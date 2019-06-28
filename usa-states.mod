@@ -1,4 +1,4 @@
-name="USA STATES MOD"
+name="USA States 1.7 DEV"
 path="/mod/usa-states/"
 tags={
 	"Alternative History"
