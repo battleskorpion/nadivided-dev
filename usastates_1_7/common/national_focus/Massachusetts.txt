@@ -45,7 +45,7 @@ ai_will_do = {
  } 
 completion_reward = { 
 add_popularity= { 
-ideology = fascism 
+ideology = communism 
 popularity = 0.2
 }
  } 
@@ -439,58 +439,57 @@ ai_will_do = {
 
 #Focus for Continue with Curley
 focus = { 
-id = SMA_continuewithcurley
-icon = GFX_goal_support_democracy
-x = 14
-y = 0
-cost = 1
-available_if_capitulated = yes 
-mutually_exclusive = { focus = SMA_revivethenativeamericanparty } 
-mutually_exclusive = { focus = SMA_bytheswordweseekpeace } 
-mutually_exclusive = { focus = SMA_peaceonlythroughliberty } 
-mutually_exclusive = { focus = SMA_ } 
-ai_will_do = { 
- factor = 1
- } 
-bypass = { 
-original_tag != SMA
- } 
-completion_reward = { 
-add_stability= 0.1
-add_war_support= -5
-political_power_factor = -0.02
- } 
-
- } 
+	id = SMA_continuewithcurley
+	icon = GFX_goal_support_democracy
+	x = 14
+	y = 0
+	cost = 1
+	available_if_capitulated = yes 
+	mutually_exclusive = { focus = SMA_revivethenativeamericanparty } 
+	mutually_exclusive = { focus = SMA_bytheswordweseekpeace } 
+	mutually_exclusive = { focus = SMA_peaceonlythroughliberty }  
+	ai_will_do = { 
+		factor = 1
+	} 
+	bypass = { 
+		NOT = {
+			original_tag = SMA
+		}
+	} 
+	completion_reward = { 
+		add_stability = 0.1
+		add_war_support = -0.05
+		political_power_factor = -0.02
+	} 
+} 
 
 #Focus for Assume Control of the Government
 focus = { 
-id = SMA_assumecontrolofthegovernment
-icon = GFX_focus_eng_organise_the_blackshirts
-x = 19
-y = 2
-cost = 10
-available_if_capitulated = yes 
-prerequisite = { focus = SMA_minutemenguards } 
-mutually_exclusive = { focus = SMA_assertcontrolofthegovernment } 
-ai_will_do = { 
- factor = 1
- } 
-bypass = { 
-has_government = fascism
- } 
-completion_reward = { 
-add_popularity= { 
-ideology = fascism 
-popularity = 0.05 
-}
-add_political_power= 50
-add_war_support= 10
-add_stability= 0.10
-has_government = fascism
- } 
-
- } 
+	id = SMA_assumecontrolofthegovernment
+	icon = GFX_focus_eng_organise_the_blackshirts
+	x = 19
+	y = 2
+	cost = 10
+	available_if_capitulated = yes 
+	prerequisite = { focus = SMA_minutemenguards } 
+	mutually_exclusive = { focus = SMA_assertcontrolofthegovernment } 
+	ai_will_do = { 
+		factor = 1
+	} 
+	bypass = { 
+		has_government = fascism
+	} 
+	completion_reward = { 
+		add_popularity = { 
+			ideology = fascism 
+			popularity = 0.05 
+		}
+	add_political_power= 50
+	add_war_support= 0.10
+	add_stability= 0.10
+	ruling_party = fascism
+	} 
+} 
 
 #Focus for Assert Control of the Government
 focus = { 
@@ -511,7 +510,7 @@ start_civil_war= {
 size = 0.5 
 }
 has_government = democratic || communism || neutrality
-add_war_support= 10
+add_war_support= 0.10
 add_stability= 0.10
  } 
 
@@ -528,15 +527,18 @@ available_if_capitulated = yes
 ai_will_do = { 
  factor = 1
  } 
-available = { 
-has_government= communism || has_government= fascism
- } 
+	available = { 
+		OR = {
+			has_government = communism
+			has_government = fascism
+		}
+	} 
 completion_reward = { 
 create_wargoal= { 
 type = annex_everything 
 target = RIR
 }
-add_war_support= 5
+add_war_support= 0.10
 add_manpower= 1000
 create_wargoal= { 
 type = annex_everything 
@@ -745,34 +747,52 @@ target = SCT
 
 #Focus for Purify the Government
 focus = { 
-id = SMA_purifythegovernment
-icon = GFX_goal_generic_war_with_comintern
-x = 23
-y = 2
-cost = 14
-available_if_capitulated = yes 
-prerequisite = { focus = SMA_spreadinfluence } 
-ai_will_do = { 
- factor = 1
- } 
-completion_reward = { 
-add_stability= -0.05
-add_war_support= 5
-add_popularity= { 
-ideology = communism
-popularity = 0.3
-}
-
-if {
-    has_government != communism
-    start_civil_war= {
-        ideology = communism
-        size = 0.5 
-     }
-}
- } 
-
- } 
+	id = SMA_purifythegovernment
+	icon = GFX_goal_generic_war_with_comintern
+	x = 23
+	y = 2
+	cost = 14
+	available_if_capitulated = yes 
+	prerequisite = { focus = SMA_spreadinfluence } 
+	ai_will_do = { 
+		factor = 1
+	} 
+	completion_reward = {	 
+		add_stability= -0.05
+		add_war_support= 0.10
+		add_popularity= { 
+			ideology = communism
+			popularity = 0.3
+		}
+			if = {
+				limit = { 
+					has_government = fascism
+				}
+				start_civil_war = {
+					ideology = communism
+					size = 0.5 
+				}
+			}
+			if = {
+				limit = { 
+					has_government = neutrality
+				}
+				start_civil_war= {
+					ideology = communism
+					size = 0.5 
+				}
+			}
+			if = {
+				limit = { 
+					has_government = democratic
+				}
+				start_civil_war= {
+					ideology = communism
+					size = 0.5 
+				}
+			}
+	}
+} 
 
 #Focus for Puritan Society
 focus = { 
