@@ -1,4 +1,4 @@
-name="USA States 1.7"
+name="USA States"
 path="mod/usastates_1_7/"
 tags={
 	"Map"
