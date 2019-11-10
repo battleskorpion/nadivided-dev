@@ -317,33 +317,23 @@ focus_tree = {
 
 	#Focus for Secure the New Empire
 	focus = { 
-	id = SMA_securethenewempire
-	icon = GFX_goal_generic_political_pressure
-	x = 86
-	y = 2
-	cost = 10
-	available_if_capitulated = yes 
-	prerequisite = { focus = SMA_reclaimmaine } 
-	completion_reward = { 
-	 
-	if {
-	country_exists=SVT 
-	create_wargoal= { 
-	type = annex_everything 
-	target = SVT
-	}
-	}
-	if {
-	country_exists=SNH
-	create_wargoal= { 
-	type = annex_everything 
-	target = SNH
-	}
+		id = SMA_securethenewempire
+		icon = GFX_goal_generic_political_pressure
+		x = 88
+		y = 3
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = {focus = SMA_reclaimmaine }
+		prerequisite = {focus = SMA_secure_bristol } 
+		prerequisite = {focus = SMA_secure_connecticut_valley } 
+		prerequisite = {focus = SMA_secure_vermont }
+		prerequisite = {focus = SMA_secure_new_hampshire } 
+	
+		completion_reward = { 
+			add_stability = 0.05
+		} 
+
 	} 
-
-	 } 
-
-	 } 
 
 	#Focus for MIT Research Projects
 	focus = { 
@@ -365,36 +355,115 @@ focus_tree = {
 
 	#Focus for Revive Old Border Disputes
 	focus = { 
-	id = SMA_reviveoldborderdisputes
-	icon = GFX_goal_generic_territory_or_war
-	x = 86
-	y = 0
-	cost = 10
-	available_if_capitulated = yes 
-	available = { 
-	 
-	OR = {
-	has_government = communism
-	has_government = fascism
+		id = SMA_reviveoldborderdisputes
+		icon = GFX_goal_generic_territory_or_war
+		x = 88
+		y = 0
+		cost = 10
+		available_if_capitulated = yes 
+		
+		available = { 
+			OR = {
+				has_government = communism
+				has_government = fascism
+			}
+		} 
+		
+		completion_reward = { 
+			add_war_support= 0.10
+			add_manpower= 1000
+		} 
+		
+	} 
+	
+	# Secure Bristol 
+	focus = { 
+		id = SMA_secure_bristol
+		icon = GFX_goal_generic_territory_or_war
+		x = 88
+		y = 1
+		cost = 5
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_reviveoldborderdisputes } 
+		available = { 
+		
+		} 
+		
+		completion_reward = { 
+			create_wargoal= { 
+				type = annex_everything 
+				target = SRI
+			}
+		} 
+		
 	}
-
-	 } 
-	completion_reward = { 
-	 
-	create_wargoal= { 
-	type = annex_everything 
-	target = SRI
+	
+	# March Into the Connecticut Valley
+	focus = { 
+		id = SMA_secure_connecticut_valley
+		icon = GFX_goal_generic_territory_or_war
+		x = 90
+		y = 1
+		cost = 5
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_reviveoldborderdisputes } 
+		available = { 
+		
+		} 
+		
+		completion_reward = { 
+			create_wargoal= { 
+				type = annex_everything 
+				target = SCT
+			}
+		} 
+		
 	}
-	add_war_support= 0.10
-	add_manpower= 1000
-	create_wargoal= { 
-	type = annex_everything 
-	target = SCT
+	
+	# Secure New Hampshire
+	focus = { 
+		id = SMA_secure_new_hampshire
+		icon = GFX_goal_generic_territory_or_war
+		x = 87
+		y = 2
+		cost = 5
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_reviveoldborderdisputes } 
+		available = { 
+		
+		} 
+		
+		completion_reward = { 
+			create_wargoal= { 
+				type = annex_everything 
+				target = SNH
+			}
+		} 
+		
 	}
-
-	 } 
-
-	 } 
+	
+	# Secure Vermont
+	focus = { 
+		id = SMA_secure_vermont
+		icon = GFX_goal_generic_territory_or_war
+		x = 89
+		y = 2
+		cost = 5
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_reviveoldborderdisputes } 
+		available = { 
+		
+		} 
+		
+		completion_reward = { 
+			create_wargoal= { 
+				type = annex_everything 
+				target = SVT
+			}
+		} 
+		
+	}
+	
 
 	#Focus for Hire MIT Alumni
 	focus = { 
@@ -434,7 +503,7 @@ focus_tree = {
 	add_stability= -0.10
 	add_popularity= { 
 	ideology = fascism 
-	popularity = 0.05
+	popularity = 0.1
 	}
 
 	 } 
@@ -443,24 +512,26 @@ focus_tree = {
 
 	#Focus for Continue with Curley
 	focus = { 
-	id = SMA_continuewithcurley
-	icon = GFX_goal_unknown ##Unfortunately, the tool could not find your icon in the game's files
-	x = 37
-	y = 0
-	cost = 1
-	available_if_capitulated = yes 
-	bypass = { 
-	NOT = {
-	original_tag = SMA
-	}
-	 } 
-	completion_reward = { 
-	add_stability = 0.1
-	add_war_support = -0.05
-	political_power_factor = -0.02
-	 } 
+		id = SMA_continuewithcurley
+		icon = GFX_goal_unknown ##Unfortunately, the tool could not find your icon in the game's files
+		x = 37
+		y = 0
+		cost = 1
+		available_if_capitulated = yes 
+		mutually_exclusive = { focus = SMA_bytheswordweseekpeace focus = SMA_peaceonlythroughliberty }
+		bypass = { 
+			NOT = {
+				original_tag = SMA
+			}
+		} 
+	
+		completion_reward = { 
+			add_stability = 0.1
+			add_war_support = -0.05
+			political_power_factor = -0.02
+		} 
 
-	 } 
+	} 
 
 	#Focus for In Memorium of the Tea Party
 	focus = { 
@@ -803,18 +874,20 @@ focus_tree = {
 
 	#Focus for "Peace only through liberty"
 	focus = { 
-	id = SMA_peaceonlythroughliberty
-	icon = GFX_goal_unknown ##Unfortunately, the tool could not find your icon in the game's files
-	x = 83
-	y = 0
-	cost = 1
-	available_if_capitulated = yes 
-	completion_reward = { 
-	add_popularity= { 
-	ideology = communism 
-	popularity = 0.2
-	}
-	 } 
+		id = SMA_peaceonlythroughliberty
+		icon = GFX_goal_unknown ##Unfortunately, the tool could not find your icon in the game's files
+		x = 83
+		y = 0
+		cost = 2
+		available_if_capitulated = yes 
+		mutually_exclusive = { focus = SMA_continuewithcurley focus = SMA_bytheswordweseekpeace }
+		
+		completion_reward = { 
+			add_popularity= { 
+				ideology = communism 
+				popularity = 0.2
+			}
+		} 
 
 	 } 
 
@@ -824,8 +897,10 @@ focus_tree = {
 		icon = GFX_goal_unknown ##Unfortunately, the tool could not find your icon in the game's files
 		x = 78
 		y = 0
-		cost = 1
+		cost = 2
 		available_if_capitulated = yes 
+		mutually_exclusive = { focus = SMA_continuewithcurley focus = SMA_peaceonlythroughliberty }
+		
 		completion_reward = { 
 			add_popularity= { 
 				ideology = fascism 
@@ -840,7 +915,7 @@ focus_tree = {
 	icon = GFX_goal_generic_territory_or_war
 	x = 86
 	y = 1
-	cost = 10
+	cost = 5
 	available_if_capitulated = yes 
 	prerequisite = { focus = SMA_reviveoldborderdisputes } 
 	completion_reward = { 
@@ -1159,7 +1234,7 @@ focus_tree = {
 	#Focus for Return to the New England Road Marking System
 	focus = { 
 		id = SMA_returntothenewenglandroadmarkingsystem
-		icon = GFX_returntothenewenglandroadmarkingsystem
+		icon = GFX_focus_NE_road_marking
 		x = 8
 		y = 5
 		cost = 10
@@ -1332,10 +1407,11 @@ focus_tree = {
 		
 		completion_reward = {
 			3 = { 					#bristol county ma 
-			add_building_construction = {
-                type = coastal_bunker
-                province = 3437		#new bedford
-                level = 4
+				add_building_construction = {
+					type = coastal_bunker
+					province = 3437		#new bedford
+					level = 4
+				}
             }
 			add_building_construction = {
                 type = coastal_bunker
@@ -1344,6 +1420,171 @@ focus_tree = {
             }
 		}
 	} 
+	
+	
+	####################################
+	###								 ###
+	###				ARMY			 ###
+	###								 ###
+	####################################
+	
+	# Army Effort
+	focus = {
+		id = SMA_army_effort
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 98
+		y = 0
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			army_experience = 75
+			add_tech_bonus = {
+				name = land_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = land_doctrine
+			}
+		}
+	}
+	
+	# The Minutemen will Protect!
+	focus = {
+		id = SMA_minutemen_protection
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 96
+		y = 1
+		cost = 10
+
+		available_if_capitulated = yes
+		prerequisite = { focus = SMA_army_effort }
+		mutually_exclusive = { focus = SMA_flexible_militia focus = SMA_disband_minutemen }
+
+		completion_reward = {
+			# idea is to rely on minutemen for protection in case of war, will give civilian factory bonuses and etc. 
+		}
+	}
+	
+	# A flexible militia
+	focus = {
+		id = SMA_flexible_militia
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 98
+		y = 1
+		cost = 10
+
+		available_if_capitulated = yes
+		prerequisite = { focus = SMA_army_effort }
+		mutually_exclusive = { focus = SMA_minutemen_protection focus = SMA_disband_minutemen }
+
+		completion_reward = {
+			# in between on relying on minutemen, and fully disbanding them. 
+		}
+	}
+	
+	# Disband the Minutemen
+	focus = {
+		id = SMA_disband_minutemen
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 100
+		y = 1
+		cost = 10
+
+		available_if_capitulated = yes
+		prerequisite = { focus = SMA_army_effort }
+		mutually_exclusive = { focus = SMA_minutemen_protection focus = SMA_flexible_militia }
+
+		completion_reward = {
+			# remove the minutemen national spirit, replace it with a new one perhaps
+		}
+	}
+	
+	# An army of rubber
+	focus = {
+		id = SMA_army_of_rubber
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 97
+		y = 2
+		cost = 10
+
+		available_if_capitulated = yes
+		prerequisite = { focus = SMA_army_effort }
+		mutually_exclusive = { focus = SMA_army_of_tungsten }
+
+		completion_reward = {
+			# focused on motorized and etc. 
+		}
+	}
+	
+	# An army of tungsten
+	focus = {
+		id = SMA_army_of_tungsten
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 99
+		y = 2
+		cost = 10
+
+		available_if_capitulated = yes
+		prerequisite = { focus = SMA_army_effort }
+		mutually_exclusive = { focus = SMA_army_of_rubber }
+
+		completion_reward = {
+			# focused on motorized and etc. 
+		}
+	}
+	
+	# National Guard Centers
+	focus = {
+		id = SMA_nat_guard_centers
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 96
+		y = 3
+		cost = 10
+
+		available_if_capitulated = yes
+		prerequisite = { focus = SMA_minutemen_protection focus = SMA_flexible_militia}
+		mutually_exclusive = { focus = SMA_fund_army_training }
+
+		completion_reward = {
+			# 
+		}
+	}
+	
+	# Fund Army Training Infrastructure
+	focus = {
+		id = SMA_fund_army_training
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 98
+		y = 3
+		cost = 10
+
+		available_if_capitulated = yes
+		prerequisite = { focus = SMA_minutemen_protection focus = SMA_flexible_militia focus = SMA_disband_minutemen }
+		mutually_exclusive = { focus = SMA_additional_army_bases focus = SMA_nat_guard_centers }
+
+		completion_reward = {
+			# 
+		}
+	}
+	
+	# Fund Additional Army Bases
+	focus = {
+		id = SMA_additional_army_bases
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 100
+		y = 3
+		cost = 10
+
+		available_if_capitulated = yes
+		prerequisite = { focus = SMA_flexible_militia focus = SMA_disband_minutemen }
+		mutually_exclusive = { focus = SMA_fund_army_training}
+
+		completion_reward = {
+			# 
+		}
+	}
+	
 
 #End of focuses 
 }
