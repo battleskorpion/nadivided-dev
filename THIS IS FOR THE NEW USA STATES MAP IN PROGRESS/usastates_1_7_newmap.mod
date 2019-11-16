@@ -34,6 +34,7 @@ replace_path="history/states"
 replace_path="history/units"
 replace_path="map/strategicregions"
 replace_path="map/supplyareas"
+replace_path="interface/nationalfocusview.gui" #testing
 tags={
 	"Map"
 	"Gameplay"
