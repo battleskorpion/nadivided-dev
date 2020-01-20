@@ -1,0 +1,138 @@
+focus_tree = {
+	id = mexico_focus
+	
+	country = {
+		factor = 0
+		
+		modifier = {
+			add = 10
+			tag = MEX
+		}
+    }
+#######################################
+##########Moderate Support#############
+#######################################
+    focus = {
+        id = MEX_moderate_support
+        icon = GFX_
+        mutually_exclusive = { focus = MEX_radical_support}
+        x = 20
+        y = 0
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_popularity = {
+                ideology = democratic
+                popularity = 15
+            }
+            add_popularity = {
+                ideology = neutrality
+                popularity = 5
+            }
+        }
+    }
+#######################################
+##########Readical Support#############
+#######################################
+    focus = {
+        id = MEX_radical_support
+        icon = GFX_
+        mutually_exclusive = { focus = MEX_moderate_support}
+        x = 40
+        y = 0
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_popularity = {
+                ideology = fascism
+                popularity = 10
+            }
+            add_popularity = {
+                ideology = communism
+                popularity = 10
+            }
+        }
+    }
+    focus = {
+        id = MEX_declair_martial_law
+        icon = GFX_
+        prerequisite = { focus = MEX_radical_support}
+        x = 40
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 0
+                has_war = no
+            }
+            modifier = {
+                factor = 2
+                has_war = yes
+            }
+            modifier = {
+                factor = 3
+                has_war_with = MDC
+            }
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_manpower = 125000
+            if = {
+                limit = {
+                     NOT = {
+                         has_idea = war_economy
+                         has_idea = tot_economic_mobilisation
+                     }
+                }
+                add_ideas = war_economy
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        has_idea = extensive_conscription
+                        has_idea = service_by_requirement
+                        has_idea = all_adults_serve
+                        has_idea = scraping_the_barrel
+                    }
+                    add_idea = extensive_conscription
+                }
+            }
+            add_ideas = MEX_martial_law
+        }
+    }
+    focus = {
+        id = MEX_remove_martial_law
+        icon = GFX_
+        prerequisite = { focus = MEX_declair_martial_law}
+        x = 40
+        y = 2
+        cost = 5
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 0
+                has_war = yes
+            }
+            modifier = {
+                factor = 2
+                has_war = no
+            }
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            remove_ideas = MEX_martial_law
+            add_stability = -0.05
+        }
+    }
+}
