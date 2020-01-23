@@ -65,8 +65,9 @@ focus_tree = {
         id = MEX_declair_martial_law
         icon = GFX_
         prerequisite = { focus = MEX_radical_support}
-        x = 40
+        x = 0
         y = 1
+        relative_position_id = MEX_radical_support
         cost = 5
         ai_will_do = {
             factor = 1
@@ -104,7 +105,7 @@ focus_tree = {
                         has_idea = all_adults_serve
                         has_idea = scraping_the_barrel
                     }
-                    add_idea = extensive_conscription
+                    add_ideas = extensive_conscription
                 }
             }
             add_ideas = MEX_martial_law
@@ -114,8 +115,9 @@ focus_tree = {
         id = MEX_remove_martial_law
         icon = GFX_
         prerequisite = { focus = MEX_declair_martial_law}
-        x = 40
+        x = 0
         y = 2
+        relative_position_id = MEX_radical_support
         cost = 5
         ai_will_do = {
             factor = 1
@@ -134,5 +136,474 @@ focus_tree = {
             remove_ideas = MEX_martial_law
             add_stability = -0.05
         }
+    }
+#######################################
+#############Trotsky###################
+#######################################
+    focus = {
+        id = MEX_listen_to_trotsky
+        icon = GFX_
+        mutually_exclusive = { focus = MEX_}
+        prerequisite = { focus = MEX_radical_support}
+        available = {
+            custom_trigger_tooltip = trotsky_accepted_tt
+            hidden_effect = {
+                has_country_flag = trotsky_accepted
+            }
+        }
+        x = -10
+        y = 1
+        relative_position_id = MEX_radical_support
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_popularity = {
+                ideology = communism
+                popularity = 10
+            }
+        }
+    }
+    focus = {
+        id = MEX_assign_trotsky_bodyguards
+        icon = GFX_
+        prerequisite = { focus = MEX_listen_to_trotsky}
+        x = -2
+        y = 1
+        relative_position_id = MEX_listen_to_trotsky
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            custom_effect_tooltip = trotsky_protected_tt
+        }
+    }
+    focus = {
+        id = MEX_trotsky_prepares_a_speech
+        icon = GFX_
+        prerequisite = { focus = MEX_listen_to_trotsky}
+        x = 0
+        y = 1
+        relative_position_id = MEX_listen_to_trotsky
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            country_event = mexico.2
+        }
+    }
+    focus = {
+        id = MEX_trotsky_siezes_power
+        icon = GFX_
+        prerequisite = { focus = MEX_trotsky_prepares_a_speech}
+        x = 0
+        y = 2
+        relative_position_id = MEX_listen_to_trotsky
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_popularity = {
+                ideology = communism
+                popularity = 10
+            }
+            set_politics = {
+                ruling_party = communism
+            }
+            create_country_leader = {
+                name = "Leon Trotsky"
+                picture = "Portrait_Leon_Trotsky.dds"
+                expire = "1965.1.1"
+                ideology = Leninism
+                traits = {
+                    autocratic_imperialist
+                    red_army_organizer
+                }
+            }
+        }
+    }
+    focus = {
+        id = MEX_socialist_industry
+        icon = GFX_
+        prerequisite = { focus = MEX_trotsky_siezes_power}
+        x = -8
+        y = 3
+        relative_position_id = MEX_listen_to_trotsky
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+            }
+            random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+        }
+    }
+    focus = {
+        id = MEX_abolish_the_capitalists
+        icon = GFX_
+        prerequisite = { focus = MEX_socialist_industry}
+        x = -3
+        y = 1
+        relative_position_id = MEX_socialist_industry
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_ideas = MEX_no_capitalists
+            add_timed_idea = {
+                idea = MEX_sieze_capitalist_property
+                time = 180
+            }
+        }
+    }
+    focus = {
+        id = MEX_redistribute_property
+        icon = GFX_
+        prerequisite = { focus = MEX_abolish_the_capitalists}
+        mutually_exclusive = { focus = MEX_repurpose_capitalist_property}
+        x = -1
+        y = 2
+        relative_position_id = MEX_abolish_the_capitalists
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+            }
+            random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+            }
+        }
+    }
+    focus = {
+        id = MEX_repurpose_capitalist_property
+        icon = GFX_
+        prerequisite = { focus = MEX_abolish_the_capitalists}
+        mutually_exclusive = { focus = MEX_redistribute_property}
+        x = 1
+        y = 2
+        relative_position_id = MEX_abolish_the_capitalists
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+            }
+            random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+            }
+        }
+    }
+    focus = {
+        id = MEX_empower_the_workers
+        icon = GFX_
+        prerequisite = { focus = MEX_repurpose_capitalist_property focus = MEX_redistribute_property}
+        x = 0
+        y = 3
+        relative_position_id = MEX_abolish_the_capitalists
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_ideas = MEX_strenghtened_working_class
+        }
+    }
+    focus = {
+        id = MEX_industrialize_the_countryside
+        icon = GFX_
+        prerequisite = { focus = MEX_socialist_industry}
+        x = 3
+        y = 1
+        relative_position_id = MEX_socialist_industry
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            582 = {
+                add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+                }
+                add_building_construction = {
+                    type = infrastructure
+                    level = 1
+                    instant_build = yes
+                }
+                set_state_category = city
+            }
+            578 = {
+                add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+                }
+                add_building_construction = {
+                    type = infrastructure
+                    level = 1
+                    instant_build = yes
+                }
+                set_state_category = city
+            }
+        }
+    }
+    focus = {
+        id = MEX_expand_urban_factories
+        icon = GFX_
+        prerequisite = { focus = MEX_industrialize_the_countryside}
+        x = -1
+        y = 1
+        relative_position_id = MEX_industrialize_the_countryside
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            583 = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+                }
+            }
+            475 = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+                }
+            }
+            550 = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MEX_the_jewel_of_mexico
+        icon = GFX_
+        prerequisite = { focus = MEX_expand_urban_factories}
+        x = -1
+        y = 2
+        relative_position_id = MEX_industrialize_the_countryside
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            546 = {
+                add_extra_state_shared_building_slots = 3
+                add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+                }
+                add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+                }
+                add_building_construction = {
+                    type = infrastructure
+                    level = 2
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MEX_expand_rubber_plantations
+        icon = GFX_
+        prerequisite = { focus = MEX_industrialize_the_countryside}
+        x = 1
+        y = 1
+        relative_position_id = MEX_industrialize_the_countryside
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            475 = {
+                add_resource = {
+                    type = rubber
+                    amount = 56
+                }
+            }
+            573 = {
+                add_resource = {
+                    type = rubber
+                    amount = 12
+                } 
+            }
+        }
+    }
+    focus = {
+        id = MEX_deforest_the_jungle
+        icon = GFX_
+        prerequisite = { focus = MEX_expand_rubber_plantations}
+        x = 1
+        y = 2
+        relative_position_id = MEX_industrialize_the_countryside
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            475 = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = infrastructure
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            573 = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = infrastructure
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            548 = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = infrastructure
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            549 = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = infrastructure
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MEX_expand_iron_mining
+        icon = GFX_
+        prerequisite = { focus = MEX_deforest_the_jungle}
+        x = 1
+        y = 3
+        relative_position_id = MEX_industrialize_the_countryside
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_ideas = MEX_expanded_iron_mining
+            548 = {
+                add_resource = {
+                    type = steel
+                    amount = 14
+                }
+            }
+            475 = {
+                add_resource = {
+                    type = steel
+                    amount = 18
+                }
+            }
+            546 = {
+                add_resource = {
+                    type = steel
+                    amount = 24
+                }
+            }
+        }
+    }
+    focus = {
+        id = MEX_
     }
 }
