@@ -1,5 +1,6 @@
 name="North America Divided"
 path="mod/nadivided"
+user_dir = "nadivided"
 replace_path="common/ai_equipment"
 replace_path="common/ai_focuses"
 replace_path="common/ai_peace"
@@ -37,5 +38,4 @@ tags={
 	"National Focuses"
 }
 picture="nadividedthumbnail.jpg"
-remote_file_id="1773965933"
 supported_version="1.8.*"
