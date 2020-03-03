@@ -13,6 +13,7 @@ replace_path="common/country_tags"
 replace_path="common/ideas"
 replace_path="common/on_actions"
 replace_path="common/national_focus"
+replace_path="common/scorers"
 replace_path="common/scripted_effects"
 replace_path="common/scripted_localisation"
 replace_path="common/technology_sharing"
@@ -37,4 +38,4 @@ tags={
 	"National Focuses"
 }
 picture="nadividedthumbnail.jpg"
-supported_version="1.8.*"
+supported_version="1.9.*"
