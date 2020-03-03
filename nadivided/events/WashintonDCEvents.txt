@@ -45,7 +45,7 @@ country_event = {
 		44 = {
 			add_extra_state_shared_building_slots = 1
 			add_building_construction = {
-				type = industrial_complex
+				type = arms_factory
 				level = 1
 				instant_build = yes
 			}
@@ -102,25 +102,60 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		tag = WDC
-		has_completed_focus = WDC_begin_integration
+		tag = SPA
+		WDC = {
+			has_completed_focus = WDC_begin_integration
+		}
 	}
 
 	option = {
 		name = WashingtonDC.4.a
-		ai_chance = { factor = 100}
-		WDC = {
-			set_autonomy = {
-				target = SPA
-				autonomy_state = autonomy_satellite
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 2
+				has_opinion = {
+					target = WDC
+					value > 50
+				}
+			}
+		}
+		if = {
+			limit = {
+				has_dlc = "Together for Victory"
+			}
+			WDC = {
+				set_autonomy = {
+					target = SPA
+					autonomy_state = autonomy_satellite
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_dlc = "Together for Victory"
+				}
+			}
+			WDC = {
+				puppet = SPA
 			}
 		}
 	}
 	option = {
 		name = WashingtonDC.4.b
-		ai_chance = { factor = 0}
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0
+				has_opinion = {
+					target = WDC
+					value > 50
+				}
+			}
+		}
 		WDC = {
-			declare_war_on = {
+			create_wargoal = {
 				target = SPA
 				type = annex_everything
 			}
@@ -136,30 +171,35 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		tag = WDC
-		has_completed_focus = WDC_take_delaware_and_nj
+		WDC = {
+			has_completed_focus = WDC_take_delaware_and_nj
+		}
+		OR = {
+			tag = SNJ
+			tag = SDE
+		}
 	}
 
 	option = {
 		name = WashingtonDC.5.a
-		ai_chance = { factor = 90}
+		ai_chance = { factor = 70}
 		WDC = {
 			annex_country = {
-				target = FROM
+				target = ROOT
 				transfer_troops = yes
 			}
 		}
 	}
 	option = {
 		name = WashingtonDC.5.b
-		ai_chance = { factor = 10}
+		ai_chance = { factor = 20}
 		if = {
 			limit = {
 				has_dlc = "Together for Victory"
 			}
 			WDC = {
 				set_autonomy = {
-					target = FROM
+					target = ROOT
 					autonomy_state = autonomy_article_state
 				}
 			}
@@ -171,16 +211,16 @@ country_event = {
 				}
 			}
 			WDC = {
-				puppet = FROM
+				puppet = ROOT
 			}
 		}
 	}
 	option = {
 		name = WashingtonDC.5.c
-		ai_chance = { factor = 0}
+		ai_chance = { factor = 10}
 		WDC = {
-			declare_war_on = {
-				target = FROM
+			create_wargoal = {
+				target = ROOT
 				type = annex_everything
 			}
 		}
@@ -221,8 +261,7 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		tag = WDC
-		has_completed_focus = WDC_take_new_york_city
+		#
 	}
 
 	option = {
@@ -230,7 +269,7 @@ country_event = {
 		ai_chance = { factor = 100}
 		WDC = {
 			annex_country = {
-				target = FROM
+				target = ROOT
 				transfer_troops = yes
 			}
 		}
@@ -239,8 +278,8 @@ country_event = {
 		name = WashingtonDC.7.b
 		ai_chance = { factor = 0}
 		WDC = {
-			declare_war_on = {
-				target = FROM
+			create_wargoal = {
+				target = ROOT
 				type = annex_everything
 			}
 		}
@@ -255,19 +294,28 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		always = no
+		#
 	}
 
 	option = {
 		name = WashingtonDC.8.a
-		ai_chance = { factor = 90}
+		ai_chance = { 
+			factor = 75
+			modifier = {
+				factor = 1.5
+				has_opinion = {
+					target = WDC
+					value > 50
+				}
+			}
+		}
 		if = {
 			limit = {
 				has_dlc = "Together for Victory"
 			}
 			WDC = {
 				set_autonomy = {
-					target = FROM
+					target = ROOT
 					autonomy_state = autonomy_article_state
 				}
 			}
@@ -279,16 +327,25 @@ country_event = {
 				}
 			}
 			WDC = {
-				puppet = FROM
+				puppet = ROOT
 			}
 		}
 	}
 	option = {
 		name = WashingtonDC.8.b
-		ai_chance = { factor = 10}
+		ai_chance = { 
+			factor = 25
+			modifier = {
+				factor = 0
+				has_opinion = {
+					target = WDC
+					value > 50
+				}
+			}
+	}
 		WDC = {
-			declare_war_on = {
-				target = FROM
+			create_wargoal = {
+				target = ROOT
 				type = puppet_wargoal_focus
 			}
 		}
@@ -310,20 +367,20 @@ country_event = {
 
 	option = {
 		name = WashingtonDC.9.a
-		ai_chance = { factor = 100}
+		ai_chance = { factor = 90}
 		WDC = {
 			annex_country = {
-				target = FROM
+				target = ROOT
 				transfer_troops = yes
 			}
 		}
 	}
 	option = {
 		name = WashingtonDC.9.b
-		ai_chance = { factor = 0}
+		ai_chance = { factor = 10}
 		WDC = {
-			declare_war_on = {
-				target = FROM
+			create_wargoal = {
+				target = ROOT
 				type = annex_everything
 			}
 		}
@@ -338,19 +395,19 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		always = no
+		#
 	}
 
 	option = {
 		name = WashingtonDC.10.a
-		ai_chance = { factor = 80}
+		ai_chance = { factor = 90}
 	}
 	option = {
 		name = WashingtonDC.10.b
-		ai_chance = { factor = 20}
-		FROM = {
-			declare_war_on = {
-				target = WDC
+		ai_chance = { factor = 10}
+		WDC = {
+			create_wargoal = {
+				target = ROOT
 				type = annex_everything
 			}
 		}
@@ -365,27 +422,46 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		always = no
+		#
 	}
 
 	option = {
 		name = WashingtonDC.11.a
-		ai_chance = { factor = 90}
+		ai_chance = {
+			factor = 75
+			modifier = {
+				factor = 0
+				ROOT = {
+					has_country_flag = WDC_buying_industry_3
+				}
+			}
+		}
 		WDC = {
 			annex_country = {
-				target = FROM
+				target = ROOT
 				transfer_troops = yes
 			}
 		}
 	}
 	option = {
 		name = WashingtonDC.11.b
-		ai_chance = { factor = 10}
-		FROM = {
-			declare_war_on = {
-				target = WDC
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 4
+				ROOT = {
+					has_country_flag = WDC_buying_industry_3
+				}
+			}
+		}
+		WDC = {
+			create_wargoal = {
+				target = ROOT
 				type = annex_everything
 			}
+		}
+		hidden_effect = {
+			set_country_flag = WDC_buying_industry_3
 		}
 	}
 }
@@ -421,8 +497,8 @@ country_event = {
 				}
 			}
 			WDC = {
-				declare_war_on = {
-					target = ROOT
+				create_wargoal = {
+					target = PREV
 					type = annex_everything
 				}
 			}
@@ -440,7 +516,7 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		always = no
+		#
 	}
 
 	option = {
@@ -461,7 +537,7 @@ country_event = {
 			}
 			WDC = {
 				set_autonomy = {
-					target = FROM
+					target = ROOT
 					autonomy_state = autonomy_commune_republic
 				}
 			}
@@ -473,7 +549,7 @@ country_event = {
 				}
 			}
 			WDC = {
-				puppet = FROM
+				puppet = ROOT
 			}
 		}
 	}
@@ -491,7 +567,7 @@ country_event = {
 		}
 		WDC = {
 			WDC = {
-				declare_war_on = {
+				create_wargoal = {
 					target = ROOT
 					type = puppet_wargoal_focus
 				}
