@@ -1,5 +1,4 @@
 name="North America Divided"
-path="mod/nadivided"
 replace_path="common/ai_equipment"
 replace_path="common/ai_focuses"
 replace_path="common/ai_peace"
@@ -31,7 +30,7 @@ replace_path="history/states"
 replace_path="history/units"
 replace_path="map/strategicregions"
 replace_path="map/supplyareas"
-replace_path="interface/nationalfocusview.gui" #testing
+replace_path="interface/nationalfocusview.gui"
 tags={
 	"Map"
 	"Gameplay"
@@ -40,3 +39,5 @@ tags={
 }
 picture="nadividedthumbnail.jpg"
 supported_version="1.9.*"
+path="C:/Users/DrKillem/Documents/Paradox Interactive/Hearts of Iron IV/mod/nadivided"
+remote_file_id="1773965933"
