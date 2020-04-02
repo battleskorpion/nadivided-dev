@@ -9,36 +9,58 @@ on_actions = {
 		}
 	}
 	
+	# Ace pilots
+	# country, FROM = ace
+	on_ace_promoted = {
+		random_events = {
+			100 = ace_promoted.1
+			5 = ace_promoted.2
+		}
+	}
+
 	# country, FROM = ace, PREV = enemy ace 
 	# This event fires twice, once for each ace.
-	#on_aces_killed_each_other = {
-	#	random_events = {
-	#		100 = aces_killed_each_other.1
-	#	}
-	#}
+	on_aces_killed_each_other = {
+		random_events = {
+			100 = aces_killed_each_other.1
+		}
+	}
 	
 	# country, FROM = our ace, 
 	# PREV = enemy ace, has killed FROM
-	#on_ace_killed_by_ace = {
-	#	random_events = {
-	#		100 = ace_killed_by_ace.1
-	#	}
-	#}
+	on_ace_killed_by_ace = {
+		random_events = {
+			100 = ace_killed_by_ace.1
+		}
+	}
 
 	# country, FROM = our ace, 
 	# PREV = enemy ace, killed by FROM
-	#on_ace_killed_other_ace = {
-	#	random_events = {
-	#		100 = ace_killed_other_ace.1
-	#	}
-	#}
+	on_ace_killed_other_ace = {
+		random_events = {
+			100 = ace_killed_other_ace.1
+		}
+	}
 
+	# our ace is killed by no name
 	# country, FROM = ace
-	#on_ace_killed = {
-	#	random_events = {
-	#		100 = ace_died.1
-	#	}
-	#}
+	on_ace_killed = {
+		random_events = {
+			100 = ace_died.1
+		}
+	}
+	
+	# our ace died in accident
+	# country, FROM = ace
+	on_ace_killed_on_accident = {
+	
+	}
+	
+	# enemy ace is killed by our non name
+	# country, FROM = enemy ace
+	on_non_ace_killed_other_ace = {
+	
+	}
 	
 	# During justifying wargoals
 	# triggered daily, so make sure there is a sink somewhere not firing events
@@ -352,10 +374,42 @@ on_actions = {
 		effect = {
 			add_timed_unit_leader_trait = {
 				trait = recently_promoted
-				days = 60
+				days = 60 #was changed to 100 base game appearantly but nah
 			}
 		}
 	}
+	
+	# root country that invades
+	# scope state that is invaded
+	# from scope state that the invasion started
+	# on_naval_invasion = {
+	# 	effect = {
+	# 	}
+	# }
+	
+	
+	# root country that paradrops
+	# scope state that is paradroped into
+	# from scope state that the paradrop started
+	on_paradrop = {
+	    effect = {
+		    set_country_flag = has_paradropped_flag
+		}
+	}
+	on_ruling_party_change = { 
+		# temp var old_ideology_token is available for effects
+		effect = {
+			every_controlled_state = {
+				limit = {
+					has_resistance = yes
+				}
+				set_temp_variable = { new_compliance = compliance }
+				multiply_temp_variable = { new_compliance = 0.5 }
+				set_compliance = new_compliance
+			}
+		}
+	}
+	
 }
 
 	
