@@ -1,7 +1,4 @@
-# This version of the file is needed for compatibility with Steam. It would be
-# renamed to reflect this, however it cannot be due to various restrictions.
-
-name="North America Divided (DEV VERSION)"
+version="1.9.*"
 replace_path="common/abilities"
 replace_path="common/achievements.txt"
 replace_path="common/ai_equipment"
@@ -40,11 +37,10 @@ replace_path="map/strategicregions"
 replace_path="map/supplyareas"
 replace_path="interface/nationalfocusview.gui"
 tags={
-	"Map"
-	"Gameplay"
 	"Alternative History"
-	"National Focuses"
+	"Events"
+	"Gameplay"
+	"Ideologies"
 }
-path="C:/Users/DrKillem/Documents/Paradox Interactive/Hearts of Iron IV/mod/NADivideddev"
-remote_file_id="1787347800"
-supported_version="1.9.*"
+name="North America Divided"
+path="mod/nadivided"
