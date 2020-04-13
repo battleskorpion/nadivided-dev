@@ -10,7 +10,8 @@
    `https://github.com/BattleSkorpion/usa-states`. and clone it into
    `Paradox Interactive/Hearts of Iron IV/mod` under your user's Documents
    folder! Then click "Clone," of course. 
-   Next, Open the new folder using a file explorer. Drag `US-States.mod`
-   into the `mods` folder. Start up HOI4, and select our mod (local version). 
+   Next, Open the new folder using a file explorer. Drag `nadivided.mod`
+   into the `mod` folder. Start up HOI4,
+   and select our mod (local version). 
    
 # Enjoy :)
