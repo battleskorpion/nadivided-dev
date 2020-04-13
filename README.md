@@ -12,6 +12,6 @@
    folder! Then click "Clone," of course. 
    Next, Open the new folder using a file explorer. Drag `nadivided.mod`
    into the `mod` folder. Start up HOI4,
-   and select our mod (local version). 
+   and select our mod (local version). Select the branch you want to use. 
    
 # Enjoy :)
