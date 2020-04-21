@@ -1082,11 +1082,11 @@ focus_tree = {
         }
     }
 #######################################
-############Deomcratic Path############
+############Democratic Path############
 #######################################
     focus = {
         id = NA_MEX_continue_the_6_year_plan
-        icon = GFX_
+        icon = GFX_focus_industry
         prerequisite = { focus = NA_MEX_moderate_support}
         x = 0
         y = 1
@@ -1118,7 +1118,7 @@ focus_tree = {
     }
     focus = {
         id = NA_MEX_deal_with_the_haciendas
-        icon = GFX_
+        icon = GFX_focus_mexico_haciendas_denied
         prerequisite = { focus = NA_MEX_continue_the_6_year_plan}
         x = 1
         y = 1
@@ -1165,7 +1165,7 @@ focus_tree = {
     }
     focus = {
         id = NA_MEX_secularize_the_schools
-        icon = GFX_
+        icon = GFX_goal_generic_scientific_exchange
         prerequisite = { focus = NA_MEX_continue_the_6_year_plan}
         x = -1
         y = 1
@@ -1182,19 +1182,47 @@ focus_tree = {
     }
     focus = {
         id = NA_MEX_deal_with_the_civil_war
-        icon = GFX_
+        icon = GFX_focus_mexico_civil_war
         prerequisite = { focus = NA_MEX_deal_with_the_haciendas}
         available = {
-            has_war_with = MAC
+            OR = {
+                has_war_with = MAC
+                has_war_with = MCL
+            }
         }
         x = 0
         y = 2
         relative_position_id = NA_MEX_continue_the_6_year_plan
+        cost = 1
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+    }
+    focus = {
+        id = NA_MEX_call_an_emergency_draft
+        icon = GFX_focus_mex_caudillo_private_armies
+        prerequisite = { focus = NA_MEX_deal_with_the_civil_war}
+        bypass = {
+            custom_trigger_tooltip = {
+                tooltip = not_mexican_civil_war_tt
+                AND = {
+                    NOT = {
+                        has_war_with = MCL
+                        has_war_with = MAC
+                    }
+                }
+            }
+        }
+        x = -2
+        y = 1
+        relative_position_id = NA_MEX_deal_with_the_civil_war
         cost = 5
         ai_will_do = {
             factor = 2
         }
         available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_MANPOWER }
 
         completion_reward = {
             add_manpower = 100000
@@ -1202,8 +1230,64 @@ focus_tree = {
             hidden_effect = {
                 load_oob = "MEX_civil_war"
             }
+        }
+    }
+    focus = {
+        id = NA_MEX_roll_out_propoganda_papers
+        icon = GFX_goal_generic_propaganda
+        prerequisite = { focus = NA_MEX_deal_with_the_civil_war}
+        bypass = {
+            custom_trigger_tooltip = {
+                tooltip = not_mexican_civil_war_tt
+                AND = {
+                    NOT = {
+                        has_war_with = MCL
+                        has_war_with = MAC
+                    }
+                }
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = NA_MEX_deal_with_the_civil_war
+        cost = 5
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
             add_war_support = 0.25
-            add_stability = 0.5
+            add_stability = 0.4
+        }
+    }
+    focus = {
+        id = NA_MEX_mobolize_industry
+        icon = GFX_focus_ask_for_company_support
+        prerequisite = { focus = NA_MEX_deal_with_the_civil_war}
+        bypass = {
+            custom_trigger_tooltip = {
+                tooltip = not_mexican_civil_war_tt
+                AND = {
+                    NOT = {
+                        has_war_with = MCL
+                        has_war_with = MAC
+                    }
+                }
+            }
+        }
+        x = 2
+        y = 1
+        relative_position_id = NA_MEX_deal_with_the_civil_war
+        cost = 5
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
             add_ideas = war_economy
             remove_ideas = MEX_exhausted_army
         }
@@ -1897,11 +1981,11 @@ focus_tree = {
             add_political_power = 50
             add_popularity = {
                 ideology = neutrality
-                popularity = -.5
+                popularity = -0.05
             }
             add_popularity = {
                 ideology = democratic
-                popularity = -.10
+                popularity = -0.10
             }
         }
     }
@@ -2101,6 +2185,12 @@ focus_tree = {
         }
         available_if_capitulated = no 
         search_filters = {FOCUS_FILTER_ANNEXATION}
+        will_lead_to_war_with = MMO
+        will_lead_to_war_with = MGR
+        will_lead_to_war_with = MOX
+        will_lead_to_war_with = MCI
+        will_lead_to_war_with = MTB
+        will_lead_to_war_with = MCM
 
         completion_reward = {
             custom_effect_tooltip = warning_south_mex_tt
@@ -2143,6 +2233,9 @@ focus_tree = {
         }
         available_if_capitulated = no 
         search_filters = {FOCUS_FILTER_ANNEXATION}
+        will_lead_to_war_with = MCA
+        will_lead_to_war_with = MYU
+        will_lead_to_war_with = MQR
         
         completion_reward = {
             create_wargoal = {
@@ -2222,6 +2315,7 @@ focus_tree = {
         }
         available_if_capitulated = no
         search_filters = {FOCUS_FILTER_ANNEXATION}
+        will_lead_to_war_with = MDC
 
         completion_reward = {
             declare_war_on = {
@@ -2249,7 +2343,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_MANPOWER }
 
         completion_reward = {
-            add_manpower = 75000
+            add_manpower = 25000
         }
     }
     focus = {
@@ -2265,6 +2359,13 @@ focus_tree = {
         }
         available_if_capitulated = no
         search_filters = {FOCUS_FILTER_ANNEXATION}
+        will_lead_to_war_with = BAJ
+        will_lead_to_war_with = MSO
+        will_lead_to_war_with = MSI
+        will_lead_to_war_with = MCH
+        will_lead_to_war_with = MCO
+        will_lead_to_war_with = MNL
+        will_lead_to_war_with = MTA
 
         completion_reward = {
             create_wargoal = {
@@ -2325,6 +2426,11 @@ focus_tree = {
         }
         available_if_capitulated = no
         search_filters = {FOCUS_FILTER_ANNEXATION}
+        will_lead_to_war_with = GUA
+        will_lead_to_war_with = BLZ
+        will_lead_to_war_with = ELS
+        will_lead_to_war_with = HON
+        will_lead_to_war_with = NIC
 
         completion_reward = {
             create_wargoal = {
@@ -2362,6 +2468,8 @@ focus_tree = {
         }
         available_if_capitulated = no
         search_filters = {FOCUS_FILTER_ANNEXATION}
+        will_lead_to_war_with = COS
+        will_lead_to_war_with = PAN
 
         completion_reward = {
             create_wargoal = {
@@ -2405,6 +2513,7 @@ focus_tree = {
         }
         available_if_capitulated = no
         search_filters = {FOCUS_FILTER_ANNEXATION}
+        will_lead_to_war_with = STX
 
         completion_reward = {
             create_wargoal = {
@@ -2426,6 +2535,7 @@ focus_tree = {
         }
         available_if_capitulated = no 
         search_filters = {FOCUS_FILTER_ANNEXATION}
+        will_lead_to_war_with = SCA
 
         completion_reward = {
             create_wargoal = {
@@ -2447,6 +2557,9 @@ focus_tree = {
         }
         available_if_capitulated = no
         search_filters = {FOCUS_FILTER_ANNEXATION}
+        will_lead_to_war_with = SAZ
+        will_lead_to_war_with = SNM
+        will_lead_to_war_with = NAV
 
         completion_reward = {
             create_wargoal = {
@@ -2476,6 +2589,9 @@ focus_tree = {
         }
         available_if_capitulated = no
         search_filters = {FOCUS_FILTER_ANNEXATION}
+        will_lead_to_war_with = UTE
+        will_lead_to_war_with = SNV
+        will_lead_to_war_with = SUT
 
         completion_reward = {
             create_wargoal = {
@@ -3044,6 +3160,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_ANNEXATION }
  
         completion_reward = {
+            will_lead_to_war_with = MDC
             create_wargoal = {
                 type = annex_everything
                 target = MDC
@@ -3065,6 +3182,12 @@ focus_tree = {
         available_if_capitulated = no
 
         search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = MMO
+        will_lead_to_war_with = MGR
+        will_lead_to_war_with = MOX
+        will_lead_to_war_with = MCI
+        will_lead_to_war_with = MTB
+        will_lead_to_war_with = MCM
 
         completion_reward = {
             create_wargoal = {
@@ -3112,6 +3235,13 @@ focus_tree = {
         }
         available_if_capitulated = no
         search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = BAJ
+        will_lead_to_war_with = MSO
+        will_lead_to_war_with = MSI
+        will_lead_to_war_with = MCH
+        will_lead_to_war_with = MCO
+        will_lead_to_war_with = MNL
+        will_lead_to_war_with = MTA
 
         completion_reward = {
             create_wargoal = {
@@ -3194,6 +3324,9 @@ focus_tree = {
         }
         available_if_capitulated = no
         search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = MCA
+        will_lead_to_war_with = MYU
+        will_lead_to_war_with = MQR
 
         completion_reward = {
             create_wargoal = {
@@ -3244,6 +3377,9 @@ focus_tree = {
         }
         available_if_capitulated = no
         search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = MCA
+        will_lead_to_war_with = MYU
+        will_lead_to_war_with = MQR
 
         completion_reward = {
             create_wargoal = {
