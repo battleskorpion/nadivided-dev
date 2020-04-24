@@ -382,7 +382,11 @@ focus_tree = {
     focus = {
         id = NA_MEX_begin_army_modernization
         icon = GFX_focus_army_moderization
-        prerequisite = { focus = NA_MEX_complete_army_reform}
+        available = {
+            NOT = {
+                has_idea = MEX_exhausted_army
+            }
+        }
         x = 0
         y = 1
         relative_position_id = NA_MEX_complete_army_reform
@@ -1139,6 +1143,7 @@ focus_tree = {
                 remove_idea = MEX_stagnant_industry1
                 add_idea = MEX_stagnant_industry2
             }
+            custom_effect_tooltip = MEX_civil_war_warning_tt
         }
     }
     focus = {
@@ -1156,6 +1161,7 @@ focus_tree = {
         
         completion_reward = {
             add_research_slot = 1
+            custom_effect_tooltip = MEX_catholic_waring_tt
         }
     }
     focus = {
@@ -1204,10 +1210,6 @@ focus_tree = {
 
         completion_reward = {
             add_manpower = 100000
-            custom_effect_tooltip = mexico_troops_civil_war_tt
-            hidden_effect = {
-                load_oob = "MEX_civil_war"
-            }
         }
     }
     focus = {
@@ -1245,14 +1247,17 @@ focus_tree = {
         icon = GFX_focus_ask_for_company_support
         prerequisite = { focus = NA_MEX_deal_with_the_civil_war}
         bypass = {
-            custom_trigger_tooltip = {
-                tooltip = not_mexican_civil_war_tt
-                AND = {
-                    NOT = {
-                        has_war_with = MCL
-                        has_war_with = MAC
+            OR = {
+                custom_trigger_tooltip = {
+                    tooltip = not_mexican_civil_war_tt
+                    AND = {
+                        NOT = {
+                            has_war_with = MCL
+                            has_war_with = MAC
+                        }
                     }
                 }
+                has_idea = war_economy
             }
         }
         x = 2
