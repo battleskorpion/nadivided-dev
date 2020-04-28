@@ -1,4 +1,35 @@
 MDC_unstable_country = {
+    MDC_revolt_imminent = {
+        
+        icon = GFX_decision_revolt
+
+        available = {
+			hidden_trigger = { always = no }
+		}
+        activation = {
+            any_owned_state = {
+                has_state_flag = MDC_near_revolt
+            }
+        }
+        visible = {
+            tag = MDC
+            MDC = {
+                any_owned_state = {
+                    OR = {
+                        has_state_flag = MDC_high_comp
+                        has_state_flag = MDC_low_comp
+                        has_state_flag = MDC_near_revolt
+                    }
+                }
+            }
+        }
+        is_good = yes
+        days_mission_timeout = 70
+        fire_only_once = yes
+        timeout_effect = { 
+            #
+        }
+    }
     MDC_revolts_in_veracruz = {
 
         icon = {
@@ -63,7 +94,6 @@ MDC_unstable_country = {
 
         complete_effect = {
 			set_country_flag = MDC_already_suppressing_revolt
-
         }
         remove_effect = {
             if = {
@@ -147,7 +177,24 @@ MDC_unstable_country = {
 
         }
         remove_effect = {
-
+            if = {
+                limit = {
+                    560 = {
+                        has_state_flag = MDC_near_revolt
+                    }
+                }
+                560 = {
+                    clr_state_flag = MDC_near_revolt
+                    set_state_flag = MDC_low_comp
+                }
+            }
+            else = {
+                560 = {
+                    clr_state_flag = MDC_low_comp
+                    set_state_flag = MDC_high_comp
+                }
+            }
+            clr_country_flag = MDC_already_suppressing_revolts
         }
     }
     MDC_revolts_in_zacatecas = {
