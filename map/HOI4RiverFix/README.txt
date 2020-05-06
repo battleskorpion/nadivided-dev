@@ -1,5 +1,7 @@
 [FILE CONVERT]
 
+Becareful windows defender does not like the file AT ALL, so makes sure it doesn't automatically delete it and yes, its not a virus, just not code signed because i'm lazy.
+
 /Hearts of Iron 4 modding\
 \river color fix program /
 
