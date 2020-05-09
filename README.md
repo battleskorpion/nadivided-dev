@@ -1,5 +1,7 @@
 # North America Divided
 
+ NOTE: ASK BEFORE USING ANYTHING NATIVE TO OUR MOD. THANK YOU FOR YOUR CONSIDERATION. WE WILL ALMOST ALWAYS ACCEPT :)
+
  If youre going to be using development / github branches of the mod, 
  Github Desktop (https://desktop.github.com) is highly reccommended, 
  although not essential. Github Desktop provides an easy way to sync changes. 
