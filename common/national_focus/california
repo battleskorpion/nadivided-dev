@@ -27,7 +27,7 @@ focus_tree = {
 	focus = { 
 		id = SCA_a_new_union_for_all
 		icon = GFX_focus_generic_treaty
-		x = -3
+		x = -5
 		y = 3
 		cost = 10
 		available_if_capitulated = yes 
@@ -75,7 +75,7 @@ focus_tree = {
 	focus = { 
 		id = SCA_stay_true_to_the_american_dream
 		icon = GFX_goal_unknown
-		x = 1
+		x = -1
 		y = 1
 		cost = 8
 		available_if_capitulated = yes 
@@ -98,7 +98,7 @@ focus_tree = {
 	focus = { 
 		id = SCA_from_sea_to_shining_sea
 		icon = GFX_focus_generic_the_giant_wakes
-		x = -2
+		x = -4
 		y = 2
 		cost = 2
 		available_if_capitulated = yes 
@@ -119,7 +119,7 @@ focus_tree = {
 	focus = { 
 		id = SCA_maintain_the_western_democracies
 		icon = GFX_goal_generic_alliance
-		x = 4
+		x = 3
 		y = 2
 		cost = 10
 		available_if_capitulated = yes 
@@ -159,49 +159,39 @@ focus_tree = {
 					ideology = fascism 
 					popularity = .05
 				} 
+				add_popularity= {
+					ideology = communism 
+					popularity = .05
+				} 
 			}
 		}
 	}
 	
-#Focus for SCA_Extort_the_neighbors
+#Focus for SCA_Extort the southern states
 	focus = { 
 		id = SCA_extort_the_neighbors
 		icon = GFX_goal_generic_political_pressure
-		x = -1
-		y = 1
+		x = 0
+		y = 2
 		cost = 15
 		available_if_capitulated = yes 
-		available = {
-			date > 1937.5.1
-		}
 		prerequisite = { 
-			focus = SCA_maintain_the_western_democracies
+			
+			focus = SCA_support_republicist_ideals
+			focus = SCA_prop_up_cartel_power
 		} 
-		mutually_exclusive = {
-			focus = SCA_befriend_the_neighbors
-		} 
-		relative_position_id = SCA_maintain_the_western_democracies
+		relative_position_id = SCA_the_mexican_question
 		ai_will_do = { 
 			factor = 1
 		} 
 		completion_reward = {
-			SCA = {
-				add_ideas = {
-					SCA_lackluster_military_complex
-				}
-			}
 			SCA = {
 				add_state_claim = 54
 			}
 			SCA = {
 				add_state_claim = 174
 			}
-			SCA = {
-				create_wargoal= {
-					type = puppet_wargoal_focus
-					target = SNV
-				}
-			}
+			
 			SCA = {
 				add_state_claim =  167	
 			}
@@ -215,16 +205,14 @@ focus_tree = {
 	focus = {
 		id = SCA_befriend_the_neighbors
 		icon = GFX_goal_generic_military_sphere
-		x = 1
+		x = 0
 		y = 1
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = {
 			focus = SCA_maintain_the_western_democracies
 		}
-		mutually_exclusive = {
-			focus = SCA_extort_the_neighbors
-		} 
+
 		relative_position_id = SCA_maintain_the_western_democracies
 		ai_will_do = { 
 			factor = 1
@@ -233,7 +221,7 @@ focus_tree = {
 			SWA = {
 				add_ideas = { democratic_influence }
 			}
-			SOR = {
+			JEF = {
 				add_ideas = { democratic_influence }
 			}
 			SAZ = {
@@ -242,14 +230,188 @@ focus_tree = {
 			SUT = {
 				add_ideas = { democratic_influence }
 			}	
+			SID = {
+				add_ideas = { democratic_influence }
+			}	
 		}
 	}
-	
+	focus = {
+		id = SCA_intergrate_Nevada
+		icon = GFX_goal_generic_military_sphere
+		x = 2
+		y = 1
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = {
+			focus = SCA_maintain_the_western_democracies
+		}
+
+		relative_position_id = SCA_maintain_the_western_democracies
+		ai_will_do = { 
+			factor = 1
+		} 
+		completion_reward = {
+             SCA = {
+				create_wargoal= {
+					type = take_state_focus
+					target = SNV
+					generator = 143 50
+				}
+			 }
+			 SNM = {
+				add_relation_modifier = {
+    				target = SCA
+    					modifier = hostile_status 
+				}
+			 }
+			 SAZ = {
+				add_relation_modifier = {
+    				target = SCA
+    					modifier = hostile_status 
+				}
+			 }
+			 SUT = {
+				add_relation_modifier = {
+    				target = SCA
+    					modifier = hostile_status 
+				}
+			 }
+			
+		}
+	}
+	focus = {
+		id = SCA_pact_idaho
+		icon = GFX_goal_generic_military_sphere
+		x = 1
+		y = 1
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = {
+			focus = SCA_intergrate_Nevada
+		}
+		relative_position_id = SCA_intergrate_Nevada
+		ai_will_do = { 
+			factor = 1
+		} 
+		completion_reward = {
+			SCA = {
+				diplomatic_relation = {
+    			country = SID
+    			relation = non_aggression_pact
+    			active = no
+				}
+			}
+		}
+	}
+	focus = {
+		id = SCA_militarise_mormon
+		icon = GFX_goal_generic_military_sphere
+		x = 0
+		y = 1
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = {
+			focus = SCA_pact_idaho
+		}
+		relative_position_id = SCA_pact_idaho
+		ai_will_do = { 
+			factor = 1
+		} 
+		completion_reward = {
+			142 = {
+				set_building_level = {
+    				type = bunker
+    				level = 5
+    				province = {
+        				all_provinces = yes
+        				limit_to_border = yes
+        				level < 5
+					}
+				}
+			}
+    }
+}
+	focus = {
+		id = SCA_develop_las_vegas
+		icon = GFX_goal_generic_military_sphere
+		x = -1
+		y = 1
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = {
+			focus = SCA_intergrate_Nevada
+		}
+
+		relative_position_id = SCA_intergrate_Nevada
+		ai_will_do = { 
+			factor = 1
+		} 
+		completion_reward = {
+			611 = {
+		 add_extra_state_shared_building_slots = 5
+			}
+		}
+	}	
+
+	focus = {
+		id = SCA_support_oregon_war
+		icon = GFX_goal_generic_military_sphere
+		x = 4
+		y = 1
+		cost = 5
+		available_if_capitulated = yes 
+		available = {
+			SOR = {
+			has_defensive_war
+			}
+		}
+		prerequisite = {
+			focus = SCA_maintain_the_western_democracies
+		}
+		relative_position_id = SCA_maintain_the_western_democracies
+		ai_will_do = { 
+			factor = 1
+		} 
+		completion_reward = {
+			SCA = {
+				add_state_core = 617
+				add_state_core = 174
+			}
+			SOR = {
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = 1000
+					producer = SCA
+				}
+			}
+
+		}
+	}
+	focus = {
+		id = SCA_support_oregon
+		icon = GFX_goal_generic_military_sphere
+		x = 1
+		y = 1
+		cost = 5
+		available_if_capitulated = yes 
+		prerequisite = {
+			focus = SCA_support_oregon_war
+		}
+		relative_position_id = SCA_support_oregon_war
+		ai_will_do = { 
+			factor = 1
+		} 
+		completion_reward = {
+			SOR = {
+				set_state_owner = 616
+			}
+		}
+	}
 #Focus
 	focus = { 
 		id = SCA_establish_free_government
 		icon = GFX_goal_unknown
-		x = -1
+		x = -3
 		y = 3
 		cost = 10
 		available_if_capitulated = yes 
@@ -267,52 +429,19 @@ focus_tree = {
 			}	
 		} 
 	}
-#Focus for SCA
-	focus = { 
-		id = SCA_develop_northern_synthetic_rubber
-		icon = GFX_goal_generic_construct_civ_factory
-		x = 0
-		y = 1
-		cost = 10
-		available_if_capitulated = yes 
-				prerequisite = {
-			focus = SCA_extort_the_neighbors
-		} 
-		relative_position_id = SCA_extort_the_neighbors
-		available = {
-			616 = {
-				is_owned_by = SCA
-			}	
-			617 = {
-				is_owned_by = SCA
-			}	
-		}
-		ai_will_do = { 
-			factor = 1
-		} 
-		completion_reward= {
-			SCA = {
-				add_resource= {
-					type = rubber 
-					amount = 8 
-					state = 616
-				}
-				add_resource= {
-					type = rubber 
-					amount = 8 
-					state = 617
-				}
-			}
-		} 
-	} 
 #Focus for SCA_develop_allies_industries_for_protections
 	focus = {
 		id = SCA_develop_allies_industries_for_protections
 		icon = GFX_goal_generic_construct_civ_factory
-		x = 0
+		x = -1
 		y = 1
 		cost = 10
 		available_if_capitulated = yes 
+		available = {
+				SOR = {
+					controls_state = 616
+				}
+		}
 		prerequisite = {
 			focus = SCA_befriend_the_neighbors
 		} 
@@ -330,7 +459,7 @@ focus_tree = {
 				add_equipment_to_stockpile = {
 					type = infantry_equipment
 					amount = 1000
-					producer = JEF
+					producer = SOR
 				}
 			}
 			SWA= {
@@ -339,23 +468,66 @@ focus_tree = {
 					amount = 16 
 					state = 189
 				}
+				give_resource_rights = { 
+					receiver = SCA state = 189 
+					}
 			}
-			JEF= {
+			SOR= {
 				add_resource= {
 					type = rubber 
 					amount = 16 
-					state = 617
+					state = 616
 				}
+				give_resource_rights = { 
+					receiver = SCA state = 616 
+					}
 			}
 
 		} 
 	}
+	focus = {
+		id = SCA_fed_army_revamp
+		icon = GFX_goal_generic_construct_civ_factory
+		x = 1
+		y = 2
+		cost = 10
+		available_if_capitulated = yes 
+		available = {
+			controls_state = 50
+			controls_state = 143
+			date < 1937.01.01
+		}
+		prerequisite = {
+			focus = SCA_befriend_the_neighbors
+			focus = SCA_develop_las_vegas
+		} 
+		ai_will_do = { 
+			factor = 1
+		}
+		relative_position_id = SCA_befriend_the_neighbors
+		completion_reward= {
+			SCA = {
+				add_ideas = {
+					SCA_lackluster_military_complex_2
+				}
+			}
+		}
+	}	
+	#
+	#
+	#
+	#
+	#
+	#
+	#
+	#
+	#
 # Mexican intervention focuses start here
 	focus = {
 		id = SCA_the_mexican_question
 		icon = focus_mexico_hat
-		x = 6
-		y = 5
+		x = -1
+		y = 4
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = {
@@ -458,7 +630,7 @@ focus_tree = {
 		completion_reward= {
 			SCA = {
 				add_popularity = {
-					ideology = fascism
+					ideology = communism
 					popularity = 0.2
 				}
 			}
@@ -737,7 +909,7 @@ focus_tree = {
 		completion_reward = {
 			SCA = {
 				add_popularity = {
-					ideology = communism
+					ideology = fascism
 					popularity = 0.2
 				}
 			}
