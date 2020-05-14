@@ -1,6 +1,6 @@
 name="North America Divided (DEV VERSION)"
 user_dir = "nadivided"
-path="mod/nadivided/"
+path="mod/nadivided-dev/"
 replace_path="common/abilities"
 replace_path="common/achievements.txt"
 replace_path="common/ai_equipment"

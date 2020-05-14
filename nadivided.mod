@@ -1,4 +1,4 @@
-name="North America Divided (DEV VERSION)"
+name="North America Divided"
 user_dir = "nadivided"
 path="mod/nadivided/"
 replace_path="common/abilities"
