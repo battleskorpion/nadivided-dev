@@ -221,6 +221,16 @@ country_event = {
                     id = cartel.10
                 }
             }
+            10 = {
+                country_event = [
+                    id = cartel.22
+                ]
+            }
+            10 = {
+                country_event = {
+                    id = cartel.23
+                }
+            }
         }
     }
 }
@@ -1143,8 +1153,8 @@ country_event = {
             tag = MNA
         }
         is_in_faction = yes
-        NOT = {
-            OR = {
+        OR = {
+            NOT = {
                 country_exists = MDC
                 has_war_with = MDC
             }
@@ -1176,6 +1186,7 @@ country_event = {
         }
     }
 }
+
 country_event = {
     id = cartel.21
     hidden = yes
@@ -1186,5 +1197,71 @@ country_event = {
                 id = cartel.0
             }
         }
+    }
+}
+
+country_event = {
+    id = cartel.22
+    title = cartel.22.t
+    desc = cartel.22.d
+    #picture = GFX_
+    
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = {
+        name = cartel.22.a
+        every_owned_state = {
+            limit = {
+                has_state_flag = MDC_high_comp
+            }
+            clr_state_flag = MDC_high_comp
+            set_state_flag = MDC_low_comp
+        }
+        every_owned_state = {
+            limit = {
+                has_state_flag = MDC_low_comp
+            }
+            clr_state_flag = MDC_low_comp
+            set_state_flag = MDC_near_revolt
+        }
+    }
+}
+country_event = {
+    id = cartel.23
+    title = cartel.23.t
+    desc = cartel.23.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = {
+        name = cartel.23.a
+        ai_chance = {
+            factor = 80
+            modifier = {
+                factor = 1.25
+                OR = {
+                    has_political_power > 100
+                    has_stability < 0.4
+                }
+            }
+        }
+        add_political_power = -50
+    }
+    option = {
+        name = cartel.23.b
+        ai_chance = {
+            factor = 20
+            modifier = {
+                factor = 0
+                OR = {
+                    has_political_power > 100
+                    has_stability < 0.4
+                }
+            }
+        }
+        add_stability = -0.05
     }
 }
