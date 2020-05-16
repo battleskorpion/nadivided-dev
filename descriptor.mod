@@ -51,5 +51,5 @@ tags={
 }
 name="North America Divided (DEV VERSION)"
 supported_version="1.9.*"
-path="C:/Users/DrKillem/Documents/Paradox Interactive/Hearts of Iron IV/mod/nadivided-dev"
+path="C:/Users/Skorpion/Documents/Paradox Interactive/Hearts of Iron IV/mod/nadivided-dev"
 remote_file_id="2095618478"
