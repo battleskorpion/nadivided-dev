@@ -21,7 +21,7 @@ MDC_unstable_country = {
         }
         cancel_if_not_visible = yes
         is_good = yes
-        days_mission_timeout = 55
+        days_mission_timeout = 70
         fire_only_once = no
         timeout_effect = {
             country_event = {
@@ -987,11 +987,77 @@ MDC_unstable_country = {
             clr_country_flag = MDC_already_suppressing_revolt
         }
     }
+    MDC_illeviate_taxes = {
+        icon = GFX_
+        cost = 0
+        days_remove = 21
+        ai_will_do = {
+            base = 200
+            modifier = {
+                factor = 0
+                check_variable = {
+                    var = MDC_currency
+                    value = 10
+                    compare = less_than
+                }
+            }
+        }
+        visible = {
+            any_owned_state = {
+                OR = {
+                    has_state_flag = MDC_high_comp
+                    has_state_flag = MDC_low_comp
+                    has_state_flag = MDC_near_revolt
+                }
+            }
+            has_variable = MDC_currency
+        }
+        available = {
+            tag = MDC
+            NOT = {
+                has_country_flag = MDC_already_illeviating_taxes
+            }
+            has_active_mission = MDC_tax_collection
+        }
+        complete_effect = {
+            random_owned_state = {
+                limit = {
+                    OR = {
+                        has_state_flag = MDC_low_comp
+                        has_state_flag = MDC_near_revolt
+                    }
+                }
+                if = {
+                    limit = {
+                        has_state_flag = MDC_low_comp
+                    }
+                    clr_state_flag = MDC_low_comp
+                    set_state_flag = MDC_high_comp
+                }
+                if = {
+                    limit = {
+                        has_state_flag = MDC_near_revolt
+                    }
+                    clr_state_flag = MDC_near_revolt
+                    set_state_flag = MDC_low_comp
+                }
+                custom_effect_tooltip = lower_resisance_tt
+            }
+            add_days_mission_timeout = {
+                mission = MDC_tax_collection
+                days = 14
+            }
+            set_country_flag = MDC_already_illeviating_taxes
+        }
+        remove_effect = {
+            clr_country_flag = MDC_already_illeviating_taxes
+        }
+    }
 }
 
 MDC_unstable_economy = {
     MDC_money_and_inventory_check = {
-        icon = #
+        icon = GFX_
 
         available = {
             tag = MDC
@@ -1002,7 +1068,61 @@ MDC_unstable_economy = {
         }
         fire_only_once = no
         complete_effect = {
-            
+            custom_effect_tooltip = MDC_money_check_tt  #[?MDC_currency]
+        }
+    }
+    MDC_tax_collection = {
+        icon = #
+        cost = 0
+        available = {
+			hidden_trigger = { always = no }
+		}
+        visible = {
+            tag = MDC
+            has_variable = MDC_currency
+        }
+        activation = {
+            has_variable = MDC_currency
+        }
+        is_good = yes
+        fire_only_once = no
+        days_mission_timeout = 15
+        cancel_if_not_visible = yes
+        timeout_effect = {
+            if = {
+                limit = {
+                    has_idea = MDC_shaky_economy
+                }
+                add_to_variable = {
+                    var = MDC_currency
+                    value = 2
+                }
+            }
+            activate_mission = MDC_send_tax_collectors
+        }
+    }
+    MDC_send_tax_collectors = {
+        icon = GFX_
+        cost = 0
+        available = {
+            hidden_trigger = { always = no }
+        }
+        visible = {
+            tag = MDC
+            has_variable = MDC_currency
+        }
+        available = {
+            tag = MDC
+            NOT = {
+                has_active_mission = MDC_tax_collection
+            }
+        }
+        
+        is_good = yes
+        fire_only_once = no
+        days_mission_timeout = 15
+        timeout_effect = {
+            activate_mission = MDC_tax_collection
         }
     }
 }
