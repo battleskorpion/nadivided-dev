@@ -2050,12 +2050,30 @@ focus_tree = {
 	}
 #
 	focus = {
-		id = GEN_take_out_fascists
-		icon = GFX_focus_generic_anti_fascist_diplomacy
+		id = GEN_call_workers_to_arms
+		icon = GFX_focus_YUG_pan_slavic_congress
 		prerequisite = { focus = GEN_strengthen_unions}
 		x = 20
 		y = 5
 		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = militarism_focus
+		}
+	}
+#
+	focus = {
+		id = GEN_take_out_fascists
+		icon = GFX_focus_generic_anti_fascist_diplomacy
+		prerequisite = { focus = GEN_call_workers_to_arms}
+		x = 20
+		y = 6
+		cost = 14
 		ai_will_do = {
 			factor = 1
 		}
@@ -2075,24 +2093,6 @@ focus_tree = {
 					}
 				}
 			}
-		}
-	}
-#
-	focus = {
-		id = GEN_call_workers_to_arms
-		icon = GFX_focus_YUG_pan_slavic_congress
-		prerequisite = { focus = GEN_take_out_fascists}
-		x = 20
-		y = 6
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_ideas = militarism_focus
 		}
 	}
 #
@@ -2213,25 +2213,67 @@ focus_tree = {
 		prerequisite = { focus = GEN_nondiscriminate_recruitment}
 		x = 22
 		y = 6
-		cost = 10
+		cost = 8
+		#cost = 1
 		ai_will_do = {
 			factor = 1
 		}
 
 		available_if_capitulated = yes
 
-		completion_reward = {
-			custom_effect_tooltip = take_out_countries_tt
+		select_effect = {
 			random_neighbor_country = {
 				limit = {
 					has_government = communism
-				}
-				ROOT = {
-					declare_war_on = {
-						target = PREV
-						type = annex_everything
+					ROOT = {
+						NOT = {
+							has_war_with = PREV
+						}
 					}
 				}
+				ROOT = {
+					set_variable = {
+						generic_focus_purge_communists_target = PREV
+					}
+				}
+			}
+			generic_focus_purge_communists_target = {
+				country_event = {
+					id = war_justification.217
+					days = 1
+					#mean_time_to_happen = 1
+				}
+				#not confirmed working? 
+			}
+		}
+		
+		cancel = {
+			NOT = {
+				country_exists = generic_focus_purge_communists_target
+			}
+		}
+		
+		#will_lead_to_war_with = generic_focus_purge_communists_target
+		# sadly not working, testing shows it only wants to work with a definitive tag idk why. this var becomes a tag.
+		
+		completion_reward = {
+			#custom_effect_tooltip = take_out_countries_tt
+			ROOT = {
+				limit = {
+					generic_focus_purge_communists_target = {
+						AND = {
+							has_government = communism
+							NOT = {
+								has_war_with = ROOT
+							}
+						}
+					}
+				}
+				declare_war_on = {
+					target = generic_focus_purge_communists_target
+					type = annex_everything
+				}
+				clear_variable = generic_focus_purge_communists_target
 			}
 		}
 	}
