@@ -442,7 +442,7 @@ focus_tree = {
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SMA_extendprohibition focus = SMA_leniency } 
-		available = { date > 1940.1.1 }
+		available = { date > 1939.10.1 }
 		
 		ai_will_do = { 
 			factor = 1
@@ -1238,25 +1238,569 @@ focus_tree = {
 			}
 		} 
 	} 
+	
+##########################	
+######## FASCISM #########
+##########################
 
-	#Focus for Minutemen Guards
+	#Focus for Minutemen Militia
 	focus = { 
-		id = SMA_minutemenguards
+		id = SMA_minutemenmilitia
 		icon = GFX_focus_eng_special_air_service
-		x = 78
+		x = 79
 		y = 1
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SMA_bytheswordweseekpeace } 
 		completion_reward = { 
-		
 			add_stability= -0.10
+			army_experience = 50
+			add_timed_idea = {
+				idea = SMA_promote_nat_cause_idea
+				days = 180
+			}
+			
+		} 
+	} 
+	
+	#assassinate leader
+	focus = { 
+		id = SMA_assassinate_leader
+		#loc change based off of current leader??? i know its possible i think
+		icon = GFX_focus_eng_special_air_service
+		x = 79
+		y = 2
+		cost = 10
+		available_if_capitulated = yes 
+		dynamic = yes #fluid localization
+		prerequisite = { focus = SMA_minutemenmilitia } 
+		prerequisite = { focus = SMA_promote_nationalist_cause }
+		completion_reward = { 
+			add_stability= -0.10
+			add_timed_idea = {
+				idea = mass_leader_assassinated_fascism
+				days = 30
+			}
+			#add "no leader" leader / temporary gov etc...
+		} 
+	}
+	
+	#march on Boston
+	focus = { 
+		id = SMA_march_on_boston
+		#loc change based off of current leader??? i know its possible i think
+		icon = GFX_focus_eng_special_air_service
+		x = 79
+		y = 3
+		cost = 3
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_assassinate_leader } 
+		
+		#must have over 40 percent support,
+		#will cause some unrest if between 40 -60 percent support but still possible, 
+		# - alot of stability, will be able to be regained 
+		# later somehow -> minutemen Militia activities???
+		# under 40 will cause a coup / civil war, TELL THE PLAYER!!!
+			
+		completion_reward = { 
+			set_rule = {
+				can_create_factions = yes
+			}
+			if = {
+				limit = {
+					fascism > 0.6
+				}
+				add_stability = -0.05
+				set_politics = {
+					ruling_party = fascism
+				}
+			} 
+			else_if = {
+				limit = {
+					fascism > 0.4
+				}
+				add_stability = -0.10
+				set_politics = {
+					ruling_party = fascism
+				}
+				add_ideas = {
+					mass_political_unrest_fascism
+					#tell player this must be removed through restructuring the gov. 
+				}
+			} 
+			else = {
+				set_temp_variable = { mass_stability = stability }
+				divide_temp_variable = {mass_stability = 2}
+				subtract_from_temp_variable = {mass_stability = 0.01}
+				multiply_temp_variable = {mass_stability = -1}
+				
+				clamp_temp_variable = {
+					var = mass_stability
+					max = -0.15
+				}
+				#under about 30 percent stability with this it will subtract at least 15. higher stability = more lost. 
+				add_stability = mass_stability
+				
+				#divide_temp_variable = {mass_stability = 100}
+				#add_to_temp_variable = {mass_stability = 0.25}	
+				start_civil_war = {
+					ruling_party = fascism
+					ideology = ROOT
+					#size = mass_stability
+					only_own_territory = no
+					capital = 5
+				}
+			}
+		}
+	}
+	
+	# restructure the government (nationalist)
+	focus = { 
+		id = SMA_restructure_government_fascism
+		icon = GFX_focus_eng_special_air_service
+		x = 79
+		y = 4
+		cost = 13
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_march_on_boston } 
+		
+		cancelable = no
+		select_effect = {
+			add_timed_idea = {
+				idea = mass_restructure_government
+				days = 90
+				#tell the player about this they wont know theyll get this :( paradoxxxxxxxx
+			}
+		}
+		
+		completion_reward = { 
+			add_stability = 0.10
+			add_political_power = 150
+			if = {
+				limit = {
+					has_idea = mass_political_unrest_fascism
+				}
+				remove_ideas = mass_political_unrest_fascism
+			}
+			add_timed_idea = {
+				idea = mass_restructured_government
+				days = 180
+			}
+		} 
+	}
+	
+	# promote the nationalist cause
+	focus = { 
+		id = SMA_promote_nationalist_cause
+		icon = GFX_focus_eng_special_air_service
+		x = 77
+		y = 1
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_bytheswordweseekpeace } 
+		completion_reward = { 
+			add_political_power = -50
 			add_popularity= { 
 				ideology = fascism 
-				popularity = 0.1
+				popularity = 0.05
+			}
+			add_timed_idea= {
+				idea = SMA_promote_nat_cause_idea
+				days = 180
 			}
 		} 
 	} 
+	
+	#greater ambitions
+	focus = { 
+		id = SMA_greater_ambitions
+		icon = GFX_focus_eng_special_air_service
+		x = 77
+		y = 2
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_promote_nationalist_cause }
+		prerequisite = { focus = SMA_minutemenmilitia }		
+		completion_reward = { 
+			add_timed_idea= {
+				idea = mass_greater_ambitions_fascism
+				days = 180
+			}
+		} 
+	} 
+	
+	#minutemen national guard
+	focus = { 
+		id = SMA_minutemen_national_guard
+		icon = GFX_focus_eng_special_air_service
+		x = 74
+		y = 3
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_greater_ambitions } 
+		mutually_exclusive = { focus = SMA_minutemen_army } 
+		
+		completion_reward = { 
+			add_stability = -0.05
+			add_timed_idea= {
+				idea = sma_fascist_nat_guard_timed
+				days = 180
+			}
+			add_ideas = sma_fascist_nat_guard
+		} 
+	}
+	
+	#A Minutemen Army
+	focus = { 
+		id = SMA_minutemen_army
+		icon = GFX_focus_eng_special_air_service
+		x = 76
+		y = 3
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_greater_ambitions }
+		mutually_exclusive = { focus = SMA_minutemen_national_guard }
+		
+		completion_reward = { 
+			add_war_support = 0.10
+			add_stability = -0.05
+			add_ideas = {
+				mass_minutemen_army_fascism#conscription_factor = 0.10 
+			}
+		} 
+	}
+	
+	#Reclaim Bristol
+	focus = { 
+		id = SMA_reclaim_bristol_fascism
+		icon = GFX_focus_eng_special_air_service
+		x = 77
+		y = 5
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_greater_ambitions }
+		prerequisite = { focus = SMA_restructure_government_fascism }	
+
+		bypass = {
+			AND = {
+				OR = {
+					SRI = {
+						NOT = {
+							any_state = {
+								is_new_england_state = yes
+							}
+						}
+					}
+					NOT = {
+						country_exists = SRI
+					}
+				}
+				has_government = fascism
+			}
+		}
+		completion_reward = { 
+			#war with RI
+			if = {
+				limit = {
+					SMA = {
+						NOT = {
+							is_in_faction_with = SRI 
+						}
+					}
+				}
+				declare_war_on = {
+					target = SRI
+					type = annex_everything
+				}
+			}
+			add_war_support = 0.03
+			
+		} 
+	} 
+	
+	#Secure The Connecticut River Valley
+	focus = { 
+		id = SMA_secure_connecticut_river_valley
+		icon = GFX_focus_eng_special_air_service
+		x = 77
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_reclaim_bristol_fascism }	
+		
+		bypass = {
+			AND = {
+				OR = {
+					SCT = {
+						NOT = {
+							any_state = {
+								is_new_england_state = yes
+							}
+						}
+					}
+					NOT = {
+						country_exists = SCT
+					}
+				}
+				OR = {
+					SVT = {
+						NOT = {
+							any_state = {
+								is_new_england_state = yes
+							}
+						}
+					}
+					NOT = {
+						country_exists = SVT
+					}
+				}
+				OR = {
+					SNH = {
+						NOT = {
+							any_state = {
+								is_new_england_state = yes
+							}
+						}
+					}
+					NOT = {
+						country_exists = SNH
+					}
+				}
+				has_government = fascism
+			}
+		}
+		
+		completion_reward = { 
+			#war with Connecticut, Vermont, New Hampshire) 
+			#(Maine will be able to step in via event - nh will ask them to if NH wishes to and etc.) 
+			if = {
+				limit = {
+					SMA = {
+						NOT = {
+							is_in_faction_with = SCT 
+						}
+					}
+				}
+				declare_war_on = {
+					target = SCT
+					type = annex_everything
+				}
+			}
+			if = {
+				limit = {
+					SMA = {
+						NOT = {
+							is_in_faction_with = SVT 
+						}
+					}
+				}
+				declare_war_on = {
+					target = SVT
+					type = annex_everything
+				}
+			}
+			if = {
+				limit = {
+					SMA = {
+						NOT = {
+							is_in_faction_with = SNH 
+						}
+					}
+				}
+				declare_war_on = {
+					target = SNH
+					type = annex_everything
+				}
+			}
+		} 
+	} 
+	
+	#The New England Empire
+	focus = { 
+		id = SMA_new_england_empire
+		icon = GFX_focus_eng_special_air_service
+		x = 77
+		y = 7
+		cost = 13
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_secure_connecticut_river_valley }
+
+		bypass = {
+			AND = {
+				controls_new_england_trigger = yes
+				has_government = fascism
+			}
+		}
+		
+		completion_reward = { 
+			# If not all of new England is had, and is not puppet part, 
+			# or ME doesn't join etc. 
+			# (Otherwise will be bypassed when other things done) 
+			# (will also give wargoal on Nova Scotia assuming not in faction and stuff) 
+			if = {
+				limit = {
+					controls_new_england_trigger = no 
+				}
+				if = {
+					limit = { 201 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } } 
+					add_state_claim = 201
+				}
+				if = {
+					limit = { 249 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }
+					add_state_claim = 249
+				}
+				if = {
+					limit = { 248 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 248
+				}
+				if = {
+					limit = { 247 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 247
+				}
+				if = {
+					limit = { 246 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 246
+				}
+				if = {
+					limit = { 245 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 245
+				}	
+				if = {
+					limit = { 10 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 10
+				}	
+				if = {
+					limit = { 6 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 6
+				}	
+				if = {
+					limit = { 242 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 242
+				}	
+				if = {
+					limit = { 422 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 422
+				}	
+				if = {
+					limit = { 421 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 421
+				}	
+				if = {
+					limit = { 7 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 7
+				}	
+				if = {
+					limit = { 1 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 1
+				}	
+				if = {
+					limit = { 2 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 2
+				}	
+				if = {
+					limit = { 3 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 3
+				}	
+				if = {
+					limit = { 4 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 4
+				}	
+				if = {
+					limit = { 5 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 5
+				}	
+				if = {
+					limit = { 199 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 199
+				}		
+				if = {
+					limit = { 200 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 200
+				}	
+				if = {
+					limit = { 9 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 9
+				}	
+				if = {
+					limit = { 8 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 8
+				}	
+				if = {
+					limit = { 210 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 210
+				}	
+				if = {
+					limit = { 211 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 211
+				}	
+				if = {
+					limit = { 185 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 185
+				}	
+				if = {
+					limit = { 326 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 326
+				}	
+				if = {
+					limit = { 324 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 324
+				}	
+				if = {
+					limit = { 417 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 417
+				}	
+				if = {
+					limit = { 186 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 186
+				}	
+				if = {
+					limit = { 327 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 327
+				}	
+				if = {
+					limit = { 325 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 325
+				}	
+				if = {
+					limit = { 329 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 329
+				}	
+				if = {
+					limit = { 418 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 418
+				}	
+				if = {
+					limit = { 419 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 419
+				}	
+				if = {
+					limit = { 420 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 420
+				}	
+				if = {
+					limit = { 328 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 328
+				}	
+				if = {
+					limit = { 416 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 416
+				}	
+				if = {
+					limit = { 415 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 415
+				}	
+				add_political_power = -40				
+				add_war_support = 0.05
+			}
+			add_named_threat = { threat = 1 name = SMA_claim_new_england_empire }
+			add_political_power = 75
+			add_stability = 0.12
+		} 
+	}
+	
+##########################	
+####### DEMOCRACY ########
+##########################
 
 	#Focus for Continue with Curley
 	focus = { 
