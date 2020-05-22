@@ -1732,7 +1732,7 @@ focus_tree = {
 		prerequisite = { focus = SFL_let_democracy_win }
 		
 		completion_reward = { 
-
+			add_war_support = 0.10
 		} 
 	}
 	
@@ -1785,8 +1785,51 @@ focus_tree = {
 		prerequisite = { focus = SFL_invite_fascist_leader_speech }
 		
 		completion_reward = { 
-
-		} 
+			set_rule = {
+				can_create_factions = yes
+			}
+			if = {
+				limit = {
+					fascism > 0.6
+				}
+				add_stability = -0.05
+				set_politics = {
+					ruling_party = fascism
+				}
+			} 
+			else_if = {
+				limit = {
+					fascism > 0.4
+				}
+				add_stability = -0.10
+				set_politics = {
+					ruling_party = fascism
+				}
+				#add_ideas = {
+				#	mass_political_unrest_fascism
+				#	#tell player this must be removed through restructuring the gov. 
+				#}
+			} 
+			else = {
+				set_temp_variable = { sfl_stability = stability }
+				divide_temp_variable = {sfl_stability = 2}
+				subtract_from_temp_variable = {sfl_stability = 0.01}
+				multiply_temp_variable = {sfl_stability = -1}
+				
+				clamp_temp_variable = {
+					var = sfl_stability
+					max = -0.15
+				}
+				#under about 30 percent stability with this it will subtract at least 15. higher stability = more lost. 
+				add_stability = sfl_stability
+				
+				#divide_temp_variable = {sfl_stability = 100}
+				#add_to_temp_variable = {sfl_stability = 0.25}	
+				set_politics = {
+					ruling_party = fascism
+				}
+			}
+		}
 	}
 	
 	#industralize north florida
@@ -1800,9 +1843,65 @@ focus_tree = {
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_march_on_tallahassee }
 		
-		completion_reward = { 
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = SFL_construction_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = industrial_complex
+						size < 2
+						include_locked = yes
+					}					
+				}
+			}
+		}
 
-		} 
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}			
+		}
+		completion_reward = {
+			15 = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				
+				set_building_level = {
+					type = infrastructure
+					level = 10
+					instant_build = yes
+				}
+			}
+		}
 	}
 	
 	#southern unity
