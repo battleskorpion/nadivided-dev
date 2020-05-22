@@ -291,6 +291,19 @@ on_actions = {
 	#Not run on a specific country.
 	on_startup = {
 		effect = {
+			SFL = {
+				if = {
+					limit = {
+						#AND = {
+							has_focus_tree = florida_focus
+							#NOT = {
+							#	has_country_flag = invite_fascist_leader_speech_leader_country_selected_flag
+							#}
+						#}
+					}
+					SFL_fascist_leader_target_country_effect = yes
+				}
+			}
 		}
 	}
 	
@@ -302,25 +315,7 @@ on_actions = {
 	#ROOT is new controller #FROM is old controller #FROM.FROM is state ID
 	
 	on_unit_leader_level_up = {
-		effect = {
-			SFL = {
-				if = {
-					limit = {
-						has_focus_tree = florida_focus
-					}
-					any_country = { 
-						if = {
-							limit = {
-								has_government = fascism
-							}	
-						}
-						SFL = {
-							set_variable = { SFL_invite_fascist_leader_speech_leader_loc = PREV }
-						}
-					}
-				}
-			}
-		}
+		
 	}
 	
 	# From is owner country
@@ -422,6 +417,20 @@ on_actions = {
 				set_temp_variable = { new_compliance = compliance }
 				multiply_temp_variable = { new_compliance = 0.5 }
 				set_compliance = new_compliance
+			}
+			
+			#added!
+			if = {
+				limit = {
+					AND = {
+						has_country_flag = invite_fascist_leader_speech_leader_target_flag
+						NOT = {
+							has_government = fascism
+						}
+					}
+				}
+				clr_country_flag = invite_fascist_leader_speech_leader_target_flag
+				SFL_fascist_leader_target_country_effect = yes
 			}
 		}
 	}
