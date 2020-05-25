@@ -357,6 +357,54 @@ focus_tree = {
         }
     }
 #######################################
+##############Democratize##############
+#######################################
+    focus = {
+        id = MDC_democratize_the_country
+        icon = GFX_
+        prerequisite = { focus = MDC_finish_the_modifications }
+        mutually_exclusive = { focus = MDC_a_cult_for_good}
+        available = {
+            has_completed_focus = MDC_restrict_the_cartels
+        }
+        x = -5
+        y = 1
+        relative_position_id = MDC_finish_the_modifications
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_popularity = {
+                ideology = democratic
+                popularity = .20
+            }
+        }
+    }
+#######################################
+#############Cult for Good#############
+#######################################
+    focus = {
+        id = MDC_a_cult_for_good
+        icon = GFX_
+        prerequisite = { focus = MDC_finish_the_modifications}
+        mutually_exclusive = { focus = MDC_democratize_the_country}
+        x = 5
+        y = 1
+        relative_position_id = MDC_finish_the_modifications
+        cost = 10
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_popularity = {
+                ideology = neutrality
+                popularity = .20
+            }
+        }
+    }
+#######################################
 ########Continue the Experiment########
 #######################################
     focus = {
@@ -377,12 +425,115 @@ focus_tree = {
             custom_effect_tooltip = MDC_gulf_cartel_available_tt
         }
     }
+    focus = {
+        id = MDC_the_personality_cult
+        icon = GFX_
+    }
+    focus = {
+        id = MDC_the_tamaulipas_acquisition
+        icon = GFX_
+        prerequisite = { focus = MDC_continue_the_experiment}
+        available = {
+            has_army_manpower = {
+                size > 120000
+            }
+            is_puppet = no
+            country_exists = MTA
+            NOT = {
+                has_war_with = MTA
+            }
+        }
+        cancel = {
+            has_war_with = MTA
+            is_subject = yes
+        }
+        x = 1
+        y = 2
+        relative_position_id = MDC_continue_the_experiment
+        cost = 10
+        ai_will_do = {
+            factor = 10
+            modifier = {
+                factor = 0
+                date < 1937.3.1
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            army_experience = 25
+            add_named_threat = { threat = 5 name = MDC_tamaulipas_acquisition}
+            if = {
+                limit = {
+                    MTA = {
+                        OR = {
+                            owns_state = 559
+                            owns_state = 589
+                            owns_state = 591
+                            owns_state = 592
+                        }
+                    }
+                }
+                MTA = {
+                    country_event = {
+                        id = cartel.35
+                    }
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_create_escort_divisions
+        icon = GFX_
+        prerequisite = { focus = MDC_the_tamaulipas_acquisition}
+        available = {
+            owns_state = 559
+            owns_state = 589
+            owns_state = 591
+            owns_state = 592
+        }
+        x = 2
+        y = 1
+        relative_position_id = MDC_the_tamaulipas_acquisition
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                manpower_per_military_factory < 5000
+            }
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_tech = bicycle_infantry1
+                    }
+                }
+                set_technology = bicycle_infantry1
+            }
+            add_tech_bonus = {
+                bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = bicycle_tech
+            }
+            add_ideas = MDC_escort_divisions
+        }
+    }
+    focus = {
+        id = MDC_
+    }
 #######################################
 #########Uncategorized economy#########
 #######################################
     focus = {
         id = MDC_rebuild_the_economy
-        icon = GFX_
+        icon = GFX_focus_industry
         prerequisite = { focus = MDC_continue_the_experiment focus = MDC_finish_the_modifications}
         x = 18
         y = 3
@@ -433,7 +584,7 @@ focus_tree = {
     }
     focus = {
         id = MDC_produce_agriculture
-        icon = GFX_
+        icon = GFX_focus_generic_wheat
         prerequisite = { focus = MDC_rebuild_the_economy}
         available = {
             has_completed_focus = MDC_state_owned_industry
@@ -556,7 +707,7 @@ focus_tree = {
     }
     focus = {
         id = MDC_invest_in_civilian_infrastructure
-        icon = GFX_
+        icon = GFX_focus_generic_industry_1
         prerequisite = { focus = MDC_rebuild_the_economy}
         available = {
             custom_trigger_tooltip = {
@@ -603,7 +754,7 @@ focus_tree = {
     }
     focus = {
         id = MDC_invest_in_civilian_economy
-        icon = GFX_
+        icon = GFX_focus_generic_industry_2
         prerequisite = { focus = MDC_invest_in_civilian_infrastructure}
         available = {
             custom_trigger_tooltip = {
@@ -640,7 +791,7 @@ focus_tree = {
     }
     focus = {
         id = MDC_an_economy_to_last
-        icon = GFX_
+        icon = GFX_focus_generic_industry_3
         prerequisite = { focus = MDC_invest_in_civilian_economy}
         available = {
             custom_trigger_tooltip = {
