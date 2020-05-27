@@ -1643,7 +1643,7 @@ country_event = {
                 }
             }
             modifier = {
-                factor = 0.67
+                add = -25 #factor = 0.67
                 MTA = {
                     num_of_controlled_states > 4
                 }
@@ -1692,6 +1692,154 @@ country_event = {
                 num_of_controlled_states < 5
             }
             add_political_power = -50
+        }
+    }
+}
+
+country_event = {
+    id = cartel.36
+    title = cartel.36.t
+    desc = cartel.36.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = {
+        name = cartel.36.a
+        ai_chance = {
+            factor = 50
+            modifier = {
+                add = 40
+                num_of_controlled_states < 4
+            }
+            modifier = {
+                factor = 0
+                num_of_controlled_states > 8
+            }
+        }
+        MDC = {
+            add_state_claim = 468
+            add_state_claim = 566
+            add_state_claim = 568
+        }
+        if = {
+            limit = {
+                has_dlc = "Together for Victory"
+            }
+            MDC = {
+                set_autonomy = {
+                    target = MYU
+                    autonomy_state = autonomy_integrated_puppet
+                }
+            }
+        }
+        else_if = {
+            limit = {
+                NOT = {
+                    has_dlc = "Together for Victory"
+                }
+            }
+            MDC = {
+                puppet = MYU
+            }
+        }
+    }
+    option = {
+        name = cartel.36.b
+        ai_chance = {
+            factor = 50
+            modifier = {
+                factor = 0.1
+                num_of_controlled_states < 4
+            }
+            modifier = {
+                factor = 2
+                num_of_controlled_states > 8
+            }
+        }
+        MDC = {
+            create_wargoal = {
+                type = puppet_wargoal_focus
+                target = MYU
+            }
+            add_state_claim = 468
+            add_state_claim = 566
+            add_state_claim = 568
+        }
+    }
+}
+
+country_event = {
+    id = cartel.37
+    title = cartel.37.t
+    desc = cartel.37.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = {
+        name = cartel.37.a
+        ai_chance = {
+            factor = 75
+        }
+        add_state_core = 59
+        if = {
+            limit = {
+                MCM = {
+                    num_of_controlled_states < 2
+                }
+            }
+            annex_country = {
+                target = MCM
+                transfer_troops = yes
+            }
+        }
+        else_if = {
+            limit = {
+                MCM = {
+                    OR = {
+                        num_of_controlled_states > 1
+                        is_ai = no
+                    }
+                }
+            }
+            declare_war_on = {
+                target = MCM
+                type = annex_everything
+            }
+        }
+    }
+    option = {
+        name = cartel.37.b
+        ai_chance = {
+            factor = 24
+        }
+        add_political_power = 25
+    }
+    option = {
+        name = cartel.37.c
+        ai_chance = {
+            factor = 1
+        }
+        add_stability = 0.05
+        if = {
+            limit = {
+                has_dlc = "Together for Victory"
+            }
+            set_autonomy = {
+                target = MCM
+                autonomy_state = autonomy_free
+            }
+        }
+        else_if = {
+            limit = {
+                NOT = {
+                    has_dlc = "Together for Victory"
+                }
+            }
+            end_puppet = MCM
         }
     }
 }

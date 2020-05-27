@@ -458,7 +458,7 @@ focus_tree = {
         prerequisite = { focus = MDC_continue_the_experiment}
         available = {
             has_army_manpower = {
-                size > 120000
+                size > 200000
             }
             is_puppet = no
             country_exists = MTA
@@ -504,6 +504,152 @@ focus_tree = {
                     }
                 }
             }
+            if = {
+                limit = {
+                    MTA = {
+                        NOT = {
+                            owns_state = 559
+                        }
+                    }
+                }
+                add_state_core = 559
+            }
+            if = {
+                limit = {
+                    MTA = {
+                        NOT = {
+                            owns_state = 589
+                        }
+                    }
+                }
+                add_state_core = 589
+            }
+            if = {
+                limit = {
+                    MTA = {
+                        NOT = {
+                            owns_state = 591
+                        }
+                    }
+                }
+                add_state_core = 591
+            }
+            if = {
+                limit = {
+                    MTA = {
+                        NOT = {
+                            owns_state = 592
+                        }
+                    }
+                }
+                add_state_core = 592
+            }
+        }
+    }
+    focus = {
+        id = MDC_demand_the_yucatan
+        icon = GFX_
+        prerequisite = { focus = MDC_the_tamaulipas_acquisition}
+        prerequisite = { focus = MDC_expand_the_gulf_fleet}
+        available = {
+            has_army_manpower = {
+                size > 250000
+            }
+            is_puppet = no
+            country_exists = MYU
+            NOT = {
+                has_war_with = MYU
+            }
+        }
+        cancel = {
+            has_war_with = MYU
+            is_subject = yes
+        }
+        x = -2
+        y = 2
+        relative_position_id = MDC_the_tamaulipas_acquisition
+        cost = 10
+        ai_will_do = {
+            factor = 10
+            modifier = {
+                factor = 0
+                OR = {
+                    date > 1938.3.1
+                    has_war = yes
+                }
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            if = {
+                limit = {
+                    AND = {
+                        country_exists = MYU
+                        OR = {
+                            owns_state = 468
+                            owns_state = 566
+                            owns_state = 568
+                        }
+                    }
+                }
+                MYU = {
+                    country_event = {
+                        id = cartel.36
+                    }
+                }
+            }
+            else = {
+                add_state_claim = 468
+                add_state_claim = 566
+                add_state_claim = 568
+            }
+        }
+    }
+    focus = {
+        id = MDC_the_colima_question
+        icon = GFX_
+        prerequisite = { focus = MDC_the_tamaulipas_acquisition }
+        available = {
+            country_exists = MCM
+            is_puppet = no
+            MCM = {
+                owns_state = 59
+            }
+        }
+        cancel = {
+            NOT = {
+                country_exists = MCM
+            }
+            is_subject = yes
+        }
+        bypass = {
+            OR = {
+                NOT = {
+                    country_exists = MCM
+                }
+                owns_state = 59
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = MDC_the_tamaulipas_acquisition
+        cost = 10
+        ai_will_do = {
+            factor = 10
+            modifier = {
+                factor = 0
+                date > 1938.1.1
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            country_event = {
+                id = cartel.37
+            }
         }
     }
     focus = {
@@ -531,14 +677,14 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_RESEARCH }
 
         completion_reward = {
-            if = {
-                limit = {
-                    NOT = {
-                        has_tech = bicycle_infantry1
-                    }
-                }
-                set_technology = bicycle_infantry1
-            }
+            #if = {
+            #    limit = {
+            #        NOT = {
+            #            has_tech = bicycle_infantry1
+            #        }
+            #    }
+            #    set_technology = bicycle_infantry1
+            #}
             add_tech_bonus = {
                 bonus = 1.0
 				ahead_reduction = 2
@@ -850,17 +996,16 @@ focus_tree = {
 ############Generic Navy###############
 #######################################
     focus = {
-        id = MDC_expand_the_gulf_fleet
+        id = MDC_create_the_gulf_fleet
         icon = GFX_
-        x = 30
+        available = {
+            owns_state = 542
+        }
+        x = 23
         y = 1
         cost = 10
         ai_will_do = {
             factor = 1
-            modifier = {
-                factor = 0
-                num_of_naval_factories > 12
-            }
             modifier = {
                 factor = 2
                 num_of_naval_factories < 8
@@ -870,7 +1015,115 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_INDUSTRY }
 
         completion_reward = {
-            
+            542 = {
+                add_extra_state_shared_building_slots = 4
+                add_building_construction = {
+                    type = dockyard
+                    level = 4
+                    instant_build = yes
+                }
+                add_building_construction = {
+                    type = naval_base
+                    level = 5
+                    instant_build = yes
+                    province = 4382
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_expand_the_gulf_fleet
+        icon = GFX_
+        prerequisite = { focus = MDC_create_the_gulf_fleet}
+        prerequisite = { focus = MDC_the_tamaulipas_acquisition}
+        available = {
+            owns_state = 559
+            owns_state = 589
+        }
+        x = 0
+        y = 2
+        relative_position_id = MDC_create_the_gulf_fleet
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                num_of_naval_factories < 10
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            559 = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = dockyard
+                    level = 2
+                    instant_build = yes
+                }
+            }
+            589 = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = dockyard
+                    level = 2
+                    instant_build = yes
+                }
+                add_building_construction = {
+                    type = naval_base
+                    level = 6
+                    instant_build = yes
+                    province = 4584
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_the_pacific_fleet
+        icon = GFX_
+        prerequisite = { focus = MDC_expand_the_gulf_fleet}
+        available = {
+            owns_state = 554
+            owns_state = 584
+        }
+        x = 0
+        y = 3
+        relative_position_id = MDC_create_the_gulf_fleet
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                num_of_naval_factories < 12
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            554 = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = dockyard
+                    level = 2
+                    instant_build = yes
+                }
+            }
+            584 = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = dockyard
+                    level = 2
+                    instant_build = yes
+                }
+                add_building_construction = {
+                    type = naval_base
+                    level = 3
+                    instant_build = yes
+                    province = 4539
+                }
+            }
         }
     }
 }
