@@ -172,7 +172,7 @@ country_event = {
                 inherit_technology = MEX
                 every_state = {
                     limit = {
-                        is_controlled_by = MEX
+                        is_core_of = MEX
                     }
                     add_core_of = MAC
                 }
@@ -240,7 +240,6 @@ country_event = {
                 inherit_technology = MEX
                 every_state = {
                     limit = {
-                        #is_controlled_by = MEX
                         is_core_of = MEX
                     }
                     add_core_of = MAC
@@ -325,7 +324,6 @@ country_event = {
                 every_state = {
                     limit = {
                         OR = {
-                            #is_controlled_by = MEX
                             is_core_of = MEX
                             is_core_of = MAC
                         }
@@ -374,8 +372,8 @@ country_event = {
                 every_state = {
                     limit = {
                         OR = {
-                            is_controlled_by = MEX
-                            is_controlled_by = MAC
+                            is_core_of = MEX
+                            is_core_of = MAC
                         }
                     }
                     add_core_of = MCL
@@ -1041,7 +1039,30 @@ country_event = {
         ai_chance = {
             factor = 100
         }
-        #subject yucatan
+        MDC = {
+            release = MYU
+        }
+        if = {
+            limit = {
+                has_dlc = "Together for Victory"
+            }
+            MDC = {
+                set_autonomy = {
+                    target = MYU
+                    autonomy_state = autonomy_integrated_puppet
+                }
+            }
+        }
+        else_if = {
+            limit = {
+                NOT = {
+                    has_dlc = "Together for Victory"
+                }
+            }
+            MDC = {
+                puppet = MYU
+            }
+        }
     }
     option = {
         name = na_mexico.21.b
@@ -1071,7 +1092,23 @@ country_event = {
         MDC = {
             release = MYU
         }
-        #join war + faction if has
+        MYU = {
+            add_to_war = {
+                targeted_alliance = MEX
+                enemy = MDC
+                hostility_reason = asked_to_join
+            }
+        }
+        if = {
+            limit = {
+                MEX = {
+                    is_faction_leader = yes
+                }
+            }
+            MEX = {
+                add_to_faction = MYU
+            }
+        }
     }
     option = {
         name = na_mexico.22.b
