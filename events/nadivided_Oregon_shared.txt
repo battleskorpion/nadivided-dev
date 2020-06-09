@@ -1279,9 +1279,9 @@ country_event = { #Portland Question 2, annexation
     option = { #accept annexation
         name = OS.26.a
         ai_chance = {
-            factor = 25
+            factor = 90
             modifier = {
-                factor = 2
+                add = 10
                 POO = {
                     has_opinion = {
                         target = SRO
@@ -1291,22 +1291,35 @@ country_event = { #Portland Question 2, annexation
             }
         }
         SRO = {
-            transfer_state = 53
             add_state_core = 53
+            annex_country = {
+                target = POO
+                transfer_troops = yes
+            }
+        }
+        hidden_effect = {
+            SRO = {
+                set_country_flag = SRO_annexed_POO
+            }
         }
     }
-    option = {
+    option = { #no annex
         name = OS.26.b
         ai_chance = {
-            factor = 75
+            factor = 10
             modifier = {
-                add = -25
+                add = -10
                 POO = {
                     has_opinion = {
                         target = SRO
                         value > 40
                     }
                 }
+            }
+        }
+        SRO = {
+            country_event = {
+                id = OS.45
             }
         }
     }
@@ -1404,6 +1417,11 @@ country_event = { #Klan's response
                 }
             }
         }
+        URO = {
+            country_event = {
+                id = OS.46
+            }
+        }
     }
     option = { #annexation
         name = OS.29.b
@@ -1429,8 +1447,11 @@ country_event = { #Klan's response
             }
         }
         URO = {
-            transfer_state = 176
             add_state_core = 176
+            annex_country = {
+                target = KKK
+                transfer_troops = yes
+            }
         }
         hidden_effect = {
             set_country_flag = URO_annexed_KKK
@@ -1790,7 +1811,7 @@ country_event = { #Training animals 2
         add_manpower = -1000
     }
 }
-country_event = { #Training animals 2
+country_event = { #Training animals 3
     id = OS.42
     title = OS.42.t
     desc = OS.42.d
@@ -1902,5 +1923,54 @@ country_event = { #PCA flavor event
     option = {
         name = OS.44.a
         add_ideas = PCA_a_greater_cause
+    }
+}
+country_event = { #POO refuses annexation
+    id = OS.45
+    title = OS.45.t
+    desc = OS.45.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #war it is
+        name = OS.45.a
+        ai_chance = {
+            factor = 80
+            modifier = {
+                factor = 0
+                is_ai = no
+            }
+        }
+        declare_war_on = {
+            target = POO
+            type = annex_everything
+        }
+        add_state_core = 53
+    }
+    option = { #it's not worth it
+        name = OS.45.b
+        ai_chance = {
+            factor = 20
+            modifier = {
+                factor = 5
+                is_ai = no
+            }
+        }
+    }
+}
+country_event = { #KKK refuses annexation
+    id = OS.46
+    title = OS.46.t
+    desc = OS.46.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = {
+        name = OS.46.a
+        add_state_core = 176
     }
 }
