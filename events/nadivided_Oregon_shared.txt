@@ -627,7 +627,7 @@ country_event = { #KKK purge
 
     option = {
         name = OS.10.a
-        176 = { add_core_of = KKK }
+        176 = { add_claim_by = KKK } #will become core
 
         53 = { add_claim_by = KKK }
         54 = { add_claim_by = KKK }
@@ -1237,6 +1237,656 @@ country_event = { #OREGON CIVIL WAR
         declare_war_on = {
             target = SRO
             type = annex_everything
+        }
+    }
+}
+country_event = { #The Portland Question
+    id = OS.25
+    title = OS.25
+    desc = OS.25
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #demand annexation
+        name = OS.25.a
+        ai_chance = {
+            factor = 75
+        }
+        POO = {
+            country_event = {
+                id = OS.26
+            }
+        }
+    }
+    option = { #leave them indepedent
+        name = OS.25.b
+        ai_chance = {
+            factor = 25
+        }
+    }
+}
+country_event = { #Portland Question 2, annexation
+    id = OS.26
+    title = OS.26.t
+    desc = OS.26.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #accept annexation
+        name = OS.26.a
+        ai_chance = {
+            factor = 25
+            modifier = {
+                factor = 2
+                POO = {
+                    has_opinion = {
+                        target = SRO
+                        value > 40
+                    }
+                }
+            }
+        }
+        SRO = {
+            transfer_state = 53
+            add_state_core = 53
+        }
+    }
+    option = {
+        name = OS.26.b
+        ai_chance = {
+            factor = 75
+            modifier = {
+                add = -25
+                POO = {
+                    has_opinion = {
+                        target = SRO
+                        value > 40
+                    }
+                }
+            }
+        }
+    }
+}
+country_event = { #Socialist or Democratic for SRO
+    id = OS.27
+    title = OS.27.t
+    desc = OS.27.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #stay commie
+        name = OS.27.a
+        ai_chance = {
+            factor = 90
+        }
+        add_popularity = {
+            ideology = communism
+            popularity = 0.15
+        }
+    }
+    option = { #go Dem
+        name = OS.27.b
+        ai_chance = {
+            factor = 10
+        }
+        set_politics = {
+            ruling_party = democratic
+        }
+        add_popularity = {
+            ideology = democratic 
+            popularity = 0.25
+        }
+    }
+}
+country_event = { #Deal with the Klan
+    id = OS.28
+    title = OS.28.t
+    desc = OS.28.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #denounce the Klan
+        name = OS.28.a
+        ai_chance = {
+            factor = 80
+        }
+        add_political_power = 100
+    }
+    option = {
+        name = OS.28.b
+        ai_chance = {
+            factor = 20
+        }
+        KKK = {
+            country_event = {
+                id = OS.29
+            }
+        }
+    }
+}
+country_event = { #Klan's response
+    id = OS.29
+    title = OS.29.t
+    desc = OS.29.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #no annexation
+        name = OS.29.a
+        ai_chance = {
+            factor = 75
+            modifier = {
+                add = -50
+                KKK = {
+                    has_opinion = {
+                        target = URO
+                        value > 40
+                    }
+                }
+            }
+            modifier = {
+                add = -25
+                KKK = {
+                    has_opinion = {
+                        target = URO
+                        value > 80
+                    }
+                }
+            }
+        }
+    }
+    option = { #annexation
+        name = OS.29.b
+        ai_chance = {
+            factor = 25
+            modifier = {
+                factor = 3
+                KKK = {
+                    has_opinion = {
+                        target = URO
+                        value > 40
+                    }
+                }
+            }
+            modifier = {
+                add = 25
+                KKK = {
+                    has_opinion = {
+                        target = URO
+                        value > 80
+                    }
+                }
+            }
+        }
+        URO = {
+            transfer_state = 176
+            add_state_core = 176
+        }
+        hidden_effect = {
+            set_country_flag = URO_annexed_KKK
+        }
+    }
+}
+country_event = { #Oregon requests Aid from Cali
+    id = OS.30
+    title = OS.30.t
+    desc = OS.30.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #give aid
+        name = OS.30.a
+        ai_chance = {
+            factor = 80
+        }
+        add_equipment_to_stockpile = {
+            type = infantry_equipment
+            amount = -1000
+        }
+        effect_tooltip = {
+            SOR = {
+                add_equipment_to_stockpile = {
+                    type = infantry_equipment
+                    amount = 1000
+                    producer = SCA
+                }
+            }
+        }
+        hidden_effect = {
+            SOR = {
+                country_event = {
+                    id = OS.31
+                }
+            }
+        }
+    }
+    option = { #deny aid
+        name = OS.30.b
+        ai_chance = {
+            factor = 20
+        }
+        add_political_power = -10
+        hidden_effect = {
+            SOR = {
+                country_event = {
+                    id = OS.32
+                }
+            }
+        }
+    }
+}
+country_event = { #accepted aid
+    id = OS.31
+    title = OS.31.t
+    desc = OS.31.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = {
+        name = OS.31
+        SOR = {
+            add_equipment_to_stockpile = {
+                type = infantry_equipment
+                amount = 1000
+                producer = SCA
+            }
+        }
+    }
+}
+country_event = { #no aid
+    id = OS.32
+    title = OS.32.t
+    desc = OS.32.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = {
+        name = OS.32 
+    }
+}
+country_event = { #Oregon Legislature Question
+    id = OS.33
+    title = OS.33.t
+    desc = OS.33.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #reinstate democracy
+        name = OS.33.a
+        ai_chance = {
+            factor = 40
+        }
+        set_politics = {
+            ruling_party = democratic
+        }
+        add_popularity = {
+            ideology = democratic 
+            popularity = 0.25
+        }
+        hidden_effect = {
+            country_event = {
+                id = OS.34
+            }
+        }
+    }
+    option = { #more martial law
+        name = OS.33.b
+        ai_chance = {
+            factor = 60
+        }
+        add_popularity = {
+            ideology = neutrality
+            popularity = 0.05
+        }
+        hidden_effect = {
+            country_event = {
+                id = OS.35
+            }
+        }
+    }
+}
+country_event = { #Bye bye meier
+    id = OS.34
+    title = OS.34.t
+    desc = OS.34.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = {
+        name = OS.34.a
+        retire_country_leader = yes
+    }
+}
+country_event = { #attempted Coup
+    id = OS.35
+    title = OS.35.t
+    desc = OS.35.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #successful Coup
+        name = OS.35.a
+        ai_chance = {
+            factor = 33
+        }
+        set_politics = {
+            ruling_party = democratic
+        }
+        add_popularity = {
+            ideology = democratic 
+            popularity = 0.10
+        }
+        hidden_effect = {
+            country_event = {
+                id = OS.36
+                days = 10
+                random = 3
+            }
+        }
+    }
+    option = { #unsuccessful Coup
+        name = OS.35.b
+        ai_chance = {
+            factor = 67
+        }
+        add_popularity = 10
+    }
+}
+country_event = { #negociate with the Socialists
+    id = OS.36
+    title = OS.36.t
+    desc = OS.36.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #send the deal
+        name = OS.36.a
+        ai_chance = {
+            factor = 50
+        }
+        SRO = {
+            country_event = {
+                id = OS.37
+            }
+        }
+    }
+    option = {
+        name = OS.36.b
+        ai_chance = {
+            factor = 50
+        }
+        add_popularity = 10
+    }
+}
+country_event = { #peace from old government
+    id = OS.37
+    title = OS.37.t
+    desc = OS.37.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #accept the deal
+        name = OS.37.a
+        ai_chance = {
+            factor = 10
+            modifier = {
+                factor = 5
+                has_government = democratic
+            }
+        }
+        white_peace = {
+            target = SOR
+            message = peace_deal_SOR_SRO_civil_war
+        }
+    }
+    option = { #no peaces
+        name = OS.37.b
+        ai_chance = {
+            factor = 90
+            modifier = {
+                add = -40
+                has_government = democratic
+            }
+        }
+        add_political_power = 10
+    }
+}
+country_event = { #The Protastant Question
+    id = OS.38
+    title = OS.38.t
+    desc = OS.38.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #it's okay
+        name = OS.38.a
+        ai_chance = {
+            factor = 40
+        }
+        swap_ideas = {
+            add_idea = ORE_catholic_state
+            remove_idea = ORE_Cristero_Spirit
+        }
+    }
+    option = { #not okay
+        name = OS.38.b
+        ai_chance = {
+            factor = 60
+        }
+        add_political_power = 50
+    }
+}
+country_event = { #Animals in the army?
+    id = OS.39
+    title = OS.39.t
+    desc = OS.39.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #yes
+        name = OS.39.a
+        ai_chance = {
+            factor = 50
+        }
+        hidden_effect = {
+            country_event = {
+                id = OS.40
+            }
+        }
+    }
+    option = { #no
+        name = OS.39.b
+        ai_chance = {
+            factor = 50
+        }
+        add_political_power = 50
+    }
+}
+country_event = { #Training animals 1
+    id = OS.40
+    title = OS.40.t
+    desc = OS.40.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #yes
+        name = OS.40.a
+        ai_chance = {
+            factor = 50
+        }
+        add_manpower = -500
+        hidden_effect = {
+            country_event = {
+                id = OS.41
+            }
+        }
+    }
+    option = { #no
+        name = OS.40.b
+        ai_chance = {
+            factor = 50
+        }
+        add_manpower = -500
+    }
+}
+country_event = { #Training animals 2
+    id = OS.41
+    title = OS.41.t
+    desc = OS.41.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #yes
+        name = OS.41.a
+        ai_chance = {
+            factor = 50
+        }
+        add_manpower = -1000
+        hidden_effect = {
+            country_event = {
+                id = OS.42
+            }
+        }
+    }
+    option = { #no
+        name = OS.41.b
+        ai_chance = {
+            factor = 50
+        }
+        add_manpower = -1000
+    }
+}
+country_event = { #Training animals 2
+    id = OS.42
+    title = OS.42.t
+    desc = OS.42.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #yes
+        name = OS.42.a
+        ai_chance = {
+            factor = 50
+        }
+        add_manpower = -2000
+        hidden_effect = {
+            country_event = {
+                id = OS.43
+            }
+        }
+    }
+    option = { #no
+        name = OS.42.b
+        ai_chance = {
+            factor = 50
+        }
+        add_manpower = -2000
+    }
+}
+country_event = { #it's successful
+    id = OS.43
+    title = OS.43.t
+    desc = OS.43.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = {
+        name = OS.43.a
+        add_manpower = 50000
+        load_oob = "PCA_animal_soldiers"
+        create_field_marshal = {
+            name = "Bearlas MacBear"
+            picture = "Portrait_POL_Voytek.dds"
+            traits = {
+                brilliant_strategist
+                inflexible_strategist
+                war_hero
+                trait_reckless
+                media_personality
+                bearer_of_artillery
+                logistics_wizard
+                skilled_staffer
+                expert_delegator
+                hill_fighter
+                trait_mountaineer
+                ranger
+                infantry_leader
+                ambusher
+                commando
+                camouflage_expert
+                trickster
+                expert_improviser
+                guerilla_fighter
+            }
+            skill = 7
+            attack_skill = 7
+            defense_skill = 6
+            planning_skill = 5
+            logistics_skill = 7
+        }
+        create_corps_commander = {
+            name = "Moosewall Jackson"
+            picture = #
+            traits = {
+                brilliant_strategist
+                inflexible_strategist
+                war_hero
+                media_personality
+                skilled_staffer
+                hill_fighter
+                trait_mountaineer
+                ranger
+                infantry_leader
+                ambusher
+                commando
+                camouflage_expert
+                trickster
+                expert_improviser
+                guerilla_fighter
+            }
+            skill = 6
+            attack_skill = 6
+            democratic = 7
+            planning_skill = 7
+            logistics_skill = 5
         }
     }
 }
