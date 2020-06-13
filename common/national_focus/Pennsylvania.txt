@@ -22,6 +22,571 @@ focus_tree = {
     continuous_focus_position = { x = 50 y = 2000 }
 
 #######################################
-
+###########Deal with Strikes###########
 #######################################
+    focus = {
+        id = SPA_deal_with_the_stikes
+        icon = GFX_
+        x = 4
+        y = 0
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_political_power = 150
+        }
+    }
+    focus = {
+        id = SPA_concession_to_the_unions
+        icon = GFX_
+        prerequisite = { focus = SPA_deal_with_the_stikes}
+        mutually_exclusive = { focus = SPA_harsh_treatment}
+        x = -1
+        y = 1
+        relative_position_id = SPA_deal_with_the_stikes
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_STABILITY }
+        historical_ai = {
+            has_completed_focus = SPA_deal_with_the_stikes
+        }
+
+        completion_reward = {
+            add_popularity = {
+                ideology = communism
+                popularity = 0.1
+            }
+            add_stability = 0.05
+        }
+    }
+    focus = {
+        id = SPA_increase_minimum_wage
+        icon = GFX_
+        prerequisite = { focus = SPA_concession_to_the_unions}
+        x = 0
+        y = 1
+        relative_position_id = SPA_concession_to_the_unions
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            add_timed_idea = {
+                idea = SPA_increased_minimum_wage
+                days = 180
+            }
+            swap_ideas = {
+                remove_idea = SPA_widespread_strikes
+                add_idea = SPA_localized_strikes
+            }
+        }
+    }
+    focus = {
+        id = SPA_8_hour_workday
+        icon = GFX_
+        prerequisite = { focus = SPA_increase_minimum_wage}
+        x = 0
+        y = 2
+        relative_position_id = SPA_concession_to_the_unions
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            remove_ideas = SPA_localized_strikes
+            add_stability = 0.05
+            add_war_support = 0.05
+        }
+    }
+    focus = {
+        id = SPA_harsh_treatment
+        icon = GFX_
+        prerequisite = { focus = SPA_deal_with_the_stikes}
+        mutually_exclusive = { focus = SPA_concession_to_the_unions}
+        x = 1
+        y = 1
+        relative_position_id = SPA_deal_with_the_stikes
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_popularity = {
+                ideology = fascism
+                popularity = 0.1
+            }
+            add_stability = -0.05
+        }
+    }
+    focus = {
+        id = SPA_crack_down_on_the_strikes
+        icon = GFX_
+        prerequisite = { focus = SPA_harsh_treatment}
+        x = 0
+        y = 1
+        relative_position_id = SPA_harsh_treatment
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_manpower = -100
+            add_political_power = 100
+            add_stability = 0.05
+        }
+    }
+    focus = {
+        id = SPA_compliance_through_fear
+        icon = GFX_
+        prerequisite = { focus = SPA_crack_down_on_the_strikes}
+        x = 0
+        y = 2
+        relative_position_id = SPA_harsh_treatment
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            remove_ideas = SPA_widespread_strikes
+            add_political_power = 50
+        }
+    }
+    focus = {
+        id = SPA_workers_back_in_the_factories
+        icon = GFX_
+        prerequisite = { focus = SPA_compliance_through_fear focus = SPA_8_hour_workday}
+        x = 0
+        y = 4
+        relative_position_id = SPA_deal_with_the_stikes
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 2
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_repair_the_factories
+        icon = GFX_
+        prerequisite = { focus = SPA_workers_back_in_the_factories}
+        x = -2
+        y = 1
+        relative_position_id = SPA_workers_back_in_the_factories
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            620 = {
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            47 = {
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 2
+                    instant_build = yes
+                }
+            }
+            287 = {
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_expand_factories_in_pilidelphia
+        icon = GFX_
+        prerequisite = { focus = SPA_repair_the_factories}
+        prerequisite = { focus = SPA_repair_the_railways}
+        x = 0
+        y = 1
+        relative_position_id = SPA_repair_the_factories
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            46 = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 2
+                    instant_build = yes
+                }
+            }
+            620 = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 2
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_develop_southern_factories
+        icon = GFX_
+        prerequisite = { focus = SPA_expand_factories_in_pilidelphia}
+        prerequisite = { focus = SPA_expand_the_railways}
+        x = 0
+        y = 2
+        relative_position_id = SPA_repair_the_factories
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            332 = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            618 = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            619 = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            331 = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            289 = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_repair_the_railways
+        icon = GFX_
+        prerequisite = { focus = SPA_workers_back_in_the_factories}
+        x = 0
+        y = 1
+        relative_position_id = SPA_workers_back_in_the_factories
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            46 = {
+                add_building_construction = {
+                    type = infrastructure
+                    level = 6
+                    instant_build = yes
+                }
+            }
+            620 = {
+                add_building_construction = {
+                    type = infrastructure
+                    level = 5
+                    instant_build = yes
+                }
+            }
+            47 = {
+                add_building_construction = {
+                    type = infrastructure
+                    level = 4
+                    instant_build = yes
+                }
+            }
+            287 = {
+                add_building_construction = {
+                    type = infrastructure
+                    level = 3
+                    instant_build = yes
+                }
+            }
+            619 = {
+                add_building_construction = {
+                    type = infrastructure
+                    level = 4
+                    instant_build = yes
+                }
+            }
+            332 = {
+                add_building_construction = {
+                    type = infrastructure
+                    level = 5
+                    instant_build = yes
+                }
+            }
+            331 = {
+                add_building_construction = {
+                    type = infrastructure
+                    level = 2
+                    instant_build = yes
+                }
+            }
+            618 = {
+                add_building_construction = {
+                    type = infrastructure
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_expand_the_railways
+        icon = GFX_
+        prerequisite = { focus = SPA_repair_the_railways}
+        x = 0
+        y = 1
+        relative_position_id = SPA_repair_the_railways
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            every_owned_state = {
+                add_building_construction = {
+                    type = infrastructure
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_national_highway_system
+        icon = GFX_
+        prerequisite = { focus = SPA_expand_the_railways}
+        x = 0
+        y = 2
+        relative_position_id = SPA_repair_the_railways
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            every_owned_state = {
+                add_building_construction = {
+                    type = infrastructure
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_repair_the_military_factories
+        icon = GFX_
+        prerequisite = { focus = SPA_workers_back_in_the_factories}
+        x = 2
+        y = 1
+        relative_position_id = SPA_workers_back_in_the_factories
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            620 = {
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            47 = {
+                add_building_construction = {
+                    type = arms_factory
+                    level = 2
+                    instant_build = yes
+                }
+            }
+            331 = {
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_expand_pittsburg_arms_factories
+        icon = GFX_
+        prerequisite = { focus = SPA_repair_the_military_factories}
+        prerequisite = { focus = SPA_repair_the_railways}
+        x = 0
+        y = 1
+        relative_position_id = SPA_repair_the_military_factories
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            47 = {
+                add_extra_state_shared_building_slots = 3
+                add_building_construction = {
+                    type = arms_factory
+                    level = 3
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_drowning_in_guns
+        icon = GFX_
+        prerequisite = { focus = SPA_expand_pittsburg_arms_factories}
+        prerequisite = { focus = SPA_expand_the_railways}
+        x = 0
+        y = 2
+        relative_position_id = SPA_repair_the_military_factories
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = arms_factory
+                    level = 2
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = arms_factory
+                    level = 2
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_every_man_a_factory
+        icon = GFX_
+        prerequisite = { focus = SPA_national_highway_system}
+        prerequisite = { focus = SPA_develop_southern_factories focus = SPA_drowning_in_guns}
+        x = 0
+        y = 3
+        relative_position_id = SPA_repair_the_railways
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            add_ideas = SPA_every_man_a_factory
+        }
+    }
 }
