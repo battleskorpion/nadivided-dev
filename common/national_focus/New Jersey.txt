@@ -98,7 +98,61 @@ focus_tree = {
 		ai_will_do = {
 			factor = 1
 		}
-		#Fund Farms - +2 division defence on core territory, +1 org regen
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = production_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = arms_factory
+						size < 2
+						include_locked = yes
+					}
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = arms_factory
+				level = 2
+				instant_build = yes
+			}
+		}
+
+		completion_reward = {
+			
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
 	}
 
 	#Focus for Genetic Modification
@@ -518,6 +572,8 @@ completion_reward = {
 			factor = 1
 		}
 		completion_reward = {
+			
+			
 			# should fire an event - explainzz stuff
 			# -10 % training mod. to calvalry -> SPIRIT
 			add_ideas = {
@@ -533,7 +589,7 @@ completion_reward = {
 		icon = GFX_goal_support_fascism
 		x = 6
 		y = 2
-		cost = 12
+		cost = 8
 		available_if_capitulated = yes
 		prerequisite = { focus = NJ_ourplaceinthestates }
 		mutually_exclusive = { 
@@ -555,13 +611,11 @@ completion_reward = {
 			factor = 1
 		}
 		completion_reward = {
-			# fire "falangist coop event" 
-			# set leader "council of order
-			# fire event "choosing our path
+			news_event = newjersey.2
 		}
 	}
 
-	#Focus for Catholic Zealotry
+	#Focus for Requiem of the States
 	focus = {
 		id = NJ_requiem_of_the_states
 		icon = GFX_focus_renounce_the_treaty_of_trianon
@@ -594,6 +648,8 @@ completion_reward = {
 		completion_reward = {
 			set_politics = { ruling_party = neutrality }
 			add_popularity = { ideology = neutrality popularity = 0.2 }
+			
+			news_event = newjersey.1
 		}
 	}
 
@@ -629,7 +685,7 @@ completion_reward = {
 		}
 		
 		completion_reward = {
-			
+			country_event = newjersey.6
 		}
 	}
 
@@ -662,6 +718,10 @@ completion_reward = {
 		#}
 		ai_will_do = {
 			factor = 1
+		}
+		
+		completion_reward = {
+			news_event = newjersey.5
 		}
 	}
 
@@ -716,6 +776,10 @@ completion_reward = {
 		ai_will_do = {
 			factor = 1
 		}
+		
+		completion_reward = {
+			news_event = newjersey.4
+		}
 	}
 
 	#Focus for A Second Union
@@ -747,6 +811,10 @@ completion_reward = {
 		#}
 		ai_will_do = {
 			factor = 1
+		}
+		
+		completion_reward = {
+			news_event = newjersey.3
 		}
 	}
 
@@ -792,6 +860,10 @@ completion_reward = {
 				ideology = rexism
 				traits = {
 					#
+					anti-democrat
+					disdain_for_politicans
+					inexperienced_imperialist
+					rearmer
 				}
 			}
 		}
@@ -838,6 +910,11 @@ completion_reward = {
 				ideology = falangism
 				traits = {
 					#
+					anti_communist
+					caudillo_2
+					famous_aviator
+					
+					
 				}
 			}
 		}
@@ -1227,7 +1304,7 @@ completion_reward = {
 	#Focus for Black Jersey
 	focus = {
 		id = NJ_blackjersey
-		icon = GFX_focus_black_jersey
+		icon = GFX_focus_Black_Jersey
 		x = 21
 		y = 4
 		cost = 10
@@ -1292,7 +1369,7 @@ completion_reward = {
 		completion_reward = {
 			create_country_leader = {
 				name = "Frank T. Johns"
-				#picture = "Portrait_SNJ_"
+				#picture = "Portrait_SNJ_Frank_T_Johns"
 				expire = "1965.1.1"
 				ideology = stalinism
 				traits = {
@@ -1953,6 +2030,9 @@ completion_reward = {
 		y = 3
 		cost = 10
 		available_if_capitulated = yes
+		available = {
+			has_country_flag = nj_event_another_trenton_washington_option
+		}
 		prerequisite = { focus = NJ_anothertrenton }
 		mutually_exclusive = { 
 			focus = NJ_thecultofjackson 
@@ -1965,8 +2045,7 @@ completion_reward = {
 		}
 		
 		completion_reward = {
-			#change leader to DePreussen
-			# probably should fire event somehow
+
 		}	
 	}
 
@@ -1978,6 +2057,9 @@ completion_reward = {
 		y = 3
 		cost = 10
 		available_if_capitulated = yes
+		available = {
+			has_country_flag = nj_event_another_trenton_jackson_option
+		}
 		prerequisite = { focus = NJ_anothertrenton }
 		mutually_exclusive = { 
 			focus = NJ_thewashingtonparty 
@@ -2003,6 +2085,9 @@ completion_reward = {
 		y = 3
 		cost = 10
 		available_if_capitulated = yes
+		available = {
+			has_country_flag = nj_event_another_trenton_roosevelt_option
+		}
 		prerequisite = { focus = NJ_anothertrenton }
 		mutually_exclusive = { 
 			focus = NJ_thewashingtonparty 
@@ -3213,6 +3298,17 @@ add_tech_bonus = {
 				ideology = leninism
 				traits = {
 					#
+					appeaser
+					cornered_fox
+					devoted_trotskyist
+					divided_intrests
+					fascist_sympathies
+					incognito
+					poltical_dancer
+					revolutionary_general
+					stalins_puppet
+					staunch_stalinist
+					veteran_communist
 				}
 			}
 		}
@@ -3293,9 +3389,10 @@ add_tech_bonus = {
 					SNJ = {
 						owns_state = 257
 					}
+
 				}
 			}
-			set_province_name = { id = 3469 name = "Novo Roma"} #formerly Trenton, the capital
+			set_province_name = { id = 3469 name = "Nova Roma"} #formerly Trenton, the capital
 			set_province_name = { id = 3462 name = "Novo Veneto"}
 			set_province_name = { id = 3424 name = "Capo Sicilia"}
 			set_province_name = { id = 2161 name = "Genoa Nova"}
@@ -3322,7 +3419,32 @@ add_tech_bonus = {
 		ai_will_do = {
 			factor = 1
 		}
+completion_reward = {
+
+set_party_name= { 
+				ideology = fascism
+				long_name = SNJ_Großer_Neu_Jersey
+				name = SNJ_Groß_Jersey
+}
+create_country_leader = {
+				name = "Reichskommissar Steiner"
+				picture = "Portrait_SNJ_Justin_Moreira.dds"
+				expire = "1965.1.1"
+				ideology = rexism
+				traits = {
+					#
+					cornered_fox
+					dictator
+					national_integeralist
+					political_dancer
+					warmonger
+					rearmer
+					hawk
+					hedonist
+					}
 	}
+}
+}
 
 	#Focus for European Out-Reach
 	focus = {
@@ -3608,7 +3730,35 @@ add_tech_bonus = {
 		ai_will_do = {
 			factor = 1
 		}
+completion_reward = {
+set_politics = {
+				ruling_party = neutrality
+}
+set_party_name= { 
+				ideology = neutrality
+				long_name = SNJ_Royal_family_of_New_Jersey
+				name = SNJ_Moreira_Dynasty
+}
+create_country_leader = {
+				name = "King Justin I"
+				picture = "Portrait_SNJ_Justin_Moreira.dds"
+				expire = "1965.1.1"
+				ideology = moderatism
+				traits = {
+					#
+					constituional_monarch
+					rearmer
+					great_survivor
+					imperial_connections
+					nationalist_symbol
+					the_legitimist
+					inexperienced_imperialist
+					}
+					
+					
+				}
 	}
+}
 
 	#Focus for The American Union State
 	focus = {
@@ -3676,6 +3826,10 @@ add_tech_bonus = {
 		ai_will_do = {
 			factor = 1
 		}
+		completion_reward = {	
+		add_political_power = 100
+		
+			}
 	}
 
 	#Focus for Private Healthcare
@@ -3727,6 +3881,23 @@ add_tech_bonus = {
 		ai_will_do = {
 			factor = 1
 		}
+		completion_reward = {
+			create_country_leader = {
+				name = "Imperator Mussolini"
+				picture = "emperor_mussolini.dds"
+				expire = "1965.1.1"
+				ideology = falangism
+				traits = {
+					#
+					american_caesar
+					dictator
+					nationalist_symbol
+					unpopular_monarch
+				}
+									
+			}
+		}
+
 	}
 
 	#Focus for The Anti-Soviet Pact
@@ -3770,6 +3941,10 @@ add_tech_bonus = {
 		ai_will_do = {
 			factor = 1
 		}
+completion_reward = {	
+
+add_stability = .125
+}
 	}
 
 	#Focus for Social Reforms
@@ -3783,7 +3958,12 @@ add_tech_bonus = {
 		prerequisite = { focus = NJ_popularreforms }
 		ai_will_do = {
 			factor = 1
-		}
+}
+completion_reward = {	
+
+add_stability = .05
+}
+		
 	}
 
 	#Focus for Liberal Budget
@@ -3928,6 +4108,10 @@ add_tech_bonus = {
 		ai_will_do = {
 			factor = 1
 		}
+completion_reward = {	
+
+add_stability = .05
+}
 	}
 
 	#Focus for Civil RIghts
@@ -3942,6 +4126,10 @@ add_tech_bonus = {
 		ai_will_do = {
 			factor = 1
 		}
+completion_reward = {	
+
+add_stability = .05
+}
 	}
 
 	#Focus for Rosie the Riveter
