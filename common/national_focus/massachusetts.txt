@@ -1097,7 +1097,7 @@ focus_tree = {
 		y = 4
 		cost = 10
 		available_if_capitulated = yes 
-		prerequisite = { focus = SMA_hiremitalumni focus = SMA_hireharvardalumni } 
+		prerequisite = { focus = SMA_hiremitalumni } 
 		available = { 
 			num_of_factories > 50
 		} 
@@ -1225,7 +1225,7 @@ focus_tree = {
 		y = 3
 		cost = 10
 		available_if_capitulated = yes 
-		prerequisite = { focus = SMA_highwayupgrades focus = SMA_additionalindustrialsubsidies } 
+		prerequisite = { focus = SMA_highwayupgrades focus = SMA_additionalbusinesssubsidies } 
 		completion_reward = { 
 			add_tech_bonus= {
 				bonus = 0.10
@@ -1803,6 +1803,28 @@ focus_tree = {
 		} 
 	}
 	
+	focus = { 
+		id = SMA_imperial_lands
+		icon = GFX_focus_eng_special_air_service
+		x = 77
+		y = 8
+		cost = 13
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_new_england_empire }
+
+		bypass = {
+			AND = {
+				controls_nova_scotia_trigger = yes
+				has_government = fascism
+			}
+		}
+		
+		completion_reward = { 
+			core_nova_scotia = yes 
+			add_political_power = -25
+		}
+	}
+	
 ##########################	
 ####### DEMOCRACY ########
 ##########################
@@ -1837,7 +1859,7 @@ focus_tree = {
 		icon = GFX_goal_generic_navy_cruiser
 		x = 1
 		y = 2
-		cost = 10
+		cost = 8
 		available_if_capitulated = yes 
 		prerequisite = { focus = SMA_expandbostonharbor } 
 		completion_reward = { 
@@ -1883,7 +1905,7 @@ focus_tree = {
 		y = 2
 		cost = 8
 		available_if_capitulated = yes 
-		prerequisite = { focus = SMA_servicebasedeconomy } 
+		prerequisite = { focus = SMA_revivetextileindustry focus = SMA_servicebasedeconomy }  
 		completion_reward = { 
 			random_owned_controlled_state= {
 				add_building_construction = {
@@ -1962,6 +1984,8 @@ focus_tree = {
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SMA_industryofmassachusetts } 
+		mutually_exclusive = { focus = SMA_revivetextileindustry }
+		
 		completion_reward = { 
 			random_owned_controlled_state= {
 				add_building_construction = {
@@ -2002,7 +2026,7 @@ focus_tree = {
 		icon = GFX_goal_generic_military_sphere
 		x = 3
 		y = 2
-		cost = 10
+		cost = 8
 		available_if_capitulated = yes 
 		prerequisite = { focus = SMA_subsidizespringfieldarmory } 
 		completion_reward = { 
@@ -2048,6 +2072,7 @@ focus_tree = {
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SMA_industryofmassachusetts }
+		mutually_exclusive = { focus = SMA_servicebasedeconomy } 
 		
 		completion_reward = { 
 			random_owned_controlled_state = {
@@ -2094,7 +2119,7 @@ focus_tree = {
 		y = 4
 		cost = 10
 		available_if_capitulated = yes 
-		prerequisite = { focus = SMA_hiremitalumni focus = SMA_hireharvardalumni } 
+		prerequisite = { focus = SMA_hireharvardalumni } 
 		
 		available = { 
 			num_of_factories > 25
@@ -2114,7 +2139,8 @@ focus_tree = {
 		y = 3
 		cost = 10
 		available_if_capitulated = yes 
-		prerequisite = { focus = SMA_additionalindustrialsubsidies focus = SMA_highwayupgrades } 
+		prerequisite = { focus = SMA_additionalbusinesssubsidies focus = SMA_highwayupgrades } 
+		
 		completion_reward = { 
 			add_tech_bonus= {
 				bonus = 0.10
@@ -2124,16 +2150,42 @@ focus_tree = {
 		}
 	}
 
-
-	#Focus for Additional Industrial Subsidies
+	#Focus for Nuclear Ambitions
 	focus = { 
-		id = SMA_additionalindustrialsubsidies
+		id = SMA_nuclear_ambitions
+		icon = GFX_goal_tfv_generic_tech_sharing
+		x = 6
+		y = 5
+		cost = 8
+		available_if_capitulated = yes 
+		available = {
+			date > 1939.1.1
+		}
+		prerequisite = { focus = SMA_harvardresearchprojects } 
+		prerequisite = { focus = SMA_mitresearchprojects } 
+		
+		available = { 
+			num_of_factories > 25
+		}
+		
+		completion_reward = { 
+			add_tech_bonus= {
+				bonus = 0.15
+				uses = 3
+				category = nuclear 
+			}
+		}
+	}
+
+	#Focus for Additional Business Subsidies
+	focus = { 
+		id = SMA_additionalbusinesssubsidies
 		icon = GFX_goal_generic_construct_civ_factory
 		x = 5
 		y = 2
 		cost = 8
 		available_if_capitulated = yes 
-		prerequisite = { focus = SMA_revivetextileindustry } 
+		prerequisite = { focus = SMA_revivetextileindustry focus = SMA_servicebasedeconomy } 
 		completion_reward = {  
 			random_owned_controlled_state={
 				limit = {
@@ -2169,11 +2221,15 @@ focus_tree = {
 			}
 		}
 	} 
-
+	
+	#-------------------------------#
+	#			COMMUNISM			#
+	#-------------------------------#
+	
 	#Focus for "Peace only through liberty"
 	focus = { 
 		id = SMA_peaceonlythroughliberty
-		icon = GFX_goal_unknown ##Unfortunately, the tool could not find your icon in the game's files
+		icon = GFX_goal_unknown 
 		x = 83
 		y = 0
 		cost = 2
@@ -2183,10 +2239,27 @@ focus_tree = {
 		completion_reward = { 
 			add_popularity= { 
 				ideology = communism 
-				popularity = 0.2
+				popularity = 0.05
 			}
 		} 
 	}
+	
+	#Focus for
+	focus = { 
+		id = SMA_communism_temp
+		icon = GFX_goal_unknown 
+		x = 83
+		y = 1
+		cost = 2
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_peaceonlythroughliberty } 
+		
+		completion_reward = { 
+			
+		} 
+	}
+	
+	#########################################################
 
 	#Focus for "By the sword we seek peace"
 	focus = { 
@@ -2691,7 +2764,7 @@ focus_tree = {
 		icon = GFX_focus_NE_road_marking
 		x = 8
 		y = 5
-		cost = 10
+		cost = 5
 		available_if_capitulated = yes 
 		prerequisite = { focus = SMA_highwayupgrades } 
 		ai_will_do = { 
