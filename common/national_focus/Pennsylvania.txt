@@ -1174,7 +1174,7 @@ focus_tree = {
         id = SPA_total_prohibition
         icon = GFX_
         prerequisite = { focus = SPA_continue_with_pinchot}
-        mutually_exclusive = { focus = }
+        mutually_exclusive = { focus = SPA_partial_prohibition}
         x = -5
         y = 1
         relative_position_id = SPA_continue_with_pinchot
@@ -1195,7 +1195,7 @@ focus_tree = {
         id = SPA_partial_prohibition
         icon = GFX_
         prerequisite = { focus = SPA_continue_with_pinchot}
-        mutually_exclusive = { focus = }
+        mutually_exclusive = { focus = SPA_total_prohibition}
         x = -3
         y = 1
         relative_position_id = SPA_continue_with_pinchot
@@ -1345,7 +1345,7 @@ focus_tree = {
         id = SPA_memories_of_the_union
         icon = GFX_
         prerequisite = { focus = SPA_healthy_unemployment}
-        prerequisite = { focus = SPA_total_prohibition focus = SPA_partial_prohibition focus = SPA_forest_service}
+        prerequisite = { focus = SPA_total_prohibition focus = SPA_partial_prohibition}
         x = -2
         y = 1
         relative_position_id = SPA_healthy_unemployment
@@ -1356,7 +1356,447 @@ focus_tree = {
         available_if_capitulated = yes
 
         completion_reward = {
+            set_rule = {
+                can_create_factions = yes
+            }
+            create_faction = NORTH_EASTERN_UNION
+        }
+    }
+    focus = {
+        id = SPA_liberate_WDC
+        icon = GFX_
+        prerequisite = { focus = SPA_memories_of_the_union}
+        mutually_exclusive = { focus = SPA_target_WDC}
+        available = {
+            country_exists = SMD
+            WDC = {
+                is_subject_of = SMD
+            }
+            NOT = {
+                WDC = {
+                    focus_progress = {
+                        focus = WDC_strike_maryland
+                        progress > 0
+                    }
+                }
+                WDC = {
+                    custom_trigger_tooltip = {
+                        tooltip = owns_maryland_tt
+                        controls_maryland_trigger = yes
+                    }
+                }
+            }
+        }
+        x = -1
+        y = 1
+        relative_position_id = SPA_memories_of_the_union
+        cost = 9
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            create_wargoal = {
+                type = annex_everything
+                target = SMD
+            }
+            custom_effect_tooltip = SPA_cliam_maryland_and_WDC
+			hidden_effect = {
+				claim_maryland = yes
+                add_state_claim = 44
+			}
+        }
+    }
+    focus = {
+        id = SPA_target_WDC
+        icon = GFX_
+        prerequisite = { focus = SPA_memories_of_the_union}
+        mutually_exclusive = { focus = SPA_liberate_WDC}
+        available = {
+            country_exists = WDC
+            WDC = {
+                custom_trigger_tooltip = {
+                    tooltip = owns_maryland_tt
+                    controls_maryland_trigger = yes
+                }
+            }
+        }
+        x = 1
+        y = 1
+        relative_position_id = SPA_memories_of_the_union
+        cost = 9
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            create_wargoal = {
+                type = annex_everything
+                target = WDC
+            }
+            custom_effect_tooltip = SPA_cliam_maryland_and_WDC_tt
+			hidden_effect = {
+				claim_maryland = yes
+                add_state_claim = 44
+			}
+        }
+    }
+    focus = {
+        id = SPA_hold_a_mock_election
+        icon = GFX_
+        prerequisite = { focus = SPA_target_WDC focus = SPA_liberate_WDC}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SPA_owns_maryland_and_WDC_tt
+                controls_maryland_trigger = yes
+                controls_state = 44
+            }
+        }
+        x = 0
+        y = 2
+        relative_position_id = SPA_memories_of_the_union
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        
+        completion_reward = {
+            country_event = {
+                id = penn.4
+            }
+        }
+    }
+    focus = {
+        id = SPA_a_question_of_the_capital
+        icon = GFX_
+        prerequisite = { focus = SPA_hold_a_mock_election}
+        x = -3
+        y = 1
+        relative_position_id = SPA_hold_a_mock_election
+        cost = 1
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
             add_political_power = 10
+        }
+    }
+    focus = {
+        id = SPA_keep_the_current_capital
+        icon = GFX_
+        prerequisite = { focus = SPA_a_question_of_the_capital}
+        mutually_exclusive = { focus = SPA_the_old_capital_philadelphia}
+        mutually_exclusive = { focus = SPA_move_the_captial_to_DC}
+        x = -2
+        y = 1
+        relative_position_id = SPA_a_question_of_the_capital
+        cost = 9
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            add_political_power = 50
+            add_stability = 0.05
+        }
+    }
+    focus = {
+        id = SPA_the_old_capital_philadelphia
+        icon = GFX_
+        prerequisite = { focus = SPA_a_question_of_the_capital}
+        available = {
+            controls_state = 46
+        }
+        mutually_exclusive = { focus = SPA_keep_the_current_capital}
+        mutually_exclusive = { focus = SPA_move_the_captial_to_DC}
+        x = 0
+        y = 1
+        relative_position_id = SPA_a_question_of_the_capital
+        cost = 9
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            set_capital = 46
+            add_political_power = 50
+            add_stability = 0.05
+        }
+    }
+    focus = {
+        id = SPA_move_the_captial_to_DC
+        icon = GFX_
+        prerequisite = { focus = SPA_a_question_of_the_capital}
+        available = {
+            controls_state = 44
+        }
+        mutually_exclusive = { focus = SPA_keep_the_current_capital}
+        mutually_exclusive = { focus = SPA_the_old_capital_philadelphia}
+        x = 2
+        y = 1
+        relative_position_id = SPA_a_question_of_the_capital
+        cost = 9
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            set_capital = 44
+            add_political_power = 50
+            add_stability = 0.05
+        }
+    }
+    focus = {
+        id = SPA_align_delaware
+        icon = GFX_
+        prerequisite = { focus = SPA_hold_a_mock_election}
+        x = 1
+        y = 1
+        relative_position_id = SPA_hold_a_mock_election
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            custom_effect_tooltip = SPA_annex_later_tt
+            custom_effect_tooltip = SPA_higher_chance_join_relation_good_60_tt
+            if = {
+                limit = {
+                    country_exists = SDE
+                }
+                SDE = {
+                    country_event = {
+                        id = penn.5
+                    }
+                }
+            }
+            claim_delaware = yes
+        }
+    }
+    focus = {
+        id = SPA_align_new_jersey
+        icon = GFX_
+        prerequisite = { focus = SPA_hold_a_mock_election}
+        x = 3
+        y = 1
+        relative_position_id = SPA_hold_a_mock_election
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            custom_effect_tooltip = SPA_annex_later_tt
+            custom_effect_tooltip = SPA_higher_chance_join_relation_good_60_tt
+            if = {
+                limit = {
+                    country_exists = SNJ
+                }
+                SNJ = {
+                    country_event = {
+                        id = penn.5
+                    }
+                }
+            }
+            claim_new_jersey = yes
+        }
+    }
+    focus = {
+        id = SPA_oppose_new_york
+        icon = GFX_
+        prerequisite = { focus = SPA_align_new_jersey focus = SPA_align_delaware}
+        x = 2
+        y = 2
+        relative_position_id = SPA_hold_a_mock_election
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            create_wargoal = {
+                target = SNY
+                type = annex_everything
+            }
+            claim_new_york = yes
+            add_state_claim = 26
+            add_state_claim = 202
+            add_state_claim = 27
+            add_state_claim = 28
+        }
+    }
+    focus = {
+        id = SPA_develop_closer_ties_to_our_allies
+        icon = GFX_
+        prerequisite = { focus = SPA_oppose_new_york}
+        x = -1
+        y = 1
+        relative_position_id = SPA_oppose_new_york
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            custom_effect_tooltip = SPA_less_likely_oppose_with_war_tt
+            if = {
+                limit = {
+                    is_in_faction_with = SDE
+                }
+                SDE = {
+                    country_event = {
+                        id = penn.8
+                    }
+                }
+            }
+            core_delaware = yes
+            if = {
+                limit = {
+                    is_in_faction_with = SNJ
+                }
+                SNJ = {
+                    country_event = {
+                        id = penn.8
+                    }
+                }
+            }
+            core_new_jersey = yes
+        }
+    }
+    focus = {
+        id = SPA_finish_integration
+        icon = GFX_
+        prerequisite = { focus = SPA_develop_closer_ties_to_our_allies}
+        available = {
+            OR = {
+                SNJ = {
+                    is_subject_of = SPA
+                }
+                SDE = {
+                    is_subject_of = SPA
+                }
+            }
+        }
+        x = -1
+        y = 2
+        relative_position_id = SPA_oppose_new_york
+        cost = 5
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 0
+                has_war = yes
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            if = {
+                limit = {
+                    SNJ = {
+                        is_subject_of = SPA
+                    }
+                }
+                annex_country = {
+                    target = SNJ
+                    transfer_troops = yes
+                }
+            }
+            if = {
+                limit = {
+                    SDE = {
+                        is_subject_of = SPA
+                    }
+                }
+                annex_country = {
+                    target = SDE
+                    transfer_troops = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_the_final_push
+        icon = GFX_
+        prerequisite = { focus = SPA_oppose_new_york}
+        bypass = {
+            NOT = {
+                has_war_with = SNY
+            }
+        }
+        x = 1
+        y = 1
+        relative_position_id = SPA_oppose_new_york
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                has_war_with = SNY
+            }
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_timed_idea = {
+                idea = SPA_the_final_push
+                days = 90
+            }
+        }
+    }
+    focus = {
+        id = SPA_vicotry_over_new_york
+        icon = GFX_
+        prerequisite = { focus = SPA_the_final_push}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SPA_owns_new_york_and_nyc_tt
+                controls_new_york_trigger = yes
+                controls_state = 26
+                controls_state = 27
+                controls_state = 28
+                controls_state = 202
+            }
+        }
+        x = 0
+        y = 3
+        relative_position_id = SPA_oppose_new_york
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            custom_effect_tooltip = SPA_core_SNY_and_NYC_tt
+            hidden_effect = {
+                core_new_york = yes
+                add_state_core = 26
+                add_state_core = 27
+                add_state_core = 28
+                add_state_core = 202
+            }
         }
     }
 #######################################
