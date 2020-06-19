@@ -98,6 +98,61 @@ focus_tree = {
 		ai_will_do = {
 			factor = 1
 		}
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = production_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = arms_factory
+						size < 2
+						include_locked = yes
+					}
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = arms_factory
+				level = 2
+				instant_build = yes
+			}
+		}
+
+		completion_reward = {
+			
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
 	}
 
 	#Focus for Genetic Modification
@@ -116,6 +171,8 @@ focus_tree = {
 		ai_will_do = {
 			factor = 1
 		}
+		
+		#Genetic Modification - -6% consumer goods
 	}
 
 	#Focus for Fertilization
@@ -134,6 +191,8 @@ focus_tree = {
 		ai_will_do = {
 			factor = 1
 		}
+		
+		#Fertilization - + monthly population 1% Consumer goods
 	}
 
 	#Focus for Quality Food
@@ -149,6 +208,10 @@ focus_tree = {
 		ai_will_do = {
 			factor = 1
 		}
+		
+		completion_reward = {
+			#Quality food - + Recruitable population, -1% Consumer goods
+		}
 	}
 
 	#Focus for Cheap Food
@@ -163,6 +226,10 @@ focus_tree = {
 		mutually_exclusive = { focus = NJ_qualityfood }
 		ai_will_do = {
 			factor = 1
+		}
+		
+		completion_reward = {
+			#"Cheap Food + Stability monthly, & low monthly pop" 
 		}
 	}
 
@@ -250,6 +317,10 @@ focus_tree = {
 		prerequisite = { focus = NJ_industry }
 		ai_will_do = {
 			factor = 1
+		}
+		
+		completion_reward = {
+			#Agriculture - + monthly pop
 		}
 	}
 
@@ -446,6 +517,23 @@ completion_reward = {
 		ai_will_do = {
 			factor = 1
 		}
+		
+		completion_reward = {
+			#every_other_country = {
+			#	if = {
+			#		limit = {
+			#			OR = {
+			#				has_government = fascism
+			#				has_government = communism
+			#			}
+			#		}
+			#	}
+			#	add_opinion_modifier = {
+			#		target = ROOT
+			#		modifier = SNJ_horseshoe_theory_modifier
+			#	}
+			#}
+		}
 	}
 
 	#Focus for Establishing Diplomatic Ties
@@ -484,6 +572,8 @@ completion_reward = {
 			factor = 1
 		}
 		completion_reward = {
+			
+			
 			# should fire an event - explainzz stuff
 			# -10 % training mod. to calvalry -> SPIRIT
 			add_ideas = {
@@ -499,11 +589,11 @@ completion_reward = {
 		icon = GFX_goal_support_fascism
 		x = 6
 		y = 2
-		cost = 12
+		cost = 8
 		available_if_capitulated = yes
 		prerequisite = { focus = NJ_ourplaceinthestates }
 		mutually_exclusive = { 
-			focus = NJ_catholiczealotry 
+			focus = NJ_requiem_of_the_states 
 		}
 		mutually_exclusive = { 
 			focus = NJ_anothertrenton 
@@ -521,15 +611,13 @@ completion_reward = {
 			factor = 1
 		}
 		completion_reward = {
-			# fire "falangist coop event" 
-			# set leader "council of order
-			# fire event "choosing our path
+			news_event = newjersey.2
 		}
 	}
 
-	#Focus for Catholic Zealotry
+	#Focus for Requiem of the States
 	focus = {
-		id = NJ_catholiczealotry
+		id = NJ_requiem_of_the_states
 		icon = GFX_focus_renounce_the_treaty_of_trianon
 		x = 14
 		y = 2
@@ -560,6 +648,8 @@ completion_reward = {
 		completion_reward = {
 			set_politics = { ruling_party = neutrality }
 			add_popularity = { ideology = neutrality popularity = 0.2 }
+			
+			news_event = newjersey.1
 		}
 	}
 
@@ -576,7 +666,7 @@ completion_reward = {
 			focus = NJ_coastaldomination 
 		}
 		mutually_exclusive = { 
-			focus = NJ_catholiczealotry 
+			focus = NJ_requiem_of_the_states 
 		}
 		mutually_exclusive = { 
 			focus = NJ_respecttheborders 
@@ -595,7 +685,7 @@ completion_reward = {
 		}
 		
 		completion_reward = {
-			
+			country_event = newjersey.6
 		}
 	}
 
@@ -618,7 +708,7 @@ completion_reward = {
 			focus = NJ_anothertrenton 
 		}
 		mutually_exclusive = { 
-			focus = NJ_catholiczealotry 
+			focus = NJ_requiem_of_the_states 
 		}
 		mutually_exclusive = { 
 			focus = NJ_coastaldomination 
@@ -629,23 +719,23 @@ completion_reward = {
 		ai_will_do = {
 			factor = 1
 		}
+		
+		completion_reward = {
+			news_event = newjersey.5
+		}
 	}
 
-	#Focus for Catholic means Universal
+	#Focus for Supreme Commander
 	focus = {
-		id = NJ_catholicmeansuniversal
+		id = NJ_supreme_commander
 		icon = GFX_goal_generic_political_pressure
 		x = 14
 		y = 4
 		cost = 1
 		available_if_capitulated = yes
 		prerequisite = { 
-			focus = NJ_papalintervention
-			focus = NJ_purgeheretics
-		}
-		prerequisite = { 
-			focus = NJ_charity
-			focus = NJ_papalintervention
+			focus = NJ_order_and_justice
+			focus = NJ_liberty_and_prosperity
 		}
 		ai_will_do = {
 			factor = 1
@@ -675,7 +765,7 @@ completion_reward = {
 			focus = NJ_anothertrenton 
 		}
 		mutually_exclusive = { 
-			focus = NJ_catholiczealotry 
+			focus = NJ_requiem_of_the_states 
 		}
 		mutually_exclusive = { 
 			focus = NJ_coastaldomination 
@@ -685,6 +775,10 @@ completion_reward = {
 		#}
 		ai_will_do = {
 			factor = 1
+		}
+		
+		completion_reward = {
+			news_event = newjersey.4
 		}
 	}
 
@@ -707,7 +801,7 @@ completion_reward = {
 			focus = NJ_anothertrenton 
 		}
 		mutually_exclusive = { 
-			focus = NJ_catholiczealotry 
+			focus = NJ_requiem_of_the_states 
 		}
 		mutually_exclusive = { 
 			focus = NJ_coastaldomination 
@@ -717,6 +811,10 @@ completion_reward = {
 		#}
 		ai_will_do = {
 			factor = 1
+		}
+		
+		completion_reward = {
+			news_event = newjersey.3
 		}
 	}
 
@@ -739,6 +837,35 @@ completion_reward = {
 				long_name = SNJ_Neu_Amerika_party_long
 				name = SNJ_neu_amerika_party 
 			}
+			if = {
+				limit = {
+					SNJ = {
+						NOT = {
+							ideology = fascism
+						}
+					}
+				}
+				set_politics = {
+					ruling_party = fascism
+				}
+			}
+			add_popularity = {
+				ideology = fascism 
+				popularity = 0.15
+			}
+			create_country_leader = {
+				name = "Justin Moreira"
+				picture = "Portrait_SNJ_Justin_Moreira.dds"
+				expire = "1965.1.1"
+				ideology = rexism
+				traits = {
+					#
+					anti-democrat
+					disdain_for_politicans
+					inexperienced_imperialist
+					rearmer
+				}
+			}
 		}
 	}
 
@@ -756,9 +883,39 @@ completion_reward = {
 			factor = 1
 		}
 		completion_reward = {
-			set_party_name= {ideology = fascism 
+			set_party_name= { ideology = fascism 
 				long_name = SNJ_Novo_Amerika_party_long
 				name = SNJ_novo_amerika_party 
+			}
+			if = {
+				limit = {
+					SNJ = {
+						NOT = {
+							ideology = fascism
+						}
+					}
+				}
+				set_politics = {
+					ruling_party = fascism
+				}
+			}
+			add_popularity = {
+				ideology = fascism 
+				popularity = 0.15
+			}
+			create_country_leader = {
+				name = "Italo Balbo"
+				picture = "portrait_italy_italo_balbo.dds"
+				expire = "1965.1.1"
+				ideology = falangism
+				traits = {
+					#
+					anti_communist
+					caudillo_2
+					famous_aviator
+					
+					
+				}
 			}
 		}
 	}
@@ -774,6 +931,10 @@ completion_reward = {
 		prerequisite = { focus = NJ_neujersey }
 		ai_will_do = {
 			factor = 1
+		}
+		
+		completion_reward = {
+			add_ideas = NJ_prussian_discipline
 		}
 	}
 
@@ -843,35 +1004,66 @@ completion_reward = {
 		}
 	}
 
-	#Focus for Papal Intervention
+	#Focus for MacArthur Shall Return
 	focus = {
-		id = NJ_papalintervention
+		id = NJ_macarthur_shall_return
 		icon = GFX_focus_generic_self_management
 		x = 16
 		y = 3
 		cost = 1
 		available_if_capitulated = yes
-		prerequisite = { focus = NJ_catholiczealotry }
+		prerequisite = { focus = NJ_requiem_of_the_states }
+		available = {
+			WDC = {
+				has_capitulated = yes
+			}
+		}
+		cancel_if_invalid = yes
+		
 		ai_will_do = {
 			factor = 1
 		}
 		
 		completion_reward = {
-			#fire event " a cardinal for america" 
+			#annex District of Columbia - WDC
+			if = {
+				limit = {
+					country_exists = WDC
+				}
+				WDC = {
+					transfer_navy = {
+						target = ROOT
+					}
+				}
+				annex_country = {
+					target = WDC
+					transfer_troops = no
+				}
+			}
+			#MacArthur
+			create_country_leader = {
+				name = "Douglas MacArthur"
+				picture = "Portrait_USA_Douglas_MacArthur.dds"
+				expire = "1964.5.1" #real death date close to 1965 the normal so why not xD
+				ideology = despotism
+				traits = {
+					#
+				}
+			}
 			
 		}
 	}
 
 	#Focus for Purge Heretics
 	focus = {
-		id = NJ_purgeheretics
+		id = NJ_order_and_justice
 		icon = GFX_focus_generic_air_defense
 		x = 14
 		y = 3
 		cost = 1
 		available_if_capitulated = yes
-		prerequisite = { focus = NJ_catholiczealotry }
-		mutually_exclusive = { focus = NJ_charity }
+		prerequisite = { focus = NJ_requiem_of_the_states }
+		mutually_exclusive = { focus = NJ_liberty_and_prosperity }
 		ai_will_do = {
 			factor = 1
 		}
@@ -885,14 +1077,14 @@ completion_reward = {
 
 	#Focus for Charity
 	focus = {
-		id = NJ_charity
+		id = NJ_liberty_and_prosperity
 		icon = GFX_focus_spr_no_pasaran
 		x = 12
 		y = 3
 		cost = 1
 		available_if_capitulated = yes
-		prerequisite = { focus = NJ_catholiczealotry }
-		mutually_exclusive = { focus = NJ_purgeheretics }
+		prerequisite = { focus = NJ_requiem_of_the_states }
+		mutually_exclusive = { focus = NJ_order_and_justice }
 		ai_will_do = {
 			factor = 1
 		}
@@ -905,21 +1097,21 @@ completion_reward = {
 
 	#Focus for Pass the Ammunition Sharing is caring
 	focus = {
-		id = NJ_martyrdom
+		id = NJ_pass_ammo_sharing_caring
 		icon = GFX_goal_generic_war_with_comintern
 		x = 11
 		y = 5
 		cost = 1
 		available_if_capitulated = yes
-		prerequisite = { focus = NJ_catholicmeansuniversal }
+		prerequisite = { focus = NJ_supreme_commander }
 		mutually_exclusive = { 
-			focus = NJ_godgivenrights 
+			focus = NJ_martial_republicanism 
 		}
 		mutually_exclusive = { 
-			focus = NJ_thecrusade 
+			focus = NJ_the_directory 
 		}
 		mutually_exclusive = { 
-			focus = NJ_fishandbread 
+			focus = NJ_fantastic_falangism 
 		}
 		ai_will_do = {
 			factor = 1
@@ -940,21 +1132,21 @@ completion_reward = {
 
 	#Focus for Martial Republicanism
 	focus = {
-		id = NJ_godgivenrights
+		id = NJ_martial_republicanism
 		icon = GFX_focus_usa_voter_registration_act
 		x = 13
 		y = 5
 		cost = 1
 		available_if_capitulated = yes
-		prerequisite = { focus = NJ_catholicmeansuniversal }
+		prerequisite = { focus = NJ_supreme_commander }
 		mutually_exclusive = { 
-			focus = NJ_martyrdom 
+			focus = NJ_pass_ammo_sharing_caring 
 		}
 		mutually_exclusive = { 
-			focus = NJ_thecrusade 
+			focus = NJ_the_directory 
 		}
 		mutually_exclusive = { 
-			focus = NJ_fishandbread 
+			focus = NJ_fantastic_falangism 
 		}
 		ai_will_do = {
 			factor = 1
@@ -979,21 +1171,21 @@ completion_reward = {
 
 	#Focus for The Directory
 	focus = {
-		id = NJ_thecrusade
+		id = NJ_the_directory
 		icon = GFX_focus_chi_army_reform
 		x = 15
 		y = 5
 		cost = 1
 		available_if_capitulated = yes
-		prerequisite = { focus = NJ_catholicmeansuniversal }
+		prerequisite = { focus = NJ_supreme_commander }
 		mutually_exclusive = { 
-			focus = NJ_godgivenrights 
+			focus = NJ_martial_republicanism 
 		}
 		mutually_exclusive = { 
-			focus = NJ_martyrdom 
+			focus = NJ_pass_ammo_sharing_caring 
 		}
 		mutually_exclusive = { 
-			focus = NJ_fishandbread 
+			focus = NJ_fantastic_falangism 
 		}
 		ai_will_do = {
 			factor = 1
@@ -1012,21 +1204,21 @@ completion_reward = {
 
 	#Focus for Fantastic Falangism
 	focus = {
-		id = NJ_fishandbread
+		id = NJ_fantastic_falangism
 		icon = GFX_focus_spa_the_phalanx_ascendant
 		x = 17
 		y = 5
 		cost = 1
 		available_if_capitulated = yes
-		prerequisite = { focus = NJ_catholicmeansuniversal }
+		prerequisite = { focus = NJ_supreme_commander }
 		mutually_exclusive = { 
-			focus = NJ_godgivenrights 
+			focus = NJ_martial_republicanism 
 		}
 		mutually_exclusive = { 
-			focus = NJ_thecrusade 
+			focus = NJ_the_directory 
 		}
 		mutually_exclusive = { 
-			focus = NJ_martyrdom 
+			focus = NJ_pass_ammo_sharing_caring 
 		}
 		ai_will_do = {
 			factor = 1
@@ -1035,17 +1227,17 @@ completion_reward = {
 
 	#Focus for Work will keep us free
 	focus = {
-		id = NJ_1dayofrest
+		id = NJ_work_keep_us_free
 		icon = GFX_goal_generic_air_production
 		x = 17
 		y = 6
 		cost = 1
 		available_if_capitulated = yes
 		prerequisite = { 
-			focus = NJ_fishandbread 
-			focus = NJ_thecrusade 
-			focus = NJ_godgivenrights 
-			focus = NJ_martyrdom 
+			focus = NJ_fantastic_falangism 
+			focus = NJ_the_directory 
+			focus = NJ_martial_republicanism 
+			focus = NJ_pass_ammo_sharing_caring 
 		}
 		ai_will_do = {
 			factor = 1
@@ -1054,17 +1246,17 @@ completion_reward = {
 
 	#Focus for Tradition of Victory
 	focus = {
-		id = NJ_promoteunity
+		id = NJ_tradition_of_victory
 		icon = GFX_goal_generic_special_forces
 		x = 13
 		y = 6
 		cost = 1
 		available_if_capitulated = yes
 		prerequisite = { 
-			focus = NJ_fishandbread 
-			focus = NJ_thecrusade 
-			focus = NJ_godgivenrights 
-			focus = NJ_martyrdom 
+			focus = NJ_fantastic_falangism 
+			focus = NJ_the_directory 
+			focus = NJ_martial_republicanism 
+			focus = NJ_pass_ammo_sharing_caring 
 		}
 		ai_will_do = {
 			factor = 1
@@ -1073,17 +1265,17 @@ completion_reward = {
 
 	#Focus for Not Killing Very discreetly
 	focus = {
-		id = NJ_bancontraceptives
+		id = NJ_not_killing_discreetly
 		icon = GFX_goal_generic_attack_allies
 		x = 11
 		y = 6
 		cost = 1
 		available_if_capitulated = yes
 		prerequisite = { 
-			focus = NJ_fishandbread 
-			focus = NJ_thecrusade 
-			focus = NJ_godgivenrights 
-			focus = NJ_martyrdom 
+			focus = NJ_fantastic_falangism 
+			focus = NJ_the_directory 
+			focus = NJ_martial_republicanism 
+			focus = NJ_pass_ammo_sharing_caring 
 		}
 		ai_will_do = {
 			factor = 1
@@ -1092,17 +1284,17 @@ completion_reward = {
 
 	#Focus for Manifest Destiny
 	focus = {
-		id = NJ_revivethetemplars
+		id = NJ_manifest_destiny
 		icon = GFX_focus_chi_mission_to_the_us
 		x = 15
 		y = 6
 		cost = 1
 		available_if_capitulated = yes
 		prerequisite = { 
-			focus = NJ_fishandbread 
-			focus = NJ_thecrusade 
-			focus = NJ_godgivenrights 
-			focus = NJ_martyrdom 
+			focus = NJ_fantastic_falangism 
+			focus = NJ_the_directory 
+			focus = NJ_martial_republicanism 
+			focus = NJ_pass_ammo_sharing_caring 
 		}
 		ai_will_do = {
 			factor = 1
@@ -1112,14 +1304,14 @@ completion_reward = {
 	#Focus for Black Jersey
 	focus = {
 		id = NJ_blackjersey
-		icon = GFX_blackjersey
+		icon = GFX_focus_Black_Jersey
 		x = 21
 		y = 4
 		cost = 10
 		available_if_capitulated = yes
 		prerequisite = { focus = NJ_commonsense }
 		mutually_exclusive = { 
-			focus = NJ_exportcorps 
+			focus = NJ_popular_socialism 
 		}
 		mutually_exclusive = { 
 			focus = NJ_colonialcommunes 
@@ -1127,6 +1319,18 @@ completion_reward = {
 		ai_will_do = {
 			factor = 1
 		}
+		
+		completion_reward = {
+			create_country_leader = {
+				name = "André Travelliour"
+				#picture = "gfx//leaders//Africa//Portrait_Africa_Generic_2.dds"
+				expire = "1965.1.1"
+				ideology = anarchist_communism
+				traits = {
+					#
+				}
+			}
+		}	
 	}
 
 	#Focus for Common Sense
@@ -1143,9 +1347,9 @@ completion_reward = {
 		}
 	}
 
-	#Focus for Export Corps
+	#Focus for Popular Socialsim
 	focus = {
-		id = NJ_exportcorps
+		id = NJ_popular_socialism
 		icon = GFX_focus_YUG_pan_slavic_congress
 		x = 25
 		y = 4
@@ -1161,6 +1365,18 @@ completion_reward = {
 		ai_will_do = {
 			factor = 1
 		}
+		
+		completion_reward = {
+			create_country_leader = {
+				name = "Frank T. Johns"
+				#picture = "Portrait_SNJ_Frank_T_Johns"
+				expire = "1965.1.1"
+				ideology = stalinism
+				traits = {
+					#
+				}
+			}
+		}	
 	}
 
 	#Focus for Colonial Communes
@@ -1173,11 +1389,23 @@ completion_reward = {
 		available_if_capitulated = yes
 		prerequisite = { focus = NJ_commonsense }
 		mutually_exclusive = { 
-			focus = NJ_exportcorps 
+			focus = NJ_popular_socialism 
 			focus = NJ_blackjersey 
 		}
 		ai_will_do = {
 			factor = 1
+		}
+		
+		completion_reward = {
+			create_country_leader = {
+				name = "Soong Mei-Ling"
+				#picture = "Portrait_SNJ_Soong_MeiLing"
+				expire = "1965.1.1"
+				ideology = leninism
+				traits = {
+					#
+				}
+			}
 		}
 	}
 
@@ -1206,6 +1434,10 @@ completion_reward = {
 		prerequisite = { focus = NJ_blackjersey }
 		ai_will_do = {
 			factor = 1
+		}
+		
+		completion_reward = {
+			#"steal from kaiserreich code" 
 		}
 	}
 
@@ -1282,6 +1514,16 @@ completion_reward = {
 		ai_will_do = {
 			factor = 1
 		}
+		
+		completion_reward = {
+			add_tech_bonus = {
+				bonus = 0.3
+				uses = 3
+				uses = 3
+				category = radar_tech
+			}
+			add_ideas = NJ_232_7_research_speed
+		}
 	}
 
 	#Focus for Fund the JUSE
@@ -1293,7 +1535,7 @@ completion_reward = {
 		y = 5
 		cost = 10
 		available_if_capitulated = yes
-		prerequisite = { focus = NJ_exportcorps }
+		prerequisite = { focus = NJ_popular_socialism }
 		mutually_exclusive = { focus = NJ_exportationofaid }
 		ai_will_do = {
 			factor = 1
@@ -1317,7 +1559,7 @@ completion_reward = {
 		y = 5
 		cost = 10
 		available_if_capitulated = yes
-		prerequisite = { focus = NJ_exportcorps }
+		prerequisite = { focus = NJ_popular_socialism }
 		mutually_exclusive = { focus = NJ_fundthejuse }
 		ai_will_do = {
 			factor = 1
@@ -1377,6 +1619,20 @@ completion_reward = {
 		ai_will_do = {
 			factor = 1
 		}
+		
+		completion_reward = {
+			#add_ideas = NJ_feed_bourgeiouis_lead_idea
+			#set_technology = {
+			#	var:infantry_equipment_2 = 1
+			#}
+			create_production_license = {
+				target = SNJ
+				equipment = {
+					type = infantry_equipment_0 #want this to be better but reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+				}
+				cost_factor = -0.2
+			}
+		}
 	}
 
 	#Focus for People's Republic of Amerika
@@ -1400,7 +1656,7 @@ completion_reward = {
 	focus = {
 		id = NJ_avengethelinewar
 		icon = GFX_goal_generic_major_war
-		x = 36
+		x = 38
 		y = 3
 		cost = 10
 		available_if_capitulated = yes
@@ -1430,7 +1686,7 @@ completion_reward = {
 	focus = {
 		id = NJ_lessonsofthelinewar
 		icon = GFX_focus_generic_provoke_border_clashes
-		x = 38
+		x = 36
 		y = 3
 		cost = 10
 		available_if_capitulated = yes
@@ -1561,17 +1817,17 @@ completion_reward = {
 
 	#Focus for Our King, Our Pope
 	focus = {
-		id = NJ_ourkingourpope
+		id = NJ_andium_invictus
 		icon = GFX_focus_generic_strike_at_democracy1
 		x = 14
 		y = 7
 		cost = 5
 		available_if_capitulated = yes
 		prerequisite = { 
-			focus = NJ_promoteunity 
-			focus = NJ_revivethetemplars 
-			focus = NJ_bancontraceptives 
-			focus = NJ_1dayofrest 
+			focus = NJ_tradition_of_victory 
+			focus = NJ_manifest_destiny 
+			focus = NJ_not_killing_discreetly 
+			focus = NJ_work_keep_us_free 
 		}
 		ai_will_do = {
 			factor = 1
@@ -1774,6 +2030,9 @@ completion_reward = {
 		y = 3
 		cost = 10
 		available_if_capitulated = yes
+		available = {
+			has_country_flag = nj_event_another_trenton_washington_option
+		}
 		prerequisite = { focus = NJ_anothertrenton }
 		mutually_exclusive = { 
 			focus = NJ_thecultofjackson 
@@ -1786,8 +2045,7 @@ completion_reward = {
 		}
 		
 		completion_reward = {
-			#change leader to DePreussen
-			# probably should fire event somehow
+
 		}	
 	}
 
@@ -1799,6 +2057,9 @@ completion_reward = {
 		y = 3
 		cost = 10
 		available_if_capitulated = yes
+		available = {
+			has_country_flag = nj_event_another_trenton_jackson_option
+		}
 		prerequisite = { focus = NJ_anothertrenton }
 		mutually_exclusive = { 
 			focus = NJ_thewashingtonparty 
@@ -1824,6 +2085,9 @@ completion_reward = {
 		y = 3
 		cost = 10
 		available_if_capitulated = yes
+		available = {
+			has_country_flag = nj_event_another_trenton_roosevelt_option
+		}
 		prerequisite = { focus = NJ_anothertrenton }
 		mutually_exclusive = { 
 			focus = NJ_thewashingtonparty 
@@ -1962,20 +2226,19 @@ add_ace = {
 		ai_will_do = {
 			factor = 1
 		}
-completion_reward = {
+		completion_reward = {
+			create_navy_leader = {
+				name = "William Halsey, Jr."
+				picture = "Portrait_USA_William_Halsey_Jr.dds"
+				traits = { bold aviation_enthusiast superior_tactician spotter }
+				skill = 5
+				attack_skill = 5
+				defense_skill = 5
+				maneuvering_skill = 4
+				coordination_skill = 3
+			}
 
-create_navy_leader = {
-	name = "William Halsey, Jr."
-		picture = "Portrait_USA_William_Halsey_Jr.dds"
-	traits = { bold aviation_enthusiast superior_tactician spotter }
-	skill = 5
-	attack_skill = 5
-	defense_skill = 5
-	maneuvering_skill = 4
-	coordination_skill = 3
-}
-
-}
+		}
 	}
 
 	#Focus for Paratroopers
@@ -2040,7 +2303,7 @@ create_navy_leader = {
 			factor = 1
 		}
 
-completion_reward = {
+		completion_reward = {
 			navy_experience = 25
 			if = {
 				limit = {
@@ -2401,7 +2664,7 @@ completion_reward = {
 			factor = 1
 		}
 #Change Economy Law to Free Trade
-
+#Market Liberalism + 100 relations with neighbors, 10% Resource export, +2.2 daily pp, +25% construction speed
 	}
 
 	#Focus for Quantity over Quality
@@ -2508,6 +2771,7 @@ bypass = {
 		}
 
 		completion_reward = {
+			
 			random_owned_controlled_state = {
 				limit = {
 					free_building_slots = {
@@ -2593,6 +2857,7 @@ bypass = {
 		ai_will_do = {
 			factor = 1
 		}
+		#Civilian Sales - +5% Defence on core territory -50k guns. +10 Stability + war support
 	}
 
 	#Focus for Work Ethic
@@ -2748,8 +3013,8 @@ add_tech_bonus = {
 		ai_will_do = {
 			factor = 1
 		}
-		complete_tooltip = {
-			#recruit able population factor +1.5
+		completion_reward = {
+			add_ideas = nj_enforce_conscription_focus_idea
 		}
 	}
 
@@ -2766,8 +3031,8 @@ add_tech_bonus = {
 		ai_will_do = {
 			factor = 1
 		}
-		complete_tooltip = {
-			#Monthly Recruitable Population +15
+		completion_reward = {
+			add_ideas = NJ_reservists_idea
 		}
 	}
 
@@ -2994,6 +3259,10 @@ add_tech_bonus = {
 		ai_will_do = {
 			factor = 1
 		}
+		
+		completion_reward = {
+			add_ideas = expansive_paratrooper_program_idea
+		}
 	}
 
 	#Focus for The Nationalist Bolshevik Coup
@@ -3008,13 +3277,48 @@ add_tech_bonus = {
 			focus = NJ_neujersey 
 			focus = NJ_novoandium 
 		}
+		
+		completion_reward = {
+			set_party_name= { 
+				ideology = communism 
+				long_name = SNJ_national_assembly_workers_long
+				name = SNJ_national_assembly_workers 
+			}
+			set_politics = {
+				ruling_party = communism
+			}
+			add_popularity = {
+				ideology = communism 
+				popularity = 0.15
+			}
+			create_country_leader = {
+				name = "Pravil N. O'Links"
+				picture = "Portrait_Germany_Generic_3.dds"
+				expire = "1965.1.1"
+				ideology = leninism
+				traits = {
+					#
+					appeaser
+					cornered_fox
+					devoted_trotskyist
+					divided_intrests
+					fascist_sympathies
+					incognito
+					poltical_dancer
+					revolutionary_general
+					stalins_puppet
+					staunch_stalinist
+					veteran_communist
+				}
+			}
+		}
 	}
 
 	#Focus for Lupus Mare
 	focus = {
 		id = NJ_lupusmare
 		icon = GFX_goal_generic_wolf_pack
-		x = 8
+		x = 9
 		y = 5
 		cost = 10
 		available_if_capitulated = yes
@@ -3031,7 +3335,7 @@ add_tech_bonus = {
 	focus = {
 		id = NJ_diegeisterbrigade
 		icon = GFX_goal_generic_secret_weapon
-		x = 4
+		x = 3
 		y = 5
 		cost = 10
 		available_if_capitulated = yes
@@ -3061,8 +3365,37 @@ add_tech_bonus = {
 			focus = NJ_coastlinesdontend
 		}
 		mutually_exclusive = { focus = NJ_avetruetocaesar }
+		available = {
+			SNJ = {
+				owns_state = 257
+			}
+		}
+		cancel_if_invalid = yes
+		
+		bypass = {
+			NOT = {
+				SNJ = {
+					owns_state = 257
+				}
+			}
+		}
 		ai_will_do = {
 			factor = 1
+		}
+		
+		completion_reward = {
+			if = {
+				limit = {
+					SNJ = {
+						owns_state = 257
+					}
+
+				}
+			}
+			set_province_name = { id = 3469 name = "Nova Roma"} #formerly Trenton, the capital
+			set_province_name = { id = 3462 name = "Novo Veneto"}
+			set_province_name = { id = 3424 name = "Capo Sicilia"}
+			set_province_name = { id = 2161 name = "Genoa Nova"}
 		}
 	}
 
@@ -3086,7 +3419,32 @@ add_tech_bonus = {
 		ai_will_do = {
 			factor = 1
 		}
+completion_reward = {
+
+set_party_name= { 
+				ideology = fascism
+				long_name = SNJ_Großer_Neu_Jersey
+				name = SNJ_Groß_Jersey
+}
+create_country_leader = {
+				name = "Reichskommissar Steiner"
+				picture = "Portrait_SNJ_Justin_Moreira.dds"
+				expire = "1965.1.1"
+				ideology = rexism
+				traits = {
+					#
+					cornered_fox
+					dictator
+					national_integeralist
+					political_dancer
+					warmonger
+					rearmer
+					hawk
+					hedonist
+					}
 	}
+}
+}
 
 	#Focus for European Out-Reach
 	focus = {
@@ -3123,6 +3481,10 @@ add_tech_bonus = {
 		ai_will_do = {
 			factor = 1
 		}
+		
+		completion_reward = {
+			add_ideas = extensive_marine_program_idea
+		}
 	}
 
 	#Focus for Expansive Marine Program
@@ -3143,6 +3505,10 @@ add_tech_bonus = {
 		ai_will_do = {
 			factor = 1
 		}
+		
+		completion_reward = {
+			add_ideas = expansive_marine_program_idea
+		}
 	}
 
 	#Focus for Extensive Paratrooper Program
@@ -3162,6 +3528,10 @@ add_tech_bonus = {
 		mutually_exclusive = { focus = NJ_expansiveparatrooperprogram }
 		ai_will_do = {
 			factor = 1
+		}
+		
+		completion_reward = {
+			add_ideas = extensive_paratrooper_program_idea
 		}
 	}
 
@@ -3200,6 +3570,14 @@ add_tech_bonus = {
 		}
 		ai_will_do = {
 			factor = 1
+		}
+		
+		completion_reward = {
+			add_equipment_to_stockpile = {
+				type = convoy
+				amount = 250
+				producer = SHI
+			}
 		}
 	}
 
@@ -3326,6 +3704,10 @@ add_tech_bonus = {
 		ai_will_do = {
 			factor = 1
 		}
+		
+		completion_reward = {
+			
+		}
 	}
 
 	#Focus for Under the Golden Sun
@@ -3348,7 +3730,35 @@ add_tech_bonus = {
 		ai_will_do = {
 			factor = 1
 		}
+completion_reward = {
+set_politics = {
+				ruling_party = neutrality
+}
+set_party_name= { 
+				ideology = neutrality
+				long_name = SNJ_Royal_family_of_New_Jersey
+				name = SNJ_Moreira_Dynasty
+}
+create_country_leader = {
+				name = "King Justin I"
+				picture = "Portrait_SNJ_Justin_Moreira.dds"
+				expire = "1965.1.1"
+				ideology = moderatism
+				traits = {
+					#
+					constituional_monarch
+					rearmer
+					great_survivor
+					imperial_connections
+					nationalist_symbol
+					the_legitimist
+					inexperienced_imperialist
+					}
+					
+					
+				}
 	}
+}
 
 	#Focus for The American Union State
 	focus = {
@@ -3393,13 +3803,13 @@ add_tech_bonus = {
 
 	#Focus for Americae Invictus
 	focus = {
-		id = NJ_astateonahill
+		id = NJ_americae_invictus
 		icon = GFX_focus_generic_diplomatic_treaty
 		x = 14
 		y = 8
 		cost = 10
 		available_if_capitulated = yes
-		prerequisite = { focus = NJ_ourkingourpope }
+		prerequisite = { focus = NJ_andium_invictus }
 		ai_will_do = {
 			factor = 1
 		}
@@ -3416,6 +3826,10 @@ add_tech_bonus = {
 		ai_will_do = {
 			factor = 1
 		}
+		completion_reward = {	
+		add_political_power = 100
+		
+			}
 	}
 
 	#Focus for Private Healthcare
@@ -3467,6 +3881,23 @@ add_tech_bonus = {
 		ai_will_do = {
 			factor = 1
 		}
+		completion_reward = {
+			create_country_leader = {
+				name = "Imperator Mussolini"
+				picture = "emperor_mussolini.dds"
+				expire = "1965.1.1"
+				ideology = falangism
+				traits = {
+					#
+					american_caesar
+					dictator
+					nationalist_symbol
+					unpopular_monarch
+				}
+									
+			}
+		}
+
 	}
 
 	#Focus for The Anti-Soviet Pact
@@ -3510,6 +3941,10 @@ add_tech_bonus = {
 		ai_will_do = {
 			factor = 1
 		}
+completion_reward = {	
+
+add_stability = .125
+}
 	}
 
 	#Focus for Social Reforms
@@ -3523,7 +3958,12 @@ add_tech_bonus = {
 		prerequisite = { focus = NJ_popularreforms }
 		ai_will_do = {
 			factor = 1
-		}
+}
+completion_reward = {	
+
+add_stability = .05
+}
+		
 	}
 
 	#Focus for Liberal Budget
@@ -3668,6 +4108,10 @@ add_tech_bonus = {
 		ai_will_do = {
 			factor = 1
 		}
+completion_reward = {	
+
+add_stability = .05
+}
 	}
 
 	#Focus for Civil RIghts
@@ -3682,6 +4126,10 @@ add_tech_bonus = {
 		ai_will_do = {
 			factor = 1
 		}
+completion_reward = {	
+
+add_stability = .05
+}
 	}
 
 	#Focus for Rosie the Riveter
