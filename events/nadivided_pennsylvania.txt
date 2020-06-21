@@ -620,3 +620,73 @@ country_event = {
         army_experience = 200
     }
 }
+country_event = {
+    id = penn.14
+    title = penn.14.t
+    desc = penn.14.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = {
+        name = penn.14.a
+        ai_chance = {
+            factor = 75
+            modifier = {
+                add = 25 #factor = 1.33
+                SDE = {
+                    num_of_controlled_states < 4
+                }
+            }
+            modifier = {
+                add = -25 #factor = 0.67
+                SDE = {
+                    num_of_controlled_states > 3
+                }
+            }
+        }
+        SPA = {
+            add_state_core = 411
+            add_state_core = 412
+            add_state_core = 413
+            annex_country = {
+                target = SDE
+                transfer_troops = yes
+            }
+        }
+    }
+    option = {
+        name = penn.14.b
+        ai_chance = {
+            factor = 25
+            modifier = {
+                factor = 0
+                MTA = {
+                    num_of_controlled_states < 4
+                }
+            }
+            modifier = {
+                factor = 2
+                MTA = {
+                    num_of_controlled_states > 3
+                }
+            }
+        }
+        SPA = {
+            declare_war_on = {
+                target = SDE
+                type = annex_everything
+            }
+            add_state_core = 411
+            add_state_core = 412
+            add_state_core = 413
+        }
+        if = {
+            limit = {
+                num_of_controlled_states < 4
+            }
+            add_political_power = -50
+        }
+    }
+}
