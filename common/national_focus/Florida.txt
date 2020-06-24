@@ -1692,6 +1692,7 @@ focus_tree = {
 		} 
 	} 
 	
+	# Focus - Let Democracy Win
 	focus = { 
 		id = SFL_let_democracy_win
 		#icon = #
@@ -1702,7 +1703,17 @@ focus_tree = {
 		prerequisite = { focus = SFL_election_of_1936 }
 		
 		completion_reward = { 
-
+			add_political_power = 50
+			#"Fred Cone Becomes leader" 
+			create_country_leader = {
+				name = "Fred Cone"
+				picture = "Portrait_SFL_Fred_Cone.dds"
+				expire = "1965.1.1"
+				ideology = conservative
+				traits = {
+					#
+				}
+			}
 		} 
 	}
 	
@@ -1747,7 +1758,7 @@ focus_tree = {
 		prerequisite = { focus = SFL_let_democracy_win }
 		
 		completion_reward = { 
-
+			add_ideas = SFL_generalismo_training_idea
 		} 
 	}
 	
@@ -1916,10 +1927,21 @@ focus_tree = {
 		prerequisite = { focus = SFL_industralize_northern_florida }
 		
 		completion_reward = { 
-
+			add_timed_idea = {
+				idea = SFL_southern_unity_idea
+				days = 180
+			}
+			SGA = {	
+				#this idea should be found in florida ideas file
+				add_timed_idea = {
+					idea = florida_influence_on_country_idea
+					days = 180
+				}
+			}
 		} 
 	}
 	
+	# claim west florida
 	focus = { 
 		id = SFL_claim_west_florida
 		#icon = #
@@ -1946,7 +1968,17 @@ focus_tree = {
 		prerequisite = { focus = SFL_election_of_1936 }
 		
 		completion_reward = { 
-
+			custom_effect_tooltip = SFL_cancel_elections_effect_tt
+			hidden_effect = {
+				set_temp_variable = { florida_party_current = current_party_ideology_group }
+				
+				set_politics = {
+					ruling_party = var:florida_party_current		#necessary otherwise crash really just wanna cancel elections
+					elections_allowed = no 
+				}
+			}
+			add_stability = -0.10
+			add_political_power = -75
 		} 
 	}
 	
@@ -1962,7 +1994,15 @@ focus_tree = {
 		prerequisite = { focus = SFL_cancel_elections }
 		
 		completion_reward = { 
-
+			add_stability = -0.05
+			
+			set_temp_variable = { sfl_fascism_popularity = party_popularity@fascism } 
+			multiply_temp_variable = { sfl_fascism_popularity = -0.4}
+			add_popularity = {
+				ideology = fascism
+				#will reduce fascist support by 40%
+				popularity = var:sfl_fascism_popularity
+			}
 		} 
 	}
 	
@@ -1977,7 +2017,7 @@ focus_tree = {
 		prerequisite = { focus = SFL_kick_fascists_out_army }
 		
 		completion_reward = { 
-
+			add_ideas = SFL_florida_army_idea_a
 		} 
 	}
 	
@@ -1993,7 +2033,7 @@ focus_tree = {
 		prerequisite = { focus = SFL_army_of_florida }
 		
 		completion_reward = { 
-
+			add_ideas = SFL_spread_sunshine_idea
 		} 
 	}
 	
@@ -2045,6 +2085,24 @@ focus_tree = {
 			18 = {
 				add_claim_by = ROOT 
 			}
+		} 
+	}
+	
+	# Nationalize West Florida
+	focus = { 
+		id = SFL_nationalize_west_fl
+		#icon = #
+		x = -1
+		y = 5
+		relative_position_id = SFL_army_of_florida
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_claim_baton_rouge }
+		
+		completion_reward = { 
+			add_state_core = 18
+			add_state_core = 155
+			add_state_core = 22
 		} 
 	}
 	
@@ -2268,7 +2326,7 @@ focus_tree = {
 		prerequisite = { focus = SFL_cancel_elections }
 		
 		completion_reward = { 
-
+			add_ideas = SFL_semmes_plan_idea
 		} 
 	}
 	
@@ -2286,7 +2344,46 @@ focus_tree = {
 		prerequisite = { focus = SFL_semmes_plan }
 		
 		completion_reward = { 
-
+			add_ideas = SFL_destroyers_semmes_idea
+		} 
+	}
+	
+	#Focus - Pearl of the Antilles
+	focus = { 
+		id = SFL_pearl_antilles
+		#rebuild navy
+		
+		#icon = #
+		x = 3
+		y = 3
+		relative_position_id = SFL_cancel_elections
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_destroyers_semmes_plan }
+		
+		completion_reward = { 
+			create_wargoal = {
+				type = annex_everything
+				target = CUB
+			}
+		} 
+	}
+	
+	#nationalize cuba
+	focus = { 
+		id = SFL_nationalize_cuba
+		#rebuild navy
+		
+		#icon = #
+		x = 3
+		y = 4
+		relative_position_id = SFL_cancel_elections
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_pearl_antilles }
+		
+		completion_reward = { 
+			core_cuba = yes
 		} 
 	}
 	
