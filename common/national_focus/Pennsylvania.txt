@@ -825,8 +825,8 @@ focus_tree = {
     focus = {
         id = SPA_expand_eire_dockyards
         icon = GFX_goal_generic_construct_naval_dockyard
-        x = 19
-        y = 0
+        x = 10
+        y = 3
         cost = 10
         ai_will_do = {
             factor = 1
@@ -885,8 +885,8 @@ focus_tree = {
     focus = {
         id = SPA_expand_philadelphia_dockyards
         icon = GFX_goal_generic_construct_naval_dockyard
-        x = 21
-        y = 0
+        x = 12
+        y = 3
         cost = 10
         ai_will_do = {
             factor = 1
@@ -969,8 +969,8 @@ focus_tree = {
         id = SPA_ground_support_focus
         icon = GFX_goal_generic_CAS
         mutually_exclusive = { focus = SPA_bombing_focus}
-        x = 23
-        y = 0
+        x = 15
+        y = 3
         cost = 10
         ai_will_do = {
             factor = 1
@@ -1025,8 +1025,8 @@ focus_tree = {
         id = SPA_bombing_focus
         icon = GFX_goal_generic_air_bomber
         mutually_exclusive = { focus = SPA_ground_support_focus}
-        x = 27
-        y = 0
+        x = 19
+        y = 3
         cost = 10
         ai_will_do = {
             factor = 1
@@ -1136,7 +1136,7 @@ focus_tree = {
                 has_country_flag = SPA_is_anarchist
             }
         }
-        x = 70
+        x = 80
         y = 0
         cost = 10
         ai_will_do = {
@@ -1920,7 +1920,7 @@ focus_tree = {
         icon = GFX_
         prerequisite = { focus = SPA_the_late_election}
         mutually_exclusive = { focus = SPA_continue_with_pinchot}
-        x = 20
+        x = 16
         y = 1
         relative_position_id = SPA_the_late_election
         cost = 10
@@ -1980,16 +1980,133 @@ focus_tree = {
         }
     }
     focus = {
-        id = SPA_claim_the_german_american_bund
+        id = SPA_invite_german_officers
+        icon = GFX_
+        prerequisite = { focus = SPA_send_volunteers_to_the_war_in_europe}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SPA_voltunteers_have_returned_tt
+                has_country_flag = SPA_volunteers_returned
+            }
+        }
+        x = -2
+        y = 2
+        relative_position_id = SPA_germanize_pennsylvania
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            army_experience = 50
+            create_field_marshal = {
+                name = "Gerd von Rundstedt"
+                picture = "Portrait_Germany_Gerd_von_Rundstedt.dds"
+                traits = { defensive_doctrine urban_assault_specialist old_guard }
+                skill = 3
+                attack_skill = 3
+                defense_skill = 2
+                planning_skill = 3
+                logistics_skill = 2
+            }
+            create_corps_commander = {
+                name = "Erwin Rommel"
+                picture = "Portrait_Germany_Erwin_Rommel.dds"
+                traits = { trickster trait_reckless war_hero armor_officer media_personality }
+                skill = 4
+                attack_skill = 4
+                defense_skill = 4
+                planning_skill = 2
+                logistics_skill = 3
+            }
+            create_corps_commander = {
+                name = "Wilhelm Ritter von Leeb"
+                picture = "Portrait_Germany_Wilhelm_Ritter_von_Leeb.dds"
+                traits = { old_guard infantry_officer }
+                skill = 3
+                attack_skill = 4
+                defense_skill = 3
+                planning_skill = 1
+                logistics_skill = 2
+            }
+        }  
+    }
+    focus = {
+        id = SPA_teach_german_as_a_secondary_language
         icon = GFX_
         prerequisite = { focus = SPA_germanize_pennsylvania}
+        x = 0
+        y = 1
+        relative_position_id = SPA_germanize_pennsylvania
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_stability = 0.05
+            add_war_support = 0.05
+        }
+    }
+    focus = {
+        id = SPA_german_engineering
+        icon = GFX_
+        prerequisite = { focus = SPA_teach_german_as_a_secondary_language}
+        x = 0
+        y = 2
+        relative_position_id = SPA_germanize_pennsylvania
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            add_ideas = SPA_german_engineering
+        }
+    }
+    focus = {
+        id = SPA_fan_german_nationalism
+        icon = GFX_
+        prerequisite = { focus = SPA_teach_german_as_a_secondary_language}
+        x = 2
+        y = 2
+        relative_position_id = SPA_germanize_pennsylvania
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_MANPOWER }
+
+        completion_reward = {
+            add_ideas = SPA_german_nationalism
+        }
+    }
+    focus = {
+        id = SPA_claim_the_german_american_bund
+        icon = GFX_
+        prerequisite = { focus = SPA_german_engineering}
+        prerequisite = { focus = SPA_fan_german_nationalism}
         available = {
             has_army_manpower = {
                 size > 150000
             }
         }
         x = 0
-        y = 1
+        y = 3
         relative_position_id = SPA_germanize_pennsylvania
         cost = 10
         ai_will_do = {
