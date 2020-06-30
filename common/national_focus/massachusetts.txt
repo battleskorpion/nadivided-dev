@@ -7,6 +7,616 @@ focus_tree = {
 			tag = SMA 
 		} 	
 	} 
+	
+	# 		   continous focus position 		  #
+	continuous_focus_position = { x = 200 y = 1600 }
+	#						   					  #
+	
+	#------------------------------#
+	 
+	#			ECONOMIC		   # 
+	
+	#------------------------------#
+	
+	#Focus for Industry of Massachusetts
+	focus = { 
+		id = SMA_industryofmassachusetts
+		icon = GFX_industryofmassachusetts
+		x = 8
+		y = 5
+		cost = 5
+		available_if_capitulated = yes 
+		completion_reward = { 
+			random_owned_controlled_state={
+				add_extra_state_shared_building_slots = 2
+				set_state_flag = SMA_industryofmassachusetts_flag
+			}
+		}
+	} 
+	
+	#Focus for In Memorium of the Tea Party
+	focus = { 
+		id = SMA_inmemoriumoftheteaparty
+		icon = GFX_goal_generic_navy_cruiser
+		x = 4
+		y = 7
+		cost = 8
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_expandbostonharbor } 
+		completion_reward = { 
+			navy_experience = 20 
+			
+			add_equipment_to_stockpile= {
+				type = convoy_1 
+				amount = 50
+				producer = SMA
+			}
+			random_owned_controlled_state={
+				limit = {
+					free_building_slots = {
+						building = dockyard
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = SMA_in_memorium_of_the_tea_party
+			}
+			
+			add_ideas = {
+				boston_tea_party_convoy_raiding
+			}
+			add_ideas = {
+				boston_tea_party_other 				#naval legacy
+			}
+			# you can see all info better when these are seperately added, can see the effects of both. 
+		} 
+	} 
+
+	#Focus for Highway Upgrades
+	focus = { 
+		id = SMA_highwayupgrades
+		icon = GFX_goal_generic_construct_infrastructure
+		x = 10
+		y = 7
+		cost = 8
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_revivetextileindustry focus = SMA_servicebasedeconomy }  
+		completion_reward = { 
+			random_owned_controlled_state= {
+				add_building_construction = {
+					type = infrastructure
+					level = 4
+					instant_build = yes
+				}
+			}
+		} 
+	} 
+
+	#Focus for Subsidize Springfield Armory
+	focus = { 
+		id = SMA_subsidizespringfieldarmory
+		icon = GFX_goal_generic_construct_mil_factory
+		x = 6
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_industryofmassachusetts } 
+		completion_reward = { 
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 2
+				set_state_flag = SMA_subsidize_springfield_armory
+			}
+		}
+	}
+	
+	#Focus for M1 "Garand" Rifle Contract
+	focus = { 
+		id = SMA_m1garandriflecontract
+		icon = GFX_goal_generic_military_sphere
+		x = 6
+		y = 7
+		cost = 8
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_subsidizespringfieldarmory } 
+		completion_reward = { 
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = SMA_m1_garand_rifle_contract
+			}	
+
+			add_equipment_production = {
+				equipment = {
+					type = USA_infantry_equipment_1 
+					creator = 'SMA'
+				}
+				requested_factories = 2
+				progress = 0.95 
+			}
+			add_equipment_to_stockpile = {
+				type = infantry_equipment_1		#was USA_infantry_equipment_1, I just want it to add M1 Garands, hopefully this will fix
+				amount = 10000 
+				producer = SMA 
+			}
+		}		
+	}
+
+	#Focus for Expand Boston Harbor
+	focus = { 
+		id = SMA_expandbostonharbor
+		icon = GFX_goal_generic_construct_naval_dockyard
+		x = 4
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_industryofmassachusetts } 
+		completion_reward = { 
+			random_owned_controlled_state={
+				limit = {
+					free_building_slots = {
+						building = dockyard
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 2
+				set_state_flag = SMA_expand_boston_harbor
+			}
+		}
+	}
+
+	#Focus for Service-Based Economy
+	focus = { 
+		id = SMA_servicebasedeconomy
+		icon = GFX_goal_generic_production
+		x = 10
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_industryofmassachusetts } 
+		mutually_exclusive = { focus = SMA_revivetextileindustry }
+		
+		completion_reward = { 
+			random_owned_controlled_state= {
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state= {
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state={
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = SMA_service_based_economy
+			}
+		} 
+	} 
+
+	#Focus for Revive Textile Industry
+	focus = { 
+		id = SMA_revivetextileindustry
+		icon = GFX_goal_generic_construct_civ_factory
+		x = 8
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_industryofmassachusetts }
+		mutually_exclusive = { focus = SMA_servicebasedeconomy } 
+		
+		completion_reward = { 
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = SMA_revive_textile_industry
+			}
+			
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = SMA_revive_textile_industry
+			}
+		} 
+	} 
+
+	#Focus for Harvard Research Projects
+	focus = { 
+		id = SMA_harvardresearchprojects
+		icon = GFX_goal_tfv_generic_tech_sharing
+		x = 8
+		y = 9
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_hireharvardalumni } 
+		
+		available = { 
+			num_of_factories > 25
+		}
+		
+		completion_reward = { 
+			add_research_slot= 1
+			
+		}
+	}
+
+	#Focus for Hire Harvard Alumni
+	focus = { 
+		id = SMA_hireharvardalumni
+		icon = GFX_goal_continuous_research
+		x = 8
+		y = 8
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_additionalbusinesssubsidies focus = SMA_highwayupgrades } 
+		
+		completion_reward = { 
+			add_tech_bonus= {
+				bonus = 0.10
+				uses = 7 
+				category = industry 
+			}
+		}
+	}
+	
+	#Focus for MIT Research Projects
+	focus = { 
+		id = SMA_mitresearchprojects
+		icon = GFX_focus_research2
+		x = 10
+		y = 9
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_hiremitalumni } 
+		available = { 
+			num_of_factories > 50
+		} 
+		completion_reward = { 
+			add_research_slot= 1
+		} 
+	} 
+	
+	#Focus for Hire MIT Alumni
+	focus = { 
+		id = SMA_hiremitalumni
+		icon = GFX_goal_generic_scientific_exchange
+		x = 10
+		y = 8
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_highwayupgrades focus = SMA_additionalbusinesssubsidies } 
+		completion_reward = { 
+			add_tech_bonus= {
+				bonus = 0.10
+				uses = 2 
+				category = radar_tech 
+			}
+
+			add_tech_bonus= {
+				bonus = 0.10
+				uses = 5
+				category = electronics 
+			}
+		} 
+	}
+
+	#Focus for Nuclear Ambitions
+	focus = { 
+		id = SMA_nuclear_ambitions
+		icon = GFX_goal_tfv_generic_tech_sharing
+		x = 9
+		y = 10
+		cost = 8
+		available_if_capitulated = yes 
+		available = {
+			date > 1939.1.1
+		}
+		prerequisite = { focus = SMA_harvardresearchprojects } 
+		prerequisite = { focus = SMA_mitresearchprojects } 
+		
+		available = { 
+			num_of_factories > 25
+		}
+		
+		completion_reward = { 
+			add_tech_bonus= {
+				bonus = 0.15
+				uses = 3
+				category = nuclear 
+			}
+		}
+	}
+
+	#Focus for Additional Business Subsidies
+	focus = { 
+		id = SMA_additionalbusinesssubsidies
+		icon = GFX_goal_generic_construct_civ_factory
+		x = 8
+		y = 7
+		cost = 8
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_revivetextileindustry focus = SMA_servicebasedeconomy } 
+		completion_reward = {  
+			random_owned_controlled_state={
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = SMA_additional_industrial_subsidies
+			}
+		} 
+	} 
+	
+	#Focus for Forts of Boston
+	focus = { 
+		id = SMA_fortsofboston
+		icon = GFX_goal_unknown
+		x = 12
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_industryofmassachusetts } 
+		ai_will_do = { 
+			factor = 1
+		}
+		
+		completion_reward = {
+			5 = { 					#city/state of boston
+				add_building_construction = {
+					type = bunker
+					province = 2394		#boston
+					level = 4
+                }  
+				add_building_construction = {
+					type = coastal_bunker
+					province = 2394		#boston
+					level = 4
+				}
+            }
+			
+		}
+	} 
+
+	#Focus for Revitalize the New Bedford Forts
+	focus = { 
+		id = SMA_revitalizethenewbedfordforts
+		icon = GFX_revitalizethenewbedfordforts
+		x = 12
+		y = 7
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_fortsofboston } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			3 = { 					#bristol county ma 
+				add_building_construction = {
+					type = coastal_bunker
+					province = 3437		#new bedford
+					level = 4
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					province = 3504		#fall river
+					level = 4
+				}
+            }
+			
+		}
+	}
+	
+	#Focus for Return to the New England Road Marking System
+	focus = { 
+		id = SMA_returntothenewenglandroadmarkingsystem
+		icon = GFX_focus_NE_road_marking
+		x = 11
+		y = 10
+		cost = 5
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_highwayupgrades } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		completion_reward = { 	
+			random_owned_controlled_state = {
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			
+			SRI = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = new_england_road_marking_modifier
+				}
+			}
+			SCT = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = new_england_road_marking_modifier
+				}
+			}
+			SVT = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = new_england_road_marking_modifier
+				}
+			}
+			SNH = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = new_england_road_marking_modifier
+				}
+			}
+			SME = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = new_england_road_marking_modifier
+				}
+			}
+			#add opinion modifier of other new england states
+		}
+	} 
+
+	#Focus for Unify New England
+	focus = { 
+		id = SMA_unifynewengland
+		icon = GFX_goal_unknown
+		x = 11
+		y = 11
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_returntothenewenglandroadmarkingsystem } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		available = { 
+			OR = {
+				has_government = democratic
+				AND = {
+					has_government = neutrality
+					fascism < 0.25
+					communism < 0.25
+				}
+				date > 1938.8.1
+			}
+		}
+		completion_reward = { 
+			SRI = {
+				country_event = {
+					id = massachusetts.1
+					days = 10
+					random = 50
+				}	
+			}
+			SCT = {
+				country_event = {
+					id = massachusetts.1
+					days = 10
+					random = 50
+				}	
+			}
+			SVT = {
+				country_event = {
+					id = massachusetts.1
+					days = 10
+					random = 50
+				}	
+			}
+			SNH = {
+				country_event = {
+					id = massachusetts.1
+					days = 10
+					random = 50
+				}	
+			}
+			SME = {
+				country_event = {
+					id = massachusetts.1
+					days = 10
+					random = 50
+				}	
+			}
+			#it will spark an event for countries to decide to join. ai will have a higher chance of joining, maybe depending on their ideology not sure yet, if they dont join, obtain wargoal. A way for democratic mass to actually do something.
+		} 
+	} 
+	
+	
+	##################################################################################
+	
+	
 	#Focus for Winning
 	focus = { 
 		id = SMA_winning
@@ -1089,22 +1699,7 @@ focus_tree = {
 	#
 	#} 
 
-	#Focus for MIT Research Projects
-	focus = { 
-		id = SMA_mitresearchprojects
-		icon = GFX_focus_research2
-		x = 7
-		y = 4
-		cost = 10
-		available_if_capitulated = yes 
-		prerequisite = { focus = SMA_hiremitalumni } 
-		available = { 
-			num_of_factories > 50
-		} 
-		completion_reward = { 
-			add_research_slot= 1
-		} 
-	}  
+	 
 
 	##Focus for Revive Old Border Disputes
 	#focus = { 
@@ -1215,31 +1810,7 @@ focus_tree = {
 	#		}
 	#	} 
 	#	
-	#}
-
-	#Focus for Hire MIT Alumni
-	focus = { 
-		id = SMA_hiremitalumni
-		icon = GFX_goal_generic_scientific_exchange
-		x = 7
-		y = 3
-		cost = 10
-		available_if_capitulated = yes 
-		prerequisite = { focus = SMA_highwayupgrades focus = SMA_additionalbusinesssubsidies } 
-		completion_reward = { 
-			add_tech_bonus= {
-				bonus = 0.10
-				uses = 2 
-				category = radar_tech 
-			}
-
-			add_tech_bonus= {
-				bonus = 0.10
-				uses = 5
-				category = electronics 
-			}
-		} 
-	} 
+	#} 
 	
 ##########################	
 ######## FASCISM #########
@@ -1863,375 +2434,6 @@ focus_tree = {
 		} 
 
 	} 
-
-	#Focus for In Memorium of the Tea Party
-	focus = { 
-		id = SMA_inmemoriumoftheteaparty
-		icon = GFX_goal_generic_navy_cruiser
-		x = 1
-		y = 2
-		cost = 8
-		available_if_capitulated = yes 
-		prerequisite = { focus = SMA_expandbostonharbor } 
-		completion_reward = { 
-			navy_experience = 20 
-			
-			add_equipment_to_stockpile= {
-				type = convoy_1 
-				amount = 50
-				producer = SMA
-			}
-			random_owned_controlled_state={
-				limit = {
-					free_building_slots = {
-						building = dockyard
-						size > 0
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = dockyard
-					level = 1
-					instant_build = yes
-				}
-				set_state_flag = SMA_in_memorium_of_the_tea_party
-			}
-			
-			add_ideas = {
-				boston_tea_party_convoy_raiding
-			}
-			add_ideas = {
-				boston_tea_party_other 				#naval legacy
-			}
-			# you can see all info better when these are seperately added, can see the effects of both. 
-		} 
-	} 
-
-	#Focus for Highway Upgrades
-	focus = { 
-		id = SMA_highwayupgrades
-		icon = GFX_goal_generic_construct_infrastructure
-		x = 7
-		y = 2
-		cost = 8
-		available_if_capitulated = yes 
-		prerequisite = { focus = SMA_revivetextileindustry focus = SMA_servicebasedeconomy }  
-		completion_reward = { 
-			random_owned_controlled_state= {
-				add_building_construction = {
-					type = infrastructure
-					level = 4
-					instant_build = yes
-				}
-			}
-		} 
-	} 
-
-	#Focus for Subsidize Springfield Armory
-	focus = { 
-		id = SMA_subsidizespringfieldarmory
-		icon = GFX_goal_generic_construct_mil_factory
-		x = 3
-		y = 1
-		cost = 10
-		available_if_capitulated = yes 
-		prerequisite = { focus = SMA_industryofmassachusetts } 
-		completion_reward = { 
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = arms_factory
-						size > 0
-						include_locked = yes
-					}
-				}
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
-				}
-				add_extra_state_shared_building_slots = 2
-				set_state_flag = SMA_subsidize_springfield_armory
-			}
-		}
-	}
-
-	#Focus for Expand Boston Harbor
-	focus = { 
-		id = SMA_expandbostonharbor
-		icon = GFX_goal_generic_construct_naval_dockyard
-		x = 1
-		y = 1
-		cost = 10
-		available_if_capitulated = yes 
-		prerequisite = { focus = SMA_industryofmassachusetts } 
-		completion_reward = { 
-			random_owned_controlled_state={
-				limit = {
-					free_building_slots = {
-						building = dockyard
-						size > 0
-						include_locked = yes
-					}
-				}
-				add_building_construction = {
-					type = dockyard
-					level = 2
-					instant_build = yes
-				}
-				add_extra_state_shared_building_slots = 2
-				set_state_flag = SMA_expand_boston_harbor
-			}
-		}
-	}
-
-	#Focus for Service-Based Economy
-	focus = { 
-		id = SMA_servicebasedeconomy
-		icon = GFX_goal_generic_production
-		x = 7
-		y = 1
-		cost = 10
-		available_if_capitulated = yes 
-		prerequisite = { focus = SMA_industryofmassachusetts } 
-		mutually_exclusive = { focus = SMA_revivetextileindustry }
-		
-		completion_reward = { 
-			random_owned_controlled_state= {
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state= {
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state={
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
-				set_state_flag = SMA_service_based_economy
-			}
-		} 
-	} 
-
-	#Focus for M1 "Garand" Rifle Contract
-	focus = { 
-		id = SMA_m1garandriflecontract
-		icon = GFX_goal_generic_military_sphere
-		x = 3
-		y = 2
-		cost = 8
-		available_if_capitulated = yes 
-		prerequisite = { focus = SMA_subsidizespringfieldarmory } 
-		completion_reward = { 
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = arms_factory
-						size > 0
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-				set_state_flag = SMA_m1_garand_rifle_contract
-			}	
-
-			add_equipment_production = {
-				equipment = {
-					type = USA_infantry_equipment_1 
-					creator = 'SMA'
-				}
-				requested_factories = 2
-				progress = 0.95 
-			}
-			add_equipment_to_stockpile = {
-				type = infantry_equipment_1		#was USA_infantry_equipment_1, I just want it to add M1 Garands, hopefully this will fix
-				amount = 10000 
-				producer = SMA 
-			}
-		}		
-	}
-
-	#Focus for Revive Textile Industry
-	focus = { 
-		id = SMA_revivetextileindustry
-		icon = GFX_goal_generic_construct_civ_factory
-		x = 5
-		y = 1
-		cost = 10
-		available_if_capitulated = yes 
-		prerequisite = { focus = SMA_industryofmassachusetts }
-		mutually_exclusive = { focus = SMA_servicebasedeconomy } 
-		
-		completion_reward = { 
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-				}
-				set_state_flag = SMA_revive_textile_industry
-			}
-			
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-				}
-				set_state_flag = SMA_revive_textile_industry
-			}
-		} 
-	} 
-
-	#Focus for Harvard Research Projects
-	focus = { 
-		id = SMA_harvardresearchprojects
-		icon = GFX_goal_tfv_generic_tech_sharing
-		x = 5
-		y = 4
-		cost = 10
-		available_if_capitulated = yes 
-		prerequisite = { focus = SMA_hireharvardalumni } 
-		
-		available = { 
-			num_of_factories > 25
-		}
-		
-		completion_reward = { 
-			add_research_slot= 1
-			
-		}
-	}
-
-	#Focus for Hire Harvard Alumni
-	focus = { 
-		id = SMA_hireharvardalumni
-		icon = GFX_goal_continuous_research
-		x = 5
-		y = 3
-		cost = 10
-		available_if_capitulated = yes 
-		prerequisite = { focus = SMA_additionalbusinesssubsidies focus = SMA_highwayupgrades } 
-		
-		completion_reward = { 
-			add_tech_bonus= {
-				bonus = 0.10
-				uses = 7 
-				category = industry 
-			}
-		}
-	}
-
-	#Focus for Nuclear Ambitions
-	focus = { 
-		id = SMA_nuclear_ambitions
-		icon = GFX_goal_tfv_generic_tech_sharing
-		x = 6
-		y = 5
-		cost = 8
-		available_if_capitulated = yes 
-		available = {
-			date > 1939.1.1
-		}
-		prerequisite = { focus = SMA_harvardresearchprojects } 
-		prerequisite = { focus = SMA_mitresearchprojects } 
-		
-		available = { 
-			num_of_factories > 25
-		}
-		
-		completion_reward = { 
-			add_tech_bonus= {
-				bonus = 0.15
-				uses = 3
-				category = nuclear 
-			}
-		}
-	}
-
-	#Focus for Additional Business Subsidies
-	focus = { 
-		id = SMA_additionalbusinesssubsidies
-		icon = GFX_goal_generic_construct_civ_factory
-		x = 5
-		y = 2
-		cost = 8
-		available_if_capitulated = yes 
-		prerequisite = { focus = SMA_revivetextileindustry focus = SMA_servicebasedeconomy } 
-		completion_reward = {  
-			random_owned_controlled_state={
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-				}
-				set_state_flag = SMA_additional_industrial_subsidies
-			}
-		} 
-	} 
-
-	#Focus for Industry of Massachusetts
-	focus = { 
-		id = SMA_industryofmassachusetts
-		icon = GFX_industryofmassachusetts
-		x = 5
-		y = 0
-		cost = 5
-		available_if_capitulated = yes 
-		completion_reward = { 
-			random_owned_controlled_state={
-				add_extra_state_shared_building_slots = 2
-				set_state_flag = SMA_industryofmassachusetts_flag
-			}
-		}
-	} 
 	
 	#-------------------------------#
 	#			COMMUNISM			#
@@ -2766,133 +2968,6 @@ focus_tree = {
 			factor = 1
 		} 
 	} 
-	
-	
-		
-	#Focus for Return to the New England Road Marking System
-	focus = { 
-		id = SMA_returntothenewenglandroadmarkingsystem
-		icon = GFX_focus_NE_road_marking
-		x = 8
-		y = 5
-		cost = 5
-		available_if_capitulated = yes 
-		prerequisite = { focus = SMA_highwayupgrades } 
-		ai_will_do = { 
-			factor = 1
-		} 
-		completion_reward = { 	
-			random_owned_controlled_state = {
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state = {
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes
-				}
-			}
-			
-			SRI = {
-				add_opinion_modifier = {
-					target = ROOT
-					modifier = new_england_road_marking_modifier
-				}
-			}
-			SCT = {
-				add_opinion_modifier = {
-					target = ROOT
-					modifier = new_england_road_marking_modifier
-				}
-			}
-			SVT = {
-				add_opinion_modifier = {
-					target = ROOT
-					modifier = new_england_road_marking_modifier
-				}
-			}
-			SNH = {
-				add_opinion_modifier = {
-					target = ROOT
-					modifier = new_england_road_marking_modifier
-				}
-			}
-			SME = {
-				add_opinion_modifier = {
-					target = ROOT
-					modifier = new_england_road_marking_modifier
-				}
-			}
-			#add opinion modifier of other new england states
-		}
-	} 
-
-	#Focus for Unify New England
-	focus = { 
-		id = SMA_unifynewengland
-		icon = GFX_goal_unknown
-		x = 8
-		y = 6
-		cost = 10
-		available_if_capitulated = yes 
-		prerequisite = { focus = SMA_returntothenewenglandroadmarkingsystem } 
-		ai_will_do = { 
-			factor = 1
-		} 
-		available = { 
-			OR = {
-				has_government = democratic
-				AND = {
-					has_government = neutrality
-					fascism < 0.25
-					communism < 0.25
-				}
-				date > 1938.8.1
-			}
-		}
-		completion_reward = { 
-			SRI = {
-				country_event = {
-					id = massachusetts.1
-					days = 10
-					random = 50
-				}	
-			}
-			SCT = {
-				country_event = {
-					id = massachusetts.1
-					days = 10
-					random = 50
-				}	
-			}
-			SVT = {
-				country_event = {
-					id = massachusetts.1
-					days = 10
-					random = 50
-				}	
-			}
-			SNH = {
-				country_event = {
-					id = massachusetts.1
-					days = 10
-					random = 50
-				}	
-			}
-			SME = {
-				country_event = {
-					id = massachusetts.1
-					days = 10
-					random = 50
-				}	
-			}
-			#it will spark an event for countries to decide to join. ai will have a higher chance of joining, maybe depending on their ideology not sure yet, if they dont join, obtain wargoal. A way for democratic mass to actually do something.
-		} 
-	} 
 
 	#Focus for Anarcho-Capitalism
 	focus = { 
@@ -2962,68 +3037,7 @@ focus_tree = {
 		ai_will_do = { 
 			factor = 1
 		} 
-	}
-
-	#Focus for Forts of Boston
-	focus = { 
-		id = SMA_fortsofboston
-		icon = GFX_goal_unknown
-		x = 9
-		y = 1
-		cost = 10
-		available_if_capitulated = yes 
-		prerequisite = { focus = SMA_industryofmassachusetts } 
-		ai_will_do = { 
-			factor = 1
-		}
-		
-		completion_reward = {
-			5 = { 					#city/state of boston
-				add_building_construction = {
-					type = bunker
-					province = 2394		#boston
-					level = 4
-                }  
-				add_building_construction = {
-					type = coastal_bunker
-					province = 2394		#boston
-					level = 4
-				}
-            }
-			
-		}
 	} 
-
-	#Focus for Revitalize the New Bedford Forts
-	focus = { 
-		id = SMA_revitalizethenewbedfordforts
-		icon = GFX_revitalizethenewbedfordforts
-		x = 9
-		y = 2
-		cost = 10
-		available_if_capitulated = yes 
-		prerequisite = { focus = SMA_fortsofboston } 
-		ai_will_do = { 
-			factor = 1
-		} 
-		
-		completion_reward = {
-			3 = { 					#bristol county ma 
-				add_building_construction = {
-					type = coastal_bunker
-					province = 3437		#new bedford
-					level = 4
-				}
-				add_building_construction = {
-					type = coastal_bunker
-					province = 3504		#fall river
-					level = 4
-				}
-            }
-			
-		}
-	} 
-	
 	
 	####################################
 	###								 ###
