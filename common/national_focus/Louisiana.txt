@@ -25,7 +25,7 @@ focus_tree = {
 #######################################
     focus = {
         id = SLA_elect_huey_long
-        icon = GFX_
+        icon = GFX_focus_huey_long
         available = {
             always = no
         }
@@ -55,7 +55,7 @@ focus_tree = {
             set_rule = {
                 can_create_factions = yes
             }
-            create_faction = SOUTHERN_COMMITTEE
+            create_faction = JEFFERSONIAN_LEAGUE
             add_political_power = 50
         }
     }
@@ -63,6 +63,12 @@ focus_tree = {
         id = SLA_second_red_river_war
         icon = GFX_
         prerequisite = { focus = SLA_create_the_southern_committee}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SLA_red_river_war_has_began_tt
+                has_global_flag = red_river_war_has_begun
+            }
+        }
         x = -12
         y = 1
         relative_position_id = SLA_create_the_southern_committee
@@ -71,17 +77,39 @@ focus_tree = {
             factor = 100
         }
         available_if_capitulated = no
+
+        completion_reward = {
+            custom_effect_tooltip = SLA_red_river_war_information_tt
+        }
     }
     focus = {
         id = SLA_demand_reinforcements
         icon = GFX_
         prerequisite = { focus = SLA_second_red_river_war}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SLA_red_river_war_has_began_tt
+                has_global_flag = red_river_war_has_begun
+            }
+        }
+        bypass = {
+            NOT = {
+                custom_trigger_tooltip = {
+                    tooltip = SLA_red_river_war_has_began_tt
+                    has_global_flag = red_river_war_has_begun
+                }
+            }
+        }
         x = -1
         y = 1
         relative_position_id = SLA_second_red_river_war
         cost = 4
         ai_will_do = {
             factor = 100
+            modifier = {
+                add = -99
+                has_war = no
+            }
         }
         available_if_capitulated = no
         search_filters = { FOCUS_FILTER_MANPOWER }
@@ -91,6 +119,85 @@ focus_tree = {
             custom_effect_tooltip = SLA_get_troops_from_deep_south
             hidden_effect = {
                 load_oob = "SLA_red_riverr_war"
+            }
+        }
+    }
+    focus = {
+        id = SLA_rally_popular_support
+        icon = GFX_
+        prerequisite = { focus = SLA_second_red_river_war}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SLA_red_river_war_has_began_tt
+                has_global_flag = red_river_war_has_begun
+            }
+        }
+        bypass = {
+            NOT = {
+                custom_trigger_tooltip = {
+                    tooltip = SLA_red_river_war_has_began_tt
+                    has_global_flag = red_river_war_has_begun
+                }
+            }
+        }
+        x = 1
+        y = 1
+        relative_position_id = SLA_second_red_river_war
+        cost = 5
+        ai_will_do = {
+            factor = 10
+            modifier = {
+                add = -9
+                has_war = no
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT}
+
+        completion_reward = {
+            add_stability = 0.05
+            add_war_support = 0.05
+        }
+    }
+    focus = {
+        id = SLA_integrate_eastern_texas
+        icon = GFX_
+        prerequisite = { focus = SLA_demand_reinforcements focus = SLA_rally_popular_support}
+        available = {
+            NOT = {
+                custom_trigger_tooltip = {
+                    tooltip = SLA_red_river_war_has_began_tt
+                    has_global_flag = red_river_war_has_begun
+                }
+            }
+        }
+        x = 0
+        y = 2
+        relative_position_id = SLA_second_red_river_war
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        
+        completion_reward = {
+            if = {
+                limit = {
+                    owns_state = 222
+                }
+                add_state_core = 222
+            }
+            if = {
+                limit = {
+                    owns_state = 223
+                }
+                add_state_core = 223
+            }
+            if = {
+                limit = {
+                    owns_state = 163
+                }
+                add_state_core = 163
             }
         }
     }
