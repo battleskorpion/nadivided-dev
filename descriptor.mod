@@ -1,6 +1,6 @@
 version="1.9.*"
 user_dir="nadivided"
-#replace_path="common/abilities"
+replace_path="common/abilities"
 replace_path="common/achievements.txt"
 replace_path="common/ai_equipment"
 replace_path="common/ai_focuses"
