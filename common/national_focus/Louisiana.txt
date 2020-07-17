@@ -422,10 +422,16 @@ focus_tree = {
         prerequisite = { focus = SLA_strengthen_the_homeland}
         available = {
             is_faction_leader = yes
+            country_exists = SGA
         }
         bypass = {
-            SGA = {
-                is_in_faction = yes
+            OR = {
+                SGA = {
+                    is_in_faction = yes
+                }
+                NOT = {
+                    country_exists = SGA
+                }
             }
         }
         x = 0
@@ -453,7 +459,7 @@ focus_tree = {
                     longism > 0.3
                     has_opinion = {
                         target = SLA
-                        value = 60
+                        value > 59
                     }
                 }
             }
@@ -480,6 +486,7 @@ focus_tree = {
                 }
             }
             add_state_claim = 155
+            add_threat = 3
         }
     }
     focus = {
@@ -535,8 +542,8 @@ focus_tree = {
             is_faction_leader = yes
         }
         x = -1
-        y = 4
-        relative_position_id = SLA_victory_in_the_red_river_war
+        y = 1
+        relative_position_id = SLA_demand_biloxi
         cost = 10
         ai_will_do = {
             factor = 1
@@ -562,8 +569,8 @@ focus_tree = {
             }
         }
         x = 1
-        y = 4
-        relative_position_id = SLA_victory_in_the_red_river_war
+        y = 1
+        relative_position_id = SLA_demand_biloxi
         cost = 10
         ai_will_do = {
             factor = 2
@@ -587,9 +594,9 @@ focus_tree = {
         available = {
             controls_arkansas_trigger = yes
         }
-        x = 1
-        y = 5
-        relative_position_id = SLA_victory_in_the_red_river_war
+        x = 0
+        y = 1
+        relative_position_id = SLA_invade_arkansas
         cost = 10
         ai_will_do = {
             factor = 2
@@ -598,6 +605,127 @@ focus_tree = {
 
         completion_reward = {
             core_arkansas = yes
+        }
+    }
+    focus = {
+        id = SLA_influence_in_the_deep_south
+        icon = GFX_
+        prerequisite = { focus = SLA_nationalize_arksansas focus = SLA_ally_arkansas}
+        available = {
+            any_country = {
+                has_idea = SLA_hueys_influence
+                NOT = {
+                    is_in_faction_with = SLA
+                }
+            }
+        }
+        bypass = {
+            NOT = {
+                any_country = {
+                    has_idea = SLA_hueys_influence
+                    NOT = {
+                        is_in_faction_with = SLA
+                    }
+                }
+            }
+        }
+        x = -1
+        y = 1
+        relative_position_id = SLA_nationalize_arksansas
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            every_country = {
+                limit = {
+                    has_idea = SLA_hueys_influence
+                    NOT = {
+                        is_in_faction_with = SLA
+                    }
+                }
+                SLA = {
+                    add_to_faction = PREV
+                }
+            }
+            every_country = {
+                limit = {
+                    has_idea = SLA_hueys_influence
+                }
+                swap_ideas = {
+                    remove_idea = SLA_hueys_influence
+                    add_idea = SLA_hueys_puppet
+                }
+            }
+        }
+    }
+    focus = {
+        id = SLA_realign_mississippi
+        icon = GFX_
+        prerequisite = { focus = SLA_influence_in_the_deep_south}
+        available = {
+            SMS = {
+                has_government = democratic
+            }
+            has_army_manpower = {
+                size > 150000
+            }
+        }
+        x = 1
+        y = 1
+        relative_position_id = SLA_influence_in_the_deep_south
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            create_wargoal = {
+                target = SMS
+                type = annex_everything
+            }
+            claim_mississippi = yes
+        }
+    }
+    focus = {
+        id = SLA_dominate_tennessee
+        icon = GFX_
+        prerequisite = { focus = SLA_influence_in_the_deep_south}
+        available = {
+            country_exists = STN
+            has_army_manpower = {
+                size > 160000
+            }
+        }
+        bypass = {
+            NOT = {
+                country_exists = STN
+            }
+        }
+        x = -1
+        y = 1
+        relative_position_id = SLA_influence_in_the_deep_south
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                has_completed_focus = SLA_realign_mississippi
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            create_wargoal = {
+                target = STN
+                type = annex_everything
+            }
+            claim_tennessee = yes
         }
     }
     focus = {
