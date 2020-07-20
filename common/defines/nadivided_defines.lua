@@ -1,0 +1,1 @@
+NDefines.NGame.MAP_SCALE_PIXEL_TO_KM = 3.15,					-- Yes, we did the math -- Yes, Sharks go extinct in 2030
