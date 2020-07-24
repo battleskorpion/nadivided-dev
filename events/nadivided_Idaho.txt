@@ -125,6 +125,106 @@ country_event = {
 		ai_chance = { factor = 30}
 	}
 }
+country_event = { #drought
+	id = Idaho.4
+	title = Idaho.4.t
+	desc = Idaho.4.d
+	#picture = GFX_
+
+	is_triggered_only = no
+	fire_only_once = no
+
+	mean_time_to_happen = {
+		days = 100
+		random = 50
+		modifier = {
+			factor = 2
+			any_owned_state = {
+				has_state_flag = SID_adequate_farming
+			}
+		}
+		modifier = {
+			factor = 2
+			any_owned_state = {
+				has_state_flag = SID_advanced_farming
+			}
+		}
+	}
+
+	trigger = {
+		OR = {
+			any_owned_state = {
+				has_state_flag = SID_minimal_farming
+			}
+			NOT = {
+				has_completed_focus = SID_continue_economic_investment
+			}
+		}
+	}
+
+	option = {
+		name = Idaho.4.a
+		custom_effect_tooltip = SID_drought_can_be_fixed_by_investing_in_farming_tt
+		random_owned_controlled_state = {
+			limit = {
+				NOT = {
+					has_state_flag = SID_adequate_farming
+					has_state_flag = SID_advanced_farming
+				}
+				has_manpower > 20000
+			}
+			add_manpower = -5000
+		}
+	}
+}
+country_event = {
+	id = Idaho.5
+	title = Idaho.5.t
+	desc = Idaho.5.d
+	#picture = GFX_
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+	trigger = {
+		has_completed_focus = SID_continue_economic_investment
+		any_owned_state = {
+			has_state_flag = SID_advanced_farming
+		}
+		SID_farming > 0.5
+	}
+
+	mean_time_to_happen = {
+		days = 400
+		random = 50
+		modifier = {
+			factor = 0.5
+			SID_farming > 1
+		}
+		modifier = {
+			factor = 0.5
+			SID_farming > 2
+		}
+	}
+
+	option = {
+		name = Idaho.5.a
+		all_controlled_state = {
+			limit = {
+				has_state_flag = SID_advanced_farming
+			}
+			if = {
+				limit = {
+					SID_farming < 2
+				}
+				add_manpower = 5000
+			}
+			else = {
+				add_manpower = 10000
+			}
+		}
+	}
+}
 country_event = {
 	id = Idaho.7
 	title = Idaho.7.t
@@ -186,39 +286,6 @@ country_event = {
 		SID = {
 			declare_war_on = {
 				target = NAV
-				type = annex_everything
-			}
-		}
-	}
-}
-country_event = {
-	id = Idaho.9
-	title = Idaho.9.t
-	desc = Idaho.9.d
-	picture = GFX_report_event_ast_army
-
-	is_triggered_only = yes
-
-	trigger = {
-		tag = UTE
-		SID = {
-			has_completed_focus = SID_sieze_remaining_mormon_land
-		}
-	}
-
-	option = {
-		name = Idaho.9.a
-		ai_chance = { factor = 95}
-		SID = {
-			transfer_state = 87
-		}
-	}
-	option = {
-		name = Idaho.9.b
-		ai_chance = { factor = 5}
-		SID = {
-			declare_war_on = {
-				target = UTE
 				type = annex_everything
 			}
 		}
