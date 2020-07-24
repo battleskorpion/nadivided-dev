@@ -136,7 +136,6 @@ country_event = { #drought
 
 	mean_time_to_happen = {
 		days = 100
-		random = 50
 		modifier = {
 			factor = 2
 			any_owned_state = {
@@ -170,10 +169,10 @@ country_event = { #drought
 				NOT = {
 					has_state_flag = SID_adequate_farming
 					has_state_flag = SID_advanced_farming
+					state = 612
 				}
-				has_manpower > 20000
 			}
-			add_manpower = -5000
+			add_manpower = -2000
 		}
 	}
 }
@@ -183,7 +182,7 @@ country_event = {
 	desc = Idaho.5.d
 	#picture = GFX_
 
-	is_triggered_only = yes
+	is_triggered_only = no
 	fire_only_once = no
 
 	trigger = {
@@ -191,31 +190,34 @@ country_event = {
 		any_owned_state = {
 			has_state_flag = SID_advanced_farming
 		}
-		SID_farming > 0.5
+		check_variable = { SID_farming > 0.5 }
 	}
 
 	mean_time_to_happen = {
-		days = 400
-		random = 50
+		days = 200
 		modifier = {
 			factor = 0.5
-			SID_farming > 1
+			check_variable = { SID_farming > 1 }
 		}
 		modifier = {
 			factor = 0.5
-			SID_farming > 2
+			check_variable = { SID_farming > 2 }
 		}
 	}
 
 	option = {
 		name = Idaho.5.a
-		all_controlled_state = {
+		every_controlled_state = {
 			limit = {
-				has_state_flag = SID_advanced_farming
+				OR = {
+					has_state_flag = SID_advanced_farming
+					state = 612
+				}
+				
 			}
 			if = {
 				limit = {
-					SID_farming < 2
+					check_variable = { SID_farming < 2 }
 				}
 				add_manpower = 5000
 			}
