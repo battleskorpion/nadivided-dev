@@ -119,7 +119,22 @@ country_event = {
     hidden = yes
 
     fire_only_once = yes
-    is_triggered_only = yes
+    is_triggered_only = no
+
+    trigger = {
+        OR = {
+            NOT = {
+                STX = {
+                    controls_state = 621
+                    controls_state = 42
+                }
+            }
+            has_global_flag = {
+                flag = red_river_war_has_begun
+                days > 180
+            }
+        }
+    }
 
     immediate = {
         if = {
@@ -217,6 +232,12 @@ country_event = { #supreme victory
                 is_historical_focus_on = no
             }
         }
+        custom_effect_tooltip = STX_more_troops_to_defend_tt
+        hidden_effect = {
+            STX = {
+                load_oob = "STX_defense_red_river"
+            }
+        }
     }
 }
 country_event = { #victory
@@ -250,6 +271,12 @@ country_event = { #victory
             modifier = {
                 add = 20
                 is_historical_focus_on = no
+            }
+        }
+        custom_effect_tooltip = STX_more_troops_to_defend_tt
+        hidden_effect = {
+            STX = {
+                load_oob = "STX_defense_red_river"
             }
         }
     }
@@ -287,6 +314,12 @@ country_event = { #loss
                 is_historical_focus_on = no
             }
         }
+        #custom_effect_tooltip = STX_more_troops_to_defend_tt
+        #hidden_effect = {
+        #    STX = {
+        #        load_oob = "STX_defense_red_river"
+        #    }
+        #}
     }
 }
 country_event = { #stalemate
@@ -321,6 +354,192 @@ country_event = { #stalemate
                 add = 20
                 is_historical_focus_on = no
             }
+        }
+        custom_effect_tooltip = STX_more_troops_to_defend_tt
+        hidden_effect = {
+            STX = {
+                load_oob = "STX_defense_red_river"
+            }
+        }
+    }
+}
+country_event = { #Demand Biloxi
+    id = louisiana.8
+    title = louisiana.8.t
+    desc = louisiana.8.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = {
+        name = louisiana.8.a
+        ai_chance = {
+            factor = 60
+            modifier = {
+                add = 20
+                longism > 0.4
+            }
+            modifier = {
+                add = 10
+                longism > 0.5
+            }
+            modifier = {
+                add = 20
+                has_opinion = {
+                    target = SLA
+                    value = 60
+                }
+            }
+            modifier = {
+                add = 30
+                is_historical_focus_on = yes
+            }
+            modifier = {
+                add = 10
+                strength_ratio = {
+                    tag = SLA
+                    ratio < 1
+                }
+            }
+            modifier = {
+                add = 20
+                strength_ratio = {
+                    tag = SLA
+                    ratio < 0.75
+                }
+            }
+            modifier = {
+                add = -20
+                strength_ratio = {
+                    tag = SLA
+                    ratio > 1
+                }
+            }
+        }
+        SLA = {
+            transfer_state = 155
+            if = {
+                limit = {
+                    is_faction_leader = yes
+                }
+                add_to_faction = SMS
+            }
+            give_guarantee = SMS
+        }
+        hidden_effect = {
+            country_event = {
+                id = louisiana.9
+                days = 360
+            }
+        }
+    }
+    option = {
+        name = louisiana.8.b
+        ai_chance = {
+            factor = 40
+            modifier = {
+                add = -20
+                longism > 0.4
+            }
+            modifier = {
+                add = -10
+                longism > 0.5
+            }
+            modifier = {
+                add = -20
+                has_opinion = {
+                    target = SLA
+                    value = 60
+                }
+            }
+            modifier = {
+                add = -30
+                is_historical_focus_on = yes
+            }
+            modifier = {
+                add = -10
+                strength_ratio = {
+                    tag = SLA
+                    ratio < 1
+                }
+            }
+            modifier = {
+                add = -20
+                strength_ratio = {
+                    tag = SLA
+                    ratio < 0.75
+                }
+            }
+            modifier = {
+                add = 20
+                strength_ratio = {
+                    tag = SLA
+                    ratio > 1
+                }
+            }
+        }
+        SLA = {
+            create_wargoal = {
+                target = SMS
+                type = take_state_focus
+                generator = { 155 }
+            }
+        }
+        add_popularity = {
+            ideology = longism
+            popularity = -0.2
+        }
+    }
+}
+country_event = {
+    id = louisiana.9
+    title = louisiana.9.t
+    desc = louisiana.9.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = {
+        name = louisiana.9.a
+        ai_chance = {
+            factor = 75
+            modifier = {
+                add = 25
+                is_historical_focus_on = yes
+            }
+            modifier = {
+                add = -25
+                democratic > 0.4
+            }
+            start_civil_war = {
+                ruling_party = longism
+                ideology = democratic
+                size = 0.6
+            }
+        }
+    }
+    option = {
+        name = louisiana.9.b
+        ai_chance = {
+            factor = 25
+            modifier = {
+                add = -25
+                is_historical_focus_on = yes
+            }
+            modifier = {
+                add = 25
+                democratic > 0.4
+            }
+        }
+        set_politics = {
+            ruling_party = democratic
+        }
+        leave_faction = yes
+        add_popularity = {
+            ideology = democratic
+            popularity = 0.2
         }
     }
 }

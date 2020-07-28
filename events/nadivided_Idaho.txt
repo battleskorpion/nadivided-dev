@@ -15,35 +15,53 @@ country_event = {
 
 	option = {
 		name = Idaho.1.a
-		ai_chance = { factor = 50}
+		ai_chance = { 
+			factor = 50
+			modifier = {
+				factor = 2
+				is_historical_focus_on = yes
+			}
+		}
 		add_popularity = {
-		ideology = democratic
-		popularity = 0.25
+			ideology = democratic
+			popularity = 0.25
 		}
 		set_politics = {
-		ruling_party = democratic
+			ruling_party = democratic
 		}
 	}
 	option = {
 		name = Idaho.1.b
-		ai_chance = { factor = 30}
+		ai_chance = { 
+			factor = 15
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
 		add_popularity = {
-		ideology = communism
-		popularity = 0.25
+			ideology = progressivism
+			popularity = 0.25
 		}
 		set_politics = {
-		ruling_party = communism
+			ruling_party = progressivism
 		}
 	}
 	option = {
 		name = Idaho.1.c
-		ai_chance = { factor = 20}
+		ai_chance = { 
+			factor = 35
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
 		add_popularity = {
-		ideology = fascism
-		popularity = 0.25
+			ideology = longism
+			popularity = 0.25
 		}
 		set_politics = {
-		ruling_party = fascism
+			ruling_party = longism
 		}
 	}
 }
@@ -54,26 +72,25 @@ country_event = {
 	picture = GFX_report_event_crowd_in_prague
 
 	is_triggered_only = yes
-
-	trigger = {
-		tag = SID
-		has_completed_focus = SID_deal_with_Mormons
-	}
+	fire_only_once = yes
 
 	option = {
 		name = Idaho.2.a
 		ai_chance = { factor = 50}
-		unlock_national_focus = SID_purge_the_Mormons
+		complete_national_focus = SID_purge_the_Mormons
 	}
 	option = {
 		name = Idaho.2.b
 		ai_chance = { factor = 50}
-		unlock_national_focus = SID_honarary_Idahoians
+		complete_national_focus = SID_honarary_Idahoians
 	}
 	option = {
 		name = Idaho.2.c
 		ai_chance = { factor = 0}
-		unlock_national_focus = SID_new_religion
+		complete_national_focus = SID_new_religion
+		set_politics = {
+			ruling_party = fascism
+		}
 		create_country_leader = {
 			name = "Prince Potato"
 			picture = "gfx//leaders//SID//Prince_Potato.dds"
@@ -108,82 +125,135 @@ country_event = {
 		ai_chance = { factor = 30}
 	}
 }
-country_event = {
+country_event = { #drought
 	id = Idaho.4
 	title = Idaho.4.t
 	desc = Idaho.4.d
-	picture = GFX_report_event_canada_patriation
+	#picture = GFX_
 
+	is_triggered_only = no
+	fire_only_once = no
 
-	is_triggered_only = yes
+	mean_time_to_happen = {
+		days = 100
+		modifier = {
+			factor = 2
+			any_owned_state = {
+				has_state_flag = SID_adequate_farming
+			}
+		}
+		modifier = {
+			factor = 2
+			any_owned_state = {
+				has_state_flag = SID_advanced_farming
+			}
+		}
+	}
 
 	trigger = {
-		tag = PBC
-		SID = {
-			has_completed_focus = SID_invite_columbia_confederacy
+		tag = SID
+		OR = {
+			any_owned_state = {
+				has_state_flag = SID_minimal_farming
+			}
+			NOT = {
+				has_completed_focus = SID_continue_economic_investment
+			}
 		}
 	}
 
 	option = {
 		name = Idaho.4.a
-		ai_chance = { factor = 100}
-		SID = { add_to_faction = PBC}
-	}
-	option = {
-		name = Idaho.4.b
-		ai_chance = { factor = 0}
+		custom_effect_tooltip = SID_drought_can_be_fixed_by_investing_in_farming_tt
+		random_owned_controlled_state = {
+			limit = {
+				NOT = {
+					has_state_flag = SID_adequate_farming
+					has_state_flag = SID_advanced_farming
+					state = 612
+				}
+			}
+			add_manpower = -2500
+		}
 	}
 }
 country_event = {
 	id = Idaho.5
 	title = Idaho.5.t
 	desc = Idaho.5.d
-	picture = GFX_report_event_canada_patriation
+	#picture = GFX_
 
-
-	is_triggered_only = yes
+	is_triggered_only = no
+	fire_only_once = no
 
 	trigger = {
-		tag = SWA
-		SID = {
-			has_completed_focus = SID_invite_washington_confederacy
+		tag = SID
+		has_completed_focus = SID_continue_economic_investment
+		any_owned_state = {
+			has_state_flag = SID_advanced_farming
+		}
+		check_variable = { SID_farming > 0.5 }
+	}
+
+	mean_time_to_happen = {
+		days = 200
+		modifier = {
+			factor = 0.5
+			check_variable = { SID_farming > 1 }
+		}
+		modifier = {
+			factor = 0.5
+			check_variable = { SID_farming > 2 }
 		}
 	}
 
 	option = {
 		name = Idaho.5.a
-		ai_chance = { factor = 100}
-		SID = { add_to_faction = SWA}
-	}
-	option = {
-		name = Idaho.5.b
-		ai_chance = { factor = 0}
+		every_controlled_state = {
+			limit = {
+				OR = {
+					has_state_flag = SID_advanced_farming
+					state = 612
+				}
+				
+			}
+			if = {
+				limit = {
+					check_variable = { SID_farming < 2 }
+				}
+				add_manpower = 5000
+			}
+			else = {
+				add_manpower = 10000
+			}
+		}
 	}
 }
 country_event = {
 	id = Idaho.6
 	title = Idaho.6.t
-	desc = Idaho.6.d
-	picture = GFX_report_event_canada_patriation
-
+	desc = Idaho.7.d
+	#picture = GFX_
 
 	is_triggered_only = yes
-
-	trigger = {
-		tag = SOR
-		SID = {
-			has_completed_focus = SID_invite_oregon_confederacy
+	
+	option = {
+		name = Idaho.7.a
+		ai_chance = {
+			factor = 100
 		}
+		add_equipment_to_stockpile = {
+			type = infantry_equipment
+			amount = 1000
+			producer = SID
+		}
+		add_manpower = 5000
 	}
-
 	option = {
-		name = Idaho.6.a
-		ai_chance = { factor = 100}
-		SID = { add_to_faction = SOR}
-	}
-	option = {
-		name = Idaho.6.b
-		ai_chance = { factor = 0}
+		name = Idaho.7.b
+		ai_chance = {
+			factor = 0
+		}
 	}
 }
 country_event = {
@@ -247,39 +317,6 @@ country_event = {
 		SID = {
 			declare_war_on = {
 				target = NAV
-				type = annex_everything
-			}
-		}
-	}
-}
-country_event = {
-	id = Idaho.9
-	title = Idaho.9.t
-	desc = Idaho.9.d
-	picture = GFX_report_event_ast_army
-
-	is_triggered_only = yes
-
-	trigger = {
-		tag = UTE
-		SID = {
-			has_completed_focus = SID_sieze_remaining_mormon_land
-		}
-	}
-
-	option = {
-		name = Idaho.9.a
-		ai_chance = { factor = 95}
-		SID = {
-			transfer_state = 87
-		}
-	}
-	option = {
-		name = Idaho.9.b
-		ai_chance = { factor = 5}
-		SID = {
-			declare_war_on = {
-				target = UTE
 				type = annex_everything
 			}
 		}

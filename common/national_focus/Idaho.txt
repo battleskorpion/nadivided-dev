@@ -319,27 +319,10 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			510 = {
-				add_extra_state_shared_building_slots = 1
+			every_owned_state = {
 				add_building_construction = {
 					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			509 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			339 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = infrastructure
-					level = 1
+					level = 1 
 					instant_build = yes
 				}
 			}
@@ -399,7 +382,7 @@ focus_tree = {
 					amount = 24
 				}
 			}
-			177 = {
+			511 = {
 				add_resource = {
 					type = steel
 					amount = 12
@@ -428,7 +411,7 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			510 = {
+			random_owned_controlled_state = {
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
@@ -436,7 +419,7 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
-			514 = {
+			random_owned_controlled_state = {
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = industrial_complex
@@ -444,7 +427,7 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
-			339 = {
+			random_owned_controlled_state = {
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = arms_factory
@@ -454,7 +437,64 @@ focus_tree = {
 			}
 		}
 	}
-#
+	focus = {
+		id = SID_continue_economic_investment
+		icon = GFX_
+		prerequisite = { focus = SID_expand_exsiting_workshops}
+		x = 0
+		y = 2
+		relative_position_id = SID_build_new_steel_mills
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			custom_effect_tooltip = SID_extra_industry_decisions
+			set_variable = { SID_farming = 0.1 }
+			add_dynamic_modifier = {
+				modifier = SID_population_growth
+			}
+			hidden_effect = {
+				177 = {
+					set_state_flag = SID_minimal_farming
+				}
+				510 = {
+					set_state_flag = SID_minimal_farming
+				}
+				509 = {
+					set_state_flag = SID_minimal_farming
+				}
+				339 = {
+					set_state_flag = SID_adequate_farming
+				}
+				511 = {
+					set_state_flag = SID_minimal_farming
+				}
+				514 = {
+					set_state_flag = SID_minimal_farming
+				}
+				384 = {
+					set_state_flag = SID_minimal_farming
+				}
+				513 = {
+					set_state_flag = SID_minimal_farming
+				}
+				512 = {
+					set_state_flag = SID_minimal_farming
+				}
+			}
+		}
+	}
 	focus = {
 		id = SID_offering_jobs_miners
 		icon = GFX_goal_generic_improve_relations
@@ -491,7 +531,7 @@ focus_tree = {
 			513 = {
 				add_resource = {
 					type = chromium
-					amount = 24
+					amount = 48
 				}
 			}
 			512 = {
@@ -969,7 +1009,7 @@ focus_tree = {
 	focus = {
 		id = SID_open_political_discord
 		icon = GFX_goal_generic_dangerous_deal
-		x = 27
+		x = 35
 		y = 0
 		cost = 5
 		
@@ -987,28 +1027,455 @@ focus_tree = {
 			country_event = { days=0 id=Idaho.1}
 		}
 	}
-#
+	focus = {
+		id = SID_accept_californian_hegemony
+		icon = GFX_
+		prerequisite = { focus = SID_open_political_discord}
+		mutually_exclusive = { focus = SID_challenge_californian_hegemony}
+		available = {
+			has_government = democratic
+		}
+		cancel_if_invalid = yes
+		x = -10
+		y = 1
+		relative_position_id = SID_open_political_discord
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_opinion_modifier = {
+				target = SCA
+				modifier = SID_work_with_california
+			}
+		}
+	}
+	focus = {
+		id = SID_intervene_in_the_oregon_civil_war
+		icon = GFX_
+		prerequisite = { focus = SID_open_political_discord}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SID_oregon_civil_war_is_ongoing
+				has_global_flag = oregon_civil_war_has_begun
+			}
+		}
+		x = 0
+		y = 2
+		relative_position_id = SID_open_political_discord
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_political_power = 100
+		}
+	}
+	focus = {
+		id = SID_send_aid_to_oregon
+		icon = GFX_
+		prerequisite = { focus = SID_intervene_in_the_oregon_civil_war}
+		mutually_exclusive = { focus = SID_direct_intervention}
+		x = -1
+		y = 1
+		relative_position_id = SID_intervene_in_the_oregon_civil_war
+		cost = 5
+		ai_will_do = {
+			factor = 2
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_stability = 0.05
+		}
+	}
+	focus = {
+		id = SID_support_the_legidimate_government
+		icon = GFX_
+		prerequisite = { focus = SID_send_aid_to_oregon}
+		available = {
+			country_exists = SOR
+			NOT = {
+				custom_trigger_tooltip = {
+					tooltip = SID_already_supporting_an_oregon
+					OR = {
+						has_completed_focus = SID_support_the_legidimate_government
+						has_completed_focus = SID_support_provisional_cascadia
+						has_completed_focus = SID_support_the_socialist_republic
+						has_completed_focus = SID_support_the_catholics
+						has_completed_focus = SID_support_the_unitary_republic
+					}
+				}
+			}
+		}
+		x = -4
+		y = 1
+		relative_position_id = SID_send_aid_to_oregon
+		cost = 10
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 3
+				ruling_party = {
+					has_government = democratic
+				}
+			}
+			modifier = {
+				factor = 2
+				ruling_party = {
+					has_government = longism
+				}
+			}
+			modifier = {
+				factor = 2
+				ruling_party = {
+					has_government = progressivism
+				}
+			}
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.1
+			}
+			SOR = {
+				country_event = {
+					id = Idaho.6
+				}
+			}
+		}
+	}
+	focus = {
+		id = SID_support_provisional_cascadia
+		icon = GFX_
+		prerequisite = { focus = SID_send_aid_to_oregon}
+		available = {
+			country_exists = PCA
+			NOT = {
+				custom_trigger_tooltip = {
+					tooltip = SID_already_supporting_an_oregon
+					OR = {
+						has_completed_focus = SID_support_the_legidimate_government
+						has_completed_focus = SID_support_provisional_cascadia
+						has_completed_focus = SID_support_the_socialist_republic
+						has_completed_focus = SID_support_the_catholics
+						has_completed_focus = SID_support_the_unitary_republic
+					}
+				}
+			}
+		}
+		x = -3
+		y = 2
+		relative_position_id = SID_send_aid_to_oregon
+		cost = 10
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				factor = 10
+				has_completed_focus = SID_new_religion
+			}
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.1
+			}
+			PCA = {
+				country_event = {
+					id = Idaho.6
+				}
+			}
+		}
+	}
+	focus = {
+		id = SID_support_the_socialist_republic
+		icon = GFX_
+		prerequisite = { focus = SID_send_aid_to_oregon}
+		available = {
+			country_exists = SRO
+			NOT = {
+				custom_trigger_tooltip = {
+					tooltip = SID_already_supporting_an_oregon
+					OR = {
+						has_completed_focus = SID_support_the_legidimate_government
+						has_completed_focus = SID_support_provisional_cascadia
+						has_completed_focus = SID_support_the_socialist_republic
+						has_completed_focus = SID_support_the_catholics
+						has_completed_focus = SID_support_the_unitary_republic
+					}
+				}
+			}
+		}
+		x = -2
+		y = 1
+		relative_position_id = SID_send_aid_to_oregon
+		cost = 10
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 2
+				ruling_party = {
+					has_government = progressivism
+				}
+			}
+			modifier = {
+				factor = 3
+				ruling_party = {
+					has_government = communism
+				}
+			}
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_popularity = {
+				ideology = communism
+				popularity = 0.1
+			}
+			SRO = {
+				country_event = {
+					id = Idaho.6
+				}
+			}
+		}
+	}
+	focus = {
+		id = SID_support_the_catholics
+		icon = GFX_
+		prerequisite = { focus = SID_send_aid_to_oregon}
+		available = {
+			country_exists = COR
+			NOT = {
+				custom_trigger_tooltip = {
+					tooltip = SID_already_supporting_an_oregon
+					OR = {
+						has_completed_focus = SID_support_the_legidimate_government
+						has_completed_focus = SID_support_provisional_cascadia
+						has_completed_focus = SID_support_the_socialist_republic
+						has_completed_focus = SID_support_the_catholics
+						has_completed_focus = SID_support_the_unitary_republic
+					}
+				}
+			}
+		}
+		x = -1
+		y = 2
+		relative_position_id = SID_send_aid_to_oregon
+		cost = 10
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 2
+				ruling_party = {
+					has_government = neutrality
+				}
+			}
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.1
+			}
+			COR = {
+				country_event = {
+					id = Idaho.6
+				}
+			}
+		}
+	}
+	focus = {
+		id = SID_support_the_unitary_republic
+		icon = GFX_ 
+		prerequisite = { focus = SID_send_aid_to_oregon}
+		available = {
+			country_exists = URO
+			NOT = {
+				custom_trigger_tooltip = {
+					tooltip = SID_already_supporting_an_oregon
+					OR = {
+						has_completed_focus = SID_support_the_legidimate_government
+						has_completed_focus = SID_support_provisional_cascadia
+						has_completed_focus = SID_support_the_socialist_republic
+						has_completed_focus = SID_support_the_catholics
+						has_completed_focus = SID_support_the_unitary_republic
+					}
+				}
+			}
+		}
+		x = 0
+		y = 1
+		relative_position_id = SID_send_aid_to_oregon
+		cost = 10
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 2
+				ruling_party = {
+					has_government = longism
+				}
+			}
+			modifier = {
+				factor = 2
+				ruling_party = {
+					has_government = fascism
+				}
+			}
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_popularity = {
+				ideology = longism
+				popularity = 0.1
+			}
+			URO = {
+				country_event = {
+					id = Idaho.6
+				}
+			}
+		}
+	}
+	focus = {
+		id = SID_direct_intervention
+		icon = GFX_
+		prerequisite = { focus = SID_intervene_in_the_oregon_civil_war}
+		mutually_exclusive = { focus = SID_send_aid_to_oregon}
+		available = {
+			OR = {
+				has_government = fascism
+				has_government = communism
+				has_government = populism
+			}
+		}
+		x = 1
+		y = 1
+		relative_position_id = SID_intervene_in_the_oregon_civil_war
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_war_support = 0.05
+		}
+	}
+	focus = {
+		id = SID_push_for_eastern_oregon
+		icon = GFX_
+		prerequisite = { focus = SID_direct_intervention}
+		x = 0
+		y = 1
+		relative_position_id = SID_direct_intervention
+		cost = 10 
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			claim_provisional_cascadia = yes
+			claim_religious_oregon = yes
+			claim_white_supremacy_oregon = yes
+			if = {
+				limit = {
+					country_exists = PCA
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = PCA
+				}
+			}
+			if = {
+				limit = {
+					country_exists = COR
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = COR
+				}
+			}
+			if = {
+				limit = {
+					country_exists = PCA
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = COR
+				}
+			}
+			if = {
+				limit = {
+					URO = {
+						has_country_flag = URO_annexed_KKK
+					}
+					country_exists = URO
+				}
+				create_wargoal = {
+					type = take_state_focus
+					generator = { 176 }
+					target = URO
+				}
+			}
+		}
+	}
+	focus = {
+		id = SID_challenge_californian_hegemony
+		icon = GFX_
+		prerequisite = { focus = SID_open_political_discord}
+		mutually_exclusive = { focus = SID_accept_californian_hegemony}
+		x = 15
+		y = 1
+		relative_position_id = SID_open_political_discord
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_political_power = 50
+			add_opinion_modifier = {
+				target = SCA
+				modifier = SID_challenge_califronia
+			}
+		}
+	}
 	focus = {
 		id = SID_go_with_Bottolfsen
 		icon = GFX_goal_support_democracy
-		prerequisite = { focus = SID_open_political_discord}
+		prerequisite = { focus = SID_challenge_californian_hegemony}
 		mutually_exclusive = { focus = SID_go_with_Barzilla_Clark}
 		mutually_exclusive = { focus = SID_go_with_Baldridge}
 		available = {
 			has_government = democratic
 		}
 		cancel_if_invalid = yes
-		x = 21
+		x = -6
 		y = 1
+		relative_position_id = SID_challenge_californian_hegemony
 		cost = 5
 		ai_will_do = {
-			factor = 1
+			factor = 3
 		}
 		
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_political_power = 50
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.1
+			}
 		}
 	}
 #
@@ -1020,8 +1487,9 @@ focus_tree = {
 			has_government = democratic
 		}
 		cancel_if_invalid = yes
-		x = 20
-		y = 2
+		x = -2
+		y = 1
+		relative_position_id = SID_go_with_Bottolfsen
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -1039,12 +1507,10 @@ focus_tree = {
 		icon = GFX_focus_contain_communism
 		prerequisite = { focus = SID_secure_domocratic_holdiings}
 		mutually_exclusive = { focus = SID_work_with_communists}
-		available = {
-			has_government = democratic
-		}
 		cancel_if_invalid = yes
-		x = 19
-		y = 3
+		x = -1
+		y = 1
+		relative_position_id = SID_secure_domocratic_holdiings
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -1063,12 +1529,10 @@ focus_tree = {
 		icon = GFX_goal_generic_dangerous_deal
 		prerequisite = { focus = SID_secure_domocratic_holdiings}
 		mutually_exclusive = { focus = SID_contain_communist_threat}
-		available = {
-			has_government = democratic
-		}
 		cancel_if_invalid = yes
-		x = 21
-		y = 3
+		x = 1
+		y = 1
+		relative_position_id = SID_secure_domocratic_holdiings
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -1089,8 +1553,9 @@ focus_tree = {
 			has_government = democratic
 		}
 		cancel_if_invalid = yes
-		x = 22
-		y = 2
+		x = 0
+		y = 1
+		relative_position_id = SID_go_with_Bottolfsen
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -1104,247 +1569,19 @@ focus_tree = {
 			add_war_support = 0.1
 		}
 	}
-#
-	focus = {
-		id = SID_shared_currency_initiative
-		icon = GFX_goal_generic_national_unity
-		prerequisite = { focus = SID_go_with_Bottolfsen}
-		available = {
-			has_government = democratic
-		}
-		cancel_if_invalid = yes
-		x = 23
-		y = 3
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		
-		available_if_capitulated = no
-
-		completion_reward = {
-			create_faction = "SID_cascadian_confederacy"
-		}
-	}
-#
-	focus = {
-		id = SID_invite_oregon_confederacy
-		icon = GFX_goal_generic_oregon
-		prerequisite = { focus = SID_shared_currency_initiative}
-		available = {
-			has_government = democratic
-		}
-		cancel_if_invalid = yes
-		x = 19
-		y = 4
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		
-		available_if_capitulated = no
-
-		completion_reward = {
-			SOR = {
-				country_event = { days=0 id=Idaho.6}		
-			}
-		}
-	}
-#
-	focus = {
-		id = SID_invite_washington_confederacy
-		icon = GFX_goal_generic_washington
-		prerequisite = { focus = SID_shared_currency_initiative}
-		available = {
-			has_government = democratic
-		}
-		cancel_if_invalid = yes
-		x = 21
-		y = 4
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		
-		available_if_capitulated = no
-
-		completion_reward = {
-			SWA = {
-				country_event = { days=0 id=Idaho.5}		
-			}
-		}
-	}
-#
-	focus = {
-		id = SID_invite_columbia_confederacy
-		icon = GFX_goal_generic_columbia
-		prerequisite = { focus = SID_shared_currency_initiative}
-		available = {
-			has_government = democratic
-		}
-		cancel_if_invalid = yes
-		x = 23
-		y = 4
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		
-		available_if_capitulated = no
-
-		completion_reward = {
-			PBC = {
-				country_event = { days=0 id=Idaho.4}
-			}
-		}
-	}
-#
-	focus = {
-		id = SID_complete_initaitive
-		icon = GFX_goal_generic_major_alliance
-		prerequisite = { focus = SID_invite_oregon_confederacy}
-		prerequisite = { focus = SID_invite_washington_confederacy}
-		prerequisite = { focus = SID_invite_columbia_confederacy}
-		available = {
-			has_government = democratic
-		}
-		cancel_if_invalid = yes
-		x = 21
-		y = 5
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		
-		available_if_capitulated = no
-
-		completion_reward = {
-			add_ideas = SID_shared_currency
-		}
-	}
-#
-	focus = {
-		id = SID_national_cascadian_railway
-		icon = GFX_goal_generic_construct_infrastructure
-		prerequisite = { focus = SID_invite_oregon_confederacy}
-		prerequisite = { focus = SID_invite_washington_confederacy}
-		prerequisite = { focus = SID_invite_columbia_confederacy}
-		available = {
-			has_government = democratic
-		}
-		cancel_if_invalid = yes
-		x = 19
-		y = 5
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		
-		available_if_capitulated = no
-
-		completion_reward = {
-			339 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			509 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			510 = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			182 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			183 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			181 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			53 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			189 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			40 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			190 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			61 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			428 = {
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-		}
-	}
-#
 	focus = {
 		id = SID_go_with_Barzilla_Clark
-		icon = GFX_goal_support_communism
-		prerequisite = { focus = SID_open_political_discord}
+		icon = GFX_focus_ideology_progressivism
+		prerequisite = { focus = SID_challenge_californian_hegemony}
 		mutually_exclusive = { focus = SID_go_with_Baldridge}
 		mutually_exclusive = { focus = SID_go_with_Bottolfsen}
 		available = {
-			has_government = communism
+			has_government = progressivism
 		}
 		cancel_if_invalid = yes
-		x = 27
+		x = 0
 		y = 1
+		relative_position_id = SID_challenge_californian_hegemony
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -1353,344 +1590,50 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			add_stability = -0.05
-		}
-	}
-#
-	focus = {
-		id = SID_cleanse_the_competition
-		icon = GFX_focus_generic_join_comintern
-		prerequisite = { focus = SID_go_with_Barzilla_Clark}
-		available = {
-			has_government = communism
-		}
-		cancel_if_invalid = yes
-		x = 25
-		y = 2
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		
-		available_if_capitulated = no
-
-		completion_reward = {
-			add_stability = 0.1
-			add_popularity = { ideology = democratic popularity = -0.15}
-			add_popularity = { ideology = communism popularity = 0.1}
-			add_popularity = { ideology = neutrality  popularity = -0.1}
-		}
-	}
-#
-	focus = {
-		id = SID_free_the_workers
-		icon = GFX_focus_generic_support_the_left_right
-		prerequisite = { focus = SID_go_with_Barzilla_Clark}
-		available = {
-			has_government = communism
-		}
-		cancel_if_invalid = yes
-		x = 27
-		y = 2
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		
-		available_if_capitulated = no
-
-		completion_reward = {
-			add_ideas = SID_free_the_workers
-			add_war_support = 0.1
-		}
-	}
-#
-	focus = {
-		id = SID_create_the_congress
-		icon = GFX_goal_generic_military_deal
-		prerequisite = { focus = SID_go_with_Barzilla_Clark}
-		available = {
-			has_government = communism
-		}
-		cancel_if_invalid = yes
-		x = 29
-		y = 2
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		
-		available_if_capitulated = no
-
-		completion_reward = {
-			create_faction = "SID_workers_congress"
-		}
-	}
-#
-	focus = {
-		id = SID_free_Oregon
-		icon = GFX_goal_generic_occupy_states_ongoing_war
-		prerequisite = { focus = SID_free_the_workers}
-		available = {
-			has_government = communism
-		}
-		cancel_if_invalid = yes
-		x = 25
-		y = 3
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		
-		available_if_capitulated = no
-
-		completion_reward = {
-			create_wargoal = {
-				type = puppet_wargoal_focus
-				target = SOR
+			add_popularity = {
+				ideology = progressivism
+				popularity = 0.1
 			}
 		}
 	}
-#
-	focus = {
-		id = SID_free_Nevada
-		icon = GFX_goal_generic_occupy_states_ongoing_war
-		prerequisite = { focus = SID_free_the_workers}
-		available = {
-			has_government = communism
-		}
-		cancel_if_invalid = yes
-		x = 27
-		y = 3
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		
-		available_if_capitulated = no
-
-		completion_reward = {
-			create_wargoal = {
-				type = puppet_wargoal_focus
-				target = SNV
-			}
-		}
-	}
-#
-	focus = {
-		id = SID_strike_the_bear
-		icon = GFX_focus_attack_california
-		prerequisite = { focus = SID_free_Oregon focus = SID_free_Nevada}
-		prerequisite = { focus = SID_the_red_tide}
-		available = {
-			has_government = communism
-		}
-		cancel_if_invalid = yes
-		x = 27
-		y = 5
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		
-		available_if_capitulated = no
-
-		completion_reward = {
-			create_wargoal = {
-				type = puppet_wargoal_focus
-				target = SCA
-			}
-			WDC = {
-				every_unit_leader = {
-					add_temporary_buff_to_units = {
-						combat_offense = 0.25
-						combat_breakthrough = 0.25
-						combat_defense = 0.1
-						combat_entrenchment = 0.1
-					
-						days = 90
-						tooltip = POWER_OF_THE_WORKERS
-					}
-				}
-			}
-		}
-	}
-#
-	focus = {
-		id = SID_free_Washington
-		icon = GFX_goal_generic_occupy_states_ongoing_war
-		prerequisite = { focus = SID_free_Oregon}
-		available = {
-			has_government = communism
-		}
-		cancel_if_invalid = yes
-		x = 25
-		y = 4
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		
-		available_if_capitulated = no
-
-		completion_reward = {
-			create_wargoal = {
-				type = puppet_wargoal_focus
-				target = SWA
-			}
-		}
-	}
-#
-	focus = {
-		id = SID_recruitment_propoganda
-		icon = GFX_focus_usa_honor_the_confederacy
-		prerequisite = { focus = SID_free_the_workers}
-		available = {
-			has_government = communism
-		}
-		cancel_if_invalid = yes
-		x = 29
-		y = 3
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		
-		available_if_capitulated = no
-		
-		completion_reward = {
-			add_ideas = SID_nationalistic_propoganda1
-		}
-	}
-#
-	focus = {
-		id = SID_the_red_tide
-		icon = GFX_focus_prc_agrarian_socialism
-		prerequisite = { focus = SID_recruitment_propoganda}
-		available = {
-			has_government = communism
-		}
-		cancel_if_invalid = yes
-		x = 29
-		y = 4
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		
-		available_if_capitulated = no
-		
-		completion_reward = {
-			swap_ideas = {
-				remove_idea = SID_nationalistic_propoganda1
-				add_idea = SID_nationalistic_propoganda2
-			}
-			add_war_support = 0.05
-		}
-	}
-#
-	focus = {
-		id = SID_communist_business
-		icon = GFX_goal_generic_soviet_construction
-		prerequisite = { focus = SID_the_red_tide}
-		available = {
-			has_government = communism
-		}
-		cancel_if_invalid = yes
-		x = 29
-		y = 5
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		
-		available_if_capitulated = no
-		
-		completion_reward = {
-			random_owned_controlled_state = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state = {
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
-			}
-		}
-	}
-#
 	focus = {
 		id = SID_go_with_Baldridge
-		icon = GFX_goal_support_fascism
-		prerequisite = { focus = SID_open_political_discord}
+		icon = GFX_focus_ideology_populism
+		prerequisite = { focus = SID_challenge_californian_hegemony}
 		mutually_exclusive = { focus = SID_go_with_Bottolfsen}
 		mutually_exclusive = { focus = SID_go_with_Barzilla_Clark}
 		available = {
-			has_government = fascism
+			has_government = longism
 		}
 		cancel_if_invalid = yes
-		x = 33
+		x = 10
 		y = 1
+		relative_position_id = SID_challenge_californian_hegemony
 		cost = 5
 		ai_will_do = {
-			factor = 1
+			factor = 2
 		}
 		
 		available_if_capitulated = no
 		
 		completion_reward = {
-			add_stability = -0.15
+			add_popularity = {
+				ideology = longism
+				popularity = 0.1
+			}
 		}
 	}
-#
-	focus = {
-		id = SID_night_of_the_sharpened_pototoes
-		icon = GFX_focus_generic_military_mission
-		prerequisite = { focus = SID_go_with_Baldridge}
-		available = {
-			has_government = fascism
-		}
-		cancel_if_invalid = yes
-		x = 31
-		y = 2
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		
-		available_if_capitulated = no
-		
-		completion_reward = {
-			add_stability = 0.15
-			add_political_power = -25
-		}
-	}
-#
 	focus = {
 		id = SID_nationalistic_fantasy
 		icon = GFX_focus_generic_little_entente
 		prerequisite = { focus = SID_go_with_Baldridge}
 		available = {
-			has_government = fascism
+			has_government = longism
 		}
 		cancel_if_invalid = yes
-		x = 33
-		y = 2
+		x = -1
+		y = 1
+		relative_position_id = SID_go_with_Baldridge
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -1708,11 +1651,17 @@ focus_tree = {
 		icon = GFX_focus_attack_utah
 		prerequisite = { focus = SID_go_with_Baldridge}
 		available = {
-			has_government = fascism
+			has_government = longism
+		}
+		bypass = {
+			NOT = {
+				country_exists = SUT
+			}
 		}
 		cancel_if_invalid = yes
-		x = 35
-		y = 2
+		x = 1
+		y = 1
+		relative_position_id = SID_go_with_Baldridge
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -1733,15 +1682,12 @@ focus_tree = {
 		icon = GFX_goal_generic_forceful_treaty
 		prerequisite = { focus = SID_prepare_attack_Utah}
 		available = {
-			has_government = fascism
-			NOT = {
-				has_wargoal_against = SUT
-				has_war_with = SUT
-			}
+			controls_utah_trigger = yes
 		}
 		cancel_if_invalid = yes
-		x = 35
-		y = 3
+		x = 0
+		y = 1
+		relative_position_id = SID_prepare_attack_Utah
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -1760,13 +1706,11 @@ focus_tree = {
 		prerequisite = { focus = SID_deal_with_Mormons}
 		mutually_exclusive = { focus = SID_honarary_Idahoians}
 		mutually_exclusive = { focus = SID_new_religion}
-		available = {
-			has_government = fascism
-
-			}
+		mutually_exclusive = { focus = SID_non_religous_policy}
 		cancel_if_invalid = yes
-		x = 31
-		y = 4
+		x = -6
+		y = 1
+		relative_position_id = SID_deal_with_Mormons
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -1775,6 +1719,10 @@ focus_tree = {
 		available_if_capitulated = no
 		
 		completion_reward = {
+			set_country_leader_ideology = falangism
+			set_politics = {
+				ruling_party = fascism
+			}
 			add_stability = 0.05
 		}
 	}
@@ -1783,12 +1731,10 @@ focus_tree = {
 		id = SID_continue_with_Idahoian_purity
 		icon = GFX_focus_generic_support_the_left_right
 		prerequisite = { focus = SID_purge_the_Mormons}
-		available = {
-			has_government = fascism
-			}
 		cancel_if_invalid = yes
-		x = 31
-		y = 5
+		x = 0
+		y = 1
+		relative_position_id = SID_purge_the_Mormons
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -1797,6 +1743,10 @@ focus_tree = {
 		available_if_capitulated = no
 		
 		completion_reward = {
+			add_popularity = {
+				popularity = 0.15
+				ideology = fascism
+			}
 			510 = {
 				add_manpower = 10000
 			}
@@ -1824,13 +1774,11 @@ focus_tree = {
 	focus = {
 		id = SID_expand_army_corps
 		icon = GFX_focus_generic_combined_arms
-		prerequisite = { focus = SID_purge_the_Mormons}
-		available = {
-			has_government = fascism
-			}
+		prerequisite = { focus = SID_purge_the_Mormons focus = SID_non_religous_policy}
 		cancel_if_invalid = yes
-		x = 33
-		y = 5
+		x = 2
+		y = 1
+		relative_position_id = SID_purge_the_Mormons
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -1850,12 +1798,10 @@ focus_tree = {
 		id = SID_nationalize_industry
 		icon = GFX_focus_generic_strike_at_democracy1
 		prerequisite = { focus = SID_continue_with_Idahoian_purity}
-		available = {
-			has_government = fascism
-			}
 		cancel_if_invalid = yes
-		x = 31
-		y = 6
+		x = 0
+		y = 2
+		relative_position_id = SID_purge_the_Mormons
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -1890,17 +1836,71 @@ focus_tree = {
 			}
 		}
 	}
-#
+	focus = {
+		id = SID_take_out_Nevada
+		icon = GFX_
+		prerequisite = { focus = SID_expand_army_corps}
+		bypass = {
+			NOT = {
+				country_exists = SNV
+			}
+		}
+		cancel_if_invalid = yes
+		x = -1
+		y = 3
+		relative_position_id = SID_expand_army_corps
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			create_wargoal = {
+				type = annex_everything
+				target = SNV
+			}
+		}
+	}
+	focus = {
+		id = SID_take_out_Arizona
+		icon = GFX_
+		prerequisite = { focus = SID_take_out_Nevada}
+		bypass = {
+			NOT = {
+				country_exists = SAR
+			}
+		}
+		cancel_if_invalid = yes
+		x = 0
+		y = 1
+		relative_position_id = SID_take_out_Nevada
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			create_wargoal = {
+				type = annex_everything 
+				target = SAR
+			}
+		}
+	}
 	focus = {
 		id = SID_take_out_Montana
 		icon = GFX_focus_montana
 		prerequisite = { focus = SID_expand_army_corps}
-		available = {
-			has_government = fascism
+		bypass = {
+			NOT = {
+				country_exists = SMT
 			}
+		}
 		cancel_if_invalid = yes
-		x = 33
-		y = 6
+		x = 0
+		y = 1
+		relative_position_id = SID_expand_army_corps
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -1919,13 +1919,16 @@ focus_tree = {
 	focus = {
 		id = SID_take_out_Wyoming
 		icon = GFX_focus_wyoming
-		prerequisite = { focus = SID_expand_army_corps}
-		available = {
-			has_government = fascism
+		prerequisite = { focus = SID_take_out_Montana}
+		bypass = {
+			NOT = {
+				country_exists = SWY
 			}
+		}
 		cancel_if_invalid = yes
-		x = 32
-		y = 8
+		x = 0
+		y = 1
+		relative_position_id = SID_take_out_Montana
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -1940,17 +1943,208 @@ focus_tree = {
 			}
 		}
 	}
-#
+	focus = {
+		id = SID_take_out_Washington
+		icon = GFX_
+		prerequisite = { focus = SID_expand_army_corps}
+		bypass = {
+			NOT = {
+				country_exists = SWA
+			}
+		}
+		cancel_if_invalid = yes
+		x = 1
+		y = 3
+		relative_position_id = SID_expand_army_corps
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			create_wargoal = {
+				type = annex_everything
+				target = SWA
+			}
+		}
+	}
+	focus = {
+		id = SID_take_out_Oregon
+		icon = GFX_
+		prerequisite = { focus = SID_take_out_Washington}
+		bypass = {
+			NOT = {
+				country_exists = SOR
+				country_exists = SRO
+				country_exists = URO
+				country_exists = COR
+				country_exists = POO
+				country_exists = JEF
+				country_exists = KKK
+				country_exists = AAO
+				country_exists = PCA
+			}
+		}
+		cancel_if_invalid = yes
+		x = 0
+		y = 1
+		relative_position_id = SID_take_out_Washington
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			if = {
+				limit = {
+					country_exists = SOR
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = SOR
+				}
+			}
+			if = {
+				limit = {
+					country_exists = SRO
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = SRO
+				}
+			}
+			if = {
+				limit = {
+					country_exists = URO
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = URO
+				}
+			}
+			if = {
+				limit = {
+					country_exists = PCA
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = PCA
+				}
+			}
+			if = {
+				limit = {
+					country_exists = JEF
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = JEF
+				}
+			}
+			if = {
+				limit = {
+					country_exists = AAO
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = AAO
+				}
+			}
+			if = {
+				limit = {
+					country_exists = KKK
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = KKK
+				}
+			}
+			if = {
+				limit = {
+					country_exists = COR
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = COR
+				}
+			}
+			if = {
+				limit = {
+					country_exists = POO
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = POO
+				}
+			}
+		}
+	}
+	focus = {
+		id = SID_anti_california_propaganda
+		icon = GFX_
+		prerequisite = { focus = SID_take_out_Arizona}
+		prerequisite = { focus = SID_take_out_Oregon}
+		x = 0
+		y = 3
+		relative_position_id = SID_take_out_Wyoming
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_ideas = SID_anti_californian_propaganda
+		}
+	}
+	focus = {
+		id = SID_strike_the_bear
+		icon = GFX_focus_attack_california
+		prerequisite = { focus = SID_anti_california_propaganda focus = SID_support_californian_mormons focus = SID_enlighten_Washington focus = SID_enlighten_Nevada}
+		available = {
+			country_exists = SCA
+		}
+		cancel_if_invalid = yes
+		x = 5
+		y = 1
+		relative_position_id = SID_anti_california_propaganda
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			create_wargoal = {
+				type = annex_everything
+				target = SCA
+			}
+			if = {
+				limit = {
+					has_completed_focus = SID_support_californian_mormons
+				}
+				add_state_core = 402
+				set_state_controller = 402
+				add_state_core = 51
+				set_state_controller = 51
+				add_state_core = 85
+				set_state_controller = 85
+				add_state_core = 400
+				set_state_controller = 400
+				add_state_core = 170
+				set_state_controller = 170
+			}
+		}
+	}
 	focus = {
 		id = SID_decrease_reliance
 		icon = GFX_goal_generic_construct_mil_factory
 		prerequisite = { focus = SID_nationalize_industry}
-		available = {
-			has_government = fascism
-			}
 		cancel_if_invalid = yes
-		x = 31
-		y = 7
+		x = 0
+		y = 3
+		relative_position_id = SID_purge_the_Mormons
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -1974,17 +2168,131 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = SID_non_religous_policy
+		icon = GFX_
+		prerequisite = { focus = SID_deal_with_Mormons}
+		mutually_exclusive = { focus = SID_new_religion}
+		mutually_exclusive = { focus = SID_purge_the_Mormons}
+		mutually_exclusive = { focus = SID_honarary_Idahoians}
+		x = -2
+		y = 1
+		relative_position_id = SID_deal_with_Mormons
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+		completion_reward = {
+			add_stability = 0.05
+		}
+	}
+	focus = {
+		id = SID_reinforce_secularism
+		icon = GFX_
+		prerequisite = { focus = SID_non_religous_policy}
+		x = 0
+		y = 1
+		relative_position_id = SID_non_religous_policy
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			custom_effect_tooltip = SID_every_utah_state_add_50_compliance
+			hidden_effect = {
+				49 = {
+					add_compliance = 50
+				}
+				87 = {
+					add_compliance = 50
+				}
+				144 = {
+					add_compliance = 50
+				}
+				299 = {
+					add_compliance = 50
+				}
+				300 = {
+					add_compliance = 50
+				}
+				308 = {
+					add_compliance = 50
+				}
+				311 = {
+					add_compliance = 50
+				}
+				313 = {
+					add_compliance = 50
+				}
+				441 = {
+					add_compliance = 50
+				}
+			}
+		}
+	}
+	focus = {
+		id = SID_strengthen_the_free_market
+		icon = GFX_
+		prerequisite = { focus = SID_reinforce_secularism}
+		x = 0
+		y = 1
+		relative_position_id = SID_reinforce_secularism
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_political_power = 50
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = SID_an_empire_for_all
+		icon = GFX_
+		prerequisite = { focus = SID_strengthen_the_free_market}
+		x = 0
+		y = 1
+		relative_position_id = SID_strengthen_the_free_market
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_ideas = SID_an_empire_for_all
+		}
+	}
+	focus = {
 		id = SID_honarary_Idahoians
 		icon = GFX_goal_generic_dangerous_deal
 		prerequisite = { focus = SID_deal_with_Mormons}
 		mutually_exclusive = { focus = SID_new_religion}
 		mutually_exclusive = { focus = SID_purge_the_Mormons}
-		available = {
-			has_government = fascism
-			}
+		mutually_exclusive = { focus = SID_non_religous_policy}
 		cancel_if_invalid = yes
-		x = 35
-		y = 4
+		x = 2
+		y = 1
+		relative_position_id = SID_deal_with_Mormons
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -2001,12 +2309,10 @@ focus_tree = {
 		id = SID_create_the_mormon_republic
 		icon = GFX_focus_generic_self_management
 		prerequisite = { focus = SID_honarary_Idahoians}
-		available = {
-			has_government = fascism
-			}
 		cancel_if_invalid = yes
-		x = 35
-		y = 5
+		x = 0
+		y = 1
+		relative_position_id = SID_honarary_Idahoians
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -2016,49 +2322,35 @@ focus_tree = {
 		
 		completion_reward = {
 			country_event = Idaho.3
-			144 = {
-				add_core_of = SID
-			}
-			49 = {
-				add_core_of = SID
-			}
-			309 = {
-				add_core_of = SID
-			}
-			312 = {
-				add_core_of = SID
-			}
-			300 = {
-				add_core_of = SID
-			}
-			299 = {
-				add_core_of = SID
-			}
-			313 = {
-				add_core_of = SID
-			}
-			311 = {
-				add_core_of = SID
-			}
-			310 = {
-				add_core_of = SID
-			}
-			308 = {
-				add_core_of = SID
-			}
+			core_utah = yes
 		}
 	}
-#
+	focus = {
+		id = SID_mormons_in_politics
+		icon = GFX_
+		prerequisite = { focus = SID_create_the_mormon_republic}
+		x = -2
+		y = 1
+		relative_position_id = SID_create_the_mormon_republic
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_political_power = 50
+			add_stability = 0.05
+		}
+	}
 	focus = {
 		id = SID_enforce_mormon_values
 		icon = GFX_goal_generic_forceful_treaty
 		prerequisite = { focus = SID_create_the_mormon_republic}
-		available = {
-			has_government = fascism
-			}
 		cancel_if_invalid = yes
-		x = 35
-		y = 6
+		x = 0
+		y = 2
+		relative_position_id = SID_honarary_Idahoians
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -2070,17 +2362,51 @@ focus_tree = {
 			add_ideas = SID_mormon_values
 		}
 	}
-#
+	focus = {
+		id = SID_mormon_industries
+		icon = GFX_
+		prerequisite = { focus = SID_create_the_mormon_republic}
+		x = 2
+		y = 1
+		relative_position_id = SID_create_the_mormon_republic
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward  = {
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
 	focus = {
 		id = SID_free_wyoming_mormons
 		icon = GFX_focus_wyoming
 		prerequisite = { focus = SID_enforce_mormon_values}
-		available = {
-			has_government = fascism
+		bypass = {
+			NOT = {
+				country_exists = SWY
 			}
+		}
 		cancel_if_invalid = yes
-		x = 34
-		y = 7
+		x = -1
+		y = 3
+		relative_position_id = SID_honarary_Idahoians
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -2100,12 +2426,15 @@ focus_tree = {
 		id = SID_free_nevada_mormons
 		icon = GFX_focus_nevada
 		prerequisite = { focus = SID_enforce_mormon_values}
-		available = {
-			has_government = fascism
+		bypass = {
+			NOT = {
+				country_exists = SNV
 			}
+		}
 		cancel_if_invalid = yes
-		x = 36
-		y = 7
+		x = 1
+		y = 3
+		relative_position_id = SID_honarary_Idahoians
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -2126,12 +2455,16 @@ focus_tree = {
 		icon = GFX_goal_generic_occupy_states_ongoing_war
 		prerequisite = { focus = SID_free_nevada_mormons}
 		prerequisite = { focus = SID_free_wyoming_mormons}
-		available = {
-			has_government = fascism
+		bypass = {
+			NOT = {
+				country_exists = NAV
+				country_exists = SAZ
 			}
+		}
 		cancel_if_invalid = yes
-		x = 35
-		y = 8
+		x = 0
+		y = 4
+		relative_position_id = SID_honarary_Idahoians
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -2140,9 +2473,6 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			UTE = {
-				country_event = Idaho.9
-			}
 			NAV = {
 				country_event = Idaho.8
 			}
@@ -2156,12 +2486,10 @@ focus_tree = {
 		id = SID_form_Deseret
 		icon = GFX_focus_generic_strike_at_democracy2
 		prerequisite = { focus = SID_sieze_remaining_mormon_land}
-		available = {
-			has_government = fascism
-			}
 		cancel_if_invalid = yes
-		x = 35
-		y = 9
+		x = 0
+		y = 5
+		relative_position_id = SID_honarary_Idahoians
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -2171,21 +2499,43 @@ focus_tree = {
 
 		completion_reward = {
 			set_cosmetic_tag = DESERET
+			core_nevada = yes
+			core_wyoming = yes
+			145 = { add_core_of = SID }
+			302 = { add_core_of = SID }
+			86 = { add_core_of = SID }
+			claim_arizona = yes
+			claim_colorado = yes
 		}
 	}
-#
+	focus = {
+		id = SID_support_californian_mormons
+		icon = GFX_
+		prerequisite = { focus = SID_form_Deseret}
+		x = 0
+		y = 1
+		relative_position_id = SID_form_Deseret
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_war_support = 0.05
+		}
+	}
 	focus = {
 		id = SID_new_religion
 		icon = GFX_goal_SID_potato_propoganda
 		prerequisite = { focus = SID_deal_with_Mormons}
 		mutually_exclusive = { focus = SID_purge_the_Mormons}
 		mutually_exclusive = { focus = SID_honarary_Idahoians}
-		available = {
-			has_government = fascism
-			}
+		mutually_exclusive = { focus = SID_non_religous_policy}
 		cancel_if_invalid = yes
-		x = 39
-		y = 4
+		x = 7
+		y = 1
+		relative_position_id = SID_deal_with_Mormons
 		cost = 10
 		ai_will_do = {
 			factor = 0
@@ -2202,12 +2552,10 @@ focus_tree = {
 		id = SID_form_the_church_of_potato
 		icon = GFX_focus_generic_self_management
 		prerequisite = { focus = SID_new_religion}
-		available = {
-			has_government = fascism
-			}
 		cancel_if_invalid = yes
-		x = 37
-		y = 5
+		x = 2
+		y = 1
+		relative_position_id = SID_new_religion
 		cost = 10
 		ai_will_do = {
 			factor = 0
@@ -2217,19 +2565,57 @@ focus_tree = {
 		
 		completion_reward = {
 			add_political_power = 75
+			add_popularity = {
+				popularity = 0.25
+				ideology = fascism
+			}
 		}
 	}
-#
+	focus = {
+		id = SID_adopt_parts_of_mormonism
+		icon = GFX_
+		prerequisite = { focus = SID_form_the_church_of_potato}
+		mutually_exclusive = { focus = SID_reject_mormon_values}
+		x = -1
+		y = 1
+		relative_position_id = SID_form_the_church_of_potato
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_ideas = SID_mormon_values
+		}
+	}
+	focus = {
+		id = SID_reject_mormon_values
+		icon = GFX_
+		prerequisite = { focus = SID_form_the_church_of_potato}
+		mutually_exclusive = { focus = SID_adopt_parts_of_mormonism}
+		x = 1
+		y = 1
+		relative_position_id = SID_form_the_church_of_potato
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_stability = 0.05
+			add_political_power = 50
+		}
+	}
 	focus = {
 		id = SID_potato_industries
 		icon = GFX_goal_generic_consumer_goods
-		prerequisite = { focus = SID_form_the_church_of_potato}
-		available = {
-			has_government = fascism
-			}
+		prerequisite = { focus = SID_new_religion}
 		cancel_if_invalid = yes
-		x = 37
-		y = 6
+		x = -1
+		y = 1
+		relative_position_id = SID_new_religion
 		cost = 10
 		ai_will_do = {
 			factor = 0
@@ -2264,17 +2650,58 @@ focus_tree = {
 			}
 		}
 	}
-#
+	focus = {
+		id = SID_expand_potato_farms
+		icon = GFX_
+		prerequisite = { focus = SID_potato_industries}
+		x = 0
+		y = 1
+		relative_position_id = SID_potato_industries
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				add_manpower = 5000
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_manpower = 5000
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
 	focus = {
 		id = SID_spread_the_potato
 		icon = GFX_goal_generic_demand_territory
-		prerequisite = { focus = SID_new_religion}
-		available = {
-			has_government = fascism
-			}
+		prerequisite = { focus = SID_expand_potato_farms focus = SID_adopt_parts_of_mormonism focus = SID_reject_mormon_values}
 		cancel_if_invalid = yes
-		x = 40
-		y = 5
+		x = 0
+		y = 4
+		relative_position_id = SID_new_religion
 		cost = 10
 		ai_will_do = {
 			factor = 0
@@ -2291,12 +2718,23 @@ focus_tree = {
 		id = SID_enlighten_Oregon
 		icon = GFX_goal_generic_occupy_states_ongoing_war
 		prerequisite = { focus = SID_spread_the_potato}
-		available = {
-			has_government = fascism
+		bypass = {
+			NOT = {
+				country_exists = SOR
+				country_exists = SRO
+				country_exists = URO
+				country_exists = COR
+				country_exists = POO
+				country_exists = JEF
+				country_exists = KKK
+				country_exists = AAO
+				country_exists = PCA
 			}
+		}
 		cancel_if_invalid = yes
-		x = 39
-		y = 6
+		x = -1
+		y = 1
+		relative_position_id = SID_spread_the_potato
 		cost = 10
 		ai_will_do = {
 			factor = 0
@@ -2305,23 +2743,103 @@ focus_tree = {
 		available_if_capitulated = no
 		
 		completion_reward = {
-			create_wargoal = {
-				type = annex_everything
-				target = SOR
+			claim_all_of_oregon = yes
+			if = {
+				limit = {
+					country_exists = SOR
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = SOR
+				}
+			}
+			if = {
+				limit = {
+					country_exists = SRO
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = SRO
+				}
+			}
+			if = {
+				limit = {
+					country_exists = URO
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = URO
+				}
+			}
+			if = {
+				limit = {
+					country_exists = PCA
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = PCA
+				}
+			}
+			if = {
+				limit = {
+					country_exists = JEF
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = JEF
+				}
+			}
+			if = {
+				limit = {
+					country_exists = AAO
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = AAO
+				}
+			}
+			if = {
+				limit = {
+					country_exists = KKK
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = KKK
+				}
+			}
+			if = {
+				limit = {
+					country_exists = COR
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = COR
+				}
+			}
+			if = {
+				limit = {
+					country_exists = POO
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = POO
+				}
 			}
 		}
 	}
-#
 	focus = {
 		id = SID_enlighten_Washington
 		icon = GFX_goal_generic_occupy_states_ongoing_war
-		prerequisite = { focus = SID_spread_the_potato}
-		available = {
-			has_government = fascism
+		prerequisite = { focus = SID_enlighten_Oregon}
+		bypass = {
+			NOT = {
+				country_exists = SWA
 			}
+		}
 		cancel_if_invalid = yes
-		x = 41
-		y = 6
+		x = 0
+		y = 1
+		relative_position_id = SID_enlighten_Oregon
 		cost = 10
 		ai_will_do = {
 			factor = 0
@@ -2330,23 +2848,26 @@ focus_tree = {
 		available_if_capitulated = no
 		
 		completion_reward = {
+			claim_washington = yes
 			create_wargoal = {
 				type = annex_everything
 				target = SWA
 			}
 		}
 	}
-#
 	focus = {
 		id = SID_enlighten_Montana
 		icon = GFX_goal_generic_occupy_states_ongoing_war
 		prerequisite = { focus = SID_spread_the_potato}
-		available = {
-			has_government = fascism
+		bypass = {
+			NOT = {
+				country_exists = SMT
 			}
+		}
 		cancel_if_invalid = yes
-		x = 40
-		y = 7
+		x = 1
+		y = 1
+		relative_position_id = SID_spread_the_potato
 		cost = 10
 		ai_will_do = {
 			factor = 0
@@ -2355,9 +2876,37 @@ focus_tree = {
 		available_if_capitulated = no
 		
 		completion_reward = {
+			claim_montana = yes
 			create_wargoal = {
 				type = annex_everything
 				target = SMT
+			}
+		}
+	}
+	focus = {
+		id = SID_enlighten_Nevada
+		icon = GFX_goal_generic_occupy_states_ongoing_war
+		prerequisite = { focus = SID_enlighten_Montana}
+		bypass = {
+			NOT = {
+				country_exists = SNV
+			}
+		}
+		cancel_if_invalid = yes
+		x = 0
+		y = 1
+		relative_position_id = SID_enlighten_Montana
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			claim_nevada = yes
+			create_wargoal = {
+				type = annex_everything
+				target = SNV
 			}
 		}
 	}
