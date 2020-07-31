@@ -1382,6 +1382,10 @@ focus_tree = {
 			factor = 1
 		}
 		available_if_capitulated = no
+		will_lead_to_war_with = { PCA }
+		will_lead_to_war_with = { COR }
+		will_lead_to_war_with = { KKK }
+		will_lead_to_war_with = { URO }
 
 		completion_reward = {
 			claim_provisional_cascadia = yes
@@ -1407,11 +1411,11 @@ focus_tree = {
 			}
 			if = {
 				limit = {
-					country_exists = PCA
+					country_exists = KKK
 				}
 				create_wargoal = {
 					type = annex_everything
-					target = COR
+					target = KKK
 				}
 			}
 			if = {
@@ -1487,7 +1491,7 @@ focus_tree = {
 			has_government = democratic
 		}
 		cancel_if_invalid = yes
-		x = -2
+		x = -3
 		y = 1
 		relative_position_id = SID_go_with_Bottolfsen
 		cost = 10
@@ -1570,6 +1574,734 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = SID_cooroprate_with_cascadia
+		icon = GFX_
+		prerequisite = { focus = SID_go_with_Bottolfsen}
+		x = 2
+		y = 1
+		relative_position_id = SID_go_with_Bottolfsen
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			set_rule = {
+				can_create_factions = yes
+			}
+			create_faction = SID_CASCADIAN_CONFEDERACY
+			if = {
+				limit = {
+					country_exists = PCA
+					has_completed_focus = SID_support_provisional_cascadia
+				}
+				add_opinion_modifier = {
+					target = PCA
+					modifier = SID_cascadian_coorportation
+				}
+				PCA = {
+					add_opinion_modifier = {
+						target = SID
+						modifier = SID_cascadian_coorportation
+					}
+				}
+			}
+			if = {
+				limit = {
+					country_exists = COR
+					has_completed_focus = SID_support_the_catholics
+				}
+				add_opinion_modifier = {
+					target = COR
+					modifier = SID_cascadian_coorportation
+				}
+				COR = {
+					add_opinion_modifier = {
+						target = SID
+						modifier = SID_cascadian_coorportation
+					}
+				}
+			}
+			if = {
+				limit = {
+					country_exists = URO
+					has_completed_focus = SID_support_the_unitary_republic
+				}
+				add_opinion_modifier = {
+					target = URO
+					modifier = SID_cascadian_coorportation
+				}
+				URO = {
+					add_opinion_modifier = {
+						target = SID
+						modifier = SID_cascadian_coorportation
+					}
+				}
+			}
+			if = {
+				limit = {
+					country_exists = SRO
+					has_completed_focus = SID_support_the_socialist_republic
+				}
+				add_opinion_modifier = {
+					target = SRO
+					modifier = SID_cascadian_coorportation
+				}
+				SRO = {
+					add_opinion_modifier = {
+						target = SID
+						modifier = SID_cascadian_coorportation
+					}
+				}
+			}
+			if = {
+				limit = {
+					country_exists = SOR
+					NOT = {
+						has_completed_focus = SID_support_provisional_cascadia
+						has_completed_focus = SID_support_the_catholics
+						has_completed_focus = SID_support_the_legidimate_government
+						has_completed_focus = SID_support_the_socialist_republic
+						has_completed_focus = SID_support_the_unitary_republic
+					}
+				}
+				add_opinion_modifier = {
+					target = SOR
+					modifier = SID_cascadian_coorportation
+				}
+				SOR = {
+					add_opinion_modifier = {
+						target = SID
+						modifier = SID_cascadian_coorportation
+					}
+				}
+			}
+		}
+	}
+	focus = {
+		id = SID_the_legidimate_government_won
+		icon = GFX_
+		prerequisite = { focus = SID_cooroprate_with_cascadia}
+		mutually_exclusive = { focus = SID_our_favored_government_won}
+		mutually_exclusive = { focus = SID_an_imposter_won}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SID_oregon_civil_war_is_over
+				NOT = {
+					has_global_flag = oregon_civil_war_has_begun
+				}
+				
+			}
+			NOT = {
+				has_completed_focus = SID_support_the_legidimate_government
+			}
+		}
+		x = -2
+		y = 1
+		relative_position_id = SID_cooroprate_with_cascadia
+		cost = 1
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+	}
+	focus = {
+		id = SID_end_our_support_for_the_rebels
+		icon = GFX_
+		prerequisite = { focus = SID_the_legidimate_government_won}
+		bypass = {
+			NOT = {
+				has_completed_focus = SID_support_provisional_cascadia
+				has_completed_focus = SID_support_the_catholics
+				has_completed_focus = SID_support_the_legidimate_government
+				has_completed_focus = SID_support_the_socialist_republic
+				has_completed_focus = SID_support_the_unitary_republic
+			}
+		}
+		x = 0
+		y = 1
+		relative_position_id = SID_the_legidimate_government_won
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			SOR = {
+				add_political_power = 50
+				add_stability = 0.05
+			}
+			add_political_power = 50
+			add_opinion_modifier = {
+				target = SOR
+				modifier = SID_cascadian_coorportation
+			}
+			SOR = {
+				add_opinion_modifier = {
+					target = SID
+					modifier = SID_cascadian_coorportation
+				}
+			}
+		}
+	}
+	focus = {
+		id = SID_an_imposter_won
+		icon = GFX_
+		prerequisite = { focus = SID_cooroprate_with_cascadia}
+		mutually_exclusive = { focus = SID_the_legidimate_government_won}
+		mutually_exclusive = { focus = SID_our_favored_government_won}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SID_oregon_civil_war_is_over
+				NOT = {
+					has_global_flag = oregon_civil_war_has_begun
+				}
+				
+			}
+		}
+		x = 2
+		y = 1
+		relative_position_id = SID_cooroprate_with_cascadia
+		cost = 1
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_political_power = 10
+		}
+	}
+	focus = {
+		id = SID_deal_with_them_later
+		icon = GFX_
+		prerequisite = { focus = SID_an_imposter_won}
+		mutually_exclusive = { focus = SID_support_jefferson}
+		x = -1
+		y = 1
+		relative_position_id = SID_an_imposter_won
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_political_power = 25
+			custom_effect_tooltip = SID_split_later_with_washington
+		}
+	}
+	focus = {
+		id = SID_support_jefferson
+		icon = GFX_
+		prerequisite = { focus = SID_an_imposter_won}
+		mutually_exclusive = { focus = SID_deal_with_them_later}
+		available = {
+			country_exists = JEF
+		}
+		x = 1
+		y = 1
+		relative_position_id = SID_an_imposter_won
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_opinion_modifier = {
+				target = JEF
+				modifier = SID_cascadian_coorportation
+			}
+		}
+	}
+	focus = {
+		id = SID_our_favored_government_won
+		icon = GFX_
+		prerequisite = { focus = SID_cooroprate_with_cascadia}
+		mutually_exclusive = { focus = SID_the_legidimate_government_won}
+		mutually_exclusive = { focus = SID_an_imposter_won}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SID_oregon_civil_war_is_over
+				NOT = {
+					has_global_flag = oregon_civil_war_has_begun
+				}
+				
+			}
+			OR = {
+				PCA = {
+					has_relation_modifier = {
+						target = SID
+						modifier = SID_cascadian_coorportation
+					}
+				}
+				COR = {
+					has_relation_modifier = {
+						target = SID
+						modifier = SID_cascadian_coorportation
+					}
+				}
+				URO = {
+					has_relation_modifier = {
+						target = SID
+						modifier = SID_cascadian_coorportation
+					}
+				}
+				SRO = {
+					has_relation_modifier = {
+						target = SID
+						modifier = SID_cascadian_coorportation
+					}
+				}
+				AND = {
+					has_completed_focus = SID_support_the_legidimate_government
+					SOR = {
+						has_relation_modifier = {
+							target = SID
+							modifier = SID_cascadian_coorportation
+						}
+					}
+				}
+			}
+		}
+		x = 0
+		y = 1
+		relative_position_id = SID_cooroprate_with_cascadia
+		cost = 1
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_political_power = 10
+		}
+	}
+	focus = {
+		id = SID_help_unite_oregon
+		icon = GFX_
+		prerequisite = { focus = SID_our_favored_government_won focus = SID_end_our_support_for_the_rebels focus = SID_support_jefferson}
+		x = 0
+		y = 2
+		relative_position_id = SID_our_favored_government_won
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			if = {
+				limit = {
+					SOR = {
+						has_relation_modifier = {
+							target = SID
+							modifier = SID_cascadian_coorportation
+						}
+					}
+				}
+				give_guarantee = SOR
+				SOR = {
+					country_event = {
+						id = Idaho.9
+					}
+				}
+			}
+			if = {
+				limit = {
+					SRO = {
+						has_relation_modifier = {
+							target = SID
+							modifier = SID_cascadian_coorportation
+						}
+					}
+				}
+				give_guarantee = SRO
+				SRO = {
+					country_event = {
+						id = Idaho.9
+					}
+				}
+			}
+			if = {
+				limit = {
+					URO = {
+						has_relation_modifier = {
+							target = SID
+							modifier = SID_cascadian_coorportation
+						}
+					}
+				}
+				give_guarantee = URO
+				URO = {
+					country_event = {
+						id = Idaho.9
+					}
+				}
+			}
+			if = {
+				limit = {
+					PCA = {
+						has_relation_modifier = {
+							target = SID
+							modifier = SID_cascadian_coorportation
+						}
+					}
+				}
+				give_guarantee = PCA
+				PCA = {
+					country_event = {
+						id = Idaho.9
+					}
+				}
+			}
+			if = {
+				limit = {
+					COR = {
+						has_relation_modifier = {
+							target = SID
+							modifier = SID_cascadian_coorportation
+						}
+					}
+				}
+				give_guarantee = COR
+				COR = {
+					country_event = {
+						id = Idaho.9
+					}
+				}
+			}
+			if = {
+				limit = {
+					JEF = {
+						has_relation_modifier = {
+							target = SID
+							modifier = SID_cascadian_coorportation
+						}
+					}
+				}
+				give_guarantee = JEF
+				JEF = {
+					country_event = {
+						id = Idaho.9
+					}
+				}
+			}
+		}
+	}
+	focus = {
+		id = SID_send_an_envoy_to_washingon
+		icon = GFX_
+		prerequisite = { focus = SID_help_unite_oregon focus = SID_deal_with_them_later}
+		x = 1
+		y = 1
+		relative_position_id = SID_help_unite_oregon
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_opinion_modifier = {
+				target = SWA
+				modifier = SID_cascadian_coorportation
+			}
+			SWA = {
+				add_opinion_modifier = {
+					target = SID
+					modifier = SID_cascadian_coorportation
+				}
+			}
+		}
+	}
+	focus = {
+		id = SID_allow_free_travel_between_universities
+		icon = GFX_
+		prerequisite = { focus = SID_send_an_envoy_to_washingon}
+		x = -2
+		y = 1
+		relative_position_id = SID_send_an_envoy_to_washingon
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_stability = 0.05
+			add_ideas = SID_university_cooperation
+			SWA = {
+				add_ideas = SID_university_cooperation
+			}
+		}
+	}
+	focus = {
+		id = SID_economic_cooperation
+		icon = GFX_
+		prerequisite = { focus = SID_send_an_envoy_to_washingon}
+		x = 0
+		y = 1
+		relative_position_id = SID_send_an_envoy_to_washingon
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			SWA = {
+				random_owned_controlled_state = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+				random_owned_controlled_state = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+		}
+	}
+	focus = {
+		id = SID_invite_them_to_the_confederacy
+		icon = GFX_
+		prerequisite = { focus = SID_allow_free_travel_between_universities}
+		prerequisite = { focus = SID_economic_cooperation}
+		x = 1
+		y = 1
+		relative_position_id = SID_allow_free_travel_between_universities
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_political_power = 50
+			SWA = {
+				country_event = {
+					id = Idaho.10
+				}
+			}
+		}
+	}
+	focus = {
+		id = SID_deal_with_oregon
+		icon = GFX_
+		prerequisite = { focus = SID_invite_them_to_the_confederacy}
+		prerequisite = { focus = SID_deal_with_them_later}
+		x = 2
+		y = 1
+		relative_position_id = SID_invite_them_to_the_confederacy
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+		will_lead_to_war_with = { SOR }
+		will_lead_to_war_with = { SRO }
+		will_lead_to_war_with = { URO }
+		will_lead_to_war_with = { PCA }
+		will_lead_to_war_with = { JEF }
+		will_lead_to_war_with = { AAO }
+		will_lead_to_war_with = { KKK }
+		will_lead_to_war_with = { COR }
+		will_lead_to_war_with = { POO }
+
+		completion_reward = {
+			claim_unitary_oregon = yes
+			claim_provisional_cascadia = yes
+			claim_neo_africa = yes
+			claim_religious_oregon = yes
+			claim_white_supremacy_oregon = yes
+			SWA = {
+				claim_oregon_proper = yes
+				claim_socialist_oregon = yes
+				claim_jefferson_starting_territory = yes
+				53 = { add_claim_by = SWA }
+			}
+			if = {
+				limit = {
+					country_exists = SOR
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = SOR
+				}
+			}
+			if = {
+				limit = {
+					country_exists = SRO
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = SRO
+				}
+			}
+			if = {
+				limit = {
+					country_exists = URO
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = URO
+				}
+			}
+			if = {
+				limit = {
+					country_exists = PCA
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = PCA
+				}
+			}
+			if = {
+				limit = {
+					country_exists = JEF
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = JEF
+				}
+			}
+			if = {
+				limit = {
+					country_exists = AAO
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = AAO
+				}
+			}
+			if = {
+				limit = {
+					country_exists = KKK
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = KKK
+				}
+			}
+			if = {
+				limit = {
+					country_exists = COR
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = COR
+				}
+			}
+			if = {
+				limit = {
+					country_exists = POO
+				}
+				create_wargoal = {
+					type = annex_everything
+					target = POO
+				}
+			}
+		}
+	}
+	focus = {
+		id = SID_send_an_envoy_to_british_columbia
+		icon = GFX_
+		prerequisite = { focus = SID_invite_them_to_the_confederacy}
+		x = 0
+		y = 1
+		relative_position_id = SID_invite_them_to_the_confederacy
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			PBC = {
+				add_opinion_modifier = {
+					target = SID
+					modifier = SID_cascadian_coorportation
+				}
+			}
+			add_opinion_modifier = {
+				target = PBC
+				modifier = SID_cascadian_coorportation
+			}
+		}
+	}
+	focus = {
+		id = SID_grant_mining_rights_in_idaho
+		icon = GFX_
+		prerequisite = { focus = SID_send_an_envoy_to_british_columbia}
+		x = 0
+		y = 1
+		relative_position_id = SID_send_an_envoy_to_british_columbia
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			PBC = {
+				create_import = {
+					resource = chromium
+					amount = 50
+					exporter = SID
+				}
+			}
+			add_political_power = 150
+		}
+	}
+	focus = {
+		id = SID_invite_british_columbia_to_the_confederacy
+		icon = GFX_
+		prerequisite = { focus = SID_grant_mining_rights_in_idaho}
+		x = 0
+		y = 1
+		relative_position_id = SID_grant_mining_rights_in_idaho
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			PBC = {
+				country_event = {
+					id = Idaho.11
+				}
+			}
+		}
+	}
+	focus = {
 		id = SID_go_with_Barzilla_Clark
 		icon = GFX_focus_ideology_progressivism
 		prerequisite = { focus = SID_challenge_californian_hegemony}
@@ -1627,9 +2359,6 @@ focus_tree = {
 		id = SID_nationalistic_fantasy
 		icon = GFX_focus_generic_little_entente
 		prerequisite = { focus = SID_go_with_Baldridge}
-		available = {
-			has_government = longism
-		}
 		cancel_if_invalid = yes
 		x = -1
 		y = 1
@@ -1650,9 +2379,6 @@ focus_tree = {
 		id = SID_prepare_attack_Utah
 		icon = GFX_focus_attack_utah
 		prerequisite = { focus = SID_go_with_Baldridge}
-		available = {
-			has_government = longism
-		}
 		bypass = {
 			NOT = {
 				country_exists = SUT
@@ -1907,6 +2633,7 @@ focus_tree = {
 		}
 		
 		available_if_capitulated = no
+		will_lead_to_war_with = { SMT }
 		
 		completion_reward = {
 			create_wargoal = {
@@ -1935,6 +2662,7 @@ focus_tree = {
 		}
 		
 		available_if_capitulated = no
+		will_lead_to_war_with = { SWY }
 		
 		completion_reward = {
 			create_wargoal = {
@@ -1961,6 +2689,7 @@ focus_tree = {
 			factor = 1
 		}
 		available_if_capitulated = no
+		will_lead_to_war_with = { SWA }
 
 		completion_reward = {
 			create_wargoal = {
@@ -1995,6 +2724,15 @@ focus_tree = {
 			factor = 1
 		}
 		available_if_capitulated = no
+		will_lead_to_war_with = { SOR }
+		will_lead_to_war_with = { SRO }
+		will_lead_to_war_with = { URO }
+		will_lead_to_war_with = { PCA }
+		will_lead_to_war_with = { JEF }
+		will_lead_to_war_with = { AAO }
+		will_lead_to_war_with = { KKK }
+		will_lead_to_war_with = { COR }
+		will_lead_to_war_with = { POO }
 
 		completion_reward = {
 			if = {
@@ -2114,6 +2852,7 @@ focus_tree = {
 			factor = 1
 		}
 		available_if_capitulated = no
+		will_lead_to_war_with = { SCA }
 
 		completion_reward = {
 			create_wargoal = {
@@ -2413,6 +3152,7 @@ focus_tree = {
 		}
 		
 		available_if_capitulated = no
+		will_lead_to_war_with = { SWY }
 
 		completion_reward = {
 			create_wargoal = {
@@ -2441,6 +3181,7 @@ focus_tree = {
 		}
 		
 		available_if_capitulated = no
+		will_lead_to_war_with = { SNV }
 
 		completion_reward = {
 			create_wargoal = {
@@ -2471,6 +3212,8 @@ focus_tree = {
 		}
 		
 		available_if_capitulated = no
+		will_lead_to_war_with = { NAV }
+		will_lead_to_war_with = { SAZ }
 
 		completion_reward = {
 			NAV = {
@@ -2741,6 +3484,15 @@ focus_tree = {
 		}
 		
 		available_if_capitulated = no
+		will_lead_to_war_with = { SOR }
+		will_lead_to_war_with = { SRO }
+		will_lead_to_war_with = { URO }
+		will_lead_to_war_with = { PCA }
+		will_lead_to_war_with = { JEF }
+		will_lead_to_war_with = { AAO }
+		will_lead_to_war_with = { KKK }
+		will_lead_to_war_with = { COR }
+		will_lead_to_war_with = { POO }
 		
 		completion_reward = {
 			claim_all_of_oregon = yes
@@ -2846,6 +3598,7 @@ focus_tree = {
 		}
 		
 		available_if_capitulated = no
+		will_lead_to_war_with = { SWA }
 		
 		completion_reward = {
 			claim_washington = yes
@@ -2874,6 +3627,7 @@ focus_tree = {
 		}
 		
 		available_if_capitulated = no
+		will_lead_to_war_with = { SMT }
 		
 		completion_reward = {
 			claim_montana = yes
@@ -2901,6 +3655,7 @@ focus_tree = {
 			factor = 1
 		}
 		available_if_capitulated = no
+		will_lead_to_war_with = { SNV }
 
 		completion_reward = {
 			claim_nevada = yes
