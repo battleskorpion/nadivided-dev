@@ -6,7 +6,7 @@ country_event = {
 	desc = california.1.d
 	picture = GFX_report_event_merchant_ship_01
 
-	is_triggered_only = yes
+	is_trigSCAed_only = yes
 	
 	option = {
 		name = california.1.a
@@ -36,7 +36,7 @@ country_event = {
 	desc = california.2.d
 	picture = GFX_report_event_merchant_ship_01
 
-	is_triggered_only = yes
+	is_trigSCAed_only = yes
 	
 	option = {
 		name = italy.2.a
@@ -44,7 +44,7 @@ country_event = {
 	}
 }
 
-# Spain Refuses to Give Up Islands
+# arizona refuses to be subjeted
 country_event = {
 	id = california.3
 	title = california.3.t
@@ -118,4 +118,125 @@ country_event = {
 		name = california.51.a
 	}
 }
+# Danzig or War (Poland)
+country_event = {
+	id = california.86
+	title = california.86.t
+	desc = california.86.d
+	picture = GFX_report_event_german_troops
 
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_war_with = SCA }
+	}
+	
+	option = {
+		name = california.86.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
+		SCA = { country_event = { id = california.87 days = 1 } }
+		effect_tooltip = {
+			SCA = {
+				transfer_state = 85
+				add_state_core = 85
+				remove_state_claim = 86
+				remove_state_claim = 762
+			}
+		}
+	}
+	
+	option = {
+		name = california.86.b
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 3
+				strength_ratio = {
+					tag = SCA
+					ratio > 0.7
+				}
+			}
+			modifier = {
+				factor = 10
+				any_other_country = {
+					is_major = yes
+					is_in_faction_with = SAZ
+				}
+			}
+		}
+		SCA = { country_event = { id = california.88 days = 1 } 
+			if = {
+				limit = {
+					is_in_faction_with = SAZ
+					is_faction_leader = yes
+				}
+				remove_from_faction = SAZ
+			}
+			if = {
+				limit = { 
+					is_in_faction_with = SAZ
+					is_faction_leader = no
+				}
+				random_other_country = {
+					limit = { 
+						is_in_faction_with = SCA
+						is_faction_leader = yes
+					}
+					remove_from_faction = SCA
+				}
+			}			
+		}		
+		hidden_effect = {
+			news_event = { hours = 1 id = news.204 }
+		}
+		effect_tooltip = {
+			SCA = {
+				declare_war_on = {
+					target = SAZ
+					type = take_state
+					generator = { 85 }
+				}
+			}
+		}
+	}
+}
+
+# Poland Cedes Danzig (Danzig or War)
+country_event = {
+	id = california.87
+	title = california.87.t
+	desc = california.87.d
+	picture = GFX_report_event_german_polish_border
+
+	is_triggered_only = yes
+	
+	option = {
+		name = california.87.a
+		transfer_state = 85
+		remove_state_claim = 86
+}
+
+# Poland Refuses to Cede Danzig (Danzig or War)
+country_event = {
+	id = california.88
+	title = california.88.t
+	desc = california.88.d
+	picture = GFX_report_event_polish_tanks_02
+
+	is_triggered_only = yes
+	
+	option = {
+		name = california.88.a
+		create_wargoal = {
+			type = take_state
+			generator = { 85 }
+			target = SAZ
+		}
+		add_state_core = 85
+}
