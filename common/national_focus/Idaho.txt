@@ -1354,7 +1354,7 @@ focus_tree = {
 			OR = {
 				has_government = fascism
 				has_government = communism
-				has_government = populism
+				has_government = longism
 			}
 		}
 		x = 1
@@ -1575,7 +1575,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SID_cooroprate_with_cascadia
-		icon = GFX_
+		icon = GFX_focus_diplomacy_cascadia
 		prerequisite = { focus = SID_go_with_Bottolfsen}
 		x = 2
 		y = 1
@@ -1591,6 +1591,7 @@ focus_tree = {
 				can_create_factions = yes
 			}
 			create_faction = SID_CASCADIAN_CONFEDERACY
+			custom_effect_tooltip = SID_have_over_75_relations_tt
 			if = {
 				limit = {
 					country_exists = PCA
@@ -1681,7 +1682,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SID_the_legidimate_government_won
-		icon = GFX_
+		icon = GFX_focus_democratic_oregon
 		prerequisite = { focus = SID_cooroprate_with_cascadia}
 		mutually_exclusive = { focus = SID_our_favored_government_won}
 		mutually_exclusive = { focus = SID_an_imposter_won}
@@ -1748,7 +1749,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SID_an_imposter_won
-		icon = GFX_
+		icon = GFX_focus_monarchist_oregon_broken
 		prerequisite = { focus = SID_cooroprate_with_cascadia}
 		mutually_exclusive = { focus = SID_the_legidimate_government_won}
 		mutually_exclusive = { focus = SID_our_favored_government_won}
@@ -1819,7 +1820,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SID_our_favored_government_won
-		icon = GFX_
+		icon = GFX_focus_monarchist_oregon_glowing
 		prerequisite = { focus = SID_cooroprate_with_cascadia}
 		mutually_exclusive = { focus = SID_the_legidimate_government_won}
 		mutually_exclusive = { focus = SID_an_imposter_won}
@@ -2091,7 +2092,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SID_invite_them_to_the_confederacy
-		icon = GFX_
+		icon = GFX_focus_generic_diplomacy_washington
 		prerequisite = { focus = SID_allow_free_travel_between_universities}
 		prerequisite = { focus = SID_economic_cooperation}
 		x = 1
@@ -2277,12 +2278,18 @@ focus_tree = {
 					exporter = SID
 				}
 			}
-			add_political_power = 150
+			513 = {
+				add_resource = {
+					type = chromium
+					amount = 50
+				}
+			}
+			add_political_power = 100
 		}
 	}
 	focus = {
 		id = SID_invite_british_columbia_to_the_confederacy
-		icon = GFX_
+		icon = GFX_focus_generic_diplomacy_british_columbia
 		prerequisite = { focus = SID_grant_mining_rights_in_idaho}
 		x = 0
 		y = 1
@@ -2298,6 +2305,426 @@ focus_tree = {
 				country_event = {
 					id = Idaho.11
 				}
+			}
+		}
+	}
+	focus = {
+		id = SID_the_future_of_the_confederacy
+		icon = GFX_
+		available = {
+			has_completed_focus = SID_invite_british_columbia_to_the_confederacy
+			has_completed_focus = SID_invite_them_to_the_confederacy
+			OR = {
+				has_completed_focus = SID_deal_with_oregon
+				has_completed_focus = SID_help_unite_oregon
+			}
+			is_faction_leader = yes
+		}
+		x = 40
+		y = 5
+		cost = 1
+		ai_will_do = {
+			factor = 2
+		}
+		available_if_capitulated = no
+	}
+	focus = {
+		id = SID_tighten_the_confederation
+		icon = GFX_
+		prerequisite = { focus = SID_the_future_of_the_confederacy}
+		x = -3
+		y = 1
+		relative_position_id = SID_the_future_of_the_confederacy
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_political_power = 100
+		}
+	}
+	focus = {
+		id = SID_cascadian_research_initiative
+		icon = GFX_
+		prerequisite = { focus = SID_tighten_the_confederation}
+		available = {
+			is_faction_leader = yes
+		}
+		x = -1
+		y = 1
+		relative_position_id = SID_tighten_the_confederation
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_to_tech_sharing_group = SID_cascadian_research_initiative
+			every_other_country = {
+				limit = {
+					is_in_faction_with = SID
+				}
+				add_to_tech_sharing_group = SID_cascadian_research_initiative
+			}
+		}
+	}
+	focus = {
+		id = SID_the_shared_currency_initiative
+		icon = GFX_
+		prerequisite = { focus = SID_tighten_the_confederation}
+		available = {
+			is_faction_leader = yes
+		}
+		x = 0
+		y = 2
+		relative_position_id = SID_tighten_the_confederation
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_ideas = SID_shared_currency
+			every_other_country = {
+				limit = {
+					is_in_faction_with = SID
+				}
+				add_ideas = SID_shared_currency
+			}
+		}
+	}
+	focus = {
+		id = SID_group_army_training
+		icon = GFX_
+		prerequisite = { focus = SID_tighten_the_confederation}
+		available = {
+			is_faction_leader = yes
+		}
+		x = 1
+		y = 1
+		relative_position_id = SID_tighten_the_confederation
+		cost = 10
+		ai_will_do = {
+			factor = 2
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_ideas = SID_group_army_training
+			every_other_country = {
+				limit = {
+					is_in_faction_with = SID
+				}
+				add_ideas = SID_group_army_training
+			}
+		}
+	}
+	focus = {
+		id = SID_confront_california
+		icon = GFX_
+		prerequisite = { focus = SID_the_future_of_the_confederacy}
+		x = 0
+		y = 1
+		relative_position_id = SID_the_future_of_the_confederacy
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_war_support = 0.05
+			if = {
+				limit = {
+					is_in_faction_with = PBC
+				}
+				PBC = {
+					add_war_support = 0.05
+				}
+			}
+			if = {
+				limit = {
+					is_in_faction_with = SWA
+				}
+				SWA = {
+					add_war_support = 0.05
+				}
+			}
+			if = {
+				limit = {
+					is_in_faction_with = SOR
+				}
+				SOR = {
+					add_war_support = 0.05
+				}
+			}
+			if = {
+				limit = {
+					is_in_faction_with = SRO
+				}
+				SRO = {
+					add_war_support = 0.05
+				}
+			}
+			if = {
+				limit = {
+					is_in_faction_with = URO
+				}
+				URO = {
+					add_war_support = 0.05
+				}
+			}
+			if = {
+				limit = {
+					is_in_faction_with = PCA
+				}
+				PCA = {
+					add_war_support = 0.05
+				}
+			}
+			if = {
+				limit = {
+					is_in_faction_with = COR
+				}
+				COR = {
+					add_war_support = 0.05
+				}
+			}
+			if = {
+				limit = {
+					is_in_faction_with = JEF
+				}
+				JEF = {
+					add_war_support = 0.05
+				}
+			}
+		}
+	}
+	focus = {
+		id = SID_operation_falling_rock
+		icon = GFX_focus_attack_california
+		prerequisite = { focus = SID_confront_california}
+		x = 0
+		y = 1
+		relative_position_id = SID_confront_california
+		cost = 10
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 2
+				SCA = {
+					has_war = yes
+				}
+			}
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			if = {
+				limit = {
+					is_in_faction_with = JEF
+				}
+				create_wargoal = {
+					target = SCA
+					type = liberate_wargoal
+				}
+				JEF = {
+					add_war_support = 0.05
+				}
+			}
+			else = {
+				create_wargoal = {
+					target = SCA
+					type = topple_government
+				}
+			}
+		}
+	}
+	focus = {
+		id = SID_influence_the_other_members
+		icon = GFX_
+		prerequisite = { focus = SID_the_future_of_the_confederacy}
+		available = {
+			is_faction_leader = yes
+		}
+		x = 3
+		y = 1
+		relative_position_id = SID_the_future_of_the_confederacy
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_ideas = SID_foreign_influence
+		}
+	}
+	focus = {
+		id = SID_influence_british_columbia
+		icon = GFX_
+		prerequisite = { focus = SID_influence_the_other_members}
+		available = {
+			is_in_faction_with = PBC
+		}
+		x = -1
+		y = 1
+		relative_position_id = SID_influence_the_other_members
+		cost = 5
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 2
+					PBC = {
+					NOT = {
+						has_government = democratic
+					}
+				}
+			}
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			PBC = {
+				add_ideas = SID_idaoan_influence
+			}
+		}
+	}
+	focus = {
+		id = SID_influence_oregon
+		icon = GFX_
+		prerequisite = { focus = SID_influence_the_other_members}
+		available = {
+			OR = {
+				is_in_faction_with = SOR
+				is_in_faction_with = SRO
+				is_in_faction_with = URO
+				is_in_faction_with = PCA
+				is_in_faction_with = COR
+				is_in_faction_with = JEF
+			}
+		}
+		x = 0
+		y = 2
+		relative_position_id = SID_influence_the_other_members
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			if = {
+				limit = {
+					SOR = {
+						has_relation_modifier = {
+							target = SID
+							modifier = SID_cascadian_coorportation
+						}
+					}
+				}
+				SOR = {
+					add_ideas = SID_idaoan_influence
+				}
+			}
+			if = {
+				limit = {
+					SRO = {
+						has_relation_modifier = {
+							target = SID
+							modifier = SID_cascadian_coorportation
+						}
+					}
+				}
+				SRO = {
+					add_ideas = SID_idaoan_influence
+				}
+			}
+			if = {
+				limit = {
+					URO = {
+						has_relation_modifier = {
+							target = SID
+							modifier = SID_cascadian_coorportation
+						}
+					}
+				}
+				URO = {
+					add_ideas = SID_idaoan_influence
+				}
+			}
+			if = {
+				limit = {
+					PCA = {
+						has_relation_modifier = {
+							target = SID
+							modifier = SID_cascadian_coorportation
+						}
+					}
+				}
+				PCA = {
+					add_ideas = SID_idaoan_influence
+				}
+			}
+			if = {
+				limit = {
+					COR = {
+						has_relation_modifier = {
+							target = SID
+							modifier = SID_cascadian_coorportation
+						}
+					}
+				}
+				COR = {
+					add_ideas = SID_idaoan_influence
+				}
+			}
+			if = {
+				limit = {
+					JEF = {
+						has_relation_modifier = {
+							target = SID
+							modifier = SID_cascadian_coorportation
+						}
+					}
+				}
+				JEF = {
+					add_ideas = SID_idaoan_influence
+				}
+			}
+		}
+	}
+	focus = {
+		id = SID_influence_washington
+		icon = GFX_
+		prerequisite = { focus = SID_influence_the_other_members}
+		available = {
+			is_in_faction_with = SWA
+		}
+		x = 1
+		y = 1
+		relative_position_id = SID_influence_the_other_members
+		cost = 5
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 2
+				SWA = {
+					NOT = {
+						has_government = democratic
+					}
+				}
+			}
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			SWA = {
+				add_ideas = SID_idaoan_influence
 			}
 		}
 	}
