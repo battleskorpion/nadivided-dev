@@ -6,8 +6,12 @@ country_event = {
     desc = greenland.1.d
     #picture = GFX_
 
-    is_triggered_only = yes
+    is_triggered_only = no
     fire_only_once = yes
+
+    trigger = {
+        tag = GRE
+    }
 
     option = {
         name = greenland.1.a
@@ -25,8 +29,8 @@ country_event = {
                 }
                 50 = {
                     country_event = {
-                        id = greenland = 3
-                        days = 35
+                        id = greenland.3
+                        days = 25
                         random = 15
                     }
                     set_country_flag = GRE_4th_fleet_at_iceland
@@ -63,7 +67,7 @@ country_event = {
         }
     }
 }
-country_event = {
+country_event = { #4th fleet arrives
     id = greenland.2
     title = greenland.2.t
     desc = greenland.2.d
@@ -75,9 +79,11 @@ country_event = {
     option = {
         name = greenland.2.a
         ai_chance = {
-            factor = 100
+            factor = 50
         }
-        add_manpower = 5000
+        446 = {
+            add_manpower = 5000
+        }
         add_equipment_to_stockpile = {
             type = convoy
             amount = 50
@@ -87,11 +93,21 @@ country_event = {
     option = {
         name = greenland.2.b
         ai_chance = {
+            factor = 50
+        }
+        custom_effect_tooltip = GRE_they_will_colonize_a_northern_state_tt
+        hidden_effect = {
+            set_country_flag = GRE_sent_expidition_north
+        }
+    }
+    option = {
+        name = greenland.2.c
+        ai_chance = {
             factor = 0
         }
     }
 }
-country_event = {
+country_event = { #4th fleet goes missing
     id = greenland.3
     title = greenland.3.t
     desc = greenland.3.d
@@ -108,6 +124,519 @@ country_event = {
 ###Colonization Random Events###
 
 country_event = {
-    id = greenland.2
-    title = greenland.2
+    id = greenland.4
+    title = greenland.4.t
+    desc = greenland.4.d
+    #picture = GFX_
+
+    is_triggered_only = no
+    fire_only_once = no
+    hidden = yes
+
+    trigger = {
+        tag = GRE
+        any_owned_state = {
+            check_variable = { colonization_progress > 0 }
+        }
+    }
+
+    mean_time_to_happen = {
+        days = 15
+        modifier = {
+            add = 10
+            has_completed_focus = GRE_make_colonization_a_privilige
+        }
+    }
+
+    immediate = {
+        random_owned_controlled_state = {
+            limit = {
+                check_variable = { colonization_progress > 0 }
+            }
+            GRE = {
+                set_variable = { colonization_target = PREV }
+            }
+            random_list = {
+                fixed_random_seed = no
+                ###Normal Events###
+                5000 = { #Discovered 5th fleet
+                    modifier = {
+                        factor = 0
+                        NOT = {
+                            has_state_flag = GRE_5th_fleet_outpost
+                        }
+                    }
+                    GRE = {
+                        country_event = {
+                            id = greenland.5
+                        }
+                    }
+                }
+                10 = { #Attacked by Inuits
+                    modifier = {
+                        factor = 0.5
+                        NOT = {
+                            all_lowland_state = yes
+                        }
+                    }
+                    modifier = {
+                        factor = 0
+                        has_completed_focus = GRE_dig_into_the_ice
+                        NOT = {
+                            all_lowland_state = yes
+                        }
+                    }
+                    GRE = {
+                        country_event = {
+                            id = greenland.6
+                        }
+                    }
+                }
+                10 = { #Fresh Water Lake Discovered
+                    modifier = {
+                        factor = 2
+                        all_lowland_state = yes
+                    }
+                    modifier = {
+                        factor = 1.2
+                        has_completed_focus = GRE_make_colonization_a_privilige
+                    }
+                    modifier = {
+                        factor = 0
+                        has_completed_focus = GRE_dig_into_the_ice
+                        NOT = {
+                            all_lowland_state = yes
+                        }
+                    }
+                    GRE = {
+                        country_event = {
+                            id = greenland.7
+                        }
+                    }
+                }
+                10 = { #Glacial Avalanch
+                    modifier = {
+                        factor = 0.2
+                        all_lowland_state = yes
+                    }
+                    modifier = {
+                        factor = 1.5
+                        OR = {
+                            state = 491 #States Surrounding very high areas
+                            state = 647
+                            highland_northern_states = yes
+                        }
+                    }
+                    modifier = {
+                        factor = 0
+                        has_completed_focus = GRE_dig_into_the_ice
+                        NOT = {
+                            all_lowland_state = yes
+                        }
+                    }
+                    GRE = {
+                        country_event = {
+                            id = greenland.8
+                        }
+                    }
+                }
+                10 = { #Plentiful Food
+                    modifier = {
+                        factor = 1.5
+                        all_lowland_state = yes
+                    }
+                    modifier = {
+                        factor = 0.5
+                        super_glacial_states = yes
+                    }
+                    modifier = {
+                        factor = 1.2
+                        has_completed_focus = GRE_make_colonization_a_privilige
+                    }
+                    modifier = {
+                        factor = 0
+                        has_completed_focus = GRE_dig_into_the_ice
+                        NOT = {
+                            all_lowland_state = yes
+                        }
+                    }
+                    GRE = {
+                        country_event = {
+                            id = greenland.9
+                        }
+                    }
+                }
+                10 = { #Acienct Forest Discoverd
+                    modifier = {
+                        factor = 1.5
+                        all_lowland_state = yes
+                    }
+                    modifier = {
+                        factor = 1.2
+                        has_completed_focus = GRE_dig_into_the_ice
+                        NOT = {
+                            all_lowland_state = yes
+                        }
+                    }
+                    modifier = {
+                        factor = 1.1
+                        has_completed_focus = GRE_make_colonization_a_privilige
+                    }
+                    GRE = {
+                        country_event = {
+                            id = greenland.10
+                        }
+                    }
+                }
+                10 = { #Resource Deposit Discovered
+                    modifier = {
+                        factor = 1.2
+                        has_completed_focus = GRE_make_colonization_a_privilige
+                    }
+                    modifier = {
+                        factor = 1.5
+                        has_completed_focus = GRE_dig_into_the_ice
+                    }
+                    modifier = {
+                        factor = 0.7
+                        NOT = {
+                            has_completed_focus = GRE_dig_into_the_ice
+                        }
+                        super_glacial_states = yes
+                    }
+                    random_list = {
+                        40 = { #Steel
+                            GRE = {
+                                country_event = {
+                                    id = greenland.11
+                                }
+                            }
+                        }
+                        25 = { #Chromium
+                            GRE = {
+                                country_event = {
+                                    id = greenland.12
+                                }
+                            }
+                        }
+                        20 = { #Tungsten
+                            GRE = {
+                                country_event = {
+                                    id = greenland.13
+                                }
+                            }
+                        }
+                        15 = { #Aluminium
+                            GRE = {
+                                country_event = {
+                                    id = greenland.14
+                                }
+                            }
+                        }
+                    }
+                }
+                10 = { #Oil Discovered
+                    modifier = {
+                        factor = 1.2
+                        has_completed_focus = GRE_make_colonization_a_privilige
+                    }
+                    modifier = {
+                        factor = 1.5
+                        has_completed_focus = GRE_dig_into_the_ice
+                    }
+                    modifier = {
+                        factor = 0.7
+                        NOT = {
+                            has_completed_focus = GRE_dig_into_the_ice
+                        }
+                        super_glacial_states = yes
+                    }
+                    GRE = {
+                        country_event = {
+                            id = greenland.15
+                        }
+                    }
+                }
+                10 = { #Severe Blizzard
+                    modifier = {
+                        factor = 0
+                        has_completed_focus = GRE_dig_into_the_ice
+                        NOT = {
+                            all_lowland_state = yes
+                        }
+                    }
+                    modifier = {
+                        factor = 0.7
+                        all_lowland_state = yes
+                    }
+                    GRE = {
+                        country_event = {
+                            id = greenland.16
+                        }
+                    }
+                }
+                10 = { #Communication loss with the colony
+                    modifier = {
+                        factor = 0.5
+                        all_lowland_state = yes
+                    }
+                    modifier = {
+                        factor = 2
+                        NOT = {
+                            has_completed_focus = GRE_dig_into_the_ice
+                        }
+                        super_glacial_states = yes
+                    }
+                    GRE = {
+                        country_event = {
+                            id = greenland.17
+                        }
+                    }
+                }
+                ###Digging Into Ice Events###
+            }
+        }
+    }
+}
+###Normal Colonization Events###
+country_event = { #5th fleet
+    id = greenland.5
+    title = greenland.5.t
+    desc = greenland.5.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = {
+        name = greenland.5.a
+        ai_chance = {
+            factor = 100
+        }
+        colonization_target = {
+            add_manpower = 5000
+            if = {
+                limit = {
+                    state = 494
+                }
+                set_state_category = town
+            }
+            else = {
+                set_state_category = rural
+            }
+            set_building_level = {
+                type = infrastructure
+                level = 3
+                instant_build = yes
+            }
+            increase_in_colonization_progress = yes
+            hidden_effect = {
+                clr_state_flag = GRE_5th_fleet_outpost
+            }
+        }
+    }
+    option = {
+        name = greenland.5.b
+        ai_chance = {
+            factor = 0
+        }
+        random_owned_controlled_state = {
+            limit = {
+                check_variable = { colonization_progress > 0 }
+                has_state_flag = GRE_5th_fleet_outpost
+            }
+            hidden_effect = {
+                clr_state_flag = GRE_5th_fleet_outpost
+            }
+        }
+    }
+}
+country_event = { #Attacked by Inuits
+    id = greenland.6
+    title = greenland.6.t
+    desc = greenland.6.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = {
+        name = greenland.6.a
+        colonization_target = {
+            if = {
+                limit = {
+                    has_completed_focus = GRE_make_colonization_a_privilige
+                }
+                add_manpower = -25
+            }
+            else = {
+                add_manpower = -50
+                decrease_in_colonization_progress = yes
+            }
+        }
+    }
+}
+country_event = { #Fresh Water Lake Discovered
+    id = greenland.7
+    title = greenland.7.t
+    desc = greenland.7.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = {
+        name = greenland.7.a
+        colonization_target = {
+            add_manpower = 50
+            increase_in_colonization_progress = yes
+        }
+    }
+}
+country_event = { #Glacial Avalanch
+    id = greenland.8
+    title = greenland.8.t
+    desc = greenland.8.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = {
+        name = greenland.8.a
+        colonization_target = {
+            if = {
+                limit = {
+                    has_completed_focus = GRE_make_colonization_a_privilige
+                }
+                add_manpower = -25
+            }
+            else = {
+                add_manpower = -50
+                decrease_in_colonization_progress = yes
+            }
+        }
+    }
+}
+country_event = { #Plentiful Food
+    id = greenland.9
+    title = greenland.9.t
+    desc = greenland.9.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = {
+        name = greenland.9.a
+        colonization_target = {
+            add_manpower = 100
+            increase_in_colonization_progress = yes
+        }
+    }
+}
+country_event = { #Acient Forest Discovered
+    id = greenland.10
+    title = greenland.10.t
+    desc = greenland.10.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = {
+        name = greenland.10.a
+        ai_chance = {
+            factor = 50
+        }
+        colonization_target = {
+            add_extra_state_shared_building_slots = 1
+            add_building_construction = {
+                type = infrastructure
+                level = 1
+                instant_build = yes
+            }
+            add_manpower = 50
+            increase_in_colonization_progress = yes
+        }
+    }
+    option = {
+        name = greenland.10.b
+        ai_chance = {
+            factor = 50
+        }
+        trigger = {
+            446 = {
+                infrastructure < 10
+            }
+        }
+        446 = {
+            add_extra_state_shared_building_slots = 1
+            add_building_construction = {
+                type = infrastructure
+                level = 1
+                instant_build = yes
+            }
+        }
+    }
+}
+country_event = { #Iron ore discovered
+    id = greenland.11
+    title = greenland.11.t
+    desc = greenland.11.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = {
+        name = greenland.11.a
+        colonization_target = {
+            add_resource = {
+                type = steel
+                amount = 24
+                state = colonization_target
+            }
+        }
+    }
+}
+country_event = {
+    id = greenland.18
+    title = greenland.18.t
+    desc = greenland.18.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = {
+        name = greenland.18.a
+        ai_chance = {
+            factor = 100
+        }
+        colonization_target = {
+            add_manpower = 4500
+            set_state_category = rural
+            GRE = {
+                transfer_state = PREV
+            }
+            add_core_of = GRE
+            set_building_level = {
+                type = infrastructure
+                level = 3
+                instant_build = yes
+            }
+            hidden_effect = {
+                clr_state_flag = GRE_4th_fleet
+                clear_variable = colonization_progress
+            }
+        }
+    }
+    option = {
+        name = greenland.18.b
+        ai_chance = {
+            factor = 0
+        }
+        add_political_power = -50
+    }
 }
