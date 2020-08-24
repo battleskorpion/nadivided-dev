@@ -1,6 +1,11 @@
 increase_in_colonization_progress = {
-    add_to_variable = { colonization_progress = 25 }
-    custom_effect_tooltip = GRE_gain_25_colonization_progress_tt
+    if = {
+        limit = {
+            has_variable = colonization_progress
+        }
+        add_to_variable = { colonization_progress = 25 }
+        custom_effect_tooltip = GRE_gain_25_colonization_progress_tt
+    }
     cycle_next_event = yes
     if = {
         limit = {
@@ -40,8 +45,13 @@ increase_in_colonization_progress = {
     }
 }
 decrease_in_colonization_progress = {
-    subtract_from_variable = { colonization_progress = 15 }
-    custom_effect_tooltip = GRE_loose_15_colonization_progress_tt
+    if = {
+        limit = {
+            has_variable = colonization_progress
+        }
+        subtract_from_variable = { colonization_progress = 15 }
+        custom_effect_tooltip = GRE_loose_15_colonization_progress_tt
+    }
     cycle_next_event = yes
     if = {
         limit = {
@@ -58,6 +68,14 @@ cycle_next_event = {
     hidden_effect = {
         every_state = {
             clr_state_flag = previous_colonization_target
+        }
+        if = {
+            limit = {
+                GRE = {
+                    check_variable = { colonization_current > 0 }
+                }
+            }
+            set_variable = { colonization_current = 0 }
         }
         if = {
             limit = {
