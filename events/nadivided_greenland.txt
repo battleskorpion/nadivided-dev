@@ -134,7 +134,7 @@ country_event = {
     desc = greenland.4.d
     #picture = GFX_
 
-    is_triggered_only = no
+    is_triggered_only = yes
     fire_only_once = no
     hidden = yes
 
@@ -143,31 +143,45 @@ country_event = {
         any_owned_state = {
             check_variable = { colonization_progress > 0 }
         }
+        #NOT = {
+        #    has_country_flag = colonization_events_already_begun
+        #}
     }
 
-    mean_time_to_happen = {
-        days = 10
-        modifier = {
-            add = 5
-            NOT = {
-                GRE = {
-                    has_completed_focus = GRE_forced_colonization
-                    has_completed_focus = GRE_dig_into_the_ice
-                }
-            }
-        }
-        modifier = {
-            add = -5
-            GRE = {
-                has_completed_focus = GRE_improved_mining_techniques
-            }
-        }
-    }
+    #mean_time_to_happen = {
+    #    days = 10
+    #    modifier = {
+    #        add = 5
+    #        NOT = {
+    #            GRE = {
+    #                has_completed_focus = GRE_forced_colonization
+    #                has_completed_focus = GRE_dig_into_the_ice
+    #            }
+    #        }
+    #    }
+    #    modifier = {
+    #        add = -5
+    #        GRE = {
+    #            has_completed_focus = GRE_improved_mining_techniques
+    #        }
+    #    }
+    #}
 
     immediate = {
+        #if = {
+        #    limit = {
+        #        NOT = {
+        #            has_country_flag = colonization_events_already_begun
+        #        }
+        #    }
+        #    set_country_flag = colonization_events_already_begun
+        #}
         random_owned_controlled_state = {
             limit = {
                 check_variable = { colonization_progress > 0 }
+                NOT = {
+                    has_state_flag = previous_colonization_target
+                }
             }
             GRE = {
                 set_variable = { colonization_target = PREV }
@@ -605,7 +619,7 @@ country_event = { #5th fleet
             hidden_effect = {
                 clr_state_flag = GRE_5th_fleet_outpost
             }
-            clear_variable = colonization_target
+            cycle_next_event = yes
         }
     }
 }
@@ -628,7 +642,7 @@ country_event = { #Attacked by Inuits
                     }
                 }
                 add_manpower = -25
-                clear_variable = colonization_target
+                cycle_next_event = yes
             }
             else = {
                 add_manpower = -50
@@ -651,11 +665,11 @@ country_event = { #Attacked by Inuits
                         has_completed_focus = GRE_make_colonization_a_privilige
                     }
                 }
-                clear_variable = colonization_target
+                cycle_next_event = yes
             }
             else = {
                 add_manpower = -25
-                clear_variable = colonization_target
+                cycle_next_event = yes
             }
         }
     }
@@ -696,7 +710,7 @@ country_event = { #Glacial Avalanch
                     }
                 }
                 add_manpower = -25
-                clear_variable = colonization_target
+                cycle_next_event = yes
             }
             else = {
                 add_manpower = -50
@@ -714,11 +728,11 @@ country_event = { #Glacial Avalanch
                         has_completed_focus = GRE_make_colonization_a_privilige
                     }
                 }
-                clear_variable = colonization_target
+                cycle_next_event = yes
             }
             else = {
                 add_manpower = -25
-                clear_variable = colonization_target
+                cycle_next_event = yes
             }
         }
     }
@@ -947,7 +961,7 @@ country_event = { #Severe Blizzard
                     }
                 }
                 add_manpower = -50
-                clear_variable = colonization_target
+                cycle_next_event = yes
             }
             else = {
                 add_manpower = -100
@@ -966,11 +980,11 @@ country_event = { #Severe Blizzard
                     }
                 }
                 add_manpower = -25
-                clear_variable = colonization_target
+                cycle_next_event = yes
             }
             else = {
                 add_manpower = -50
-                clear_variable = colonization_target
+                cycle_next_event = yes
             }
         }
     }
@@ -1185,7 +1199,7 @@ country_event = { #Cave in
         add_political_power = -25
         var:colonization_target = {
             add_manpower = -25
-            clear_variable = colonization_target
+            cycle_next_event = yes
         }
     }
 }
