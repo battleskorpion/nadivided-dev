@@ -12,7 +12,9 @@ increase_in_colonization_progress = {
             clr_country_flag = GRE_already_colonizing
         }
         custom_effect_tooltip = GRE_colonization_complete_tt
-        subtract_from_variable = { colonization_current = 1 }
+        GRE = {
+            subtract_from_variable = { colonization_current = 1 }
+        }
         if = {
             limit = {
                 NOT = {
@@ -49,12 +51,19 @@ decrease_in_colonization_progress = {
     }
 }
 cycle_next_event = {
-    set_state_flag = previous_colonization_target
     clear_variable = colonization_target
+    GRE = {
+        clr_country_flag = no_event_set
+    }
     hidden_effect = {
+        every_state = {
+            clr_state_flag = previous_colonization_target
+        }
         if = {
             limit = {
-                check_variable = { colonization_current = 1 }
+                GRE = {
+                    check_variable = { colonization_current = 1 }
+                }
             }
             GRE = {
                 country_event = {
@@ -65,22 +74,48 @@ cycle_next_event = {
         }
         else_if = {
             limit = {
-                check_variable = { colonization_current = 2 }
+                GRE = {
+                    check_variable = { colonization_current = 2 }
+                }
             }
+            set_state_flag = previous_colonization_target
             GRE = {
                 country_event = {
                     id = greenland.4
-                    days = 10
+                    days = 15
                 }
             }
         }
-        else = {
+        else_if = {
+            limit = {
+                GRE = {
+                    check_variable = { colonization_current = 3 }
+                }
+            }
+            set_state_flag = previous_colonization_target
             GRE = {
                 country_event = {
                     id = greenland.4
-                    days = 5
+                    days = 15
                 }
             }
+        }
+        else_if = {
+            limit = {
+                GRE = {
+                    check_variable = { colonization_current = 4 }
+                }
+            }
+            set_state_flag = previous_colonization_target
+            GRE = {
+                country_event = id = greenland.4
+                days = 15
+            }
+        }
+        else = {
+            #GRE = {
+            #    set_country_flag = no_event_set
+            #}
         }
     }
 }
@@ -286,4 +321,7 @@ set_up_colonization_focus = {
             id = greenland.18
         }
     }
+    #hidden_effect = {
+    #    set_country_flag = no_event_set
+    #}
 }
