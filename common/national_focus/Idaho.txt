@@ -2760,7 +2760,7 @@ focus_tree = {
 				ideology = communism
 				popularity = 0.1
 			}
-			create_faction = SID_united_american_socialist_republics
+			create_faction = SID_united_american_communist_republics
 			set_rule = {
 				can_create_factions = yes
 			}
@@ -2793,7 +2793,7 @@ focus_tree = {
 			country_exists = SRO
 			is_faction_leader = yes
 		}
-		x = -2
+		x = -1
 		y = 1
 		relative_position_id = SID_push_revolutionary_spirit
 		cost = 5
@@ -3063,6 +3063,141 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = SID_friends_in_washington
+		icon = GFX_
+		prerequisite = { focus = SID_bloody_oregon focus = SID_help_unite_oregon_com focus = SID_the_ultimate_betrayal }
+		mutually_exclusive = { focus = SID_bloody_washington}
+		available = {
+			SWA = {
+				has_government = communism
+			}
+		}
+		x = -2
+		y = 2
+		relative_position_id = SID_bloody_oregon
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			custom_effect_tooltip = SID_able_to_integrate_later_tt
+			SWA = {
+				country_event = {
+					id = Idaho.15
+				}
+			}
+		}
+	}
+	focus = {
+		id = SID_bloody_washington
+		icon = GFX_
+		prerequisite = { focus = SID_bloody_oregon focus = SID_help_unite_oregon_com focus = SID_the_ultimate_betrayal }
+		mutually_exclusive = { focus = SID_friends_in_washington}
+		x = 0
+		y = 2
+		relative_position_id = SID_bloody_oregon
+		cost = 10
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				SWA = {
+					has_government = communism
+				}
+			}
+		}
+		available_if_capitulated = no
+		will_lead_to_war_with = SWA
+
+		completion_reward = {
+			create_wargoal = {
+				target = SWA
+				type = annex_everything
+			}
+		}
+	}
+	focus = {
+		id = SID_proclaim_the_UACR
+		icon = GFX_
+		prerequisite = { focus = SID_bloody_washington focus = SID_friends_in_washington }
+		available = {
+			is_subject = no
+			OR = {
+				AND = {
+					controls_all_of_oregon_trigger = yes
+					controls_washington_trigger = yes
+				}
+				AND = {
+					is_faction_leader = yes
+					is_in_faction_with = SWA
+					is_in_faction_with = SRO
+				}
+			}
+		}
+		x = -1
+		y = 1
+		relative_position_id = SID_bloody_washington
+		cost = 15
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			# add_named_threat = {
+			# 	threat = 5
+			# 	name = SID_UACR
+			# }
+			if = {
+				limit = {
+					is_in_faction_with = SWA
+				}
+				SWA = {
+					country_event = {
+						id = Idaho.16
+					}
+				}
+			}
+			if = {
+				limit = {
+					is_in_faction_with = SRO
+				}
+				SRO = {
+					country_event = {
+						id = Idaho.16
+					}
+				}
+			}
+			core_washington = yes
+			core_all_of_oregon = yes
+			hidden_effect = {
+				news_event = {
+					id = usastates_news.12
+					days = 10
+				}
+			}
+		}
+	}
+	focus = {
+		id = SID_expand_the_UACR
+		icon = GFX_
+		prerequisite = { focus = SID_proclaim_the_UACR}
+		x = -2
+		y = 1
+		relative_position_id = SID_proclaim_the_UACR
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_war_support = 0.15
+		}
+	}
+	focus = {
 		id = SID_moderate_revolution
 		icon = GFX_
 		prerequisite = { focus = SID_go_with_Barzilla_Clark}
@@ -3085,13 +3220,174 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = SID_create_the_workers_council
+		icon = GFX_
+		prerequisite = { focus = SID_moderate_revolution}
+		x = 0
+		y = 1
+		relative_position_id = SID_moderate_revolution
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_popularity = {
+				ideology = progressivism
+				popularity = 0.15
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = 0.05
+			}
+			create_faction = SID_workers_council
+			set_rule = {
+				can_create_factions = yes
+			}
+		}
+	}
+	focus = {
+		id = SID_influence_oregon_pro
+		icon = GFX_
+		prerequisite = { focus = SID_create_the_workers_council}
+		x = 0
+		y = 1
+		relative_position_id = SID_create_the_workers_council
+		cost = 10 
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+	focus = {
+		id = SID_assuming_direct_control
+		icon = GFX_
+		prerequisite = { focus = SID_influence_oregon_pro}
+		mutually_exclusive = { focus = SID_gradual_integration}
+		x = -1
+		y = 1
+		relative_position_id = SID_influence_oregon_pro
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+	focus = {
+		id = SID_gradual_integration
+		icon = GFX_
+		prerequisite = { focus = SID_influence_oregon_pro}
+		mutually_exclusive = { focus = SID_assuming_direct_control}
+		x = 1
+		y = 1
+		relative_position_id = SID_influence_oregon_pro
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+	focus = {
+		id = SID_influence_washington_pro
+		icon = GFX_
+		prerequisite = { focus = SID_assuming_direct_control focus = SID_gradual_integration}
+		x = 1
+		y = 1
+		relative_position_id = SID_assuming_direct_control
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+	focus = {
+		id = SID_assuming_direct_control_swa
+		text = SID_assuming_direct_control
+		icon = GFX_
+		prerequisite = { focus = SID_influence_washington_pro}
+		mutually_exclusive = { focus = SID_gradual_integration_swa}
+		x = -1
+		y = 1
+		relative_position_id = SID_influence_washington_pro
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+	focus = {
+		id = SID_gradual_integration_swa
+		text = SID_gradual_integration
+		icon = GFX_
+		prerequisite = { focus = SID_influence_washington_pro}
+		mutually_exclusive = { focus = SID_assuming_direct_control_swa}
+		x = 1
+		y = 1
+		relative_position_id = SID_influence_washington_pro
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+
+		}
+	}
+	focus = {
+		id = SID_directly_challenge_california
+		icon = GFX_
+		prerequisite = { focus = SID_proclaim_the_UACR focus = SID_assuming_direct_control_swa focus = SID_gradual_integration_swa}
+		x = 4
+		y = 1
+		relative_position_id = SID_proclaim_the_UACR
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_political_power = 50
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
 		id = SID_push_reforms
 		icon = GFX_
 		prerequisite = { focus = SID_go_with_Barzilla_Clark}
 		x = 0
 		y = 2
 		relative_position_id = SID_go_with_Barzilla_Clark
-		cost = 5
+		cost = 10
 		ai_will_do = {
 			factor = 1
 		}
@@ -3100,6 +3396,21 @@ focus_tree = {
 		completion_reward = {
 			add_political_power = 50
 			custom_effect_tooltip = SID_immigration_from_reforms_tt
+			if = {
+				limit = {
+					has_completed_focus = SID_total_revolution
+				}
+				add_popularity = {
+					ideology = communism
+					popularity = 0.2
+				}
+			}
+			else = {
+				add_popularity = {
+					ideology = progressivism
+					popularity = 0.2
+				}
+			}
 		}
 	}
 	focus = {
@@ -4152,7 +4463,7 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			add_war_support = 0.05
+			add_war_support = 0.1
 		}
 	}
 	focus = {
