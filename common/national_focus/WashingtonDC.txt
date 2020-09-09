@@ -2417,9 +2417,10 @@ focus_tree = {
 		icon = GFX_focus_fdr
 		prerequisite = { focus = WDC_rebuild_congress}
 		mutually_exclusive = { focus = WDC_let_alf_take_power}
+		mutually_exclusive = { focus = WDC_disunited_forever}
 		mutually_exclusive = { focus = WDC_let_nor_take_power}
 		mutually_exclusive = { focus = WDC_keep_hoover_in_charge}
-		x = 52
+		x = 50
 		y = 1
 		cost = 5
 		ai_will_do = {
@@ -2443,7 +2444,7 @@ focus_tree = {
 		id = WDC_introduce_the_new_deal2
 		icon = GFX_focus_introduce_new_deal
 		prerequisite = { focus = WDC_let_fdr_take_power}
-		x = 52
+		x = 50
 		y = 2
 		cost = 5
 		ai_will_do = {
@@ -2621,7 +2622,7 @@ focus_tree = {
 	focus = {
 		id = WDC_deal_with_the_new_population
 		icon = GFX_focus_generic_manpower
-		prerequisite = { focus = WDC_introduce_the_new_deal2}
+		prerequisite = { focus = WDC_introduce_the_new_deal2 focus = WDC_let_alf_take_power}
 		x = 56
 		y = 3
 		cost = 5
@@ -2766,7 +2767,7 @@ focus_tree = {
 	focus = {
 		id = WDC_reopen_foriegn_policy
 		icon = GFX_goal_generic_positive_trade_relations
-		prerequisite = { focus = WDC_introduce_the_new_deal2}
+		prerequisite = { focus = WDC_introduce_the_new_deal2 focus = WDC_let_alf_take_power}
 		available = {
 			custom_trigger_tooltip = {
 				tooltip = no_growing_pains_tt
@@ -3896,9 +3897,10 @@ focus_tree = {
 		icon = GFX_focus_alf_landon
 		prerequisite = { focus = WDC_rebuild_congress}
 		mutually_exclusive = { focus = WDC_let_fdr_take_power}
+		mutually_exclusive = { focus = WDC_disunited_forever}
 		mutually_exclusive = { focus = WDC_let_nor_take_power}
 		mutually_exclusive = { focus = WDC_keep_hoover_in_charge}
-		x = 66
+		x = 56
 		y = 1
 		cost = 5
 		ai_will_do = {
@@ -4139,11 +4141,46 @@ focus_tree = {
 	}
 #
 	focus = {
+		id = WDC_disunited_forever
+		icon = GFX_focus_disunited_america
+		prerequisite = { focus = WDC_rebuild_congress}
+		mutually_exclusive = { focus = WDC_let_alf_take_power}
+		mutually_exclusive = { focus = WDC_let_fdr_take_power}
+		mutually_exclusive = { focus = WDC_let_nor_take_power}
+		mutually_exclusive = { focus = WDC_keep_hoover_in_charge}
+		x = 70
+		y = 1
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = no
+
+		completion_reward = {
+			remove_ideas = WDC_great_depression1
+			add_popularity = {
+				ideology = neutrality 
+				popularity = 0.25
+			}
+			create_country_leader = {
+				name = "Leaderless America"
+				picture = "gfx\leaders\leader_unknown.dds"
+				expire = "1965.1.1"
+				ideology = centrism
+				traits = {
+					#
+				}
+			}
+		}
+	}
+	focus = {
 		id = WDC_a_look_back_at_the_articles
 		icon = GFX_focus_paper_stacked
-		prerequisite = { focus = WDC_let_alf_take_power}
-		x = 70
-		y = 2
+		prerequisite = { focus = WDC_disunited_forever}
+		x = 0
+		y = 1
+		relative_position_id = WDC_disunited_forever
 		cost = 5
 		ai_will_do = {
 			factor = 1
@@ -4161,8 +4198,9 @@ focus_tree = {
 		icon = GFX_goal_generic_forceful_treaty
 		prerequisite = { focus = WDC_a_look_back_at_the_articles}
 		mutually_exclusive = { focus = WDC_stay_true_to_the_articles}
-		x = 69
-		y = 3
+		x = -1
+		y = 1
+		relative_position_id = WDC_a_look_back_at_the_articles
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -4181,8 +4219,9 @@ focus_tree = {
 		icon = GFX_focus_generic_treaty
 		prerequisite = { focus = WDC_a_look_back_at_the_articles}
 		mutually_exclusive = { focus = WDC_strenghten_our_hold}
-		x = 71
-		y = 3
+		x = 1
+		y = 1
+		relative_position_id = WDC_a_look_back_at_the_articles
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -4233,8 +4272,9 @@ focus_tree = {
 		id = WDC_prepare_to_enact_the_articles
 		icon = GFX_goal_tripartite_pact
 		prerequisite = { focus = WDC_stay_true_to_the_articles focus = WDC_strenghten_our_hold}
-		x = 70
-		y = 4
+		x = -1
+		y = 1
+		relative_position_id = WDC_stay_true_to_the_articles
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -4253,8 +4293,9 @@ focus_tree = {
 		id = WDC_send_a_proposition_to_new_england
 		icon = GFX_focus_eng_concessions_to_the_trade_unions
 		prerequisite = { focus = WDC_prepare_to_enact_the_articles}
-		x = 66
-		y = 5
+		x = -4
+		y = 1
+		relative_position_id = WDC_prepare_to_enact_the_articles
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -4300,8 +4341,9 @@ focus_tree = {
 		id = WDC_expand_new_england_manufactories
 		icon = GFX_focus_ask_for_company_support
 		prerequisite = { focus = WDC_send_a_proposition_to_new_england}
-		x = 66
-		y = 6
+		x = -4
+		y = 2
+		relative_position_id = WDC_prepare_to_enact_the_articles
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -4365,8 +4407,9 @@ focus_tree = {
 		id = WDC_send_a_proposition_to_new_york
 		icon = GFX_focus_integrate
 		prerequisite = { focus = WDC_prepare_to_enact_the_articles}
-		x = 70
-		y = 5
+		x = 0
+		y = 1
+		relative_position_id = WDC_prepare_to_enact_the_articles
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -4387,8 +4430,9 @@ focus_tree = {
 		id = WDC_develop_new_york
 		icon = GFX_goal_generic_construct_infrastructure
 		prerequisite = { focus = WDC_send_a_proposition_to_new_york}
-		x = 70
-		y = 6
+		x = 0
+		y = 2
+		relative_position_id = WDC_prepare_to_enact_the_articles
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -4457,8 +4501,9 @@ focus_tree = {
 		}
 		mutually_exclusive = { focus = WDC_let_new_york_take_new_york_city}
 		mutually_exclusive = { focus = WDC_let_new_york_city_stay_automous}
-		x = 68
-		y = 7
+		x = -2
+		y = 1
+		relative_position_id = WDC_develop_new_york
 		cost = 5
 		ai_will_do = {
 			factor = 1
@@ -4481,8 +4526,9 @@ focus_tree = {
 		prerequisite = { focus = WDC_develop_new_york}
 		mutually_exclusive = { focus = WDC_take_new_york_city_for_ourselves}
 		mutually_exclusive = { focus = WDC_let_new_york_city_stay_automous}
-		x = 70
-		y = 7
+		x = 0
+		y = 1
+		relative_position_id = WDC_develop_new_york
 		cost = 5
 		ai_will_do = {
 			factor = 1
@@ -4508,8 +4554,9 @@ focus_tree = {
 		}
 		mutually_exclusive = { focus = WDC_take_new_york_city_for_ourselves}
 		mutually_exclusive = { focus = WDC_let_new_york_take_new_york_city}
-		x = 72
-		y = 7
+		x = 2
+		y = 1
+		relative_position_id = WDC_develop_new_york
 		cost = 5
 		ai_will_do = {
 			factor = 1
@@ -4530,8 +4577,9 @@ focus_tree = {
 		id = WDC_send_a_proposition_to_the_south
 		icon = GFX_goal_generic_improve_relations
 		prerequisite = { focus = WDC_prepare_to_enact_the_articles}
-		x = 74
-		y = 5
+		x = 4
+		y = 1
+		relative_position_id = WDC_prepare_to_enact_the_articles
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -4577,8 +4625,9 @@ focus_tree = {
 		id = WDC_develop_southern_plantations
 		icon = GFX_focus_generic_cotton
 		prerequisite = { focus = WDC_send_a_proposition_to_the_south}
-		x = 74
-		y = 6
+		x = 4
+		y = 2
+		relative_position_id = WDC_prepare_to_enact_the_articles
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -4644,8 +4693,9 @@ focus_tree = {
 		prerequisite = { focus = WDC_develop_southern_plantations}
 		prerequisite = { focus = WDC_expand_new_england_manufactories}
 		prerequisite = { focus = WDC_let_new_york_city_stay_automous focus = WDC_let_new_york_take_new_york_city focus = WDC_take_new_york_city_for_ourselves}
-		x = 68
-		y = 8
+		x = -2
+		y = 1
+		relative_position_id = WDC_let_new_york_take_new_york_city
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -4686,8 +4736,9 @@ focus_tree = {
 		id = WDC_expand_chigago_shipping
 		icon = GFX_goal_generic_build_navy
 		prerequisite = { focus = WDC_persuade_the_great_lakes}
-		x = 68
-		y = 9
+		x = 0
+		y = 1
+		relative_position_id = WDC_persuade_the_great_lakes
 		cost = 5
 		ai_will_do = {
 			factor = 1
@@ -4713,8 +4764,9 @@ focus_tree = {
 		prerequisite = { focus = WDC_develop_southern_plantations}
 		prerequisite = { focus = WDC_expand_new_england_manufactories}
 		prerequisite = { focus = WDC_let_new_york_city_stay_automous focus = WDC_let_new_york_take_new_york_city focus = WDC_take_new_york_city_for_ourselves}
-		x = 72
-		y = 8
+		x = 2
+		y = 1
+		relative_position_id = WDC_let_new_york_take_new_york_city
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -4755,8 +4807,9 @@ focus_tree = {
 		id = WDC_develop_kentucian_coal_mining
 		icon = GFX_goal_generic_construction2
 		prerequisite = { focus = WDC_send_an_ultimatuim_to_the_middle_states}
-		x = 72
-		y = 9
+		x = 0
+		y = 1
+		relative_position_id = WDC_send_an_ultimatuim_to_the_middle_states
 		cost = 5
 		ai_will_do = {
 			factor = 1
@@ -4778,8 +4831,9 @@ focus_tree = {
 		icon = GFX_focus_generic_wheat
 		prerequisite = { focus = WDC_develop_kentucian_coal_mining}
 		prerequisite = { focus = WDC_expand_chigago_shipping}
-		x = 70
-		y = 10
+		x = 2
+		y = 1
+		relative_position_id = WDC_expand_chigago_shipping
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -4841,8 +4895,9 @@ focus_tree = {
 		icon = GFX_focus_texas_state
 		prerequisite = { focus = WDC_develop_kentucian_coal_mining}
 		prerequisite = { focus = WDC_expand_chigago_shipping}
-		x = 68
-		y = 10
+		x = 0
+		y = 1
+		relative_position_id = WDC_expand_chigago_shipping
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -4867,8 +4922,9 @@ focus_tree = {
 		available = {
 			has_completed_focus = WDC_strenghten_our_hold
 		}
-		x = 69
-		y = 11
+		x = 1
+		y = 1
+		relative_position_id = WDC_take_on_the_lone_star
 		cost = 5
 		ai_will_do = {
 			factor = 1
@@ -4896,8 +4952,9 @@ focus_tree = {
 		available = {
 			has_completed_focus = WDC_stay_true_to_the_articles
 		}
-		x = 67
-		y = 11
+		x = -1
+		y = 1
+		relative_position_id = WDC_take_on_the_lone_star
 		cost = 5
 		ai_will_do = {
 			factor = 1
@@ -4919,8 +4976,9 @@ focus_tree = {
 		icon = GFX_goal_generic_major_alliance
 		prerequisite = { focus = WDC_develop_kentucian_coal_mining}
 		prerequisite = { focus = WDC_expand_chigago_shipping}
-		x = 72
-		y = 10
+		x = 0
+		y = 1
+		relative_position_id = WDC_develop_kentucian_coal_mining
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -4945,8 +5003,9 @@ focus_tree = {
 		available = {
 			has_completed_focus = WDC_strenghten_our_hold
 		}
-		x = 71
-		y = 11
+		x = -1
+		y = 1
+		relative_position_id = WDC_guarentee_californian_autonomy
 		cost = 5
 		ai_will_do = {
 			factor = 1
@@ -4972,8 +5031,9 @@ focus_tree = {
 		available = {
 			has_completed_focus = WDC_stay_true_to_the_articles
 		}
-		x = 73
-		y = 11
+		x = 1
+		y = 1
+		relative_position_id = WDC_guarentee_californian_autonomy
 		cost = 5
 		ai_will_do = {
 			factor = 1
@@ -5014,8 +5074,9 @@ focus_tree = {
 		icon = GFX_goal_generic_position_armies
 		prerequisite = { focus = WDC_develop_kentucian_coal_mining}
 		prerequisite = { focus = WDC_expand_chigago_shipping}
-		x = 66
-		y = 10
+		x = -2
+		y = 1
+		relative_position_id = WDC_expand_chigago_shipping
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -5077,8 +5138,9 @@ focus_tree = {
 		icon = GFX_focus_integrate
 		prerequisite = { focus = WDC_develop_kentucian_coal_mining}
 		prerequisite = { focus = WDC_expand_chigago_shipping}
-		x = 74
-		y = 10
+		x = 2
+		y = 1
+		relative_position_id = WDC_develop_kentucian_coal_mining
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -5123,6 +5185,7 @@ focus_tree = {
 		icon = GFX_focus_norman_thomas
 		prerequisite = { focus = WDC_rebuild_congress}
 		mutually_exclusive = { focus = WDC_let_fdr_take_power}
+		mutually_exclusive = { focus = WDC_disunited_forever}
 		mutually_exclusive = { focus = WDC_let_alf_take_power}
 		mutually_exclusive = { focus = WDC_keep_hoover_in_charge}
 		x = 82
@@ -6434,6 +6497,7 @@ focus_tree = {
 		mutually_exclusive = { focus = WDC_prepare_a_coup}
 		mutually_exclusive = { focus = WDC_let_fdr_take_power}
 		mutually_exclusive = { focus = WDC_let_alf_take_power}
+		mutually_exclusive = { focus = WDC_disunited_forever}
 		mutually_exclusive = { focus = WDC_let_nor_take_power}
 		x = 96
 		y = 1
