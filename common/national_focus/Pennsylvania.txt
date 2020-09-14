@@ -635,9 +635,10 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_RESEARCH }
 
         completion_reward = {
+            army_experience = 50
             add_tech_bonus = {
-                bonus = 0.75
-                uses = 2
+                bonus = 1
+                uses = 1
                 category = land_doctrine
             }
         }
@@ -752,9 +753,10 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_RESEARCH }
 
         completion_reward = {
+            army_experience = 50
             add_tech_bonus = {
-                bonus = 0.75
-                uses = 2
+                bonus = 1
+                uses = 1
                 category = land_doctrine
             }
         }
@@ -862,11 +864,15 @@ focus_tree = {
         x = 0
         y = 1
         relative_position_id = SPA_expand_eire_dockyards
-        cost = 1
+        cost = 10
         ai_will_do = {
             factor = 1
         }
         available_if_capitulated = yes
+
+        completion_reward = {
+            navy_experience = 100
+        }
     }
     focus = {
         id = SPA_invest_in_submarines
@@ -922,11 +928,15 @@ focus_tree = {
         x = 0
         y = 1
         relative_position_id = SPA_expand_philadelphia_dockyards
-        cost = 1
+        cost = 10
         ai_will_do = {
             factor = 1
         }
         available_if_capitulated = yes
+        
+        completion_reward = {
+            navy_experience = 100
+        }
     }
     focus = {
         id = SPA_invest_in_capital_ships
@@ -987,6 +997,7 @@ focus_tree = {
         available_if_capitulated = yes
         
         completion_reward = {
+            air_experience = 10
             add_ideas = SPA_ground_support_focus1
         }
     }
@@ -1004,6 +1015,7 @@ focus_tree = {
         available_if_capitulated = yes
 
         completion_reward = {
+            air_experience = 10
             swap_ideas = {
                 add_idea = SPA_ground_support_focus2
                 remove_idea = SPA_ground_support_focus1
@@ -1024,6 +1036,7 @@ focus_tree = {
         available_if_capitulated = yes
 
         completion_reward = {
+            air_experience = 10
             swap_ideas = {
                 add_idea = SPA_ground_support_focus3
                 remove_idea = SPA_ground_support_focus2
@@ -1043,6 +1056,7 @@ focus_tree = {
         available_if_capitulated = yes
 
         completion_reward = {
+            air_experience = 10
             add_ideas = SPA_bombing_focus1
         }
     }
@@ -1060,6 +1074,7 @@ focus_tree = {
         available_if_capitulated = yes
 
         completion_reward = {
+            air_experience = 10
             swap_ideas = {
                 add_idea = SPA_bombing_focus2
                 remove_idea = SPA_bombing_focus1
@@ -1080,6 +1095,7 @@ focus_tree = {
         available_if_capitulated = yes
 
         completion_reward = {
+            air_experience = 10
             swap_ideas = {
                 add_idea = SPA_bombing_focus3
                 remove_idea = SPA_bombing_focus2
@@ -1180,6 +1196,7 @@ focus_tree = {
         id = SPA_continue_with_pinchot
         icon = GFX_
         prerequisite = { focus = SPA_the_late_election}
+        mutually_exclusive = { focus = SPA_go_with_george_howard_earle_iii}
         mutually_exclusive = { focus = SPA_go_with_fritz_julius_kuhn}
         available = {
             always = no
@@ -1926,6 +1943,31 @@ focus_tree = {
         }
     }
 #######################################
+###########Generic Democracy###########
+#######################################
+    focus = {
+        id = SPA_go_with_george_howard_earle_iii
+        icon = GFX_
+        prerequisite = { focus = SPA_the_late_election }
+        mutually_exclusive = { focus = SPA_continue_with_pinchot}
+        mutually_exclusive = { focus = SPA_go_with_fritz_julius_kuhn}
+        x = 0
+        y = 1
+        relative_position_id = SPA_the_late_election
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_popularity = {
+                ideology = democratic
+                popularity = 0.1
+            }
+        }
+    }
+#######################################
 ############Forming the Bund###########
 #######################################
     focus = {
@@ -1933,7 +1975,8 @@ focus_tree = {
         icon = GFX_
         prerequisite = { focus = SPA_the_late_election}
         mutually_exclusive = { focus = SPA_continue_with_pinchot}
-        x = 16
+        mutually_exclusive = { focus = SPA_go_with_george_howard_earle_iii}
+        x = 10
         y = 1
         relative_position_id = SPA_the_late_election
         cost = 10
@@ -3775,6 +3818,330 @@ focus_tree = {
             }
             set_rule = {
                 can_guarantee_other_ideologies = yes
+            }
+        }
+    }
+    focus = {
+        id = SPA_join_the_democratic_league
+        icon = GFX_
+        prerequisite = { focus = SPA_willing_to_work_with_others}
+        mutually_exclusive = { focus = SPA_create_the_alliance_of_free_countries}
+        available = {
+            SNY = {
+                is_faction_leader = yes
+            }
+        }
+        x = -2
+        y = 1
+        relative_position_id = SPA_willing_to_work_with_others
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            SNY = {
+                country_event = {
+                    id = penn.20
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_ensure_the_stability_of_the_neighbors
+        icon = GFX_
+        prerequisite = { focus = SPA_join_the_democratic_league}
+        available = {
+            is_in_faction_with = SNY
+        }
+        x = 0
+        y = 1
+        relative_position_id = SPA_join_the_democratic_league
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            every_other_country = {
+                limit = {
+                    NOT = {
+                        is_in_faction_with = SNY
+                        tag = SNY
+                    }
+                    is_neighbor_of = SPA
+                }
+                add_ideas = SPA_pennsylvanian_influence
+            }
+        }
+    }
+    focus = {
+        id = SPA_create_the_alliance_of_free_countries
+        icon = GFX_
+        prerequisite = { focus = SPA_willing_to_work_with_others}
+        mutually_exclusive = { focus = SPA_join_the_democratic_league}
+        x = 4
+        y = 1
+        relative_position_id = SPA_willing_to_work_with_others
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            set_rule = {
+                can_create_factions = yes
+            }
+            create_faction = SPA_alliance_of_free_countries
+        }
+    }
+    focus = {
+        id = SPA_invite_new_jersey_to_the_faction
+        icon = GFX_
+        prerequisite = { focus = SPA_create_the_alliance_of_free_countries}
+        available = {
+            country_exists = SNJ
+            is_faction_leader = yes
+            NOT = {
+                SNJ = {
+                    is_faction_leader = yes
+                }
+            }
+        }
+        x = -2
+        y = 1
+        relative_position_id = SPA_create_the_alliance_of_free_countries
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            SNJ = {
+                country_event = {
+                    id = penn.21
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_invite_new_york_to_the_faction
+        icon = GFX_
+        prerequisite = { focus = SPA_create_the_alliance_of_free_countries}
+        available = {
+            country_exists = SNY
+            is_faction_leader = yes
+            NOT = {
+                SNY = {
+                    is_faction_leader = yes
+                }
+            }
+        }
+        x = -1
+        y = 2
+        relative_position_id = SPA_create_the_alliance_of_free_countries
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            SNY = {
+                country_event = {
+                    id = penn.21
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_invite_ohio_to_the_faction
+        icon = GFX_
+        prerequisite = { focus = SPA_create_the_alliance_of_free_countries}
+        available = {
+            country_exists = SOH
+            is_faction_leader = yes
+            NOT = {
+                SOH = {
+                    is_faction_leader = yes
+                }
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SPA_create_the_alliance_of_free_countries
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            SOH = {
+                country_event = {
+                    id = penn.21
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_invite_virginia_to_the_faction
+        icon = GFX_
+        prerequisite = { focus = SPA_create_the_alliance_of_free_countries}
+        available = {
+            country_exists = SVA
+            is_faction_leader = yes
+            NOT = {
+                SVA = {
+                    is_faction_leader = yes
+                }
+            }
+        }
+        x = 1
+        y = 2
+        relative_position_id = SPA_create_the_alliance_of_free_countries
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            SVA = {
+                country_event = {
+                    id = penn.21
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_invite_ontario_to_the_faction
+        icon = GFX_
+        prerequisite = { focus = SPA_create_the_alliance_of_free_countries}
+        available = {
+            country_exists = PON
+            is_faction_leader = yes
+            NOT = {
+                PON = {
+                    is_faction_leader = yes
+                }
+            }
+        }
+        x = 2
+        y = 1
+        relative_position_id = SPA_create_the_alliance_of_free_countries
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            PON = {
+                country_event = {
+                    id = penn.21
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_the_arsenal_of_freedom
+        icon = GFX_
+        prerequisite = { focus = SPA_join_the_democratic_league focus = SPA_create_the_alliance_of_free_countries}
+        x = 2
+        y = 1
+        relative_position_id = SPA_join_the_democratic_league
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 2
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_the_best_defense
+        icon = GFX_
+        prerequisite = { focus = SPA_the_arsenal_of_freedom}
+        x = 0
+        y = 1
+        relative_position_id = SPA_the_arsenal_of_freedom
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = arms_factory
+                    level = 2
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = arms_factory
+                    level = 2
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_is_a_good_offense
+        icon = GFX_
+        prerequisite = { focus = SPA_the_best_defense}
+        x = 0
+        y = 1
+        relative_position_id = SPA_the_best_defense
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_MANPOWER }
+
+        completion_reward = {
+            army_experience = 100
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                category = land_doctrine
             }
         }
     }
