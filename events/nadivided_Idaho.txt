@@ -142,7 +142,7 @@ country_event = { #drought
 	fire_only_once = no
 
 	mean_time_to_happen = {
-		days = 100
+		days = 250
 		modifier = {
 			factor = 2
 			any_owned_state = {
@@ -1109,5 +1109,724 @@ country_event = {
 		name = Idaho.21.a
 		complete_national_focus = SID_go_with_Bottolfsen
 		add_war_support = 0.15
+	}
+}
+country_event = {
+	id = Idaho.22
+	title = Idaho.22.t
+	desc = Idaho.22.d
+	#picture = GFX_
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = Idaho.22.a
+		ai_chance = {
+			factor = 100
+		}
+		puppet = SID
+	}
+	option = {
+		name = Idaho.22.b
+		ai_chance = {
+			factor = 0
+		}
+		add_political_power = -25
+	}
+}
+country_event = {
+	id = Idaho.23
+	title = Idaho.23.t
+	desc = Idaho.23.d
+	#picture = GFX_
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = Idaho.23.a
+		ai_chance = {
+			factor = 80
+		}
+		SID = {
+			add_state_core = 194
+			add_state_core = 681
+			if = {
+				limit = {
+					SMT = {
+						is_in_faction_with = SCA
+					}
+				}
+				transfer_state = 194
+			}
+			else = {
+				SCA = {
+					create_wargoal = {
+						type = take_state_focus
+						target = SMT
+						generator = { 194 }
+					}
+					custom_effect_tooltip = SCA_transfer_states_to_SID_tt
+				}
+			}
+			if = {
+				limit = {
+					SWY = {
+						is_in_faction_with = SCA
+					}
+				}
+				transfer_state = 681
+			}
+			else = {
+				SCA = {
+					create_wargoal = {
+						type = take_state_focus
+						target = SWY
+						generator = { 681 }
+					}
+				}
+				custom_effect_tooltip = SCA_transfer_states_to_SID_tt
+			}
+			add_stability = 0.05
+			add_political_power = 50
+		}
+	}
+	option = {
+		name = Idaho.23.b
+		ai_chance = {
+			factor = 20
+		}
+		SID = {
+			add_state_core = 194
+			add_stability = 0.05
+			add_political_power = 25
+			if = {
+				limit = {
+					SMT = {
+						is_in_faction_with = SCA
+					}
+				}
+				transfer_state = 194
+			}
+			else = {
+				SCA = {
+					create_wargoal = {
+						type = take_state_focus
+						target = SMT
+						generator = { 194 }
+					}
+				}
+				custom_effect_tooltip = SCA_transfer_states_to_SID_tt
+			}
+		}
+	}
+	option = {
+		name = Idaho.23.c
+		ai_chance = {
+			factor = 0
+		}
+		add_political_power = -50
+	}
+}
+country_event = {
+	id = Idaho.24
+
+	hidden = yes
+
+	is_triggered_only = no
+	fire_only_once = yes
+
+	trigger = {
+		country_exists = SID
+		OR = {
+			SCA = {
+				owns_state = 681
+			}
+			any_country = {
+				NOT = {
+					tag = SID
+				}
+				OR = {
+					is_puppet_of = SCA
+					is_subject_of = SCA
+					is_in_faction_with = SCA
+				}
+				owns_state = 681
+			}
+		}
+		681 = {
+			is_core_of = SID
+		}
+		SID = {
+			has_completed_focus = SID_our_eternal_reward
+		}
+	}
+
+	option = {
+		SID = {
+			transfer_state = 681
+		}
+	}
+}
+country_event = {
+	id = Idaho.25
+
+	hidden = yes
+
+	is_triggered_only = no
+	fire_only_once = yes
+
+	trigger = {
+		country_exists = SID
+		OR = {
+			SCA = {
+				owns_state = 194
+			}
+			any_country = {
+				NOT = {
+					tag = SID
+				}
+				OR = {
+					is_puppet_of = SCA
+					is_subject_of = SCA
+					is_in_faction_with = SCA
+				}
+				owns_state = 194
+			}
+		}
+		
+		194 = {
+			is_core_of = SID
+		}
+		SID = {
+			has_completed_focus = SID_our_eternal_reward
+		}
+	}
+
+	option = {
+		SID = {
+			transfer_state = 194
+		}
+	}
+}
+country_event = {
+	id = Idaho.26
+	title = Idaho.26.t
+	desc = Idaho.26.d
+	#picture = GFX_
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = Idaho.26.a
+		add_political_power = 100
+	}
+}
+country_event = {
+	id = Idaho.27
+	title = Idaho.27.t
+	desc = Idaho.27.d
+	#picture = GFX_
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = Idaho.27.a
+		ai_chance = {
+			factor = 95
+		}
+		leave_faction = yes
+		set_rule = {
+			can_create_factions = yes
+		}
+		create_faction = SID_pacific_treaty_organization
+		set_major = yes
+		declare_war_on = {
+			target = SCA
+			type = annex_everything
+		}
+		custom_effect_tooltip = SID_other_countries_will_join_based_on_their_willingness_tt
+		hidden_effect = {
+			SID = {
+				country_event = {
+					id = Idaho.28
+				}
+			}
+			SWA = {
+				if = {
+					limit = {
+						is_in_faction_with = SCA
+						country_exists = SWA
+					}
+					if = {
+						limit = {
+							is_ai = yes
+						}
+						set_temp_variable = { SID_opposition = 100 }
+						subtract_from_temp_variable = { SID_opposition = SID_willingness }
+						random_list = {
+							var:SID_willingness = {
+								SID = {
+									country_event = {
+										id = Idaho.30
+									}
+								}
+							}
+							var:SID_opposition = {
+								SID = {
+									country_event = {
+										id = Idaho.31
+									}
+								}
+							}
+						}
+					}
+					else = {
+						country_event = {
+							id = Idaho.32
+						}
+					}
+				}
+			}
+			SOR = {
+				if = {
+					limit = {
+						is_in_faction_with = SCA
+						country_exists = SOR
+					}
+					if = {
+						limit = {
+							is_ai = yes
+						}
+						set_temp_variable = { SID_opposition = 100 }
+						subtract_from_temp_variable = { SID_opposition = SID_willingness }
+						random_list = {
+							var:SID_willingness = {
+								SID = {
+									country_event = {
+										id = Idaho.33
+									}
+								}
+							}
+							var:SID_opposition = {
+								SID = {
+									country_event = {
+										id = Idaho.34
+									}
+								}
+							}
+						}
+					}
+					else = {
+						country_event = {
+							id = Idaho.35
+						}
+					}
+				}
+			}
+			SNV = {
+				if = {
+					limit = {
+						is_in_faction_with = SCA
+						country_exists = SNV
+					}
+					if = {
+						limit = {
+							is_ai = yes
+						}
+						set_temp_variable = { SID_opposition = 100 }
+						subtract_from_temp_variable = { SID_opposition = SID_willingness }
+						random_list = {
+							var:SID_willingness = {
+								SID = {
+									country_event = {
+										id = Idaho.36
+									}
+								}
+							}
+							var:SID_opposition = {
+								SID = {
+									country_event = {
+										id = Idaho.37
+									}
+								}
+							}
+						}
+					}
+					else = {
+						country_event = {
+							id = Idaho.38
+						}
+					}
+				}
+			}
+		}
+	}
+	option = {
+		name = Idaho.27.b
+		ai_chance = {
+			factor = 5
+		}
+		add_stability = -0.1
+		add_war_support = -0.1
+		add_political_power = -50
+	}
+}
+country_event = {
+	id = Idaho.28
+	title = Idaho.28.t
+	desc = Idaho.28.d
+	#picture = GFX_
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = { #Northern Revolt
+		name = Idaho.28.a
+		# RCA = {
+		# 	set_state_controller
+		# }
+		SID = {
+			add_to_faction = RCA
+		}
+		every_state = {
+			limit = {
+				is_core_of = SCA
+			}
+			add_core_of = RCA
+		}
+		RCA = {
+			inherit_technology = SCA
+			set_politics = {
+				ruling_party = democratic
+			}
+			set_popularities = {
+				democratic = 50
+				neutrality = 15
+				fascism = 0
+				communism = 5
+				progressivism = 25
+				longism = 5
+			}
+			add_to_war = {
+				targeted_alliance = SID
+				enemy = SCA
+			}
+		}
+	}
+	option = { #Southern Revolt
+		name = Idaho.28.b
+		# RCA = {
+		# 	set_state_controller
+		# }
+		SID = {
+			add_to_faction = RCA
+		}
+		every_state = {
+			limit = {
+				is_core_of = SCA
+			}
+			add_core_of = RCA
+		}
+		RCA = {
+			inherit_technology = SCA
+			set_politics = {
+				ruling_party = democratic
+			}
+			set_popularities = {
+				democratic = 50
+				neutrality = 15
+				fascism = 0
+				communism = 5
+				progressivism = 25
+				longism = 5
+			}
+			add_to_war = {
+				targeted_alliance = SID
+				enemy = SCA
+			}
+		}
+	}
+}
+# country_event = {
+# 	id = Idaho.29
+# 	title = Idaho.29.t
+# 	desc = Idaho.29.d
+# 	#picture = GFX_
+
+# 	is_triggered_only = yes
+# 	fire_only_once = yes
+
+# 	option = {
+# 		name = Idaho.29.a
+# 	}
+# }
+country_event = {
+	id = Idaho.30
+	title = Idaho.30.t
+	desc = Idaho.30.d
+	#picture = GFX_
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = Idaho.30.a
+		SWA = {
+			leave_faction = yes
+		}
+		SID = {
+			add_to_faction = SWA
+		}
+		SWA = {
+			add_to_war = {
+				targeted_alliance = SID
+				enemy = SCA
+			}
+		}
+	}
+}
+country_event = {
+	id = Idaho.31
+	title = Idaho.31.t
+	desc = Idaho.31.d
+	#picture = GFX_
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = Idaho.31.a
+	}
+}
+country_event = {
+	id = Idaho.32
+	title = Idaho.32.t
+	desc = Idaho.32.d
+	#picture = GFX_
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = Idaho.32.a
+		SID = {
+			country_event = {
+				id = Idaho.30
+			}
+		}
+	}
+	option = {
+		name = Idaho.32.b
+		SID = {
+			country_event = {
+				id = Idaho.31
+			}
+		}
+	}
+}
+country_event = {
+	id = Idaho.33
+	title = Idaho.33.t
+	desc = Idaho.33.d
+	#picture = GFX_
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = Idaho.30.a
+		SOR = {
+			leave_faction = yes
+		}
+		SID = {
+			add_to_faction = SOR
+		}
+		SOR = {
+			add_to_war = {
+				targeted_alliance = SID
+				enemy = SCA
+			}
+		}
+	}
+}
+country_event = {
+	id = Idaho.34
+	title = Idaho.34.t
+	desc = Idaho.34.d
+	#picture = GFX_
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = Idaho.31.a
+	}
+}
+country_event = {
+	id = Idaho.35
+	title = Idaho.32.t
+	desc = Idaho.32.d
+	#picture = GFX_
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = Idaho.32.a
+		SID = {
+			country_event = {
+				id = Idaho.33
+			}
+		}
+	}
+	option = {
+		name = Idaho.32.b
+		SID = {
+			country_event = {
+				id = Idaho.34
+			}
+		}
+	}
+}
+country_event = {
+	id = Idaho.36
+	title = Idaho.36.t
+	desc = Idaho.36.d
+	#picture = GFX_
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = Idaho.30.a
+		SNV = {
+			leave_faction = yes
+		}
+		SID = {
+			add_to_faction = SNV
+		}
+		SNV = {
+			add_to_war = {
+				targeted_alliance = SID
+				enemy = SCA
+			}
+		}
+	}
+}
+country_event = {
+	id = Idaho.37
+	title = Idaho.37.t
+	desc = Idaho.37.d
+	#picture = GFX_
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = Idaho.31.a
+	}
+}
+country_event = {
+	id = Idaho.38
+	title = Idaho.32.t
+	desc = Idaho.32.d
+	#picture = GFX_
+
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	option = {
+		name = Idaho.32.a
+		SID = {
+			country_event = {
+				id = Idaho.36
+			}
+		}
+	}
+	option = {
+		name = Idaho.32.b
+		SID = {
+			country_event = {
+				id = Idaho.37
+			}
+		}
+	}
+}
+country_event = {
+	id = Idaho.39
+	title = Idaho.39.t
+	desc = Idaho.39.d
+	#picture = GFX_
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = Idaho.39.a
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 0
+				is_faction_leader = yes
+			}
+		}
+		SID = {
+			add_to_faction = ROOT
+		}
+	}
+	option = {
+		name = Idaho.39.b
+		ai_chance = {
+			factor = 20
+		}
+		if = {
+			limit = {
+				OR = {
+					has_government = fascism
+					has_government = communism
+				}
+			}
+			SID = {
+				create_wargoal = {
+					target = ROOT
+					type = topple_government
+				}
+			}
+		}
+	}
+}
+country_event = {
+	id = Idaho.40
+	title = Idaho.40.t
+	desc = Idaho.40.d
+	#picture = GFX_
+
+	is_triggered_only = yes
+	fire_only_once = no
+
+	option = {
+		name = Idaho.40.a
+		ai_chance = {
+			factor = 80
+		}
+		SID = {
+			puppet = ROOT
+		}
+	}
+	option = {
+		name = Idaho.40.b
+		ai_chance = {
+			factor = 20
+		}
+		SID = {
+			create_wargoal = {
+				target = ROOT
+				type = puppet_wargoal_focus
+			}
+		}
 	}
 }

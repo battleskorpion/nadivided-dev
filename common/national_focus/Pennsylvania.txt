@@ -19,7 +19,7 @@ focus_tree = {
     #FOCUS_FILTER_RESEARCH
     #FOCUS_FILTER_WAR_SUPPORT
 
-    continuous_focus_position = { x = 50 y = 2000 }
+    continuous_focus_position = { x = 50 y = 1350 }
 
 #######################################
 ###########Deal with Strikes###########
@@ -635,9 +635,10 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_RESEARCH }
 
         completion_reward = {
+            army_experience = 50
             add_tech_bonus = {
-                bonus = 0.75
-                uses = 2
+                bonus = 1
+                uses = 1
                 category = land_doctrine
             }
         }
@@ -752,9 +753,10 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_RESEARCH }
 
         completion_reward = {
+            army_experience = 50
             add_tech_bonus = {
-                bonus = 0.75
-                uses = 2
+                bonus = 1
+                uses = 1
                 category = land_doctrine
             }
         }
@@ -834,7 +836,7 @@ focus_tree = {
     focus = {
         id = SPA_expand_eire_dockyards
         icon = GFX_goal_generic_construct_naval_dockyard
-        x = 10
+        x = 8
         y = 3
         cost = 10
         ai_will_do = {
@@ -862,11 +864,15 @@ focus_tree = {
         x = 0
         y = 1
         relative_position_id = SPA_expand_eire_dockyards
-        cost = 1
+        cost = 10
         ai_will_do = {
             factor = 1
         }
         available_if_capitulated = yes
+
+        completion_reward = {
+            navy_experience = 100
+        }
     }
     focus = {
         id = SPA_invest_in_submarines
@@ -894,7 +900,7 @@ focus_tree = {
     focus = {
         id = SPA_expand_philadelphia_dockyards
         icon = GFX_goal_generic_construct_naval_dockyard
-        x = 12
+        x = 10
         y = 3
         cost = 10
         ai_will_do = {
@@ -922,11 +928,15 @@ focus_tree = {
         x = 0
         y = 1
         relative_position_id = SPA_expand_philadelphia_dockyards
-        cost = 1
+        cost = 10
         ai_will_do = {
             factor = 1
         }
         available_if_capitulated = yes
+        
+        completion_reward = {
+            navy_experience = 100
+        }
     }
     focus = {
         id = SPA_invest_in_capital_ships
@@ -978,7 +988,7 @@ focus_tree = {
         id = SPA_ground_support_focus
         icon = GFX_goal_generic_CAS
         mutually_exclusive = { focus = SPA_bombing_focus}
-        x = 15
+        x = 13
         y = 3
         cost = 10
         ai_will_do = {
@@ -987,6 +997,7 @@ focus_tree = {
         available_if_capitulated = yes
         
         completion_reward = {
+            air_experience = 10
             add_ideas = SPA_ground_support_focus1
         }
     }
@@ -1004,6 +1015,7 @@ focus_tree = {
         available_if_capitulated = yes
 
         completion_reward = {
+            air_experience = 10
             swap_ideas = {
                 add_idea = SPA_ground_support_focus2
                 remove_idea = SPA_ground_support_focus1
@@ -1024,6 +1036,7 @@ focus_tree = {
         available_if_capitulated = yes
 
         completion_reward = {
+            air_experience = 10
             swap_ideas = {
                 add_idea = SPA_ground_support_focus3
                 remove_idea = SPA_ground_support_focus2
@@ -1034,7 +1047,7 @@ focus_tree = {
         id = SPA_bombing_focus
         icon = GFX_goal_generic_air_bomber
         mutually_exclusive = { focus = SPA_ground_support_focus}
-        x = 19
+        x = 17
         y = 3
         cost = 10
         ai_will_do = {
@@ -1043,6 +1056,7 @@ focus_tree = {
         available_if_capitulated = yes
 
         completion_reward = {
+            air_experience = 10
             add_ideas = SPA_bombing_focus1
         }
     }
@@ -1060,6 +1074,7 @@ focus_tree = {
         available_if_capitulated = yes
 
         completion_reward = {
+            air_experience = 10
             swap_ideas = {
                 add_idea = SPA_bombing_focus2
                 remove_idea = SPA_bombing_focus1
@@ -1080,6 +1095,7 @@ focus_tree = {
         available_if_capitulated = yes
 
         completion_reward = {
+            air_experience = 10
             swap_ideas = {
                 add_idea = SPA_bombing_focus3
                 remove_idea = SPA_bombing_focus2
@@ -1144,7 +1160,7 @@ focus_tree = {
         mutually_exclusive = { focus = SPA_the_late_election}
         available = {
             custom_trigger_tooltip = {
-                tooltip = has_embraced_the_strikes
+                tooltip = has_embraced_the_strikes_tt
                 has_country_flag = SPA_is_anarchist
             }
         }
@@ -1180,6 +1196,7 @@ focus_tree = {
         id = SPA_continue_with_pinchot
         icon = GFX_
         prerequisite = { focus = SPA_the_late_election}
+        mutually_exclusive = { focus = SPA_go_with_george_howard_earle_iii}
         mutually_exclusive = { focus = SPA_go_with_fritz_julius_kuhn}
         available = {
             always = no
@@ -1774,9 +1791,7 @@ focus_tree = {
         icon = GFX_
         prerequisite = { focus = SPA_oppose_new_york}
         bypass = {
-            NOT = {
-                has_war_with = SNY
-            }
+            controls_new_york_trigger = yes
         }
         x = 1
         y = 1
@@ -1928,14 +1943,15 @@ focus_tree = {
         }
     }
 #######################################
-############Forming the Bund###########
+###########Generic Democracy###########
 #######################################
     focus = {
-        id = SPA_go_with_fritz_julius_kuhn
+        id = SPA_go_with_george_howard_earle_iii
         icon = GFX_
-        prerequisite = { focus = SPA_the_late_election}
+        prerequisite = { focus = SPA_the_late_election }
         mutually_exclusive = { focus = SPA_continue_with_pinchot}
-        x = 16
+        mutually_exclusive = { focus = SPA_go_with_fritz_julius_kuhn}
+        x = 0
         y = 1
         relative_position_id = SPA_the_late_election
         cost = 10
@@ -1946,7 +1962,32 @@ focus_tree = {
 
         completion_reward = {
             add_popularity = {
-                ideology = communism
+                ideology = democratic
+                popularity = 0.1
+            }
+        }
+    }
+#######################################
+############Forming the Bund###########
+#######################################
+    focus = {
+        id = SPA_go_with_fritz_julius_kuhn
+        icon = GFX_
+        prerequisite = { focus = SPA_the_late_election}
+        mutually_exclusive = { focus = SPA_continue_with_pinchot}
+        mutually_exclusive = { focus = SPA_go_with_george_howard_earle_iii}
+        x = 10
+        y = 1
+        relative_position_id = SPA_the_late_election
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_popularity = {
+                ideology = fascism
                 popularity = 0.1
             }
             add_stability = -0.1
@@ -2067,10 +2108,36 @@ focus_tree = {
         }
     }
     focus = {
+        id = SPA_germans_in_factories
+        icon = GFX_
+        prerequisite = { focus = SPA_germanize_pennsylvania}
+        x = 2
+        y = 1
+        relative_position_id = SPA_germanize_pennsylvania
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            remove_ideas = SPA_high_unemployment
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
         id = SPA_german_engineering
         icon = GFX_
-        prerequisite = { focus = SPA_teach_german_as_a_secondary_language}
-        x = 0
+        prerequisite = { focus = SPA_germans_in_factories}
+        x = 2
         y = 2
         relative_position_id = SPA_germanize_pennsylvania
         cost = 10
@@ -2096,7 +2163,7 @@ focus_tree = {
         id = SPA_fan_german_nationalism
         icon = GFX_
         prerequisite = { focus = SPA_teach_german_as_a_secondary_language}
-        x = 2
+        x = 0
         y = 2
         relative_position_id = SPA_germanize_pennsylvania
         cost = 10
@@ -3318,10 +3385,224 @@ focus_tree = {
         }
     }
     focus = {
+        id = SPA_pure_anarchy
+        icon = GFX_
+        prerequisite = { focus = SPA_embrace_anarchy}
+        mutually_exclusive = { focus = SPA_state_of_anarchy}
+        x = -1
+        y = 1
+        relative_position_id = SPA_embrace_anarchy
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_ideas = SPA_pure_anarchy_idea
+        }
+    }
+    focus = {
+        id = SPA_a_collectivised_society
+        icon = GFX_
+        prerequisite = { focus = SPA_pure_anarchy}
+        x = 0
+        y = 1
+        relative_position_id = SPA_pure_anarchy
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_ideas = SPA_collectivized_society
+            unlock_decision_category_tooltip = SPA_government_council
+            hidden_effect = {
+                set_variable = { SPA_attack_new_jersey_support = 18 }
+                set_variable = { SPA_abolish_the_national_treasury_support = 44 }
+                set_variable = { SPA_enact_complete_womans_rights_support = 36 }
+                set_variable = { SPA_the_good_word_of_anarchism_support = 42 }
+            }
+        }
+    }
+    focus = {
+        id = SPA_the_good_word_of_anarchism
+        icon = GFX_
+        prerequisite = { focus = SPA_a_collectivised_society}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SPA_support_to_do_focus_over_50_tt
+                has_variable = SPA_the_good_word_of_anarchism_support
+                check_variable = { SPA_the_good_word_of_anarchism_support > 50 }
+            }
+        }
+        x = -4
+        y = 1
+        relative_position_id = SPA_a_collectivised_society
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            add_political_power = 100
+            hidden_effect = {
+                clear_variable = SPA_the_good_word_of_anarchism_support
+                if = {
+                    limit = {
+                        NOT = {
+                            has_variable = SPA_finish_conversion_to_anarchism_support
+                        }
+                    }
+                    set_variable = { SPA_finish_conversion_to_anarchism_support = 34 }
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_abolish_the_national_treasury
+        icon = GFX_
+        prerequisite = { focus = SPA_a_collectivised_society}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SPA_support_to_do_focus_over_50_tt
+                has_variable = SPA_abolish_the_national_treasury_support
+                check_variable = { SPA_abolish_the_national_treasury_support > 50 }
+            }
+        }
+        x = -2
+        y = 1
+        relative_position_id = SPA_a_collectivised_society
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            add_timed_idea = {
+                idea = SPA_abolished_national_treasury
+                days = 180
+            }
+            hidden_effect = {
+                clear_variable = SPA_abolish_the_national_treasury_support
+                if = {
+                    limit = {
+                        NOT = {
+                            has_variable = SPA_finish_conversion_to_anarchism_support
+                        }
+                    }
+                    set_variable = { SPA_finish_conversion_to_anarchism_support = 34 }
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_finish_conversion_to_anarchism
+        icon = GFX_
+        prerequisite = { focus = SPA_the_good_word_of_anarchism}
+        prerequisite = { focus = SPA_abolish_the_national_treasury}
+        x = 1
+        y = 1
+        relative_position_id = SPA_the_good_word_of_anarchism
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            remove_ideas = SPA_political_chaos
+            hidden_effect = {
+                clear_variable = SPA_finish_conversion_to_anarchism_support
+            }
+        }
+    }
+    focus = {
+        id = SPA_attack_new_jersey
+        icon = GFX_
+        prerequisite = { focus = SPA_a_collectivised_society}
+        available = {
+            country_exists = SNJ
+            custom_trigger_tooltip = {
+                tooltip = SPA_support_to_do_focus_over_50_tt
+                has_variable = SPA_attack_new_jersey_support
+                check_variable = { SPA_attack_new_jersey_support > 50 }
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SPA_a_collectivised_society
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            create_wargoal = {
+                target = SNJ
+                type = annex_everything
+            }
+            hidden_effect = {
+                set_variable = { SPA_core_new_jersey_support = 8 }
+                clear_variable = SPA_attack_new_jersey_support
+            }
+        }
+    }
+    focus = {
+        id = SPA_core_new_jersey
+        icon = GFX_
+        prerequisite = { focus = SPA_attack_new_jersey}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SPA_support_to_do_focus_over_50_tt
+                has_variable = SPA_core_new_jersey_support
+                check_variable = { SPA_core_new_jersey_support > 50 }
+            }
+            controls_new_jersey_trigger = yes
+        }
+        x = 0
+        y = 1
+        relative_position_id = SPA_attack_new_jersey
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            every_state = {
+                limit = {
+                    is_core_of = SNJ
+                }
+                add_core_of = SPA
+            }
+            hidden_effect = {
+                clear_variable = SPA_core_new_jersey_support
+            }
+        }
+    }
+    focus = {
         id = SPA_state_of_anarchy
         icon = GFX_
         prerequisite = { focus = SPA_embrace_anarchy}
-        x = 0
+        mutually_exclusive = { focus = SPA_pure_anarchy}
+        x = 1
         y = 1
         relative_position_id = SPA_embrace_anarchy
         cost = 10
@@ -3333,6 +3614,698 @@ focus_tree = {
 
         completion_reward = {
             add_ideas = SPA_controlled_chaos
+        }
+    }
+    focus = {
+        id = SPA_merge_the_powers_of_government_and_of_people
+        icon = GFX_
+        prerequisite = { focus = SPA_state_of_anarchy}
+        x = 3
+        y = 1
+        relative_position_id = SPA_state_of_anarchy
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL}
+
+        completion_reward = {
+            add_political_power = 50
+            custom_effect_tooltip = SPA_starts_event_chain_to_reform_government_tt
+            hidden_effect = {
+                country_event = {
+                    id = penn.15
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_elected_representatives
+        icon = GFX_
+        prerequisite = { focus = SPA_merge_the_powers_of_government_and_of_people}
+        mutually_exclusive = { focus = SPA_complete_representation}
+        available = {
+            always = no
+        }
+        x = -1
+        y = 1
+        relative_position_id = SPA_merge_the_powers_of_government_and_of_people
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            add_stability = 0.05
+        }
+    }
+    focus = {
+        id = SPA_complete_representation
+        icon = GFX_
+        prerequisite = { focus = SPA_merge_the_powers_of_government_and_of_people}
+        mutually_exclusive = { focus = SPA_elected_representatives}
+        available = {
+            always = no
+        }
+        x = 1
+        y = 1
+        relative_position_id = SPA_merge_the_powers_of_government_and_of_people
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_political_power = 50
+        }
+    }
+    focus = {
+        id = SPA_organized_militia
+        icon = GFX_
+        prerequisite = { focus = SPA_elected_representatives focus = SPA_complete_representation}
+        mutually_exclusive = { focus = SPA_conscripted_militia}
+        available = {
+            always = no
+        }
+        x = 0
+        y = 1
+        relative_position_id = SPA_elected_representatives
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_MANPOWER }
+
+        completion_reward = {
+            add_ideas = SPA_organized_militia_idea
+        }
+    }
+    focus = {
+        id = SPA_conscripted_militia
+        icon = GFX_
+        prerequisite = { focus = SPA_elected_representatives focus = SPA_complete_representation}
+        mutually_exclusive = { focus = SPA_organized_militia}
+        available = {
+            always = no
+        }
+        x = 0
+        y = 1
+        relative_position_id = SPA_complete_representation
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_MANPOWER }
+
+        completion_reward = {
+            add_ideas = SPA_conscripted_militia_idea
+        }
+    }
+    focus = {
+        id = SPA_powerful_trade_unions
+        icon = GFX_
+        prerequisite = { focus = SPA_organized_militia focus = SPA_conscripted_militia}
+        mutually_exclusive = { focus = SPA_disorganized_factories}
+        available = {
+            always = no
+        }
+        x = 0
+        y = 1
+        relative_position_id = SPA_organized_militia
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_disorganized_factories
+        icon = GFX_
+        prerequisite = { focus = SPA_organized_militia focus = SPA_conscripted_militia}
+        mutually_exclusive = { focus = SPA_powerful_trade_unions}
+        available = {
+            always = no
+        }
+        x = 0
+        y = 1
+        relative_position_id = SPA_conscripted_militia
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_stability = 0.05
+            add_political_power = 50
+        }
+    }
+    focus = {
+        id = SPA_a_reformed_society
+        icon = GFX_
+        prerequisite = { focus = SPA_powerful_trade_unions focus = SPA_disorganized_factories}
+        available = {
+            always = no
+        }
+        x = 1
+        y = 1
+        relative_position_id = SPA_powerful_trade_unions
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            remove_ideas = SPA_political_chaos
+        }
+    }
+    focus = {
+        id = SPA_work_with_democracies
+        icon = GFX_
+        prerequisite = { focus = SPA_a_reformed_society}
+        x = -2
+        y = 1
+        relative_position_id = SPA_a_reformed_society
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_ideas = SPA_willing_to_work_with_democracies
+        }
+    }
+    focus = {
+        id = SPA_work_with_progressivist_countries
+        icon = GFX_
+        prerequisite = { focus = SPA_a_reformed_society}
+        x = 0
+        y = 1
+        relative_position_id = SPA_a_reformed_society
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_ideas = SPA_willing_to_work_with_progresssive_countries
+        }
+    }
+    focus = {
+        id = SPA_work_with_communist_countries
+        icon = GFX_
+        prerequisite = { focus = SPA_a_reformed_society}
+        x = 2
+        y = 1
+        relative_position_id = SPA_a_reformed_society
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_ideas = SPA_willing_to_work_with_communist_countries
+        }
+    }
+    focus = {
+        id = SPA_willing_to_work_with_others
+        icon = GFX_
+        prerequisite = { focus = SPA_work_with_democracies}
+        prerequisite = { focus = SPA_work_with_progressivist_countries}
+        prerequisite = { focus = SPA_work_with_communist_countries}
+        x = 2
+        y = 1
+        relative_position_id = SPA_work_with_democracies
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            remove_ideas = SPA_willing_to_work_with_democracies
+            remove_ideas = SPA_willing_to_work_with_progresssive_countries
+            remove_ideas = SPA_willing_to_work_with_communist_countries
+            add_ideas = SPA_willingness_to_work_with_others
+            set_rule = {
+                can_boost_other_ideologies = yes
+            }
+            set_rule = {
+                can_guarantee_other_ideologies = yes
+            }
+        }
+    }
+    focus = {
+        id = SPA_join_the_democratic_league
+        icon = GFX_
+        prerequisite = { focus = SPA_willing_to_work_with_others}
+        mutually_exclusive = { focus = SPA_create_the_alliance_of_free_countries}
+        available = {
+            SNY = {
+                is_faction_leader = yes
+            }
+        }
+        x = -2
+        y = 1
+        relative_position_id = SPA_willing_to_work_with_others
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            SNY = {
+                country_event = {
+                    id = penn.20
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_ensure_the_stability_of_the_neighbors
+        icon = GFX_
+        prerequisite = { focus = SPA_join_the_democratic_league}
+        available = {
+            is_in_faction_with = SNY
+        }
+        x = 0
+        y = 1
+        relative_position_id = SPA_join_the_democratic_league
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            every_other_country = {
+                limit = {
+                    NOT = {
+                        is_in_faction_with = SNY
+                        tag = SNY
+                    }
+                    is_neighbor_of = SPA
+                }
+                add_ideas = SPA_pennsylvanian_influence_anarchism
+            }
+        }
+    }
+    focus = {
+        id = SPA_create_the_alliance_of_free_countries
+        icon = GFX_
+        prerequisite = { focus = SPA_willing_to_work_with_others}
+        mutually_exclusive = { focus = SPA_join_the_democratic_league}
+        x = 4
+        y = 1
+        relative_position_id = SPA_willing_to_work_with_others
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            set_rule = {
+                can_create_factions = yes
+            }
+            create_faction = SPA_alliance_of_free_countries
+        }
+    }
+    focus = {
+        id = SPA_invite_new_jersey_to_the_faction
+        icon = GFX_
+        prerequisite = { focus = SPA_create_the_alliance_of_free_countries}
+        available = {
+            country_exists = SNJ
+            is_faction_leader = yes
+            NOT = {
+                SNJ = {
+                    is_faction_leader = yes
+                }
+            }
+        }
+        x = -2
+        y = 1
+        relative_position_id = SPA_create_the_alliance_of_free_countries
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            SNJ = {
+                country_event = {
+                    id = penn.21
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_invite_new_york_to_the_faction
+        icon = GFX_
+        prerequisite = { focus = SPA_create_the_alliance_of_free_countries}
+        available = {
+            country_exists = SNY
+            is_faction_leader = yes
+            NOT = {
+                SNY = {
+                    is_faction_leader = yes
+                }
+            }
+        }
+        x = -1
+        y = 2
+        relative_position_id = SPA_create_the_alliance_of_free_countries
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            SNY = {
+                country_event = {
+                    id = penn.21
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_invite_ohio_to_the_faction
+        icon = GFX_
+        prerequisite = { focus = SPA_create_the_alliance_of_free_countries}
+        available = {
+            country_exists = SOH
+            is_faction_leader = yes
+            NOT = {
+                SOH = {
+                    is_faction_leader = yes
+                }
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SPA_create_the_alliance_of_free_countries
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            SOH = {
+                country_event = {
+                    id = penn.21
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_invite_virginia_to_the_faction
+        icon = GFX_
+        prerequisite = { focus = SPA_create_the_alliance_of_free_countries}
+        available = {
+            country_exists = SVA
+            is_faction_leader = yes
+            NOT = {
+                SVA = {
+                    is_faction_leader = yes
+                }
+            }
+        }
+        x = 1
+        y = 2
+        relative_position_id = SPA_create_the_alliance_of_free_countries
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            SVA = {
+                country_event = {
+                    id = penn.21
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_invite_ontario_to_the_faction
+        icon = GFX_
+        prerequisite = { focus = SPA_create_the_alliance_of_free_countries}
+        available = {
+            country_exists = PON
+            is_faction_leader = yes
+            NOT = {
+                PON = {
+                    is_faction_leader = yes
+                }
+            }
+        }
+        x = 2
+        y = 1
+        relative_position_id = SPA_create_the_alliance_of_free_countries
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            PON = {
+                country_event = {
+                    id = penn.21
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_the_arsenal_of_freedom
+        icon = GFX_
+        prerequisite = { focus = SPA_join_the_democratic_league focus = SPA_create_the_alliance_of_free_countries}
+        x = 2
+        y = 1
+        relative_position_id = SPA_join_the_democratic_league
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 2
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_the_best_defense
+        icon = GFX_
+        prerequisite = { focus = SPA_the_arsenal_of_freedom}
+        x = 0
+        y = 1
+        relative_position_id = SPA_the_arsenal_of_freedom
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = arms_factory
+                    level = 2
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = arms_factory
+                    level = 2
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_is_a_good_offense
+        icon = GFX_
+        prerequisite = { focus = SPA_the_best_defense}
+        x = 0
+        y = 1
+        relative_position_id = SPA_the_best_defense
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_MANPOWER }
+
+        completion_reward = {
+            army_experience = 100
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                category = land_doctrine
+            }
+        }
+    }
+    focus = {
+        id = SPA_enact_complete_womans_rights
+        icon = GFX_
+        prerequisite = { focus = SPA_a_reformed_society focus = SPA_a_collectivised_society}
+        available = {
+            if = {
+                limit = {
+                    has_variable = SPA_enact_complete_womans_rights_support
+                }
+                custom_trigger_tooltip = {
+                    tooltip = SPA_support_to_do_focus_over_50_tt
+                    check_variable = { SPA_enact_complete_womans_rights_support > 50 }
+                }
+            }
+        }
+        x = -4
+        y = 1
+        relative_position_id = SPA_a_reformed_society
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            set_rule = {
+                can_generate_female_aces = yes
+            }
+            add_ideas = SPA_complete_womens_rights
+            hidden_effect = {
+                if = {
+                    limit = {
+                        has_variable = SPA_enact_complete_womans_rights_support
+                    }
+                    set_variable = { SPA_enact_complete_child_rights_support = 4 }
+                    clear_variable = SPA_enact_complete_womans_rights_support
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_enact_complete_child_rights
+        icon = GFX_
+        prerequisite = { focus = SPA_enact_complete_womans_rights}
+        available = {
+            if = {
+                limit = {
+                    has_variable = SPA_enact_complete_child_rights_support
+                }
+                custom_trigger_tooltip = {
+                    tooltip = SPA_support_to_do_focus_over_50_tt
+                    check_variable = { SPA_enact_complete_child_rights_support > 50 }
+                }
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SPA_enact_complete_womans_rights
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_MANPOWER FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_ideas = SPA_complete_child_rights
+            hidden_effect = {
+                if = {
+                    limit = {
+                        has_variable = SPA_enact_complete_child_rights_support
+                    }
+                    clear_variable = SPA_enact_complete_child_rights_support
+                }
+            }
+        }
+    }
+    focus = {
+        id = SPA_listen_to_the_technocrats
+        icon = GFX_
+        prerequisite = { focus = SPA_a_reformed_society}
+        x = 4
+        y = 1
+        relative_position_id = SPA_a_reformed_society
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_ideas = SPA_technocratic_influence
         }
     }
 }
