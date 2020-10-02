@@ -27,11 +27,11 @@ focus_tree = {
         id = MDC_modify_the_great_society
         icon = GFX_focus_political_advice
         mutually_exclusive = { focus = MDC_continue_the_experiment}
-        x = 7
+        x = 20
         y = 0
         cost = 10
         ai_will_do = {
-            factor = 2
+            factor = 1
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_STABILITY }
@@ -357,24 +357,843 @@ focus_tree = {
         }
     }
 #######################################
+##############Democratize##############
+#######################################
+    focus = {
+        id = MDC_follow_attaturks_example
+        icon = GFX_
+        prerequisite = { focus = MDC_finish_the_modifications }
+        mutually_exclusive = { focus = MDC_a_cult_for_good}
+        available = {
+            has_completed_focus = MDC_restrict_the_cartels
+        }
+        x = -5
+        y = 1
+        relative_position_id = MDC_finish_the_modifications
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_popularity = {
+                ideology = democratic
+                popularity = 0.05
+            }
+            add_popularity = {
+                ideology = neutrality
+                popularity = 0.15
+            }
+        }
+    }
+#######################################
+#############Cult for Good#############
+#######################################
+    focus = {
+        id = MDC_a_cult_for_good
+        icon = GFX_
+        prerequisite = { focus = MDC_finish_the_modifications}
+        mutually_exclusive = { focus = MDC_follow_attaturks_example}
+        x = 5
+        y = 1
+        relative_position_id = MDC_finish_the_modifications
+        cost = 10
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_popularity = {
+                ideology = neutrality
+                popularity = 0.20
+            }
+        }
+    }
+    focus = {
+        id = MDC_end_european_dependency
+        icon = GFX_
+        prerequisite = { focus = MDC_follow_attaturks_example focus = MDC_a_cult_for_good}
+        x = -5
+        y = 1
+        relative_position_id = MDC_a_cult_for_good
+        cost = 10
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            add_stability = 0.05
+            add_political_power = 50
+        }
+    }
+#######################################
 ########Continue the Experiment########
 #######################################
     focus = {
         id = MDC_continue_the_experiment
         icon = GFX_focus_refuse_support
         mutually_exclusive = { focus = MDC_modify_the_great_society}
-        x = 28
+        x = 50
         y = 0
+        cost = 10
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        historical_ai = {
+            tag = MDC
+        }
+
+        completion_reward = {
+            add_political_power = 50
+            custom_effect_tooltip = MDC_gulf_cartel_available_tt
+        }
+    }
+    focus = {
+        id = MDC_the_personality_cult
+        icon = GFX_
+        prerequisite = { focus = MDC_continue_the_experiment}
+        x = -2
+        y = 1
+        relative_position_id = MDC_continue_the_experiment
+        cost = 10
+        ai_will_do = {
+            factor = 5
+            modifier = {
+                factor = 0
+                has_stability > 0.6
+            }
+            modifier = {
+                factor = 2
+                has_stability < 0.3
+            }
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            add_stability = 0.1
+            add_political_power = 50
+        }
+    }
+    focus = {
+        id = MDC_request_guns_from_europe
+        icon = GFX_
+        prerequisite = { focus = MDC_the_personality_cult}
+        x = 0
+        y = 1
+        relative_position_id = MDC_the_personality_cult
         cost = 10
         ai_will_do = {
             factor = 1
         }
         available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_POLITICAL }
 
         completion_reward = {
-            add_political_power = 50
-            custom_effect_tooltip = MDC_gulf_cartel_available_tt
+            add_equipment = {
+                type = infantry_equipment
+                amount = 1000
+            }
+        }
+    }
+    focus = {
+        id = MDC_the_tamaulipas_acquisition
+        icon = GFX_
+        prerequisite = { focus = MDC_continue_the_experiment}
+        available = {
+            has_army_manpower = {
+                size > 200000
+            }
+            is_puppet = no
+            country_exists = MTA
+            NOT = {
+                has_war_with = MTA
+            }
+            custom_trigger_tooltip = {
+                tooltip = MDC_MEX_not_civil_war_warning_tt
+                always = yes
+            }
+        }
+        cancel = {
+            has_war_with = MTA
+            is_subject = yes
+        }
+        x = 1
+        y = 2
+        relative_position_id = MDC_continue_the_experiment
+        cost = 10
+        ai_will_do = {
+            factor = 10
+            modifier = {
+                factor = 0
+                date < 1937.3.1
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        historical_ai = {
+            date > 1937.3.1
+        }
+
+        completion_reward = {
+            army_experience = 25
+            add_named_threat = { threat = 5 name = MDC_tamaulipas_acquisition}
+            if = {
+                limit = {
+                    MTA = {
+                        OR = {
+                            owns_state = 559
+                            owns_state = 589
+                            owns_state = 591
+                            owns_state = 592
+                        }
+                    }
+                }
+                MTA = {
+                    country_event = {
+                        id = cartel.35
+                    }
+                }
+            }
+            if = {
+                limit = {
+                    MTA = {
+                        NOT = {
+                            owns_state = 559
+                        }
+                    }
+                }
+                add_state_core = 559
+            }
+            if = {
+                limit = {
+                    MTA = {
+                        NOT = {
+                            owns_state = 589
+                        }
+                    }
+                }
+                add_state_core = 589
+            }
+            if = {
+                limit = {
+                    MTA = {
+                        NOT = {
+                            owns_state = 591
+                        }
+                    }
+                }
+                add_state_core = 591
+            }
+            if = {
+                limit = {
+                    MTA = {
+                        NOT = {
+                            owns_state = 592
+                        }
+                    }
+                }
+                add_state_core = 592
+            }
+            hidden_effect = {
+                if = {
+                    limit = {
+                        NOT = {
+                            MEX = {
+                                OR = {
+                                    has_war_with = MAC
+                                    has_war_with = MCL
+                                }
+                            }
+                        }
+                    }
+                    MEX = {
+                        country_event = {
+                            id = cartel.38
+                            days = 5
+                        }
+                    }
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_demand_the_yucatan
+        icon = GFX_
+        prerequisite = { focus = MDC_the_tamaulipas_acquisition}
+        prerequisite = { focus = MDC_expand_the_gulf_fleet}
+        available = {
+            has_army_manpower = {
+                size > 250000
+            }
+            is_puppet = no
+            country_exists = MYU
+            NOT = {
+                has_war_with = MYU
+            }
+        }
+        cancel = {
+            has_war_with = MYU
+            is_subject = yes
+        }
+        x = -2
+        y = 2
+        relative_position_id = MDC_the_tamaulipas_acquisition
+        cost = 10
+        ai_will_do = {
+            factor = 10
+            modifier = {
+                factor = 0
+                OR = {
+                    date > 1938.3.1
+                    has_war = yes
+                }
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            if = {
+                limit = {
+                    AND = {
+                        country_exists = MYU
+                        OR = {
+                            owns_state = 468
+                            owns_state = 566
+                            owns_state = 568
+                        }
+                    }
+                }
+                MYU = {
+                    country_event = {
+                        id = cartel.36
+                    }
+                }
+            }
+            else = {
+                add_state_claim = 468
+                add_state_claim = 566
+                add_state_claim = 568
+            }
+        }
+    }
+    focus = {
+        id = MDC_the_colima_question
+        icon = GFX_
+        prerequisite = { focus = MDC_the_tamaulipas_acquisition }
+        available = {
+            country_exists = MCM
+            is_puppet = no
+            MCM = {
+                owns_state = 59
+            }
+        }
+        cancel = {
+            NOT = {
+                country_exists = MCM
+            }
+            is_subject = yes
+        }
+        bypass = {
+            OR = {
+                NOT = {
+                    country_exists = MCM
+                }
+                owns_state = 59
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = MDC_the_tamaulipas_acquisition
+        cost = 10
+        ai_will_do = {
+            factor = 10
+            modifier = {
+                factor = 0
+                date > 1938.1.1
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            country_event = {
+                id = cartel.37
+            }
+        }
+    }
+    focus = {
+        id = MDC_create_escort_divisions
+        icon = GFX_
+        prerequisite = { focus = MDC_the_tamaulipas_acquisition}
+        available = {
+            owns_state = 559
+            owns_state = 589
+            owns_state = 591
+            owns_state = 592
+        }
+        x = 2
+        y = 1
+        relative_position_id = MDC_the_tamaulipas_acquisition
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                manpower_per_military_factory < 5000
+            }
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            #if = {
+            #    limit = {
+            #        NOT = {
+            #            has_tech = bicycle_infantry1
+            #        }
+            #    }
+            #    set_technology = bicycle_infantry1
+            #}
+            add_tech_bonus = {
+                bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = bicycle_tech
+            }
+            add_ideas = MDC_escort_divisions
+        }
+    }
+#######################################
+#########Uncategorized economy#########
+#######################################
+    focus = {
+        id = MDC_rebuild_the_economy
+        icon = GFX_focus_industry
+        prerequisite = { focus = MDC_continue_the_experiment focus = MDC_finish_the_modifications}
+        x = 40
+        y = 3
+        cost = 7
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MDC_ECONOMY }
+
+        completion_reward = {
+            add_to_variable = {
+                var = MDC_currency
+                value = 10
+            }
+            custom_effect_tooltip = MDC_gain_10_currency
+        }
+    }
+    focus = {
+        id = MDC_produce_textiles
+        icon = GFX_
+        prerequisite = { focus = MDC_rebuild_the_economy}
+        available = {
+            has_completed_focus = MDC_privatized_industry
+        }
+        x = -1
+        y = 1
+        relative_position_id = MDC_rebuild_the_economy
+        cost = 7
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MDC_ECONOMY }
+
+        completion_reward = {
+            set_variable = {
+                var = MDC_textiles
+                value = 10
+            }
+            set_variable = {
+                var = MDC_price_textiles
+                value = 5
+            }
+            custom_effect_tooltip = MDC_gain_10_textiles
+            custom_effect_tooltip = MDC_able_to_produce_textiles
+        }
+    }
+    focus = {
+        id = MDC_produce_agriculture
+        icon = GFX_focus_generic_wheat
+        prerequisite = { focus = MDC_rebuild_the_economy}
+        available = {
+            has_completed_focus = MDC_state_owned_industry
+        }
+        x = -3
+        y = 1
+        relative_position_id = MDC_rebuild_the_economy
+        cost = 7
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MDC_ECONOMY }
+
+        completion_reward = {
+            set_variable = {
+                var = MDC_crates_of_food
+                value = 10
+            }
+            set_variable = {
+                var = MDC_price_food
+                value = 2
+            }
+            custom_effect_tooltip = MDC_gain_10_food
+            custom_effect_tooltip = MDC_able_to_produce_food
+        }
+    }
+    focus = {
+        id = MDC_produce_liquor
+        icon = GFX_
+        prerequisite = { focus = MDC_rebuild_the_economy}
+        available = {
+            OR = {
+                has_completed_focus = MDC_continue_the_experiment
+                has_completed_focus = MDC_diversify_the_cartels
+            }
+        }
+        x = 1
+        y = 1
+        relative_position_id = MDC_rebuild_the_economy
+        cost = 7
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MDC_ECONOMY }
+
+        completion_reward = {
+            set_variable = {
+                var = MDC_liquor
+                value = 10
+            }
+            set_variable = {
+                var = MDC_price_liquor
+                value = 3
+            }
+            custom_effect_tooltip = MDC_gain_10_liquor
+            custom_effect_tooltip = MDC_able_to_produce_liquor
+        }
+    }
+    focus = {
+        id = MDC_produce_hard_liquor
+        icon = GFX_
+        prerequisite = { focus = MDC_produce_liquor}
+        available = {
+            has_completed_focus = MDC_continue_the_experiment
+        }
+        x = 1
+        y = 2
+        relative_position_id = MDC_rebuild_the_economy
+        cost = 7
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MDC_ECONOMY }
+
+        completion_reward = {
+            set_variable = {
+                var = MDC_hard_liquor
+                value = 10
+            }
+            set_variable = {
+                var = MDC_price_hard_liquor
+                value = 6
+            }
+            custom_effect_tooltip = MDC_gain_10_hard_liquor
+            custom_effect_tooltip = MDC_able_to_produce_Hard_liquor
+        }
+    }
+    focus = {
+        id = MDC_produce_illegal_substances
+        icon = GFX_
+        prerequisite = { focus = MDC_rebuild_the_economy}
+        available = {
+            has_completed_focus = MDC_continue_the_experiment
+        }
+        x = 3
+        y = 1
+        relative_position_id = MDC_rebuild_the_economy
+        cost = 7
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MDC_ECONOMY }
+
+        completion_reward = {
+            set_variable = {
+                var = MDC_illegal_substances
+                value = 10
+            }
+            set_variable = {
+                var = MDC_price_illegal_substances
+                value = 4
+            }
+            custom_effect_tooltip = MDC_gain_10_illegal_substances
+            custom_effect_tooltip = MDC_able_to_produce_illegal_substances
+        }
+    }
+    focus = {
+        id = MDC_invest_in_civilian_infrastructure
+        icon = GFX_focus_generic_industry_1
+        prerequisite = { focus = MDC_rebuild_the_economy}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = 50_currency_availabe_tt
+                check_variable = { MDC_currency > 49 }
+            }
+            has_completed_focus = MDC_finish_the_modifications
+        }
+        x = 0
+        y = 3
+        relative_position_id = MDC_rebuild_the_economy
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_MDC_ECONOMY FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            add_to_variable = {
+                var = MDC_currency
+                value = -50
+            }
+            custom_effect_tooltip = spend_50_currency_tt
+            swap_ideas = {
+                remove_idea = MDC_shaky_economy
+                add_idea = MDC_recovering_economy
+            }
+            random_owned_controlled_state = {
+                add_building_construction = {
+                    type = infrastructure
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                add_building_construction = {
+                    type = infrastructure
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_invest_in_civilian_economy
+        icon = GFX_focus_generic_industry_2
+        prerequisite = { focus = MDC_invest_in_civilian_infrastructure}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = 50_currency_availabe_tt
+                check_variable = { MDC_currency > 49 }
+            }
+        }
+        x = 0
+        y = 4
+        relative_position_id = MDC_rebuild_the_economy
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_MDC_ECONOMY FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            add_to_variable = {
+                var = MDC_currency
+                value = -50
+            }
+            custom_effect_tooltip = spend_50_currency_tt
+            remove_ideas = MDC_recovering_economy
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_an_economy_to_last
+        icon = GFX_focus_generic_industry_3
+        prerequisite = { focus = MDC_invest_in_civilian_economy}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = 50_currency_availabe_tt
+                check_variable = { MDC_currency > 49 }
+            }
+        }
+        x = 0
+        y = 5
+        relative_position_id = MDC_rebuild_the_economy
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_MDC_ECONOMY FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            add_to_variable = {
+                var = MDC_currency
+                value = -50
+            }
+            custom_effect_tooltip = spend_50_currency_tt
+            add_ideas = MDC_booming_economy
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+#######################################
+############Generic Navy###############
+#######################################
+    focus = {
+        id = MDC_create_the_gulf_fleet
+        icon = GFX_
+        available = {
+            owns_state = 542
+        }
+        x = -5
+        y = 1
+        relative_position_id = MDC_continue_the_experiment
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                num_of_naval_factories < 8
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            542 = {
+                add_extra_state_shared_building_slots = 4
+                add_building_construction = {
+                    type = dockyard
+                    level = 4
+                    instant_build = yes
+                }
+                add_building_construction = {
+                    type = naval_base
+                    level = 5
+                    instant_build = yes
+                    province = 4382
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_expand_the_gulf_fleet
+        icon = GFX_
+        prerequisite = { focus = MDC_create_the_gulf_fleet}
+        available = {
+            owns_state = 559
+            owns_state = 589
+        }
+        x = 0
+        y = 2
+        relative_position_id = MDC_create_the_gulf_fleet
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                num_of_naval_factories < 10
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            559 = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = dockyard
+                    level = 2
+                    instant_build = yes
+                }
+            }
+            589 = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = dockyard
+                    level = 2
+                    instant_build = yes
+                }
+                add_building_construction = {
+                    type = naval_base
+                    level = 6
+                    instant_build = yes
+                    province = 4584
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_the_pacific_fleet
+        icon = GFX_
+        prerequisite = { focus = MDC_expand_the_gulf_fleet}
+        available = {
+            owns_state = 554
+            owns_state = 584
+        }
+        x = 0
+        y = 3
+        relative_position_id = MDC_create_the_gulf_fleet
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                num_of_naval_factories < 12
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            554 = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = dockyard
+                    level = 2
+                    instant_build = yes
+                }
+            }
+            584 = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = dockyard
+                    level = 2
+                    instant_build = yes
+                }
+                add_building_construction = {
+                    type = naval_base
+                    level = 3
+                    instant_build = yes
+                    province = 4539
+                }
+            }
         }
     }
 }
