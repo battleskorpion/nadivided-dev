@@ -1,0 +1,577 @@
+add_namespace = texas
+
+country_event = { #The Klan Aggregates
+    id = texas.1
+    title = texas.1.t
+    desc = texas.1.d
+    #picture = GFX_
+
+    fire_only_once = yes
+    is_triggered_only = no
+
+    trigger = {
+        tag = STX
+        has_country_flag = texas_loss_rrw
+    }
+
+    option = {
+        name = texas.1.a
+        add_stability = -0.02
+        hidden_effect = {
+            set_country_flag = texas_klan_has_agreegated
+        }
+    }
+}
+country_event = { #Rangers start a boarder skirmish
+    id = texas.2
+    title = texas.2.t
+    desc = texas.2.d
+    #picture = GFX_
+
+    fire_only_once = no
+    is_triggered_only = no
+
+    trigger = {
+        tag = STX
+        NOT = {
+            has_country_flag = STX_static_texas_rangers
+        }
+        OR = {
+            has_idea = STX_texas_rangers
+            has_idea = STX_powerful_texas_rangers
+            has_idea = STX_very_powerful_texas_rangers
+        }
+    }
+
+    mean_time_to_happen = {
+        days = 60
+        modifier = {
+            factor = 2
+            has_idea = STX_texas_rangers
+        }
+        modifier = {
+            factor = 0.8
+            has_idea = STX_very_powerful_texas_rangers
+        }
+    }
+
+    option = { #Leave them be
+        name = texas.2.a
+        ai_chance = {
+            factor = 50
+        }
+        increase_texas_ranger_level = yes
+        add_war_support = 0.05
+    }
+    option = { #Punish Them
+        name = texas.2.b
+        ai_chance = {
+            factor = 50
+        }
+        decrease_texas_ranger_level = yes
+        add_political_power = 50
+    }
+}
+country_event = { ###Texas Panhandle from Oklahoma, Ranger Path
+    id = texas.3
+    title = texas.3.t
+    desc = texas.3.d
+    #picture = GFX_
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    option = {
+        name = texas.3.a
+        ai_chance = {
+            factor = 50
+            modifier = {
+                add = 25
+                strength_ratio = {
+                    tag = STX
+                    ratio < 0.75
+                }
+            }
+            modifier = {
+                add = 50
+                strength_ratio = {
+                    tag = STX
+                    ratio < 0.5
+                }
+            }
+            modifier = {
+                add = -25
+                strength_ratio = {
+                    tag = STX
+                    ratio > 1
+                }
+            }
+            modifier = {
+                add = -50
+                strength_ratio = {
+                    tag = STX
+                    ratio > 1.5
+                }
+            }
+        }
+        STX = {
+            transfer_state = 153
+        }
+    }
+    option = {
+        name = texas.3.b
+        ai_chance = {
+            factor = 50
+            modifier = {
+                add = -25
+                strength_ratio = {
+                    tag = STX
+                    ratio < 0.75
+                }
+            }
+            modifier = {
+                add = -50
+                strength_ratio = {
+                    tag = STX
+                    ratio < 0.5
+                }
+            }
+            modifier = {
+                add = 25
+                strength_ratio = {
+                    tag = STX
+                    ratio > 1
+                }
+            }
+            modifier = {
+                add = 50
+                strength_ratio = {
+                    tag = STX
+                    ratio > 1.5
+                }
+            }
+        }
+        STX = {
+            create_wargoal = {
+                type = take_state_focus
+                generator = { 153 }
+                target = ROOT
+            }
+        }
+    }
+}
+country_event = { ###Eastern Texas, Ranger Path
+    id = texas.4
+    title = texas.4.t
+    desc = texas.4.d
+    #picture = GFX_
+
+    fire_only_once = no
+    is_triggered_only = yes
+
+    option = {
+        name = texas.3.a
+        ai_chance = {
+            factor = 50
+            modifier = {
+                add = 25
+                strength_ratio = {
+                    tag = STX
+                    ratio < 0.75
+                }
+            }
+            modifier = {
+                add = 50
+                strength_ratio = {
+                    tag = STX
+                    ratio < 0.5
+                }
+            }
+            modifier = {
+                add = -25
+                strength_ratio = {
+                    tag = STX
+                    ratio > 1
+                }
+            }
+            modifier = {
+                add = -50
+                strength_ratio = {
+                    tag = STX
+                    ratio > 1.5
+                }
+            }
+        }
+        if = {
+            limit = {
+                owns_state = 222
+            }
+            STX = {
+                transfer_state = 222
+            }
+        }
+        if = {
+            limit = {
+                owns_state = 223
+            }
+            STX = {
+                transfer_state = 223
+            }
+        }
+        if = {
+            limit = {
+                owns_state = 163
+            }
+            STX = {
+                transfer_state = 163
+            }
+        }
+    }
+    option = {
+        name = texas.3.b
+        ai_chance = {
+            factor = 50
+            modifier = {
+                add = -25
+                strength_ratio = {
+                    tag = STX
+                    ratio < 0.75
+                }
+            }
+            modifier = {
+                add = -50
+                strength_ratio = {
+                    tag = STX
+                    ratio < 0.5
+                }
+            }
+            modifier = {
+                add = 25
+                strength_ratio = {
+                    tag = STX
+                    ratio > 1
+                }
+            }
+            modifier = {
+                add = 50
+                strength_ratio = {
+                    tag = STX
+                    ratio > 1.5
+                }
+            }
+        }
+        STX = {
+            create_wargoal = {
+                type = take_state_focus
+                generator = { 222 223 163 }
+                target = ROOT
+            }
+        }
+    }
+}
+country_event = { #Texas Demands Panhandle
+    id = texas.5
+    title = texas.5.t
+    desc = texas.5.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = {
+        name = texas.3.a
+        ai_chance = {
+            factor = 50
+            modifier = {
+                add = 25
+                strength_ratio = {
+                    tag = STX
+                    ratio < 0.75
+                }
+            }
+            modifier = {
+                add = 50
+                strength_ratio = {
+                    tag = STX
+                    ratio < 0.5
+                }
+            }
+            modifier = {
+                add = -25
+                strength_ratio = {
+                    tag = STX
+                    ratio > 1
+                }
+            }
+            modifier = {
+                add = -50
+                strength_ratio = {
+                    tag = STX
+                    ratio > 1.5
+                }
+            }
+        }
+        STX = {
+            transfer_state = 152
+        }
+    }
+    option = {
+        name = texas.3.b
+        ai_chance = {
+            factor = 50
+            modifier = {
+                add = -25
+                strength_ratio = {
+                    tag = STX
+                    ratio < 0.75
+                }
+            }
+            modifier = {
+                add = -50
+                strength_ratio = {
+                    tag = STX
+                    ratio < 0.5
+                }
+            }
+            modifier = {
+                add = 25
+                strength_ratio = {
+                    tag = STX
+                    ratio > 1
+                }
+            }
+            modifier = {
+                add = 50
+                strength_ratio = {
+                    tag = STX
+                    ratio > 1.5
+                }
+            }
+        }
+        STX = {
+            create_wargoal = {
+                type = take_state_focus
+                generator = { 152 }
+                target = ROOT
+            }
+        }
+    }
+}
+country_event = { #Demand Eastern New Mexico
+    id = texas.6
+    title = texas.6.t
+    desc = texas.6.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = {
+        name = texas.3.a
+        ai_chance = {
+            factor = 50
+            modifier = {
+                add = 25
+                strength_ratio = {
+                    tag = STX
+                    ratio < 0.75
+                }
+            }
+            modifier = {
+                add = 50
+                strength_ratio = {
+                    tag = STX
+                    ratio < 0.5
+                }
+            }
+            modifier = {
+                add = -25
+                strength_ratio = {
+                    tag = STX
+                    ratio > 1
+                }
+            }
+            modifier = {
+                add = -50
+                strength_ratio = {
+                    tag = STX
+                    ratio > 1.5
+                }
+            }
+        }
+        if = {
+            limit = {
+                owns_state = 146
+            }
+            STX = {
+                transfer_state = 146
+            }
+        }
+        if = {
+            limit = {
+                owns_state = 147
+            }
+            STX = {
+                transfer_state = 147
+            }
+        }
+        if = {
+            limit = {
+                owns_state = 151
+            }
+            STX = {
+                transfer_state = 151
+            }
+        }
+        if = {
+            limit = {
+                owns_state = 150
+            }
+            STX = {
+                transfer_state = 150
+            }
+        }
+    }
+    option = {
+        name = texas.3.b
+        ai_chance = {
+            factor = 50
+            modifier = {
+                add = -25
+                strength_ratio = {
+                    tag = STX
+                    ratio < 0.75
+                }
+            }
+            modifier = {
+                add = -50
+                strength_ratio = {
+                    tag = STX
+                    ratio < 0.5
+                }
+            }
+            modifier = {
+                add = 25
+                strength_ratio = {
+                    tag = STX
+                    ratio > 1
+                }
+            }
+            modifier = {
+                add = 50
+                strength_ratio = {
+                    tag = STX
+                    ratio > 1.5
+                }
+            }
+        }
+        STX = {
+            create_wargoal = {
+                type = take_state_focus
+                generator = { 146 147 150 151 }
+                target = ROOT
+            }
+        }
+    }
+}
+country_event = {
+    id = texas.7
+    title = texas.7.t
+    desc = texas.7.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = {
+        name = texas.3.a
+        ai_chance = {
+            factor = 50
+            modifier = {
+                add = 25
+                strength_ratio = {
+                    tag = STX
+                    ratio < 0.75
+                }
+            }
+            modifier = {
+                add = 50
+                strength_ratio = {
+                    tag = STX
+                    ratio < 0.5
+                }
+            }
+            modifier = {
+                add = -25
+                strength_ratio = {
+                    tag = STX
+                    ratio > 1
+                }
+            }
+            modifier = {
+                add = -50
+                strength_ratio = {
+                    tag = STX
+                    ratio > 1.5
+                }
+            }
+        }
+        if = {
+            limit = {
+                owns_state = 316
+            }
+            STX = {
+                transfer_state = 316
+            }
+        }
+        if = {
+            limit = {
+                owns_state = 682
+            }
+            STX = {
+                transfer_state = 682
+            }
+        }
+    }
+    option = {
+        name = texas.3.b
+        ai_chance = {
+            factor = 50
+            modifier = {
+                add = -25
+                strength_ratio = {
+                    tag = STX
+                    ratio < 0.75
+                }
+            }
+            modifier = {
+                add = -50
+                strength_ratio = {
+                    tag = STX
+                    ratio < 0.5
+                }
+            }
+            modifier = {
+                add = 25
+                strength_ratio = {
+                    tag = STX
+                    ratio > 1
+                }
+            }
+            modifier = {
+                add = 50
+                strength_ratio = {
+                    tag = STX
+                    ratio > 1.5
+                }
+            }
+        }
+        STX = {
+            create_wargoal = {
+                type = take_state_focus
+                generator = { 316 682 }
+                target = ROOT
+            }
+        }
+    }
+}
