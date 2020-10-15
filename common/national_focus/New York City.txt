@@ -1,0 +1,1308 @@
+focus_tree = {
+    id = new_york_city_focus_tree
+
+    country = {
+        factor = 0
+        modifier = {
+            add = 10
+            tag = NYC
+        }
+    }
+
+    continuous_focus_position = { x = 50 y = 2000 }
+
+#FOCUS_FILTER_STABILITY
+#FOCUS_FILTER_INDUSTRY
+#FOCUS_FILTER_ANNEXATION
+#FOCUS_FILTER_MANPOWER
+#FOCUS_FILTER_POLITICAL
+#FOCUS_FILTER_RESEARCH
+#FOCUS_FILTER_WAR_SUPPORT
+
+#################################################
+############### Begining of NYC Tree ############
+#################################################
+
+
+# Focus for The Big City
+    focus =  {
+        id = NYC_big_city
+        icon =  GFX_
+        x = 7
+        y = 0
+        cost = 10
+		available_if_capitulated = yes	
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+		completion_reward = {
+		
+		SNY = {give_guarantee = NYC}
+		set_rule = { can_send_volunteers = yes }
+		}
+
+        
+    }
+	#Focus for Take Control
+	focus = {
+        id = NYC_take_control
+        icon =  GFX_ 
+        x = 7
+        y = 1
+        cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus =  NYC_big_city }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+		completion_reward = {
+		add_stability = 0.2
+		add_war_support = -0.2
+		add_timed_idea = { idea = NYC_street_control  days = 100 }
+		}
+        
+    }
+	#Focus for Autonomus Region
+	focus = {
+        id = NYC_auto_region
+        icon =  GFX_ 
+        x = 7
+        y = 2
+        cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_take_control }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+		completion_reward = {
+		add_autonomy_ratio = {
+		value = -0.1
+	
+}
+		}
+
+        
+    }
+	# Focus for A New New York City
+	focus = {
+        id = NYC_NNYC
+        icon =  GFX_ 
+        x = 7
+        y = 3
+        cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_auto_region }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+		completion_reward = {
+		add_political_power = 175
+		}
+
+        
+    }
+	
+	### End of Basic ###
+	
+	
+	
+	### Autonomous Region Focuses ###
+	
+	# Focus for The New York Model
+	focus = {
+        id = NYC_NY_Model
+        icon =  GFX_ 
+        x = 3
+        y = 4
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_NNYC }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+		completion_reward = {
+		add_ideas = {
+		nyc_ny_model
+		}
+		}
+
+        
+    }
+	
+	# Neutral Focuses
+  
+  # Focus for Foreign Trade Mission
+	focus = {
+        id = NYC_FTM
+        icon =  GFX_ 
+        x = 1
+        y = 5
+        cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_NY_Model }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+		completion_reward = {
+		add_ideas = {
+		nyc_foreign_trade
+		}
+		}
+        
+    }
+  
+   # Focus for Urban Growth Project
+	focus = {
+        id = NYC_UGP
+        icon =  GFX_ 
+        x = 1
+        y = 6
+        cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_FTM }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+		completion_reward = {
+			add_ideas = {
+			nyc_ugp
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+        
+    }
+  
+   # Focus for Education Reform
+	focus = {
+        id = NYC_education_reform
+        icon =  GFX_ 
+        x = 1
+        y = 7
+        cost = 15
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_UGP }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+		completion_reward = {
+			add_research_slot= 1
+		}
+        
+    }
+  
+  #Subjective Focuses
+	
+	 # Focus for Jobs for the State
+	focus = {
+        id = NYC_state_jobs
+        icon =  GFX_ 
+        x = 3
+        y = 5
+        cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_NY_Model }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+		completion_reward = {
+		add_ideas = {
+		nyc_state_jobs
+		}
+		}
+		
+        
+    }
+	
+	
+	 # Focus for Increase Economic Cooperation
+	focus = {
+        id = NYC_IEC
+        icon =  GFX_ 
+        x = 3
+        y = 6
+        cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_state_jobs }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+		completion_reward = {
+		add_ideas = {
+		nyc_iec
+		}
+		}
+
+        
+    }
+	
+	
+	 # Focus for Repair the NYSE
+	focus = {
+        id = NYC_NYSE
+        icon =  GFX_ 
+        x = 3
+        y = 7
+        cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_IEC }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+		completion_reward = {
+		add_ideas = {
+		nyc_nyse
+		}
+			add_timed_idea = { idea = NYC_repair_nyse  days = 100 }
+		}
+
+        
+    }
+	
+	
+	### Autonomous Focuses
+	
+	 # Focus for An Independent Trade Fleet
+	focus = {
+        id = NYC_trade_fleet
+        icon =  GFX_ 
+        x = 5
+        y = 5
+        cost = 5
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_NY_Model }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+		completion_reward = {
+		add_ideas = {
+		nyc_trade_fleet
+		}
+			navy_experience = -25
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+			}			
+		}
+
+        
+    }
+	
+	 # Focus for Nationalize our Exports
+	focus = {
+        id = NYC_exports_nationalized
+        icon =  GFX_ 
+        x = 5
+        y = 6
+        cost = 15
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_trade_fleet }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+		completion_reward = {
+		add_autonomy_ratio = {
+		value = 0.3
+			}
+		add_timed_idea = { idea = NYC_nationalized_exports  days = 365 }
+		}
+        
+    }
+	
+	 
+	 # Focus for The Gang War
+	focus = {
+        id = NYC_gang_war
+        icon =  GFX_ 
+        x = 5
+        y = 7
+        cost = 15
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_exports_nationalized }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+		completion_reward = {
+		add_political_power = -100
+		add_stability = 0.1
+		add_war_support = 0.05
+		}
+		}
+        
+    
+	
+	 # Focus for Create our own Currency
+	focus = {
+        id = NYC_currency
+        icon =  GFX_ 
+        x = 4
+        y = 8
+        cost = 15
+		available_if_capitulated = yes
+		prerequisite = { 
+		focus = NYC_gang_war 
+		}
+		mutually_exclusive = { focus = NYC_obey }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+		completion_reward = {
+		add_autonomy_ratio = {
+		value = 0.1
+			}
+		add_ideas = {
+		nyc_custom_currency
+		}
+		
+		}
+
+        
+    }
+	
+	 # Focus for Obidence
+	focus = {
+        id = NYC_obey
+        icon =  GFX_ 
+        x = 2
+        y = 8
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { 
+		focus =  NYC_NYSE
+		}
+		prerequisite = { 
+		focus =  NYC_education_reform
+		}
+		mutually_exclusive = { focus = NYC_currency }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+	### End of Free Focuses (Puppet) ###
+	
+    # AI Focus for Annex Into New York State
+	focus = {
+        id = NYC_Annexed_into_NY
+        icon =  GFX_ 
+        x = 0
+        y = 9
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_obey }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+  
+    # Focus for Interstate Infrastructure
+	focus = {
+        id = NYC_interstate
+        icon =  GFX_ 
+        x = 2
+        y = 9
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_obey }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+	# Focus for New York State Science Center
+	focus = {
+        id = NYC_NYSSC
+        icon =  GFX_ 
+        x = 4
+        y = 9
+        cost = 15
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_obey }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+		completion_reward = {
+			add_research_slot= 1
+		}
+        
+    }
+	
+	# Focus for Shore Defender
+	focus = {
+        id = NYC_shore_defender
+        icon =  GFX_ 
+        x = 1
+        y = 10
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_interstate }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+  
+  # Focus for American Luxembourg
+	focus = {
+        id = NYC_lux
+        icon =  GFX_ 
+        x = 3
+        y = 10
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_interstate }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+  
+  # Focus for Propose the Tri-State Economic Alliance 
+	focus = {
+        id = NYC_TEA
+        icon =  GFX_ 
+        x = 1
+        y = 11
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_shore_defender }
+		mutually_exclusive = { focus = NYC_NY_expand }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+	
+	# Focus for Provoke NY Expansionism 
+	focus = {
+        id = NYC_NY_expand
+        icon =  GFX_ 
+        x = 3
+        y = 11
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_lux  }
+		mutually_exclusive = { focus = NYC_TEA  }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+	### End of NY Model Focuses ###
+	
+	### Reject NYS Focuses ###
+	
+	# Focus for Demand Greater Autonomy
+	focus = {
+        id = NYC_great_auto
+        icon =  GFX_ 
+        x = 7
+        y = 4
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_NNYC }
+		mutually_exclusive = { focus = NYC_nj_puppet }
+		mutually_exclusive = { focus = NYC_obey }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+	
+	# Focus for Brotherly Embrace
+	focus = {
+        id = NYC_nj_puppet
+        icon =  GFX_ 
+        x = 11
+        y = 4
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_NNYC }
+		mutually_exclusive = { focus = NYC_great_auto }
+		mutually_exclusive = { focus = NYC_obey }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+	
+	### Automated Focuses* ###
+	
+	 # Focus for Peace
+	focus = {
+        id = NYC_peace
+        icon =  GFX_ 
+        x = 8
+        y = 5
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = {
+		focus =  NYC_great_auto
+		}
+		prerequisite = {
+		focus =  NYC_nj_puppet
+		}
+		mutually_exclusive = { focus = NYC_war }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+
+
+
+ # Focus for  War
+	focus = {
+        id = NYC_war
+        icon =  GFX_ 
+        x = 10
+        y = 5
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = {
+		focus =  NYC_great_auto
+		}
+		prerequisite = {
+		focus =  NYC_nj_puppet
+		}
+		mutually_exclusive = { focus = NYC_peace }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+
+
+ # Focus for  Alone 
+	focus = {
+        id = NYC_alone
+        icon =  GFX_ 
+        x = 7
+        y = 6
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { 
+		focus =  NYC_war
+		}
+		prerequisite = { 
+		focus =  NYC_peace
+		}
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+
+
+ # Focus for Crossing the Hudson
+	focus = {
+        id = NYC_NJ_aid
+        icon =  GFX_ 
+        x = 9
+        y = 6
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { 
+		focus =  NYC_war
+		}
+		prerequisite = { 
+		focus =  NYC_peace
+		}
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+
+ # Focus for Jersey says Shore
+	focus = {
+        id = NYC_NJ_puppet
+        icon =  GFX_ 
+        x = 11
+        y = 6
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { 
+		focus =  NYC_war
+		}
+		prerequisite = { 
+		focus =  NYC_peace
+		}
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+
+
+### End of Automated Focuses###
+
+ # Focus for Concrete Jungle
+	focus = {
+        id = NYC_urabn_warfare
+        icon =  GFX_ 
+        x = 9
+        y = 7
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { 
+		focus =  NYC_alone	
+		focus =  NYC_NJ_aid
+		focus =  NYC_NJ_puppet
+		}
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+
+
+ # Focus for Reconstruction Effort
+	focus = {
+        id = NYC_reconstruction_effort
+        icon =  GFX_ 
+        x = 9
+        y = 8
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_urabn_warfare }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+
+
+### End of Wartime Focuses ###
+
+## Independent Focuses ##
+
+ # Focus for Propose the Triple Entente Americana
+	focus = {
+        id = NYC_faction_TEA
+        icon =  GFX_ 
+        x = 6
+        y = 9
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_reconstruction_effort }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+
+
+ # Focus for NYC Is Free!
+	focus = {
+        id = NYC_free_city
+        icon =  GFX_ 
+        x = 8
+        y = 9
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_reconstruction_effort }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+
+ # Focus for Work First
+	focus = {
+        id = NYC_work_1st
+        icon =  GFX_ 
+        x = 6
+        y = 10
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_faction_TEA }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+
+ # Focus for Play Second
+	focus = {
+        id = NYC_play_2nd
+        icon =  GFX_ 
+        x = 8
+        y = 10
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_free_city }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+
+
+ # Focus for Dock & Trade
+	focus = {
+        id = NYC_dockandtrade
+        icon =  GFX_ 
+        x = 7
+        y = 11
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { 
+		focus =  NYC_work_1st
+		}
+		prerequisite = { 
+		focus =  NYC_play_2nd
+		}
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+
+
+ # Focus for Crush the State
+	focus = {
+        id = NYC_take_nys
+        icon =  GFX_ 
+        x = 6
+        y = 12
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_dockandtrade }
+		mutually_exclusive = {
+		focus = NYC_city_state 
+		}
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+
+ # Focus for Dutch Irridentism
+	focus = {
+        id = NYC_invade_PA
+        icon =  GFX_ 
+        x = 5
+        y = 13
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_take_nys }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+
+
+ # Focus for  Fratricide
+	focus = {
+        id = NYC_invade_NJ
+        icon =  GFX_ 
+        x = 7
+        y = 13
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_take_nys }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+
+
+ # Focus for Mid Atlantic Union
+	focus = {
+        id = NYC_MAU
+        icon =  GFX_ 
+        x = 6
+        y = 14
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { 
+		focus =  NYC_invade_PA
+		}
+		prerequisite = { 
+		focus =  NYC_invade_NJ
+		}
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+	
+	# Focus for City-State
+	focus = {
+        id = NYC_city_state
+        icon =  GFX_ 
+        x = 8
+        y = 12
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { 
+		focus =
+		NYC_dockandtrade 
+		}
+		mutually_exclusive = {
+		focus = NYC_take_nys 
+		}
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+	
+
+  ### End of Independent Focuses*###
+  ## NJ Puppet Focuses ###
+  
+   # Focus for Fruits of Victory
+	focus = {
+        id = NYC_FoV
+        icon =  GFX_ 
+        x = 10
+        y = 9
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_reconstruction_effort }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+
+  
+   # Focus for Mainland Defenses
+	focus = {
+        id = NYC_maginot
+        icon =  GFX_ 
+        x = 12
+        y = 9
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_reconstruction_effort }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+
+
+ # Focus for Soil & Toil
+	focus = {
+        id = NYC_soil
+        icon =  GFX_ 
+        x = 10
+        y = 10
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_FoV }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+
+  
+   # Focus for Home Grown Guns
+	focus = {
+        id = NYC_HGG
+        icon =  GFX_ 
+        x = 12
+        y = 10
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_maginot }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+
+  
+   # Focus for Irredentism
+	focus = {
+        id = NYC_irredentism
+        icon =  GFX_ 
+        x = 15
+        y = 11
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { 
+		focus = NYC_HGG
+		focus = NYC_soil
+		}
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+
+
+ # Focus for New Jersey City
+	focus = {
+        id = NYC_njc
+        icon =  GFX_ 
+        x = 16
+        y = 12
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_irredentism }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+
+
+ # Focus for Invade the Mainland
+	focus = {
+        id = NYC_invade_nys
+        icon =  GFX_ 
+        x = 14
+        y = 12
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_irredentism }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+	
+	# Focus for Jersey Strong
+	focus = {
+        id = NYC_jersey_strong
+        icon =  GFX_ 
+        x = 13
+        y = 13
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = {
+		focus = NYC_free_fighters
+		focus = NYC_invade_nys
+		}
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+	
+	# Focus for Cheers!
+	focus = {
+        id = NYC_cheers
+        icon =  GFX_ 
+        x = 11
+        y = 14
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { 
+		focus =  NYC_prosperity 
+		focus =  NYC_jersey_strong
+		}
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+	 # Focus for Freedom At Last!
+	focus = {
+        id = NYC_freedom_at_last
+        icon =  GFX_ 
+        x = 11
+        y = 11
+        cost = 1
+		available_if_capitulated = yes
+			prerequisite = { 
+		focus = NYC_HGG
+		focus = NYC_soil
+		}
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+	
+	
+	
+	# Focus for Sell Staten Island
+	focus = {
+        id = NYC_staten_isle
+        icon =  GFX_ 
+        x = 10
+        y = 12
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_freedom_at_last }
+		mutually_exclusive = { focus = NYC_free_fighters }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+	
+	# Focus for We'll Fight For It
+	focus = {
+        id = NYC_free_fighters
+        icon =  GFX_ 
+        x = 12
+        y = 12
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { focus = NYC_freedom_at_last }
+		mutually_exclusive = { focus = NYC_staten_isle }
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+	
+	# Focus for Prosperity
+	focus = {
+        id = NYC_prosperity
+        icon =  GFX_ 
+        x = 9
+        y = 13
+        cost = 1
+		available_if_capitulated = yes
+		prerequisite = { 
+		focus = NYC_staten_isle
+		focus = NYC_city_state
+		}
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+
+        
+    }
+	
+
+
+  
+  ######################################################################
+  # Focus for 
+#	focus = {
+ #       id = NYC_
+  #      icon =  GFX_ 
+   #     x = 
+    #    y = 
+    #    cost = 1
+	#	available_if_capitulated = yes
+	#	prerequisite = { focus =  }
+     #   ai_will_do = {
+      #      factor = 10
+       # }
+        #available_if_capitulated = yes 
+    #}
+}

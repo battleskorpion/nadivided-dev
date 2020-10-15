@@ -1,0 +1,213 @@
+STX_deal_with_the_texas_rangers = {
+    STX_relax_regulations = {
+        icon = GFX_
+
+        available = {
+            NOT = {
+                has_idea = STX_very_powerful_texas_rangers
+            }
+        }
+        visible = {
+            NOT = {
+                has_idea = STX_very_powerful_texas_rangers
+            }
+            tag = STX
+        }
+        cost = 100
+        days_re_enable = 100
+        ai_will_do = {
+            base = 10
+            modifier = {
+                factor = 3
+                has_idea = STX_very_weak_texas_rangers
+            }
+            modifier = {
+                factor = 2
+                has_idea = STX_weak_texas_rangers
+            }
+            modifier = {
+                factor = 0.5
+                has_idea = STX_powerful_texas_rangers
+            }
+        }
+        fire_only_once = no
+        cancel_if_not_visible = yes
+
+        complete_effect = {
+            increase_texas_ranger_level = yes
+        }
+    }
+    STX_tighten_regulations = {
+        icon = GFX_
+
+        available = {
+            NOT = {
+                has_idea = STX_very_weak_texas_rangers
+            }
+        }
+        visible = {
+            NOT = {
+                has_idea = STX_very_weak_texas_rangers
+            }
+            tag = STX
+        }
+        cost = 100
+        days_re_enable = 100
+        ai_will_do = {
+            base = 10
+            modifier = {
+                factor = 3
+                has_idea = STX_very_powerful_texas_rangers
+            }
+            modifier = {
+                factor = 2
+                has_idea = STX_powerful_texas_rangers
+            }
+            modifier = {
+                factor = 0.5
+                has_idea = STX_weak_texas_rangers
+            }
+        }
+        fire_only_once = no
+        cancel_if_not_visible = yes
+
+        complete_effect = {
+            decrease_texas_ranger_level = yes
+        }
+    }
+}
+STX_third_red_river_war_dcat = {
+    STX_begin_the_third_red_river_war = {
+        icon = GFX_
+
+        available = {
+            NOT = {
+                has_country_flag = STX_preparing_for_rrw3
+            }
+            country_exists = SLA
+        }
+        visible = {
+            always = yes
+        }
+        cost = 0
+        days_remove = 35
+        fire_only_once = yes
+        war_with_on_remove = SLA
+        ai_will_do = {
+            base = 10
+            modifier = {
+                factor = 10
+                strength_ratio = {
+                    tag = SLA
+                    ratio > 1
+                }
+            }
+            modifier = {
+                factor = 2
+                strength_ratio = {
+                    tag = SLA
+                    ratio > 1.5
+                }
+            }
+            modifier = {
+                factor = 2
+                strength_ratio = {
+                    tag = SLA
+                    ratio > 2
+                }
+            }
+        }
+        remove_effect = {
+            declare_war_on = {
+                target = SLA
+                type = annex_everything
+            }
+        }
+    }
+    STX_recruit_new_orleans = {
+        icon = GFX_
+
+        available = {
+            NOT = {
+                country_exists = ORL
+            }
+        }
+        visible = {
+            always = yes
+        }
+        cost = 10
+        fire_only_once = yes
+        complete_effect = {
+            hidden_effect = {
+                set_country_flag = STX_getting_ORL_support
+                set_variable = { ORL_support = 0 }
+            }
+            unlock_decision_tooltip = STX_meet_with_walmsley
+        }
+    }
+    STX_meet_with_walmsley = {
+        icon = GFX_
+
+        available = {
+            NOT = {
+                has_country_flag = STX_preparing_for_rrw3
+            }
+            custom_trigger_tooltip = {
+                tooltip = NOT_100_support_tt
+                check_variable = { ORL_support < 100 }
+            }
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = STX_getting_ORL_support
+            }
+        }
+        cost = 10
+        fire_only_once = yes
+        days_remove = 10
+        complete_effect = {
+            set_country_flag = STX_preparing_for_rrw3
+        }
+        remove_effect = {
+            custom_effect_tooltip = STX_add_10_support_ORL
+            add_to_variable = { ORL_support = 10 }
+            clr_country_flag = STX_preparing_for_rrw3
+        }
+    }
+    STX_send_guns_to_new_orleans = {
+        icon = GFX_
+
+        available = {
+            NOT = {
+                has_country_flag = STX_preparing_for_rrw3
+            }
+            custom_trigger_tooltip = {
+                tooltip = NOT_100_support_tt
+                check_variable = { ORL_support < 100 }
+            }
+            has_equipment = {
+                infantry_equipment > 999
+            }
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = STX_getting_ORL_support
+            }
+        }
+        cost = 10
+        fire_only_once = no
+        days_remove = 10
+        complete_effect = {
+            set_country_flag = STX_preparing_for_rrw3
+            add_equipment_to_stockpile = {
+                type = infantry_equipment
+                amount = -1000
+            }
+        }
+        remove_effect = {
+            custom_effect_tooltip = STX_add_10_support_ORL
+            add_to_variable = { ORL_support = 10 }
+            clr_country_flag = STX_preparing_for_rrw3
+        }
+    }
+}
