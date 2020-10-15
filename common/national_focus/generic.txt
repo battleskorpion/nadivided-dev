@@ -1658,11 +1658,15 @@ focus_tree = {
 		prerequisite = { focus = GEN_reopen_the_political_sphere}
 		mutually_exclusive = { focus = GEN_sieze_the_means_of_production }
 		mutually_exclusive = { focus = GEN_take_advantage_of_the_chaos }
-		x = 17
+		x = 18
 		y = 1
 		cost = 10
 		ai_will_do = {
 			factor = 1
+			modifier = {
+				factor = 100
+				has_country_flag = SLA_huey_is_leader
+			}
 		}
 
 		available_if_capitulated = yes
@@ -1686,6 +1690,10 @@ focus_tree = {
 		cost = 5
 		ai_will_do = {
 			factor = 1
+			modifier = {
+				factor = 0
+				has_country_flag = SLA_huey_is_leader
+			}
 		}
 
 		available_if_capitulated = yes
@@ -1713,15 +1721,23 @@ focus_tree = {
 			add_political_power = 50
 			add_popularity = {
 				ideology = democratic
-				popularity = .1
+				popularity = 0.2
+			}
+			add_popularity = {
+				ideology = longism
+				popularity = 0.03
+			}
+			add_popularity = {
+				ideology = progressivism
+				popularity = 0.03
 			}
 			add_popularity = {
 				ideology = communism
-				popularity = 0.02
+				popularity = 0.01
 			}
 			add_popularity = {
 				ideology = fascism
-				popularity = 0.02
+				popularity = 0.01
 			}
 			add_popularity = {
 				ideology = neutrality
@@ -1854,17 +1870,30 @@ focus_tree = {
 		icon = GFX_goal_generic_forceful_treaty
 		prerequisite = { focus = GEN_ideals_of_the_union}
 		mutually_exclusive = { focus = GEN_adopt_the_constitution}
-		x = 18
+		x = 19
 		y = 2
 		cost = 5
 		ai_will_do = {
 			factor = 1
+			modifier = {
+				factor = 100
+				has_country_flag = SLA_huey_is_leader
+			}
 		}
 
 		available_if_capitulated = yes
 
 		completion_reward = {
 			add_political_power = 100
+			add_popularity = {
+				ideology = longism
+				popularity = 0.1
+			}
+			add_popularity = {
+				ideology = progressivism
+				popularity = 0.1
+			}
+			remove_ideas = democratic_influence
 		}
 	}
 #
@@ -1872,11 +1901,16 @@ focus_tree = {
 		id = GEN_ban_public_opposition
 		icon = GFX_focus_usa_voter_registration_act
 		prerequisite = { focus = GEN_rewrite_the_constitution}
+		mutually_exclusive = { focus = GEN_create_a_better_union}
 		x = 18
 		y = 3
 		cost = 10
 		ai_will_do = {
 			factor = 1
+			modifier = {
+				factor = 100
+				has_country_flag = SLA_huey_is_leader
+			}
 		}
 
 		available_if_capitulated = yes
@@ -1884,20 +1918,28 @@ focus_tree = {
 		completion_reward = {
 			add_stability = -0.07
 			add_popularity = {
-				ideology = democratic
-				popularity = .5
+				ideology = longism
+				popularity = 0.25
 			}
 			add_popularity = {
 				ideology = communism
-				popularity = -.02
+				popularity = -0.02
+			}
+			add_popularity = {
+				ideology = democratic
+				popularity = -0.05
+			}
+			add_popularity = {
+				ideology = progressivism
+				popularity = -0.05
 			}
 			add_popularity = {
 				ideology = fascism
-				popularity = -.02
+				popularity = -0.02
 			}
 			add_popularity = {
 				ideology = neutrality
-				popularity = -.01
+				popularity = -0.01
 			}
 		}
 	}
@@ -1950,10 +1992,82 @@ focus_tree = {
 	}
 #
 	focus = {
+		id = GEN_create_a_better_union
+		icon = GFX_focus_ideology_progressivism
+		prerequisite = { focus = GEN_rewrite_the_constitution}
+		mutually_exclusive = { focus = GEN_ban_public_opposition}
+		x = 1
+		y = 1
+		relative_position_id = GEN_rewrite_the_constitution
+		cost = 10
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				has_country_flag = SLA_huey_is_leader
+			}
+		}
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_popularity = {
+				ideology = progressivism
+				popularity = 0.2
+			}
+		}
+	}
+	focus = {
+		id = GEN_push_social_reform
+		icon = GFX_focus_generic_treaty
+		prerequisite = { focus = GEN_create_a_better_union}
+		x = 0
+		y = 1
+		relative_position_id = GEN_create_a_better_union
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_stability = 0.05
+			add_war_support = 0.05
+			add_political_power = 50
+		}
+	}
+	focus = {
+		id = GEN_protect_others
+		icon = GFX_goal_generic_improve_relations
+		prerequisite = { focus = GEN_push_social_reform}
+		x = 0
+		y = 1
+		relative_position_id = GEN_push_social_reform
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = liberty_ethos_focus
+			add_ideas = ideological_fanaticism_focus
+			set_rule = { can_send_volunteers = yes }
+			# add_ideas = volunteer_corps_focus
+			if = {
+				limit = {
+					is_ai = no
+				}
+				set_rule = {
+					can_create_factions = yes
+				}
+			}
+		}
+	}
+	focus = {
 		id = GEN_call_an_emergency_draft
 		icon = GFX_focus_generic_manpower
-		prerequisite = { focus = GEN_an_iron_fortress focus = GEN_forign_intervention}
-		x = 17
+		prerequisite = { focus = GEN_an_iron_fortress focus = GEN_forign_intervention focus = GEN_protect_others}
+		x = 18
 		y = 6
 		cost = 10
 		ai_will_do = {
@@ -1974,11 +2088,15 @@ focus_tree = {
 		prerequisite = { focus = GEN_reopen_the_political_sphere}
 		mutually_exclusive = { focus = GEN_ideals_of_the_union}
 		mutually_exclusive = { focus = GEN_take_advantage_of_the_chaos}
-		x = 20
+		x = 22
 		y = 1
 		cost = 10
 		ai_will_do = {
 			factor = 1
+			modifier = {
+				factor = 0
+				has_country_flag = SLA_huey_is_leader
+			}
 		}
 
 		available_if_capitulated = yes
@@ -1996,7 +2114,7 @@ focus_tree = {
 		id = GEN_work_with_the_workers
 		icon = GFX_goal_generic_improve_relations
 		prerequisite = { focus = GEN_sieze_the_means_of_production}
-		x = 20
+		x = 22
 		y = 2
 		cost = 5
 		ai_will_do = {
@@ -2025,7 +2143,7 @@ focus_tree = {
 		id = GEN_ban_fascist_publications
 		icon = GFX_focus_renounce_the_treaty_of_trianon
 		prerequisite = { focus = GEN_work_with_the_workers}
-		x = 20
+		x = 22
 		y = 3
 		cost = 10
 		ai_will_do = {
@@ -2054,7 +2172,7 @@ focus_tree = {
 		id = GEN_strengthen_unions
 		icon = GFX_focus_generic_join_comintern
 		prerequisite = { focus = GEN_ban_fascist_publications}
-		x = 20
+		x = 22
 		y = 4
 		cost = 10
 		ai_will_do = {
@@ -2072,7 +2190,7 @@ focus_tree = {
 		id = GEN_take_out_fascists
 		icon = GFX_focus_generic_anti_fascist_diplomacy
 		prerequisite = { focus = GEN_strengthen_unions}
-		x = 20
+		x = 22
 		y = 5
 		cost = 10
 		ai_will_do = {
@@ -2106,7 +2224,7 @@ focus_tree = {
 		id = GEN_call_workers_to_arms
 		icon = GFX_focus_YUG_pan_slavic_congress
 		prerequisite = { focus = GEN_take_out_fascists}
-		x = 20
+		x = 22
 		y = 6
 		cost = 10
 		ai_will_do = {
@@ -2126,11 +2244,15 @@ focus_tree = {
 		prerequisite = { focus = GEN_reopen_the_political_sphere}
 		mutually_exclusive = { focus = GEN_ideals_of_the_union}
 		mutually_exclusive = { focus = GEN_sieze_the_means_of_production}
-		x = 22
+		x = 24
 		y = 1
 		cost = 10
 		ai_will_do = {
 			factor = 1   
+			modifier = {
+				factor = 0
+				has_country_flag = SLA_huey_is_leader
+			}
 		}
 
 		available_if_capitulated = yes
@@ -2148,7 +2270,7 @@ focus_tree = {
 		id = GEN_purity_through_unity
 		icon = GFX_focus_usa_honor_the_confederacy
 		prerequisite = { focus = GEN_take_advantage_of_the_chaos}
-		x = 22
+		x = 24
 		y = 2
 		cost = 5
 		ai_will_do = {
@@ -2177,7 +2299,7 @@ focus_tree = {
 		id = GEN_purge_non_purists
 		icon = GFX_goal_generic_more_territorial_claims
 		prerequisite = { focus = GEN_purity_through_unity}
-		x = 22
+		x = 24
 		y = 3
 		cost = 10
 		ai_will_do = {
@@ -2208,7 +2330,7 @@ focus_tree = {
 		id = GEN_militarize_the_state
 		icon = GFX_focus_generic_manpower
 		prerequisite = { focus = GEN_purge_non_purists}
-		x = 22
+		x = 24
 		y = 4
 		cost = 10
 		ai_will_do = {
@@ -2226,7 +2348,7 @@ focus_tree = {
 		id = GEN_nondiscriminate_recruitment
 		icon = GFX_focus_generic_little_entente
 		prerequisite = { focus = GEN_militarize_the_state}
-		x = 22
+		x = 24
 		y = 5
 		cost = 10
 		ai_will_do = {
@@ -2244,7 +2366,7 @@ focus_tree = {
 		id = GEN_purge_the_communists
 		icon = GFX_focus_contain_communism
 		prerequisite = { focus = GEN_nondiscriminate_recruitment}
-		x = 22
+		x = 24
 		y = 6
 		cost = 10
 		ai_will_do = {
