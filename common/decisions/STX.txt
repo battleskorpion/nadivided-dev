@@ -122,6 +122,111 @@ STX_third_red_river_war_dcat = {
                 target = SLA
                 type = annex_everything
             }
+            hidden_effect = {
+                set_country_flag = STX_rrw3_start
+            }
+            if = {
+                limit = {
+                    check_variable = { ORL_support > 0 }
+                    SLA = {
+                        owns_state = 18
+                    }
+                }
+                SLA = {
+                    release = ORL
+                    declare_war_on = {
+                        target = ORL
+                        type = annex_everything
+                    }
+                }
+                ORL = {
+                    division_template = {
+                        name = "Infantry"
+                        regiments = {
+                            infantry = { x = 0 y = 0 }
+                            infantry = { x = 0 y = 1 }
+                            infantry = { x = 0 y = 2 }
+                            infantry = { x = 1 y = 0 }
+                            infantry = { x = 1 y = 1 }
+                            infantry = { x = 1 y = 2 }
+                        }
+                    }
+                    18 = {
+                        create_unit = {
+                            division = "name = \"Infantry Division\" division_template = \"Infantry\" start_experience_factor = 0.1 start_equipment_factor = 0.8"
+                        }
+                        create_unit = {
+                            division = "name = \"Infantry Division\" division_template = \"Infantry\" start_experience_factor = 0.1 start_equipment_factor = 0.8"
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        check_variable = { ORL_support > 25 }
+                    }
+                    STX = {
+                        add_to_faction = ORL
+                    }
+                    ORL = {
+                        18 = {
+                            create_unit = {
+                                division = "name = \"Infantry Division\" division_template = \"Infantry\" start_experience_factor = 0.1 start_equipment_factor = 0.8"
+                            }
+                            create_unit = {
+                                division = "name = \"Infantry Division\" division_template = \"Infantry\" start_experience_factor = 0.1 start_equipment_factor = 0.8"
+                            }
+                        }
+                    }
+                    if = {
+                        limit = {
+                            check_variable = { ORL_support > 49 }
+                        }
+                        STX = {
+                            puppet = ORL
+                        }
+                        ORL = {
+                            18 = {
+                                create_unit = {
+                                    division = "name = \"Infantry Division\" division_template = \"Infantry\" start_experience_factor = 0.1 start_equipment_factor = 0.8"
+                                }
+                                create_unit = {
+                                    division = "name = \"Infantry Division\" division_template = \"Infantry\" start_experience_factor = 0.1 start_equipment_factor = 0.8"
+                                }
+                            }
+                        }
+                        if = {
+                            limit = {
+                                check_variable = { ORL_support > 79 }
+                            }
+                            ORL = {
+                                18 = {
+                                    create_unit = {
+                                        division = "name = \"Infantry Division\" division_template = \"Infantry\" start_experience_factor = 0.1 start_equipment_factor = 0.8"
+                                    }
+                                    create_unit = {
+                                        division = "name = \"Infantry Division\" division_template = \"Infantry\" start_experience_factor = 0.1 start_equipment_factor = 0.8"
+                                    }
+                                }
+                            }
+                            if = {
+                                limit = {
+                                    check_variable = { ORL_support > 99 }
+                                }
+                                ORL = {
+                                    18 = {
+                                        create_unit = {
+                                            division = "name = \"Infantry Division\" division_template = \"Infantry\" start_experience_factor = 0.1 start_equipment_factor = 0.8"
+                                        }
+                                        create_unit = {
+                                            division = "name = \"Infantry Division\" division_template = \"Infantry\" start_experience_factor = 0.1 start_equipment_factor = 0.8"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     STX_recruit_new_orleans = {
@@ -143,6 +248,8 @@ STX_third_red_river_war_dcat = {
                 set_variable = { ORL_support = 0 }
             }
             unlock_decision_tooltip = STX_meet_with_walmsley
+            unlock_decision_tooltip = STX_send_guns_to_new_orleans
+            unlock_decision_tooltip = STX_pro_texan_propoganda_in_new_oreleans
         }
     }
     STX_meet_with_walmsley = {
@@ -186,7 +293,7 @@ STX_third_red_river_war_dcat = {
                 check_variable = { ORL_support < 100 }
             }
             has_equipment = {
-                infantry_equipment > 999
+                infantry_equipment > 499
             }
         }
         visible = {
@@ -201,8 +308,37 @@ STX_third_red_river_war_dcat = {
             set_country_flag = STX_preparing_for_rrw3
             add_equipment_to_stockpile = {
                 type = infantry_equipment
-                amount = -1000
+                amount = -500
             }
+        }
+        remove_effect = {
+            custom_effect_tooltip = STX_add_10_support_ORL
+            add_to_variable = { ORL_support = 10 }
+            clr_country_flag = STX_preparing_for_rrw3
+        }
+    }
+    STX_pro_texan_propoganda_in_new_oreleans = {
+        icon = GFX_
+
+        available = {
+            NOT = {
+                has_country_flag = STX_preparing_for_rrw3
+            }
+            custom_trigger_tooltip = {
+                tooltip = NOT_100_support_tt
+                check_variable = { ORL_support < 100 }
+            }
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = STX_getting_ORL_support
+            }
+        }
+        cost = 50
+        fire_only_once = no
+        days_remove = 15
+        complete_effect = {
+            set_country_flag = STX_preparing_for_rrw3
         }
         remove_effect = {
             custom_effect_tooltip = STX_add_10_support_ORL
