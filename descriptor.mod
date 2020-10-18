@@ -1,4 +1,4 @@
-version="1.9.*"
+version="0.6.1"
 user_dir="nadivided"
 replace_path="common/abilities"
 replace_path="common/achievements.txt"
@@ -50,6 +50,6 @@ tags={
 	"National Focuses"
 }
 name="North America Divided (DEV VERSION)"
-supported_version="1.9.*"
+supported_version="1.10.*"
 path="C:/Users/Skorpion/Documents/Paradox Interactive/Hearts of Iron IV/mod/nadivided-dev"
 remote_file_id="2095618478"
