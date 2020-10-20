@@ -423,11 +423,12 @@ focus_tree = {
             factor = 1
         }
         available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+        search_filters = { FOCUS_FILTER_POLITICAL }
 
         completion_reward = {
-            add_stability = 0.05
             add_political_power = 50
+            add_stability = -0.05
+            remove_ideas = MDC_concessions_to_the_europeans
         }
     }
     focus = {
@@ -496,7 +497,7 @@ focus_tree = {
             }
         }
         available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_STABILITY }
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_POLITICAL }
 
         completion_reward = {
             add_stability = 0.1
@@ -507,6 +508,9 @@ focus_tree = {
         id = MDC_request_guns_from_europe
         icon = GFX_
         prerequisite = { focus = MDC_the_personality_cult}
+        available = {
+            has_idea = MDC_concessions_to_the_europeans
+        }
         x = 0
         y = 1
         relative_position_id = MDC_the_personality_cult
@@ -514,12 +518,43 @@ focus_tree = {
         ai_will_do = {
             factor = 1
         }
-        available_if_capitulated = yes
+        available_if_capitulated = no
 
         completion_reward = {
             add_equipment = {
                 type = infantry_equipment
                 amount = 1000
+            }
+        }
+    }
+    focus = {
+        id = MDC_silence_the_opposition
+        icon = GFX_
+        prerequisite = { focus = MDC_request_guns_from_europe}
+        available = {
+            has_equipment = {
+                infantry_equipment > 10000
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = MDC_request_guns_from_europe
+        cost = 10
+        ai_will_do = {
+            factor = 5
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_equipment = {
+                type = infantry_equipment
+                amount = -10000
+            }
+            custom_effect_tooltip = MDC_the_country_becomes_stable_tt
+            every_state = {
+                clr_state_flag = MDC_high_comp
+                clr_state_flag = MDC_low_comp
+                clr_state_flag = MDC_near_revolt
             }
         }
     }
@@ -685,11 +720,11 @@ focus_tree = {
                 limit = {
                     AND = {
                         country_exists = MYU
-                        OR = {
-                            owns_state = 468
-                            owns_state = 566
-                            owns_state = 568
-                        }
+                        # OR = {
+                        #     owns_state = 468
+                        #     owns_state = 566
+                        #     owns_state = 568
+                        # }
                     }
                 }
                 MYU = {
@@ -698,11 +733,9 @@ focus_tree = {
                     }
                 }
             }
-            else = {
-                add_state_claim = 468
-                add_state_claim = 566
-                add_state_claim = 568
-            }
+            add_state_claim = 468
+            add_state_claim = 566
+            add_state_claim = 568
         }
     }
     focus = {
@@ -790,6 +823,44 @@ focus_tree = {
 				category = bicycle_tech
             }
             add_ideas = MDC_escort_divisions
+        }
+    }
+    focus = {
+        id = MDC_confront_the_old_government
+        icon = GFX_
+        prerequisite = { focus = MDC_demand_the_yucatan}
+        mutually_exclusive = { focus = MDC_secure_the_mexican_region}
+        x = -1
+        y = 2
+        relative_position_id = MDC_demand_the_yucatan
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_war_support = 0.15
+        }
+    }
+    focus = {
+        id = MDC_secure_the_mexican_region
+        icon = GFX_
+        prerequisite = { focus = MDC_demand_the_yucatan}
+        mutually_exclusive = { focus = MDC_confront_the_old_government}
+        x = 1
+        y = 2
+        relative_position_id = MDC_demand_the_yucatan
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_war_support = 0.15
         }
     }
 #######################################
@@ -1109,6 +1180,15 @@ focus_tree = {
                 factor = 2
                 num_of_naval_factories < 8
             }
+            modifier = {
+                factor = 0
+                NOT = {
+                    OR = {
+                        has_completed_focus = MDC_continue_the_experiment
+                        has_completed_focus = MDC_modify_the_great_society
+                    }
+                }
+            }
         }
         available_if_capitulated = no
         search_filters = { FOCUS_FILTER_INDUSTRY }
@@ -1127,6 +1207,53 @@ focus_tree = {
                     instant_build = yes
                     province = 4382
                 }
+            }
+        }
+    }
+    focus = {
+        id = MDC_cruiser_investments
+        icon = GFX_
+        prerequisite = { focus = MDC_create_the_gulf_fleet}
+        x = -1
+        y = 1
+        relative_position_id = MDC_create_the_gulf_fleet
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 2
+                ahead_reduction = 1
+                category = cl_tech
+                category = ca_tech
+            }
+        }
+    }
+    focus = {
+        id = MDC_protection_from_under_the_surface
+        icon = GFX_
+        prerequisite = { focus = MDC_create_the_gulf_fleet}
+        x = 1
+        y = 1
+        relative_position_id = MDC_create_the_gulf_fleet
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 2
+                ahead_reduction = 1
+                category = ss_tech
             }
         }
     }
@@ -1178,6 +1305,29 @@ focus_tree = {
         }
     }
     focus = {
+        id = MDC_the_need_for_destroyers
+        icon = GFX_
+        prerequisite = { focus = MDC_expand_the_gulf_fleet}
+        x = 2
+        y = 1
+        relative_position_id = MDC_expand_the_gulf_fleet
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 2
+                ahead_reduction = 1
+                category = dd_tech
+            }
+        }
+    }
+    focus = {
         id = MDC_the_pacific_fleet
         icon = GFX_
         prerequisite = { focus = MDC_expand_the_gulf_fleet}
@@ -1221,6 +1371,52 @@ focus_tree = {
                     instant_build = yes
                     province = 4539
                 }
+            }
+        }
+    }
+    focus = {
+        id = MDC_the_need_for_battleships
+        icon = GFX_
+        prerequisite = { focus = MDC_the_pacific_fleet}
+        x = -1
+        y = 1
+        relative_position_id = MDC_the_pacific_fleet
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 2
+                ahead_reduction = 1
+                category = bb_tech
+            }
+        }
+    }
+    focus = {
+        id = MDC_the_need_for_carriers
+        icon = GFX_
+        prerequisite = { focus = MDC_the_pacific_fleet}
+        x = 1
+        y = 1
+        relative_position_id = MDC_the_pacific_fleet
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 2
+                ahead_reduction = 1
+                category = cv_tech
             }
         }
     }
