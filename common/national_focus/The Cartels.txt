@@ -535,6 +535,7 @@ focus_tree = {
             has_equipment = {
                 infantry_equipment > 10000
             }
+            has_manpower > 5000
         }
         x = 0
         y = 1
@@ -550,6 +551,7 @@ focus_tree = {
                 type = infantry_equipment
                 amount = -10000
             }
+            add_manpower = -5000
             custom_effect_tooltip = MDC_the_country_becomes_stable_tt
             every_state = {
                 clr_state_flag = MDC_high_comp
@@ -596,6 +598,7 @@ focus_tree = {
         historical_ai = {
             date > 1937.3.1
         }
+        will_lead_to_war_with = MTA
 
         completion_reward = {
             army_experience = 25
@@ -672,7 +675,7 @@ focus_tree = {
                     MEX = {
                         country_event = {
                             id = cartel.38
-                            days = 5
+                            days = 15
                         }
                     }
                 }
@@ -714,6 +717,7 @@ focus_tree = {
         }
         available_if_capitulated = no
         search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = MYU
 
         completion_reward = {
             if = {
@@ -776,6 +780,7 @@ focus_tree = {
         }
         available_if_capitulated = no
         search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = MCM
 
         completion_reward = {
             country_event = {
@@ -841,7 +846,220 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_WAR_SUPPORT }
 
         completion_reward = {
-            add_war_support = 0.15
+            add_war_support = 0.1
+        }
+    }
+    focus = {
+        id = MDC_prepare_for_total_war
+        icon = GFX_
+        prerequisite = { focus = MDC_confront_the_old_government}
+        mutually_exclusive = { focus = MDC_the_deed_already_done}
+        available = {
+            OR = {
+                country_exists = MEX
+                country_exists = MCL
+                country_exists = MAC
+            }
+        }
+        x = -4
+        y = 1
+        relative_position_id = MDC_confront_the_old_government
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            claim_mexico_proper = yes
+        }
+    }
+    focus = {
+        id = MDC_the_deed_already_done
+        icon = GFX_
+        prerequisite = { focus = MDC_confront_the_old_government}
+        mutually_exclusive = { focus = MDC_prepare_for_total_war}
+        available = {
+            NOT = {
+                country_exists = MEX
+                country_exists = MCL
+                country_exists = MAC
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = MDC_confront_the_old_government
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            claim_mexico_proper = yes
+        }
+    }
+    focus = {
+        id = MDC_prepare_the_armed_forces
+        icon = GFX_
+        prerequisite = { focus = MDC_the_deed_already_done}
+        x = -1
+        y = 1
+        relative_position_id = MDC_the_deed_already_done
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            army_experience = 50
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                category = army_doctrine
+            }
+        }
+    }
+    focus = {
+        id = MDC_the_rightful_heir
+        icon = GFX_
+        prerequisite = { focus = MDC_the_deed_already_done}
+        x = 1
+        y = 1
+        relative_position_id = MDC_the_deed_already_done
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_political_power = 50
+            add_stability = 0.05
+        }
+    }
+    focus = {
+        id = MDC_invade_central_mexico
+        icon = GFX_
+        prerequisite = { focus = MDC_prepare_the_armed_forces}
+        prerequisite = { focus = MDC_the_rightful_heir}
+        bypass = {
+            NOT = {
+                country_exists = MMI
+                country_exists = MQU
+                country_exists = MGU
+                country_exists = MCT
+                country_exists = MHI
+                country_exists = MPU
+                country_exists = MVE
+                country_exists = MZA
+                country_exists = MEM
+            }
+        }
+        x = 1
+        y = 1
+        relative_position_id = MDC_prepare_the_armed_forces
+        cost = 15
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = MMI
+        will_lead_to_war_with = MQU
+        will_lead_to_war_with = MGU
+        will_lead_to_war_with = MCT
+        will_lead_to_war_with = MHI
+        will_lead_to_war_with = MPU
+        will_lead_to_war_with = MVE
+        will_lead_to_war_with = MZA
+        will_lead_to_war_with = MEM
+
+        completion_reward = {
+            if = {
+                limit = {
+                    country_exists = MMI
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MMI
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MQU
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MQU
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MGU
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MGU
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MCT
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MCT
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MHI
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MHI
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MPU
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MPU
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MVE
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MVE
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MZA
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MZA
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MEM
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MEM
+                }
+            }
         }
     }
     focus = {
@@ -860,7 +1078,958 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_WAR_SUPPORT }
 
         completion_reward = {
-            add_war_support = 0.15
+            add_war_support = 0.1
+        }
+    }
+    focus = {
+        id = MDC_move_to_secure_northern_mexico
+        icon = GFX_
+        prerequisite = { focus = MDC_secure_the_mexican_region}
+        x = 1
+        y = 1
+        relative_position_id = MDC_secure_the_mexican_region
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            claim_baja_california = yes
+            claim_sonora = yes
+            claim_chihuahua = yes
+            claim_coahuila = yes
+            claim_nuevo_leon = yes
+            claim_sinaloa = yes
+        }
+    }
+    focus = {
+        id = MDC_choke_the_northern_economies
+        icon = GFX_
+        prerequisite = { focus = MDC_move_to_secure_northern_mexico}
+        x = 0
+        y = 1
+        relative_position_id = MDC_move_to_secure_northern_mexico
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            BAJ = {
+                add_stability = -0.05
+            }
+            MSO = {
+                add_stability = -0.05
+            }
+            MCH = {
+                add_stability = -0.05
+            }
+            MCO = {
+                add_stability = -0.05
+            }
+            MNL = {
+                add_stability = -0.05
+            }
+            MSI = {
+                add_stability = -0.05
+            }
+        }
+    }
+    focus = {
+        id = MDC_blockade_the_coasts
+        icon = GFX_
+        prerequisite = { focus = MDC_choke_the_northern_economies}
+        available = {
+            NOT = {
+                has_completed_focus = MDC_strike_the_north
+            }
+        }
+        x = -1
+        y = 1
+        relative_position_id = MDC_choke_the_northern_economies
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            BAJ = {
+                if = {
+                    limit = {
+                        has_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                    swap_ideas = {
+                        add_idea = MDC_trade_blocked_by_the_cartels2
+                        remove_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                }
+                else = {
+                    add_ideas = MDC_trade_blocked_by_the_cartels1
+                }
+            }
+            MSO = {
+                if = {
+                    limit = {
+                        has_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                    swap_ideas = {
+                        add_idea = MDC_trade_blocked_by_the_cartels2
+                        remove_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                }
+                else = {
+                    add_ideas = MDC_trade_blocked_by_the_cartels1
+                }
+            }
+            MCH = {
+                if = {
+                    limit = {
+                        has_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                    swap_ideas = {
+                        add_idea = MDC_trade_blocked_by_the_cartels2
+                        remove_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                }
+                else = {
+                    add_ideas = MDC_trade_blocked_by_the_cartels1
+                }
+            }
+            MCO = {
+                if = {
+                    limit = {
+                        has_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                    swap_ideas = {
+                        add_idea = MDC_trade_blocked_by_the_cartels2
+                        remove_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                }
+                else = {
+                    add_ideas = MDC_trade_blocked_by_the_cartels1
+                }
+            }
+            MNL = {
+                if = {
+                    limit = {
+                        has_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                    swap_ideas = {
+                        add_idea = MDC_trade_blocked_by_the_cartels2
+                        remove_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                }
+                else = {
+                    add_ideas = MDC_trade_blocked_by_the_cartels1
+                }
+            }
+            MSI = {
+                if = {
+                    limit = {
+                        has_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                    swap_ideas = {
+                        add_idea = MDC_trade_blocked_by_the_cartels2
+                        remove_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                }
+                else = {
+                    add_ideas = MDC_trade_blocked_by_the_cartels1
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_cut_them_off_from_the_disunited_states
+        icon = GFX_
+        prerequisite = { focus = MDC_choke_the_northern_economies}
+        available = {
+            NOT = {
+                has_completed_focus = MDC_strike_the_north
+            }
+        }
+        x = 1
+        y = 1
+        relative_position_id = MDC_choke_the_northern_economies
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            BAJ = {
+                if = {
+                    limit = {
+                        has_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                    swap_ideas = {
+                        add_idea = MDC_trade_blocked_by_the_cartels2
+                        remove_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                }
+                else = {
+                    add_ideas = MDC_trade_blocked_by_the_cartels1
+                }
+            }
+            MSO = {
+                if = {
+                    limit = {
+                        has_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                    swap_ideas = {
+                        add_idea = MDC_trade_blocked_by_the_cartels2
+                        remove_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                }
+                else = {
+                    add_ideas = MDC_trade_blocked_by_the_cartels1
+                }
+            }
+            MCH = {
+                if = {
+                    limit = {
+                        has_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                    swap_ideas = {
+                        add_idea = MDC_trade_blocked_by_the_cartels2
+                        remove_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                }
+                else = {
+                    add_ideas = MDC_trade_blocked_by_the_cartels1
+                }
+            }
+            MCO = {
+                if = {
+                    limit = {
+                        has_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                    swap_ideas = {
+                        add_idea = MDC_trade_blocked_by_the_cartels2
+                        remove_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                }
+                else = {
+                    add_ideas = MDC_trade_blocked_by_the_cartels1
+                }
+            }
+            MNL = {
+                if = {
+                    limit = {
+                        has_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                    swap_ideas = {
+                        add_idea = MDC_trade_blocked_by_the_cartels2
+                        remove_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                }
+                else = {
+                    add_ideas = MDC_trade_blocked_by_the_cartels1
+                }
+            }
+            MSI = {
+                if = {
+                    limit = {
+                        has_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                    swap_ideas = {
+                        add_idea = MDC_trade_blocked_by_the_cartels2
+                        remove_idea = MDC_trade_blocked_by_the_cartels1
+                    }
+                }
+                else = {
+                    add_ideas = MDC_trade_blocked_by_the_cartels1
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_strike_the_north
+        icon = GFX_
+        prerequisite = { focus = MDC_blockade_the_coasts focus = MDC_cut_them_off_from_the_disunited_states}
+        bypass = {
+            NOT = {
+                country_exists = BAJ
+                country_exists = MSO
+                country_exists = MCH
+                country_exists = MCO
+                country_exists = MNL
+                country_exists = MSI
+            }
+        }
+        x = 1
+        y = 2
+        relative_position_id = MDC_blockade_the_coasts
+        cost = 12
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = BAJ
+        will_lead_to_war_with = MSO
+        will_lead_to_war_with = MCH
+        will_lead_to_war_with = MCO
+        will_lead_to_war_with = MNL
+        will_lead_to_war_with = MSI
+
+        completion_reward = {
+            if = {
+                limit = {
+                    country_exists = BAJ
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = BAJ
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MSO
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MSO
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MCH
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MCH
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MCO
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MCO
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MNL
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MNL
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MSI
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MSI
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_move_to_secure_the_yucatan_peninsula
+        icon = GFX_
+        prerequisite = { focus = MDC_secure_the_mexican_region}
+        x = 5
+        y = 1
+        relative_position_id = MDC_secure_the_mexican_region
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            claim_campeche = yes
+            claim_quintana_roo = yes
+        }
+    }
+    focus = {
+        id = MDC_annex_yucatan
+        icon = GFX_
+        prerequisite = { focus = MDC_move_to_secure_the_yucatan_peninsula}
+        available = {
+            MYU = {
+                is_subject_of = MYU
+            }
+        }
+        bypass = {
+            own_yucatan = yes
+        }
+        x = 0
+        y = 1
+        relative_position_id = MDC_move_to_secure_the_yucatan_peninsula
+        cost = 5
+        ai_will_do = {
+            factor = 5
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            MYU = {
+                country_event = {
+
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_prepare_for_the_worst
+        icon = GFX_
+        prerequisite = { focus = MDC_annex_yucatan}
+        mutually_exclusive = { focus = MDC_dont_fear_the_jungle}
+        x = -1
+        y = 1
+        relative_position_id = MDC_annex_yucatan
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            if = {
+                limit = {
+                    owns_state = 468
+                }
+                468 = {
+                    add_building_construction = {
+                        type = bunker
+                        level = 1
+                        instant_build = yes
+                        province = {
+                            all_provinces = yes
+                            limit_to_border = yes
+                        }
+                    }
+                }
+            }
+            if = {
+                limit = {
+                    owns_state = 566
+                }
+                566 = {
+                    add_building_construction = {
+                        type = bunker
+                        level = 1
+                        instant_build = yes
+                        province = {
+                            all_provinces = yes
+                            limit_to_border = yes
+                        }
+                    }
+                }
+            }
+            if = {
+                limit = {
+                    owns_state = 568
+                }
+                568 = {
+                    add_building_construction = {
+                        type = bunker
+                        level = 1
+                        instant_build = yes
+                        province = {
+                            all_provinces = yes
+                            limit_to_border = yes
+                        }
+                    }
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_train_in_jungle_warfare
+        icon = GFX_
+        prerequisite = { focus = MDC_prepare_for_the_worst}
+        x = 0
+        y = 1
+        relative_position_id = MDC_prepare_for_the_worst
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                category = army_doctrine
+            }
+            army_experience = 50
+        }
+    }
+    focus = {
+        id = MDC_fear_the_jungle
+        icon = GFX_
+        prerequisite = { focus = MDC_train_in_jungle_warfare}
+        bypass = {
+            NOT = {
+                country_exists = MCA
+                country_exists = MQR
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = MDC_train_in_jungle_warfare
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = MCA
+        will_lead_to_war_with = MQR
+
+        completion_reward = {
+            if = {
+                limit = {
+                    country_exists = MCA
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MCA
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MQR
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MQR
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_dont_fear_the_jungle
+        icon = GFX_
+        prerequisite = { focus = MDC_annex_yucatan}
+        mutually_exclusive = { focus = MDC_prepare_for_the_worst }
+        bypass = {
+            NOT = {
+                country_exists = MCA
+                country_exists = MQR
+            }
+        }
+        x = 1
+        y = 1
+        relative_position_id = MDC_annex_yucatan
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = MCA
+        will_lead_to_war_with = MQR
+
+        completion_reward = {
+            if = {
+                limit = {
+                    country_exists = MCA
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MCA
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MQR
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MQR
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_move_to_secure_southern_mexico
+        icon = GFX_
+        prerequisite = { focus = MDC_secure_the_mexican_region}
+        x = 9
+        y = 1
+        relative_position_id = MDC_secure_the_mexican_region
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            claim_chiapas = yes
+            claim_guerrero = yes
+            claim_morelos = yes
+            claim_oaxaca = yes
+            claim_tabasco = yes
+        }
+    }
+    focus = {
+        id = MDC_invade_through_tabasco
+        icon = GFX_
+        prerequisite = { focus = MDC_move_to_secure_southern_mexico}
+        available = {
+            country_exists = MTB
+        }
+        mutually_exclusive = { focus = MDC_invade_through_guerrero}
+        mutually_exclusive = { focus = MDC_invade_through_the_yucatan}
+        x = -2
+        y = 1
+        relative_position_id = MDC_move_to_secure_southern_mexico
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = MTB
+
+        completion_reward = {
+            create_wargoal = {
+                type = annex_everything
+                target = MTB
+            }
+        }
+    }
+    focus = {
+        id = MDC_invade_through_guerrero
+        icon = GFX_
+        prerequisite = { focus = MDC_move_to_secure_southern_mexico}
+        available = {
+            country_exists = MGR
+        }
+        mutually_exclusive = { focus = MDC_invade_through_tabasco }
+        mutually_exclusive = { focus = MDC_invade_through_the_yucatan}
+        x = 0
+        y = 1
+        relative_position_id = MDC_move_to_secure_southern_mexico
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = MGR
+
+        completion_reward = {
+            create_wargoal = {
+                type = annex_everything
+                target = MGR
+            }
+        }
+    }
+    focus = {
+        id = MDC_secure_the_enclave
+        icon = GFX_
+        prerequisite = { focus = MDC_invade_through_tabasco focus = MDC_invade_through_guerrero}
+        x = 1
+        y = 1
+        relative_position_id = MDC_invade_through_tabasco
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            if = {
+                limit = {
+                    owns_state = 563
+                }
+                563 = {
+                    add_building_construction = {
+                        type = bunker
+                        level = 1
+                        instant_build = yes
+                        province = {
+                            all_provinces = yes
+                            limit_to_border = yes
+                        }
+                    }
+                    add_building_construction = {
+                        type = coastal_bunker
+                        level = 1
+                        instant_build = yes
+                        province = {
+                            all_provinces = yes
+                            limit_to_coastal = yes
+                        }
+                    }
+                }
+            }
+            if = {
+                limit = {
+                    owns_state = 465
+                }
+                465 = {
+                    add_building_construction = {
+                        type = bunker
+                        level = 1
+                        instant_build = yes
+                        province = {
+                            all_provinces = yes
+                            limit_to_border = yes
+                        }
+                    }
+                    add_building_construction = {
+                        type = coastal_bunker
+                        level = 1
+                        instant_build = yes
+                        province = {
+                            all_provinces = yes
+                            limit_to_coastal = yes
+                        }
+                    }
+                }
+            }
+            if = {
+                limit = {
+                    owns_state = 544
+                }
+                544 = {
+                    add_building_construction = {
+                        type = bunker
+                        level = 1
+                        instant_build = yes
+                        province = {
+                            all_provinces = yes
+                            limit_to_border = yes
+                        }
+                    }
+                    add_building_construction = {
+                        type = coastal_bunker
+                        level = 1
+                        instant_build = yes
+                        province = {
+                            all_provinces = yes
+                            limit_to_coastal = yes
+                        }
+                    }
+                }
+            }
+            if = {
+                limit = {
+                    owns_state = 576
+                }
+                576 = {
+                    add_building_construction = {
+                        type = bunker
+                        level = 1
+                        instant_build = yes
+                        province = {
+                            all_provinces = yes
+                            limit_to_border = yes
+                        }
+                    }
+                    add_building_construction = {
+                        type = coastal_bunker
+                        level = 1
+                        instant_build = yes
+                        province = {
+                            all_provinces = yes
+                            limit_to_coastal = yes
+                        }
+                    }
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_
+    }
+    focus = {
+        id = MDC_invade_through_the_yucatan
+        icon = GFX_
+        prerequisite = { focus = MDC_move_to_secure_southern_mexico}
+        available = {
+            own_campeche = yes
+        }
+        mutually_exclusive = { focus = MDC_invade_through_tabasco}
+        mutually_exclusive = { focus = MDC_invade_through_guerrero}
+        x = 2
+        y = 1
+        relative_position_id = MDC_move_to_secure_southern_mexico
+        cost = 5
+        ai_will_do = {
+            factor = 5
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = MTB
+        will_lead_to_war_with = MCI
+
+        completion_reward = {
+            if = {
+                limit = {
+                    country_exists = MTB
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MTB
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MCI
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MCI
+                }
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        country_exists = MTB
+                        country_exists = MCI
+                    }
+                }
+                every_country = {
+                    limit = {
+                        OR = {
+                            owns_state = 563
+                            owns_state = 465
+                            owns_state = 565
+                            owns_state = 464
+                        }
+                        NOT = {
+                            tag = MDC
+                        }
+                    }
+                    create_wargoal = {
+                        type = annex_everything
+                        target = THIS
+                    }
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_roll_through_southern_mexico
+        icon = GFX_
+        prerequisite = { focus = MDC_invade_through_the_yucatan focus = MDC_secure_the_enclave}
+        bypass = {
+            NOT = {
+                country_exists = MOX
+                country_exists = MGR
+                country_exists = MMO
+                country_exists = MTB
+                country_exists = MCI
+            }
+        }
+        x = -1
+        y = 2
+        relative_position_id = MDC_invade_through_the_yucatan
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = MOX
+        will_lead_to_war_with = MGR
+        will_lead_to_war_with = MMO
+        will_lead_to_war_with = MTB
+        will_lead_to_war_with = MCI
+
+        completion_reward = {
+            if = {
+                limit = {
+                    country_exists = MOX
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MOX
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MGR
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MGR
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MMO
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MMO
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MTB
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MTB
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MCI
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MCI
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_challange_the_old_government
+        icon = GFX_
+        prerequisite = { focus = MDC_strike_the_north}
+        prerequisite = { focus = MDC_fear_the_jungle focus = MDC_dont_fear_the_jungle}
+        prerequisite = { focus = MDC_roll_through_southern_mexico}
+        x = 4
+        y = 1
+        relative_position_id = MDC_strike_the_north
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            complete_national_focus = MDC_confront_the_old_government
+        }
+    }
+    focus = {
+        id = MDC_semi_legetimate_ruler
+        icon = GFX_
+        prerequisite = { focus = MDC_strike_the_north}
+        prerequisite = { focus = MDC_fear_the_jungle focus = MDC_dont_fear_the_jungle}
+        prerequisite = { focus = MDC_roll_through_southern_mexico}
+        x = 6
+        y = 1
+        relative_position_id = MDC_strike_the_north
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_ideas = MDC_semi_legetimate_ruler_idea
         }
     }
 #######################################
