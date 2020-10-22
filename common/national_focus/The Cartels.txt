@@ -21,13 +21,458 @@ focus_tree = {
 #FOCUS_FILTER_WAR_SUPPORT
 
 #######################################
+#############Army+Air Path#############
+#######################################
+    focus = {
+        id = MDC_deal_with_the_armed_forces
+        icon = GFX_
+        x = 10
+        y = 0
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        
+        completion_reward = {
+            army_experience = 75
+            air_experience = 75
+        }
+    }
+    focus = {
+        id = MDC_a_mexican_army
+        icon = GFX_
+        prerequisite = { focus = MDC_deal_with_the_armed_forces}
+        mutually_exclusive = { focus = MDC_a_cartel_army}
+        mutually_exclusive = { focus = MDC_a_european_army}
+        x = 0
+        y = 1
+        relative_position_id = MDC_deal_with_the_armed_forces
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_ideas = MDC_a_mexican_army_idea
+        }
+    }
+    focus = {
+        id = MDC_a_cartel_army
+        icon = GFX_
+        prerequisite = { focus = MDC_deal_with_the_armed_forces}
+        mutually_exclusive = { focus = MDC_a_mexican_army}
+        mutually_exclusive = { focus = MDC_a_european_army}
+        available = {
+            NOT = {
+                has_completed_focus = MDC_restrict_the_cartels
+            }
+        }
+        x = -6
+        y = 1
+        relative_position_id = MDC_deal_with_the_armed_forces
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                has_completed_focus = MDC_continue_the_experiment
+            }
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_ideas = MDC_a_cartel_army_idea
+        }
+    }
+    focus = {
+        id = MDC_construction_recruitment_centers
+        icon = GFX_
+        prerequisite = { focus = MDC_a_cartel_army focus = MDC_a_mexican_army}
+        x = 3
+        y = 1
+        relative_position_id = MDC_a_cartel_army
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MANPOWER }
+
+        completion_reward = {
+            add_ideas = MDC_recruitment_centers
+        }
+    }
+    focus = {
+        id = MDC_a_european_army
+        icon = GFX_
+        prerequisite = { focus = MDC_deal_with_the_armed_forces}
+        mutually_exclusive = { focus = MDC_a_mexican_army}
+        mutually_exclusive = { focus = MDC_a_cartel_army}
+        available = {
+            has_idea = MDC_concessions_to_the_europeans
+        }
+        x = 6
+        y = 1
+        relative_position_id = MDC_deal_with_the_armed_forces
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_ideas = MDC_a_european_army_idea
+        }
+    }
+    focus = {
+        id = MDC_keep_a_standing_army
+        icon = GFX_
+        prerequisite = { focus = MDC_a_european_army focus = MDC_a_mexican_army}
+        x = -3
+        y = 1
+        relative_position_id = MDC_a_european_army
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_ideas
+        }
+    }
+    focus = {
+        id = MDC_modernize_beyond_belief
+        icon = GFX_
+        prerequisite = { focus = MDC_a_european_army}
+        available = {
+            has_idea = MDC_concessions_to_the_europeans
+        }
+        x = -1
+        y = 1
+        relative_position_id = MDC_a_european_army
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            swap_ideas = {
+                add_idea = MDC_a_european_army_idea2
+                remove_idea = MDC_a_european_army_idea
+            }
+        }
+    }
+    focus = {
+        id = MDC_streamline_production
+        icon = GFX_
+        prerequisite = { focus = MDC_modernize_beyond_belief}
+        available = {
+            has_idea = MDC_concessions_to_the_europeans
+        }
+        x = 0
+        y = 1
+        relative_position_id = MDC_modernize_beyond_belief
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            swap_ideas = {
+                add_idea = MDC_a_european_army_idea3
+                remove_idea = MDC_a_european_army_idea2
+            }
+        }
+    }
+    focus = {
+        id = MDC_learn_from_the_second_great_war
+        icon = GFX_
+        prerequisite = { focus = MDC_a_european_army}
+        available = {
+            has_idea = MDC_concessions_to_the_europeans
+        }
+        x = 1
+        y = 1
+        relative_position_id = MDC_a_european_army
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            army_experience = 25
+            add_tech_bonus = {
+                bonus = 1
+                uses = 2
+                category = army_doctrine
+            }
+        }
+    }
+    focus = {
+        id = MDC_europaen_weapon_designs
+        icon = GFX_
+        prerequisite = { focus = MDC_learn_from_the_second_great_war}
+        available = {
+            has_idea = MDC_concessions_to_the_europeans
+        }
+        x = 0 
+        y = 1
+        relative_position_id = MDC_learn_from_the_second_great_war
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 2
+                ahead_reduction = 1
+                category = infantry_tech
+            }
+        }
+    }
+    focus = {
+        id = MDC_european_gun_trucks
+        icon = GFX_
+        prerequisite = { focus = MDC_europaen_weapon_designs}
+        prerequisite = { focus = MDC_streamline_production}
+        available = {
+            has_idea = MDC_concessions_to_the_europeans
+        }
+        x = -2
+        y = 1
+        relative_position_id = MDC_europaen_weapon_designs
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 2
+                ahead_reduction = 1
+                category = motorized_equipment
+                category = cat_mechanized_equipment
+            }
+        }
+    }
+    focus = {
+        id = MDC_european_tank_designs
+        icon = GFX_
+        prerequisite = { focus = MDC_europaen_weapon_designs}
+        available = {
+            has_idea = MDC_concessions_to_the_europeans
+        }
+        x = 0
+        y = 1
+        relative_position_id = MDC_europaen_weapon_designs
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 2
+                ahead_reduction = 1
+                category = armor
+            }
+        }
+    }
+    focus = {
+        id = MDC_a_force_to_be_rekoned_with
+        icon = GFX_
+        prerequisite = { focus = MDC_european_gun_trucks}
+        prerequisite = { focus = MDC_european_tank_designs}
+        available = {
+            has_idea = MDC_concessions_to_the_europeans
+        }
+        x = 1
+        y = 1
+        relative_position_id = MDC_european_gun_trucks
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        
+        completion_reward = {
+            swap_ideas = {
+                add_idea = MDC_a_european_army_idea4
+                remove_idea = MDC_a_european_army_idea3
+            }
+        }
+    }
+    focus = {
+        id = MDC_expand_the_airforce
+        icon = GFX_
+        prerequisite = { focus = MDC_deal_with_the_armed_forces}
+        x = 10
+        y = 1
+        relative_position_id = MDC_deal_with_the_armed_forces
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                category = air_doctrine
+            }
+        }
+    }
+    focus = {
+        id = MDC_protect_our_cargo
+        icon = GFX_
+        prerequisite = { focus = MDC_expand_the_airforce}
+        x = -1
+        y = 1
+        relative_position_id = MDC_expand_the_airforce
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 2
+                ahead_reduction = 1
+                category = cas_bomber
+            }
+        }
+    }
+    focus = {
+        id = MDC_drop_off_our_cargo
+        icon = GFX_
+        prerequisite = { focus = MDC_expand_the_airforce}
+        x = 1
+        y = 1
+        relative_position_id = MDC_expand_the_airforce
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1 
+                uses = 2
+                ahead_reduction = 1
+                category = cat_strategic_bomber
+                category = tactical_bomber
+            }
+        }
+    }
+    focus = {
+        id = MDC_jalisco_airbase
+        icon = GFX_
+        prerequisite = { focus = MDC_expand_the_airforce}
+        available = {
+            owns_state = 554
+        }
+        x = 0
+        y = 2
+        relative_position_id = MDC_expand_the_airforce
+        cost = 7
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            554 = {
+                set_building_level = {
+                    type = air_base
+                    level = 10
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_huasteca_airbase
+        icon = GFX_
+        prerequisite = { focus = MDC_jalisco_airbase}
+        available = {
+            owns_state = 542
+        }
+        x = -1
+        y = 1
+        relative_position_id = MDC_jalisco_airbase
+        cost = 7
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            542 = {
+                set_building_level = {
+                    type = air_base
+                    level = 10
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_tepehuanes_airbase
+        icon = GFX_
+        prerequisite = { focus = MDC_jalisco_airbase}
+        available = {
+            owns_state = 476
+        }
+        x = 1
+        y = 1
+        relative_position_id = MDC_jalisco_airbase
+        cost = 7
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            476 = {
+                set_building_level = {
+                    type = air_base
+                    level = 10
+                    instant_build = yes
+                }
+            }
+        }
+    }
+#######################################
 ########Modify the Great Society#######
 #######################################
     focus = {
         id = MDC_modify_the_great_society
         icon = GFX_focus_political_advice
         mutually_exclusive = { focus = MDC_continue_the_experiment}
-        x = 20
+        x = 30
         y = 0
         cost = 10
         ai_will_do = {
@@ -210,6 +655,7 @@ focus_tree = {
         available = {
             NOT = {
                 has_completed_focus = MDC_finish_the_modifications
+                has_completed_focus = MDC_a_cartel_army
             }
         }
         x = 5
@@ -421,6 +867,10 @@ focus_tree = {
         cost = 10
         ai_will_do = {
             factor = 1
+            modifier = {
+                factor = 0
+                has_completed_focus = MDC_a_european_army
+            }
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
@@ -861,7 +1311,7 @@ focus_tree = {
                 country_exists = MAC
             }
         }
-        x = -4
+        x = -3
         y = 1
         relative_position_id = MDC_confront_the_old_government
         cost = 10
@@ -872,6 +1322,161 @@ focus_tree = {
 
         completion_reward = {
             claim_mexico_proper = yes
+        }
+    }
+    focus = {
+        id = MDC_the_great_struggle
+        icon = GFX_
+        prerequisite = { focus = MDC_prepare_for_total_war}
+        x = 0
+        y = 1
+        relative_position_id = MDC_prepare_for_total_war
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_stability = 0.05
+            add_war_support = 0.05
+        }
+    }
+    focus = {
+        id = MDC_experiment_with_new_tactics
+        icon = GFX_
+        prerequisite = { focus = MDC_the_great_struggle}
+        x = -1
+        y = 1
+        relative_position_id = MDC_the_great_struggle
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                category = army_doctrine
+            }
+            army_experience = 25
+        }
+    }
+    focus = {
+        id = MDC_spread_distrust
+        icon = GFX_
+        prerequisite = { focus = MDC_the_great_struggle}
+        x = 1
+        y = 1
+        relative_position_id = MDC_the_great_struggle
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            if = {
+                limit = {
+                    country_exists = MEX
+                }
+                MEX = {
+                    add_stability = -0.05
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MCL
+                }
+                MCL = {
+                    add_stability = -0.05
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MAC
+                }
+                MAC = {
+                    add_stability = -0.05
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_remember_the_second_mexican_revolution
+        icon = GFX_
+        prerequisite = { focus = MDC_experiment_with_new_tactics}
+        prerequisite = { focus = MDC_spread_distrust}
+        x = 1
+        y = 1
+        relative_position_id = MDC_experiment_with_new_tactics
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MANPOWER }
+
+        completion_reward = {
+            add_ideas = MDC_memories_of_the_second_mexican_revolution
+        }
+    }
+    focus = {
+        id = MDC_strike_mexico
+        icon = GFX_
+        prerequisite = { focus = MDC_remember_the_second_mexican_revolution}
+        bypass = {
+            NOT = {
+                country_exists = MEX
+                country_exists = MCL
+                country_exists = MAC
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = MDC_remember_the_second_mexican_revolution
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = MEX
+        will_lead_to_war_with = MCL
+        will_lead_to_war_with = MAC
+
+        completion_reward = {
+            if = {
+                limit = {
+                    country_exists = MEX
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MEX
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MCL
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MCL
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MAC
+                }
+                create_wargoal = {
+                    type = annex_everything
+                    target = MAC
+                }
+            }
         }
     }
     focus = {
@@ -1060,6 +1665,28 @@ focus_tree = {
                     target = MEM
                 }
             }
+        }
+    }
+    focus = {
+        id = MDC_move_to_secure_the_rest_of_mexico
+        icon = GFX_
+        prerequisite = { focus = MDC_strike_mexico focus = MDC_invade_central_mexico}
+        available = {
+            NOT = {
+                has_completed_focus = MDC_secure_the_mexican_region
+            }
+        }
+        x = 3
+        y = 1
+        relative_position_id = MDC_strike_mexico
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            complete_national_focus = MDC_secure_the_mexican_region
         }
     }
     focus = {
@@ -1849,9 +2476,6 @@ focus_tree = {
         }
     }
     focus = {
-        id = MDC_
-    }
-    focus = {
         id = MDC_invade_through_the_yucatan
         icon = GFX_
         prerequisite = { focus = MDC_move_to_secure_southern_mexico}
@@ -2000,6 +2624,11 @@ focus_tree = {
         prerequisite = { focus = MDC_strike_the_north}
         prerequisite = { focus = MDC_fear_the_jungle focus = MDC_dont_fear_the_jungle}
         prerequisite = { focus = MDC_roll_through_southern_mexico}
+        available = {
+            NOT = {
+                has_completed_focus = MDC_confront_the_old_government
+            }
+        }
         x = 4
         y = 1
         relative_position_id = MDC_strike_the_north
@@ -2363,6 +2992,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_INDUSTRY }
 
         completion_reward = {
+            navy_experience = 25
             542 = {
                 add_extra_state_shared_building_slots = 4
                 add_building_construction = {
@@ -2449,6 +3079,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_INDUSTRY }
 
         completion_reward = {
+            navy_experience = 25
             559 = {
                 add_extra_state_shared_building_slots = 2
                 add_building_construction = {
@@ -2519,6 +3150,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_INDUSTRY }
 
         completion_reward = {
+            navy_experience = 25
             554 = {
                 add_extra_state_shared_building_slots = 2
                 add_building_construction = {
