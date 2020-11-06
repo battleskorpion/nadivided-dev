@@ -1,4 +1,4 @@
-version="0.6.1"
+version="0.9"
 user_dir="nadivided"
 replace_path="common/abilities"
 replace_path="common/achievements.txt"
