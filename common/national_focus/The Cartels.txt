@@ -10,7 +10,7 @@ focus_tree = {
         }
     }
 
-    continuous_focus_position = { x = 50 y = 2000 }
+    continuous_focus_position = { x = 50 y = 1000 }
 
 #FOCUS_FILTER_STABILITY
 #FOCUS_FILTER_INDUSTRY
@@ -854,7 +854,7 @@ focus_tree = {
         id = MDC_modify_the_great_society
         icon = GFX_focus_political_advice
         mutually_exclusive = { focus = MDC_continue_the_experiment}
-        x = 26
+        x = 25
         y = 0
         cost = 10
         ai_will_do = {
@@ -1372,9 +1372,214 @@ focus_tree = {
             add_political_power = 50
         }
     }
-#######################################
-#############Cult for Good#############
-#######################################
+    focus = {
+        id = MDC_reform_the_academia
+        icon = GFX_goal_generic_scientific_exchange
+        prerequisite = { focus = MDC_amelios_progress_reforms}
+        x = -3
+        y = 1
+        relative_position_id = MDC_amelios_progress_reforms
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_ideas = MDC_reformed_academia
+        }
+    }
+    focus = {
+        id = MDC_enact_workers_reforms
+        icon = GFX_
+        prerequisite = { focus = MDC_amelios_progress_reforms}
+        x = -1
+        y = 1
+        relative_position_id = MDC_amelios_progress_reforms
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_popularity = {
+                ideology = progressivism
+                popularity = 0.1
+            }
+            add_ideas = MDC_workers_reforms
+        }
+    }
+    focus = {
+        id = MDC_a_country_built_for_success
+        icon = GFX_
+        prerequisite = { focus = MDC_reform_the_academia}
+        prerequisite = { focus = MDC_enact_workers_reforms}
+        x = 1
+        y = 1
+        relative_position_id = MDC_reform_the_academia
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_stability = 0.05
+            add_war_support = 0.05
+        }
+    }
+    focus = {
+        id = MDC_move_the_capital
+        icon = GFX_
+        prerequisite = { focus = MDC_amelios_progress_reforms}
+        available = {
+            owns_state = 546
+        }
+        x = 0
+        y = 2
+        relative_position_id = MDC_amelios_progress_reforms
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_political_power = 75
+            set_capital = 546
+            if = {
+                limit = {
+                    NOT = {
+                        546 = {
+                            is_core_of = MDC
+                        }
+                    }
+                }
+                add_state_core = 546
+            }
+        }
+    }
+    focus = {
+        id = MDC_invest_in_a_power_grid
+        icon = GFX_
+        prerequisite = { focus = MDC_amelios_progress_reforms}
+        x = 1
+        y = 1
+        relative_position_id = MDC_amelios_progress_reforms
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            every_owned_state = {
+                limit = {
+                    infrastructure < 10
+                }
+                add_building_construction = {
+                    type = infrastructure
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_expand_clean_water_availability
+        icon = GFX_
+        prerequisite = { focus = MDC_amelios_progress_reforms}
+        x = 3
+        y = 1
+        relative_position_id = MDC_amelios_progress_reforms
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            every_owned_state = {
+                limit = {
+                    infrastructure < 10
+                }
+                add_building_construction = {
+                    type = infrastructure
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MDC_invite_immigrants
+        icon = GFX_
+        prerequisite = { focus = MDC_invest_in_a_power_grid}
+        prerequisite = { focus = MDC_expand_clean_water_availability}
+        x = 1
+        y = 1
+        relative_position_id = MDC_invest_in_a_power_grid
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_MANPOWER }
+
+        completion_reward = {
+            swap_ideas = {
+                add_idea = MDC_rush_of_immigrants
+                remove_idea = MEX_uncontrolled_population_growth
+            }
+        }
+    }
+    focus = {
+        id = MDC_immigration_from_asia
+        icon = GFX_
+        prerequisite = { focus = MDC_invite_immigrants}
+        x = -1
+        y = 1
+        relative_position_id = MDC_invite_immigrants
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_MANPOWER }
+
+        completion_reward = {
+            capital_scope = {
+                add_manpower = 100000
+            }
+        }
+    }
+    focus = {
+        id = MDC_immigration_from_europe
+        icon = GFX_
+        prerequisite = { focus = MDC_invite_immigrants}
+        x = 1
+        y = 1
+        relative_position_id = MDC_invite_immigrants
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_MANPOWER }
+
+        completion_reward = {
+            capital_scope = {
+                add_manpower = 100000
+            }
+        }
+    }
     focus = {
         id = MDC_end_european_dependency
         icon = GFX_
@@ -1428,7 +1633,7 @@ focus_tree = {
         id = MDC_continue_the_experiment
         icon = GFX_focus_refuse_support
         mutually_exclusive = { focus = MDC_modify_the_great_society}
-        x = 50
+        x = 43
         y = 0
         cost = 10
         ai_will_do = {
@@ -1491,7 +1696,7 @@ focus_tree = {
         completion_reward = {
             add_equipment_to_stockpile = {
                 type = infantry_equipment
-                amount = 1000
+                amount = 1500
             }
         }
     }
@@ -3186,7 +3391,7 @@ focus_tree = {
         id = MDC_rebuild_the_economy
         icon = GFX_focus_industry
         prerequisite = { focus = MDC_continue_the_experiment focus = MDC_finish_the_modifications}
-        x = 40
+        x = 33
         y = 3
         cost = 7
         ai_will_do = {
@@ -3205,7 +3410,7 @@ focus_tree = {
     }
     focus = {
         id = MDC_produce_textiles
-        icon = GFX_
+        icon = GFX_goal_generic_investments
         prerequisite = { focus = MDC_rebuild_the_economy}
         available = {
             has_completed_focus = MDC_privatized_industry
@@ -3265,7 +3470,7 @@ focus_tree = {
     }
     focus = {
         id = MDC_produce_liquor
-        icon = GFX_
+        icon = GFX_focus_pab_beer_for_the_troops
         prerequisite = { focus = MDC_rebuild_the_economy}
         available = {
             OR = {
@@ -3298,7 +3503,7 @@ focus_tree = {
     }
     focus = {
         id = MDC_produce_hard_liquor
-        icon = GFX_
+        icon = GFX_focus_hard_liquor
         prerequisite = { focus = MDC_produce_liquor}
         available = {
             has_completed_focus = MDC_continue_the_experiment
@@ -3328,7 +3533,7 @@ focus_tree = {
     }
     focus = {
         id = MDC_produce_illegal_substances
-        icon = GFX_
+        icon = GFX_goal_generic_construct_civ_factory
         prerequisite = { focus = MDC_rebuild_the_economy}
         available = {
             has_completed_focus = MDC_continue_the_experiment
@@ -3372,7 +3577,7 @@ focus_tree = {
         relative_position_id = MDC_rebuild_the_economy
         cost = 10
         ai_will_do = {
-            factor = 1
+            factor = 2
         }
         available_if_capitulated = no
         search_filters = { FOCUS_FILTER_MDC_ECONOMY FOCUS_FILTER_INDUSTRY }
@@ -3404,6 +3609,24 @@ focus_tree = {
         }
     }
     focus = {
+        id = MDC_bring_education_to_cities
+        icon = GFX_focus_research
+        prerequisite = { focus = MDC_invest_in_civilian_infrastructure}
+        x = 2
+        y = 1
+        relative_position_id = MDC_invest_in_civilian_infrastructure
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_research_slot = 1
+        }
+    }
+    focus = {
         id = MDC_invest_in_civilian_economy
         icon = GFX_focus_generic_industry_2
         prerequisite = { focus = MDC_invest_in_civilian_infrastructure}
@@ -3418,7 +3641,7 @@ focus_tree = {
         relative_position_id = MDC_rebuild_the_economy
         cost = 10
         ai_will_do = {
-            factor = 1
+            factor = 2
         }
         available_if_capitulated = no
         search_filters = { FOCUS_FILTER_MDC_ECONOMY FOCUS_FILTER_INDUSTRY }
@@ -3441,6 +3664,24 @@ focus_tree = {
         }
     }
     focus = {
+        id = MDC_bring_education_to_the_rural_areas
+        icon = GFX_focus_research2
+        prerequisite = { focus = MDC_invest_in_civilian_economy}
+        x = -2
+        y = 1
+        relative_position_id = MDC_invest_in_civilian_economy
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_research_slot = 1
+        }
+    }
+    focus = {
         id = MDC_an_economy_to_last
         icon = GFX_focus_generic_industry_3
         prerequisite = { focus = MDC_invest_in_civilian_economy}
@@ -3455,7 +3696,7 @@ focus_tree = {
         relative_position_id = MDC_rebuild_the_economy
         cost = 10
         ai_will_do = {
-            factor = 1
+            factor = 2
         }
         available_if_capitulated = no
         search_filters = { FOCUS_FILTER_MDC_ECONOMY FOCUS_FILTER_INDUSTRY }
