@@ -1,4 +1,4 @@
-version="1.9.*"
+version="0.9"
 user_dir="nadivided"
 #replace_path="common/abilities"
 replace_path="common/achievements.txt"
@@ -51,6 +51,6 @@ tags={
 }
 name="North America Divided"
 picture="thumbnail.png"
-supported_version="1.9.*"
+supported_version="1.10.*"
 path="C:/Users/Skorpion/Documents/Paradox Interactive/Hearts of Iron IV/mod/nadivided"
 remote_file_id="1773965933"
