@@ -495,13 +495,16 @@ focus_tree = {
         mutually_exclusive = { focus = MSH_look_outwards}
         x = 22
         y = 0
-        cost = 5
+        cost = 10
         ai_will_do = {
             factor = 2
             modifier = {
+                factor = 0
+                tag = MCM
+            }
+            modifier = {
                 factor = 0.5
                 OR = {
-                    tag = MCM
                     tag = MMO
                     tag = MQR
                 }
@@ -520,7 +523,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_WAR_SUPPORT }
 
         completion_reward = {
-            add_war_support = 0.05
+            add_war_support = 0.1
         }
     }
     focus = {
@@ -698,6 +701,8 @@ focus_tree = {
         bypass = {
             NOT = {
                 country_exists = MEX
+                country_exists = MCL
+                country_exists = MAC
             }
         }
         x = 1
@@ -717,9 +722,32 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_ANNEXATION }
 
         completion_reward = {
-            create_wargoal = {
-                target = MEX
-                type = annex_everything
+            if = {
+                limit = {
+                    country_exists = MEX
+                }
+                create_wargoal = {
+                    target = MEX
+                    type = annex_everything
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MCL
+                }
+                create_wargoal = {
+                    target = MCL
+                    type = annex_everything
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MAC
+                }
+                create_wargoal = {
+                    target = MAC
+                    type = annex_everything
+                }
             }
         }
     }
@@ -763,7 +791,8 @@ focus_tree = {
         available = {
             own_mexico_proper = yes
             own_the_cartels = yes
-            OR = {
+            count_triggers = {
+                amount = 3
                 own_baja_california = yes
                 own_chihuahua = yes
                 own_coahuila = yes
@@ -772,7 +801,8 @@ focus_tree = {
                 own_sonora = yes
                 own_tamaulipas = yes
             }
-            OR = {
+            count_triggers = {
+                amount = 3
                 own_campeche = yes
                 own_chiapas = yes
                 own_guerrero = yes
@@ -977,7 +1007,7 @@ focus_tree = {
         y = 0
         cost = 5
         ai_will_do = {
-            factor = 2
+            factor = 3
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
@@ -1320,6 +1350,25 @@ focus_tree = {
             add_popularity = {
                 ideology = longism
                 popularity = 0.1
+            }
+        }
+    }
+    focus = {
+        id = MSH_adopt_tenants_of_southern_populism
+        icon = GFX_
+        prerequisite = { focus = MSH_collaborate_with_texas}
+        x = -1
+        y = 1
+        relative_position_id = MSH_collaborate_with_texas
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            set_politics = {
+                ruling_party = longism
             }
         }
     }
