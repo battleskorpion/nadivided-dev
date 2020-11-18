@@ -1,6 +1,165 @@
 add_namespace = california
 
 country_event = {
+	id = california.75
+	title = california.75.t
+	desc = california.75.d
+	picture = GFX_report_event_german_speech
+	
+	is_triggered_only = yes
+	
+ 	immediate = {
+ 		hidden_effect = {
+ 			add_named_threat = { threat = 2 name = california.4.t }
+ 		} 		
+ 	}
+
+	option = {
+		name = california.75.a
+		4 = {
+			if = {
+				limit = { is_owned_by = JEF }
+				add_core_of = SCA
+			}
+		}
+		152 = {
+			if = {
+				limit = { is_owned_by = JEF }
+				add_core_of = SCA
+			}
+		}
+		153 = {
+			if = {
+				limit = { is_owned_by = JEF }
+				add_core_of = SCA
+			}
+		}
+		JEF = {
+			every_unit_leader = {
+				set_nationality = SCA
+			}
+		}
+		annex_country = { target = JEF transfer_troops = yes }
+		add_political_power = 75
+		set_country_flag = JEF_annexed
+		add_war_support = 0.1
+		add_stability = 0.05
+		hidden_effect = {
+			news_event = { hours = 6 id = news.36 }
+		}
+	}
+}
+# jefferson decsion on annexations
+country_event = {
+	id = california.28
+	title = california.28.t
+	desc = california.28.d
+	picture = GFX_report_event_hitler_parade
+	
+	is_triggered_only = yes
+	
+	option = { # Accept
+		name = california.28.a
+		ai_chance = {
+			base = 30
+			modifier = {
+				add = -25
+				SCA = { has_army_size = { size < 40 } }
+			}
+			modifier = {
+				add = 100
+				SCA = { has_army_size = { size > 39 } }
+			}
+			modifier = {
+				add = 20
+				is_in_faction_with = SCA
+			}
+		}
+		SCA = {
+			country_event = { hours = 2 id = california.4 }
+		}
+		custom_effect_tooltip = GAME_OVER_TT
+	}
+	option = { # Refuse
+		name = california.28.b
+		ai_chance = {
+			base = 10			
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+				NOT = { HUN = { has_completed_focus = HUN_protect_austria } }
+			}
+			modifier = {
+				SCA = { has_army_size = { size > 39 } }
+				factor = 0.5
+			}
+			modifier = {
+				add = 20
+				SCA = { has_army_size = { size < 30 } }
+			}
+
+			modifier = {
+				factor = 2
+				is_in_faction = yes
+				NOT = { is_in_faction_with = SCA }
+			}
+			modifier = {
+				any_other_country = {
+					has_guaranteed = JEF
+				}
+				factor = 5 #i've got friends
+			}
+			modifier = {
+				any_other_country = {
+					is_major = yes
+					has_guaranteed = JEF
+				}
+				factor = 5 #i've got big friends
+			}
+		}
+		SCA = {
+			add_opinion_modifier = { target = ROOT modifier = SCA_anschluss_rejected }
+			country_event = { hours = 2 id = california.29 }
+			if = { limit = { is_in_faction_with = JEF }
+				remove_from_faction = JEF
+			}
+		}
+	}
+}
+# Austria refuses Anschluss
+country_event = {
+	id = california.29
+	title = california.29.t
+	desc = california.29.d
+	picture = GFX_report_event_german_troops
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = california.29.a
+		add_state_claim = 4
+		add_state_claim = 152
+		add_state_claim = 153
+		create_wargoal = {
+			type = take_state_focus
+			target = JEF
+			generator = { 4 152 153 }
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+country_event = {
 	id = california.1
 	title = california.1.t
 	desc = california.1.d
@@ -166,21 +325,21 @@ country_event = {
 				factor = 10
 				any_other_country = {
 					is_major = yes
-					is_in_faction_with = SAZ
+					is_in_faction_with = SNV
 				}
 			}
 		}
 		SCA = { country_event = { id = california.88 days = 1 } 
 			if = {
 				limit = {
-					is_in_faction_with = SAZ
+					is_in_faction_with = SNV
 					is_faction_leader = yes
 				}
-				remove_from_faction = SAZ
+				remove_from_faction = SNV
 			}
 			if = {
 				limit = { 
-					is_in_faction_with = SAZ
+					is_in_faction_with = SNV
 					is_faction_leader = no
 				}
 				random_other_country = {
@@ -198,7 +357,7 @@ country_event = {
 		effect_tooltip = {
 			SCA = {
 				declare_war_on = {
-					target = SAZ
+					target = SNV
 					type = take_state
 					generator = { 85 }
 				}
@@ -236,7 +395,13 @@ country_event = {
 		create_wargoal = {
 			type = take_state
 			generator = { 85 }
-			target = SAZ
+			target = SNV
 		}
 		add_state_core = 85
 }
+###############################################################
+#############CIVIL WAR STUFF AFTER THE ELECTION################
+###############################################################
+
+
+

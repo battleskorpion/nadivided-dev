@@ -338,6 +338,7 @@ focus_tree = {
 		completion_reward = {
 			SCA = {
 				add_political_power = 50
+				add_idea = SCA_vice_rossi
 					
 			}
 		}
@@ -362,7 +363,7 @@ focus_tree = {
 		completion_reward = {
 			SCA = {
 				add_political_power = 50
-					
+				country_event = { id = california.51  days = 12 }	
 			}
 		}
 	}
@@ -391,6 +392,7 @@ focus_tree = {
 			SCA = {
 				custom_effect_tooltip = 2_SCA_tt
 				add_political_power = 50
+				country_event = { id = california.150 days = 4 }
 			}
 		}
 	}
@@ -814,7 +816,7 @@ focus_tree = {
 			factor = 1
 		} 
 		completion_reward = {
-			
+
 		}
 	}
 	focus = { 
@@ -870,7 +872,7 @@ focus_tree = {
 	focus = {
 		id = SCA_intergrate_Nevada
 		icon = GFX_goal_generic_nevada
-		x = 2
+		x = -4
 		y = 1
 		cost = 8
 		available_if_capitulated = yes 
@@ -894,7 +896,7 @@ focus_tree = {
 	focus = {
 		id = SCA_contain_idaho
 		icon = GFX_goal_generic_military_sphere
-		x = -1
+		x = 1
 		y = 1
 		cost = 8
 		available_if_capitulated = yes 
@@ -916,37 +918,94 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = SCA_militarise_mormon
-		icon = GFX_goal_generic_military_sphere
-		x = 1
-		y = 2
-		cost = 10
-		available_if_capitulated = yes 
-		prerequisite = {
-			focus = SCA_befriend_the_neighbors
-		}
+		id = SCA_invite_utah
+		icon = GFX_goal_generic_alliance
+		prerequisite = { focus = SCA_befriend_the_neighbors }
+		x = -1
+		y = 1
 		relative_position_id = SCA_befriend_the_neighbors
-		ai_will_do = { 
-			factor = 1
-		} 
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		available = {
+			is_faction_leader = yes
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		complete_tooltip = {
+
+		}
+
 		completion_reward = {
-			142 = {
-				set_building_level = {
-    				type = bunker
-    				level = 5
-    				province = {
-        				all_provinces = yes
-        				limit_to_border = yes
-        				level < 5
-					}
-				}
+			SUT = {
+				country_event = generic.5
 			}
-    }
-}
+			if = {
+				limit = {
+					has_completed_focus = SCA_intergrate_Nevada
+
+				}	
+			}
+		}
+	}
+	focus = {
+		id = SCA_invite_terrortories
+		icon = GFX_goal_generic_alliance
+		prerequisite = { focus = SCA_invite_utah }
+		x = 0
+		y = 1
+		relative_position_id = SCA_invite_utah
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 100
+		}
+
+		available = {
+			is_faction_leader = yes
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+			SAK = {
+				country_event = generic.5
+			}
+			if = {
+				limit = {
+					has_completed_focus = SCA_intergrate_Nevada
+
+				}	
+			}
+			SHI = {
+				country_event = generic.5
+			}
+			if = {
+				limit = {
+					has_completed_focus = SCA_intergrate_Nevada
+
+				}	
+			}
+		}
+	}
 focus = {
 		id = SCA_sway_arizona
 		icon = GFX_goal_generic_military_sphere
-		x = -1
+		x = 1
 		y = 1
 		cost = 10
 		available_if_capitulated = yes 
@@ -955,7 +1014,7 @@ focus = {
 		}
 		relative_position_id = SCA_befriend_the_neighbors
 		ai_will_do = { 
-			factor = 1
+			factor = 50
 		} 
 		completion_reward = {
 			SCA = {country_event = { days = 1 id = california.4 }}
@@ -973,26 +1032,17 @@ focus = {
 		}
 		relative_position_id = SCA_sway_arizona
 		ai_will_do = { 
-			factor = 1
+			factor = 200
 		} 
 		completion_reward = {
-			142 = {
-				set_building_level = {
-    				type = bunker
-    				level = 5
-    				province = {
-        				all_provinces = yes
-        				limit_to_border = yes
-        				level < 5
-					}
-				}
+			SCA = {
 			}
     }
 }
 	focus = {
 		id = SCA_develop_las_vegas
 		icon = GFX_goal_generic_military_sphere
-		x = 1
+		x = -1
 		y = 1
 		cost = 10
 		available_if_capitulated = yes 
@@ -1036,7 +1086,7 @@ focus = {
 	focus = {
 		id = SCA_support_oregon_war
 		icon = GFX_goal_generic_military_sphere
-		x = 10
+		x = 12
 		y = 1
 		cost = 5
 		available_if_capitulated = yes 
@@ -1060,7 +1110,7 @@ focus = {
 			SOR = {
 				add_equipment_to_stockpile = {
 					type = infantry_equipment
-					amount = 1000
+					amount = 3000
 					producer = SCA
 				}
 			}
@@ -1094,11 +1144,37 @@ focus = {
 		y = 1
 		cost = 5
 		available_if_capitulated = yes 
+				available = { 
+					SOR = {
+						
+					}
+					date < 1936.11.21
+		}
 		prerequisite = {
 			focus = SCA_support_oregon
-			focus= SCA_develop_allies_industries_for_protections
+			focus= SCA_develop_allies_for_protections
 		}
 		relative_position_id = SCA_support_oregon
+		ai_will_do = { 
+			factor = 1
+		} 
+		completion_reward = {
+			SCA = {
+
+			}
+		}
+	}
+	focus = {
+		id = SCA_victors_of_the_struggle
+		icon = GFX_goal_generic_oregon
+		x = -1
+		y = 3
+		cost = 5
+		available_if_capitulated = yes 
+		prerequisite = {
+			focus = SCA_march_on_jefferson
+		}
+		relative_position_id = SCA_support_oregon_war
 		ai_will_do = { 
 			factor = 1
 		} 
@@ -1209,9 +1285,9 @@ focus = {
 	}
 #Focus for SCA_develop_allies_industries_for_protections
 	focus = {
-		id = SCA_develop_allies_industries_for_protections
+		id = SCA_develop_allies_for_protections
 		icon = GFX_goal_generic_construct_civ_factory
-		x = 2
+		x = 4
 		y = 1
 		cost = 10
 		available_if_capitulated = yes 
@@ -1224,7 +1300,7 @@ focus = {
 			focus = SCA_befriend_the_neighbors
 		} 
 		ai_will_do = { 
-			factor = 1
+			factor = 1000
 		}
 		relative_position_id = SCA_befriend_the_neighbors
 		completion_reward= {
@@ -1353,7 +1429,7 @@ focus = {
 	focus = {
 		id = SCA_counter_intelliegence_training
 		icon = focus_mexico_hat
-		x = -4
+		x = 0
 		y = 1
 		cost = 8
 		available_if_capitulated = yes 
@@ -1445,15 +1521,15 @@ focus = {
 	focus = {
 		id = SCA_fold_idaho
 		icon = focus_mexico_hat
-		x = 1
-		y = 2
+		x = -3
+		y = 1
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = {
-			focus = SCA_consolidate_the_rockies
+			focus = SCA_befriend_the_neighbors
 
 		} 
-		relative_position_id = SCA_counter_intelliegence_training
+		relative_position_id = SCA_befriend_the_neighbors
 		ai_will_do = { 
 			factor = 1
 		}
@@ -1464,15 +1540,15 @@ focus = {
 		focus = {
 		id = SCA_develop_boise
 		icon = focus_mexico_hat
-		x = 1
-		y = 3
+		x = 0
+		y = 1
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = {
-			focus = SCA_consolidate_the_rockies
+			focus = SCA_fold_idaho
 
 		} 
-		relative_position_id = SCA_counter_intelliegence_training
+		relative_position_id = SCA_fold_idaho
 		ai_will_do = { 
 			factor = 1
 		}
