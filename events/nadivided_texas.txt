@@ -808,6 +808,13 @@ country_event = { #Allred's Rio Grande Alliance Joining Event
                 add = 25
                 has_completed_focus = MSH_collaborate_with_texas
             }
+            modifier = {
+                add = 25
+                has_opinion = {
+                    target = STX
+                    value > 60
+                }
+            }
         }
         STX = {
             add_to_faction = ROOT
@@ -821,14 +828,65 @@ country_event = { #Allred's Rio Grande Alliance Joining Event
                 add = -25
                 has_completed_focus = MSH_collaborate_with_texas
             }
+            modifier = {
+                add = -25
+                has_opinion = {
+                    target = STX
+                    value > 60
+                }
+            }
         }
         hidden_effect = {
-            
+            set_country_flag = STX_refused_alliance
         }
         STX = {
             country_event = {
-
+                id = texas.14
             }
         }
     }
 }
+country_event = { #Alliance Invitation refused
+    id = texas.14
+    title = texas.14.t
+    desc = texas.14.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = {
+        name = texas.14.a
+        ai_chance = {
+            factor = 75
+        }
+        random_country = {
+            limit = {
+                has_country_flag = STX_refused_alliance
+            }
+            STX = {
+                create_wargoal = {
+                    target = FROM
+                    type = puppet_wargoal_focus
+                }
+            }
+        }
+        hidden_effect = {
+            every_country = {
+                clr_country_flag = STX_refused_alliance
+            }
+        }
+    }
+    option = {
+        name = texas.14.b
+        ai_chance = {
+            factor = 25
+        }
+        add_political_power = 50
+        hidden_effect = {
+            every_country = {
+                clr_country_flag = STX_refused_alliance
+            }
+        }
+    }
+}  
