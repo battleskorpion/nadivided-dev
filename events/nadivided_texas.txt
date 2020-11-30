@@ -714,3 +714,179 @@ country_event = { #STX Unites the Klan
         }
     }
 }
+country_event = { #Allred new Secretary of State
+    id = texas.11
+    title = texas.11.t
+    if = {
+        limit = {
+            has_country_flag = STX_garner_returned
+        }
+        desc = texas.11.d
+    }
+    else = {
+        desc = texas.11.da
+    }
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #LBJ
+        name = texas.11.a
+        ai_chance = {
+            factor = 0
+            modifier = {
+                add = 100
+                NOT = {
+                    has_country_flag = STX_garner_returned
+                }
+            }
+        }
+        add_stability = 0.05
+        add_political_power = 25
+    }
+    option = { #Isolationist Garner
+        name = texas.11.b
+        ai_chance = {
+            factor = 100
+        }
+        trigger = {
+            has_country_flag = STX_garner_returned
+        }
+        add_war_support = 0.05
+        add_political_power = 25
+    }
+}
+country_event = { #Garner returns from Haiti
+    id = texas.12
+    title = texas.12.t
+    desc = texas.12.d
+    #picture = GFX_
+
+    is_triggered_only = no
+    fire_only_once = yes
+
+    trigger = {
+        tag = STX
+        NOT = {
+            country_exists = AOH
+        }
+    }
+
+    option = {
+        name = texas.12.a
+        ai_chance = {
+            factor = 100
+        }
+        add_political_power = 25
+        hidden_effect = {
+            set_country_flag = STX_garner_returned
+        }
+    }
+    option = {
+        name = texas.12.b
+        ai_chance = {
+            factor = 0
+        }
+        add_political_power = -25
+    }
+}
+country_event = { #Allred's Rio Grande Alliance Joining Event
+    id = texas.13
+    title = texas.13.t
+    desc = texas.13.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = {
+        name = texas.13.a
+        ai_chance = {
+            factor = 75
+            modifier = {
+                add = 25
+                has_completed_focus = MSH_collaborate_with_texas
+            }
+            modifier = {
+                add = 25
+                has_opinion = {
+                    target = STX
+                    value > 60
+                }
+            }
+        }
+        STX = {
+            add_to_faction = ROOT
+        }
+    }
+    option = {
+        name = texas.13.b
+        ai_chance = {
+            factor = 25
+            modifier = {
+                add = -25
+                has_completed_focus = MSH_collaborate_with_texas
+            }
+            modifier = {
+                add = -25
+                has_opinion = {
+                    target = STX
+                    value > 60
+                }
+            }
+        }
+        hidden_effect = {
+            set_country_flag = STX_refused_alliance
+        }
+        STX = {
+            country_event = {
+                id = texas.14
+            }
+        }
+    }
+}
+country_event = { #Alliance Invitation refused
+    id = texas.14
+    title = texas.14.t
+    desc = texas.14.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = {
+        name = texas.14.a
+        ai_chance = {
+            factor = 75
+        }
+        random_country = {
+            limit = {
+                has_country_flag = STX_refused_alliance
+            }
+            STX = {
+                create_wargoal = {
+                    target = FROM
+                    type = puppet_wargoal_focus
+                }
+            }
+        }
+        hidden_effect = {
+            every_country = {
+                clr_country_flag = STX_refused_alliance
+            }
+        }
+    }
+    option = {
+        name = texas.14.b
+        ai_chance = {
+            factor = 25
+        }
+        add_political_power = 50
+        hidden_effect = {
+            every_country = {
+                clr_country_flag = STX_refused_alliance
+            }
+        }
+    }
+}  
