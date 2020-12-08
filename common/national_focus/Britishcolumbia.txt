@@ -220,7 +220,7 @@ focus_tree = {
 
 	focus = {
 		id = PBC_Marine_Divison
-		icon = GFX_goal_generic_special_forces
+		icon = GFX_focus_PCB_Marines
 		prerequisite = { focus = equipment_effort_3 }
 		x = -1
 		y = 1
@@ -604,7 +604,7 @@ focus_tree = {
 
 		available_if_capitulated = yes
 		ai_will_do = {
-			factor = 1
+			factor = 10
 		}
 
 		available = {
@@ -909,7 +909,7 @@ focus_tree = {
 
 focus = {
 		id = PBC_Vancover_Island_Grand_Dockyard
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_focus_PCB_Vancover_Island_Grand_Dockyard
 		prerequisite = { focus = destroyer_effort }		
 		x = 0
 		y = 1
@@ -972,7 +972,7 @@ focus = {
 
 focus = {
 		id = PBC_British_Columbian_Grand_Navy
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_focus_PBC_British_Columbian_Grand_Navy
 		prerequisite = { focus = capital_ships_effort }		
 		x = 0
 		y = 1
@@ -1034,7 +1034,7 @@ focus = {
 
 		
 		ai_will_do = {
-			factor = 2
+			factor = 1
 		}
 
 		bypass = {
@@ -1167,10 +1167,10 @@ focus = {
 
 	focus = {
 		id = PBC_Exploit_Iron_Mines1
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_focus_generic_steel
 		prerequisite = { focus = production_effort }
 		x = 2
-		y = 0
+		y = 1
 		relative_position_id = production_effort
 		cost = 5
 
@@ -1180,7 +1180,7 @@ focus = {
 			429 = {
 				add_resource = {
 					type = steel
-					amount = 14
+					amount = 16
 				}
 			}			
 		}
@@ -1188,7 +1188,7 @@ focus = {
 			has_tech = ExcavationI
 		}
 		ai_will_do = {
-			factor = 3
+			factor = 6
 			modifier = {
 				factor = 0.25
 				always = yes
@@ -1675,10 +1675,10 @@ focus = {
 
 	focus = {
 		id = PBC_Exploit_Iron_Mines2
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_focus_generic_steel
 		prerequisite = { focus = construction_effort_3 }
 		x = 2
-		y = 0
+		y = 1
 		relative_position_id = construction_effort_3
 		cost = 10
 
@@ -1688,7 +1688,7 @@ focus = {
 			427 = {
 				add_resource = {
 					type = steel
-					amount = 24
+					amount = 45
 				}
 			}			
 		}
@@ -1696,7 +1696,7 @@ focus = {
 			has_tech = ExcavationIV
 		}
 		ai_will_do = {
-			factor = 1
+			factor = 2
 			modifier = {
 				factor = 0.25
 				always = yes
@@ -1805,7 +1805,7 @@ focus = {
 		icon = GFX_goal_generic_secret_weapon
 		prerequisite = { focus = secret_weapons }
 		x = 2
-		y = 0
+		y = 1
 		relative_position_id = secret_weapons
 		cost = 10
 
@@ -1837,7 +1837,7 @@ focus = {
 
 	focus = {
 		id = PBC_Fight_against_Government_Corrution
-		icon = GFX_goal_generic_neutrality_focus
+		icon = GFX_goal_generic_demand_territory
 		x = 27
 		y = 0
 		cost = 10
@@ -1868,6 +1868,7 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
+			add_ideas = PAB_Democracy			
 		}
 
 		ai_will_do = {
@@ -1881,16 +1882,50 @@ focus = {
 
 focus = {
 		id = PBC_Defend_Our_Freedom
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_goal_generic_construct_mil_factory
 		prerequisite = { focus = PBC_Hold_The_First_Election }				
 		x = 0
 		y = 1
 		relative_position_id = PBC_Hold_The_First_Election
 		cost = 10
 
+		available = {
+			has_government = democratic
+			}
+
 		available_if_capitulated = yes
 
 		completion_reward = {
+			385 = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								385 = {
+									free_building_slots = {
+										building = arms_factory
+										size > 2
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
 		}
 
 		ai_will_do = {
@@ -1904,8 +1939,8 @@ focus = {
 
 focus = {
 		id = PBC_the_switzerland_stratagem
-		icon = GFX_goal_generic_secret_weapon
-		prerequisite = { focus = PBC_Defend_Our_Freedom }				
+		icon = GFX_focus_PCB_Switzerland
+		prerequisite = { focus = GFX_focus_PCB_Switzerland }				
 		x = 0
 		y = 1
 		relative_position_id = PBC_Defend_Our_Freedom
@@ -1914,6 +1949,7 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
+			add_ideas = PBC_Switzerlandstrat
 		}
 
 		ai_will_do = {
@@ -1927,16 +1963,18 @@ focus = {
 
 focus = {
 		id = PBC_Okanagan_boom
-		icon = GFX_goal_generic_secret_weapon
-		prerequisite = { focus = PBC_the_switzerland_stratagem }				
-		x = 0
+		icon = GFX_focus_PBC_Okanagan
+		prerequisite = { focus = PBC_Universtiy_Grants OR = PBC_Industrial_Research_Grant }				
+		mutually_exclusive = { focus = PBC_Military_Contracts }
+		x = 3
 		y = 1
-		relative_position_id = PBC_the_switzerland_stratagem
+		relative_position_id = PBC_Universtiy_Grants
 		cost = 10
 
 		available_if_capitulated = yes
 
 		completion_reward = {
+			add_ideas = PBC_OkanaganBoom
 		}
 
 		ai_will_do = {
@@ -1950,16 +1988,17 @@ focus = {
 
 focus = {
 		id = PBC_Female_Foresters_Volenteers
-		icon = GFX_goal_generic_secret_weapon
-		prerequisite = { focus = PBC_Okanagan_boom }				
+		icon = GFX_focus_PCB_womans_forrestry
+		prerequisite = { focus = PBC_Universtiy_Grants }				
 		x = -1
 		y = 1
-		relative_position_id = PBC_Okanagan_boom
+		relative_position_id = PBC_Universtiy_Grants
 		cost = 10
 
 		available_if_capitulated = yes
 
 		completion_reward = {
+			add_ideas = PBC_Woman_forresters
 		}
 
 		ai_will_do = {
@@ -1974,10 +2013,10 @@ focus = {
 focus = {
 		id = PBC_Universtiy_Grants
 		icon = GFX_focus_research
-		prerequisite = { focus = PBC_Okanagan_boom }				
-		x = 1
+		prerequisite = { focus = PBC_the_switzerland_stratagem }				
+		x = 0
 		y = 1
-		relative_position_id = PBC_Okanagan_boom
+		relative_position_id = PBC_the_switzerland_stratagem
 		cost = 10
 
 		available_if_capitulated = yes
@@ -1997,17 +2036,23 @@ focus = {
 
 focus = {
 		id = PBC_Freedom_Of_The_Northwest
-		icon = GFX_goal_generic_secret_weapon
-		prerequisite = { focus = PBC_Universtiy_Grants } OR			
-		prerequisite = { focus = PBC_Military_Contracts }			
+		icon = GFX_focus_PCB_FreedomofNorthwest
+		prerequisite = { focus = PBC_Female_Foresters_Volenteers OR = PBC_Military_Contracts}			
 		x = 2
 		y = 1
-		relative_position_id = PBC_Universtiy_Grants
+		relative_position_id = PBC_Female_Foresters_Volenteers
 		cost = 10
 
 		available_if_capitulated = yes
 
+		available = {	
+			date > 1944.4.1
+		}
+
 		completion_reward = {
+			set_rule = {
+				can_create_factions = yes
+			}
 		}
 
 		ai_will_do = {
@@ -2034,10 +2079,11 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
+			add_ideas = PAB_Populism		
 		}
 
 		ai_will_do = {
-			factor = 1
+			factor = 3
 			modifier = {
 				factor = 0.25
 				always = yes
@@ -2054,9 +2100,14 @@ focus = {
 		relative_position_id = PBC_Fund_The_Social_Credit_Union
 		cost = 10
 
+		available = {
+			has_government = longism
+			}
+
 		available_if_capitulated = yes
 
 		completion_reward = {
+			add_ideas = PBC_Raisetaxes
 		}
 
 		ai_will_do = {
@@ -2070,7 +2121,7 @@ focus = {
 
 focus = {
 		id = PBC_Give_Haida_People_Postions_in_government
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_focus_PCB_Haida
 		prerequisite = { focus = PBC_Increased_Taxes }		
 		x = 0
 		y = 1
@@ -2080,8 +2131,9 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
+			set_cosmetic_tag = HAIDA_CONFEDERACY
 		}
-
+		
 		ai_will_do = {
 			factor = 1
 			modifier = {
@@ -2093,7 +2145,7 @@ focus = {
 
 focus = {
 		id = PBC_Create_New_Equality_Bill
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_focus_paper_stacked
 		prerequisite = { focus = PBC_Give_Haida_People_Postions_in_government }		
 		x = 0
 		y = 1
@@ -2116,9 +2168,9 @@ focus = {
 
 focus = {
 		id = PBC_Military_Contracts
-		icon = GFX_goal_generic_secret_weapon
-		prerequisite = { focus = PBC_Create_New_Equality_Bill }	OR
-		prerequisite = { focus = PBC_Industrial_Research_Grant }
+		icon = GFX_focus_PCB_Militarycontracts
+		prerequisite = { focus = PBC_Create_New_Equality_Bill OR = PBC_Industrial_Research_Grant }
+		mutually_exclusive = { focus = PBC_Okanagan_boom }
 		x = 2
 		y = 1
 		relative_position_id = PBC_Create_New_Equality_Bill
@@ -2140,7 +2192,7 @@ focus = {
 
 focus = {
 		id = PBC_Secure_the_Seas_for_Protection
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_goal_generic_construct_naval_dockyard
 		prerequisite = { focus = PBC_Military_Contracts }		
 		x = 2
 		y = 1
@@ -2150,6 +2202,22 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
+			61 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
+			62 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+			}
 		}
 
 		ai_will_do = {
@@ -2163,7 +2231,7 @@ focus = {
 
 focus = {
 		id = PBC_A_Promise_to_the_farmers
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_focus_pab_propaganda
 		prerequisite = { focus = PBC_Fight_against_Government_Corrution }
 		mutually_exclusive = { focus = PBC_Fund_The_Social_Credit_Union }
 		mutually_exclusive = { focus = PBC_Hold_The_First_Election }
@@ -2175,10 +2243,11 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
+			add_ideas = PAB_Progressivism		
 		}
 
 		ai_will_do = {
-			factor = 2
+			factor = 1
 			modifier = {
 				factor = 0.25
 				always = yes
@@ -2195,9 +2264,14 @@ focus = {
 		relative_position_id = PBC_A_Promise_to_the_farmers
 		cost = 10
 
+		available = {
+			has_government = progressivism
+			}
+
 		available_if_capitulated = yes
 
 		completion_reward = {
+			add_ideas = PBC_Lowertaxes
 		}
 
 		ai_will_do = {
@@ -2211,7 +2285,7 @@ focus = {
 
 focus = {
 		id = PBC_Subsidize_Lumber_Industry
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_focus_PCB_lumberjacks
 		prerequisite = { focus = PBC_Decrease_Taxes }		
 		x = 0
 		y = 1
@@ -2220,7 +2294,59 @@ focus = {
 
 		available_if_capitulated = yes
 
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = construction_effort_tt
+				429 = {
+					free_building_slots = {
+						building = industrial_complex
+						size < 2
+						include_locked = yes
+					}
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}
+		}		
+
 		completion_reward = {
+			429 = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								429 = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
 		}
 
 		ai_will_do = {
@@ -2258,7 +2384,7 @@ focus = {
 
 	focus = {
 		id = PBC_Leave_Corruption_to_Run_Amuk
-		icon = GFX_goal_generic_neutrality_focus
+		icon = GFX_focus_research
 		x = 37
 		y = 0
 		cost = 10
@@ -2319,6 +2445,10 @@ focus = {
 		relative_position_id = PBC_Promote_Socialist_Newspapers
 		cost = 10
 
+		available = {
+			has_government = communism
+			}
+
 		available_if_capitulated = yes
 
 		completion_reward = {
@@ -2336,11 +2466,11 @@ focus = {
 
 focus = {
 		id = PBC_Socialist_Think_Tanks
-		icon = GFX_focus_research
+		icon = GFX_focus_generic_socialist_science
 		prerequisite = { focus = PBC_Enact_Maxarist_Policy }
 
 		x = -2
-		y = 0
+		y = 1
 		relative_position_id = PBC_Enact_Maxarist_Policy
 		cost = 10
 
@@ -2351,7 +2481,7 @@ focus = {
 		}
 
 		ai_will_do = {
-			factor = 1
+			factor = 6
 			modifier = {
 				factor = 0.25
 				always = yes
@@ -2361,7 +2491,7 @@ focus = {
 
 focus = {
 		id = PBC_Garage_Workshops
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_focus_PCB_garage_spirt
 		prerequisite = { focus = PBC_Spirit_of_the_Revolution }
 
 		x = 0
@@ -2372,7 +2502,7 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-		add_ideas = PAB_Communism		
+			add_ideas = PAB_Scramble_to_make_gunsi
 		}
 
 		ai_will_do = {
@@ -2411,7 +2541,7 @@ focus = {
 
 focus = {
 		id = PBC_Enact_Maxarist_Policy
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_focus_generic_join_comintern
 		prerequisite = { focus = PBC_Garage_Workshops }
 
 		x = 0
@@ -2461,7 +2591,7 @@ focus = {
 
 focus = {
 		id = PBC_Ask_Forgien_Communists_For_Assistance
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_focus_ger_great_red_menace
 		prerequisite = { focus = PBC_One_Year_Plan }
 		mutually_exclusive = { focus = PBC_Create_North_West_Socialist_Federation }
 		x = -2
@@ -2486,7 +2616,7 @@ focus = {
 
 focus = {
 		id = PBC_Ask_Soviet_Union_For_Assistance
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_focus_fra_loyalty_stalin
 		prerequisite = { focus = PBC_Ask_Forgien_Communists_For_Assistance }
 
 		x = 1
@@ -2511,7 +2641,7 @@ focus = {
 
 focus = {
 		id = PBC_Recieve_Commumist_Chinese_Refugees
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_focus_chi_cooperation_with_the_communists
 		prerequisite = { focus = PBC_Ask_Forgien_Communists_For_Assistance }
 
 		x = -1
@@ -2536,7 +2666,7 @@ focus = {
 
 focus = {
 		id = PBC_Create_North_West_Socialist_Federation
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_focus_PCB_SocialistFederation
 		prerequisite = { focus = PBC_One_Year_Plan }
 		mutually_exclusive = { focus = PBC_Ask_Forgien_Communists_For_Assistance }
 		x = 2
@@ -2547,11 +2677,18 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-		add_ideas = PAB_Communism		
+			if = {
+				limit = {
+					is_ai = no
+				}
+				set_rule = {
+					can_create_factions = yes
+				}
+			}
 		}
 
 		ai_will_do = {
-			factor = 1
+			factor = 6
 			modifier = {
 				factor = 0.25
 				always = yes
@@ -2584,6 +2721,42 @@ focus = {
 		}
 	}
 
+focus = {
+		id = PBC_Spread_The_Revolution_to_Alberta
+		icon = GFX_goal_generic_major_war
+		prerequisite = { focus = PBC_BC_Brand_Socialism }
+
+		x = 0
+		y = 1
+		relative_position_id = PBC_BC_Brand_Socialism
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			create_wargoal = {
+   			type = puppet_wargoal_focus
+    		target = PAB
+			}	
+		}
+
+		available = {				
+			if = {
+				limit = {
+					is_ai = yes
+				}
+				date > 1943.06.1
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.25
+				always = yes
+			}
+		}
+	}
 
 focus = {
 		id = PBC_Arrest_Union_leaders
@@ -2613,13 +2786,17 @@ focus = {
 
 focus = {
 		id = PBC_Burnaby_Death_Squads
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_focus_PCB_Deathsquads
 		prerequisite = { focus = PBC_Arrest_Union_leaders }
 
 		x = 0
 		y = 1
 		relative_position_id = PBC_Arrest_Union_leaders
 		cost = 10
+
+		available = {
+			has_government = fascism
+			}
 
 		available_if_capitulated = yes
 
@@ -2638,22 +2815,22 @@ focus = {
 
 focus = {
 		id = PBC_BC_Youth_Army
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_focus_generic_little_entente
 		prerequisite = { focus = PBC_Burnaby_Death_Squads }
 
 		x = 2
-		y = 0
+		y = 1
 		relative_position_id = PBC_Burnaby_Death_Squads
 		cost = 10
 
 		available_if_capitulated = yes
 
 		completion_reward = {
-		add_ideas = PAB_Communism		
+			add_ideas = military_youth_focus
 		}
 
 		ai_will_do = {
-			factor = 3
+			factor = 5
 			modifier = {
 				factor = 0.25
 				always = yes
@@ -2663,7 +2840,7 @@ focus = {
 
 focus = {
 		id = PBC_Attack_The_Yukon
-		icon = GFX_goal_generic_major_war
+		icon = GFX_focus_PCB_Yukon
 		prerequisite = { focus = PBC_Burnaby_Death_Squads }
 
 		x = 0
@@ -2691,7 +2868,7 @@ focus = {
 
 focus = {
 		id = PBC_Violent_Suppression
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_focus_pab_military_police
 		prerequisite = { focus = PBC_Attack_The_Yukon }
 
 		x = 0
@@ -2716,11 +2893,11 @@ focus = {
 
 focus = {
 		id = PBC_Immoral_Science
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_focus_PCB_Medical_Experiments
 		prerequisite = { focus = PBC_Violent_Suppression }
 
 		x = 2
-		y = 0
+		y = 1
 		relative_position_id = PBC_Violent_Suppression
 		cost = 10
 
@@ -2741,7 +2918,7 @@ focus = {
 
 focus = {
 		id = PBC_Alaska_Is_Rightfully_Ours
-		icon = GFX_goal_generic_major_war
+		icon = GFX_focus_PCB_Alaska
 		prerequisite = { focus = PBC_Violent_Suppression }
 
 		x = 0
@@ -2769,7 +2946,7 @@ focus = {
 
 focus = {
 		id = PBC_A_Greater_BC
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_focus_PCB_GreaterBC
 		prerequisite = { focus = PBC_Alaska_Is_Rightfully_Ours }
 
 		x = -1
@@ -2780,7 +2957,16 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
+		add_state_core = 426
+		add_state_core = 69
+		add_state_core = 431
+		add_state_core = 432
+		add_state_core = 433
+		add_state_core = 440
+		add_state_core = 489
+		add_state_core = 443
+		add_state_core = 498
+		add_state_core = 499
 		}
 
 		ai_will_do = {
@@ -2794,7 +2980,7 @@ focus = {
 
 focus = {
 		id = PBC_Slave_Labour_in_the_mines
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_focus_pab_coal_mine
 		prerequisite = { focus = PBC_Alaska_Is_Rightfully_Ours }
 
 		x = 1
@@ -2805,7 +2991,18 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
+			427 = {
+				add_resource = {
+					type = steel
+					amount = 14
+				}
+			}			
+			427 = {
+				add_resource = {
+					type = Chromium
+					amount = 6
+				}		
+			}
 		}
 
 		ai_will_do = {
@@ -2819,7 +3016,7 @@ focus = {
 
 	focus = {
 		id = PBC_Chinese_Immigration
-		icon = GFX_focus_generic_manpower
+		icon = GFX_focus_PBC_Asian_Immigration1
 		x = 45
 		y = 0
 		cost = 5
@@ -2827,12 +3024,8 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_tech_bonus = {
-				name = industrial_bonus
-				bonus = 1.0
-				uses = 1
-				category = industry
-			}
+			add_timed_idea = { idea = PBC_asianimmigration1  days = 250 }
+			add_manpower = 4000
 		}
 
 		ai_will_do = {
@@ -2846,7 +3039,7 @@ focus = {
 
 focus = {
 		id = PBC_Accept_Refugees_From_East_Asia
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_focus_PBC_Asian_Immigration2
 		prerequisite = { focus = PBC_Chinese_Immigration }
 
 		x = 0
@@ -2863,6 +3056,7 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {	
+			add_timed_idea = { idea = PBC_asianimmigration2  days = 365 }		
 		}
 
 		ai_will_do = {
@@ -2876,7 +3070,7 @@ focus = {
 
 focus = {
 		id = PBC_Asian_Immigration_Attraction_Plan
-		icon = GFX_goal_generic_secret_weapon
+		icon = GFX_focus_PBC_Asian_Immigration3
 		prerequisite = { focus = PBC_Accept_Refugees_From_East_Asia }
 
 		x = 0
@@ -2891,8 +3085,9 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {	
-		}
-
+			add_ideas = PBC_asianimmigration3	
+		}	
+			
 		ai_will_do = {
 			factor = 3
 			modifier = {
