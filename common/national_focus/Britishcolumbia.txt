@@ -34,10 +34,10 @@ focus_tree = {
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		available_if_capitulated = yes
 		ai_will_do = {
-			factor = 1
+			factor = 2
 			modifier = {
 				factor = 0.2
-				date < 1939.1.1			
+				date < 1936.1.1			
 			}		
 		}
 		completion_reward = {
@@ -62,6 +62,10 @@ focus_tree = {
 		cost = 10
 		ai_will_do = {
 			factor = 1
+			modifier = {
+				factor = 0.2
+				date < 1938.1.1			
+			}		
 		}
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		available_if_capitulated = yes
@@ -159,7 +163,13 @@ focus_tree = {
 		y = 2
 		relative_position_id = motorization_effort
 		cost = 10
-
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.2
+				date < 1939.1.1			
+			}		
+		}
 		available_if_capitulated = yes
 
 		completion_reward = {
@@ -918,7 +928,65 @@ focus = {
 
 		available_if_capitulated = yes
 
+		complete_tooltip = {
+			navy_experience = 100
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = dockyard
+				level = 2
+				instant_build = yes
+			}
+		}
+		
 		completion_reward = {
+			if = {
+				limit = {
+					NOT = {
+						62 = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					62 = {
+						is_coastal = yes
+					}
+				}
+				62 = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+
+			}			
 		}
 
 		ai_will_do = {
@@ -982,6 +1050,7 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
+			add_ideas = PBC_grandnavy
 		}
 
 		ai_will_do = {
@@ -1034,7 +1103,7 @@ focus = {
 
 		
 		ai_will_do = {
-			factor = 1
+			factor = 2
 		}
 
 		bypass = {
@@ -1106,7 +1175,7 @@ focus = {
 
 
 		ai_will_do = {
-			factor = 2			
+			factor = 1			
 		}
 
 		bypass = {
@@ -1282,7 +1351,7 @@ focus = {
 
 
 		ai_will_do = {
-			factor = 2
+			factor = 1
 		}
 
 		bypass = {
@@ -1867,8 +1936,8 @@ focus = {
 
 		available_if_capitulated = yes
 
-		completion_reward = {
-			add_ideas = PAB_Democracy			
+		completion_reward = {		
+			add_timed_idea = { idea = PAB_Democracy  days = 600 }		
 		}
 
 		ai_will_do = {
@@ -1940,7 +2009,7 @@ focus = {
 focus = {
 		id = PBC_the_switzerland_stratagem
 		icon = GFX_focus_PCB_Switzerland
-		prerequisite = { focus = GFX_focus_PCB_Switzerland }				
+		prerequisite = { focus = PBC_Defend_Our_Freedom }				
 		x = 0
 		y = 1
 		relative_position_id = PBC_Defend_Our_Freedom
@@ -1974,7 +2043,7 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_ideas = PBC_OkanaganBoom
+			add_timed_idea = { idea = PBC_OkanaganBoom  days = 365 }
 		}
 
 		ai_will_do = {
@@ -2078,8 +2147,8 @@ focus = {
 
 		available_if_capitulated = yes
 
-		completion_reward = {
-			add_ideas = PAB_Populism		
+		completion_reward = {		
+			add_timed_idea = { idea = PAB_Populism  days = 600 }		
 		}
 
 		ai_will_do = {
@@ -2132,6 +2201,31 @@ focus = {
 
 		completion_reward = {
 			set_cosmetic_tag = HAIDA_CONFEDERACY
+			add_state_core = 426
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.25
+				always = yes
+			}
+		}
+	}
+
+focus = {
+		id = PBC_Divisional_totems_poles
+		icon = GFX_focus_divisional_Totem
+		prerequisite = { focus = PBC_Give_Haida_People_Postions_in_government }		
+		x = 2
+		y = 1
+		relative_position_id = PBC_Give_Haida_People_Postions_in_government
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = PBC_Divisonal_Totems_poles
 		}
 		
 		ai_will_do = {
@@ -2155,6 +2249,7 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
+			add_ideas = PBC_Equality_Bill
 		}
 
 		ai_will_do = {
@@ -2179,6 +2274,7 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
+			add_ideas = PBC_Military_Contracts
 		}
 
 		ai_will_do = {
@@ -2242,8 +2338,8 @@ focus = {
 
 		available_if_capitulated = yes
 
-		completion_reward = {
-			add_ideas = PAB_Progressivism		
+		completion_reward = {	
+			add_timed_idea = { idea = PAB_Progressivism  days = 500 }
 		}
 
 		ai_will_do = {
@@ -2398,12 +2494,12 @@ focus = {
 		completion_reward = {
 			add_popularity = {
 			ideology = communism
-			popularity = 0.5
+			popularity = 0.05
 			}
 	
 			add_popularity = {
-			ideology = facism
-			popularity = 0.5
+			ideology = fascism
+			popularity = 0.05
 			}	
 			add_stability = -0.15		
 		}
@@ -2422,16 +2518,12 @@ focus = {
 
 		available_if_capitulated = yes
 
-		completion_reward = {
-		add_ideas = PAB_Communism		
+		completion_reward = {		
+		add_timed_idea = { idea = PAB_Communism  days = 500 }
 		}
 
 		ai_will_do = {
-			factor = 3
-			modifier = {
-				factor = 0.25
-				always = yes
-			}
+			factor = 10
 		}
 	}
 
@@ -2452,7 +2544,7 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-		add_ideas = PAB_Communism		
+		add_ideas = PBC_Spirit_of_Revolution
 		}
 
 		ai_will_do = {
@@ -2527,7 +2619,7 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-		add_ideas = PAB_Communism		
+			add_stability = 0.15
 		}
 
 		ai_will_do = {
@@ -2547,12 +2639,15 @@ focus = {
 		x = 0
 		y = 1
 		relative_position_id = PBC_Garage_Workshops
-		cost = 10
+		cost = 5
 
 		available_if_capitulated = yes
 
 		completion_reward = {
-		add_ideas = PAB_Communism		
+			add_popularity = {
+    		ideology = communism
+    		popularity = 0.10
+			}	
 		}
 
 		ai_will_do = {
@@ -2577,8 +2672,8 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-		add_ideas = PAB_Communism		
-		}
+			add_timed_idea = { idea = PBC_One_year_plan  days = 365 }
+	}
 
 		ai_will_do = {
 			factor = 1
@@ -2602,11 +2697,11 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-		add_ideas = PAB_Communism		
+			add_political_power = 200	
 		}
 
 		ai_will_do = {
-			factor = 1
+			factor = 3
 			modifier = {
 				factor = 0.25
 				always = yes
@@ -2627,10 +2722,11 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {		
+			add_ideas = PBC_Help_From_Soviets
 		}
 
 		ai_will_do = {
-			factor = 1
+			factor = 4
 			modifier = {
 				factor = 0.25
 				always = yes
@@ -2647,16 +2743,17 @@ focus = {
 		x = -1
 		y = 1
 		relative_position_id = PBC_Ask_Forgien_Communists_For_Assistance
-		cost = 10
+		cost = 15
 
 		available_if_capitulated = yes
 
 		completion_reward = {
 			add_manpower = 110000	
+			add_timed_idea = { idea = PBC_asianimmigration1  days = 24 }			
 		}
 
 		ai_will_do = {
-			factor = 1
+			factor = 10
 			modifier = {
 				factor = 0.25
 				always = yes
@@ -2688,7 +2785,7 @@ focus = {
 		}
 
 		ai_will_do = {
-			factor = 6
+			factor = 3
 			modifier = {
 				factor = 0.25
 				always = yes
@@ -2709,11 +2806,11 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-		add_ideas = PAB_Communism		
+		add_ideas = PBC_BC_Brand_Socialism		
 		}
 
 		ai_will_do = {
-			factor = 1
+			factor = 2
 			modifier = {
 				factor = 0.25
 				always = yes
@@ -2772,11 +2869,11 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-		
+			add_timed_idea = { idea = PBC_Arrest_Unionists  days = 450 }		
 		}
 
 		ai_will_do = {
-			factor = 1
+			factor = 10
 			modifier = {
 				factor = 0.25
 				always = yes
@@ -2786,7 +2883,7 @@ focus = {
 
 focus = {
 		id = PBC_Burnaby_Death_Squads
-		icon = GFX_focus_PCB_Deathsquads
+		icon = GFX_focus_generic_little_entente
 		prerequisite = { focus = PBC_Arrest_Union_leaders }
 
 		x = 0
@@ -2800,8 +2897,8 @@ focus = {
 
 		available_if_capitulated = yes
 
-		completion_reward = {
-		add_ideas = PAB_Communism		
+		completion_reward = {	
+			add_timed_idea = { idea = PBC_Burnaby_death_Squads  days = 900 }		
 		}
 
 		ai_will_do = {
@@ -2879,7 +2976,7 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-		add_ideas = PAB_Communism		
+		add_ideas = PBC_Violent_Suppression		
 		}
 
 		ai_will_do = {
@@ -3024,8 +3121,9 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_timed_idea = { idea = PBC_asianimmigration1  days = 250 }
+			add_timed_idea = { idea = PBC_asianimmigration1  days = 365 }
 			add_manpower = 4000
+			add_political_power = -75	
 		}
 
 		ai_will_do = {
