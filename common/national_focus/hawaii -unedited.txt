@@ -19,7 +19,7 @@ continuous_focus_position = { x = 20 y = 2400 }
 		id = Hawaii_fixingtheadministration
 		icon = GFX_goal_generic_production2
 		x = 13
-		y = 5
+		y = 4
 		cost = 10
 		available_if_capitulated = no
 		prerequisite = { 
@@ -54,9 +54,8 @@ continuous_focus_position = { x = 20 y = 2400 }
 	focus = {
 		id = Hawaii_alliesinasia
 		icon = GFX_focus_usa_focus_on_asia
-		relative_position_id = Hawaii_foreignaffairs
-		x = 2
-		y = 1
+		x = 40
+		y = 2
 		cost = 10
 		available_if_capitulated = yes
 		prerequisite = { focus = Hawaii_foreignaffairs }
@@ -83,11 +82,29 @@ continuous_focus_position = { x = 20 y = 2400 }
 		}
 	}
 
+	#Focus for Crush the Fascists!
+	focus = {
+		id = Hawaii_crushthefascists
+		icon = GFX_focus_generic_anti_fascist_diplomacy
+		x = 8
+		y = 9
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { 
+			focus = Hawaii_thepacificinternationale 
+			focus = Hawaii_directrulefromhonolulu 
+			focus = Hawaii_abeaconofsocialism 
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
 	#Focus for Foreign Affairs
 	focus = {
 		id = Hawaii_foreignaffairs
 		icon = GFX_goal_generic_intelligence_exchange
-		x = 36
+		x = 37
 		y = 1
 		cost = 10
 		available_if_capitulated = yes
@@ -110,8 +127,24 @@ continuous_focus_position = { x = 20 y = 2400 }
 		}
 	}
 
-
-
+	#Focus for Administer the Islands
+	focus = {
+		id = Hawaii_administertheislands
+		icon = GFX_goal_unknown
+		x = 15
+		y = 6
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = Hawaii_createaparliament }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_stability = 0.05
+			add_political_power = -10
+			add_war_support = .05
+	}
+}
 	#Focus for Hawaiian Suffrage
 	focus = {
 		id = Hawaii_hawaiiansuffrage
@@ -120,7 +153,7 @@ continuous_focus_position = { x = 20 y = 2400 }
 		y = 7
 		cost = 10
 		available_if_capitulated = yes
-		prerequisite = { focus = Hawaii_createaparliament }
+		prerequisite = { focus = Hawaii_administertheislands }
 		ai_will_do = {
 			factor = 1
 		}
@@ -167,22 +200,38 @@ completion_reward = {
 	focus = {
 		id = Hawaii_establishthepresidency
 		icon = GFX_focus_usa_recruit_the_free_corps
-		x = 0
-		y = 1
+		x = 12
+		y = 8
 		cost = 10
-		relative_position_id = Hawaii_anamericanmodel
 		available_if_capitulated = yes
-		prerequisite = { focus = Hawaii_anamericanmodel }
+		prerequisite = { focus = Hawaii_centralizetheleadership }
+		mutually_exclusive = { focus = Hawaii_electedministry }
 		ai_will_do = {
 			factor = 1
 		}
 		completion_reward = {
 			add_stability = 0.05
 			add_war_support = 0.10
-
 	}
 }
-
+	#Focus for Elected Ministry
+	focus = {
+		id = Hawaii_electedministry
+		icon = GFX_goal_unknown
+		x = 14
+		y = 8
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = Hawaii_centralizetheleadership }
+		mutually_exclusive = { focus = Hawaii_establishthepresidency }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_stability = 0.10
+			add_war_support = 0.05 
+	}
+}
 	#Focus for Absolute Rule
 	focus = {
 		id = Hawaii_absoluterule
@@ -192,7 +241,7 @@ completion_reward = {
 		cost = 10
 		available_if_capitulated = yes
 		prerequisite = { 
-			focus = Hawaii_regulatetheplantations 
+			focus = Hawaii_amonarchicaldebate 
 		}
 		prerequisite = { 
 			focus = Hawaii_thefruitquestion 
@@ -215,7 +264,7 @@ completion_reward = {
 		cost = 10
 		available_if_capitulated = yes
 		prerequisite = { 
-			focus = Hawaii_regulatetheplantations 
+			focus = Hawaii_amonarchicaldebate 
 		}
 		prerequisite = { 
 			focus = Hawaii_thefruitquestion 
@@ -299,7 +348,19 @@ completion_reward = {
 		}
 	}
 
-
+	#Focus for Universal Suffrage?
+	focus = {
+		id = Hawaii_universalsuffrage
+		icon = GFX_goal_unknown
+		x = 27
+		y = 6
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = Hawaii_anamericanmodel }
+		ai_will_do = {
+			factor = 1
+		}
+	}
 
 	#Focus for The Political System
 	focus = {
@@ -446,16 +507,9 @@ completion_reward = {
 		ai_will_do = {
 			factor = 1
 		}
-
 		completion_reward = {
-			add_popularity = {
-				ideology = longism
-				popularity = 0.1
-			}
-			add_popularity = {
-				ideology = progressivism
-				popularity = 0.1
-			}		
+			add_stability = 0.10
+			add_political_power = 25
 	}
 }
 	#Focus for Create Work Camps
@@ -481,7 +535,7 @@ completion_reward = {
 		cost = 10
 		available_if_capitulated = yes
 		prerequisite = { 
-			focus = Hawaii_whattodowiththeroyalfamily 
+			focus = Hawaii_conventionoftheleft 
 		}
 		prerequisite = { 
 			focus = Hawaii_thefruitquestion 
@@ -489,7 +543,9 @@ completion_reward = {
 		mutually_exclusive = { 
 			focus = Hawaii_closetheplantations 
 		}
-
+		mutually_exclusive = { 
+			focus = Hawaii_regulatetheplantations 
+		}
 		ai_will_do = {
 			factor = 1
 		}
@@ -499,17 +555,22 @@ completion_reward = {
 	focus = {
 		id = Hawaii_closetheplantations
 		icon = GFX_goal_unknown
-		x = 10
+		x = 8
 		y = 4
 		cost = 10
 		available_if_capitulated = yes
 		prerequisite = { 
-			focus = Hawaii_whattodowiththeroyalfamily 
+			focus = Hawaii_conventionoftheleft 
+		}
+		prerequisite = { 
+			focus = Hawaii_thefruitquestion 
 		}
 		mutually_exclusive = { 
 			focus = Hawaii_nationalizetheplantations 
 		}
-
+		mutually_exclusive = { 
+			focus = Hawaii_regulatetheplantations 
+		}
 		ai_will_do = {
 			factor = 1
 		}
@@ -568,12 +629,20 @@ completion_reward = {
 	focus = {
 		id = Hawaii_regulatetheplantations
 		icon = GFX_goal_generic_trade
-		x = 18
-		y =3
+		x = 10
+		y = 4
 		cost = 10
 		available_if_capitulated = yes
 		prerequisite = { 
-			focus = Hawaii_themonarchistswin 
+			focus = Hawaii_conventionoftheleft 
+		}
+		prerequisite = { 
+			focus = Hawaii_thefruitquestion 
+		}
+		mutually_exclusive = { 
+			focus = Hawaii_nationalizetheplantations 
+			focus = Hawaii_closetheplantations 
+			#focus = Hawaii_ 
 		}
 		ai_will_do = {
 			factor = 1
@@ -605,7 +674,28 @@ completion_reward = {
 		prerequisite = { 
 			focus = Hawaii_suppresslocalmovements 
 		}
+		prerequisite = { 
+			focus = Hawaii_whattodowiththeroyalfamily 
+		}
+		mutually_exclusive = { 
+			focus = Hawaii_powertothetradeunions 
+			focus = Hawaii_congressoftheislands 
+			#focus = Hawaii_ 
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
 
+	#Focus for Unity Through Brotherhood
+	focus = {
+		id = Hawaii_unitythroughbrotherhood
+		icon = GFX_goal_molotov_ribbentrop_pact
+		x = 8
+		y = 5
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = Hawaii_closetheplantations }
 		ai_will_do = {
 			factor = 1
 		}
@@ -630,14 +720,16 @@ completion_reward = {
 		id = Hawaii_congressoftheislands
 		icon = GFX_goal_unknown
 		x = 8
-		y = 9
+		y = 7
 		cost = 10
 		available_if_capitulated = yes
-		prerequisite = { focus = Hawaii_directrulefromhonolulu }
-		prerequisite = { focus = Hawaii_thepacificinternationale }
 		prerequisite = { 
-			focus = Hawaii_congressoftheislands 
+			focus = Hawaii_unitythroughbrotherhood 
 		}
+		prerequisite = { 
+			focus = Hawaii_whattodowiththeroyalfamily 
+		}
+		mutually_exclusive = { focus = Hawaii_enforcepartyauthority }
 		ai_will_do = {
 			factor = 1
 		}
@@ -694,15 +786,10 @@ completion_reward = {
 		id = Hawaii_abeaconofsocialism
 		icon = GFX_focus_prc_agrarian_socialism
 		x = 8
-		y = 10
+		y = 8
 		cost = 10
 		available_if_capitulated = yes
-		prerequisite = { focus = Hawaii_directrulefromhonolulu }
-		prerequisite = { focus = Hawaii_thepacificinternationale }
-		prerequisite = { 
-			focus = Hawaii_congressoftheislands 
-		}
-
+		prerequisite = { focus = Hawaii_congressoftheislands }
 		ai_will_do = {
 			factor = 1
 		}
@@ -828,7 +915,7 @@ completion_reward = {
 		y = 5
 		cost = 10
 		available_if_capitulated = yes
-		prerequisite = { focus = Hawaii_closetheplantations }
+		prerequisite = { focus = Hawaii_regulatetheplantations }
 		ai_will_do = {
 			factor = 1
 		}
@@ -843,11 +930,86 @@ completion_reward = {
 		cost = 10
 		available_if_capitulated = yes
 		prerequisite = { 
+			focus = Hawaii_whattodowiththeroyalfamily 
+		}
+		prerequisite = { 
 			focus = Hawaii_culturalintegration 
 		}
-
+		mutually_exclusive = { focus = Hawaii_enforcepartyauthority }
+		ai_will_do = {
+			factor = 1
+		}
 	}
 
+	#Focus for Rewrite the Constitution
+	focus = {
+		id = Hawaii_rewritetheconstitution
+		icon = GFX_focus_generic_treaty
+		x = 13
+		y = 6
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = Hawaii_removecorruptofficials }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_stability = 0.05
+			add_political_power = 25
+			add_war_support = 0.10
+	}
+}
+	#Focus for Centralize the Leadership?
+	focus = {
+		id = Hawaii_centralizetheleadership
+		icon = GFX_focus_generic_support_the_left_right
+		x = 13
+		y = 7
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = Hawaii_rewritetheconstitution }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_stability = 0.05
+			add_political_power = 30
+	}
+}
+	#Focus for Remove Corrupt officials
+	focus = {
+		id = Hawaii_removecorruptofficials
+		icon = GFX_goal_unknown
+		x = 13
+		y = 5
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = Hawaii_fixingtheadministration }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_stability = 0.10
+			add_political_power = -150
+	}
+}
+	#Focus for Edit the Constitution
+	focus = {
+		id = Hawaii_edittheconstitution
+		icon = GFX_focus_generic_treaty
+		x = 17
+		y = 6
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = Hawaii_keeptheconstitution }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_stability = -0.05
+			add_political_power = -20
+	}
+}
 	#Focus for An American Model
 	focus = {
 		id = Hawaii_anamericanmodel
@@ -865,6 +1027,33 @@ completion_reward = {
 		}
 	}
 
+	#Focus for The Hawaiian Empire
+	focus = {
+		id = Hawaii_thehawaiianempire
+		icon = GFX_goal_unknown
+		x = 21
+		y = 9
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { 
+			focus = Hawaii_arrestoppositionleaders 
+		}
+		prerequisite = { 
+			focus = Hawaii_enforceroyalpower 
+		}
+		prerequisite = { 
+			focus = Hawaii_monarchistpropaganda 
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_stability = 0.10
+			add_political_power = 25
+			add_war_support = 0.10
+			#ask scorpion about country tags for the name chnage
+	}
+}
 #fire event, where one option gives stability and takes war support and the other does the opposite
 	#Focus for Reinstate the Constitution?
 	focus = {
@@ -903,6 +1092,29 @@ completion_reward = {
 		}
 	}
 
+	#Focus for Reinstate Council Members?
+	focus = {
+		id = Hawaii_reinstatecouncilmembers
+		icon = GFX_goal_unknown
+		x = 15
+		y = 9
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { 
+			focus = Hawaii_hawaiiansuffrage 
+		}
+		prerequisite = { 
+			focus = Hawaii_allowemergencypowers 
+		}
+		prerequisite = { 
+			focus = Hawaii_monarchistpropaganda 
+		}
+		ai_will_do = {
+			factor = 1
+		}
+#fire event that will decide between "reinstate all, reinstate some, reinstate none"
+#outcome has varying levels of stabilty and opposite amounts of war support
+	}
 
 	#Focus for Allow Emergency Powers?
 	focus = {
@@ -912,7 +1124,7 @@ completion_reward = {
 		y = 7
 		cost = 10
 		available_if_capitulated = yes
-		prerequisite = { focus = Hawaii_keeptheconstitution }
+		prerequisite = { focus = Hawaii_edittheconstitution }
 		ai_will_do = {
 			factor = 1
 		}
@@ -943,7 +1155,22 @@ completion_reward = {
 	}
 }
 	#Focus for Centralize the Power
-
+	focus = {
+		id = Hawaii_centralizethepower
+		icon = GFX_goal_unknown
+		x = 19
+		y = 6
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = Hawaii_dissolvetheconstitution }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_stability = 0.05
+			add_political_power = 20
+	}
+}
 	#Focus for Enforce Royal Power
 	focus = {
 		id = Hawaii_enforceroyalpower
@@ -952,7 +1179,7 @@ completion_reward = {
 		y = 7
 		cost = 10
 		available_if_capitulated = yes
-		prerequisite = { focus = Hawaii_dissolvetheconstitution }
+		prerequisite = { focus = Hawaii_centralizethepower }
 		ai_will_do = {
 			factor = 1
 		}
@@ -962,16 +1189,31 @@ completion_reward = {
 	}
 }
 	#Focus for Undermine Opposition Ideals
-
-	#Focus for Institute Loyalists
 	focus = {
-		id = Hawaii_instituteloyalists
-		icon = GFX_goal_generic_demand_territory
+		id = Hawaii_undermineoppositionideals
+		icon = GFX_goal_tfv_saf_anti_colonialist_crusade
 		x = 21
 		y = 5
 		cost = 10
 		available_if_capitulated = yes
 		prerequisite = { focus = Hawaii_absoluterule }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_stability = -0.05
+			add_political_power = -10
+	}
+}
+	#Focus for Institute Loyalists
+	focus = {
+		id = Hawaii_instituteloyalists
+		icon = GFX_goal_generic_demand_territory
+		x = 21
+		y = 6
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = Hawaii_undermineoppositionideals }
 		ai_will_do = {
 			factor = 1
 		}
@@ -1025,7 +1267,7 @@ completion_reward = {
 	focus = {
 		id = Hawaii_reformtheconstitution
 		icon = GFX_focus_hol_the_foundations_of_defense
-		x = 24
+		x = 23
 		y = 5
 		cost = 10
 		available_if_capitulated = yes
@@ -1040,7 +1282,18 @@ completion_reward = {
 	}
 }
 	#Focus for A Monarchical Debate!
-
+	focus = {
+		id = Hawaii_amonarchicaldebate
+		icon = GFX_goal_tfv_strengthen_commonwealth_ties
+		x = 18
+		y = 3
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = Hawaii_themonarchistswin }
+		ai_will_do = {
+			factor = 1
+		}
+	}
 #add national modifier "The Hawaiian Civil War" whirtes get +att - def Natives get +def -att
 	#Focus for The Native Uprising!
 	focus = {
@@ -1056,9 +1309,9 @@ completion_reward = {
 		}
 	}
 
-	#Hawaii_whattodowiththeroyalfamily
+	#Focus for Convention of the Left!
 	focus = {
-		id = Hawaii_whattodowiththeroyalfamily
+		id = Hawaii_conventionoftheleft
 		icon = GFX_focus_generic_join_comintern
 		x = 8
 		y = 3
@@ -1084,12 +1337,11 @@ completion_reward = {
 		}
 	}
 
-
-	#Focus for Organize the Congress
+	#Focus for Emulate the Federalists
 	focus = {
-		id = Hawaii_organizethecongress
+		id = Hawaii_emulatethefederalists
 		icon = GFX_goal_unknown
-		x = 30
+		x = 29
 		y = 5
 		cost = 10
 		available_if_capitulated = yes
@@ -1099,12 +1351,57 @@ completion_reward = {
 		}
 	}
 
+	#Focus for Island Administration
+	focus = {
+		id = Hawaii_islandadministration
+		icon = GFX_goal_unknown
+		x = 25
+		y = 5
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = Hawaii_theliberalswin }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_stability = 0.15
+			add_political_power = 20
+
+	}
+}
+	#Focus for Organize the Congress
+	focus = {
+		id = Hawaii_organizethecongress
+		icon = GFX_goal_unknown
+		x = 31
+		y = 5
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = Hawaii_theconservativeswin }
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	#Focus for Local Autonomy
+	focus = {
+		id = Hawaii_localautonomy
+		icon = GFX_goal_unknown
+		x = 25
+		y = 6
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = Hawaii_islandadministration }
+		ai_will_do = {
+			factor = 1
+		}
+	}
 
 	#Focus for Power to the Congress
 	focus = {
 		id = Hawaii_powertothecongress
 		icon = GFX_goal_unknown
-		x = 30
+		x = 31
 		y = 6
 		cost = 10
 		available_if_capitulated = yes
@@ -1118,11 +1415,30 @@ completion_reward = {
 	focus = {
 		id = Hawaii_bureaucraticdecentralization
 		icon = GFX_goal_unknown
-		x = 24
+		x = 23
 		y = 6
 		cost = 10
 		available_if_capitulated = yes
 		prerequisite = { focus = Hawaii_reformtheconstitution }
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	#Focus for Enact Comintern
+	focus = {
+		id = Hawaii_enactcomintern
+		icon = GFX_goal_unknown
+		x = 6
+		y = 10
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { 
+			focus = Hawaii_crushthefascists 
+		}
+		prerequisite = { 
+			focus = Hawaii_directrulefromhonolulu 
+		}
 		ai_will_do = {
 			factor = 1
 		}
@@ -1133,7 +1449,26 @@ completion_reward = {
 		id = Hawaii_exporttherevolution
 		icon = GFX_goal_unknown
 		x = 8
-		y = 11
+		y = 10
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { 
+			focus = Hawaii_thepacificinternationale 
+			focus = Hawaii_directrulefromhonolulu 
+			focus = Hawaii_abeaconofsocialism 
+			focus = Hawaii_crushthefascists 
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	#Focus for Stage Communist Uprisings!
+	focus = {
+		id = Hawaii_stagecommunistuprisings
+		icon = GFX_goal_unknown
+		x = 10
+		y = 10
 		cost = 10
 		available_if_capitulated = yes
 		prerequisite = { 
@@ -1305,71 +1640,12 @@ completion_reward = {
 	focus = {
 		id = Hawaii_industryofhawaii
 		icon = GFX_goal_unknown
-		x = 42
+		x = 46
 		y = 0
 		cost = 10
 		available_if_capitulated = yes
 		ai_will_do = {
 			factor = 1
-
-		}
-	}
-
-	focus = {
-		id = Hawaii_Maui_Sugar_Project
-		icon = GFX_goal_unknown
-		x = 0
-		y = 1
-		cost = 10
-		available_if_capitulated = yes
-		relative_position_id = Hawaii_industryofhawaii
-		ai_will_do = {
-			factor = 1
-
-		prerequisite = { 
-			focus = Hawaii_industryofhawaii 
-		}
-
-		}
-	}
-
-	focus = {
-		id = Hawaii_Grow_Pineapple_Canning_factories
-		icon = GFX_goal_unknown
-		x = 0
-		y = 1
-		cost = 10
-		available_if_capitulated = yes
-		relative_position_id = Hawaii_Maui_Sugar_Project
-		ai_will_do = {
-			factor = 1
-
-		prerequisite = { 
-			focus = Hawaii_industryofhawaii 
-		}
-
-
-
-		}
-	}
-
-	focus = {
-		id = Hawaii_Modern_Weapons
-		icon = GFX_goal_unknown
-		x = 0
-		y = 1
-		cost = 10
-		available_if_capitulated = yes
-		relative_position_id = Hawaii_Grow_Pineapple_Canning_factories
-		ai_will_do = {
-			factor = 1
-
-		prerequisite = { 
-			focus = Hawaii_industryofhawaii 
-		}
-
-
-
 		}
 	}
 
@@ -1384,7 +1660,7 @@ completion_reward = {
 		prerequisite = { 
 			focus = Hawaii_enforcecongressionalpowers 
 			focus = Hawaii_splitpowersbetweenbranches 
-			focus = Hawaii_establishthepresidency 
+			focus = Hawaii_universalsuffrage 
 		}
 		ai_will_do = {
 			factor = 1
@@ -1413,6 +1689,19 @@ completion_reward = {
 		}
 	}
 
+	#Focus for Slight Centralization
+	focus = {
+		id = Hawaii_slightcentralization
+		icon = GFX_goal_unknown
+		x = 29
+		y = 6
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = Hawaii_emulatethefederalists }
+		ai_will_do = {
+			factor = 1
+		}
+	}
 
 	#Focus for Split Powers between Branches
 	focus = {
@@ -1460,7 +1749,7 @@ completion_reward = {
 		id = Hawaii_formtheupsr
 		icon = GFX_goal_unknown
 		x = 8
-		y = 12
+		y = 11
 		cost = 10
 		available_if_capitulated = yes
 		prerequisite = { 
