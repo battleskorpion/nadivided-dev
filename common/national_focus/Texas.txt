@@ -3899,6 +3899,9 @@ focus_tree = {
 
         completion_reward = {
             add_ideas = STX_isolation
+            set_rule = {
+                can_only_justify_war_on_threat_country = yes
+            }
             custom_effect_tooltip = STX_gain_25_money_for_development_tt
             set_variable = { STX_money = 25 }
         }
@@ -4106,6 +4109,39 @@ focus_tree = {
         }
     }
     focus = {
+        id = STX_protect_the_boarders
+        icon = GFX_
+        prerequisite = { focus = STX_protect_against_coastal_flooding}
+        x = 0
+        y = 1
+        relative_position_id = STX_protect_against_coastal_flooding
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        
+        completion_reward = {
+            custom_effect_tooltip = STX_spend_25_development_money_tt
+            add_to_variable = { STX_money = -25 }
+            every_owned_state = {
+                limit = {
+                    is_core_of = STX
+                }
+                add_building_construction = {
+                    type = bunker
+                    level = 1
+                    instant_build = yes
+                    province = {
+                        all_provinces = yes
+                        limit_to_border = yes
+                        level < 5
+                    }
+                }
+            }
+        }
+    }
+    focus = {
         id = STX_pour_funding_into_technology
         icon = GFX_
         prerequisite = { focus = STX_development_bank_of_texas}
@@ -4125,6 +4161,29 @@ focus_tree = {
             add_research_slot = 1
         }
     }
+    focus = {
+        id = STX_subsidize_new_construction_equipment
+        icon = GFX_
+        prerequisite = { focus = STX_pour_funding_into_technology}
+        x = 0
+        y = 1
+        relative_position_id = STX_pour_funding_into_technology
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            custom_effect_tooltip = STX_spend_25_development_money_tt
+            add_to_variable = { STX_money = -25 }
+            swap_ideas = {
+                add_idea = STX_isolation2
+                remove_idea = STX_isolation
+            }
+        }
+    }
 # LBJ = civil rights champion, two focuses to completely remove segregation
 # LBJ segregation focuses "Endorse the CRM" "Pass the CR Bill"
 # LBJ = anti crime/ corruption, make "Declare War on Poverty" a focus
@@ -4137,7 +4196,7 @@ focus_tree = {
         mutually_exclusive = { focus = STX_elect_miriam_a_ferguson}
         mutually_exclusive = { focus = STX_elect_w_lee_o_daniel}
         mutually_exclusive = { focus = STX_elect_hiram_wesley_evans}
-        x = -2
+        x = 0
         y = 1
         relative_position_id = STX_1937_presidential_election
         cost = 5
