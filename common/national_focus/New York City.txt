@@ -1,1308 +1,3222 @@
 focus_tree = {
-    id = new_york_city_focus_tree
-
-    country = {
-        factor = 0
-        modifier = {
-            add = 10
-            tag = NYC
-        }
-    }
-
-    continuous_focus_position = { x = 50 y = 2000 }
-
-#FOCUS_FILTER_STABILITY
-#FOCUS_FILTER_INDUSTRY
-#FOCUS_FILTER_ANNEXATION
-#FOCUS_FILTER_MANPOWER
-#FOCUS_FILTER_POLITICAL
-#FOCUS_FILTER_RESEARCH
-#FOCUS_FILTER_WAR_SUPPORT
-
-#################################################
-############### Begining of NYC Tree ############
-#################################################
-
-
-# Focus for The Big City
-    focus =  {
-        id = NYC_big_city
-        icon =  GFX_
-        x = 7
-        y = 0
-        cost = 10
-		available_if_capitulated = yes	
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-		completion_reward = {
-		
-		SNY = {give_guarantee = NYC}
-		set_rule = { can_send_volunteers = yes }
-		}
-
-        
-    }
-	#Focus for Take Control
-	focus = {
-        id = NYC_take_control
-        icon =  GFX_ 
-        x = 7
-        y = 1
-        cost = 10
-		available_if_capitulated = yes
-		prerequisite = { focus =  NYC_big_city }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-		completion_reward = {
-		add_stability = 0.2
-		add_war_support = -0.2
-		add_timed_idea = { idea = NYC_street_control  days = 100 }
-		}
-        
-    }
-	#Focus for Autonomus Region
-	focus = {
-        id = NYC_auto_region
-        icon =  GFX_ 
-        x = 7
-        y = 2
-        cost = 10
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_take_control }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-		completion_reward = {
-		add_autonomy_ratio = {
-		value = -0.1
+	id = new york city
 	
-}
-		}
-
-        
-    }
-	# Focus for A New New York City
-	focus = {
-        id = NYC_NNYC
-        icon =  GFX_ 
-        x = 7
-        y = 3
-        cost = 10
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_auto_region }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-		completion_reward = {
-		add_political_power = 175
-		}
-
-        
-    }
+	country = {
+		factor = 0
 	
-	### End of Basic ###
-	
-	
-	
-	### Autonomous Region Focuses ###
-	
-	# Focus for The New York Model
-	focus = {
-        id = NYC_NY_Model
-        icon =  GFX_ 
-        x = 3
-        y = 4
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_NNYC }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-		completion_reward = {
-		add_ideas = {
-		nyc_ny_model
-		}
-		}
-
-        
-    }
-	
-	# Neutral Focuses
-  
-  # Focus for Foreign Trade Mission
-	focus = {
-        id = NYC_FTM
-        icon =  GFX_ 
-        x = 1
-        y = 5
-        cost = 10
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_NY_Model }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-		completion_reward = {
-		add_ideas = {
-		nyc_foreign_trade
-		}
-		}
-        
-    }
-  
-   # Focus for Urban Growth Project
-	focus = {
-        id = NYC_UGP
-        icon =  GFX_ 
-        x = 1
-        y = 6
-        cost = 10
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_FTM }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-		completion_reward = {
-			add_ideas = {
-			nyc_ugp
-			}
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = arms_factory
-						size > 1
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = arms_factory
-										size > 1
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-				}
-			}
-		}
-        
-    }
-  
-   # Focus for Education Reform
-	focus = {
-        id = NYC_education_reform
-        icon =  GFX_ 
-        x = 1
-        y = 7
-        cost = 15
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_UGP }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-		completion_reward = {
-			add_research_slot= 1
-		}
-        
-    }
-  
-  #Subjective Focuses
-	
-	 # Focus for Jobs for the State
-	focus = {
-        id = NYC_state_jobs
-        icon =  GFX_ 
-        x = 3
-        y = 5
-        cost = 10
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_NY_Model }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-		completion_reward = {
-		add_ideas = {
-		nyc_state_jobs
-		}
-		}
-		
-        
-    }
-	
-	
-	 # Focus for Increase Economic Cooperation
-	focus = {
-        id = NYC_IEC
-        icon =  GFX_ 
-        x = 3
-        y = 6
-        cost = 10
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_state_jobs }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-		completion_reward = {
-		add_ideas = {
-		nyc_iec
-		}
-		}
-
-        
-    }
-	
-	
-	 # Focus for Repair the NYSE
-	focus = {
-        id = NYC_NYSE
-        icon =  GFX_ 
-        x = 3
-        y = 7
-        cost = 10
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_IEC }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-		completion_reward = {
-		add_ideas = {
-		nyc_nyse
-		}
-			add_timed_idea = { idea = NYC_repair_nyse  days = 100 }
-		}
-
-        
-    }
-	
-	
-	### Autonomous Focuses
-	
-	 # Focus for An Independent Trade Fleet
-	focus = {
-        id = NYC_trade_fleet
-        icon =  GFX_ 
-        x = 5
-        y = 5
-        cost = 5
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_NY_Model }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-		completion_reward = {
-		add_ideas = {
-		nyc_trade_fleet
-		}
-			navy_experience = -25
-			if = {
-				limit = {
-					NOT = {
-						any_owned_state = {
-							dockyard > 0
-							free_building_slots = {
-								building = dockyard
-								size > 2
-								include_locked = yes
-							}
-						}
-					}
-					any_owned_state = {
-						is_coastal = yes
-					}
-				}
-				random_owned_controlled_state = {
-					limit = {
-						is_coastal = yes
-						free_building_slots = {
-							building = dockyard
-							size > 2
-							include_locked = yes
-						}
-					}
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = dockyard
-						level = 3
-						instant_build = yes
-					}
-				}
-				set_country_flag = naval_effort_built
-			}
-			if = {
-				limit = {
-					NOT = { has_country_flag = naval_effort_built }
-					any_owned_state = {
-						dockyard > 0
-						free_building_slots = {
-							building = dockyard
-							size > 2
-							include_locked = yes
-						}
-					}
-				}
-				random_owned_controlled_state = {
-					limit = {
-						dockyard > 0
-						free_building_slots = {
-							building = dockyard
-							size > 2
-							include_locked = yes
-						}
-					}
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = dockyard
-						level = 3
-						instant_build = yes
-					}
-				}
-				set_country_flag = naval_effort_built
-			}
-			if = {
-				limit = {
-					NOT = { has_country_flag = naval_effort_built }
-					NOT = {
-						any_owned_state = {
-							free_building_slots = {
-								building = dockyard
-								size > 2
-								include_locked = yes
-							}
-						}
-					}
-				}
-				random_state = {
-					limit = {
-						controller = { tag = ROOT }
-						free_building_slots = {
-							building = dockyard
-							size > 2
-							include_locked = yes
-						}
-					}
-					add_extra_state_shared_building_slots = 3
-					add_building_construction = {
-						type = dockyard
-						level = 3
-						instant_build = yes
-					}
-				}
-			}			
-		}
-
-        
-    }
-	
-	 # Focus for Nationalize our Exports
-	focus = {
-        id = NYC_exports_nationalized
-        icon =  GFX_ 
-        x = 5
-        y = 6
-        cost = 15
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_trade_fleet }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-		completion_reward = {
-		add_autonomy_ratio = {
-		value = 0.3
-			}
-		add_timed_idea = { idea = NYC_nationalized_exports  days = 365 }
-		}
-        
-    }
-	
-	 
-	 # Focus for The Gang War
-	focus = {
-        id = NYC_gang_war
-        icon =  GFX_ 
-        x = 5
-        y = 7
-        cost = 15
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_exports_nationalized }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-		completion_reward = {
-		add_political_power = -100
-		add_stability = 0.1
-		add_war_support = 0.05
-		}
-		}
-        
-    
-	
-	 # Focus for Create our own Currency
-	focus = {
-        id = NYC_currency
-        icon =  GFX_ 
-        x = 4
-        y = 8
-        cost = 15
-		available_if_capitulated = yes
-		prerequisite = { 
-		focus = NYC_gang_war 
-		}
-		mutually_exclusive = { focus = NYC_obey }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-		completion_reward = {
-		add_autonomy_ratio = {
-		value = 0.1
-			}
-		add_ideas = {
-		nyc_custom_currency
-		}
-		
-		}
-
-        
-    }
-	
-	 # Focus for Obidence
-	focus = {
-        id = NYC_obey
-        icon =  GFX_ 
-        x = 2
-        y = 8
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { 
-		focus =  NYC_NYSE
-		}
-		prerequisite = { 
-		focus =  NYC_education_reform
-		}
-		mutually_exclusive = { focus = NYC_currency }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-	### End of Free Focuses (Puppet) ###
-	
-    # AI Focus for Annex Into New York State
-	focus = {
-        id = NYC_Annexed_into_NY
-        icon =  GFX_ 
-        x = 0
-        y = 9
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_obey }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-  
-    # Focus for Interstate Infrastructure
-	focus = {
-        id = NYC_interstate
-        icon =  GFX_ 
-        x = 2
-        y = 9
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_obey }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-	# Focus for New York State Science Center
-	focus = {
-        id = NYC_NYSSC
-        icon =  GFX_ 
-        x = 4
-        y = 9
-        cost = 15
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_obey }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-		completion_reward = {
-			add_research_slot= 1
-		}
-        
-    }
-	
-	# Focus for Shore Defender
-	focus = {
-        id = NYC_shore_defender
-        icon =  GFX_ 
-        x = 1
-        y = 10
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_interstate }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-  
-  # Focus for American Luxembourg
-	focus = {
-        id = NYC_lux
-        icon =  GFX_ 
-        x = 3
-        y = 10
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_interstate }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-  
-  # Focus for Propose the Tri-State Economic Alliance 
-	focus = {
-        id = NYC_TEA
-        icon =  GFX_ 
-        x = 1
-        y = 11
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_shore_defender }
-		mutually_exclusive = { focus = NYC_NY_expand }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-	
-	# Focus for Provoke NY Expansionism 
-	focus = {
-        id = NYC_NY_expand
-        icon =  GFX_ 
-        x = 3
-        y = 11
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_lux  }
-		mutually_exclusive = { focus = NYC_TEA  }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-	### End of NY Model Focuses ###
-	
-	### Reject NYS Focuses ###
-	
-	# Focus for Demand Greater Autonomy
-	focus = {
-        id = NYC_great_auto
-        icon =  GFX_ 
-        x = 7
-        y = 4
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_NNYC }
-		mutually_exclusive = { focus = NYC_nj_puppet }
-		mutually_exclusive = { focus = NYC_obey }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-	
-	# Focus for Brotherly Embrace
-	focus = {
-        id = NYC_nj_puppet
-        icon =  GFX_ 
-        x = 11
-        y = 4
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_NNYC }
-		mutually_exclusive = { focus = NYC_great_auto }
-		mutually_exclusive = { focus = NYC_obey }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-	
-	### Automated Focuses* ###
-	
-	 # Focus for Peace
-	focus = {
-        id = NYC_peace
-        icon =  GFX_ 
-        x = 8
-        y = 5
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = {
-		focus =  NYC_great_auto
-		}
-		prerequisite = {
-		focus =  NYC_nj_puppet
-		}
-		mutually_exclusive = { focus = NYC_war }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-
-
-
- # Focus for  War
-	focus = {
-        id = NYC_war
-        icon =  GFX_ 
-        x = 10
-        y = 5
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = {
-		focus =  NYC_great_auto
-		}
-		prerequisite = {
-		focus =  NYC_nj_puppet
-		}
-		mutually_exclusive = { focus = NYC_peace }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-
-
- # Focus for  Alone 
-	focus = {
-        id = NYC_alone
-        icon =  GFX_ 
-        x = 7
-        y = 6
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { 
-		focus =  NYC_war
-		}
-		prerequisite = { 
-		focus =  NYC_peace
-		}
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-
-
- # Focus for Crossing the Hudson
-	focus = {
-        id = NYC_NJ_aid
-        icon =  GFX_ 
-        x = 9
-        y = 6
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { 
-		focus =  NYC_war
-		}
-		prerequisite = { 
-		focus =  NYC_peace
-		}
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-
- # Focus for Jersey says Shore
-	focus = {
-        id = NYC_NJ_puppet
-        icon =  GFX_ 
-        x = 11
-        y = 6
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { 
-		focus =  NYC_war
-		}
-		prerequisite = { 
-		focus =  NYC_peace
-		}
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-
-
-### End of Automated Focuses###
-
- # Focus for Concrete Jungle
-	focus = {
-        id = NYC_urabn_warfare
-        icon =  GFX_ 
-        x = 9
-        y = 7
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { 
-		focus =  NYC_alone	
-		focus =  NYC_NJ_aid
-		focus =  NYC_NJ_puppet
-		}
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-
-
- # Focus for Reconstruction Effort
-	focus = {
-        id = NYC_reconstruction_effort
-        icon =  GFX_ 
-        x = 9
-        y = 8
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_urabn_warfare }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-
-
-### End of Wartime Focuses ###
-
-## Independent Focuses ##
-
- # Focus for Propose the Triple Entente Americana
-	focus = {
-        id = NYC_faction_TEA
-        icon =  GFX_ 
-        x = 6
-        y = 9
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_reconstruction_effort }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-
-
- # Focus for NYC Is Free!
-	focus = {
-        id = NYC_free_city
-        icon =  GFX_ 
-        x = 8
-        y = 9
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_reconstruction_effort }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-
- # Focus for Work First
-	focus = {
-        id = NYC_work_1st
-        icon =  GFX_ 
-        x = 6
-        y = 10
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_faction_TEA }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-
- # Focus for Play Second
-	focus = {
-        id = NYC_play_2nd
-        icon =  GFX_ 
-        x = 8
-        y = 10
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_free_city }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-
-
- # Focus for Dock & Trade
-	focus = {
-        id = NYC_dockandtrade
-        icon =  GFX_ 
-        x = 7
-        y = 11
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { 
-		focus =  NYC_work_1st
-		}
-		prerequisite = { 
-		focus =  NYC_play_2nd
-		}
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-
-
- # Focus for Crush the State
-	focus = {
-        id = NYC_take_nys
-        icon =  GFX_ 
-        x = 6
-        y = 12
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_dockandtrade }
-		mutually_exclusive = {
-		focus = NYC_city_state 
-		}
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-
- # Focus for Dutch Irridentism
-	focus = {
-        id = NYC_invade_PA
-        icon =  GFX_ 
-        x = 5
-        y = 13
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_take_nys }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-
-
- # Focus for  Fratricide
-	focus = {
-        id = NYC_invade_NJ
-        icon =  GFX_ 
-        x = 7
-        y = 13
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_take_nys }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-
-
- # Focus for Mid Atlantic Union
-	focus = {
-        id = NYC_MAU
-        icon =  GFX_ 
-        x = 6
-        y = 14
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { 
-		focus =  NYC_invade_PA
-		}
-		prerequisite = { 
-		focus =  NYC_invade_NJ
-		}
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-	
-	# Focus for City-State
-	focus = {
-        id = NYC_city_state
-        icon =  GFX_ 
-        x = 8
-        y = 12
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { 
-		focus =
-		NYC_dockandtrade 
-		}
-		mutually_exclusive = {
-		focus = NYC_take_nys 
-		}
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-	
-
-  ### End of Independent Focuses*###
-  ## NJ Puppet Focuses ###
-  
-   # Focus for Fruits of Victory
-	focus = {
-        id = NYC_FoV
-        icon =  GFX_ 
-        x = 10
-        y = 9
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_reconstruction_effort }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-
-  
-   # Focus for Mainland Defenses
-	focus = {
-        id = NYC_maginot
-        icon =  GFX_ 
-        x = 12
-        y = 9
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_reconstruction_effort }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-
-
- # Focus for Soil & Toil
-	focus = {
-        id = NYC_soil
-        icon =  GFX_ 
-        x = 10
-        y = 10
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_FoV }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-
-  
-   # Focus for Home Grown Guns
-	focus = {
-        id = NYC_HGG
-        icon =  GFX_ 
-        x = 12
-        y = 10
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_maginot }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-
-  
-   # Focus for Irredentism
-	focus = {
-        id = NYC_irredentism
-        icon =  GFX_ 
-        x = 15
-        y = 11
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { 
-		focus = NYC_HGG
-		focus = NYC_soil
-		}
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-
-
- # Focus for New Jersey City
-	focus = {
-        id = NYC_njc
-        icon =  GFX_ 
-        x = 16
-        y = 12
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_irredentism }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-
-
- # Focus for Invade the Mainland
-	focus = {
-        id = NYC_invade_nys
-        icon =  GFX_ 
-        x = 14
-        y = 12
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_irredentism }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-	
-	# Focus for Jersey Strong
-	focus = {
-        id = NYC_jersey_strong
-        icon =  GFX_ 
-        x = 13
-        y = 13
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = {
-		focus = NYC_free_fighters
-		focus = NYC_invade_nys
-		}
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-	
-	# Focus for Cheers!
-	focus = {
-        id = NYC_cheers
-        icon =  GFX_ 
-        x = 11
-        y = 14
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { 
-		focus =  NYC_prosperity 
-		focus =  NYC_jersey_strong
-		}
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-	 # Focus for Freedom At Last!
-	focus = {
-        id = NYC_freedom_at_last
-        icon =  GFX_ 
-        x = 11
-        y = 11
-        cost = 1
-		available_if_capitulated = yes
-			prerequisite = { 
-		focus = NYC_HGG
-		focus = NYC_soil
-		}
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-	
-	
-	
-	# Focus for Sell Staten Island
-	focus = {
-        id = NYC_staten_isle
-        icon =  GFX_ 
-        x = 10
-        y = 12
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_freedom_at_last }
-		mutually_exclusive = { focus = NYC_free_fighters }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-	
-	# Focus for We'll Fight For It
-	focus = {
-        id = NYC_free_fighters
-        icon =  GFX_ 
-        x = 12
-        y = 12
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { focus = NYC_freedom_at_last }
-		mutually_exclusive = { focus = NYC_staten_isle }
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-	
-	# Focus for Prosperity
-	focus = {
-        id = NYC_prosperity
-        icon =  GFX_ 
-        x = 9
-        y = 13
-        cost = 1
-		available_if_capitulated = yes
-		prerequisite = { 
-		focus = NYC_staten_isle
-		focus = NYC_city_state
-		}
-        ai_will_do = {
-            factor = 10
-        }
-        available_if_capitulated = yes
-
-        
-    }
-	
-
-
-  
-  ######################################################################
-  # Focus for 
+	modifier = { 
+			add = 8
+			tag = NYC
+		} 
+	} 
+continuous_focus_position = { x = 0001 y = 1900 }
+
+# FOCUS TEMPLATE COPY + PASTE
+#
+# OCTAMAN'S CODE (NO STEALING LOLOLOL)	HA HA IS STOLEN BITCH																																														#stfu octOman
+#
 #	focus = {
- #       id = NYC_
-  #      icon =  GFX_ 
-   #     x = 
-    #    y = 
-    #    cost = 1
-	#	available_if_capitulated = yes
-	#	prerequisite = { focus =  }
-     #   ai_will_do = {
-      #      factor = 10
-       # }
-        #available_if_capitulated = yes 
-    #}
-}
+#		id = SOH_
+#		icon = GFX_
+#		prerequisite = { focus = }
+#		mutually_exclusive = { focus =  }
+#		x = -3
+#		y = 0
+#		relative_position_id =
+#
+#		cost = 10
+#
+#		ai_will_do = {
+#			factor = 1
+#		}
+#
+#		available = {
+#
+#		}
+#		
+#		bypass = {
+#
+#		}
+#
+#		cancel_if_invalid = yes
+#		continue_if_invalid = no
+#		available_if_capitulated = no
+#		complete_tooltip = {
+#
+#		}
+#
+#		completion_reward = {
+#
+#		}
+#	}
+
+	focus = {
+		id = NYC_inspire_the_people_with_Speech
+		icon = GFX_
+		prerequisite = { focus = f }
+		mutually_exclusive = { focus = NYC_food_Riots }
+		x = -3
+		y = 0
+		relative_position_id = f
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Rooftop_Farming_Campaign
+		icon = GFX_
+		prerequisite = { focus = NYC_inspire_the_people_with_Speech }
+		mutually_exclusive = { focus = f }
+		x = 0
+		y = 1
+		relative_position_id = NYC_inspire_the_people_with_Speech
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Recycling_Campaign
+		icon = GFX_
+		prerequisite = { focus = NYC_Rooftop_Farming_Campaign }
+		mutually_exclusive = { focus = f }
+		x = -1
+		y = 1
+		relative_position_id = NYC_Rooftop_Farming_Campaign
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Fishing_Campaign
+		icon = GFX_
+		prerequisite = { focus = NYC_Rooftop_Farming_Campaign }
+		mutually_exclusive = { focus = f }
+		x = 1
+		y = 1
+		relative_position_id = NYC_Rooftop_Farming_Campaign
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Anti_Crime_Campaign
+		icon = GFX_
+		prerequisite = { focus = NYC_Fishing_Campaign }
+		prerequisite = { focus = NYC_Recycling_Campaign }
+		mutually_exclusive = { focus = f }
+		x = -1
+		y = 1
+		relative_position_id = NYC_Fishing_Campaign
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_New_York_Secret_Service
+		icon = GFX_
+		prerequisite = { focus = NYC_Anti_Crime_Campaign }
+		mutually_exclusive = { focus = f }
+		x = 0
+		y = 1
+		relative_position_id = NYC_Anti_Crime_Campaign
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Build_More_Ships
+		icon = GFX_
+		prerequisite = { focus = NYC_New_York_Secret_Service }
+		mutually_exclusive = { focus = f }
+		x = -1
+		y = 1
+		relative_position_id = NYC_New_York_Secret_Service
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Build_More_Ships
+		icon = GFX_
+		prerequisite = { focus = NYC_New_York_Secret_Service }
+		mutually_exclusive = { focus = f }
+		x = -1
+		y = 1
+		relative_position_id = NYC_New_York_Secret_Service
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Rooftop_Greenhouses
+		icon = GFX_
+		prerequisite = { focus = NYC_Build_More_Ships }
+		mutually_exclusive = { focus = f }
+		x = 0
+		y = 1
+		relative_position_id = NYC_Build_More_Ships
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Combine_The_Army_And_The_Police
+		icon = GFX
+		prerequisite = { focus = NYC_New_York_Secret_Service }
+		mutually_exclusive = { focus = f }
+		x = 1
+		y = 1
+		relative_position_id = NYC_New_York_Secret_Service
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_District_Recruitment
+		icon = GFX_
+		prerequisite = { focus = NYC_Combine_The_Army_And_The_Police }
+		mutually_exclusive = { focus = f }
+		x = 0
+		y = 1
+		relative_position_id = NYC_Combine_The_Army_And_The_Police
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Respect_The_State
+		icon = GFX_
+		prerequisite = { focus = NYC_District_Recruitment }
+		mutually_exclusive = { focus = NYC_Distance_Ourself_from_the_State }
+		x = 0
+		y = 1
+		relative_position_id = NYC_District_Recruitment
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Distance_Ourself_from_the_State
+		icon = GFX_
+		prerequisite = { focus = NYC_Rooftop_Greenhouses }
+		mutually_exclusive = { focus = NYC_Respect_The_State }
+		x = 0
+		y = 1
+		relative_position_id = NYC_Rooftop_Greenhouses
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+
+	focus = {
+		id = NYC_food_Riots
+		icon = GFX_
+		mutually_exclusive = { focus = NYC_inspire_the_people_with_Speech }
+		x = 8
+		y = 0
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Accept_That_New_York_has_no_food
+		icon = GFX_
+		prerequisite = { focus = NYC_food_Riots }
+		mutually_exclusive = { focus = NYC_Blame_New_York_State }
+		x = -2
+		y = 1
+		relative_position_id = NYC_food_Riots
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+###Progressism###
+	focus = {
+		id = NYC_Blame_New_York_State
+		icon = GFX_
+		prerequisite = { focus = NYC_food_Riots }
+		mutually_exclusive = { focus = NYC_Accept_That_New_York_has_no_food }
+		x = 10
+		y = 1
+		relative_position_id = NYC_food_Riots
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Halt_the_migrants
+		icon = GFX_
+		prerequisite = { focus = NYC_Blame_New_York_State }
+		mutually_exclusive = { focus = NYC_Regulate_The_Migrants }
+		x = -2
+		y = 1
+		relative_position_id = NYC_Blame_New_York_State
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_draft_the_unemployed
+		icon = GFX_
+		prerequisite = { focus = NYC_Halt_the_migrants }
+
+		x = -1
+		y = 1
+		relative_position_id = NYC_Halt_the_migrants
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Military_Junta
+		icon = GFX_
+		prerequisite = { focus = NYC_draft_the_unemployed }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_draft_the_unemployed
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Weapons_production_Program
+		icon = GFX_
+		prerequisite = { focus = NYC_Military_Junta }
+
+		x = -1
+		y = 1
+		relative_position_id = NYC_Military_Junta
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Convert_Statue_Of_liberty
+		icon = GFX_
+		prerequisite = { focus = NYC_Military_Junta }
+
+		x = 1
+		y = 1
+		relative_position_id = NYC_Military_Junta
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Limited_Reopening_of_Wall_Street
+		icon = GFX_
+		prerequisite = { focus = NYC_Convert_Statue_Of_liberty focus = NYC_Demand_Reperations_for_withholding_food }
+
+		x = 2
+		y = 1
+		relative_position_id = NYC_Convert_Statue_Of_liberty
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_AA_Gun_on_every_roof
+		icon = GFX_
+		prerequisite = { focus = NYC_Weapons_production_Program }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Weapons_production_Program
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_public_works_program
+		icon = GFX_
+		prerequisite = { focus = NYC_Halt_the_migrants focus = NYC_Regulate_The_Migrants }
+
+		x = 2
+		y = 1
+		relative_position_id = NYC_Halt_the_migrants
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_end_Segrigation
+		icon = GFX_
+		prerequisite = { focus = NYC_public_works_program }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_public_works_program
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Regulate_The_Migrants
+		icon = GFX_
+		prerequisite = { focus = NYC_Blame_New_York_State }
+		mutually_exclusive = { focus = NYC_Halt_the_migrants }
+		x = 2
+		y = 1
+		relative_position_id = NYC_Blame_New_York_State
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_monitize_the_Migration
+		icon = GFX_
+		prerequisite = { focus = NYC_Regulate_The_Migrants }
+
+		x = 1
+		y = 1
+		relative_position_id = NYC_Regulate_The_Migrants
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_New_york_has_mistreated_us
+		icon = GFX_
+		prerequisite = { focus = NYC_monitize_the_Migration }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_monitize_the_Migration
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Demand_Reperations_for_withholding_food
+		icon = GFX_
+		prerequisite = { focus = NYC_New_york_has_mistreated_us }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_New_york_has_mistreated_us
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Lower_taxes
+		icon = GFX_
+		prerequisite = { focus = NYC_Demand_Reperations_for_withholding_food }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Demand_Reperations_for_withholding_food
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+###POPULISM####
+	focus = {
+		id = NYC_Faith_in_the_invisible_hand
+		icon = GFX_
+		prerequisite = { focus = NYC_Accept_That_New_York_has_no_food }
+		mutually_exclusive = { focus = NYC_The_Government_Must_Intervine }
+		x = -3
+		y = 1
+		relative_position_id = NYC_Accept_That_New_York_has_no_food
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Install_Fred_Trump_As_leader
+		icon = GFX_
+		prerequisite = { focus = NYC_Faith_in_the_invisible_hand }
+		x = 0
+		y = 1
+		relative_position_id = NYC_Faith_in_the_invisible_hand
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Send_Trade_Mission_To_Africa
+		icon = GFX_
+		prerequisite = { focus = NYC_Install_Fred_Trump_As_leader }
+
+		x = -1
+		y = 1
+		relative_position_id = NYC_Install_Fred_Trump_As_leader
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Smooze_Buisness_leaders_For_Trade
+		icon = GFX_
+		prerequisite = { focus = NYC_Send_Trade_Mission_To_Africa }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Send_Trade_Mission_To_Africa
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Subsidies_for_Food_Imports
+		icon = GFX_
+		prerequisite = { focus = NYC_Smooze_Buisness_leaders_For_Trade }
+		prerequisite = { focus = NYC_Trade_Our_Navy_Away_For_Large_food_Supply_with_JAM }
+		x = 1
+		y = 1
+		relative_position_id = NYC_Smooze_Buisness_leaders_For_Trade
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Send_Trade_Mission_to_Carribean
+		icon = GFX_
+		prerequisite = { focus = NYC_Install_Fred_Trump_As_leader }
+
+		x = 1
+		y = 1
+		relative_position_id = NYC_Install_Fred_Trump_As_leader
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Trade_Our_Navy_Away_For_Large_food_Supply_with_JAM
+		icon = GFX_
+		prerequisite = { focus = NYC_Send_Trade_Mission_to_Carribean }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Send_Trade_Mission_to_Carribean
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Irish_Brigades
+		icon = GFX_
+		prerequisite = { focus = NYC_Smooze_Buisness_leaders_For_Trade
+        focus = NYC_Combine_The_Army_And_The_Police
+         }
+
+		x = -2
+		y = 1
+		relative_position_id = NYC_Smooze_Buisness_leaders_For_Trade
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Make_Comprmises_with_the_mob
+		icon = GFX_
+		prerequisite = { focus = NYC_Subsidies_for_Food_Imports }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Subsidies_for_Food_Imports
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Tell_New_york_state_tostickit
+		icon = GFX_
+		prerequisite = { focus = NYC_Make_Comprmises_with_the_mob }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Make_Comprmises_with_the_mob
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_awaken_giant_within
+		icon = GFX_
+		prerequisite = { focus = NYC_Tell_New_york_state_tostickit }
+
+		x = -1
+		y = 1
+		relative_position_id = NYC_Tell_New_york_state_tostickit
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Invite_investors_from_Europe
+		icon = GFX_
+		prerequisite = { focus = NYC_Tell_New_york_state_tostickit }
+
+		x = 1
+		y = 1
+		relative_position_id = NYC_Tell_New_york_state_tostickit
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Allow_Robber_Barons_outlaw_Unions
+		icon = GFX_
+		prerequisite = { focus = NYC_Invite_investors_from_Europe }
+		prerequisite = { focus = NYC_awaken_giant_within }
+		x = -1
+		y = 1
+		relative_position_id = NYC_Invite_investors_from_Europe
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Re_Open_Wall_Street_Stock_Markets
+		icon = GFX_
+		x = 0
+		y = 1
+		relative_position_id = NYC_Allow_Robber_Barons_outlaw_Unions
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+###
+	focus = {
+		id = NYC_The_Government_Must_Intervine
+		icon = GFX_
+		prerequisite = { focus = NYC_Accept_That_New_York_has_no_food }
+		mutually_exclusive = { focus = NYC_Faith_in_the_invisible_hand }
+		x = 5
+		y = 1
+		relative_position_id = NYC_Accept_That_New_York_has_no_food
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+###FASCISM###
+	focus = {
+		id = NYC_Mafia_Will_have_its_Say
+		icon = GFX_
+		prerequisite = { focus = NYC_The_Government_Must_Intervine }
+
+		x = -1
+		y = 1
+		relative_position_id = NYC_The_Government_Must_Intervine
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Mobsters_Laws
+		icon = GFX_
+		prerequisite = { focus = NYC_Mafia_Will_have_its_Say }
+
+		x = -2
+		y = 1
+		relative_position_id = NYC_Mafia_Will_have_its_Say
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Prepare_Our_Forces
+		icon = GFX_
+		prerequisite = { focus = NYC_Mafia_Will_have_its_Say }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Mafia_Will_have_its_Say
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Force_people_To_stay
+		icon = GFX_
+		prerequisite = { focus = NYC_Prepare_Our_Forces }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Prepare_Our_Forces
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Declare_War_Upon_Our_Oppresors
+		icon = GFX_
+		prerequisite = { focus = NYC_Force_people_To_stay focus = NYC_Nationalize_industry }
+
+		x = 1
+		y = 1
+		relative_position_id = NYC_Force_people_To_stay
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Bronx_Massacre
+		icon = GFX_
+		prerequisite = { focus = NYC_Declare_War_Upon_Our_Oppresors }
+		prerequisite = { focus = NYC_Force_people_To_stay }
+		x = -1
+		y = 1
+		relative_position_id = NYC_Declare_War_Upon_Our_Oppresors
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Mechanize_the_gang
+		icon = GFX_
+		prerequisite = { focus = NYC_Bronx_Massacre }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Bronx_Massacre
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_A_Smugglers_Paradise
+		icon = GFX_
+		prerequisite = { focus = NYC_Mechanize_the_gang }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Mechanize_the_gang
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Bulldoze_Harlem
+		icon = GFX_
+		prerequisite = { focus = NYC_A_Smugglers_Paradise }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_A_Smugglers_Paradise
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Bio_research_ellis_island
+		icon = GFX_
+		prerequisite = { focus = NYC_Bulldoze_Harlem }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Bulldoze_Harlem
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+###ZIONISM###
+	focus = {
+		id = NYC_A_Profound_Dream
+		icon = GFX_
+		prerequisite = { focus = NYC_Force_people_To_stay }
+
+		x = -3
+		y = 2
+		relative_position_id = NYC_Force_people_To_stay
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+
+	focus = {
+		id = NYC_Mass_Conversion_Plan
+		icon = GFX_
+		prerequisite = { focus = NYC_A_Profound_Dream }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_A_Profound_Dream
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Invite_Jewish_immagrants_fromEurope
+		icon = GFX_
+		prerequisite = { focus = NYC_Mass_Conversion_Plan }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Mass_Conversion_Plan
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Deal_with_modern_philistines
+		icon = GFX_
+		prerequisite = { focus = NYC_Invite_Jewish_immagrants_fromEurope }
+
+		x = -1
+		y = 1
+		relative_position_id = NYC_Invite_Jewish_immagrants_fromEurope
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_David_and_Goliath
+		icon = GFX_
+		prerequisite = { focus = NYC_Deal_with_modern_philistines }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Deal_with_modern_philistines
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_WG_Ver_NEWHAMP
+		icon = GFX_
+		prerequisite = { focus = NYC_David_and_Goliath }
+
+		x = -3
+		y = 2
+		relative_position_id = NYC_David_and_Goliath
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_WG_NewJersey
+		icon = GFX_
+		prerequisite = { focus = NYC_David_and_Goliath }
+
+		x = -2
+		y = 2
+		relative_position_id = NYC_David_and_Goliath
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_WG_Maine
+		icon = GFX_
+		prerequisite = { focus = NYC_David_and_Goliath }
+
+		x = -1
+		y = 2
+		relative_position_id = NYC_David_and_Goliath
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_WG_PA
+		icon = GFX_
+		prerequisite = { focus = NYC_David_and_Goliath }
+
+		x = 0
+		y = 2
+		relative_position_id = NYC_David_and_Goliath
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Conentiqit_Rhode_island_massa
+		icon = GFX_
+		prerequisite = { focus = NYC_David_and_Goliath }
+
+		x = 1
+		y = 2
+		relative_position_id = NYC_David_and_Goliath
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Build_the_Third_Temple
+		icon = GFX_
+		prerequisite = { focus = NYC_WG_Ver_NEWHAMP }
+		prerequisite = { focus = NYC_WG_NewJersey }
+		prerequisite = { focus = NYC_WG_Maine }
+		prerequisite = { focus = NYC_Conentiqit_Rhode_island_massa }
+		prerequisite = { focus = NYC_WG_PA }
+		x = 2
+		y = 1
+		relative_position_id = NYC_WG_Ver_NEWHAMP
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Martyrdom
+		icon = GFX_
+		prerequisite = { focus = NYC_Invite_Jewish_immagrants_fromEurope }
+
+		x = 1
+		y = 1
+		relative_position_id = NYC_Invite_Jewish_immagrants_fromEurope
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Lend_money
+		icon = GFX_
+		prerequisite = { focus = NYC_Martyrdom }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Martyrdom
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+###COMMUNISM###
+	focus = {
+		id = NYC_Wall_street_will_burn
+		icon = GFX_
+		prerequisite = { focus = NYC_The_Government_Must_Intervine }
+
+		x = 1
+		y = 1
+		relative_position_id = NYC_The_Government_Must_Intervine
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Wall_street_will_burn
+		icon = GFX_
+		prerequisite = { focus = NYC_The_Government_Must_Intervine }
+
+		x = 1
+		y = 1
+		relative_position_id = NYC_The_Government_Must_Intervine
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Blow_up_the_statue_of_liberty
+		icon = GFX_
+		prerequisite = { focus = NYC_Wall_street_will_burn }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Wall_street_will_burn
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Nationalize_industry
+		icon = GFX_
+		prerequisite = { focus = NYC_Blow_up_the_statue_of_liberty }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Blow_up_the_statue_of_liberty
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Spread_The_Revolution
+		icon = GFX_
+		prerequisite = { focus = NYC_Nationalize_industry  }
+		prerequisite = { focus = NYC_Declare_War_Upon_Our_Oppresors  }
+
+		x = 0
+		y = 2
+		relative_position_id = NYC_Nationalize_industry
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Liberate_PA
+		icon = GFX_
+		prerequisite = { focus = NYC_Spread_The_Revolution  }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Spread_The_Revolution
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Attack_vermont_and_newhamp
+		icon = GFX_
+		prerequisite = { focus = NYC_Spread_The_Revolution  }
+
+		x = 1
+		y = 1
+		relative_position_id = NYC_Spread_The_Revolution
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Attack_ONtario
+		icon = GFX_
+		prerequisite = { focus = NYC_Spread_The_Revolution  }
+
+		x = 2
+		y = 1
+		relative_position_id = NYC_Spread_The_Revolution
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Found_Comentern_of_America
+		icon = GFX_
+		prerequisite = { focus = NYC_Attack_ONtario  }
+
+		x = -1
+		y = 1
+		relative_position_id = NYC_Attack_ONtario
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Rat_Weaponization_Program
+		icon = GFX_
+		prerequisite = { focus = NYC_Found_Comentern_of_America  }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Found_Comentern_of_America
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+###MILITARY###
+	focus = {
+		id = NYC_Mobilize
+		icon = GFX_
+		x = 24
+		y = 0
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Weapons1
+		icon = GFX_
+		prerequisite = { focus = NYC_Mobilize }
+
+		x = -1
+		y = 1
+		relative_position_id = NYC_Mobilize
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Weapons2
+		icon = GFX_
+		prerequisite = { focus = NYC_Weapons1 }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Weapons1
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Support_Weapons
+		icon = GFX_
+		prerequisite = { focus = NYC_Weapons2 }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Weapons2
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_New_York_Rangers
+		icon = GFX_
+		prerequisite = { focus = NYC_Dcotrine3 }
+		prerequisite = { focus = NYC_Dcotrine3 }
+		x = 1
+		y = 1
+		relative_position_id = NYC_Support_Weapons
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Dcotrine1
+		icon = GFX_
+		prerequisite = { focus = NYC_Mobilize }
+
+		x = 1
+		y = 1
+		relative_position_id = NYC_Mobilize
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Dcotrine2
+		icon = GFX_
+		prerequisite = { focus = NYC_Dcotrine1 }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Dcotrine1
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Dcotrine3
+		icon = GFX_
+		prerequisite = { focus = NYC_Dcotrine2 }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Dcotrine2
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+###NAVY###
+	focus = {
+		id = NYC_Restore_Dry_Docks
+		icon = GFX_
+		x = 29
+		y = 0
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_New_Venice_of_eastern_Seaboard
+		icon = GFX_
+		prerequisite = { focus = NYC_Restore_Dry_Docks }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_Restore_Dry_Docks
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_New_york_Marines
+		icon = GFX_
+		prerequisite = { focus = NYC_Restore_Dry_Docks }
+
+		x = -2
+		y = 1
+		relative_position_id = NYC_Restore_Dry_Docks
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_add_gun_batteries_to_the_Statue_of_liberty
+		icon = GFX_
+		prerequisite = { focus = NYC_New_Venice_of_eastern_Seaboard }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_New_Venice_of_eastern_Seaboard
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_add_gun_batteries_to_the_Statue_of_liberty
+		icon = GFX_
+		prerequisite = { focus = NYC_New_Venice_of_eastern_Seaboard }
+
+		x = 0
+		y = 1
+		relative_position_id = NYC_New_Venice_of_eastern_Seaboard
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_Submarines
+		icon = GFX_
+		prerequisite = { focus = NYC_add_gun_batteries_to_the_Statue_of_liberty }
+
+		x = -1
+		y = 1
+		relative_position_id = NYC_add_gun_batteries_to_the_Statue_of_liberty
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = NYC_destroyers
+		icon = GFX_
+		prerequisite = { focus = NYC_add_gun_batteries_to_the_Statue_of_liberty }
+
+		x = 1
+		y = 1
+		relative_position_id = NYC_add_gun_batteries_to_the_Statue_of_liberty
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+
+		}
+
+		completion_reward = {
+
+		}
+	}
+
+#
+}	
