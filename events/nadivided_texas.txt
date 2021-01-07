@@ -920,7 +920,7 @@ country_event = { #Pa becomes leader
         name = texas.16.a
         create_country_leader = {
             name = "Jim \"Pa\" Ferguson"
-            # picture = "gfx/leaders/STX/"
+            picture = "gfx/leaders/STX/leader_pa_furgeson.dds"
             expire = "1965.1.1"
             ideology = moderatism
             traits = {
@@ -1197,6 +1197,22 @@ country_event = { #Dan Moody creates the Liberty League
     option = {
         name = texas.24.a
         custom_effect_tooltip = STX_liberty_league_gains_support_major_tt
+        every_unit_leader = {
+            limit = {
+                OR = {
+                    has_id = 102
+                    has_id = 105
+                    has_id = 108
+                }
+            }
+            add_unit_leader_trait = loyal_to_moody
+        }
+        every_unit_leader = {
+            limit = {
+                has_id = 105
+            }
+            promote_leader = yes
+        }
         hidden_effect = {
             set_variable = { STX_liberty_league_support = 20 }
             country_event = {
@@ -1352,11 +1368,137 @@ country_event = { #Liberty League seizes the national arms stockpile
 
     option = { #We can't stop them
         name = texas.28.a
+        ai_chance = {
+            factor = 100
+        }
+        hidden_effect = {
+            set_temp_variable = { STX_liberty_league_temp = 100 }
+            subtract_from_temp_variable = { STX_liberty_league_temp = STX_liberty_league_support }
+            divide_temp_variable = { STX_liberty_league_temp = 10 }
+        }
+        # effect_tooltip = {
+        #     set_equipment_fraction = STX_liberty_league_temp
+        # }
         MTX = {
-            
+            if = {
+                limit = {
+                    STX = {
+                        has_full_control_of_state = 79
+                    }
+                }
+                set_capital = 79
+                add_state_core = 79
+            }
+            hidden_effect = {
+                country_event = {
+                    id = texas.29
+                    days = 15
+                }
+            }
+        }
+        transfer_units_fraction = {
+            target = MTX
+            size = var:STX_liberty_league_temp
+            stockpile_ratio = var:STX_liberty_league_temp
+            army_ratio = var:STX_liberty_league_temp
+            navy_ratio = 0
+            air_ratio = var:STX_liberty_league_temp
+            keep_unit_leaders_trigger = {
+                NOT = {
+                    has_triat = loyal_to_moody
+                }
+            }
+        }
+        # hidden_effect = {  #Old Shit code
+        #     set_temp_variable = { STX_liberty_league_infantry_temp = STX_liberty_league_temp }
+        #     multiply_temp_variable = { STX_liberty_league_infantry_temp = num_equipment@infantry_equipment}
+        #     send_equipment = {
+        #         type = infantry_equipment
+        #         amount = var:STX_liberty_league_infantry_temp
+        #         target = MTX
+        #     }
+        #     set_temp_variable = { STX_liberty_league_artillery_temp = STX_liberty_league_temp }
+        #     multiply_temp_variable = { STX_liberty_league_artillery_temp = num_equipment@artillery_equipment}
+        #     send_equipment = {
+        #         type = artillery_equipment
+        #         amount = var:STX_liberty_league_artillery_temp
+        #         target = MTX
+        #     }
+        #     set_temp_variable = { STX_liberty_league_support_temp = STX_liberty_league_temp }
+        #     multiply_temp_variable = { STX_liberty_league_support_temp = num_equipment@support_equipment}
+        #     send_equipment = {
+        #         type = support_equipment
+        #         amount = var:STX_liberty_league_support_temp
+        #         target = MTX
+        #     }
+        # }
+    }
+    option = { #Become MTX
+        name = texas.28.b
+        ai_chance = {
+            factor = 0
+        }
+    }
+}
+country_event = { #MTX declares war on STX
+    id = texas.29
+    title = texas.29.t
+    desc = texas.29.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Peace was never an option
+        name = texas.29.a
+        declare_war_on = {
+            target = STX
+            type = annex_everything
+        }
+        add_war_support = 0.3
+        add_stability = 0.3
+        hidden_effect = {
+            STX = {
+                clr_country_flag = STX_political_backlash
+                country_event = {
+                    id = texas.30
+                    days = 3
+                    random = 1
+                }
+            }
         }
     }
 }
 country_event = { #Gets Klan volunteer divisions (after start of civil war)
+    id = texas.30
+    title = texas.30.t
+    desc = texas.30.d
+    #picture = GFX_
 
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Accept the volunteer divisions
+        name = texas.30.a
+        ai_chance = {
+            factor = 80
+        }
+        add_war_support = 0.05
+        add_stability = -0.05
+        add_popularity = {
+            ideology = fascism
+            popularity = 0.15
+        }
+        custom_effect_tooltip = STX_get_klan_divisions
+        hidden_effect = {
+            load_oob = "STX_klan_civil_war.txt"
+        }
+    }
+    option = { #Keep the Klan out of our War!
+        name = texas.30.b
+        ai_chance = {
+            factor = 20
+        }
+        add_stability = 0.1
+    }
 }
