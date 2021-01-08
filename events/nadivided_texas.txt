@@ -1140,14 +1140,14 @@ country_event = { #meet with lobbyists
     option = { #Side with lobbyists
         name = texas.21.a
         ai_chance = {
-            factor = 60
+            factor = 80
         }
         complete_national_focus = STX_side_with_the_lobbyists
     }
     option = { #Keep our promises
         name = texas.21.b
         ai_chance = {
-            factor = 40
+            factor = 20
         }
         complete_national_focus = STX_keep_our_campaign_promises
     }
@@ -1380,19 +1380,101 @@ country_event = { #Liberty League seizes the national arms stockpile
         #     set_equipment_fraction = STX_liberty_league_temp
         # }
         MTX = {
-            if = {
-                limit = {
-                    STX = {
-                        has_full_control_of_state = 79
-                    }
-                }
-                set_capital = 79
-                add_state_core = 79
-            }
+            add_state_core = 79
+            transfer_state = 79
+            set_capital = 79
             hidden_effect = {
                 country_event = {
                     id = texas.29
                     days = 15
+                }
+            }
+            inherit_technology = STX
+            load_focus_tree = {
+                tree = texas_focus
+                keep_completed = yes
+            }
+            complete_national_focus = MTX_dan_moodys_coup
+            hidden_effect = {
+                if = {
+                    limit = {
+                        NOT = {
+                            has_completed_focus = STX_the_state_the_depression_forgot
+                        }
+                    }
+                    add_ideas = STX_the_great_depression
+                    if = {
+                        limit = {
+                            has_completed_focus = STX_expand_the_power_grid
+                        }
+                        swap_ideas = {
+                            remove_idea = STX_the_great_depression
+                            add_idea = STX_the_great_depression2
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_completed_focus = STX_introduce_hybrid_seed_corn
+                        NOT = {
+                            has_completed_focus = STX_never_another_dust_bowl
+                        }
+                    }
+                    add_ideas = STX_hybrid_seed_corn
+                }
+                if = {
+                    limit = {
+                        has_completed_focus = STX_experiment_with_combines
+                        NOT = {
+                            has_completed_focus = STX_never_another_dust_bowl
+                        }
+                    }
+                    add_ideas = STX_mechanized_farming1
+                    if = {
+                        limit = {
+                            has_completed_focus = STX_truly_mechanized_farming
+                        }
+                        swap_ideas = {
+                            remove_idea = STX_mechanized_farming1
+                            add_idea = STX_mechanized_farming2
+                        }
+                    }
+                }
+                if = {
+                    limit = {
+                        has_completed_focus = STX_never_another_dust_bowl
+                    }
+                    add_ideas = STX_the_masters_of_farming
+                }
+                if = {
+                    limit = {
+                        has_completed_focus = STX_export_to_north_america
+                    }
+                    add_offsite_building = {
+                        type = industrial_complex
+                        level = 2
+                    }
+                }
+                if = {
+                    limit = {
+                        has_completed_focus = STX_export_to_europe
+                    }
+                    add_offsite_building = {
+                        type = arms_factory
+                        level = 2
+                    }
+                }
+                if = {
+                    limit = {
+                        has_completed_focus = STX_the_hidden_terror
+                    }
+                    add_ideas = STX_hidden_terror
+                }
+                if = {
+                    limit = {
+                        has_completed_focus = STX_large_and_powerful
+                    }
+                    add_ideas = STX_large_and_powerful
                 }
             }
         }
@@ -1455,8 +1537,6 @@ country_event = { #MTX declares war on STX
             target = STX
             type = annex_everything
         }
-        add_war_support = 0.3
-        add_stability = 0.3
         hidden_effect = {
             STX = {
                 clr_country_flag = STX_political_backlash
@@ -1465,6 +1545,11 @@ country_event = { #MTX declares war on STX
                     days = 3
                     random = 1
                 }
+            }
+            country_event = {
+                id = texas.32
+                days = 25
+                random = 10
             }
         }
     }
@@ -1500,5 +1585,57 @@ country_event = { #Gets Klan volunteer divisions (after start of civil war)
             factor = 20
         }
         add_stability = 0.1
+    }
+}
+country_event = { #Burdens of Texas
+    id = texas.31
+    title = texas.31.t
+    desc = texas.31.d
+    #picture = GFX_
+    
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #We must bear these burdens
+        name = texas.31.a
+        add_ideas = STX_crimewave
+        add_ideas = STX_segregation
+    }
+}
+country_event = { #The state of the Texas Rangers
+    id = texas.32
+    title = texas.32.t
+    desc = texas.32.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #We should focus on a standardized army
+        name = texas.32.a
+        ai_chance = {
+            factor = 10
+        }
+        add_ideas = STX_very_weak_texas_rangers
+        complete_national_focus = STX_very_weak_texas_rangers_force
+        add_war_support = 0.1
+        add_stability = 0.25
+    }
+    option = { #We should give some power to the rangers
+        name = texas.32.b
+        ai_chance = {
+            factor = 50
+        }
+        add_ideas = STX_texas_rangers
+        complete_national_focus = STX_moderate_texas_rangers_force
+    }
+    option = { #We need all the help we can get
+        name = texas.32.c
+        ai_chance = {
+            factor = 40
+        }
+        add_ideas = STX_very_powerful_texas_rangers
+        complete_national_focus = STX_very_powerful_texas_rangers_force
+        add_manpower = 25000
     }
 }

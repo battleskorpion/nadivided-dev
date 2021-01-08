@@ -403,7 +403,7 @@ focus_tree = {
         completion_reward = {
             add_offsite_building = {
                 type = industrial_complex
-                level = 3
+                level = 2
             }
         }
     }
@@ -431,7 +431,7 @@ focus_tree = {
         completion_reward = {
             add_offsite_building = {
                 type = arms_factory
-                level = 3
+                level = 2
             }
         }
     }
@@ -3686,6 +3686,9 @@ focus_tree = {
         }
         allow_branch = {
             NOT = {
+                tag = MTX
+            }
+            NOT = {
                 has_completed_focus = STX_the_new_government
             }
         }
@@ -4990,7 +4993,7 @@ focus_tree = {
         relative_position_id = STX_elect_w_lee_o_daniel
         cost = 8
         ai_will_do = {
-            factor = 1
+            factor = 3
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
@@ -5035,7 +5038,7 @@ focus_tree = {
         relative_position_id = STX_hilbily_jamberee
         cost = 8
         ai_will_do = {
-            factor = 1
+            factor = 3
         }
         available_if_capitulated = yes
 
@@ -5093,7 +5096,7 @@ focus_tree = {
         relative_position_id = STX_side_with_the_lobbyists
         cost = 8
         ai_will_do = {
-            factor = 1
+            factor = 2
         }
         available_if_capitulated = yes
 
@@ -5154,7 +5157,7 @@ focus_tree = {
         relative_position_id = STX_crack_down_on_communism
         cost = 8
         ai_will_do = {
-            factor = 1
+            factor = 2
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
@@ -5177,7 +5180,7 @@ focus_tree = {
         relative_position_id = STX_crack_down_on_communism
         cost = 8
         ai_will_do = {
-            factor = 1
+            factor = 2
         }
         available_if_capitulated = yes
         
@@ -5197,7 +5200,7 @@ focus_tree = {
         relative_position_id = STX_laws_against_labor
         cost = 8
         ai_will_do = {
-            factor = 1
+            factor = 2
         }
         available_if_capitulated = yes
 
@@ -5223,7 +5226,7 @@ focus_tree = {
         relative_position_id = STX_anti_violence_act
         cost = 8
         ai_will_do = {
-            factor = 1
+            factor = 3
         }
         available_if_capitulated = no
 
@@ -5314,6 +5317,11 @@ focus_tree = {
         prerequisite = { focus = STX_enact_nationwide_conscription}
         available = {
             has_war_with = MTX
+            OR = {
+                has_idea = STX_texas_rangers
+                has_idea = STX_powerful_texas_rangers
+                has_idea = STX_very_powerful_texas_rangers
+            }
             custom_trigger_tooltip = {
                 tooltip = TX_not_corresponding_focus_complete
                 NOT = {
@@ -5321,6 +5329,9 @@ focus_tree = {
                         has_completed_focus = MTX_ask_the_texas_rangers_for_help
                     }
                 }
+            }
+            any_owned_state = {
+                is_fully_controlled_by = STX
             }
         }
         bypass = {
@@ -5331,7 +5342,7 @@ focus_tree = {
         x = -1
         y = 1
         relative_position_id = STX_enact_nationwide_conscription
-        cost = 10
+        cost = 8
         ai_will_do = {
             factor = 5
         }
@@ -5557,6 +5568,573 @@ focus_tree = {
             add_timed_idea = {
                 idea = STX_rebuilding_texas
                 days = 270
+            }
+            every_state = {
+                remove_core_of = MTX
+            }
+        }
+    }
+    focus = {
+        id = MTX_dan_moodys_coup
+        icon = GFX_
+        mutually_exclusive = { focus = STX_a_populist_texas}
+        allow_branch = {
+            tag = MTX
+            NOT = {
+                has_completed_focus = STX_the_new_government
+            }
+        }
+        x = 50
+        y = 0
+        cost = 8
+        ai_will_do = {
+            factor = 5
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_political_power = 250
+        }
+    }
+    focus = {
+        id = MTX_a_struggle_for_survival
+        icon = GFX_
+        prerequisite = { focus = MTX_dan_moodys_coup}
+        available = {
+            has_war_with = STX
+        }
+        bypass = {
+            NOT = {
+                has_war_with = STX
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = MTX_dan_moodys_coup
+        cost = 8
+        ai_will_do = {
+            factor = 5
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_MANPOWER }
+
+        completion_reward = {
+            add_war_support = 0.15
+            add_manpower = 25000
+        }
+    }
+    focus = {
+        id = MTX_ask_the_texas_rangers_for_help
+        icon = GFX_
+        prerequisite = { focus = MTX_a_struggle_for_survival}
+        available = {
+            has_war_with = STX
+            OR = {
+                has_idea = STX_texas_rangers
+                has_idea = STX_powerful_texas_rangers
+                has_idea = STX_very_powerful_texas_rangers
+            }
+            custom_trigger_tooltip = {
+                tooltip = TX_not_corresponding_focus_complete
+                NOT = {
+                    MTX = {
+                        has_completed_focus = STX_ask_the_texas_rangers_for_help
+                    }
+                }
+            }
+            any_owned_state = {
+                is_fully_controlled_by = MTX
+            }
+        }
+        bypass = {
+            NOT = {
+                has_war_with = STX
+            }
+        }
+        x = -3
+        y = 1
+        relative_position_id = MTX_a_struggle_for_survival
+        cost = 8
+        ai_will_do = {
+            factor = 5
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            division_template = {
+                name = "Texas Ranger Division"
+                is_locked = yes
+
+                division_names_group = TEX_INF_01
+
+                regiments = {
+                    cavalry = { x = 0 y = 0 }
+                    cavalry = { x = 0 y = 1 }
+                    cavalry = { x = 0 y = 2 }
+                    cavalry = { x = 1 y = 0 }
+                    cavalry = { x = 1 y = 1 }
+                    cavalry = { x = 1 y = 2 }
+                    cavalry = { x = 2 y = 0 }
+                    cavalry = { x = 2 y = 1 }
+                    cavalry = { x = 2 y = 2 }
+                    cavalry = { x = 3 y = 0 }
+                }
+                support = {
+                    military_police = { x = 0 y = 0 }
+                    recon = { x = 0 y = 1 }
+                    engineer = { x = 0 y = 2 }
+                    field_hospital = { x = 0 y = 3 }
+                }
+                priority = 2
+            }
+            random_owned_controlled_state = {
+                limit = {
+                    is_fully_controlled_by = MTX
+                }
+                create_unit = {
+                    division = "name = \"Texas Ranger Force\" division_template = \"Texas Ranger Division\" start_experience_factor = 0.8 start_equipment_factor = 1"
+                    owner = MTX
+                }
+                create_unit = {
+                    division = "name = \"Texas Ranger Force\" division_template = \"Texas Ranger Division\" start_experience_factor = 0.8 start_equipment_factor = 1"
+                    owner = MTX
+                }
+                create_unit = {
+                    division = "name = \"Texas Ranger Force\" division_template = \"Texas Ranger Division\" start_experience_factor = 0.8 start_equipment_factor = 1"
+                    owner = MTX
+                }
+                create_unit = {
+                    division = "name = \"Texas Ranger Force\" division_template = \"Texas Ranger Division\" start_experience_factor = 0.8 start_equipment_factor = 1"
+                    owner = MTX
+                }
+                create_unit = {
+                    division = "name = \"Texas Ranger Force\" division_template = \"Texas Ranger Division\" start_experience_factor = 0.8 start_equipment_factor = 1"
+                    owner = MTX
+                }
+                create_unit = { #6
+                    division = "name = \"Texas Ranger Force\" division_template = \"Texas Ranger Division\" start_experience_factor = 0.8 start_equipment_factor = 1"
+                    owner = MTX
+                }
+                create_unit = {
+                    division = "name = \"Texas Ranger Force\" division_template = \"Texas Ranger Division\" start_experience_factor = 0.8 start_equipment_factor = 1"
+                    owner = MTX
+                }
+                create_unit = {
+                    division = "name = \"Texas Ranger Force\" division_template = \"Texas Ranger Division\" start_experience_factor = 0.8 start_equipment_factor = 1"
+                    owner = MTX
+                }
+                create_unit = {
+                    division = "name = \"Texas Ranger Force\" division_template = \"Texas Ranger Division\" start_experience_factor = 0.8 start_equipment_factor = 1"
+                    owner = MTX
+                }
+                create_unit = {
+                    division = "name = \"Texas Ranger Force\" division_template = \"Texas Ranger Division\" start_experience_factor = 0.8 start_equipment_factor = 1"
+                    owner = MTX
+                }
+                create_unit = {
+                    division = "name = \"Texas Ranger Force\" division_template = \"Texas Ranger Division\" start_experience_factor = 0.8 start_equipment_factor = 1"
+                    owner = MTX
+                }
+                create_unit = {
+                    division = "name = \"Texas Ranger Force\" division_template = \"Texas Ranger Division\" start_experience_factor = 0.8 start_equipment_factor = 1"
+                    owner = MTX
+                }
+            }
+        }
+    }
+    focus = {
+        id = MTX_mobolize_our_industry
+        icon = GFX_
+        prerequisite = { focus = MTX_a_struggle_for_survival}
+        available = {
+            has_war_with = STX
+        }
+        bypass = {
+            NOT = {
+                has_war_with = STX
+            }
+        }
+        x = -1
+        y = 1
+        relative_position_id = MTX_a_struggle_for_survival
+        cost = 8
+        ai_will_do = {
+            factor = 4
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            if = {
+                limit = {
+                    has_idea = undisturbed_isolation
+                    has_idea = isolation
+                    has_idea = civilian_economy
+                    has_idea = low_economic_mobilisation
+                    has_idea = partial_economic_mobilisation
+                }
+                add_ideas = war_economy
+            }
+            random_owned_controlled_state = {
+                limit = {
+                    free_building_slots = {
+                        building = arms_factory
+                        size > 0
+                        include_locked = no
+                    }
+                }
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                limit = {
+                    free_building_slots = {
+                        building = arms_factory
+                        size > 0
+                        include_locked = no
+                    }
+                }
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MTX_forcefully_expand_the_army
+        icon = GFX_
+        prerequisite = { focus = MTX_a_struggle_for_survival}
+        x = 1
+        y = 1
+        relative_position_id = MTX_a_struggle_for_survival
+        cost = 8
+        ai_will_do = {
+            factor = 4
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_MANPOWER }
+
+        completion_reward = {
+            if = {
+                limit = {
+                    OR = {
+                        has_idea = disarmed_nation
+                        has_idea = minutemen_militia_conscription
+                        has_idea = volunteer_only
+                        has_idea = limited_conscription
+                    }
+                }
+                add_ideas = extensive_conscription
+            }
+            add_manpower = 15000
+        }
+    }
+    focus = {
+        id = MTX_let_the_unions_contribute
+        icon = GFX_
+        prerequisite = { focus = MTX_mobolize_our_industry focus = MTX_forcefully_expand_the_army}
+        available = {
+            has_war_with = STX
+        }
+        bypass = {
+            NOT = {
+                has_war_with = STX
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = MTX_mobolize_our_industry
+        cost = 8
+        ai_will_do = {
+            factor = 4
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_POLITICAL FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            add_popularity = {
+                ideology = communism
+                popularity = 0.05
+            }
+            add_popularity = {
+                ideology = progressivism
+                popularity = 0.15
+            }
+            add_stability = 0.05
+            add_political_power = 50
+            random_owned_controlled_state = {
+                limit = {
+                    free_building_slots = {
+                        building = arms_factory
+                        size > 0
+                        include_locked = no
+                    }
+                }
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                limit = {
+                    free_building_slots = {
+                        building = arms_factory
+                        size > 0
+                        include_locked = no
+                    }
+                }
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MTX_let_the_people_contribute
+        icon = GFX_
+        prerequisite = { focus = MTX_forcefully_expand_the_army focus = MTX_mobolize_our_industry}
+        available = {
+            has_war_with = STX
+        }
+        bypass = {
+            NOT = {
+                has_war_with = STX
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = MTX_forcefully_expand_the_army
+        cost = 8
+        ai_will_do = {
+            factor = 4
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_war_support = 0.05
+            add_political_power = 50
+        }
+    }
+    focus = {
+        id = MTX_preare_defensive_lines
+        icon = GFX_
+        prerequisite = { focus = MTX_a_struggle_for_survival}
+        available = {
+            has_war_with = STX
+            any_owned_state = {
+                is_fully_controlled_by = MTX
+            }
+        }
+        bypass = {
+            NOT = {
+                has_war_with = STX
+            }
+        }
+        x = 3
+        y = 1
+        relative_position_id = MTX_a_struggle_for_survival
+        cost = 8
+        ai_will_do = {
+            factor = 2
+            modifier = {
+                factor = 2
+                has_completed_focus = MTX_ask_the_texas_rangers_for_help
+            }
+            modifier = {
+                factor = 0
+                surrender_progress < 0.1
+            }
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                limit = {
+                    is_fully_controlled_by = MTX
+                }
+                add_building_construction = {
+                    type = bunker
+                    level = 2
+                    instant_build = yes
+                    province = {
+                        all_provinces = yes
+                        limit_to_border = yes
+                        level < 4
+                    }
+                }
+            }
+        }
+    }
+    focus = {
+        id = MTX_prepare_a_defensive_line_at_the_pesos_river
+        icon = GFX_
+        prerequisite = { focus = MTX_preare_defensive_lines}
+        available = {
+            has_war_with = STX
+            has_full_control_of_state
+        }
+        bypass = {
+            NOT = {
+                has_war_with = STX
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = MTX_preare_defensive_lines
+        cost = 8
+        ai_will_do = {
+            factor = 4
+            modifier = {
+                factor = 0
+                surrender_progress < 0.1
+            }
+            modifier = {
+                factor = 4
+                surrender_progress > 0.5
+            }
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+
+        }
+    }
+    focus = {
+        id = MTX_prepare_the_davis_line
+        icon = GFX_
+        prerequisite = { focus = MTX_prepare_a_defensive_line_at_the_pesos_river}
+        available = {
+            has_war_with = STX
+            has_full_control_of_state
+        }
+        bypass = {
+            NOT = {
+                has_war_with = STX
+            }
+        }
+        x = 0 
+        y = 1
+        relative_position_id = MTX_prepare_a_defensive_line_at_the_pesos_river
+        cost = 8
+        ai_will_do = {
+            factor = 2
+            modifier = {
+                factor = 0
+                surrender_progress < 0.1
+            }
+            modifier = {
+                factor = 5
+                surrender_progress > 0.6
+            }
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+
+        }
+    }
+    focus = {
+        id = MTX_victory_in_the_civil_war
+        icon = GFX_
+        prerequisite = { focus = MTX_let_the_unions_contribute focus = MTX_let_the_people_contribute}
+        available = {
+            NOT = {
+                has_war_with = STX
+            }
+        }
+        x = 1
+        y = 1
+        relative_position_id = MTX_let_the_unions_contribute
+        cost = 8
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_political_power = 100
+            country_event = {
+                id = texas.31
+            }
+        }
+    }
+    focus = {
+        id = MTX_pacify_violent_texans
+        icon = GFX_
+        prerequisite = { focus = MTX_victory_in_the_civil_war}
+        x = 4
+        y = 1
+        relative_position_id = MTX_victory_in_the_civil_war
+        cost = 8
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            every_owned_state = {
+                limit = {
+                    is_core_of = STX
+                    NOT = {
+                        is_core_of = MTX
+                    }
+                }
+                add_compliance = 50
+            }
+        }
+    }
+    focus = {
+        id = MTX_integrate_texas
+        icon = GFX_
+        prerequisite = { focus = MTX_pacify_violent_texans}
+        x = 0
+        y = 1
+        relative_position_id = MTX_pacify_violent_texans
+        cost = 8
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            every_state = {
+                limit = {
+                    is_core_of = STX
+                    NOT = {
+                        is_core_of = MTX
+                    }
+                }
+                add_core_of = MTX
+            }
+        }
+    }
+    focus = {
+        id = MTX_remove_populism_for_good
+        icon = GFX_
+        prerequisite = { focus = MTX_integrate_texas}
+        x = 0
+        y = 1
+        relative_position_id = MTX_integrate_texas
+        cost = 8
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            every_state = {
+                remove_core_of = STX
             }
         }
     }
@@ -6095,7 +6673,7 @@ focus_tree = {
         allow_branch = {
             has_completed_focus = STX_the_new_government
         }
-        x = 50
+        x = 47
         y = 0
         cost = 10
         ai_will_do = {
