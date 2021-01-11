@@ -5575,6 +5575,138 @@ focus_tree = {
         }
     }
     focus = {
+        id = STX_state_mandated_white_supremacy
+        icon = GFX_
+        prerequisite = { focus = STX_rebuild_texas}
+        x = -2
+        y = 1
+        relative_position_id = STX_rebuild_texas
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_stability = -0.1
+            add_political_power = 50
+            add_war_support = 0.05
+            swap_ideas = {
+                add_idea = STX_segregation3
+                remove_idea = STX_segregation
+            }
+        }
+    }
+    focus = {
+        id = STX_crush_external_communism
+        icon = GFX_
+        prerequisite = { focus = STX_rebuild_texas}
+        x = 0
+        y = 1
+        relative_position_id = STX_rebuild_texas
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_war_support = 0.05
+            add_political_power = 50
+        }
+    }
+    focus = {
+        id = STX_guard_against_communism
+        icon = GFX_
+        prerequisite = { focus = STX_crush_external_communism}
+        x = -1
+        y = 1
+        relative_position_id = STX_crush_external_communism
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_ideas = STX_anti_communist_influence
+            custom_effect_tooltip = STX_every_country_in_south_conditions_get_idea
+            every_country = {
+                limit = {
+                    OR = {
+                        tag = SLA
+                        tag = ORL
+                        tag = SAR
+                        tag = SNM
+                        tag = SOK
+                        tag = SMS
+                        tag = SAL
+                        tag = SGA
+                        tag = SSC
+                    }
+                    exists = yes
+                    has_opinion = {
+                        target = STX
+                        value > 50
+                    }
+                    NOT = {
+                        ruling_party = communism
+                    }
+                }
+                add_ideas = STX_anti_communist_influence
+            }
+        }
+    }
+    focus = {
+        id = STX_cleanse_arkansas
+        icon = GFX_
+        prerequisite = { focus = STX_crush_external_communism}
+        available = {
+            SAR = {
+                has_government = communism
+            }
+        }
+        x = 1
+        y = 1
+        relative_position_id = STX_crush_external_communism
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            create_wargoal = {
+                target = SAR
+                type = annex_everything
+            }
+        }
+    }
+    focus = {
+        id = STX_ensure_lobbyist_loyalty
+        icon = GFX_
+        prerequisite = { focus = STX_rebuild_texas}
+        x = 2
+        y = 1
+        relative_position_id = STX_rebuild_texas
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        
+        completion_reward = {
+            swap_ideas = {
+                add_idea = STX_crimewave2
+                remove_idea = STX_crimewave
+            }
+        }
+    }
+    focus = {
         id = MTX_dan_moodys_coup
         icon = GFX_
         mutually_exclusive = { focus = STX_a_populist_texas}
@@ -6093,10 +6225,138 @@ focus_tree = {
         }
     }
     focus = {
+        id = MTX_crack_down_on_corruption
+        icon = GFX_
+        prerequisite = { focus = MTX_victory_in_the_civil_war}
+        available = {
+            has_idea = STX_crimewave
+        }
+        bypass = {
+            has_idea = STX_crimewave2
+        }
+        x = -3
+        y = 1
+        relative_position_id = MTX_victory_in_the_civil_war
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            swap_ideas = {
+                add_idea = STX_crimewave2
+                remove_idea = STX_crimewave
+            }
+        }
+    }
+    focus = {
+        id = MTX_fire_those_connected_to_the_crime_wave
+        icon = GFX_
+        prerequisite = { focus = MTX_crack_down_on_corruption}
+        available = {
+            has_idea = STX_crimewave2
+        }
+        x = 0
+        y = 1
+        relative_position_id = MTX_crack_down_on_corruption
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            remove_ideas = STX_crimewave2
+        }
+    }
+    focus = {
+        id = MTX_equally_represent_everyone_in_government_jobs
+        icon = GFX_
+        prerequisite = { focus = MTX_victory_in_the_civil_war}
+        available = {
+            has_idea = STX_segregation
+        }
+        bypass = {
+            OR = {
+                has_idea = STX_segregation2
+                has_idea = STX_segregation3
+            }
+        }
+        x = -1
+        y = 1
+        relative_position_id = MTX_victory_in_the_civil_war
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MANPOWER }
+
+        completion_reward = {
+            swap_ideas = {
+                remove_idea = STX_segregation
+                add_idea = STX_segregation2
+            }
+        }
+    }
+    focus = {
+        id = MTX_ban_the_klan
+        icon = GFX_
+        prerequisite = { focus = MTX_equally_represent_everyone_in_government_jobs}
+        available = {
+            OR = {
+                has_idea = STX_segregation3
+                has_idea = STX_segregation2
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = MTX_equally_represent_everyone_in_government_jobs
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            if = {
+                limit = {
+                    has_idea = STX_segregation2
+                }
+                remove_ideas = STX_segregation2
+            } else {
+                remove_ideas = STX_segregation3
+            }
+        }
+    }
+    focus = {
+        id = MTX_push_legal_reform
+        icon = GFX_
+        prerequisite = { focus = MTX_victory_in_the_civil_war}
+        x = 1
+        y = 1
+        relative_position_id = MTX_victory_in_the_civil_war
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_stability = 0.05
+            add_political_power = 50
+        }
+    }
+    focus = {
         id = MTX_pacify_violent_texans
         icon = GFX_
         prerequisite = { focus = MTX_victory_in_the_civil_war}
-        x = 4
+        x = 3
         y = 1
         relative_position_id = MTX_victory_in_the_civil_war
         cost = 8
@@ -6181,6 +6441,235 @@ focus_tree = {
 
         completion_reward = {
             add_stability = 0.1
+        }
+    }
+    focus = {
+        id = STX_turn_texas_into_an_economic_powerhouse
+        icon = GFX_
+        prerequisite = { focus = STX_keep_our_campaign_promises}
+        x = -2
+        y = 1
+        relative_position_id = STX_keep_our_campaign_promises
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 0.75
+                uses = 1
+                category = industry
+            }
+        }
+    }
+    focus = {
+        id = STX_abolish_capital_punishment
+        icon = GFX_
+        prerequisite = { focus = STX_keep_our_campaign_promises}
+        x = 0
+        y = 1
+        relative_position_id = STX_keep_our_campaign_promises
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_MANPOWER FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_manpower = 50
+            add_stability = 0.05
+            swap_ideas = {
+                add_idea = STX_crimewave2
+                remove_idea = STX_crimewave
+            }
+        }
+    }
+    focus = {
+        id = STX_mend_ties_with_huey_long
+        icon = GFX_
+        prerequisite = { focus = STX_keep_our_campaign_promises}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = STX_huey_leads_louisiana_tt
+                SLA = {
+                    has_country_flag = SLA_huey_is_leader
+                }
+            }
+            country_exists = SLA
+        }
+        x = 3
+        y = 1
+        relative_position_id = STX_keep_our_campaign_promises
+        cost = 8
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = yes
+        
+        completion_reward = {
+            add_opinion_modifier = {
+                target = SLA
+                modifier = generic_improved_relations
+            }
+            SLA = {
+                add_opinion_modifier = {
+                    target = STX
+                    modifier = generic_improved_relations
+                }
+            }
+        }
+    }
+    focus = {
+        id = STX_shared_populist_values
+        icon = GFX_
+        prerequisite = { focus = STX_mend_ties_with_huey_long}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = STX_huey_leads_louisiana_tt
+                SLA = {
+                    has_country_flag = SLA_huey_is_leader
+                }
+            }
+            country_exists = SLA
+        }
+        x = -1
+        y = 1
+        relative_position_id = STX_mend_ties_with_huey_long
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_popularity = {
+                ideology = longism
+                popularity = 0.15
+            }
+            SLA = {
+                add_popularity = {
+                    ideology = longism
+                    popularity = 0.15
+                }
+            }
+        }
+    }
+    focus = {
+        id = STX_peace_mission_to_louisiana
+        icon = GFX_
+        prerequisite = { focus = STX_mend_ties_with_huey_long}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = STX_huey_leads_louisiana_tt
+                SLA = {
+                    has_country_flag = SLA_huey_is_leader
+                }
+            }
+            country_exists = SLA
+        }
+        x = 1
+        y = 1
+        relative_position_id = STX_mend_ties_with_huey_long
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_political_power = 100
+        }
+    }
+    focus = {
+        id = STX_ask_to_join_the_jeffersonian_league
+        icon = GFX_
+        prerequisite = { focus = STX_shared_populist_values}
+        prerequisite = { focus = STX_peace_mission_to_louisiana}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = STX_huey_leads_louisiana_tt
+                SLA = {
+                    has_country_flag = SLA_huey_is_leader
+                }
+            }
+            country_exists = SLA
+        }
+        x = 1
+        y = 1
+        relative_position_id = STX_shared_populist_values
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            SLA = {
+                country_event = {
+                    id = texas.33
+                }
+            }
+        }
+    }
+    focus = {
+        id = STX_ask_louisiana_for_our_land_back
+        icon = GFX_
+        prerequisite = { focus = STX_ask_to_join_the_jeffersonian_league}
+        available = {
+            is_in_faction_with = SLA
+            SLA = {
+
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = STX_ask_to_join_the_jeffersonian_league
+        cost = 8
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            SLA = {
+                country_event = {
+                    id = texas.34
+                }
+            }
+        }
+    }
+    focus = {
+        id = STX_ask_oklahoma_for_our_land_back
+        icon = GFX_
+        prerequisite = { focus = STX_ask_louisiana_for_our_land_back}
+        available = {
+            is_in_faction_with = SLA
+            SOK = {
+                is_in_faction_with = SLA
+
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = STX_ask_louisiana_for_our_land_back
+        cost = 8
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            SLA = {
+                country_event = {
+                    id = texas.35
+                }
+            }
         }
     }
     focus = {
