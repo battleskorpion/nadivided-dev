@@ -1,6 +1,165 @@
 add_namespace = california
 
 country_event = {
+	id = california.75
+	title = california.75.t
+	desc = california.75.d
+	picture = GFX_report_event_german_speech
+	
+	is_triggered_only = yes
+	
+ 	immediate = {
+ 		hidden_effect = {
+ 			add_named_threat = { threat = 2 name = california.4.t }
+ 		} 		
+ 	}
+
+	option = {
+		name = california.75.a
+		4 = {
+			if = {
+				limit = { is_owned_by = JEF }
+				add_core_of = SCA
+			}
+		}
+		152 = {
+			if = {
+				limit = { is_owned_by = JEF }
+				add_core_of = SCA
+			}
+		}
+		153 = {
+			if = {
+				limit = { is_owned_by = JEF }
+				add_core_of = SCA
+			}
+		}
+		JEF = {
+			every_unit_leader = {
+				set_nationality = SCA
+			}
+		}
+		annex_country = { target = JEF transfer_troops = yes }
+		add_political_power = 75
+		set_country_flag = JEF_annexed
+		add_war_support = 0.1
+		add_stability = 0.05
+		hidden_effect = {
+			news_event = { hours = 6 id = news.36 }
+		}
+	}
+}
+# jefferson decsion on annexations
+country_event = {
+	id = california.28
+	title = california.28.t
+	desc = california.28.d
+	picture = GFX_report_event_hitler_parade
+	
+	is_triggered_only = yes
+	
+	option = { # Accept
+		name = california.28.a
+		ai_chance = {
+			base = 30
+			modifier = {
+				add = -25
+				SCA = { has_army_size = { size < 40 } }
+			}
+			modifier = {
+				add = 100
+				SCA = { has_army_size = { size > 39 } }
+			}
+			modifier = {
+				add = 20
+				is_in_faction_with = SCA
+			}
+		}
+		SCA = {
+			country_event = { hours = 2 id = california.4 }
+		}
+		custom_effect_tooltip = GAME_OVER_TT
+	}
+	option = { # Refuse
+		name = california.28.b
+		ai_chance = {
+			base = 10			
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+				NOT = { HUN = { has_completed_focus = HUN_protect_austria } }
+			}
+			modifier = {
+				SCA = { has_army_size = { size > 39 } }
+				factor = 0.5
+			}
+			modifier = {
+				add = 20
+				SCA = { has_army_size = { size < 30 } }
+			}
+
+			modifier = {
+				factor = 2
+				is_in_faction = yes
+				NOT = { is_in_faction_with = SCA }
+			}
+			modifier = {
+				any_other_country = {
+					has_guaranteed = JEF
+				}
+				factor = 5 #i've got friends
+			}
+			modifier = {
+				any_other_country = {
+					is_major = yes
+					has_guaranteed = JEF
+				}
+				factor = 5 #i've got big friends
+			}
+		}
+		SCA = {
+			add_opinion_modifier = { target = ROOT modifier = SCA_anschluss_rejected }
+			country_event = { hours = 2 id = california.29 }
+			if = { limit = { is_in_faction_with = JEF }
+				remove_from_faction = JEF
+			}
+		}
+	}
+}
+# Austria refuses Anschluss
+country_event = {
+	id = california.29
+	title = california.29.t
+	desc = california.29.d
+	picture = GFX_report_event_german_troops
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = california.29.a
+		add_state_claim = 4
+		add_state_claim = 152
+		add_state_claim = 153
+		create_wargoal = {
+			type = take_state_focus
+			target = JEF
+			generator = { 4 152 153 }
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+country_event = {
 	id = california.1
 	title = california.1.t
 	desc = california.1.d
@@ -29,8 +188,8 @@ country_event = {
 	}
 }
 
-# Spain Gives Up Balearic Islands
-country_event = {
+# arizona gives up state
+	country_event = {
 	id = california.2
 	title = california.2.t
 	desc = california.2.d
@@ -39,12 +198,12 @@ country_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = italy.2.a
+		name = california.2.a
 		SCA = { transfer_state = 177 }
 	}
 }
 
-# Spain Refuses to Give Up Islands
+# arizona refuses to be subjeted
 country_event = {
 	id = california.3
 	title = california.3.t
@@ -58,7 +217,191 @@ country_event = {
 		SCA = { add_state_claim = 177 }
 	}
 }
+country_event = {
+	id = california.4
+	title = california.4.t
+	desc = california.4.d
+	picture = GFX_report_event_merchant_ship_01
 
+	is_triggered_only = yes
+	
+	option = {
+		name = california.4.a
+		SCA = { country_event = { id = california.4 } }
+		effect_tooltip = {
+			SCA = { transfer_state = 177 }
+		}
+
+		hidden_effect = {
+			news_event = { id = news.190 }
+		}
+	}
+	option = {
+		name = california.4.b
+		ai_chance = { factor = 0 }
+		SCA = { country_event = { id = california.2 } }
+		effect_tooltip = {
+			SCA = { add_state_claim = 177 }
+		}
+	}
+}
+country_event = {
+	id = california.50
+	title = california.50.title
+	desc = california.50.desc
+	
+	picture = GFX_report_event_merchant_ship_01
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = california.50.a
+
+		add_equipment_to_stockpile = {
+			type = infantry_equipment_0
+			amount = 250
+			producer = "SCA"
+		}
+	}
+}
+country_event = {
+	id = california.51
+	title = california.51.title
+	desc = california.51.desc
+	
+	picture = GFX_report_event_merchant_ship_01
+
+	is_triggered_only = yes
+
+	option = {
+		name = california.51.a
+	}
+}
+# Danzig or War (Poland)
+country_event = {
+	id = california.86
+	title = california.86.t
+	desc = california.86.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_war_with = SCA }
+	}
+	
+	option = {
+		name = california.86.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
+		SCA = { country_event = { id = california.87 days = 1 } }
+		effect_tooltip = {
+			SCA = {
+				transfer_state = 85
+				add_state_core = 85
+				remove_state_claim = 86
+				remove_state_claim = 762
+			}
+		}
+	}
+	
+	option = {
+		name = california.86.b
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 3
+				strength_ratio = {
+					tag = SCA
+					ratio > 0.7
+				}
+			}
+			modifier = {
+				factor = 10
+				any_other_country = {
+					is_major = yes
+					is_in_faction_with = SNV
+				}
+			}
+		}
+		SCA = { country_event = { id = california.88 days = 1 } 
+			if = {
+				limit = {
+					is_in_faction_with = SNV
+					is_faction_leader = yes
+				}
+				remove_from_faction = SNV
+			}
+			if = {
+				limit = { 
+					is_in_faction_with = SNV
+					is_faction_leader = no
+				}
+				random_other_country = {
+					limit = { 
+						is_in_faction_with = SCA
+						is_faction_leader = yes
+					}
+					remove_from_faction = SCA
+				}
+			}			
+		}		
+		hidden_effect = {
+			news_event = { hours = 1 id = news.204 }
+		}
+		effect_tooltip = {
+			SCA = {
+				declare_war_on = {
+					target = SNV
+					type = take_state
+					generator = { 85 }
+				}
+			}
+		}
+	}
+}
+
+# Poland Cedes Danzig (Danzig or War)
+country_event = {
+	id = california.87
+	title = california.87.t
+	desc = california.87.d
+	picture = GFX_report_event_german_polish_border
+
+	is_triggered_only = yes
+	
+	option = {
+		name = california.87.a
+		transfer_state = 85
+		remove_state_claim = 86
+}
+
+# Poland Refuses to Cede Danzig (Danzig or War)
+country_event = {
+	id = california.88
+	title = california.88.t
+	desc = california.88.d
+	picture = GFX_report_event_polish_tanks_02
+
+	is_triggered_only = yes
+	
+	option = {
+		name = california.88.a
+		create_wargoal = {
+			type = take_state
+			generator = { 85 }
+			target = SNV
+		}
+		add_state_core = 85
+}
+###############################################################
+#############CIVIL WAR STUFF AFTER THE ELECTION################
+###############################################################
 
 
 
