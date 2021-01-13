@@ -1,1371 +1,767 @@
 focus_tree = {
-    id = cuba_focus
+	id = CUB
+	country = {
+		factor = 0
+		modifier = {
+			add = 10
+			tag = CUB
+		}
+	}
+	
+	continuous_focus_position = { x = 50 y = 2500 }
+	
+	#Focus for Target the Cartels
+	focus = {
+		id = CUB_target_the_cartels
+		icon = GFX_goal_unknown
+		x = 4
+		y = 8
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = CUB_counterterrorism }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_opinion_modifier= { 
+			target = MDC 
+			modifier = MDC_Cuban_Opposition  
+			}
+		}
+	}
 
-    country = {
-        factor = 0
+	#Focus for End the dictator
+	focus = {
+		id = CUB_end_the_dictator
+		icon = GFX_goal_unknown
+		x = 8
+		y = 5
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { 
+			focus = CUB_foreign_policy_behemoth 
+		}
+		prerequisite = { 
+			focus = CUB_redeem_neoliberalism 
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			kill_ideology_leader = neutrality
+		}
+	}
 
-        modifier = {
-            add = 10
-            tag = CUB
-        }
-    }
-    default = no
+	#Focus for Forget America
+	focus = {
+		id = CUB_forget_america
+		icon = GFX_goal_generic_forceful_treaty
+		x = 30
+		y = 2
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = CUB_guantanamo_crisis }
+		mutually_exclusive = { focus = CUB_dreams_of_a_republic }
+		ai_will_do = {
+			factor = 1
+		}
+	}
 
-#######################################
-############Industrial Shit############
-#######################################
-    focus = {
-        id = CUB_expand_our_industry
-        icon = GFX_focus_generic_industry_2
-        x = 6
-        y = 0
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH }
-        
-        completion_reward = {
-            random_owned_controlled_state = {
-                add_extra_state_shared_building_slots = 1
-                add_building_construction = {
-                    type = Industrial_complex
-                    level = 1
-                    instant_build = yes
-                }
-            }
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                category = industry
-            }
-        }
-    }
-    focus = {
-        id = CUB_invest_in_pinar_del_rio
-        icon = GFX_goal_generic_construct_civilian
-        prerequisite = { focus = CUB_expand_our_industry}
-        available = {
-            controls_state = 603
-        }
-        x = -6
-        y = 1
-        relative_position_id = CUB_expand_our_industry
-        cost = 5
-        ai_will_do = {
-            factor = 2
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_INDUSTRY }
+	#Focus for Guantanamo Crisis
+	focus = {
+		id = CUB_guantanamo_crisis
+		icon = GFX_goal_generic_major_war
+		x = 20
+		y = 1
+		cost = 1
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		bypass = {
+			owns_state= 454
+		}
+		available = {
+			HAI = {has_defensive_war_with= AOH}
+		}
+		completion_reward = {
+			set_state_owner= 454  
+			country_event= {
+			days = 4
+			id = cuba.2
+			}
+		}
+	}
 
-        completion_reward = {
-            603 = {
-                add_extra_state_shared_building_slots = 2
-                hidden_effect = {
-                    set_state_flag = CUB_has_been_invested_in
-                }
-            }
-        }
-    }
-    focus = {
-        id = CUB_invest_in_havana
-        icon = GFX_goal_generic_construct_civilian
-        prerequisite = { focus = CUB_expand_our_industry}
-        available = {
-            controls_state = 478
-        }
-        x = -4
-        y = 1
-        relative_position_id = CUB_expand_our_industry
-        cost = 5
-        ai_will_do = {
-            factor = 2
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_INDUSTRY }
+	#Focus for Build a Congress
+	focus = {
+		id = CUB_build_a_congress
+		icon = GFX_goal_unknown
+		x = 5
+		y = 5
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { 
+			focus = CUB_foreign_policy_behemoth 
+		}
+		prerequisite = { 
+			focus = CUB_redeem_neoliberalism 
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
 
-        completion_reward = {
-            478 = {
-                add_extra_state_shared_building_slots = 2
-                hidden_effect = {
-                    set_state_flag = CUB_has_been_invested_in
-                }
-            }
-        }
-    }
-    focus = {
-        id = CUB_invest_in_juventud
-        icon = GFX_goal_generic_construct_civilian
-        prerequisite = { focus = CUB_expand_our_industry}
-        available = {
-            controls_state = 607
-        }
-        x = -2
-        y = 1
-        relative_position_id = CUB_expand_our_industry
-        cost = 5
-        ai_will_do = {
-            factor = 2
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_INDUSTRY }
+	#Focus for Dreams of a Republic
+	focus = {
+		id = CUB_dreams_of_a_republic
+		icon = GFX_goal_support_democracy
+		x = 10
+		y = 2
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = CUB_guantanamo_crisis }
+		mutually_exclusive = { focus = CUB_forget_america }
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			owns_state= 454
+		}
+		completion_reward = {
+			add_popularity= { 
+			ideology = democratic 
+			popularity = 0.2 
+			}
+  			add_popularity= { 
+			ideology = progressivism 
+			popularity = 0.2 
+			}
+		}
+	}
 
-        completion_reward = {
-            607 = {
-                add_extra_state_shared_building_slots = 2
-                hidden_effect = {
-                    set_state_flag = CUB_has_been_invested_in
-                }
-            }
-        }
-    }
-    focus = {
-        id = CUB_invest_in_camaguey
-        icon = GFX_goal_generic_construct_civilian
-        prerequisite = { focus = CUB_expand_our_industry}
-        available = {
-            controls_state = 606
-        }
-        x = 0
-        y = 1
-        relative_position_id = CUB_expand_our_industry
-        cost = 5
-        ai_will_do = {
-            factor = 2
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_INDUSTRY }
+	#Focus for Redeem Neoliberalism
+	focus = {
+		id = CUB_redeem_neoliberalism
+		icon = GFX_goal_unknown
+		x = 8
+		y = 4
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = CUB_a_gulf_republic }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_ideas= CUB_savior_of_democracy
+		}
+	}
 
-        completion_reward = {
-            606 = {
-                add_extra_state_shared_building_slots = 2
-                hidden_effect = {
-                    set_state_flag = CUB_has_been_invested_in
-                }
-            }
-        }
-    }
-    focus = {
-        id = CUB_invest_in_holguin
-        icon = GFX_goal_generic_construct_civilian
-        prerequisite = { focus = CUB_expand_our_industry}
-        available = {
-            controls_state = 477
-        }
-        x = 2
-        y = 1
-        relative_position_id = CUB_expand_our_industry
-        cost = 5
-        ai_will_do = {
-            factor = 2
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_INDUSTRY }
+	#Focus for Foreign policy Behemoth
+	focus = {
+		id = CUB_foreign_policy_behemoth
+		icon = GFX_goal_unknown
+		x = 2
+		y = 4
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = CUB_a_gulf_republic }
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			has_government= democratic
+		}
+		completion_reward = {
+			set_major= yes
+		}
+	}
 
-        completion_reward = {
-            477 = {
-                add_extra_state_shared_building_slots = 2
-                hidden_effect = {
-                    set_state_flag = CUB_has_been_invested_in
-                }
-            }
-        }
-    }
-    focus = {
-        id = CUB_finish_investments
-        icon = GFX_focus_generic_industry_3
-        prerequisite = { focus = CUB_invest_in_holguin focus = CUB_invest_in_camaguey focus = CUB_invest_in_juventud focus = CUB_invest_in_havana focus = CUB_invest_in_pinar_del_rio }
-        x = -2
-        y = 2
-        relative_position_id = CUB_expand_our_industry
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_INDUSTRY }
+	#Focus for A Caribbean Union
+	focus = {
+		id = CUB_a_caribbean_union
+		icon = GFX_goal_unknown
+		x = 15
+		y = 3
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = CUB_dreams_of_a_republic }
+		mutually_exclusive = { focus = CUB_a_gulf_republic }
+		ai_will_do = {
+			factor = 1
+		}
+	}
 
-        completion_reward = {
-            every_controlled_state = {
-                limit = {
-                    has_state_flag = CUB_has_been_invested_in
-                }
-                add_building_construction = {
-                    type = Industrial_complex
-                    level = 2
-                    instant_build = yes
-                }
-                hidden_effect = {
-                    clr_state_flag = CUB_has_been_invested_in
-                }
-            }
-        }
-    }
-    focus = {
-        id = CUB_invest_in_our_military_industry
-        icon = GFX_goal_generic_construct_mil_factory
-        prerequisite = { focus = CUB_expand_our_industry}
-        x = 5
-        y = 1
-        relative_position_id = CUB_expand_our_industry
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_INDUSTRY }
+	#Focus for A Gulf Republic
+	focus = {
+		id = CUB_a_gulf_republic
+		icon = GFX_goal_unknown
+		x = 5
+		y = 3
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = CUB_dreams_of_a_republic }
+		mutually_exclusive = { focus = CUB_a_caribbean_union }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			set_politics= {
+			ruling_party = democratic 
+			elections_allowed = yes 
+			}
+			country_event= {
+			days = 4 
+			id = cuba.3 
+			}
+			add_popularity= { 
+			ideology = democratic 
+			popularity = 0.3 
+			}
+		}
+	}
 
-        completion_reward = {
-            random_owned_controlled_state = {
-                add_extra_state_shared_building_slots = 3
-                add_building_construction = {
-                    type = arms_factory
-                    level = 3
-                    instant_build = yes
-                }
-            }
-        }
-    }
-    focus = {
-        id = CUB_prioritize_havana_arms_production
-        icon = GFX_focus_ask_for_company_support
-        prerequisite = { focus = CUB_invest_in_our_military_industry}
-        mutually_exclusive = { focus = CUB_prioritize_holguin_arms_production}
-        available = {
-            controls_state = 478
-        }
-        x = -1
-        y = 1
-        relative_position_id = CUB_invest_in_our_military_industry
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_INDUSTRY }
+	#Focus for Negotiations With Mexico
+	focus = {
+		id = CUB_negotiations_with_mexico
+		icon = GFX_goal_unknown
+		x = 6
+		y = 7
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { 
+			focus = CUB_congress_rule 
+			focus = CUB_elect_a_president 
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_opinion_modifier= { 
+			target = MEX 
+			modifier = MEX_Cuban_Friendship 
+			}
+		}
+	}
 
-        completion_reward = {
-            478 = {
-                add_extra_state_shared_building_slots = 3
-                add_building_construction = {
-                    type = arms_factory
-                    level = 3
-                    instant_build = yes
-                }
-            }
-        }
-    }
-    focus = {
-        id = CUB_prioritize_holguin_arms_production
-        icon = GFX_focus_ask_for_company_support
-        prerequisite = { focus = CUB_invest_in_our_military_industry}
-        mutually_exclusive = { focus = CUB_prioritize_havana_arms_production}
-        available = {
-            controls_state = 477
-        }
-        x = 1
-        y = 1
-        relative_position_id = CUB_invest_in_our_military_industry
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_INDUSTRY }
+	#Focus for Counterterrorism
+	focus = {
+		id = CUB_counterterrorism
+		icon = GFX_goal_unknown
+		x = 4
+		y = 7
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { 
+			focus = CUB_congress_rule 
+			focus = CUB_elect_a_president 
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_opinion_modifier= { 
+			target = MTB 
+			modifier = Other_Cuban_Rivalry  
+			}
+			add_opinion_modifier= { 
+			target = MCA 
+			modifier = Other_Cuban_Rivalry  
+			}
+			add_opinion_modifier= { 
+			target = MYU 
+			modifier = Other_Cuban_Rivalry  
+			}
+			add_opinion_modifier= { 
+			target = MQR 
+			modifier = Other_Cuban_Rivalry  
+			}
+			add_opinion_modifier= { 
+			target = MTA 
+			modifier = Other_Cuban_Rivalry  
+			}
+		}
+	}
 
-        completion_reward = {
-            477 = {
-                add_extra_state_shared_building_slots = 3
-                add_building_construction = {
-                    type = arms_factory
-                    level = 3
-                    instant_build = yes
-                }
-            }
-        }
-    }
-#######################################
-###############Army Shit###############
-#######################################
-    focus = {
-        id = CUB_cuban_armed_forces
-        icon = GFX_focus_expand_the_minutemen
-        x = 18
-        y = 0
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
+	#Focus for Crush Florida's Naval Pursuits
+	focus = {
+		id = CUB_crush_floridas_naval_pursuits
+		icon = GFX_goal_unknown
+		x = 2
+		y = 7
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { 
+			focus = CUB_elect_a_president 
+			focus = CUB_congress_rule 
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			SFL = {
+				transfer_navy = {
+					target = CUB
+				}
+			}
+		}
+	}
 
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                category = infantry_tech
-            }
-        }
-    }
-    focus = {
-        id = CUB_motorized_designs
-        icon = GFX_goal_generic_army_motorized
-        prerequisite = { focus = CUB_cuban_armed_forces}
-        x = -2
-        y = 1
-        relative_position_id = CUB_cuban_armed_forces
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
+	#Focus for A True Successor
+	focus = {
+		id = CUB_a_true_successor
+		icon = GFX_goal_unknown
+		x = 2
+		y = 5
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { 
+			focus = CUB_redeem_neoliberalism 
+		}
+		prerequisite = { 
+			focus = CUB_foreign_policy_behemoth 
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
 
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 1
-                category = motorized_equipment
-            }
-        }
-    }
-    focus = {
-        id = CUB_invest_in_tanks
-        icon = GFX_goal_generic_army_tanks
-        prerequisite = { focus = CUB_motorized_designs}
-        prerequisite = { focus = CUB_invest_in_our_military_industry}
-        x = -2
-        y = 1
-        relative_position_id = CUB_motorized_designs
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
+	#Focus for Congress Rule
+	focus = {
+		id = CUB_congress_rule
+		icon = GFX_goal_unknown
+		x = 7
+		y = 6
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { 
+			focus = CUB_end_the_dictator 
+		}
+		prerequisite = { 
+			focus = CUB_build_a_congress 
+		}
+		prerequisite = { 
+			focus = CUB_a_true_successor 
+		}
+		mutually_exclusive = { 
+			focus = CUB_elect_a_president 
+		}
+		mutually_exclusive = { 
+			focus = CUB_ 
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
 
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 2
-                category = armor
-            }
-        }
-    }
-    focus = {
-        id = CUB_invest_in_mechanized
-        icon = GFX_focus_upgrade_moterized
-        prerequisite = { focus = CUB_motorized_designs}
-        prerequisite = { focus = CUB_invest_in_our_military_industry}
-        x = 0
-        y = 1
-        relative_position_id = CUB_motorized_designs
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
+	#Focus for Elect a President
+	focus = {
+		id = CUB_elect_a_president
+		icon = GFX_goal_unknown
+		x = 3
+		y = 6
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { 
+			focus = CUB_build_a_congress 
+		}
+		prerequisite = { 
+			focus = CUB_a_true_successor 
+		}
+		prerequisite = { 
+			focus = CUB_end_the_dictator 
+		}
+		mutually_exclusive = { focus = CUB_congress_rule }
+		ai_will_do = {
+			factor = 1
+		}
+	}
 
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 2
-                category = cat_mechanized_equipment
-            }
-        }
-    }
-    focus = {
-        id = CUB_new_infantry_weapons
-        icon = GFX_focus_army_moderization
-        prerequisite = { focus = CUB_cuban_armed_forces}
-        x = 0
-        y = 1
-        relative_position_id = CUB_cuban_armed_forces
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
+	#Focus for Help Out Texas
+	focus = {
+		id = CUB_help_out_texas
+		icon = GFX_goal_unknown
+		x = 8
+		y = 7
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { 
+			focus = CUB_elect_a_president 
+			focus = CUB_congress_rule 
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_opinion_modifier= { 
+				target = STX 
+				modifier = STX_Cuban_Friendship 
+			}
+		}
+	}
 
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 2
-                category = infantry_tech
-            }
-            add_equipment_to_stockpile = {
-                type = infantry_equipment
-                amount = 1000
-            }
-        }
-    }
-    focus = {
-        id = CUB_bigger_guns
-        icon = GFX_goal_generic_army_artillery2
-        prerequisite = { focus = CUB_new_infantry_weapons}
-        x = 0
-        y = 2
-        relative_position_id = CUB_cuban_armed_forces
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
+	#Focus for Finish Florida
+	focus = {
+		id = CUB_finish_florida
+		icon = GFX_goal_unknown
+		x = 2
+		y = 10
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = CUB_the_gulf_alliance }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			create_wargoal= { 
+			type = annex_everything 
+			target = SFL
+			}
+		}
+	}
 
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 2
-                category = artillery
-            }
-        }
-    }
-    focus = {
-        id = CUB_fan_nationalism
-        icon = GFX_focus_generic_infantry
-        prerequisite = { focus = CUB_cuban_armed_forces}
-        x = 2
-        y = 1
-        relative_position_id = CUB_cuban_armed_forces
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_MANPOWER }
+	#Focus for Form the Gulf Republic
+	focus = {
+		id = CUB_form_the_gulf_republic
+		icon = GFX_goal_unknown
+		x = 5
+		y = 12
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { 
+			focus = CUB_connections 
+		}
+		prerequisite = { 
+			focus = CUB_dig_out_the_roots 
+		}
+		prerequisite = { 
+			focus = CUB_blockade_orleans 
+		}
+		prerequisite = { 
+			focus = CUB_expand_the_port 
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		set_cosmetic_tag = GULF_REP
+		}
+	}
 
-        completion_reward = {
-            add_ideas = militarism_focus
-        }
-    }
-#######################################
-###############Navy Shit###############
-#######################################
-    focus = {
-        id = CUB_expand_our_navy
-        icon = GFX_goal_generic_construct_naval_dockyard
-        x = 24
-        y = 0
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
+	#Focus for Invite Mexico
+	focus = {
+		id = CUB_invite_mexico
+		icon = GFX_goal_unknown
+		x = 6
+		y = 10
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = CUB_the_gulf_alliance }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_to_faction= MEX
+		}
+	}
 
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                category = naval_equipment
-            }
-            navy_experience = 25
-            random_owned_controlled_state = {
-                limit = {
-                    is_coastal = yes
-                }
-                add_extra_state_shared_building_slots = 2
-                add_building_construction = {
-                    type = dockyard
-                    level = 2
-                    instant_build = yes
-                }
-            }
-        }
-    }
-    focus = {
-        id = CUB_an_invasion_force
-        icon = GFX_focus_generic_manpower
-        prerequisite = { focus = CUB_expand_our_navy}
-        x = -2
-        y = 1
-        relative_position_id = CUB_expand_our_navy
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
+	#Focus for Expand the Port
+	focus = {
+		id = CUB_expand_the_port
+		icon = GFX_goal_unknown
+		x = 6
+		y = 11
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = CUB_invite_mexico }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_state_core = 475 
+			transfer_state = 475
+			add_state_core = 573 
+			transfer_state = 573
+		}
+	}
 
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 2
-                ahead_reduction = 1
-                category = tp_tech
-            }
-        }
-    }
-    focus = {
-        id = CUB_invest_in_marines
-        icon = GFX_focus_upgrade_marines
-        prerequisite = { focus = CUB_an_invasion_force}
-        prerequisite = { focus = CUB_new_infantry_weapons}
-        x = 0
-        y = 1
-        relative_position_id = CUB_an_invasion_force
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
+	#Focus for Port Veracruz
+	focus = {
+		id = CUB_port_veracruz
+		icon = GFX_goal_unknown
+		x = 6
+		y = 8
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = CUB_negotiations_with_mexico }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_state_core = 691  
+			transfer_state = 691
+		}
+	}
 
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 2
-                category = marine_tech
-            }
-        }
-    }
-    focus = {
-        id = CUB_marine_supremacy
-        icon = GFX_goal_generic_amphibious_assault
-        prerequisite = { focus = CUB_invest_in_marines}
-        x = 0
-        y = 2
-        relative_position_id = CUB_an_invasion_force
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        
-        completion_reward = {
-            add_ideas = CUB_marine_supremacy
-        }
-    }
-    focus = {
-        id = CUB_invest_in_submarines
-        icon = GFX_goal_generic_navy_submarine
-        prerequisite = { focus = CUB_expand_our_navy}
-        x = 0
-        y = 1
-        relative_position_id = CUB_expand_our_navy
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
+	#Focus for Economic Support
+	focus = {
+		id = CUB_economic_support
+		icon = GFX_goal_unknown
+		x = 8
+		y = 8
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = CUB_help_out_texas }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_offsite_building= { type = industrial_complex level = 5 }
+		}
+	}
 
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 2
-                category = ss_tech
-            }
-            navy_experience = 25
-        }
-    }
-    focus = {
-        id = CUB_invest_in_destroyers
-        icon = GFX_goal_generic_navy_anti_submarine
-        prerequisite = { focus = CUB_expand_our_navy}
-        x = 2
-        y = 1
-        relative_position_id = CUB_expand_our_navy
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
+	#Focus for Havana to Miami
+	focus = {
+		id = CUB_havana_to_miami
+		icon = GFX_goal_unknown
+		x = 2
+		y = 8
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = CUB_crush_floridas_naval_pursuits }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_state_core = 11  
+			transfer_state = 11
+		}
+	}
 
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 2
-                category = dd_tech
-            }
-            navy_experience = 25
-        }
-    }
-    focus = {
-        id = CUB_advanced_mine_laying_techniques
-        icon = GFX_goal_continuous_naval_production
-        prerequisite = { focus = CUB_invest_in_submarines}
-        x = 0
-        y = 2
-        relative_position_id = CUB_expand_our_navy
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
+	#Focus for The Gulf Alliance
+	focus = {
+		id = CUB_the_gulf_alliance
+		icon = GFX_goal_unknown
+		x = 5
+		y = 9
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { 
+			focus = CUB_havana_to_miami 
+		}
+		prerequisite = { 
+			focus = CUB_economic_support 
+		}
+		prerequisite = { 
+			focus = CUB_port_veracruz 
+		}
+		prerequisite = { 
+			focus = CUB_target_the_cartels 
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			create_faction = GULF_PACT
+		}
+	}
 
-        completion_reward = {
-            if = {
-                limit = {
-                    has_dlc = "Man the Guns"
-                }
-                add_tech_bonus = {
-                    bonus = 1
-                    uses = 2
-                    category = naval_minelaying
-                    category = naval_minesweeping
-                }
-            }
-            if = {
-                limit = {
-                    NOT = {
-                        has_dlc = "Man the Guns"
-                    }
-                }
-                add_tech_bonus = {
-                    bonus = 1
-                    uses = 1
-                    ahead_reduction = 2
-                    category = ss_tech
-                }
-            }
-            navy_experience = 25
-        }
-    }
-    focus = {
-        id = CUB_new_torpedo_designs
-        icon = GFX_goal_generic_occupy_start_war
-        prerequisite = { focus = CUB_invest_in_submarines focus = CUB_invest_in_destroyers}
-        x = 2
-        y = 2
-        relative_position_id = CUB_expand_our_navy
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
+	#Focus for Invite Texas
+	focus = {
+		id = CUB_invite_texas
+		icon = GFX_goal_unknown
+		x = 8
+		y = 10
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = CUB_the_gulf_alliance }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_to_faction= STX
+			add_state_core= 163
+			transfer_state= 163
+			add_state_core= 42
+			transfer_state= 42
+			add_state_core= 165
+			transfer_state= 165
+			add_state_core= 164
+			transfer_state= 164
+			add_state_core= 162
+			transfer_state= 162
+		}
+	}
 
-        completion_reward = {
-            if = {
-                limit = {
-                    has_dlc = "Man the Guns"
-                }
-                add_tech_bonus = {
-                    bonus = 1
-                    uses = 2
-                    ahead_reduction = 2
-                    technology = basic_torpedo
-                    technology = improved_ship_torpedo_launcher
-                    technology = advanced_ship_torpedo_launcher
-                    technology = modern_ship_torpedo_launcher
-                }
-            }
-            if = {
-                limit = {
-                    NOT = {
-                        has_dlc = "Man the Guns"
-                    }
-                }
-                add_tech_bonus = {
-                    bonus = 1
-                    uses = 1
-                    ahead_reduction = 2
-                    category = ss_tech
-                    category = dd_tech
-                }
-            }
-            navy_experience = 25
-        }
-    }
-    focus = {
-        id = CUB_capital_ships
-        icon = GFX_goal_generic_build_navy
-        prerequisite = { focus = CUB_expand_our_navy}
-        x = 4
-        y = 1
-        relative_position_id = CUB_expand_our_navy
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
+	#Focus for Blockade Orleans
+	focus = {
+		id = CUB_blockade_orleans
+		icon = GFX_goal_unknown
+		x = 8
+		y = 11
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = CUB_invite_texas }
+		ai_will_do = {
+			factor = 1
+		}
+			completion_reward = {
+			add_state_core= 18
+			transfer_state= 18
+			add_state_core= 19
+			transfer_state= 19
+			add_state_core= 20
+			transfer_state= 20
+		}
+	}
 
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 2
-                category = bb_tech
-            }
-            navy_experience = 25
-        }
-    }
-    focus = {
-        id = CUB_invest_in_cruisers
-        icon = GFX_goal_generic_navy_cruiser
-        prerequisite = { focus = CUB_capital_ships}
-        x = 4
-        y = 2 
-        relative_position_id = CUB_expand_our_navy
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
+	#Focus for End the Warlords
+	focus = {
+		id = CUB_end_the_warlords
+		icon = GFX_goal_unknown
+		x = 4
+		y = 10
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = CUB_the_gulf_alliance }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			create_wargoal = { type = annex_everything target = MTB }
+			create_wargoal = { type = annex_everything target = MCA }
+			create_wargoal = { type = annex_everything target = MQR }
+			create_wargoal = { type = annex_everything target = MYU }
+			create_wargoal = { type = annex_everything target = MTA }
+		}
+	}
 
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 2
-                category = bc_tech
-            }
-            navy_experience = 25
-        }
-    }
-    focus = {
-        id = CUB_caribbean_naval_power
-        icon = GFX_focus_naval_supremacy
-        prerequisite = { focus = CUB_marine_supremacy}
-        prerequisite = { focus = CUB_new_torpedo_designs focus = CUB_advanced_mine_laying_techniques focus = CUB_invest_in_cruisers}
-        x = 0
-        y = 4
-        relative_position_id = CUB_expand_our_navy
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        
-        completion_reward = {
-            add_ideas = CUB_caribbean_naval_power
-        }
-    }
-#######################################
-###############Air Shit################
-#######################################
-    focus = {
-        id = CUB_cuban_air_force
-        icon = GFX_goal_generic_build_airforce
-        x = 27
-        y = 4
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
+	#Focus for Dig out the Roots
+	focus = {
+		id = CUB_dig_out_the_roots
+		icon = GFX_goal_unknown
+		x = 4
+		y = 11
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = CUB_end_the_warlords }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			create_wargoal = {
+			type = take_state_focus
+			target = MDC
+			generator = { 542 }
+			}
+		}
+	}
 
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 2
-                category = air_equipment
-            }
-        }
-    }
-    focus = {
-        id = CUB_invest_in_naval_bombers
-        icon = GFX_goal_generic_air_naval_bomber
-        prerequisite = { focus = CUB_cuban_air_force}
-        prerequisite = { focus = CUB_expand_our_navy}
-        x = -2
-        y = 1
-        relative_position_id = CUB_cuban_air_force
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
+	#Focus for Connections
+	focus = {
+		id = CUB_connections
+		icon = GFX_goal_unknown
+		x = 2
+		y = 11
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = CUB_finish_florida }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			create_wargoal = {
+			type = take_state_focus
+			target = SAL
+			generator = { 22 }
+			}
+			create_wargoal = {
+			type = take_state_focus
+			target = SMS
+			generator = { 155 }
+			}
+		}
+	}
 
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 2
-                category = naval_air
-            }
-        }
-    }
-    focus = {
-        id = CUB_invest_in_fighters
-        icon = GFX_focus_fighter
-        prerequisite = { focus = CUB_cuban_air_force}
-        x = 0
-        y = 1
-        relative_position_id = CUB_cuban_air_force
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
+	#Focus for Continue the Junta
+	focus = {
+		id = CUB_continue_the_junta
+		icon = GFX_goal_unknown
+		x = 25
+		y = 3
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = CUB_forget_america }
+		mutually_exclusive = { focus = CUB_young_power }
+		ai_will_do = {
+			factor = 1
+		}
+	}
 
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 2
-                category = light_fighter
-            }
-        }
-    }
-    focus = {
-        id = CUB_invest_in_cas
-        icon = GFX_goal_generic_CAS
-        prerequisite = { focus = CUB_cuban_air_force}
-        x = 2
-        y = 1
-        relative_position_id = CUB_cuban_air_force
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
+	#Focus for Young Power
+	focus = {
+		id = CUB_young_power
+		icon = GFX_goal_unknown
+		x = 35
+		y = 3
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = CUB_forget_america }
+		mutually_exclusive = { focus = CUB_continue_the_junta }
+		ai_will_do = {
+			factor = 1
+		}
+	}
 
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 2
-                category = cas_bomber
-            }
-        }
-    }
-#######################################
-############Political Shit#############
-#######################################
-    focus = {
-        id = CUB_barnet_the_interim_president
-        icon = GFX_goal_support_democracy
-        available = {
-            custom_trigger_tooltip = {
-                tooltip = CUB_barnet_is_still_the_president_tt
-                NOT = {
-                    has_country_flag = CUB_migel_leader
-                }
-            }
-        }
-        x = 32
-        y = 0
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_POLITICAL }
+	#Focus for Further the Dictator
+	focus = {
+		id = CUB_further_the_dictator
+		icon = GFX_goal_unknown
+		x = 21
+		y = 4
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = CUB_continue_the_junta }
+		mutually_exclusive = { focus = CUB_the_spanish_king }
+		ai_will_do = {
+			factor = 1
+		}
+	}
 
-        completion_reward = {
-            custom_effect_tooltip = CUB_barnet_will_no_longer_be_in_office_by_may_tt
-            add_stability = 0.05
-            add_political_power = 100
-        }
-    }
-    focus = {
-        id = CUB_the_7_month_president
-        icon = GFX_focus_generic_strike_at_democracy2
-        available = {
-            custom_trigger_tooltip = {
-                tooltip = CUB_Miguel_is_president_tt
-                has_country_flag = CUB_migel_leader
-            }
-        }
-        x = 32
-        y = 1
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
-
-        completion_reward = {
-            custom_effect_tooltip = CUB_miguel_not_pres_by_descember_tt
-            add_stability = 0.05
-            add_political_power = 100
-        }
-    }
-    focus = {
-        id = CUB_a_long_term_president
-        icon = GFX_goal_generic_neutrality_focus
-        available = {
-            custom_trigger_tooltip = {
-                tooltip = CUB_Federico_is_president_tt
-                has_country_flag = CUB_federico_leader
-            }
-        }
-        x = 32
-        y = 2
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
-
-        completion_reward = {
-            add_stability = 0.05
-            add_war_support = 0.05
-        }
-    }
-    focus = {
-        id = CUB_pardon_gerado_machado
-        icon = GFX_focus_generic_treaty
-        prerequisite = { focus = CUB_a_long_term_president}
-        x = -2
-        y = 1
-        relative_position_id = CUB_a_long_term_president
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_POLITICAL }
-
-        completion_reward = {
-            add_political_power = 150
-        }
-    }
-    focus = {
-        id = CUB_pensions
-        icon = GFX_goal_generic_national_unity
-        prerequisite = { focus = CUB_a_long_term_president}
-        x = 0
-        y = 1
-        relative_position_id = CUB_a_long_term_president
-        cost = 5
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_STABILITY }
-
-        completion_reward = {
-            add_stability = 0.05
-        }
-    }
-    focus = {
-        id = CUB_insurance
-        icon = GFX_goal_generic_intelligence_exchange
-        prerequisite = { focus = CUB_pensions}
-        x = 0
-        y = 2
-        relative_position_id = CUB_a_long_term_president
-        cost = 5
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_WAR_SUPPORT }
-
-        completion_reward = {
-            add_war_support = 0.05
-        }
-    }
-    focus = {
-        id = CUB_increase_minimum_wage
-        icon = GFX_goal_generic_investments
-        prerequisite = { focus = CUB_a_long_term_president}
-        x = 2
-        y = 1
-        relative_position_id = CUB_a_long_term_president
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_POLITICAL FOCUS_FILTER_WAR_SUPPORT }
-
-        completion_reward = {
-            add_timed_idea = {
-                idea = CUB_increased_minimum_wage
-                days = 120
-            }
-            add_political_power = 100
-            add_stability = 0.05
-            add_war_support = 0.05
-        }
-    }
-    focus = {
-        id = CUB_decrease_working_hours
-        icon = GFX_goal_generic_consumer_goods
-        prerequisite = { focus = CUB_increase_minimum_wage}
-        x = 2
-        y = 2
-        relative_position_id = CUB_a_long_term_president
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_INDUSTRY }
-
-        completion_reward = {
-            add_ideas = CUB_better_working_conditions
-        }
-    }
-    focus = {
-        id = CUB_9_cent_law
-        icon = GFX_goal_generic_scientific_exchange
-        prerequisite = { focus = CUB_increase_minimum_wage}
-        x = 4
-        y = 2
-        relative_position_id = CUB_a_long_term_president
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
-
-        completion_reward = {
-            add_research_slot = 1
-        }
-    }
-    focus = {
-        id = CUB_law_of_sugar_coordination
-        icon = GFX_goal_generic_construction2
-        prerequisite = { focus = CUB_decrease_working_hours}
-        prerequisite = { focus = CUB_insurance}
-        x = 1
-        y = 3
-        relative_position_id = CUB_a_long_term_president
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_STABILITY }
-
-        completion_reward = {
-            add_stability = 0.05
-            add_ideas = CUB_law_of_suger_coordination
-        }
-    }
-    focus = {
-        id = CUB_invite_refugees_from_the_war_in_europe
-        icon = GFX_focus_rally_people
-        prerequisite = { focus = CUB_law_of_sugar_coordination}
-        x = -1
-        y = 4
-        relative_position_id = CUB_a_long_term_president
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_MANPOWER }
-
-        completion_reward = {
-            every_controlled_state = {
-                add_manpower = 5000
-            }
-            add_research_slot = 1
-        }
-    }
-    focus = {
-        id = CUB_nationalize_industries
-        icon = GFX_focus_share_industry
-        prerequisite = { focus = CUB_law_of_sugar_coordination}
-        x = 1
-        y = 4
-        relative_position_id = CUB_a_long_term_president
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_INDUSTRY }
-
-        completion_reward = {
-            random_owned_controlled_state = {
-                add_extra_state_shared_building_slots = 2
-                add_building_construction = {
-                    type = industrial_complex
-                    level = 2
-                    instant_build = yes
-                }
-            }
-            random_owned_controlled_state = {
-                add_extra_state_shared_building_slots = 2
-                add_building_construction = {
-                    type = arms_factory
-                    level = 2
-                    instant_build = yes
-                }
-            }
-        }
-    }
-#######################################
-#############Conquest Shit#############
-#######################################
-    focus = {
-        id = CUB_prepare_for_conquest
-        icon = GFX_focus_generic_strike_at_democracy1
-        available = {
-            AND = {
-                date > 1937.1.1
-                has_army_manpower = {
-                    size > 75000
-                }
-            }
-        }
-        x = 39
-        y = 0
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_WAR_SUPPORT }
-
-        completion_reward = {
-            add_war_support = 0.1
-        }
-    }
-    focus = {
-        id = CUB_invade_jamaica
-        icon = GFX_focus_generic_take_land
-        prerequisite = { focus = CUB_prepare_for_conquest}
-        available = {
-            has_army_manpower = {
-                size > 100000
-            }
-        }
-        bypass = {
-            NOT = {
-                country_exists = JAM
-            }
-        }
-        x = -1
-        y = 1
-        relative_position_id = CUB_prepare_for_conquest
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_ANNEXATION }
-
-        completion_reward = {
-            create_wargoal = {
-                type = annex_everything
-                target = JAM
-            }
-            add_state_claim = 479
-        }
-    }
-    focus = {
-        id = CUB_invade_the_bahamas
-        icon = GFX_focus_generic_take_land
-        prerequisite = { focus = CUB_prepare_for_conquest}
-        available = {
-            has_army_manpower = {
-                size > 100000
-            }
-        }
-        bypass = {
-            NOT = {
-                country_exists = BAH
-            }
-        }
-        x = 1
-        y = 1
-        relative_position_id = CUB_prepare_for_conquest
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_ANNEXATION }
-
-        completion_reward = {
-            create_wargoal = {
-                type = annex_everything
-                target = BAH
-            }
-            claim_the_bahamas = yes
-        }
-    }
-    focus = {
-        id = CUB_invade_haiti
-        icon = GFX_focus_generic_take_land
-        prerequisite = { focus = CUB_invade_the_bahamas focus = CUB_invade_jamaica}
-        available = {
-            has_army_manpower = {
-                size > 120000
-            }
-        }
-        bypass = {
-            NOT = {
-                country_exists = HAI
-                country_exists = AOH
-            }
-        }
-        x = -2
-        y = 2
-        relative_position_id = CUB_prepare_for_conquest
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_ANNEXATION }
-
-        completion_reward = {
-            create_wargoal = {
-                type = annex_everything
-                target = HAI
-            }
-            create_wargoal = {
-                type = annex_everything
-                target = AOH
-            }
-            claim_haiti = yes
-        }
-    }
-    focus = {
-        id = CUB_invade_the_dominican_republic
-        icon = GFX_focus_generic_take_land
-        prerequisite = { focus = CUB_invade_the_bahamas focus = CUB_invade_jamaica}
-        available = {
-            has_army_manpower = {
-                size > 120000
-            }
-        }
-        bypass = {
-            NOT = {
-                country_exists = DOM
-            }
-        }
-        x = 2
-        y = 2
-        relative_position_id = CUB_prepare_for_conquest
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_ANNEXATION }
-
-        completion_reward = {
-            create_wargoal = {
-                type = annex_everything
-                target = DOM
-            }
-            claim_dominca = yes
-        }
-    }
-    focus = {
-        id = CUB_invade_puerto_rico
-        icon = GFX_focus_generic_take_land
-        prerequisite = { focus = CUB_invade_the_bahamas focus = CUB_invade_jamaica}
-        available = {
-            has_army_manpower = {
-                size > 120000
-            }
-        }
-        bypass = {
-            NOT = {
-                country_exists = PRR
-            }
-        }
-        x = 0
-        y = 2
-        relative_position_id = CUB_prepare_for_conquest
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_ANNEXATION }
-
-        completion_reward = {
-            create_wargoal = {
-                type = annex_everything
-                target = PRR
-            }
-            add_state_claim = 399
-        }
-    }
-    focus = {
-        id = CUB_invade_the_antilles_federation
-        icon = GFX_focus_generic_take_land
-        prerequisite = { focus = CUB_invade_puerto_rico focus = CUB_invade_the_dominican_republic focus = CUB_invade_haiti}
-        available = {
-            has_army_manpower = {
-                size > 125000
-            }
-        }
-        bypass = {
-            NOT = {
-                country_exists = UAF
-            }
-        }
-        x = 0
-        y = 3
-        relative_position_id = CUB_prepare_for_conquest
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_ANNEXATION }
-
-        completion_reward = {
-            create_wargoal = {
-                type = annex_everything
-                target = UAF
-            }
-            claim_antilles_federation = yes
-        }
-    }
-    focus = {
-        id = CUB_leader_of_the_carribbean
-        icon = GFX_focus_generic_support_the_left_right
-        prerequisite = { focus = CUB_invade_the_antilles_federation}
-        available = {
-            any_owned_state = {
-                is_core_of = DOM
-            }
-            any_owned_state = {
-                is_core_of = HAI
-            }
-            any_owned_state = {
-                is_core_of = UAF
-            }
-            NOT = {
-                country_exists = UAF
-            }
-        }
-        x = 0
-        y = 4
-        relative_position_id = CUB_prepare_for_conquest
-        cost = 10
-        ai_will_do = {
-            factor = 3
-        }
-        available_if_capitulated = no
-        
-        completion_reward = {
-            core_antilles_federation = yes
-            core_the_bahamas = yes
-            core_dominca = yes
-            core_haiti = yes
-            add_state_core = 399 #Puerto Rico
-            add_state_core = 479 #Jamaica
-            add_state_core = 631 #Turks and Cocos
-            add_state_core = 226 #Cayman Islands
-        }
-    }
+	#Focus for The Spanish King
+	focus = {
+		id = CUB_the_spanish_king
+		icon = GFX_goal_unknown
+		x = 29
+		y = 4
+		cost = 10
+		available_if_capitulated = yes
+		prerequisite = { focus = CUB_continue_the_junta }
+		mutually_exclusive = { focus = CUB_further_the_dictator }
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	#Focus for The Secret Weapon
+	focus = {
+		id = CUB_Secret_Weapon
+		icon = GFX_goal_unknown
+		x = 29
+		y = 40
+		cost = 1
+		available_if_capitulated = yes
+		available = {
+			always = no
+		}
+		#prerequisite = { focus = CUB_continue_the_junta }
+		#mutually_exclusive = { focus = CUB_further_the_dictator }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			SFL = { country_event = { id = florida.4 } }
+		}
+	}
+	
+#End of focuses 
 }
