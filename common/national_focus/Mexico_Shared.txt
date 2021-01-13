@@ -38,7 +38,7 @@ focus_tree = {
         icon = GFX_focus_mexico_star
         mutually_exclusive = { focus = MSH_forge_our_own_destiny}
         mutually_exclusive = { focus = MSH_look_outwards}
-        x = 3
+        x = 6
         y = 0
         cost = 5
         ai_will_do = {
@@ -53,23 +53,23 @@ focus_tree = {
     }
     focus = {
         id = MSH_collaborate_with_the_cartels
-        icon = GFX_focus_mex_caudillo_private_armies
+        icon = GFX_
         prerequisite = { focus = MSH_look_inwards}
         mutually_exclusive = { focus = MSH_collaborate_with_the_old_government}
-        x = 2
+        x = 6
         y = 1
         relative_position_id = MSH_look_inwards
         cost = 5
         ai_will_do = {
-            factor = 1
+            factor = 0#1
             modifier = {
-                factor = 10
+                factor = 4
                 OR = {
                     tag = MCM
                 }
             }
             modifier = {
-                factor = 2
+                factor = 3
                 OR = {
                     tag = MSI
                     tag = MCO
@@ -78,7 +78,7 @@ focus_tree = {
                 }
             }
             modifier = {
-                factor = 1.5
+                factor = 2
                 OR = {
                     tag = BAJ
                     tag = MSO
@@ -96,189 +96,11 @@ focus_tree = {
         }
     }
     focus = {
-        id = MSH_pledge_our_support
-        icon = GFX_focus_integrate
-        prerequisite = { focus = MSH_collaborate_with_the_cartels}
-        available = {
-            country_exists = MDC
-            MDC = {
-                any_owned_state = {
-                    OR = {
-                        has_state_flag = MDC_high_comp
-                        has_state_flag = MDC_low_comp
-                        has_state_flag = MDC_near_revolt
-                    }
-                }
-            }
-        }
-        x = -1
-        y = 1
-        relative_position_id = MSH_collaborate_with_the_cartels
-        cost = 5
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        
-        completion_reward = {
-            MDC = {
-                add_political_power = 50
-            }
-        }
-    }
-    focus = {
-        id = MSH_send_weapons
-        icon = GFX_goal_generic_small_arms
-        prerequisite = { focus = MSH_pledge_our_support}
-        available = {
-            country_exists = MDC
-        }
-        bypass = {
-            NOT = {
-                MDC = {
-                    any_owned_state = {
-                        OR = {
-                            has_state_flag = MDC_high_comp
-                            has_state_flag = MDC_low_comp
-                            has_state_flag = MDC_near_revolt
-                        }
-                    }
-                }
-            }
-        }
-        x = 0
-        y = 1
-        relative_position_id = MSH_pledge_our_support
-        cost = 5
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-
-        completion_reward = {
-            MDC = {
-                add_equipment_to_stockpile = {
-                    type = infantry_equipment
-                    amount = 2500
-                    producer = ROOT
-                }
-            }
-        }
-    }
-    focus = {
-        id = MSH_rewarded_for_our_aid
-        icon = GFX_focus_generic_concessions
-        prerequisite = { focus = MSH_send_weapons}
-        available = {
-            country_exists = MDC
-            NOT = {
-                MDC = {
-                    any_owned_state = {
-                        OR = {
-                            has_state_flag = MDC_high_comp
-                            has_state_flag = MDC_low_comp
-                            has_state_flag = MDC_near_revolt
-                        }
-                    }
-                }
-            }
-        }
-        x = 0
-        y = 1
-        relative_position_id = MSH_send_weapons
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
-
-        completion_reward = {
-            add_stability = 0.07
-            add_war_support = 0.07
-        }
-    }
-    focus = {
-        id = MSH_rightful_expansion_of_our_territory
-        icon = GFX_focus_mex_redeem_aztlan
-        prerequisite = { focus = MSH_rewarded_for_our_aid}
-        x = 0
-        y = 1
-        relative_position_id = MSH_rewarded_for_our_aid
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_ANNEXATION }
-
-        completion_reward = {
-            random_neighbor_country = {
-                limit = {
-                    # is_a_state_of_mexico = yes
-                    NOT = {
-                        tag = MEX
-                        tag = MCL
-                        tag = MAC
-                        tag = MDC
-                    }
-                }
-                ROOT = {
-                    create_wargoal = {
-                        target = PREV
-                        type = annex_everything
-                    }
-                }
-                every_owned_state = {
-                    ROOT = {
-                        add_state_claim = PREV
-                    }
-                }
-            }
-        }
-    }
-    focus = {
-        id = MSH_advice_from_juan_nepomuceno_guerra
-        icon = GFX_focus_political_advice
-        prerequisite = { focus = MSH_collaborate_with_the_cartels}
-        x = 1
-        y = 1
-        relative_position_id = MSH_collaborate_with_the_cartels
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_POLITICAL }
-
-        completion_reward = {
-            custom_effect_tooltip = MSH_unlock_juan_nepomuceno_guerra_advisor_tt
-        }
-    }
-    focus = {
-        id = MSH_militarized_teachings
-        icon = GFX_focus_upgrade_troops
-        prerequisite = { focus = MSH_advice_from_juan_nepomuceno_guerra}
-        x = 0
-        y = 1
-        relative_position_id = MSH_advice_from_juan_nepomuceno_guerra
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_MANPOWER }
-
-        completion_reward = {
-            add_ideas = militarism_focus
-        }
-    }
-    focus = {
         id = MSH_collaborate_with_the_old_government
         icon = GFX_focus_mexico_coorporate
         prerequisite = { focus = MSH_look_inwards}
         mutually_exclusive = { focus = MSH_collaborate_with_the_cartels}
-        x = -3
+        x = -6
         y = 1
         relative_position_id = MSH_look_inwards
         cost = 5
@@ -495,18 +317,15 @@ focus_tree = {
         icon = GFX_focus_generic_home_defense
         mutually_exclusive = { focus = MSH_look_inwards}
         mutually_exclusive = { focus = MSH_look_outwards}
-        x = 14
+        x = 22
         y = 0
-        cost = 10
+        cost = 5
         ai_will_do = {
             factor = 2
             modifier = {
-                factor = 0
-                tag = MCM
-            }
-            modifier = {
                 factor = 0.5
                 OR = {
+                    tag = MCM
                     tag = MMO
                     tag = MQR
                 }
@@ -525,7 +344,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_WAR_SUPPORT }
 
         completion_reward = {
-            add_war_support = 0.1
+            add_war_support = 0.05
         }
     }
     focus = {
@@ -562,7 +381,7 @@ focus_tree = {
         x = 2
         y = 2
         relative_position_id = MSH_fan_nationalism
-        cost = 5
+        cost = 10
         ai_will_do = {
             factor = 1
             modifier = {
@@ -582,7 +401,7 @@ focus_tree = {
             }
             add_equipment_to_stockpile = {
                 type = infantry_equipment
-                amount = 20000
+                amount = 5000
             }
         }
     }
@@ -634,8 +453,6 @@ focus_tree = {
                     is_a_state_of_mexico = yes
                     NOT = {
                         tag = MEX
-                        tag = MCL
-                        tag = MAC
                         tag = MDC
                     }
                 }
@@ -661,8 +478,6 @@ focus_tree = {
                     is_a_state_of_mexico = yes
                     NOT = {
                         tag = MEX
-                        tag = MCL
-                        tag = MAC
                         tag = MDC
                     }
                 }
@@ -707,8 +522,6 @@ focus_tree = {
         bypass = {
             NOT = {
                 country_exists = MEX
-                country_exists = MCL
-                country_exists = MAC
             }
         }
         x = 1
@@ -728,32 +541,9 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_ANNEXATION }
 
         completion_reward = {
-            if = {
-                limit = {
-                    country_exists = MEX
-                }
-                create_wargoal = {
-                    target = MEX
-                    type = annex_everything
-                }
-            }
-            if = {
-                limit = {
-                    country_exists = MCL
-                }
-                create_wargoal = {
-                    target = MCL
-                    type = annex_everything
-                }
-            }
-            if = {
-                limit = {
-                    country_exists = MAC
-                }
-                create_wargoal = {
-                    target = MAC
-                    type = annex_everything
-                }
+            create_wargoal = {
+                target = MEX
+                type = annex_everything
             }
         }
     }
@@ -797,8 +587,7 @@ focus_tree = {
         available = {
             own_mexico_proper = yes
             own_the_cartels = yes
-            count_triggers = {
-                amount = 3
+            OR = {
                 own_baja_california = yes
                 own_chihuahua = yes
                 own_coahuila = yes
@@ -807,8 +596,7 @@ focus_tree = {
                 own_sonora = yes
                 own_tamaulipas = yes
             }
-            count_triggers = {
-                amount = 3
+            OR = {
                 own_campeche = yes
                 own_chiapas = yes
                 own_guerrero = yes
@@ -1009,11 +797,11 @@ focus_tree = {
         icon = GFX_focus_north_america
         mutually_exclusive = { focus = MSH_look_inwards}
         mutually_exclusive = { focus = MSH_forge_our_own_destiny}
-        x = 24
+        x = 40
         y = 0
         cost = 5
         ai_will_do = {
-            factor = 3
+            factor = 2
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
@@ -1026,8 +814,9 @@ focus_tree = {
         id = MSH_collaborate_with_california
         icon = GFX_goal_generic_improve_relations
         prerequisite = { focus = MSH_look_outwards}
+        mutually_exclusive = { focus = MSH_collaborate_with_central_america}
         mutually_exclusive = { focus = MSH_collaborate_with_texas}
-        x = -4
+        x = -8
         y = 1
         relative_position_id = MSH_look_outwards
         cost = 5
@@ -1206,7 +995,7 @@ focus_tree = {
         id = MSH_build_closer_ties_with_the_states
         icon = GFX_focus_north_america_diplomacy
         prerequisite = { focus = MSH_collaborate_with_california focus = MSH_collaborate_with_texas}
-        x = 0
+        x = -4
         y = 2
         relative_position_id = MSH_look_outwards
         cost = 10
@@ -1319,12 +1108,13 @@ focus_tree = {
         icon = GFX_goal_generic_improve_relations
         prerequisite = { focus = MSH_look_outwards}
         mutually_exclusive = { focus = MSH_collaborate_with_california}
-        x = 4
+        mutually_exclusive = { focus = MSH_collaborate_with_central_america}
+        x = 0
         y = 1
         relative_position_id = MSH_look_outwards
         cost = 5
         ai_will_do = {
-            factor = 1
+            factor = 0#1
             modifier = {
                 factor = 4
                 OR = {
@@ -1352,111 +1142,50 @@ focus_tree = {
 
         completion_reward = {
             add_popularity = {
-                ideology = longism
+                ideology = neutrality
                 popularity = 0.1
             }
         }
     }
     focus = {
-        id = MSH_adopt_tenants_of_southern_populism
-        icon = GFX_focus_ideology_populism
-        prerequisite = { focus = MSH_collaborate_with_texas}
-        x = -1
+        id = MSH_collaborate_with_central_america
+        icon = GFX_goal_generic_improve_relations
+        prerequisite = { focus = MSH_look_outwards}
+        mutually_exclusive = { focus = MSH_collaborate_with_california}
+        mutually_exclusive = { focus = MSH_collaborate_with_texas}
+        x = 8
         y = 1
-        relative_position_id = MSH_collaborate_with_texas
-        cost = 10
+        relative_position_id = MSH_look_outwards
+        cost = 5
         ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-
-        completion_reward = {
-            set_politics = {
-                ruling_party = longism
-            }
-        }
-    }
-    focus = {
-        id = MSH_improve_quality_of_life
-        icon = GFX_focus_request_foreign_aid
-        prerequisite = { focus = MSH_adopt_tenants_of_southern_populism}
-        x = 0
-        y = 1
-        relative_position_id = MSH_adopt_tenants_of_southern_populism
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-
-        completion_reward = {
-            add_stability = 0.05
-            add_popularity = {
-                popularity = 0.10
-                ideology = longism
-            }
-        }
-    }
-    focus = {
-        id = MSH_ensure_unity
-        icon = GFX_goal_generic_national_unity
-        prerequisite = { focus = MSH_improve_quality_of_life}
-        x = 0
-        y = 1
-        relative_position_id = MSH_improve_quality_of_life
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-
-        completion_reward = {
-            add_ideas = why_we_fight_focus
-        }
-    }
-    focus = {
-        id = MSH_protect_our_new_way_of_life
-        icon = GFX_goal_generic_defence
-        prerequisite = { focus = MSH_ensure_unity}
-        x = 0
-        y = 1
-        relative_position_id = MSH_ensure_unity
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-
-        completion_reward = {
-            if = {
-                limit = {
-                    has_idea = militarism_focus
+            factor = 0#!
+            modifier = {
+                factor = 4
+                OR = {
+                    tag = MQR
                 }
-                add_manpower = 50000
             }
-            else = {
-                add_ideas = militarism_focus
+            modifier = {
+                factor = 3
+                OR = {
+                    tag = MYU
+                    tag = MCA
+                }
             }
-        }
-    }
-    focus = {
-        id = MSH_expand_our_resource_extraction
-        icon = GFX_goal_generic_oil_refinery
-        prerequisite = { focus = MSH_collaborate_with_texas}
-        x = 1
-        y = 1
-        relative_position_id = MSH_collaborate_with_texas
-        cost = 10
-        ai_will_do = {
-            factor = 1
+            modifier = {
+                factor = 2
+                OR = {
+                    tag = MTB
+                    tag = MCI
+                }
+            }
         }
         available_if_capitulated = yes
 
         completion_reward = {
-            random_owned_controlled_state = {
-                type = oil
-                amount = 48
-                state = THIS
+            add_popularity = {
+                ideology = neutrality
+                popularity = 0.1
             }
         }
     }
@@ -1466,7 +1195,7 @@ focus_tree = {
     focus = {
         id = MSH_expand_our_industry
         icon = GFX_focus_industry
-        x = 33
+        x = 52
         y = 0
         cost = 10
         ai_will_do = {
@@ -1662,8 +1391,8 @@ focus_tree = {
         id = MSH_expand_dockyards
         icon = GFX_goal_generic_construct_naval_dockyard
         prerequisite = { focus = MSH_expand_military_industry}
-        x = 2
-        y = 3
+        x = 3
+        y = 2
         relative_position_id = MSH_expand_our_industry
         cost = 15
         ai_will_do = {
@@ -1706,7 +1435,7 @@ focus_tree = {
     focus = {
 		id = MSH_army_effort
 		icon = GFX_goal_generic_allies_build_infantry
-		x = 38
+		x = 57
 		y = 0
 		cost = 10
 		search_filters = {  FOCUS_FILTER_RESEARCH }
@@ -1928,7 +1657,7 @@ focus_tree = {
     focus = {
 		id = MSH_aviation_effort
 		icon = GFX_goal_generic_build_airforce
-		x = 42
+		x = 61
 		y = 0
 		cost = 10
 
@@ -2227,7 +1956,7 @@ focus_tree = {
     focus = {
 		id = MSH_naval_effort
 		icon = GFX_goal_generic_construct_naval_dockyard
-		x = 46
+		x = 65
 		y = 0
 		cost = 10
 

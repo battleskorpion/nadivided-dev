@@ -14,9 +14,6 @@
    folder! Then click "Clone," of course. 
    Next, Open the new folder using a file explorer. Drag `nadivided-dev.mod`
    into the `mod` folder. Start up HOI4,
-   and select our mod (local version). 
-   
-   ***Select the branch you want to use in Github before launching the game.*** 
-   ***If unsure ask someone dear to your heart who is knowledgeable***
+   and select our mod (local version). Select the branch you want to use. 
    
 # Enjoy :)
