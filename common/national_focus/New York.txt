@@ -18,5 +18,78 @@ focus_tree = {
 #FOCUS_FILTER_POLITICAL
 #FOCUS_FILTER_RESEARCH
 #FOCUS_FILTER_WAR_SUPPORT
+    
+#################################################
+###   Holy Shit the Country is Falling Apart  ###
+#################################################
+    focus = {
+        id = SNY_the_attack_on_albany
+        icon = GFX_
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SNY_attack_on_albany_has_occured_tt
+                has_country_flag = SNY_attack_on_albany
+            }
+        }
+        bypass = {
+            hidden_trigger = {
+                has_country_flag = SNY_attack_on_albany
+            }
+        }
+        x = 50
+        y = 0
+        cost = 10
+        ai_will_do = {
+            factor = 0
+        }
+        available_if_capitulated = no
+    }
+    focus = {
+        id = SNY_postpone_the_elections
+        icon = GFX_
+        prerequisite = { focus = SNY_the_attack_on_albany}
+        mutually_exclusive = { focus = SNY_the_elections_must_continue}
+        x = -20
+        y = 1
+        relative_position_id = SNY_the_attack_on_albany
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        
+        completion_reward = {
+            swap_ideas = {
+                add_idea = SNY_failing_democracy
+                remove_idea = SNY_self_proclaimed_bastion_of_democracy
+            }
+        }
+    }
+    focus = {
+        id = SNY_the_elections_must_continue
+        icon = GFX_
+        prerequisite = { focus = SNY_the_attack_on_albany}
+        mutually_exclusive = { focus = SNY_postpone_the_elections}
+        available = {
+            OR = {
+                has_government = democratic
+                has_government = progressivism
+            }
+        }
+        x = 20
+        y = 1
+        relative_position_id = SNY_the_attack_on_albany
+        cost = 10
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = no
 
+        completion_reward = {
+            add_timed_idea = {
+                idea = SNY_upheld_democracy
+                days = 270
+            }
+        }
+    }
 }
