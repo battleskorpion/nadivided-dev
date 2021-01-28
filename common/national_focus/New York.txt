@@ -728,7 +728,169 @@ focus_tree = {
         }
     }
     focus = {
-        id = SNY_
+        id = SNY_gain_the_support_of_congress_members
+        icon = GFX_
+        prerequisite = { focus = SNY_the_army_makes_a_demonstration}
+        available = {
+            NOT = {
+                has_completed_focus = SNY_the_armys_coup
+            }
+        }
+        x = -2
+        y = 1
+        relative_position_id = SNY_the_army_makes_a_demonstration
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            add_stability = 0.1
+            country_event = {
+                id = new_york.20
+            }
+            custom_effect_tooltip = SNY_corruption_will_be_normalized_tt
+        }
+    }
+    focus = {
+        id = SNY_gain_the_support_of_the_people
+        icon = GFX_
+        prerequisite = { focus = SNY_the_army_makes_a_demonstration}
+        available = {
+            NOT = {
+                has_completed_focus = SNY_the_armys_coup
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_the_army_makes_a_demonstration
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_stability = 0.03
+            add_war_support = 0.03
+            country_event = {
+                id = new_york.19
+            }
+        }
+    }
+    focus = {
+        id = SNY_gain_the_support_of_the_navy
+        icon = GFX_
+        prerequisite = { focus = SNY_the_army_makes_a_demonstration}
+        available = {
+            NOT = {
+                has_completed_focus = SNY_the_armys_coup
+            }
+        }
+        x = 2
+        y = 1
+        relative_position_id = SNY_the_army_makes_a_demonstration
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_war_support = 0.05
+        }
+    }
+    focus = {
+        id = SNY_the_armys_coup
+        icon = GFX_
+        prerequisite = { focus = SNY_gain_the_support_of_congress_members focus = SNY_gain_the_support_of_the_people focus = SNY_gain_the_support_of_the_navy}
+        x = 0
+        y = 1
+        relative_position_id = SNY_gain_the_support_of_the_people
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        
+        completion_reward = {
+            set_politics = {
+                ruling_party = neutrality
+            }
+            create_country_leader = {
+                name = "Military Council"
+                picture = "gfx//leaders//SNY//.dds"
+                expire = "1965.1.1"
+                ideology = oligarchism
+                traits = {
+                    military_council
+                }
+            }
+            country_event = {
+                id = new_york.21
+            }
+            if = {
+                limit = {
+                    has_completed_focus = SNY_gain_the_support_of_the_people
+                }
+                add_popularity = {
+                    ideology = neutrality
+                    popularity = 0.2
+                }
+            } else = {
+                add_popularity = {
+                    ideology = neutrality
+                    popularity = 0.1
+                }
+            }
+            if = {
+                limit = {
+                    has_completed_focus = SNY_gain_the_support_of_congress_members
+                }
+                add_timed_idea = {
+                    idea = SNY_corruption
+                    days = 270
+                }
+            } else = {
+                add_timed_idea = {
+                    idea = SNY_opposed_by_congress
+                    days = 270
+                }
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        has_completed_focus = SNY_gain_the_support_of_the_navy
+                    }
+                }
+                add_ideas = SNY_navy_troubles
+            }
+        }
+    }
+    focus = {
+        id = SNY_the_question_of_leadership
+        icon = GFX_
+        prerequisite = { focus = SNY_the_armys_coup}
+        x = 0
+        y = 1
+        relative_position_id = SNY_the_armys_coup
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_political_power = 150
+            country_event = {
+                id = new_york.22
+            }
+        }
     }
     focus = {
         id = SNY_the_elections_must_continue
