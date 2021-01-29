@@ -245,6 +245,411 @@ focus_tree = {
         }
     }
     focus = {
+        id = SNY_the_march_on_albany
+        icon = GFX_
+        prerequisite = { focus = SNY_talk_of_socialist_values}
+        prerequisite = { focus = SNY_create_the_independent_labor_league_of_new_york focus = SNY_pledge_to_empower_the_workers}
+        available = {
+            communism > 0.25
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_talk_of_socialist_values
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        
+        completion_reward = {
+            country_event = {
+                id = new_york.18
+            }
+        }
+    }
+    focus = {
+        id = SNY_anti_stalinist_rhetoric
+        icon = GFX_
+        prerequisite = { focus = SNY_the_march_on_albany}
+        available = {
+            has_government = communism
+        }
+        x = -1
+        y = 1
+        relative_position_id = SNY_the_march_on_albany
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_political_power = -30
+            add_stability = 0.05
+            add_war_support = 0.05
+        }
+    }
+    focus = {
+        id = SNY_american_exceptionalism
+        icon = GFX_
+        prerequisite = { focus = SNY_the_march_on_albany}
+        available = {
+            has_government = communism
+        }
+        x = 1
+        y = 1
+        relative_position_id = SNY_the_march_on_albany
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            add_stability = 0.05
+            add_popularity = {
+                ideology = democratic
+                popularity = 0.02
+            }
+            add_popularity = {
+                ideology = progressivism
+                popularity = 0.05
+            }
+            add_popularity = {
+                ideology = communism
+                popularity = 0.12
+            }
+        }
+    }
+    focus = {
+        id = SNY_empower_the_unions
+        icon = GFX_
+        prerequisite = { focus = SNY_anti_stalinist_rhetoric}
+        prerequisite = { focus = SNY_american_exceptionalism}
+        available = {
+            has_government = communism
+        }
+        x = 1
+        y = 1
+        relative_position_id = SNY_anti_stalinist_rhetoric
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            add_popularity = {
+                ideology = communism
+                popularity = 0.08
+            }
+        }
+    }
+    focus = {
+        id = SNY_remove_the_powers_of_the_senate
+        icon = GFX_
+        prerequisite = { focus = SNY_empower_the_unions}
+        available = {
+            has_government = communism
+        }
+        x = -2
+        y = 1
+        relative_position_id = SNY_empower_the_unions
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_political_power = 150
+            add_stability = -0.05
+            add_war_support = -0.03
+        }
+    }
+    focus = {
+        id = SNY_make_congress_obsolete
+        icon = GFX_
+        prerequisite = { focus = SNY_remove_the_powers_of_the_senate}
+        available = {
+            has_government = communism
+            OR = {
+                has_idea = SNY_political_violence
+                has_idea = SNY_political_deadlock
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_remove_the_powers_of_the_senate
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            if = {
+                limit = {
+                    has_idea = SNY_political_violence
+                }
+                remove_ideas = SNY_political_violence
+            } else = {
+                remove_ideas = SNY_political_deadlock
+            }
+        }
+    }
+    focus = {
+        id = SNY_communism_in_america
+        icon = GFX_
+        prerequisite = { focus = SNY_empower_the_unions}
+        prerequisite = { focus = SNY_transitional_communism}
+        available = {
+            has_government = communism
+            NOT = {
+                has_idea = SNY_failing_democracy
+                has_idea = SNY_legacy_of_FDRs_impeachment
+                OR = {
+                    has_idea = SNY_the_great_depression
+                }
+                OR = {
+                    has_idea = SNY_political_deadlock
+                    has_idea = SNY_political_violence
+                }
+            }
+        }
+        x = 0
+        y = 2
+        relative_position_id = SNY_empower_the_unions
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_war_support = 0.07
+        }
+    }
+    focus = {
+        id = SNY_communism_in_pennsylvania
+        icon = GFX_
+        prerequisite = { focus = SNY_communism_in_america}
+        available = {
+            has_government = communism
+            country_exists = SPA
+        }
+        bypass = {
+            NOT = {
+                country_exists = SPA
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_communism_in_america
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            create_wargoal = {
+                type = annex_everything
+                target = SPA
+            }
+            claim_pennsylvania = yes
+        }
+    }
+    focus = {
+        id = SNY_communism_in_the_great_lakes
+        icon = GFX_
+        prerequisite = { focus = SNY_communism_in_pennsylvania}
+        available = {
+            has_government = communism
+            any_country = {
+                OR = {
+                    tag = SOH
+                    tag = CLE
+                    tag = SIN
+                    tag = SIL
+                    tag = SMI
+                    tag = SWI
+                }
+                exists = yes
+                is_neighbor_of = SNY
+            }
+        }
+        x = -1
+        y = 1
+        relative_position_id = SNY_communism_in_pennsylvania
+        cost = 15
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            every_country = {
+                limit = {
+                    OR = {
+                        tag = SOH
+                        tag = CLE
+                        tag = SIN
+                        tag = SIL
+                        tag = SMI
+                        tag = SWI
+                    }
+                    exists = yes
+                }
+                SPA = {
+                    create_wargoal = {
+                        type = annex_everything
+                        target = PREV
+                    }
+                }
+            }
+            claim_ohio = yes
+            claim_indiana = yes
+            claim_illinios = yes
+            claim_michigan = yes
+            claim_wisconsin = yes
+        }
+    }
+    focus = {
+        id = SNY_communism_in_new_england
+        icon = GFX_
+        prerequisite = { focus = SNY_communism_in_pennsylvania}
+        available = {
+            has_government = communism
+            any_country = {
+                OR = {
+                    tag = SMA
+                    tag = SRI
+                    tag = SCT
+                    tag = SNH
+                    tag = SVT
+                    tag = SME
+                }
+                exists = yes
+                is_neighbor_of = SNY
+            }
+        }
+        x = 1
+        y = 1
+        relative_position_id = SNY_communism_in_pennsylvania
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            every_country = {
+                limit = {
+                    OR = {
+                        tag = SMA
+                        tag = SRI
+                        tag = SCT
+                        tag = SNH
+                        tag = SVT
+                        tag = SME
+                    }
+                    exists = yes
+                }
+                SPA = {
+                    create_wargoal = {
+                        type = annex_everything
+                        target = PREV
+                    }
+                }
+            }
+            claim_new_england = yes
+        }
+    }
+    focus = {
+        id = SNY_remove_fdrs_legacy
+        icon = GFX_
+        prerequisite = { focus = SNY_american_exceptionalism}
+        available = {
+            has_government = communism
+        }
+        x = 1
+        y = 1
+        relative_position_id = SNY_american_exceptionalism
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            remove_ideas = SNY_legacy_of_FDRs_impeachment
+        }
+    }
+    focus = {
+        id = SNY_transitional_communism
+        icon = GFX_
+        prerequisite = { focus = SNY_remove_fdrs_legacy}
+        available = {
+            has_government = communism
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_remove_fdrs_legacy
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_political_power = 100
+            add_popularity = {
+                ideology = communism
+                popularity = 0.07
+            }
+        }
+    }
+    focus = {
+        id = SNY_remove_dreams_of_democracy
+        icon = GFX_
+        prerequisite = { focus = SNY_transitional_communism}
+        available = {
+            has_government = communism
+            has_idea = SNY_failing_democracy
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_transitional_communism
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            remove_ideas = SNY_failing_democracy
+        }
+    }
+    focus = {
         id = SNY_charles_poletti_makes_a_speech
         icon = GFX_
         prerequisite = { focus = SNY_postpone_the_elections}
@@ -319,6 +724,171 @@ focus_tree = {
             }
             country_event = {
                 id = new_york.10
+            }
+        }
+    }
+    focus = {
+        id = SNY_gain_the_support_of_congress_members
+        icon = GFX_
+        prerequisite = { focus = SNY_the_army_makes_a_demonstration}
+        available = {
+            NOT = {
+                has_completed_focus = SNY_the_armys_coup
+            }
+        }
+        x = -2
+        y = 1
+        relative_position_id = SNY_the_army_makes_a_demonstration
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            add_stability = 0.1
+            country_event = {
+                id = new_york.20
+            }
+            custom_effect_tooltip = SNY_corruption_will_be_normalized_tt
+        }
+    }
+    focus = {
+        id = SNY_gain_the_support_of_the_people
+        icon = GFX_
+        prerequisite = { focus = SNY_the_army_makes_a_demonstration}
+        available = {
+            NOT = {
+                has_completed_focus = SNY_the_armys_coup
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_the_army_makes_a_demonstration
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_stability = 0.03
+            add_war_support = 0.03
+            country_event = {
+                id = new_york.19
+            }
+        }
+    }
+    focus = {
+        id = SNY_gain_the_support_of_the_navy
+        icon = GFX_
+        prerequisite = { focus = SNY_the_army_makes_a_demonstration}
+        available = {
+            NOT = {
+                has_completed_focus = SNY_the_armys_coup
+            }
+        }
+        x = 2
+        y = 1
+        relative_position_id = SNY_the_army_makes_a_demonstration
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_war_support = 0.05
+        }
+    }
+    focus = {
+        id = SNY_the_armys_coup
+        icon = GFX_
+        prerequisite = { focus = SNY_gain_the_support_of_congress_members focus = SNY_gain_the_support_of_the_people focus = SNY_gain_the_support_of_the_navy}
+        x = 0
+        y = 1
+        relative_position_id = SNY_gain_the_support_of_the_people
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        
+        completion_reward = {
+            set_politics = {
+                ruling_party = neutrality
+            }
+            create_country_leader = {
+                name = "Military Council"
+                picture = "gfx//leaders//SNY//.dds"
+                expire = "1965.1.1"
+                ideology = oligarchism
+                traits = {
+                    military_council
+                }
+            }
+            country_event = {
+                id = new_york.21
+            }
+            if = {
+                limit = {
+                    has_completed_focus = SNY_gain_the_support_of_the_people
+                }
+                add_popularity = {
+                    ideology = neutrality
+                    popularity = 0.2
+                }
+            } else = {
+                add_popularity = {
+                    ideology = neutrality
+                    popularity = 0.1
+                }
+            }
+            if = {
+                limit = {
+                    has_completed_focus = SNY_gain_the_support_of_congress_members
+                }
+                add_timed_idea = {
+                    idea = SNY_corruption
+                    days = 270
+                }
+            } else = {
+                add_timed_idea = {
+                    idea = SNY_opposed_by_congress
+                    days = 270
+                }
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        has_completed_focus = SNY_gain_the_support_of_the_navy
+                    }
+                }
+                add_ideas = SNY_navy_troubles
+            }
+        }
+    }
+    focus = {
+        id = SNY_the_question_of_leadership
+        icon = GFX_
+        prerequisite = { focus = SNY_the_armys_coup}
+        x = 0
+        y = 1
+        relative_position_id = SNY_the_armys_coup
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_political_power = 150
+            country_event = {
+                id = new_york.22
             }
         }
     }
