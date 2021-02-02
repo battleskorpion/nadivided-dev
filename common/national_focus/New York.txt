@@ -894,15 +894,18 @@ focus_tree = {
         }
     }
     focus = {
-        id = SNY_francis_mulcahy_assumes_leadership
+        id = SNY_expand_the_state
         icon = GFX_
         prerequisite = { focus = SNY_the_question_of_leadership}
-        mutually_exclusive = { focus = SNY_bruce_clarke_assumes_leadership}
-        mutually_exclusive = { focus = SNY_george_decker_assumes_leadership}
         available = {
-            always = no
+            OR = {
+                has_completed_focus = SNY_balance_the_powers_of_the_branches
+                has_completed_focus = SNY_prioritize_the_army
+                has_completed_focus = SNY_supremacy_of_the_infantry
+                has_completed_focus = SNY_the_navys_new_power
+            }
         }
-        x = -4
+        x = -3
         y = 1
         relative_position_id = SNY_the_question_of_leadership
         cost = 10
@@ -910,13 +913,277 @@ focus_tree = {
             factor = 1
         }
         available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_war_support = 0.05
+        }
     }
     focus = {
-        id = SNY_bruce_clarke_assumes_leadership
+        id = SNY_encroach_on_nycs_independence
+        icon = GFX_
+        prerequisite = { focus = SNY_expand_the_state}
+        available = {
+            has_manpower > 250000
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_expand_the_state
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        
+        completion_reward = {
+            every_state = {
+                limit = {
+                    state = 26
+                    state = 27
+                    state = 28
+                    state = 202
+                }
+                add_claim_by = SNY
+            }
+        }
+    }
+    focus = {
+        id = SNY_integration_by_force
+        icon = GFX_
+        prerequisite = { focus = SNY_encroach_on_nycs_independence}
+        available = {
+            has_manpower > 300000
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_encroach_on_nycs_independence
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        will_lead_to_war_with = NYC
+
+        completion_reward = {
+            end_puppet = NYC
+            declare_war_on = {
+                target = NYC
+                type = annex_everything
+            }
+            remove_ideas = SNY_independent_new_york_city
+        }
+    }
+    focus = {
+        id = SNY_crush_resistance
+        icon = GFX_
+        prerequisite = { focus = SNY_integration_by_force}
+        available = {
+            owns_state = 26
+            owns_state = 27
+            owns_state = 28
+            owns_state = 202
+        }
+        mutually_exclusive = { focus = SNY_slow_integration}
+        x = -1
+        y = 1
+        relative_position_id = SNY_integration_by_force
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_state_core = 26
+            add_state_core = 27
+            add_state_core = 28
+            add_state_core = 202
+            add_stability = -0.05
+            add_manpower = -5000
+        }
+    }
+    focus = {
+        id = SNY_slow_integration
+        icon  = GFX_
+        prerequisite = { focus = SNY_integration_by_force}
+        available = {
+            owns_state = 26
+            owns_state = 27
+            owns_state = 28
+            owns_state = 202
+        }
+        mutually_exclusive = { focus = SNY_crush_resistance}
+        x = 1
+        y = 1
+        relative_position_id = SNY_integration_by_force
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_state_core = 26
+            add_state_core = 27
+            add_state_core = 28
+            add_state_core = 202
+        }
+    }
+    focus = {
+        id = SNY_relentless_expansionism
+        icon = GFX_
+        prerequisite = { focus = SNY_crush_resistance focus = SNY_slow_integration}
+        x = 1
+        y = 1
+        relative_position_id = SNY_crush_resistance
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_ideas = SNY_relentless_expansionism
+        }
+    }
+    focus = {
+        id = SNY_crush_all_resistance
+        icon = GFX_
+        prerequisite = { focus = SNY_relentless_expansionism}
+        available = {
+            any_controlled_state = {
+                NOT = {
+                    is_core_of = SNY
+                }
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_relentless_expansionism
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_ideas = SNY_relentless_occupation
+        }
+    }
+    focus = {
+        id = SNY_stabilize_the_state
         icon = GFX_
         prerequisite = { focus = SNY_the_question_of_leadership}
-        mutually_exclusive = { focus = SNY_francis_mulcahy_assumes_leadership}
+        available = {
+            OR = {
+                has_completed_focus = SNY_balance_the_powers_of_the_branches
+                has_completed_focus = SNY_prioritize_the_army
+                has_completed_focus = SNY_supremacy_of_the_infantry
+                has_completed_focus = SNY_the_navys_new_power
+            }
+        }
+        x = -6
+        y = 1
+        relative_position_id = SNY_the_question_of_leadership
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            add_stability = 0.05
+        }
+    }
+    focus = {
+        id = SNY_dissolve_congress
+        icon = GFX_
+        prerequisite = { focus = SNY_stabilize_the_state}
+        available = {
+            NOT = {
+                OR = {
+                    has_idea = SNY_corruption
+                    has_idea = SNY_opposed_by_congress
+                }
+            }
+            has_idea = SNY_political_violence
+        }
+        x = -1
+        y = 1
+        relative_position_id = SNY_stabilize_the_state
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            remove_ideas = SNY_political_violence
+            add_stability = -0.20
+            add_timed_idea = {
+                idea = SNY_centralizing_power
+                days = 320
+            }
+            country_event = {
+                id = new_york.23
+            }
+        }
+    }
+    focus = {
+        id = SNY_silence_the_navy
+        icon = GFX_
+        prerequisite = { focus = SNY_stabilize_the_state}
+        available = {
+            has_idea = SNY_navy_troubles
+            NOT = {
+                has_completed_focus = SNY_the_navy_coups_the_coup
+            }
+        }
+        x = 0
+        y = 2
+        relative_position_id = SNY_stabilize_the_state
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            remove_ideas = SNY_navy_troubles
+        }
+    }
+    focus = {
+        id = SNY_crush_dreams_of_FDR_returning
+        icon = GFX_
+        prerequisite = { focus = SNY_stabilize_the_state}
+        available = {
+            NOT = {
+                has_idea = SNY_failing_democracy
+            }
+        }
+        x = 1
+        y = 1
+        relative_position_id = SNY_stabilize_the_state
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            remove_ideas = SNY_legacy_of_FDRs_impeachment
+        }
+    }
+    focus = {
+        id = SNY_francis_mulcahy_assumes_leadership
+        icon = GFX_
+        prerequisite = { focus = SNY_the_question_of_leadership}
+        mutually_exclusive = { focus = SNY_bruce_clarke_assumes_leadership}
         mutually_exclusive = { focus = SNY_george_decker_assumes_leadership}
+        mutually_exclusive = { focus = SNY_the_navy_coups_the_coup}
         available = {
             always = no
         }
@@ -930,11 +1197,81 @@ focus_tree = {
         available_if_capitulated = yes
     }
     focus = {
+        id = SNY_balance_the_powers_of_the_branches
+        icon = GFX_
+        prerequisite = { focus = SNY_francis_mulcahy_assumes_leadership}
+        available = {
+            NOT = {
+                has_completed_focus = SNY_the_navy_coups_the_coup
+            }
+        }
+        x = 0
+        y = 1 
+        relative_position_id = SNY_francis_mulcahy_assumes_leadership
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            army_experience = 25
+            navy_experience = 25
+            air_experience = 25
+            add_stability = 0.03
+        }
+    }
+    focus = {
+        id = SNY_bruce_clarke_assumes_leadership
+        icon = GFX_
+        prerequisite = { focus = SNY_the_question_of_leadership}
+        mutually_exclusive = { focus = SNY_francis_mulcahy_assumes_leadership}
+        mutually_exclusive = { focus = SNY_george_decker_assumes_leadership}
+        mutually_exclusive = { focus = SNY_the_navy_coups_the_coup}
+        available = {
+            always = no
+        }
+        x = 2
+        y = 1
+        relative_position_id = SNY_the_question_of_leadership
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+    }
+    focus = {
+        id = SNY_prioritize_the_army
+        icon = GFX_
+        prerequisite = { focus = SNY_bruce_clarke_assumes_leadership}
+        available = {
+            NOT = {
+                has_completed_focus = SNY_the_navy_coups_the_coup
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_bruce_clarke_assumes_leadership
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            army_experience = 75
+            war_support_factor = 0.03
+        }
+    }
+    focus = {
         id = SNY_george_decker_assumes_leadership
         icon = GFX_
         prerequisite = { focus = SNY_the_question_of_leadership}
         mutually_exclusive = { foucs = SNY_francis_mulcahy_assumes_leadership}
         mutually_exclusive = { focus = SNY_george_decker_assumes_leadership}
+        mutually_exclusive = { focus = SNY_the_navy_coups_the_coup}
         available = {
             always = no
         }
@@ -946,6 +1283,170 @@ focus_tree = {
             factor = 1
         }
         available_if_capitulated = yes
+    }
+    focus = {
+        id = SNY_supremacy_of_the_infantry
+        icon = GFX_
+        prerequisite = { focus = SNY_george_decker_assumes_leadership}
+        available = {
+            NOT = {
+                has_idea = SNY_navy_troubles
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_george_decker_assumes_leadership
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_ideas = SNY_infantry_supremacy
+        }
+    }
+    focus = {
+        id = SNY_the_navy_coups_the_coup
+        icon = GFX_
+        mutually_exclusive = { focus = SNY_francis_mulcahy_assumes_leadership}
+        mutually_exclusive = { focus = SNY_george_decker_assumes_leadership}
+        mutually_exclusive = { focus = SNY_george_decker_assumes_leadership}
+        available = {
+            always = no
+        }
+        x = 6
+        y = 1
+        relative_position_id = SNY_the_question_of_leadership
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+    }
+    focus = {
+        id = SNY_the_navys_new_power
+        icon = GFX_
+        prerequisite = { focus = SNY_the_navy_coups_the_coup}
+        bypass = {
+            hidden_trigger = {
+                NOT = {
+                    has_idea = SNY_navy_troubles
+                }
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_the_navy_coups_the_coup
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            remove_ideas = SNY_navy_troubles
+        }
+    }
+    focus = {
+        id = SNY_create_a_naval_advisory_council
+        icon = GFX_
+        prerequisite = { focus = SNY_the_navys_new_power}
+        x = 0
+        y = 1
+        relative_position_id = SNY_the_navys_new_power
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_ideas = SNY_powerful_navy
+        }
+    }
+    focus = {
+        id = SNY_expand_local_naval_bases
+        icon = GFX_
+        prerequisite = { focus = SNY_create_a_naval_advisory_council}
+        available = {
+            any_owned_state = {
+                is_coastal = yes
+                free_building_slots = {
+                    building = dockyard
+                    size > 2
+                    include_locked = no
+                }
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_create_a_naval_advisory_council
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                limit = {
+                    is_coastal = yes
+                    free_building_slots = {
+                        building = dockyard
+                        size > 2
+                        include_locked = no
+                    }
+                }
+                add_building_construction = {
+                    type = dockyard
+                    level = 3
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_secure_foreign_naval_bases
+        icon = GFX_
+        prerequisite = { focus = SNY_expand_local_naval_bases}
+        available = {
+            OR = {
+                country_exists = BER
+                country_exists = BAH
+                # country_exists = SFL
+                country_exists = PAN
+            }
+            has_completed_focus = SNY_relentless_expansionism
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_expand_local_naval_bases
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            every_country = {
+                exists = yes
+                OR = {
+                    tag = BER
+                    tag = BAH
+                    # tag = SFL
+                    tag = PAN
+                }
+                SNY = {
+                    create_wargoal = {
+                        target = PREV
+                        type = annex_everything
+                    }
+                }
+            }
+        }
     }
     focus = {
         id = SNY_the_elections_must_continue
@@ -978,7 +1479,6 @@ focus_tree = {
         id = SNY_herbert_lehman_makes_a_speech
         icon = GFX_
         prerequisite = { focus = SNY_the_elections_must_continue}
-        mutually_exclusive = { }
         x = -6
         y = 1
         relative_position_id = SNY_the_elections_must_continue
