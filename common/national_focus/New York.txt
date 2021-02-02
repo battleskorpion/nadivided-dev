@@ -467,6 +467,7 @@ focus_tree = {
         }
         available_if_capitulated = no
         search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = SPA
 
         completion_reward = {
             create_wargoal = {
@@ -504,6 +505,12 @@ focus_tree = {
         }
         available_if_capitulated = no
         search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = SOH
+        will_lead_to_war_with = CLE
+        will_lead_to_war_with = SIN
+        will_lead_to_war_with = SIL
+        will_lead_to_war_with = SMI
+        will_lead_to_war_with = SWI
 
         completion_reward = {
             every_country = {
@@ -1163,6 +1170,7 @@ focus_tree = {
             NOT = {
                 has_idea = SNY_failing_democracy
             }
+            has_idea = SNY_legacy_of_FDRs_impeachment
         }
         x = 1
         y = 1
@@ -1223,6 +1231,68 @@ focus_tree = {
         }
     }
     focus = {
+        id = SNY_the_army_has_power
+        icon = GFX_
+        prerequisite = { focus = SNY_balance_the_powers_of_the_branches}
+        x = 0
+        y = 1
+        relative_position_id = SNY_balance_the_powers_of_the_branches
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        
+        completion_reward = {
+            add_ideas = SNY_army_power
+        }
+    }
+    focus = {
+        id = SNY_the_airforce_has_power
+        icon = GFX_
+        prerequisite = { focus = SNY_the_army_has_power}
+        x = 0
+        y = 1
+        relative_position_id = SNY_the_army_has_power
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            swap_ideas = {
+                remove_idea = SNY_army_power
+                add_idea = SNY_land_power
+            }
+        }
+    }
+    focus = {
+        id = SNY_the_navy_has_power
+        icon = GFX_
+        prerequisite = { focus = SNY_the_airforce_has_power}
+        available = {
+            NOT = {
+                has_idea = SNY_navy_troubles
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_the_airforce_has_power
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            swap_ideas = {
+                remove_idea = SNY_land_power
+                add_idea = SNY_military_power
+            }
+        }
+    }
+    focus = {
         id = SNY_bruce_clarke_assumes_leadership
         icon = GFX_
         prerequisite = { focus = SNY_the_question_of_leadership}
@@ -1266,6 +1336,79 @@ focus_tree = {
         }
     }
     focus = {
+        id = SNY_expand_military_production
+        icon = GFX_
+        prerequisite = { focus = SNY_prioritize_the_army}
+        available = {
+            NOT = {
+                has_idea = SNY_navy_troubles
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_prioritize_the_army
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = arms_factory
+                    level = 2
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_create_an_army_advisory_council
+        icon = GFX_
+        prerequisite = { focus = SNY_expand_military_production}
+        x = 0
+        y = 1
+        relative_position_id = SNY_expand_military_production
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        
+        completion_reward = {
+            add_ideas = SNY_army_advisory_council
+        }
+    }
+    focus = {
+        id = SNY_the_pennsylvanian_campaign
+        icon = GFX_
+        prerequisite = { focus = SNY_create_an_army_advisory_council focus = SNY_the_new_england_campaign}
+        available = {
+            has_completed_focus = SNY_relentless_expansionism
+            country_exists = SPA
+        }
+        x = 1
+        y = 1
+        relative_position_id = SNY_create_an_army_advisory_council
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = SPA
+
+        completion_reward = {
+            create_wargoal = {
+                target = SPA
+                type = annex_everything
+            }
+        }
+    }
+    focus = {
         id = SNY_george_decker_assumes_leadership
         icon = GFX_
         prerequisite = { focus = SNY_the_question_of_leadership}
@@ -1304,6 +1447,95 @@ focus_tree = {
 
         completion_reward = {
             add_ideas = SNY_infantry_supremacy
+        }
+    }
+    focus = {
+        id = SNY_militarize_the_state
+        icon = GFX_
+        prerequisite = { focus = SNY_supremacy_of_the_infantry}
+        available = {
+            any_owned_state = {
+                industrial_complex > 2
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_supremacy_of_the_infantry
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                limit = {
+                    industrial_complex > 2
+                }
+                remove_building = {
+                    type = industrial_complex
+                    level = 3
+                }
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = arms_factory
+                    level = 4
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_the_new_england_campaign
+        icon = GFX_
+        prerequisite = { focus = SNY_militarize_the_state}
+        available = {
+            has_completed_focus = SNY_relentless_expansionism
+            OR = {
+                country_exists = SMA
+                country_exists = SRI
+                country_exists = SCT
+                country_exists = SNH
+                country_exists = SVT
+                country_exists = SME
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_militarize_the_state
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = SMA
+        will_lead_to_war_with = SRI
+        will_lead_to_war_with = SCT
+        will_lead_to_war_with = SNH
+        will_lead_to_war_with = SVT
+        will_lead_to_war_with = SME
+
+        completion_reward = {
+            every_country = {
+                limit = {
+                    OR = {
+                        tag = SMA
+                        tag = SRI
+                        tag = SCT
+                        tag = SNH
+                        tag = SVT
+                        tag = SME
+                    }
+                }
+                SNY = {
+                    create_wargoal = {
+                        target = PREV
+                        type = annex_everything
+                    }
+                }
+            }
         }
     }
     focus = {
@@ -1429,6 +1661,9 @@ focus_tree = {
         }
         available_if_capitulated = no
         search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = BER
+        will_lead_to_war_with = BAH
+        will_lead_to_war_with = PAN
 
         completion_reward = {
             every_country = {
