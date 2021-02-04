@@ -679,6 +679,227 @@ country_event = { #The Navy coups The Army
         complete_national_focus = SNY_the_navy_coups_the_coup
     }
 }
+country_event = { #Asking to dam the Niagara Falls River
+    id = new_york.27
+    title = new_york.27.t
+    desc = new_york.27.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #We accept
+        name = new_york.27.a
+        ai_chance = {
+            factor = 60
+        }
+        custom_effect_tooltip = SNY_we_will_get_following_effects_tt
+        effect_tooltip = {
+            94 = {
+                set_state_category = large_city
+                add_building_construction = {
+                    type = infrastructure
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+        custom_effect_tooltip = SNY_the_project_will_take_270_days_to_complete_tt
+        hidden_effect = {
+            SNY = {
+                country_event = {
+                    id = new_york.28
+                }
+            }
+        }
+    }
+    option = { #We should help with the Construction
+        name = new_york.27.b
+        ai_chance = {
+            factor = 40
+        }
+        custom_effect_tooltip = SNY_we_will_get_following_effects_tt
+        effect_tooltip = {
+            94 = {
+                set_state_category = large_city
+                add_building_construction = {
+                    type = infrastructure
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            ###One more state###
+        }
+        custom_effect_tooltip = SNY_the_project_will_take_160_days_to_complete_tt
+        add_timed_idea = {
+            idea = SNY_constructing_the_niagara_dam
+            days = 160
+        }
+        hidden_effect = {
+            set_country_flag = SNY_helping_to_construct_the_dam
+            SNY = {
+                country_event = {
+                    id = new_york.29
+                }
+            }
+        }
+    }
+    option = { #We decline
+        name = new_york.27.c
+        ai_chance = {
+            factor = 0
+        }
+        hidden_effect = {
+            SNY = {
+                country_event = {
+                    id = new_york.30
+                }
+            }
+        }
+    }
+}
+country_event = { #Allowed to build the Niagara Dam
+    id = new_york.28
+    title = new_york.28.t
+    desc = new_york.28.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Let the Construction Commence!
+        name = new_york.28.a
+        custom_effect_tooltip = SNY_the_project_will_take_270_days_to_complete_tt
+        add_timed_idea = {
+            idea = SNY_constructing_the_niagara_dam
+            days = 270
+        }
+        hidden_effect = {
+            set_global_flag = SNY_niagara_dam_construction
+        }
+    }
+}
+country_event = { #They will help build the Niagara Dam
+    id = new_york.29
+    title = new_york.29.t
+    desc = new_york.29.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = {
+        name = new_york.28.a
+        custom_effect_tooltip = SNY_the_project_will_take_160_days_to_complete_tt
+        add_timed_idea = {
+            idea = SNY_constructing_the_niagara_dam
+            days = 160
+        }
+        hidden_effect = {
+            set_global_flag = SNY_niagara_dam_construction
+        }
+    }
+}
+country_event = { #Niagara Dam cannot be built
+    id = new_york.30
+    title = new_york.30.t
+    desc = new_york.30.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = {
+        name = new_york.30.a
+        94 = {
+            owner = {
+                add_opinion_modifier = {
+                    target = SNY
+                    modifier = blocked_construction_of_niagara_dam
+                }
+                SNY = {
+                    add_opinion_modifier = {
+                        target = PREV
+                        modifier = blocked_construction_of_niagara_dam
+                    }
+                }
+            }
+        }
+    }
+}
+country_event = { #Niagara Dam is finished! (SNY)
+    id = new_york.31
+    title = new_york.31.t
+    desc = new_york.31.d
+    #picture = GFX_
+
+    is_triggered_only = no
+    fire_only_once = yes
+
+    trigger = {
+        tag = SNY
+        NOT = {
+            has_idea = SNY_constructing_the_niagara_dam
+        }
+        has_global_flag = SNY_niagara_dam_construction
+    }
+
+    immediate = {
+        clr_global_flag = SNY_niagara_dam_construction
+    }
+
+    option = { #Great News!
+        name = new_york.31.a
+        29 = {
+            set_state_category = megalopolis
+            add_building_construction = {
+                type = infrastructure
+                level = 1
+                instant_build = yes
+            }
+        }
+        ###Some other states get an upgrade on state_category
+        hidden_effect = {
+            94 = {
+                owner = {
+                    country_event = {
+                        id = new_york.32
+                    }
+                }
+            }
+        }
+    }
+}
+country_event = { #Niagara Dam finished! (94)
+    id = new_york.32
+    title = new_york.31.t
+    desc = new_york.31.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = {
+        name = new_york.31.a
+        94 = {
+            set_state_category = large_city
+            add_building_construction = {
+                type = infrastructure
+                level = 1
+                instant_build = yes
+            }
+        }
+        if = {
+            limit = {
+                has_country_flag = SNY_helping_to_construct_the_dam
+            }
+            hidden_effect = {
+                clr_country_flag = SNY_helping_to_construct_the_dam
+            }
+            ###Other states get shit
+        }
+    }
+}
 
 # country_event = {
 #     id = new_york.1
