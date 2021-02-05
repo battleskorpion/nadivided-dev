@@ -1773,14 +1773,15 @@ focus_tree = {
 		x = 1
 		y = 3
 		relative_position_id = SFL_let_democracy_win
-		cost = 20
+		cost = 18
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_ready_for_war }
 		
 		completion_reward = { 
-			retire_country_leader = yes
+			remove_unit_leader = 7001
+			set_country_flag = lowry_arrested
 			
-			# TODO:set new specific country leader that Sibbs will make 
+			
 			
 			add_political_power = -250
 		} 
@@ -1792,12 +1793,57 @@ focus_tree = {
 		x = 1
 		y = 4
 		relative_position_id = SFL_let_democracy_win
-		cost = 15
+		cost = 12
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_arrest_damned_lowry }
 		
 		completion_reward = { 
 			#event "Maybe either send in strike breakers or give into demands." 
+			add_stability = -0.05
+			add_timed_idea = { 
+				idea = SFL_strikers_aftermath
+				days = 120
+			} 
+		} 
+	}
+	
+	focus = { 
+		id = SFL_bonus_bill_or_else #"pay up focus" 
+		#icon = #
+		x = 1
+		y = 5
+		relative_position_id = SFL_let_democracy_win
+		cost = 8
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_deal_with_strikers }
+		
+		completion_reward = { 
+			#"I think we need focus where user has to pick between bonus bill and release of Lowry or civil war
+			#	Civil war will be between new fascist state vs Democrat Florida though fascist leader can’t be Lowry
+			#	Because he’s in jail
+			#	If he pays bonus bill then you loose 250 political power and increase fascism" 
+			#(do event) 
+			
+			event = florida.4
+		} 
+	}
+	
+	#"police state focus" 
+	focus = {
+		id = SFL_police_state_now
+		#icon = #
+		x = 1
+		y = 1
+		relative_position_id = SFL_bonus_bill_or_else
+		cost = 13
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_bonus_bill_or_else }
+		
+		completion_reward = {
+			#"Police state focus" which adds 10K men to manpower with boost to stability but -300 PP
+			add_manpower = 10000
+			add_stability = 0.1
+			add_political_power = -250
 		} 
 	}
 	
