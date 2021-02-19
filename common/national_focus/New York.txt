@@ -51,7 +51,6 @@ focus_tree = {
             OR = {
                 has_completed_focus = SNY_the_elections_must_continue
                 has_completed_focus = SNY_charles_poletti_makes_a_speech
-                # has_completed_focus = SNY_postpone_the_elections
             }
         }
         x = -5
@@ -507,6 +506,29 @@ focus_tree = {
             }
         }
     }
+    focus = {
+        id = SNY_make_sure_universities_stay_stable
+        icon = GFX_
+        prerequisite = { focus = SNY_clear_hoovervilles}
+        available = {
+            NOT = {
+                has_idea = SNY_the_great_depression
+            }
+        }
+        x = 0
+        y = 2
+        relative_position_id = SNY_clear_hoovervilles
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_research_slot = 1
+        }
+    }
 ##################################################
 ###   Holy Shit the Army isn't Falling Apart   ###
 ##################################################
@@ -515,7 +537,10 @@ focus_tree = {
         icon = GFX_
         mutually_exclusive = { focus = SNY_strengthen_the_army}
         available = {
-            has_completed_focus = SNY_the_attack_on_albany
+            custom_trigger_tooltip = {
+                tooltip = SNY_attack_on_albany_has_occured_tt
+                has_country_flag = SNY_attack_on_albany
+            }
             NOT = {
                 custom_trigger_tooltip = {
                     tooltip = SNY_amry_has_a_lot_of_influence_tt
@@ -526,7 +551,7 @@ focus_tree = {
                 }
             }
         }
-        x = 22
+        x = 21
         y = 0
         cost = 5
         ai_will_do = {
@@ -579,7 +604,7 @@ focus_tree = {
         id = SNY_reubild_the_navy
         icon = GFX_
         prerequisite = { focus = SNY_punish_the_army_for_leaving_the_capital}
-        x = -3
+        x = -4
         y = 1
         relative_position_id = SNY_punish_the_army_for_leaving_the_capital
         cost = 10
@@ -590,6 +615,126 @@ focus_tree = {
 
         completion_reward = {
             navy_experience = 75
+        }
+    }
+    focus = {
+        id = SNY_the_great_lakes_fleet
+        icon = GFX_
+        prerequisite = { focus = SNY_reubild_the_navy}
+        available = {
+            owns_state = 29
+        }
+        x = -1
+        y = 1
+        relative_position_id = SNY_reubild_the_navy
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            navy_experience = 25
+            29 = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = dockyard
+                    level = 2
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_invest_in_submarines
+        icon = GFX_
+        prerequisite = { focus = SNY_the_great_lakes_fleet}
+        x = -1
+        y = 1
+        relative_position_id = SNY_the_great_lakes_fleet
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                ahead_reduction = 2
+                category = ss_tech
+            }
+        }
+    }
+    focus = {
+        id = SNY_invest_in_destroyers
+        icon = GFX_
+        prerequisite = { focus = SNY_the_great_lakes_fleet focus = SNY_the_atlantic_fleet}
+        x = 1
+        y = 1
+        relative_position_id = SNY_the_great_lakes_fleet
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                ahead_reduction = 2
+                category = dd_tech
+            }
+        }
+    }
+    focus = {
+        id = SNY_the_atlantic_fleet
+        icon = GFX_
+        prerequisite = { focus = SNY_reubild_the_navy}
+        available = {
+
+        }
+        x = 1
+        y = 1
+        relative_position_id = SNY_reubild_the_navy
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            navy_experience = 25
+            ###buildings
+        }
+    }
+    focus = {
+        id = SNY_invest_in_battleships
+        icon = GFX_
+        prerequisite = { focus = SNY_the_atlantic_fleet}
+        x = 0
+        y = 2
+        relative_position_id = SNY_the_atlantic_fleet
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                ahead_reduction = 2
+                category = bb_tech
+            }
         }
     }
     focus = {
@@ -636,9 +781,56 @@ focus_tree = {
                 mobile_warfare = 1
             }
             add_tech_bonus = {
-                bonus = 0.5
+                bonus = 0.75
                 uses = 1
                 category = cat_mobile_warfare
+            }
+        }
+    }
+    focus = {
+        id = SNY_an_armored_spearhead
+        icon = GFX_
+        prerequisite = { focus = SNY_a_mobile_army}
+        x = 0
+        y = 1
+        relative_position_id = SNY_a_mobile_army
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                ahead_reduction = 1
+                category = armor
+            }
+        }
+    }
+    focus = {
+        id = SNY_mechanized_support
+        icon = GFX_
+        prerequisite = { focus = SNY_an_armored_spearhead}
+        x = 0
+        y = 1
+        relative_position_id = SNY_an_armored_spearhead
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                ahead_reduction = 1
+                category = motorized_equipment
+                category = cat_mechanized_equipment
             }
         }
     }
@@ -669,9 +861,55 @@ focus_tree = {
                 superior_firepower = 1
             }
             add_tech_bonus = {
-                bonus = 0.5
+                bonus = 0.75
                 uses = 1
                 category = cat_superior_firepower
+            }
+        }
+    }
+    focus = {
+        id = SNY_an_infantry_core
+        icon = GFX_
+        prerequisite = { focus = SNY_an_infantry_army}
+        x = 0 
+        y = 1
+        relative_position_id = SNY_an_infantry_army
+        cost = 10
+        ai_will_do = {
+            factor = 1 
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                ahead_reduction = 1
+                category = infantry_weapons
+            }
+        }
+    }
+    focus = {
+        id = SNY_artillery_support
+        icon = GFX_
+        prerequisite = { focus = SNY_an_infantry_core}
+        x = 0
+        y = 1
+        relative_position_id = SNY_an_infantry_core
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                ahead_reduction = 1
+                category = artillery
             }
         }
     }
@@ -679,7 +917,7 @@ focus_tree = {
         id = SNY_rebuild_the_airforce
         icon = GFX_
         prerequisite = { focus = SNY_punish_the_army_for_leaving_the_capital}
-        x = 3
+        x = 4
         y = 1
         relative_position_id = SNY_punish_the_army_for_leaving_the_capital
         cost = 10
@@ -693,11 +931,129 @@ focus_tree = {
         }
     }
     focus = {
+        id = SNY_fighter_focus
+        icon = GFX_
+        prerequisite = { focus = SNY_rebuild_the_airforce}
+        x = -1
+        y = 1
+        relative_position_id = SNY_rebuild_the_airforce
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                ahead_reduction = 1
+                category = light_fighter
+            }
+        }
+    }
+    focus = {
+        id = SNY_cas_focus
+        icon = GFX_
+        prerequisite = { focus = SNY_fighter_focus}
+        x = 0
+        y = 2
+        relative_position_id = SNY_fighter_focus
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                ahead_reduction = 1
+                category = cas_bomber
+            }
+        }
+    }
+    focus = {
+        id = SNY_bomber_focus
+        icon = GFX_
+        prerequisite = { focus = SNY_rebuild_the_airforce}
+        x = 1
+        y = 1
+        relative_position_id = SNY_rebuild_the_airforce
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                ahead_reduction = 1
+                category = tactical_bomber
+            }
+        }
+    }
+    focus = {
+        id = SNY_naval_bomber_focus 
+        icon = GFX_
+        prerequisite = { focus = SNY_bomber_focus focus = SNY_fighter_focus}
+        x = -1
+        y = 1
+        relative_position_id = SNY_bomber_focus
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                ahead_reduction = 1
+                category = naval_bomber
+            }
+        }
+    }
+    focus = {
+        id = SNY_strategic_bomber_focus
+        icon = GFX_
+        prerequisite = { focus = SNY_bomber_focus}
+        x = 1
+        y = 1
+        relative_position_id = SNY_bomber_focus
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                ahead_reduction = 1
+                category = cat_strategic_bomber
+            }
+        }
+    }
+    focus = {
         id = SNY_strengthen_the_army
         icon = GFX_
         mutually_exclusive = { focus = SNY_reform_the_army}
         available = {
-            has_completed_focus = SNY_the_attack_on_albany
+            custom_trigger_tooltip = {
+                tooltip = SNY_attack_on_albany_has_occured_tt
+                has_country_flag = SNY_attack_on_albany
+            }
             custom_trigger_tooltip = {
                 tooltip = SNY_amry_has_a_lot_of_influence_tt
                 OR = {
@@ -706,7 +1062,7 @@ focus_tree = {
                 }
             }
         }
-        x = 28
+        x = 33
         y = 0
         cost = 5
         ai_will_do = {
@@ -716,6 +1072,125 @@ focus_tree = {
 
         completion_reward = {
             army_experience = 75
+        }
+    }
+    focus = {
+        id = SNY_basic_tactical_education
+        icon = GFX_
+        prerequisite = { focus = SNY_strengthen_the_army}
+        x = -4
+        y = 1
+        relative_position_id = SNY_strengthen_the_army
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                category = land_doctrine
+            }
+        }
+    }
+    focus = {
+        id = SNY_improved_tactical_education
+        icon = GFX_
+        prerequisite = { focus = SNY_basic_tactical_education}
+        x = 0
+        y = 1
+        relative_position_id = SNY_basic_tactical_education
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                category = land_doctrine
+            }
+        }
+    }
+    focus = {
+        id = SNY_advanced_tactical_education
+        icon = GFX_
+        prerequisite = { focus = SNY_improved_tactical_education}
+        x = 0
+        y = 1
+        relative_position_id = SNY_improved_tactical_education
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                category = land_doctrine
+            }
+        }
+    }
+    focus = {
+        id = SNY_masterful_tactical_education
+        icon = GFX_
+        prerequisite = { focus = SNY_advanced_tactical_education}
+        x = 0
+        y = 1
+        relative_position_id = SNY_advanced_tactical_education
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_ideas = SNY_tactical_education
+        }
+    }
+    focus = {
+        id = SNY_divert_more_funding_to_the_military
+        icon = GFX_
+        prerequisite = { focus = SNY_strengthen_the_army}
+        x = 0
+        y = 1
+        relative_position_id = SNY_strengthen_the_army
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        
+        completion_reward = {
+            add_ideas = SNY_well_funded_military
+        }
+    }
+    focus = {
+        id = SNY_build_recruitment_centers
+        icon = GFX_
+        prerequisite = { focus = SNY_strengthen_the_army focus = SNY_reform_the_army}
+        x = -6
+        y = 1
+        relative_position_id = SNY_strengthen_the_army
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_MANPOWER }
+
+        completion_reward = {
+            add_ideas = SNY_national_recruitment_campaign
         }
     }
 ##################################################
@@ -1295,6 +1770,61 @@ focus_tree = {
                 }
             }
             claim_new_england = yes
+        }
+    }
+    focus = {
+        id = SNY_communism_in_new_jersey
+        icon = GFX_
+        prerequisite = { focus = SNY_communism_in_pennsylvania}
+        available = {
+            has_government = communism
+            SNJ = {
+                exists = yes
+                is_neighbor_of = SNY
+            }
+        }
+        x = 0
+        y = 2
+        relative_position_id = SNY_communism_in_pennsylvania
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = SNJ
+
+        completion_reward = {
+            create_wargoal = {
+                type = annex_everything
+                target = SNJ
+            }
+            claim_new_jersey = yes
+        }
+    }
+    focus = {
+        id = SNY_proclaim_the_american_peoples_republic
+        icon = GFX_
+        prerequisite = { focus = SNY_communism_in_america}
+        available = {
+            controls_pennsylvania_trigger = yes
+            OR = {
+                controls_new_england_trigger = yes
+                controls_great_lakes_trigger = yes
+            }
+        }
+        x = 2
+        y = 1
+        relative_position_id = SNY_communism_in_america
+        cost = 10
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = no
+        
+        completion_reward = {
+            set_cosmetic_tag = AMERICAN_PEOPLES_REPUBLIC
+            unlock_decision_category_tooltip = SNY_american_peoples_republic
         }
     }
     focus = {
