@@ -1,5 +1,268 @@
 add_namespace = california
+#Sending the invitation to bully nevada
+country_event = {
+	id = California.1
+	title = California.1.t
+	desc = California.1.desc
+	picture = GFX_report_event_gre_allied_diplomacy
+
+	is_triggered_only = yes
+	
+	option = {
+		name = California.1.a #invite utah to bully
+		trigger = {
+			if = {
+				country_exists = SUT
+
+			}
+		}
+		SUT = { country_event = California.2 }
+		hidden_effect = { 
+			set_country_flag = SCA_nevada_gambit_meeting
+		}
+	}
+}
+#Invitation to bully nevada
+country_event = {
+	id = California.2
+	title = California.2.t
+	desc = California.2.desc
+	picture = GFX_report_event_gre_allied_diplomacy_military
+
+	is_triggered_only = yes
+	
+	option = {
+		name = California.2.a
+		ai_chance = {
+			base = 100
+			modifier = {
+				factor = 0
+				NOT = { original_tag = SCA } 
+				OR = {
+					has_war_support < 20
+					has_war = yes
+				}
+			}
+		}
+		hidden_effect = { 
+			set_country_flag = GRE_join_the_hunt
+			if = { 
+				limit = { 
+					original_tag = SUT
+				}
+				GRE = { set_country_flag = SCA_utah_joins_the_hunt }
+			}
 
 
+		}	
+	}
+	option = {
+		name = California.2.b 
+		ai_chance = {
+			base = 0
+			modifier = {
+				add = 60
+				NOT = { original_tag = ITA } 
+				GRE = { 
+					OR = {
+						has_idea = GRE_eee_in_government 
+						has_government = fascism
+					}
+				}
+			}
+		}
+		add_political_power = 75
+	}
+}
+#Invitations received: Only California attending
+country_event = {
+	id = California.9
+	title = California.9.t
+	desc = California.9.desc
+	picture = GFX_report_event_gre_athens
 
+	fire_only_once = yes
+	
+	trigger = {
+		original_tag = GRE
+		has_country_flag = GRE_California_attending_convention
+		NOT = {
+			has_country_flag = GRE_france_attending_convention
+		}
+		NOT = {
+			has_country_flag = GRE_italy_attending_convention
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 7
+	}
+	
+	option = {
+		name = California.9.a 
+		hidden_effect = {  
+			set_country_flag = GRE_only_California_in_attendance
+			clr_country_flag = GRE_California_attending_convention
+			country_event = { id = California.18 days = 7 }
+			ENG = { set_country_flag = GRE_only_California_in_attendance }
+			ENG = { clr_country_flag = GRE_California_attending_convention }
+			ENG = { 
+				country_event = { id = California.18 days = 7 }
+			}	
+		}	
+	}
+}
+#Invitations received: Nobody attending!
+country_event = {
+	id = California.14
+	title = California.14.t
+	desc = California.14.desc
+	picture = GFX_report_event_gre_political_upheaval
+
+	fire_only_once = yes
+	
+	trigger = {
+		original_tag = GRE
+		has_country_flag = GRE_attending_megali_convention
+		NOT = { 
+			has_country_flag = GRE_California_attending_convention
+			has_country_flag = GRE_france_attending_convention
+			has_country_flag = GRE_italy_attending_convention
+			has_country_flag = GRE_megali_convention_a_failure
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 14
+	}
+	
+	option = {
+		name = California.14.a
+		add_stability = -0.1
+		hidden_effect = {  
+			set_country_flag = GRE_megali_convention_a_failure
+		}	
+	}
+}
+country_event = {
+    id = California.15
+    title = California.15.t
+    desc = California.15.d
+    #picture = GFX_
+    fire_only_once = yes
+	limit = {
+		has_government = democratic
+	}
+	is_triggered_only = yes
+    option = {
+        name = California.15.a
+		unlock_national_focus = SCA_the_establishment
+		set_political_party = {
+    		ideology = democratic
+    		popularity = 65
+		}
+    }
+	option = {
+        name = California.15.b
+		unlock_national_focus = SCA_anti_establishment
+		set_political_party = {
+    		ideology = progressivism
+    		popularity = 65
+		}
+    }
+}
+country_event = {
+    id = California.16
+    title = California.16.t
+    desc = California.16.d
+    #picture = GFX_
+
+    fire_only_once = yes
+	
+	is_triggered_only = yes
+    option = {
+        name = California.16.a
+    	complete_national_focus = SCA_the_military_steps_in
+    }
+	option = {
+        name = California.16.b
+    	complete_national_focus = SCA_maintain_the_western_democracies
+		SCA = { country_event = { id = California.15 } }
+		}
+    }
+}
+country_event = {
+	id = California.49
+	title = California.49.t
+	desc = California.49.d
+	picture = GFX_silly_patton
+	
+	trigger = {
+		tag = SCA
+	}	
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	mean_time_to_happen = { days = 7 }
+
+	option = {
+		name = California.49.a
+		effect_tooltip = {
+			hidden_effect = {
+			set_country_flag = SCA_patton_behind
+		}
+
+		}
+	}
+	option = {
+		name = California.49.b
+		effect_tooltip = {
+			hidden_effect = {
+			set_country_flag = SCA_patton_front
+		}
+
+		}
+	}
+}
+country_event = {
+	id = California.50
+	title = California.50.t
+	desc = California.50.d
+	picture = GFX_report_event_europe_funeral
+	
+	trigger = {
+		tag = SCA
+	}	
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	mean_time_to_happen = { days = 7 }
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = SCA_patton_dead
+		}		
+	}
+	
+	option = {
+		name = California.50.a
+		effect_tooltip = {
+			SCA = {
+				create_country_leader = {
+					name = "Walt Disney"
+					picture = "portrait_walt_disney.dds"
+					expire = "1965.1.1"
+					ideology = fascism_ideology
+					traits = {
+					anti_communist_crusader
+					}
+				set_politics = {
+					ruling_party = fascism
+					}
+				}
+			}	
+		}
+	}
+
+}
 

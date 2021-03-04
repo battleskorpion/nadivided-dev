@@ -1263,14 +1263,11 @@ country_event = { #Portland Question 2, annexation
                 }
             }
             modifier = {
-                factor = 0.25
-                SPA = {
-                    has_completed_focus = SPA_embrace_anarchy
-                }
+                factor = 0
+                has_cosmetic_tag = ANARCHY_OR
             }
         }
         SRO = {
-            add_state_core = 53
             annex_country = {
                 target = POO
                 transfer_troops = yes
@@ -1296,10 +1293,8 @@ country_event = { #Portland Question 2, annexation
                 }
             }
             modifier = {
-                add = 75
-                SPA = {
-                    has_completed_focus = SPA_embrace_anarchy
-                }
+                add = 99
+                has_cosmetic_tag = ANARCHY_OR
             }
         }
         SRO = {
@@ -1604,12 +1599,12 @@ country_event = { #Bye bye meier
             traits = {
                 democratic_reformer
             }
+        }
         hidden_effect = {
             country_event = {
                 id = OS.36
                 days = 10
                 random = 3
-                }
             }
         }
     }
@@ -1944,7 +1939,7 @@ country_event = { #it's successful
             }
             skill = 6
             attack_skill = 6
-            democratic = 7
+            defense_skill = 7
             planning_skill = 7
             logistics_skill = 5
         }
@@ -1986,7 +1981,6 @@ country_event = { #POO refuses annexation
             target = POO
             type = annex_everything
         }
-        add_state_core = 53
     }
     option = { #it's not worth it
         name = OS.45.b
@@ -2013,20 +2007,20 @@ country_event = { #KKK refuses annexation
         add_state_core = 176
     }
 }
-country_event = { #Cali kicks SRO from faction
-    id = OS.47
-    title = OS.47.t
-    desc = OS.47.d
-    #picture = GFX_
+# country_event = { #Cali kicks SRO from faction
+#     id = OS.47
+#     title = OS.47.t
+#     desc = OS.47.d
+#     #picture = GFX_
 
-    is_triggered_only = yes
-    fire_only_once = yes
+#     is_triggered_only = yes
+#     fire_only_once = yes
 
-    option = {
-        name = OS.47.a
-        leave_faction = yes
-    }
-}
+#     option = {
+#         name = OS.47.a
+#         leave_faction = yes
+#     }
+# }
 country_event = {
     id = OS.48
     title = OS.48.t
@@ -2038,16 +2032,104 @@ country_event = {
 
     trigger = {
         has_global_flag = oregon_civil_war_has_begun
-        NOT = {
-            count_triggers = {
-                amount = 2
+        OR = {
+            if = {
+                limit = {
+                    tag = POO
+                }
                 country_exists = POO
+                NOT = {
+                    country_exists = COR
+                    country_exists = SOR
+                    country_exists = SRO
+                    country_exists = KKK
+                    country_exists = PCA
+                    country_exists = URO
+                }
+            }
+            if = {
+                limit = {
+                    tag = COR
+                }
                 country_exists = COR
+                NOT = {
+                    country_exists = POO
+                    country_exists = SOR
+                    country_exists = SRO
+                    country_exists = KKK
+                    country_exists = PCA
+                    country_exists = URO
+                }
+            }
+            if = {
+                limit = {
+                    tag = SOR
+                }
                 country_exists = SOR
+                NOT = {
+                    country_exists = POO
+                    country_exists = COR
+                    country_exists = SRO
+                    country_exists = KKK
+                    country_exists = PCA
+                    country_exists = URO
+                }
+            }
+            if = {
+                limit = {
+                    tag = SRO
+                }
                 country_exists = SRO
+                NOT = {
+                    country_exists = COR
+                    country_exists = SOR
+                    country_exists = POO
+                    country_exists = KKK
+                    country_exists = PCA
+                    country_exists = URO
+                }
+            }
+            if = {
+                limit = {
+                    tag = KKK
+                }
                 country_exists = KKK
+                NOT = {
+                    country_exists = COR
+                    country_exists = SOR
+                    country_exists = SRO
+                    country_exists = POO
+                    country_exists = PCA
+                    country_exists = URO
+                }
+            }
+            if = {
+                limit = {
+                    tag = PCA
+                }
                 country_exists = PCA
+                NOT = {
+                    country_exists = COR
+                    country_exists = SOR
+                    country_exists = SRO
+                    country_exists = KKK
+                    country_exists = POO
+                    country_exists = URO
+                }
+            }
+            if = {
+                limit = {
+                    tag = URO
+                }
                 country_exists = URO
+                NOT = {
+                    country_exists = COR
+                    country_exists = SOR
+                    country_exists = SRO
+                    country_exists = KKK
+                    country_exists = PCA
+                    country_exists = POO
+                }
             }
         }
         OR = {
@@ -2063,5 +2145,9 @@ country_event = {
     option = {
         name = OS.48.a
         load_focus_tree = Victory
+        news_event = {
+            id = usastates_news.10
+            days = 1
+        }
     }
 }

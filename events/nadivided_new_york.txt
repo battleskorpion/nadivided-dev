@@ -101,6 +101,9 @@ country_event = { #The military abandons the capital
         name = new_york.3.a
         add_stability = -0.03
         custom_effect_tooltip = SNY_the_army_will_gain_influence_tt
+        281 = {
+            set_demilitarized_zone = yes
+        }
         hidden_effect = {
             if = {
                 limit = {
@@ -200,7 +203,11 @@ country_event = { #The attack on Albany
             add_idea = SNY_political_violence
         }
         custom_effect_tooltip = SNY_the_army_will_lose_influence_tt
+        281 = {
+            set_demilitarized_zone = no
+        }
         hidden_effect = {
+            set_global_flag = albany_attack_has_occured
             set_country_flag = SNY_attack_on_albany
             if = {
                 limit = {
@@ -228,8 +235,8 @@ country_event = { #The attack on Albany
             }
             news_event = {
                 id = usastates_news.14
+                days = 1
             }
-            set_global_flag = albany_attack
             if = {
                 limit = {
                     country_exists = NYC
@@ -251,12 +258,16 @@ country_event = { #The attack on Albany
             remove_idea = SNY_political_deadlock
             add_idea = SNY_political_violence
         }
+        281 = {
+            set_demilitarized_zone = no
+        }
         hidden_effect = {
+            set_global_flag = albany_attack_has_occured
             set_country_flag = SNY_attack_on_albany
             news_event = {
                 id = usastates_news.14
+                days = 1
             }
-            set_global_flag = albany_attack
             if = {
                 limit = {
                     country_exists = NYC
@@ -485,7 +496,7 @@ country_event = { #The Army's Coup
     fire_only_once = yes
 
     option = {
-        name = new_york.21
+        name = new_york.21.a
     }
 }
 country_event = { #The question of leadership
@@ -523,7 +534,7 @@ country_event = { #The question of leadership
         }
         create_country_leader = {
             name = "Bruce C. Clarke"
-            picture = "gfx//leaders//SNY//.dds"
+            picture = "gfx//leaders//SNY//gfx_leaders_SNY_general_bruce_c_clark.dds"
             expire = "1965.1.1"
             ideology = oligarchism
             traits = {
@@ -552,7 +563,7 @@ country_event = { #The question of leadership
         }
         create_country_leader = {
             name = "George Decker"
-            picture = "gfx//leaders//SNY//.dds"
+            picture = "gfx//leaders//SNY//gfx_leaders_SNY_general_decker.dds"
             expire = "1965.1.1"
             ideology = falangism
             traits = {
@@ -665,7 +676,7 @@ country_event = { #The Navy coups The Army
         }
         create_country_leader = {
             name = "Russell Wilson"
-            picture = "gfx//leaderes//SNY//.dds"
+            picture = "gfx//leaderes//SNY//russell_wilson.dds"
             expire = "1965.1.1"
             ideology = oligarchism
             traits = {
@@ -919,6 +930,80 @@ country_event = { #Niagara Dam finished! (94)
                     level = 1
                     instant_build = yes
                 }
+            }
+        }
+    }
+}
+country_event = { #Deal with New York City
+    id = new_york.33
+    title = new_york.33.t
+    desc = new_york.33.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #We must work to reintegrate them
+        name = new_york.33.a
+    }
+}
+country_event = { #Leader of SNY visits NYC
+    id = new_york.34
+    title = new_york.34.t
+    desc = new_york.34.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #What a lovely visit
+        name = new_york.34.a
+    }
+}
+country_event = { #SNY demands annexation of NYC
+    id = new_york.35
+    title = new_york.35.t
+    desc = new_york.35.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option ={ #WE will join them
+        name = new_york.35.a
+        ai_chance = {
+            factor = 100
+            modifier = {
+                add = -80
+                OR = {
+                    has_completed_focus = NYC_Blame_New_York_State
+                    has_completed_focus = NYC_The_Government_Must_Intervine
+                }
+            }
+        }
+        SNY = {
+            annex_country = {
+                target = NYC
+                transfer_troops = yes
+            }
+        }
+    }
+    option = { #They can stick it
+        name = new_york.35.b
+        ai_chance = {
+            factor = 0
+            modifier = {
+                add = 80
+                OR = {
+                    has_completed_focus = NYC_Blame_New_York_State
+                    has_completed_focus = NYC_The_Government_Must_Intervine
+                }
+            }
+        }
+        SNY = {
+            create_wargoal = {
+                type = annex_everything
+                target = NYC
             }
         }
     }
