@@ -2347,4 +2347,257 @@ focus_tree = {
 		}
 	}
 #
+
+
+
+
+
+############
+old code 
+	focus = {
+		id = SID_honarary_Idahoians
+		icon = GFX_goal_generic_dangerous_deal
+		mutually_exclusive = { focus = SID_new_religion}
+		mutually_exclusive = { focus = SID_purge_the_Mormons}
+		mutually_exclusive = { focus = SID_non_religous_policy}
+		cancel_if_invalid = yes
+		x = 40
+		y = 1
+		relative_position_id = SID_deal_with_Mormons
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		
+		available_if_capitulated = no
+		
+		completion_reward = {
+			add_stability = 0.05
+		}
+	}
+#
+	focus = {
+		id = SID_create_the_mormon_republic
+		icon = GFX_focus_generic_self_management
+		prerequisite = { focus = SID_honarary_Idahoians}
+		cancel_if_invalid = yes
+		x = 0
+		y = 1
+		relative_position_id = SID_honarary_Idahoians
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		
+		available_if_capitulated = no
+		
+		completion_reward = {
+			country_event = Idaho.3
+			core_utah = yes
+		}
+	}
+	focus = {
+		id = SID_mormons_in_politics
+		icon = GFX_rally_the_mormons
+		prerequisite = { focus = SID_create_the_mormon_republic}
+		x = -2
+		y = 1
+		relative_position_id = SID_create_the_mormon_republic
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_political_power = 50
+			add_stability = 0.05
+		}
+	}
+	focus = {
+		id = SID_enforce_mormon_values
+		icon = GFX_goal_generic_forceful_treaty
+		prerequisite = { focus = SID_create_the_mormon_republic}
+		cancel_if_invalid = yes
+		x = 0
+		y = 2
+		relative_position_id = SID_honarary_Idahoians
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		
+		available_if_capitulated = no
+		
+		completion_reward = {
+			add_ideas = SID_mormon_values
+		}
+	}
+	focus = {
+		id = SID_mormon_industries
+		icon = GFX_rally_the_mormons
+		prerequisite = { focus = SID_create_the_mormon_republic}
+		x = 2
+		y = 1
+		relative_position_id = SID_create_the_mormon_republic
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward  = {
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = SID_free_wyoming_mormons
+		icon = GFX_focus_wyoming
+		prerequisite = { focus = SID_enforce_mormon_values}
+		bypass = {
+			NOT = {
+				country_exists = SWY
+			}
+		}
+		cancel_if_invalid = yes
+		x = -1
+		y = 3
+		relative_position_id = SID_honarary_Idahoians
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		
+		available_if_capitulated = no
+		will_lead_to_war_with = SWY
+
+		completion_reward = {
+			create_wargoal = {
+				type = annex_everything
+				target = SWY
+			}
+		}
+	}
+#
+	focus = {
+		id = SID_free_nevada_mormons
+		icon = GFX_focus_nevada
+		prerequisite = { focus = SID_enforce_mormon_values}
+		bypass = {
+			NOT = {
+				country_exists = SNV
+			}
+		}
+		cancel_if_invalid = yes
+		x = 1
+		y = 3
+		relative_position_id = SID_honarary_Idahoians
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		
+		available_if_capitulated = no
+		will_lead_to_war_with = SNV
+
+		completion_reward = {
+			create_wargoal = {
+				type = annex_everything
+				target = SNV
+			}
+		}
+	}
+#
+	focus = {
+		id = SID_sieze_remaining_mormon_land
+		icon = GFX_goal_generic_occupy_states_ongoing_war
+		prerequisite = { focus = SID_free_nevada_mormons}
+		prerequisite = { focus = SID_free_wyoming_mormons}
+		bypass = {
+			NOT = {
+				country_exists = NAV
+				country_exists = SAZ
+			}
+		}
+		cancel_if_invalid = yes
+		x = 0
+		y = 4
+		relative_position_id = SID_honarary_Idahoians
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		
+		available_if_capitulated = no
+		will_lead_to_war_with = NAV
+		will_lead_to_war_with = SAZ
+
+		completion_reward = {
+			NAV = {
+				country_event = Idaho.8
+			}
+			SAZ = {
+				country_event = Idaho.7
+			}
+		}
+	}
+#
+	focus = {
+		id = SID_form_Deseret
+		icon = GFX_focus_isis_utah
+		prerequisite = { focus = SID_sieze_remaining_mormon_land}
+		cancel_if_invalid = yes
+		x = 0
+		y = 5
+		relative_position_id = SID_honarary_Idahoians
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		
+		available_if_capitulated = no
+
+		completion_reward = {
+			set_cosmetic_tag = DESERET
+			core_nevada = yes
+			core_wyoming = yes
+			145 = { add_core_of = SID }
+			302 = { add_core_of = SID }
+			86 = { add_core_of = SID }
+			claim_arizona = yes
+			claim_colorado = yes
+		}
+	}
+	focus = {
+		id = SID_support_californian_mormons
+		icon = GFX_focus_pab_goal_crusade
+		prerequisite = { focus = SID_form_Deseret}
+		x = 0
+		y = 1
+		relative_position_id = SID_form_Deseret
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_war_support = 0.1
+		}
+	}
 }
