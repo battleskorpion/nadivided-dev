@@ -23,7 +23,6 @@ focus_tree = {
 		x = 3
 		y = 0
 
-        prerequisite = { focus = PAB_Construct_Booze_factories }
 		cost = 5
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		
@@ -32,9 +31,10 @@ focus_tree = {
 			factor = 1
 		}
 
-		completion_reward = {
-			add_ideas = PAB_farmer_army		
-			add_manpower = 2000
+		mutually_exclusive = { focus = PON_1936_Ontario_Elections }
+
+		completion_reward = {	
+			add_stability = -0.15				
 		}
 	}
 #
@@ -69,6 +69,10 @@ focus_tree = {
 		relative_position_id = PON_Back_Swastica_clubs
         prerequisite = { focus = PON_Back_Swastica_clubs }
 		cost = 10
+
+		available = {
+			has_government = fascism
+			}
 
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		
@@ -716,7 +720,11 @@ focus_tree = {
 		cost = 10
 
 		search_filters = {  FOCUS_FILTER_RESEARCH }
-		
+
+		available = {
+			has_government = communism
+			}
+
 		available_if_capitulated = yes
 		ai_will_do = {
 			factor = 1
@@ -1076,7 +1084,7 @@ focus_tree = {
 		icon = GFX_focus_broken_Canada
 		x = 27
 		y = 0
-		cost = 1
+		cost = 10
 		ai_will_do = {
 			factor = 1
 		}
@@ -1193,7 +1201,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = PON_Farmers_Mechanization
         prerequisite = { focus = PON_Farmers_Mechanization }
-		cost = 10
+		cost = 8
 
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		
@@ -1219,7 +1227,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = PON_Fertalizer_distribution
         prerequisite = { focus = PON_Fertalizer_distribution }
-		cost = 10
+		cost = 5
 
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		
@@ -1227,14 +1235,118 @@ focus_tree = {
 		ai_will_do = {
 			factor = 1
 		}
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = infantry_artillery_bonus
-				bonus = 1.0
-				uses = 1
-				category = cat_mobile_warfare
+		available = {
+			any_owned_state = {
+				is_coastal = yes
 			}
+		}
+
+		complete_tooltip = {
+			navy_experience = 25
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = dockyard
+				level = 2
+				instant_build = yes
+			}
+		}
+		
+		completion_reward = {
+			navy_experience = 25
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+				92 = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+				}
+				95 = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+			}			
 		}
 	}
 #
@@ -1274,7 +1386,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = PON_Great_lakes_shipyards
         prerequisite = { focus = PON_Great_lakes_shipyards focus = PON_Civilian_Expansion2 }
-		cost = 10
+		cost = 5
 
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		
@@ -1480,7 +1592,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = PON_Tackleing_Great_depression
         prerequisite = { focus = PON_Tackleing_Great_depression }
-		cost = 10
+		cost = 5
 
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		
@@ -1723,7 +1835,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = PON_Military_factories_expansion
         prerequisite = { focus = PON_Military_factories_expansion }
-		cost = 10
+		cost = 5
 
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		
@@ -1749,7 +1861,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = PON_Women_in_the_factories
         prerequisite = { focus = PON_Women_in_the_factories }
-		cost = 10
+		cost = 5
 
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		
@@ -2021,6 +2133,8 @@ focus_tree = {
 			factor = 50
 		}
 
+		mutually_exclusive = { focus = PON_Toronto_Marches }
+
 		available_if_capitulated = no
 
 		completion_reward = {
@@ -2067,7 +2181,14 @@ focus_tree = {
 		cost = 10
 
 		search_filters = {  FOCUS_FILTER_RESEARCH }
-		
+
+		available = {
+			has_government = longism
+			has_government = democratic
+			
+			}
+
+
 		available_if_capitulated = yes
 		ai_will_do = {
 			factor = 50
@@ -2093,6 +2214,10 @@ focus_tree = {
 		ai_will_do = {
 			factor = 50
 		}
+
+		available = {
+			has_government = democratic
+			}
 
 		completion_reward = {
 			add_tech_bonus = {
@@ -2120,6 +2245,10 @@ focus_tree = {
 			factor = 50
 		}
 
+		available = {
+			has_government = democratic
+			}
+
 		completion_reward = {
 			add_tech_bonus = {
 				name = infantry_artillery_bonus
@@ -2145,6 +2274,10 @@ focus_tree = {
 		ai_will_do = {
 			factor = 50
 		}
+
+		available = {
+			has_government = democratic
+			}
 
 		bypass = {
 			custom_trigger_tooltip = {
@@ -2218,6 +2351,10 @@ focus_tree = {
 			factor = 50
 		}
 
+		available = {
+			has_government = democratic
+			}
+
 		completion_reward = {
 			set_technology = {
     			improved_light_tank = 1
@@ -2264,7 +2401,12 @@ focus_tree = {
 		cost = 10
 
 		search_filters = {  FOCUS_FILTER_RESEARCH }
-		
+
+		available = {
+			has_government = longism
+			}
+
+
 		available_if_capitulated = yes
 		ai_will_do = {
 			factor = 50
@@ -2349,7 +2491,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_ideas = War_Economy
 		}
 	}
 #
@@ -2657,12 +2799,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_tech_bonus = {
-				name = infantry_artillery_bonus
-				bonus = 1.0
-				uses = 1
-				category = cat_mobile_warfare
-			}
+			add_political_power = 150
 		}
 	}
 #
@@ -2674,6 +2811,10 @@ focus_tree = {
 		relative_position_id = PON_James_Simpson
         prerequisite = { focus = PON_James_Simpson }
 		cost = 10
+
+		available = {
+			has_government = neutrality
+			}
 
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		
@@ -2704,12 +2845,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_tech_bonus = {
-				name = infantry_artillery_bonus
-				bonus = 1.0
-				uses = 1
-				category = cat_mobile_warfare
-			}
+			add_ideas = PON_RCMP
 		}
 	}
 # 
@@ -2730,12 +2866,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_tech_bonus = {
-				name = infantry_artillery_bonus
-				bonus = 1.0
-				uses = 1
-				category = cat_mobile_warfare
-			}
+			add_ideas = PON_Orange_order_cadets
 		}
 	}
 #
@@ -2808,7 +2939,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+		remove_ideas = PON_Qubec_Uprisings
 		}
 	}
 #
@@ -2861,12 +2992,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_tech_bonus = {
-				name = infantry_artillery_bonus
-				bonus = 1.0
-				uses = 1
-				category = cat_mobile_warfare
-			}
+			add_political_power = 75
 		}
 	}
 # 
@@ -2887,11 +3013,13 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_tech_bonus = {
-				name = infantry_artillery_bonus
-				bonus = 1.0
-				uses = 1
-				category = cat_mobile_warfare
+			102 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
 			}
 		}
 	}
@@ -2918,7 +3046,7 @@ focus_tree = {
 				name = infantry_artillery_bonus
 				bonus = 1.0
 				uses = 1
-				category = cat_mobile_warfare
+				category = light_fighter
 			}
 		}
 	}
@@ -2962,7 +3090,10 @@ focus_tree = {
 
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		available = {
-				date > 1941.01.1
+			date > 1941.01.1
+			owns_state = 31
+			owns_state = 130
+			owns_state = 392
 		}		
 		available_if_capitulated = yes
 		ai_will_do = {
@@ -2970,11 +3101,28 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_tech_bonus = {
-				name = infantry_artillery_bonus
-				bonus = 1.0
-				uses = 1
-				category = cat_mobile_warfare
+			add_state_core = 133
+			add_state_core = 31
+			add_state_core = 132
+			add_state_core = 131
+			add_state_core = 134
+			add_state_core = 130
+			add_state_core = 323
+			add_state_core = 394
+			add_state_core = 517
+			add_state_core = 392
+			add_state_core = 516
+			add_state_core = 515
+			add_state_core = 393
+			add_timed_idea = { idea = PON_Maritimes_industry  days = 900 }
+			navy_experience = 100
+			132 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
 			}
 		}
 	}
@@ -3077,12 +3225,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_tech_bonus = {
-				name = infantry_artillery_bonus
-				bonus = 1.0
-				uses = 1
-				category = cat_mobile_warfare
-			}
+			add_ideas = PON_Anglican_Church_endorces_us
 		}
 	}
 #
@@ -3121,7 +3264,7 @@ focus_tree = {
 		icon = GFX_focus_broken_Canada
 		x = 33
 		y = 0
-		cost = 1
+		cost = 5
 		ai_will_do = {
 			factor = 1
 		}
@@ -3137,8 +3280,7 @@ focus_tree = {
 	focus = {
 		id = PON_Weapons1
 		icon = GFX_goal_generic_small_arms
-		prerequisite = { focus = PON_Canadian_army }
-
+		prerequisite = { focus = PON_Ontario_army }
 		x = -1
 		y = 1
 		relative_position_id = PON_Ontario_army
