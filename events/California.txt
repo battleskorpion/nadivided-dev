@@ -160,6 +160,90 @@ country_event = {
 }
     }
 }
+country_event = { #invite SWA to coalition
+    id = california.16
+    title = california.16.t
+    desc = california.16.d
+    picture = GFX_report_event_french_resistance_02
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    option = {
+        name = california.16.a #Accept
+        SCA = {
+            add_to_faction = SWA
+        }
+        ai_chance = {
+            base = 10
+        }
+    }
+
+    option = {
+        name = california.16.b #reject
+        SCA = {
+            add_opinion_modifier = { target = SWA modifier = faction_traitor }
+        }
+        ai_chance = {
+            base = 0
+        }
+    }
+}
+country_event = { #invite SMN to coalition
+    id = california.17
+    title = california.17.t
+    desc = california.17.d
+    picture = GFX_report_event_french_resistance_02
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    option = {
+        name = california.17.a #Accept
+        SCA = {
+            add_to_faction = SNM
+        }
+        ai_chance = {
+            base = 10
+        }
+    }
+
+    option = {
+        name = california.17.b #reject
+        SCA = {
+            add_opinion_modifier = { target = SSM modifier = faction_traitor }
+        }
+        ai_chance = {
+            base = 0
+        }
+    }
+}
+country_event = { #invite SMN to coalition
+    id = california.18
+    title = california.18.t
+    desc = california.18.d
+    picture = GFX_report_event_french_resistance_02
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    option = {
+        name = california.18.a #Accept
+        SCA = {
+            add_to_faction = SNM
+        }
+        ai_chance = {
+            base = 10
+        }
+    }
+
+    option = {
+        name = california.18.b #reject
+        SCA = {
+            add_opinion_modifier = { target = SSM modifier = faction_traitor }
+        }
+        ai_chance = {
+            base = 0
+        }
+    }
+}
 country_event = {
 	id = California.49
 	title = California.49.t
@@ -253,5 +337,162 @@ country_event = {
 		}
 	}
 
+	}
+}	
+	# Danzig or War (jefferson)
+country_event = {
+	id = california.86
+	title = california.86.t
+	desc = california.86.d
+	picture = GFX_report_event_german_troops
+
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_war_with = GER }
+	}
+	
+	option = {
+		name = california.86.a
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
+		GER = { country_event = { id = california.87 days = 1 } }
+		effect_tooltip = {
+			GER = {
+				transfer_state = 85
+				add_state_core = 85
+				remove_state_claim = 86
+				remove_state_claim = 762
+			}
+		}
+		country_event = { id = poland.1 days = 7 }
+		hidden_effect = {
+			news_event = { id = news.203 hours = 6 }
+		}
+	}
+	
+	option = {
+		name = california.86.b
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 3
+				strength_ratio = {
+					tag = GER
+					ratio > 0.7
+				}
+			}
+			modifier = {
+				factor = 10
+				any_other_country = {
+					is_major = yes
+					is_in_faction_with = JEF
+				}
+			}
+		}
+		GER = { country_event = { id = california.88 days = 1 } 
+			if = {
+				limit = {
+					is_in_faction_with = JEF
+					is_faction_leader = yes
+				}
+				remove_from_faction = JEF
+			}
+			if = {
+				limit = { 
+					is_in_faction_with = JEF
+					is_faction_leader = no
+				}
+				random_other_country = {
+					limit = { 
+						is_in_faction_with = GER
+						is_faction_leader = yes
+					}
+					remove_from_faction = GER
+				}
+			}			
+		}		
+		hidden_effect = {
+			news_event = { hours = 1 id = news.204 }
+		}
+		effect_tooltip = {
+			GER = {
+				declare_war_on = {
+					target = JEF
+					type = take_state
+					generator = { 85 }
+				}
+			}
+		}
+	}
 }
+
+# Poland Cedes Danzig (Danzig or War)
+country_event = {
+	id = california.87
+	title = california.87.t
+	desc = california.87.d
+	picture = GFX_report_event_german_polish_border
+
+	is_triggered_only = yes
+	
+	option = {
+		name = california.87.a
+		transfer_state = 85
+		remove_state_claim = 86
+		if = {
+			limit = {
+				ENG = {
+					NOT = {
+						is_in_faction_with = GER
+					}
+				}
+			}
+			ENG = {
+				add_war_support = -0.1 #dodged a bullet there
+			}
+		}
+		if = {
+			limit = {
+				FRA = {
+					NOT = {
+						is_in_faction_with = GER
+					}
+				}
+			}
+			FRA = {
+				add_war_support = -0.1 #dodged a bullet there
+			}
+		}
+	}
+}
+
+# Poland Refuses to Cede Danzig - so we jsut send guns to kill some bastards
+country_event = {
+	id = california.88
+	title = california.88.t
+	desc = california.88.d
+	picture = GFX_report_event_polish_tanks_02
+
+	is_triggered_only = yes
+	
+	option = {
+		name = california.88.a
+		}
+		SCA = {
+			send_equipment = {
+    		equipment = infantry_equipment
+    		amount = 2000
+    		target = SOR
+}
+		}
+		}
+	}
+}
+
 
