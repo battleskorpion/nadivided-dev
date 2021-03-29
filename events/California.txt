@@ -35,14 +35,6 @@ country_event = {
 		name = California.2.a
 		ai_chance = {
 			base = 100
-			modifier = {
-				factor = 0
-				NOT = { original_tag = SCA } 
-				OR = {
-					has_war_support < 20
-					has_war = yes
-				}
-			}
 		}
 		hidden_effect = { 
 			set_country_flag = SUT_join_the_hunt
@@ -61,17 +53,20 @@ country_event = {
 		ai_chance = {
 			base = 0
 			modifier = {
-				add = 60
+				add = 0
 			}
+		}
+		SUT = {
+
 		}
 		add_political_power = 75
 	}
 }
 #Invitations received: Only California attending
 country_event = {
-	id = California.9
-	title = California.9.t
-	desc = California.9.desc
+	id = California.3
+	title = California.3.t
+	desc = California.3.desc
 	picture = GFX_report_event_gre_athens
 
 	fire_only_once = yes
@@ -86,36 +81,42 @@ country_event = {
 	}
 	
 	option = {
-		name = California.9.a 
-		hidden_effect = {  
-			set_country_flag = SCA_california_at_ready
-			clr_country_flag = SCA_utah_joins_the_hunt
-			country_event = { id = California.10 days = 7 }
-				SUT = {
-					country_event = { id = California.10 days = 7 }
-				}
-				
-			}	
+		name = California.3.a 
+		SCA = {
+			add_state_claim = 143
+			add_state_claim = 50
+			add_state_claim = 611
+			add_state_claim = 687
+			declare_war_on = {
+			target = SNV
+			type = annex_everything
+		}
+		SUT = {
+			add_state_claim = 142
+			add_state_claim = 686
+			add_state_claim = 141
+			declare_war_on = {
+			target = SNV
+			type = annex_everything
+		}
 		}	
 	}
 }
 #Invitations received: Nobody attending!
 country_event = {
-	id = California.14
-	title = California.14.t
-	desc = California.14.desc
+	id = California.4
+	title = California.4.t
+	desc = California.4.desc
 	picture = GFX_report_event_gre_political_upheaval
 
 	fire_only_once = yes
+	is_triggered_only = yes
 	
 	trigger = {
-		original_tag = GRE
-		has_country_flag = GRE_attending_megali_convention
+		original_tag = SUT
+		has_country_flag =  SUT_join_the_hunt
 		NOT = { 
-			has_country_flag = GRE_California_attending_convention
-			has_country_flag = GRE_france_attending_convention
-			has_country_flag = GRE_italy_attending_convention
-			has_country_flag = GRE_megali_convention_a_failure
+			has_country_flag = SUT_utah_attending_convention
 		}
 	}
 
@@ -124,17 +125,16 @@ country_event = {
 	}
 	
 	option = {
-		name = California.14.a
-		add_stability = -0.1
-		hidden_effect = {  
-			set_country_flag = GRE_megali_convention_a_failure
-		}	
+		name = California.4.a
+		SCA = {
+		add_stability = -0.01
+		}
 	}
 }
 country_event = {
     id = California.15
     title = California.15.t
-    desc = California.15.d
+    desc = California.15.desc
     #picture = GFX_
     fire_only_once = yes
 	limit = {
@@ -142,7 +142,7 @@ country_event = {
 	}
 	is_triggered_only = yes
     option = {
-        name = California.15.a
+        name = california.15.a
 		unlock_national_focus = SCA_the_establishment
 		set_political_party = {
     		ideology = democratic
@@ -150,7 +150,7 @@ country_event = {
 		}
     }
 	option = {
-        name = California.15.b
+        name = california.15.b
 		unlock_national_focus = SCA_anti_establishment
 		set_politics = {
    	 	ruling_party = progressivism
@@ -163,7 +163,7 @@ country_event = {
 country_event = { #invite SWA to coalition
     id = california.19
     title = california.19.t
-    desc = california.19.d
+    desc = california.19.desc
     picture = GFX_report_event_french_resistance_02
     fire_only_once = yes
     is_triggered_only = yes
@@ -183,7 +183,7 @@ country_event = { #invite SWA to coalition
 country_event = { #invite SMN to coalition
     id = california.17
     title = california.17.t
-    desc = california.17.d
+    desc = california.17.desc
     picture = GFX_report_event_french_resistance_02
     fire_only_once = yes
     is_triggered_only = yes
@@ -211,7 +211,7 @@ country_event = { #invite SMN to coalition
 country_event = { #proceed to devlop the nevada economic dominacation 
     id = california.19
     title = california.19.t
-    desc = california.19.d
+    desc = california.19.desc
     #picture = GFX_report_event_french_resistance_02
     fire_only_once = yes
     is_triggered_only = yes
@@ -229,7 +229,7 @@ country_event = { #proceed to devlop the nevada economic dominacation
 country_event = { #re-establish laws regarding segregation.
     id = california.20
     title = california.20.t
-    desc = california.20.d
+    desc = california.20.desc
     #picture = GFX_report_event_french_resistance_02
     fire_only_once = yes
     is_triggered_only = yes
@@ -275,7 +275,7 @@ country_event = { #re-establish laws regarding segregation.
 country_event = { #proceed to devlop the nevada economic dominacation 
     id = california.21
     title = california.21.t
-    desc = california.21.d
+    desc = california.21.desc
     #picture = GFX_report_event_french_resistance_02
     fire_only_once = yes
     is_triggered_only = yes
@@ -369,6 +369,7 @@ country_event = {
 	
 	trigger = {
 		tag = SCA
+		if = {
 		limit = {
 			SCA = {
 				has_country_flag = SCA_patton_front
@@ -378,8 +379,20 @@ country_event = {
 				}
 			BAJ = {
 				has_capitulated = yes
+				OR = {
+					BAJ = {
+						is_puppet_of = SCA
+					}
+				}
+				OR = {
+					BAJ = {
+						exists = no
+					}
+				}
+
 				}
 			}
+		}
 		}
 	}	
 	is_triggered_only = yes
