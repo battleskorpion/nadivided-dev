@@ -1,537 +1,1515 @@
-SNY_election = {
-    campaining_in_new_york_city = {
-        icon = GFX_campaining_in_state
+SNY_remove_hopes_of_democracy = {
+    ###Not on map###
+    SNY_begin_the_process = {
+        icon = GFX_
 
         available = {
-            OR = {
-                NYC = {
-                    is_subject_of = SNY
-                    has_full_control_of_state = 26
-                    has_full_control_of_state = 27
-                    has_full_control_of_state = 28
-                    has_full_control_of_state = 202
-                }
-                AND = {
-                    has_full_control_of_state = 26
-                    has_full_control_of_state = 27
-                    has_full_control_of_state = 28
-                    has_full_control_of_state = 202
-                }
-            }
-            OR = {
-                has_completed_focus = SNY_herbet_h_lehman
-                has_completed_focus = SNY_william_f_bleakey
-                has_completed_focus = SNY_endorse_herbet_h_lehman
-                has_completed_focus = SNY_rockwell_kent
-                has_completed_focus = SNY_harry_w_laidler
-                has_completed_focus = SNY_robert_minor
-            }
-            NOT = {
-                has_country_flag = SNY_already_campaining
-            }
-            custom_trigger_tooltip = {
-                tooltip = at_least_10_support_for_another_party_tt
-                202 = {
-                    count_triggers = {
-                        amount = 2
-                        check_variable = { state_democratic_support > 9 }
-                        check_variable = { state_republican_support > 9 }
-                        check_variable = { state_labor_support > 9 }
-                        check_variable = { state_socialist_support > 9 }
-                        check_variable = { state_communist_support > 9 }
-                    }
-                }
-            }
-            custom_trigger_tooltip = {
-                tooltip = 202_check_support_tt
-                always = yes
-            }
+            original_tag = SNY
         }
-        days_remove = 50
-        cost = 100
-        highlight_state_targets = { state = 202 }
-        highlight_states = {
-            state = 26
-            state = 27
-            state = 28
-            state = 202
-        }
-        on_map_mode = map_only
-        fire_only_once = no
         visible = {
-            always = yes ###while election is still going on
+            NOT = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
         }
         cancel_if_not_visible = yes
-
+        fire_only_once = yes
+        cost = 25
         complete_effect = {
-			set_country_flag = SNY_already_campaining
-        }
-        remove_effect = {
-            202 = {
-                SNY_campaign_decision = yes
+            add_popularity = {
+                ideology = democratic
+                popularity = -0.05
             }
-            clr_country_flag = SNY_already_campaining
-        }
-    }
-    campaining_in_downstate_new_york = {
-        icon = GFX_campaining_in_state
-
-        available = {
-            AND = {
-                has_full_control_of_state = 277
-                has_full_control_of_state = 278
-                has_full_control_of_state = 279
-                has_full_control_of_state = 291
-                has_full_control_of_state = 622
+            add_popularity = {
+                ideology = progressivism
+                popularity = -0.05
             }
-            custom_trigger_tooltip = {
-                tooltip = 277_check_support_tt
-                always = yes
-            }
-            OR = {
-                has_completed_focus = SNY_herbet_h_lehman
-                has_completed_focus = SNY_william_f_bleakey
-                has_completed_focus = SNY_endorse_herbet_h_lehman
-                has_completed_focus = SNY_rockwell_kent
-                has_completed_focus = SNY_harry_w_laidler
-                has_completed_focus = SNY_robert_minor
-            }
-            NOT = {
-                has_country_flag = SNY_already_campaining
-            }
-            custom_trigger_tooltip = {
-                tooltip = at_least_10_support_for_another_party_tt
-                277 = {
-                    count_triggers = {
-                        amount = 2
-                        check_variable = { state_democratic_support > 9 }
-                        check_variable = { state_republican_support > 9 }
-                        check_variable = { state_labor_support > 9 }
-                        check_variable = { state_socialist_support > 9 }
-                        check_variable = { state_communist_support > 9 }
+            hidden_effect = {
+                set_country_flag = SNY_getting_rid_of_democracy
+                every_owned_state = {
+                    limit = {
+                        is_core_of = SNY
+                    }
+                    add_dynamic_modifier = {
+                        modifier = SNY_high_democracy_support
                     }
                 }
             }
         }
-        days_remove = 25
+    }
+    SNY_silence_outspoken_congressmen = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            has_stability > 0.25
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = SNY_getting_rid_of_democracy
+            }
+            NOT = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
+        }
+        cancel_if_not_visible = yes
+        fire_only_once = yes
         cost = 25
-        highlight_state_targets = { state = 277 }
+        days_remove = 70
+        complete_effect = {
+            add_stability = -0.05
+        }
+        modifier = { #Stability is earned back all the way
+            stability_weekly = 0.005
+        }
+        remove_effect = {
+            add_popularity = {
+                ideology = democratic
+                popularity = -0.1
+            }
+            add_popularity = {
+                ideology = progressivism
+                popularity = -0.1
+            }
+        }
+    }
+    SNY_crush_hopes_of_democracy = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            every_owned_state = {
+                OR = {
+                    NOT = {
+                        has_dynamic_modifier = {
+                            modifier = SNY_high_democracy_support
+                        }
+                    }
+                    NOT = {
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                        has_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                    }
+                }
+            }
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = SNY_getting_rid_of_democracy
+            }
+            NOT = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
+            any_owned_state = {
+                NOT = {
+                    has_dynamic_modifier = {
+                        modifier = SNY_high_democracy_support
+                    }
+                }
+            }
+        }
+        cancel_if_not_visible = yes
+        fire_only_once = yes
+        cost = 25
+        complete_effect = {
+            remove_ideas = SNY_failing_democracy
+        }
+    }
+###On map###
+    SNY_291_removing_democracy = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            291 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = SNY_getting_rid_of_democracy
+            }
+            NOT = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
+            owns_state = 291
+            291 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+            }
+        }
+        on_map_mode = map_only
+        highlight_state_targets = { state = 291}
+        highlight_states = {
+            state = 291
+        }
+        cancel_if_not_visible = yes
+        fire_only_once = no
+        cost = 10
+        ai_will_do = {
+            base = 50
+            modifier = {
+                factor = 2
+                has_political_power > 100
+            }
+        }
+        days_remove = 35
+        remove_effect = {
+            if = {
+                limit = {
+                    291 = {
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    }
+                }
+                291 = {
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+                add_political_power = 25
+            } else_if = {
+                limit = {
+                    291 = {
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    }
+                }
+                291 = {
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+    }
+    SNY_278_removing_democracy = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            278 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = SNY_getting_rid_of_democracy
+            }
+            NOT = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
+            owns_state = 278
+            278 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+            }
+        }
+        on_map_mode = map_only
+        highlight_state_targets = { state = 278}
+        highlight_states = {
+            state = 278
+        }
+        cancel_if_not_visible = yes
+        fire_only_once = no
+        cost = 10
+        ai_will_do = {
+            base = 50
+            modifier = {
+                factor = 2
+                has_political_power > 100
+            }
+        }
+        days_remove = 35
+        remove_effect = {
+            if = {
+                limit = {
+                    278 = {
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    }
+                }
+                278 = {
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+                add_political_power = 25
+            } else_if = {
+                limit = {
+                    278 = {
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    }
+                }
+                278 = {
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+    }
+    SNY_279_removing_democracy = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            279 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = SNY_getting_rid_of_democracy
+            }
+            NOT = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
+            owns_state = 279
+            279 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+            }
+        }
+        on_map_mode = map_only
+        highlight_state_targets = { state = 279}
+        highlight_states = {
+            state = 279
+        }
+        cancel_if_not_visible = yes
+        fire_only_once = no
+        cost = 10
+        ai_will_do = {
+            base = 50
+            modifier = {
+                factor = 2
+                has_political_power > 100
+            }
+        }
+        days_remove = 35
+        remove_effect = {
+            if = {
+                limit = {
+                    279 = {
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    }
+                }
+                279 = {
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+                add_political_power = 25
+            } else_if = {
+                limit = {
+                    279 = {
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    }
+                }
+                279 = {
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+    }
+    SNY_277_removing_democracy = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            277 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = SNY_getting_rid_of_democracy
+            }
+            NOT = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
+            owns_state = 277
+            277 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+            }
+        }
+        on_map_mode = map_only
+        highlight_state_targets = { state = 277}
         highlight_states = {
             state = 277
-            state = 278
-            state = 279
-            state = 291
+        }
+        cancel_if_not_visible = yes
+        fire_only_once = no
+        cost = 10
+        ai_will_do = {
+            base = 50
+            modifier = {
+                factor = 2
+                has_political_power > 100
+            }
+        }
+        days_remove = 35
+        remove_effect = {
+            if = {
+                limit = {
+                    277 = {
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    }
+                }
+                277 = {
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+                add_political_power = 25
+            } else_if = {
+                limit = {
+                    277 = {
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    }
+                }
+                277 = {
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+    }
+    SNY_622_removing_democracy = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            622 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = SNY_getting_rid_of_democracy
+            }
+            NOT = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
+            owns_state = 622
+            622 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+            }
+        }
+        on_map_mode = map_only
+        highlight_state_targets = { state = 622}
+        highlight_states = {
             state = 622
         }
-        on_map_mode = map_only
-        fire_only_once = no
-        visible = {
-            always = yes
-        }
         cancel_if_not_visible = yes
-
-        complete_effect = {
-			set_country_flag = SNY_already_campaining
+        fire_only_once = no
+        cost = 10
+        ai_will_do = {
+            base = 50
+            modifier = {
+                factor = 2
+                has_political_power > 100
+            }
         }
+        days_remove = 35
         remove_effect = {
-            277 = {
-                SNY_campaign_decision = yes
-            }
-            clr_country_flag = SNY_already_campaining
-        }
-    }
-    campaining_in_middlestate_new_york = {
-        icon = GFX_campaining_in_state
-
-        available = {
-            AND = {
-                has_full_control_of_state = 280
-                has_full_control_of_state = 281
-            }
-            custom_trigger_tooltip = {
-                tooltip = 280_check_support_tt
-                always = yes
-            }
-            OR = {
-                has_completed_focus = SNY_herbet_h_lehman
-                has_completed_focus = SNY_william_f_bleakey
-                has_completed_focus = SNY_endorse_herbet_h_lehman
-                has_completed_focus = SNY_rockwell_kent
-                has_completed_focus = SNY_harry_w_laidler
-                has_completed_focus = SNY_robert_minor
-            }
-            NOT = {
-                has_country_flag = SNY_already_campaining
-            }
-            custom_trigger_tooltip = {
-                tooltip = at_least_10_support_for_another_party_tt
-                280 = {
-                    count_triggers = {
-                        amount = 2
-                        check_variable = { state_democratic_support > 9 }
-                        check_variable = { state_republican_support > 9 }
-                        check_variable = { state_labor_support > 9 }
-                        check_variable = { state_socialist_support > 9 }
-                        check_variable = { state_communist_support > 9 }
+            if = {
+                limit = {
+                    622 = {
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                     }
+                }
+                622 = {
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+                add_political_power = 25
+            } else_if = {
+                limit = {
+                    622 = {
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    }
+                }
+                622 = {
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
-        days_remove = 25
-        cost = 25
-        highlight_state_targets = { state = 280 }
+    }
+    SNY_281_removing_democracy = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            281 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = SNY_getting_rid_of_democracy
+            }
+            NOT = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
+            owns_state = 281
+            281 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+            }
+        }
+        on_map_mode = map_only
+        highlight_state_targets = { state = 281}
         highlight_states = {
-            state = 280
             state = 281
         }
-        on_map_mode = map_only
-        fire_only_once = no
-        visible = {
-            always = yes
-        }
         cancel_if_not_visible = yes
-
-        complete_effect = {
-			set_country_flag = SNY_already_campaining
+        fire_only_once = no
+        cost = 10
+        ai_will_do = {
+            base = 50
+            modifier = {
+                factor = 2
+                has_political_power > 100
+            }
         }
+        days_remove = 35
         remove_effect = {
-            280 = {
-                SNY_campaign_decision = yes
-            }
-            clr_country_flag = SNY_already_campaining
-        }
-    }
-    campaining_in_eaststate_new_york = {
-        icon = GFX_campaining_in_state
-
-        available = {
-            AND = {
-                has_full_control_of_state = 274
-                has_full_control_of_state = 275
-            }
-            custom_trigger_tooltip = {
-                tooltip = 274_check_support_tt
-                always = yes
-            }
-            OR = {
-                has_completed_focus = SNY_herbet_h_lehman
-                has_completed_focus = SNY_william_f_bleakey
-                has_completed_focus = SNY_endorse_herbet_h_lehman
-                has_completed_focus = SNY_rockwell_kent
-                has_completed_focus = SNY_harry_w_laidler
-                has_completed_focus = SNY_robert_minor
-            }
-            NOT = {
-                has_country_flag = SNY_already_campaining
-            }
-            custom_trigger_tooltip = {
-                tooltip = at_least_10_support_for_another_party_tt
-                274 = {
-                    count_triggers = {
-                        amount = 2
-                        check_variable = { state_democratic_support > 9 }
-                        check_variable = { state_republican_support > 9 }
-                        check_variable = { state_labor_support > 9 }
-                        check_variable = { state_socialist_support > 9 }
-                        check_variable = { state_communist_support > 9 }
+            if = {
+                limit = {
+                    281 = {
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                     }
+                }
+                281 = {
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+                add_political_power = 25
+            } else_if = {
+                limit = {
+                    281 = {
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    }
+                }
+                281 = {
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
-        days_remove = 25
-        cost = 25
-        highlight_state_targets = { state = 274 }
+    }
+    SNY_280_removing_democracy = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            280 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = SNY_getting_rid_of_democracy
+            }
+            NOT = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
+            owns_state = 280
+            280 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+            }
+        }
+        on_map_mode = map_only
+        highlight_state_targets = { state = 280}
+        highlight_states = {
+            state = 280
+        }
+        cancel_if_not_visible = yes
+        fire_only_once = no
+        cost = 10
+        ai_will_do = {
+            base = 50
+            modifier = {
+                factor = 2
+                has_political_power > 100
+            }
+        }
+        days_remove = 35
+        remove_effect = {
+            if = {
+                limit = {
+                    280 = {
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    }
+                }
+                280 = {
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+                add_political_power = 25
+            } else_if = {
+                limit = {
+                    280 = {
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    }
+                }
+                280 = {
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+    }
+    SNY_282_removing_democracy = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            282 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = SNY_getting_rid_of_democracy
+            }
+            NOT = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
+            owns_state = 282
+            282 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+            }
+        }
+        on_map_mode = map_only
+        highlight_state_targets = { state = 282}
+        highlight_states = {
+            state = 282
+        }
+        cancel_if_not_visible = yes
+        fire_only_once = no
+        cost = 10
+        ai_will_do = {
+            base = 50
+            modifier = {
+                factor = 2
+                has_political_power > 100
+            }
+        }
+        days_remove = 35
+        remove_effect = {
+            if = {
+                limit = {
+                    282 = {
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    }
+                }
+                282 = {
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+                add_political_power = 25
+            } else_if = {
+                limit = {
+                    282 = {
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    }
+                }
+                282 = {
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+    }
+    SNY_100_removing_democracy = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            100 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = SNY_getting_rid_of_democracy
+            }
+            NOT = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
+            owns_state = 100
+            100 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+            }
+        }
+        on_map_mode = map_only
+        highlight_state_targets = { state = 100}
+        highlight_states = {
+            state = 100
+        }
+        cancel_if_not_visible = yes
+        fire_only_once = no
+        cost = 10
+        ai_will_do = {
+            base = 50
+            modifier = {
+                factor = 2
+                has_political_power > 100
+            }
+        }
+        days_remove = 35
+        remove_effect = {
+            if = {
+                limit = {
+                    100 = {
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    }
+                }
+                100 = {
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+                add_political_power = 25
+            } else_if = {
+                limit = {
+                    100 = {
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    }
+                }
+                100 = {
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+    }
+    SNY_283_removing_democracy = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            283 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = SNY_getting_rid_of_democracy
+            }
+            NOT = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
+            owns_state = 283
+            283 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+            }
+        }
+        on_map_mode = map_only
+        highlight_state_targets = { state = 283}
+        highlight_states = {
+            state = 283
+        }
+        cancel_if_not_visible = yes
+        fire_only_once = no
+        cost = 10
+        ai_will_do = {
+            base = 50
+            modifier = {
+                factor = 2
+                has_political_power > 100
+            }
+        }
+        days_remove = 35
+        remove_effect = {
+            if = {
+                limit = {
+                    283 = {
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    }
+                }
+                283 = {
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+                add_political_power = 25
+            } else_if = {
+                limit = {
+                    283 = {
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    }
+                }
+                283 = {
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+    }
+    SNY_414_removing_democracy = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            414 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = SNY_getting_rid_of_democracy
+            }
+            NOT = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
+            owns_state = 414
+            414 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+            }
+        }
+        on_map_mode = map_only
+        highlight_state_targets = { state = 414}
+        highlight_states = {
+            state = 414
+        }
+        cancel_if_not_visible = yes
+        fire_only_once = no
+        cost = 10
+        ai_will_do = {
+            base = 50
+            modifier = {
+                factor = 2
+                has_political_power > 100
+            }
+        }
+        days_remove = 35
+        remove_effect = {
+            if = {
+                limit = {
+                    414 = {
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    }
+                }
+                414 = {
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+                add_political_power = 25
+            } else_if = {
+                limit = {
+                    414 = {
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    }
+                }
+                414 = {
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+    }
+    SNY_276_removing_democracy = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            276 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = SNY_getting_rid_of_democracy
+            }
+            NOT = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
+            owns_state = 276
+            276 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+            }
+        }
+        on_map_mode = map_only
+        highlight_state_targets = { state = 276}
+        highlight_states = {
+            state = 276
+        }
+        cancel_if_not_visible = yes
+        fire_only_once = no
+        cost = 10
+        ai_will_do = {
+            base = 50
+            modifier = {
+                factor = 2
+                has_political_power > 100
+            }
+        }
+        days_remove = 35
+        remove_effect = {
+            if = {
+                limit = {
+                    276 = {
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    }
+                }
+                276 = {
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+                add_political_power = 25
+            } else_if = {
+                limit = {
+                    276 = {
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    }
+                }
+                276 = {
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+    }
+    SNY_274_removing_democracy = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            274 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = SNY_getting_rid_of_democracy
+            }
+            NOT = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
+            owns_state = 274
+            274 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+            }
+        }
+        on_map_mode = map_only
+        highlight_state_targets = { state = 274}
         highlight_states = {
             state = 274
-            state = 275
-        }
-        on_map_mode = map_only
-        fire_only_once = no
-        visible = {
-            always = yes
         }
         cancel_if_not_visible = yes
-
-        complete_effect = {
-			set_country_flag = SNY_already_campaining
+        fire_only_once = no
+        cost = 10
+        ai_will_do = {
+            base = 50
+            modifier = {
+                factor = 2
+                has_political_power > 100
+            }
         }
+        days_remove = 35
         remove_effect = {
-            274 = {
-                SNY_campaign_decision = yes
-            }
-            clr_country_flag = SNY_already_campaining
-        }
-    }
-    campaining_in_greater_buffalo_city_new_york = {
-        icon = GFX_campaining_in_state
-
-        available = {
-            AND = {
-                has_full_control_of_state = 29
-                has_full_control_of_state = 250
-                has_full_control_of_state = 272
-                has_full_control_of_state = 273
-            }
-            custom_trigger_tooltip = {
-                tooltip = 29_check_support_tt
-                always = yes
-            }
-            OR = {
-                has_completed_focus = SNY_herbet_h_lehman
-                has_completed_focus = SNY_william_f_bleakey
-                has_completed_focus = SNY_endorse_herbet_h_lehman
-                has_completed_focus = SNY_rockwell_kent
-                has_completed_focus = SNY_harry_w_laidler
-                has_completed_focus = SNY_robert_minor
-            }
-            NOT = {
-                has_country_flag = SNY_already_campaining
-            }
-            custom_trigger_tooltip = {
-                tooltip = at_least_10_support_for_another_party_tt
-                29 = {
-                    count_triggers = {
-                        amount = 2
-                        check_variable = { state_democratic_support > 9 }
-                        check_variable = { state_republican_support > 9 }
-                        check_variable = { state_labor_support > 9 }
-                        check_variable = { state_socialist_support > 9 }
-                        check_variable = { state_communist_support > 9 }
+            if = {
+                limit = {
+                    274 = {
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                     }
+                }
+                274 = {
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+                add_political_power = 25
+            } else_if = {
+                limit = {
+                    274 = {
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    }
+                }
+                274 = {
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
-        days_remove = 25
+    }
+    SNY_275_removing_democracy = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            275 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = SNY_getting_rid_of_democracy
+            }
+            NOT = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
+            owns_state = 275
+            275 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+            }
+        }
+        on_map_mode = map_only
+        highlight_state_targets = { state = 275}
+        highlight_states = {
+            state = 275
+        }
+        cancel_if_not_visible = yes
+        fire_only_once = no
+        cost = 10
+        ai_will_do = {
+            base = 50
+            modifier = {
+                factor = 2
+                has_political_power > 100
+            }
+        }
+        days_remove = 35
+        remove_effect = {
+            if = {
+                limit = {
+                    275 = {
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    }
+                }
+                275 = {
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+                add_political_power = 25
+            } else_if = {
+                limit = {
+                    275 = {
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    }
+                }
+                275 = {
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+    }
+    SNY_250_removing_democracy = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            250 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = SNY_getting_rid_of_democracy
+            }
+            NOT = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
+            owns_state = 250
+            250 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+            }
+        }
+        on_map_mode = map_only
+        highlight_state_targets = { state = 250}
+        highlight_states = {
+            state = 250
+        }
+        cancel_if_not_visible = yes
+        fire_only_once = no
+        cost = 10
+        ai_will_do = {
+            base = 50
+            modifier = {
+                factor = 2
+                has_political_power > 100
+            }
+        }
+        days_remove = 35
+        remove_effect = {
+            if = {
+                limit = {
+                    250 = {
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    }
+                }
+                250 = {
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+                add_political_power = 25
+            } else_if = {
+                limit = {
+                    250 = {
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    }
+                }
+                250 = {
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+    }
+    SNY_29_removing_democracy = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            29 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = SNY_getting_rid_of_democracy
+            }
+            NOT = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
+            owns_state = 29
+            29 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+            }
+        }
+        on_map_mode = map_only
+        highlight_state_targets = { state = 29}
+        highlight_states = {
+            state = 29
+        }
+        cancel_if_not_visible = yes
+        fire_only_once = no
+        cost = 10
+        ai_will_do = {
+            base = 50
+            modifier = {
+                factor = 2
+                has_political_power > 100
+            }
+        }
+        days_remove = 35
+        remove_effect = {
+            if = {
+                limit = {
+                    29 = {
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    }
+                }
+                29 = {
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+                add_political_power = 25
+            } else_if = {
+                limit = {
+                    29 = {
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    }
+                }
+                29 = {
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+    }
+    SNY_273_removing_democracy = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            273 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = SNY_getting_rid_of_democracy
+            }
+            NOT = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
+            owns_state = 273
+            273 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+            }
+        }
+        on_map_mode = map_only
+        highlight_state_targets = { state = 273}
+        highlight_states = {
+            state = 273
+        }
+        cancel_if_not_visible = yes
+        fire_only_once = no
+        cost = 10
+        ai_will_do = {
+            base = 50
+            modifier = {
+                factor = 2
+                has_political_power > 100
+            }
+        }
+        days_remove = 35
+        remove_effect = {
+            if = {
+                limit = {
+                    273 = {
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    }
+                }
+                273 = {
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+                add_political_power = 25
+            } else_if = {
+                limit = {
+                    273 = {
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    }
+                }
+                273 = {
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+    }
+    SNY_272_removing_democracy = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            272 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+        visible = {
+            hidden_trigger = {
+                has_country_flag = SNY_getting_rid_of_democracy
+            }
+            NOT = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
+            owns_state = 272
+            272 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+            }
+        }
+        on_map_mode = map_only
+        highlight_state_targets = { state = 272}
+        highlight_states = {
+            state = 272
+        }
+        cancel_if_not_visible = yes
+        fire_only_once = no
+        cost = 10
+        ai_will_do = {
+            base = 50
+            modifier = {
+                factor = 2
+                has_political_power > 100
+            }
+        }
+        days_remove = 35
+        remove_effect = {
+            if = {
+                limit = {
+                    272 = {
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    }
+                }
+                272 = {
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+                add_political_power = 25
+            } else_if = {
+                limit = {
+                    272 = {
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    }
+                }
+                272 = {
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
+    }
+}
+SNY_public_works_administration = {
+    SNY_create_the_new_york_state_thruway = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            num_of_civilian_factories_available_for_projects > 2
+        }
+        visible = {
+            owns_state = 272
+            owns_state = 29
+            owns_state = 274
+            owns_state = 280
+            owns_state = 277
+            owns_state = 291
+        }
+        highlight_states = {
+            state = 272
+            state = 29
+            state = 274
+            state = 280
+            state = 277
+            state = 291
+        }
+        cancel_if_not_visible = yes
+        fire_only_once = yes
         cost = 25
-        highlight_state_targets = { state = 29 }
+        days_remove = 90
+        ai_will_do = {
+            base = 50
+            modifier = {
+                factor = 2
+                num_of_civilian_factories_available_for_projects > 9
+            }
+        }
+        modifier = {
+            civilian_factory_use = 3
+        }
+        remove_effect = {
+            every_owned_state = {
+                limit = {
+                    state = 272
+                    state = 29
+                    state = 274
+                    state = 280
+                    state = 277
+                    state = 291
+                }
+                add_building_construction = {
+                    type = infrastructure
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    SNY_clear_and_repurpose_the_albany_slums = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            num_of_civilian_factories_available_for_projects > 1
+        }
+        visible = {
+            owns_state = 281
+        }
+        highlight_states = {
+            state = 281
+        }
+        cancel_if_not_visible = yes
+        fire_only_once = yes
+        cost = 25
+        days_remove = 35
+        ai_will_do = {
+            base = 50
+            modifier = {
+                factor = 2
+                num_of_civilian_factories_available_for_projects > 9
+            }
+        }
+        modifier = {
+            civilian_factory_use = 2
+        }
+        remove_effect = {
+            281 = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    SNY_dam_niagara_falls = {
+        icon = GFX_
+
+        available = {
+            original_tag = SNY
+            num_of_civilian_factories_available_for_projects > 2
+        }
+        visible = {
+            owns_state = 29
+            owns_state = 250
+        }
         highlight_states = {
             state = 29
             state = 250
-            state = 272
-            state = 273
-        }
-        on_map_mode = map_only
-        fire_only_once = no
-        visible = {
-            always = yes
         }
         cancel_if_not_visible = yes
-
-        complete_effect = {
-			set_country_flag = SNY_already_campaining
-        }
-        remove_effect = {
-            29 = {
-                SNY_campaign_decision = yes
-            }
-            clr_country_flag = SNY_already_campaining
-        }
-    }
-    campaining_in_upstate_new_york = {
-        icon = GFX_campaining_in_state
-
-        available = {
-            AND = {
-                has_full_control_of_state = 100
-                has_full_control_of_state = 276
-                has_full_control_of_state = 282
-                has_full_control_of_state = 283
-                has_full_control_of_state = 414
-            }
-            custom_trigger_tooltip = {
-                tooltip = 276_check_support_tt
-                always = yes
-            }
-            OR = {
-                has_completed_focus = SNY_herbet_h_lehman
-                has_completed_focus = SNY_william_f_bleakey
-                has_completed_focus = SNY_endorse_herbet_h_lehman
-                has_completed_focus = SNY_rockwell_kent
-                has_completed_focus = SNY_harry_w_laidler
-                has_completed_focus = SNY_robert_minor
-            }
-            NOT = {
-                has_country_flag = SNY_already_campaining
-            }
-            custom_trigger_tooltip = {
-                tooltip = at_least_10_support_for_another_party_tt
-                276 = {
-                    count_triggers = {
-                        amount = 2
-                        check_variable = { state_democratic_support > 9 }
-                        check_variable = { state_republican_support > 9 }
-                        check_variable = { state_labor_support > 9 }
-                        check_variable = { state_socialist_support > 9 }
-                        check_variable = { state_communist_support > 9 }
-                    }
-                }
-            }
-        }
-        days_remove = 25
+        fire_only_once = yes
         cost = 25
-        highlight_state_targets = { state = 276 }
-        highlight_states = {
-            state = 100
-            state = 276
-            state = 282
-            state = 283
-            state = 414
+        ai_will_do = {
+            base = 50
+            modifier = {
+                factor = 2
+                num_of_civilian_factories_available_for_projects > 9
+            }
         }
-        on_map_mode = map_only
-        fire_only_once = no
-        visible = {
-            always = yes
-        }
-        cancel_if_not_visible = yes
-
         complete_effect = {
-			set_country_flag = SNY_already_campaining
-        }
-        remove_effect = {
-            276 = {
-                SNY_campaign_decision = yes
-            }
-            clr_country_flag = SNY_already_campaining
-        }
-    }
-    SNY_new_york_election = {
-        icon = GFX_
-
-        allowed = { tag = SNY }
-        available = {
-			hidden_trigger = { always = no }
-		}
-        activation = {
-            always = yes
-        }
-        is_good = yes
-        days_mission_timeout = 307
-        timeout_effect = {
-            custom_effect_tooltip = SNY_election_ends_tt
+            custom_effect_tooltip = SNY_we_will_ask_owner_first_tt
             hidden_effect = {
-                SNY_calc_election_ends = yes
-                if = {
-                    limit = {
-                        AND = {
-                            check_variable = { 
-                                var = SNY_total_democratic_support
-                                value = SNY_total_republican_support 
-                                compare = greater_than_or_equals
-                            }
-                            check_variable = { 
-                                var = SNY_total_democratic_support
-                                value = SNY_total_labor_support 
-                                compare = greater_than_or_equals
-                            }
-                            check_variable = { 
-                                var = SNY_total_democratic_support
-                                value = SNY_total_socialist_support
-                                compare = greater_than_or_equals
-                            }
-                            check_variable = { 
-                                var = SNY_total_democratic_support
-                                value = SNY_toatl_communist_support 
-                                compare = greater_than_or_equals
-                            }
+                94 = {
+                    owner = {
+                        country_event = {
+                            id = new_york.27
                         }
                     }
-                    country_event = {
-                        id = new_york.1
+                }
+            }
+            custom_effect_tooltip = SNY_we_will_get_the_following_effects_if_they_accept_tt
+            effect_tooltip = {
+                29 = {
+                    set_state_category = megalopolis
+                    add_building_construction = {
+                        type = infrastructure
+                        level = 1
+                        instant_build = yes
                     }
                 }
-                else_if = {
-                    limit = {
-                        AND = {
-                            check_variable = { 
-                                var = SNY_total_republican_support
-                                value = SNY_total_democratic_support 
-                                compare = greater_than_or_equals
-                            }
-                            check_variable = { 
-                                var = SNY_total_republican_support
-                                value = SNY_total_labor_support 
-                                compare = greater_than_or_equals
-                            }
-                            check_variable = { 
-                                var = SNY_total_republican_support
-                                value = SNY_total_socialist_support
-                                compare = greater_than_or_equals
-                            }
-                            check_variable = { 
-                                var = SNY_total_republican_support
-                                value = SNY_toatl_communist_support 
-                                compare = greater_than_or_equals
-                            }
-                        }
-                    }
-                    country_event = {
-                        id = new_york.2
-                    }
-                }
-                else_if = {
-                    limit = {
-                        AND = {
-                            check_variable = { 
-                                var = SNY_total_labor_support
-                                value = SNY_total_democratic_support 
-                                compare = greater_than_or_equals
-                            }
-                            check_variable = { 
-                                var = SNY_total_labor_support
-                                value = SNY_total_republican_support 
-                                compare = greater_than_or_equals
-                            }
-                            check_variable = { 
-                                var = SNY_total_labor_support
-                                value = SNY_total_socialist_support
-                                compare = greater_than_or_equals
-                            }
-                            check_variable = { 
-                                var = SNY_total_labor_support
-                                value = SNY_toatl_communist_support 
-                                compare = greater_than_or_equals
-                            }
-                        }
-                    }
-                    country_event = {
-                        id = new_york.3
-                    }
-                }
-                else_if = {
-                    limit = {
-                        AND = {
-                            check_variable = { 
-                                var = SNY_total_socialist_support
-                                value = SNY_total_democratic_support 
-                                compare = greater_than_or_equals
-                            }
-                            check_variable = { 
-                                var = SNY_total_socialist_support
-                                value = SNY_total_republican_support 
-                                compare = greater_than_or_equals
-                            }
-                            check_variable = { 
-                                var = SNY_total_socialist_support
-                                value = SNY_total_labor_support
-                                compare = greater_than_or_equals
-                            }
-                            check_variable = { 
-                                var = SNY_total_socialist_support
-                                value = SNY_toatl_communist_support 
-                                compare = greater_than_or_equals
-                            }
-                        }
-                    }
-                    country_event = {
-                        id = new_york.4
-                    }
-                }
-                else = {
-                    country_event = {
-                        id = new_york.5
+                250 = {
+                    set_state_category = city
+                    add_building_construction = {
+                        type = infrastructure
+                        level = 1
+                        instant_build = yes
                     }
                 }
             }
         }
     }
+}
+SNY_american_peoples_republic = {
+    
 }

@@ -31,7 +31,7 @@ country_event = {
         }
         add_popularity = {
             ideology = longism
-            popularity = 0.6
+            popularity = 0.3
         }
         # create_country_leader = {
         #     name = "Huey P. Long"
@@ -45,18 +45,10 @@ country_event = {
         #         dictator
         #     }
         # }
-        complete_national_focus = SLA_elect_huey_long
+        # complete_national_focus = SLA_elect_huey_long
         hidden_effect = {
             set_country_flag = SLA_huey_is_leader
         }
-    }
-    option = {
-        name = louisiana.1.b
-        ai_chance = {
-            factor = 0
-        }
-        kill_country_leader = yes
-        custom_effect_tooltip = SLA_can_i_ask_why_tt
     }
 }
 country_event = {
@@ -71,48 +63,35 @@ country_event = {
     option = {
         name = louisiana.2.a
         ai_chance = {
-            factor = 20
-            modifier = {
-                add = 40
-                has_country_flag = SLA_huey_is_leader
-            }
-            modifier = {
-                add = 80
-                is_historical_focus_on = yes
-            }
+            factor = 100
         }
         give_guarantee = SOK
-        if = {
-            limit = {
-                is_faction_leader = yes
-            }
-            SLA = { add_to_faction = SOK }
-        }
+        create_faction = JEFFERSONIAN_LEAGUE
+        set_rule = { can_create_factions = yes }
+        SLA = { add_to_faction = SOK }
+        # if = { #Code for once SLA has a focus tree
+        #     limit = {
+        #         is_faction_leader = yes
+        #     }
+        #     SLA = { add_to_faction = SOK }
+        # }
         SOK = {
             country_event = {
                 id = oklahoma.2
             }
         }
     }
-    option = {
-        name = louisiana.2.b
-        ai_chance = {
-            factor = 80
-            modifier = {
-                add = -40
-                has_country_flag = SLA_huey_is_leader
-            }
-            modifier = {
-                factor = 0
-                is_historical_focus_on = yes
-            }
-        }
-        SOK = {
-            country_event = {
-                id = oklahoma.3
-            }
-        }
-    }
+    # option = {
+    #     name = louisiana.2.b
+    #     ai_chance = {
+    #         factor = 0
+    #     }
+    #     SOK = {
+    #         country_event = {
+    #             id = oklahoma.3
+    #         }
+    #     }
+    # }
 }
 country_event = {
     id = louisiana.3
@@ -123,15 +102,33 @@ country_event = {
 
     trigger = {
         OR = {
-            NOT = {
-                STX = {
-                    controls_state = 621
-                    controls_state = 42
+            # NOT = {
+            #     STX = {
+            #         controls_state = 621
+            #         controls_state = 42
+            #     }
+            # }
+            AND = {
+                OR = {
+                    SLA = {
+                        controls_state = 612
+                    }
+                    SOK = {
+                        controls_state = 612
+                    }
+                }
+                OR = {
+                    SLA = {
+                        controls_state = 42
+                    }
+                    SOK = {
+                        controls_state = 42
+                    }
                 }
             }
             has_global_flag = {
                 flag = red_river_war_has_begun
-                days > 180
+                days > 240
             }
         }
     }
@@ -139,25 +136,12 @@ country_event = {
     immediate = {
         if = {
             limit = {
-                NOT = {
-                    STX = {
-                        controls_state = 621
-                        controls_state = 42
-                    }
-                }
-            }
-            SLA = {
-                country_event = {
-                    id = louisiana.4 #supreme victory
-                }
-            }
-        }
-        else_if = {
-            limit = {
-                NOT = {
-                    STX = {
-                        OR = {
+                STX = {
+                    OR = {
+                        NOT = {
                             controls_state = 621
+                        }
+                        NOT = {
                             controls_state = 42
                         }
                     }
@@ -165,7 +149,7 @@ country_event = {
             }
             SLA = {
                 country_event = {
-                    id = louisiana.5 #victory
+                    id = louisiana.4 #victory
                 }
             }
         }
@@ -212,10 +196,6 @@ country_event = { #supreme victory
         name = louisiana.4.a
         ai_chance = {
             factor = 100
-            modifier = {
-                add = -20
-                is_historical_focus_on = no
-            }
         }
         SOK = {
             country_event = {
@@ -227,10 +207,6 @@ country_event = { #supreme victory
         name = louisiana.4.b
         ai_chance = {
             factor = 0
-            modifier = {
-                add = 20
-                is_historical_focus_on = no
-            }
         }
         custom_effect_tooltip = STX_more_troops_to_defend_tt
         hidden_effect = {
@@ -240,7 +216,7 @@ country_event = { #supreme victory
         }
     }
 }
-country_event = { #victory
+country_event = { #victory (Old Shit Victory)
     id = louisiana.5
     title = louisiana.5.t
     desc = louisiana.5.d
@@ -253,10 +229,6 @@ country_event = { #victory
         name = louisiana.5.a
         ai_chance = {
             factor = 100
-            modifier = {
-                add = -20
-                is_historical_focus_on = no
-            }
         }
         SOK = {
             country_event = {
@@ -268,10 +240,6 @@ country_event = { #victory
         name = louisiana.5.b
         ai_chance = {
             factor = 0
-            modifier = {
-                add = 20
-                is_historical_focus_on = no
-            }
         }
         custom_effect_tooltip = STX_more_troops_to_defend_tt
         hidden_effect = {
@@ -294,10 +262,6 @@ country_event = { #loss
         name = louisiana.6.a
         ai_chance = {
             factor = 100
-            modifier = {
-                add = -20
-                is_historical_focus_on = no
-            }
         }
         SOK = {
             country_event = {
@@ -309,10 +273,6 @@ country_event = { #loss
         name = louisiana.6.b
         ai_chance = {
             factor = 0
-            modifier = {
-                add = 20
-                is_historical_focus_on = no
-            }
         }
         #custom_effect_tooltip = STX_more_troops_to_defend_tt
         #hidden_effect = {
@@ -335,10 +295,6 @@ country_event = { #stalemate
         name = louisiana.7.a
         ai_chance = {
             factor = 100
-            modifier = {
-                add = -20
-                is_historical_focus_on = no
-            }
         }
         SOK = {
             country_event = {
@@ -350,10 +306,6 @@ country_event = { #stalemate
         name = louisiana.7.b
         ai_chance = {
             factor = 0
-            modifier = {
-                add = 20
-                is_historical_focus_on = no
-            }
         }
         custom_effect_tooltip = STX_more_troops_to_defend_tt
         hidden_effect = {
@@ -388,7 +340,7 @@ country_event = { #Demand Biloxi
                 add = 20
                 has_opinion = {
                     target = SLA
-                    value = 60
+                    value > 60
                 }
             }
             modifier = {
@@ -450,7 +402,7 @@ country_event = { #Demand Biloxi
                 add = -20
                 has_opinion = {
                     target = SLA
-                    value = 60
+                    value > 60
                 }
             }
             modifier = {
