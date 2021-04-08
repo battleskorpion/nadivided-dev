@@ -26,39 +26,14 @@ focus_tree = {
 #################################################
 ###################Colonization##################
 #################################################
-    focus = {
-        id = GRE_make_colonization_a_privilige
-        icon = GFX_focus_colonize_greenland
-        mutually_exclusive = { focus = GRE_dig_into_the_ice}
-        mutually_exclusive = { focus = GRE_forced_colonization}
-        x = 6
-        y = 0
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        
-        completion_reward = {
-            add_ideas = GRE_colonizing_greenland
-            custom_effect_tooltip = GRE_colonization_tt
-            custom_effect_tooltip = GRE_privilige_colonization_tt
-            unlock_decision_category_tooltip = GRE_colonization
-	    PNT = { country_event = { id = northwest.3 } }
-            hidden_effect = {
-                set_up_colonization_focus = yes
-                set_variable = { colonization_max = 2 }
-                set_variable = { colonization_current = 0 }
-            }
-        }
-    }
+
     focus = {
         id = GRE_salt_water_distilation
         icon = GFX_goal_generic_scientific_exchange
-        prerequisite = { focus = GRE_make_colonization_a_privilige}
-        x = -1
+        prerequisite = { focus = GRE_no_one_is_safe}
+        x = 1
         y = 1
-        relative_position_id = GRE_make_colonization_a_privilige
+        relative_position_id = GRE_no_one_is_safe
         cost = 10
         ai_will_do = {
             factor = 1
@@ -73,10 +48,10 @@ focus_tree = {
     focus = {
         id = GRE_geological_studies
         icon = GFX_goal_generic_construction2
-        prerequisite = { focus = GRE_make_colonization_a_privilige}
-        x = 1
+        prerequisite = { focus = GRE_relentless_colonization}
+        x = -1
         y = 1
-        relative_position_id = GRE_make_colonization_a_privilige
+        relative_position_id = GRE_relentless_colonization
         cost = 10
         ai_will_do = {
             factor = 1
@@ -88,79 +63,10 @@ focus_tree = {
             add_ideas = GRE_expert_geologiests
         }
     }
-    focus = {
-        id = GRE_dig_into_the_ice
-        icon = GFX_focus_colonize_greenland
-        mutually_exclusive = { focus = GRE_make_colonization_a_privilige}
-        mutually_exclusive = { focus = GRE_forced_colonization}
-        x = 14
-        y = 0
-        cost = 10
-        ai_will_do = {
-            factor = 0
-        }
-        available_if_capitulated = yes
 
-        completion_reward = {
-            add_ideas = GRE_colonizing_greenland
-            custom_effect_tooltip = GRE_colonization_tt
-            custom_effect_tooltip = GRE_dig_into_ice_tt
-            unlock_decision_category_tooltip = GRE_colonization
-	    PNT = { country_event = { id = northwest.3 } }
-            hidden_effect = {
-                set_up_colonization_focus = yes
-                set_variable = { colonization_max = 2 }
-                set_variable = { colonization_current = 0 }
-            }
-        }
-    }
-    focus = {
-        id = GRE_an_underground_home
-        icon = GFX_goal_generic_construct_civilian
-        prerequisite = { focus = GRE_dig_into_the_ice}
-        x = -1
-        y = 1
-        relative_position_id = GRE_dig_into_the_ice
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_INDUSTRY }
-
-        completion_reward = {
-            custom_effect_tooltip = GRE_extra_slots_for_massive_lake_tt
-            every_owned_state = {
-                limit = {
-                    has_state_flag = GRE_already_discovered_lake_local
-                }
-                add_extra_state_shared_building_slots = 1
-            }
-        }
-    }
-    focus = {
-        id = GRE_improved_mining_techniques
-        icon = GFX_goal_generic_construction2
-        prerequisite = { focus = GRE_dig_into_the_ice}
-        x = 1
-        y = 1
-        relative_position_id = GRE_dig_into_the_ice
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        
-        completion_reward = {
-            custom_effect_tooltip = GRE_1_more_colony
-            add_to_variable = { colonization_max = 1 }
-        }
-    }
     focus = {
         id = GRE_forced_colonization
         icon = GFX_focus_colonize_greenland
-        mutually_exclusive = { focus = GRE_make_colonization_a_privilige}
-        mutually_exclusive = { focus = GRE_dig_into_the_ice}
         x = 10
         y = 0
         cost = 10
@@ -229,9 +135,9 @@ focus_tree = {
     focus = {
         id = GRE_glacial_research_institute
         icon = GFX_focus_research2
-        prerequisite = { focus = GRE_make_colonization_a_privilige focus = GRE_forced_colonization focus = GRE_dig_into_the_ice}
+        prerequisite = { focus = GRE_forced_colonization}
         available = {
-            num_of_controlled_states > 9
+            num_of_controlled_states > 14
         }
         x = 0
         y = 3
@@ -255,10 +161,7 @@ focus_tree = {
         icon = GFX_focus_greenland_flag
         prerequisite = { focus = GRE_glacial_research_institute}
         available = {
-            #num_of_factories > 14
-            NOT = {
-                has_idea = GRE_isolation
-            }
+            num_of_factories > 8
         }
         x = 0
         y = 1
@@ -298,7 +201,7 @@ focus_tree = {
         prerequisite = { focus = GRE_the_future_of_greenland}
         prerequisite = { focus = GRE_make_colonization_a_privilige focus = GRE_forced_colonization}
         mutually_exclusive = { focus = GRE_a_life_underneath_the_ice}
-        x = -4
+        x = 0
         y = 1
         relative_position_id = GRE_the_future_of_greenland
         cost = 10
@@ -447,28 +350,11 @@ focus_tree = {
 
         completion_reward = {
             add_ideas = GRE_vast_and_developing
+            remove_ideas = GRE_isolation
+            remove_ideas = GRE_strained_resources 
         }
     }
-    focus = {
-        id = GRE_a_life_underneath_the_ice
-        icon = GFX_goal_generic_construct_military
-        prerequisite = { focus = GRE_the_future_of_greenland}
-        prerequisite = { focus = GRE_dig_into_the_ice}
-        mutually_exclusive = { focus = GRE_look_outwards}
-        x = 4
-        y = 1
-        relative_position_id = GRE_the_future_of_greenland
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_STABILITY }
-        
-        completion_reward = {
-            add_stability = 0.1
-        }
-    }
+
     focus = {
         id = GRE_study_foreign_naval_designs
         icon = GFX_goal_generic_navy_doctrines_tactics
@@ -520,139 +406,8 @@ focus_tree = {
             air_experience = 100
         }
     }
-    focus = {
-        id = GRE_move_the_capital
-        icon = GFX_focus_generic_self_management
-        prerequisite = { focus = GRE_a_life_underneath_the_ice}
-        available = {
-            custom_trigger_tooltip = {
-                tooltip = GRE_at_least_one_state_with_massive_lake_discovered_tt
-                any_owned_state = {
-                    has_state_flag = GRE_already_discovered_lake_local
-                }
-            }
-        }
-        x = 0
-        y = 1
-        relative_position_id = GRE_a_life_underneath_the_ice
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_POLITICAL }
 
-        completion_reward = {
-            add_political_power = 50
-            country_event = {
-                id = greenland.27
-            }
-        }
-    }
-    focus = {
-        id = GRE_rare_resource_extraction
-        icon = GFX_focus_generic_chromium
-        prerequisite = { focus = GRE_move_the_capital}
-        x = -1
-        y = 1
-        relative_position_id = GRE_move_the_capital
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        
-        completion_reward = {
-            add_ideas = GRE_rare_resource_extraction
-        }
-    }
-    focus = {
-        id = GRE_dravern_industry
-        icon = GFX_focus_generic_industry_3
-        prerequisite = { focus = GRE_rare_resource_extraction}
-        prerequisite = { focus = GRE_embrace_a_dwavern_spirit}
-        x = 0
-        y = 1
-        relative_position_id = GRE_rare_resource_extraction
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_INDUSTRY }
 
-        completion_reward = {
-            random_owned_controlled_state = {
-                limit = {
-                    has_state_flag = GRE_already_discovered_lake_local
-                }
-                add_extra_state_shared_building_slots = 2
-                add_building_construction = {
-                    type = industrial_complex
-                    level = 2
-                    instant_build = yes
-                }
-            }
-            increase_dwavern_level = yes
-        }
-    }
-    focus = {
-        id = GRE_embrace_a_dwavern_spirit
-        icon = GFX_goal_demand_sudetenland
-        prerequisite = { focus = GRE_move_the_capital}
-        x = 1
-        y = 1
-        relative_position_id = GRE_move_the_capital
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_STABILITY }
-
-        completion_reward = {
-            add_stability = 0.05
-            increase_dwavern_level = yes
-        }
-    }
-    focus = {
-        id = GRE_underground_living
-        icon = GFX_goal_generic_fortify_city
-        prerequisite = { focus = GRE_embrace_a_dwavern_spirit}
-        x = 0
-        y = 1
-        relative_position_id = GRE_embrace_a_dwavern_spirit
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_POLITICAL }
-
-        completion_reward = {
-            add_political_power = 50
-            increase_dwavern_level = yes
-        }
-    }
-    focus = {
-        id = GRE_norse_and_dwarvern
-        icon = GFX_focus_norse
-        prerequisite = { focus = GRE_underground_living}
-        prerequisite = { focus = GRE_dravern_industry}
-        x = -1
-        y = 1
-        relative_position_id = GRE_underground_living
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_WAR_SUPPORT }
-
-        completion_reward = {
-            increase_dwavern_level = yes
-        }
-    }
 #################################################
 ############Expansion/Diplomatic Tree############
 #################################################
@@ -696,74 +451,5 @@ focus_tree = {
             create_faction = NORTHERN_LEAGUE
         }
     }
-    focus = {
-        id = GRE_viking_heritage
-        icon = GFX_focus_MOTHER_FUCKING_VIKINGS
-        prerequisite = { focus = GRE_norse_and_dwarvern focus = GRE_vast_and_developing}
-        mutually_exclusive = { focus = GRE_diplomatic_endeavors}
-        x = 0
-        y = 2
-        relative_position_id = GRE_norse_and_dwarvern
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_MANPOWER }
 
-        completion_reward = {
-            add_ideas = GRE_viking_heritage
-            set_politics = {
-                ruling_party = fascism
-            }
-            create_country_leader = {
-	
-                name = "Oleif Hroksson"
-                picture = "leaders//GRE//vikingboi.dds"
-                expire = "1965.1.1"
-                ideology = viking_dictatorship
-                traits = {
-                    #
-                }
-            }
-            add_popularity = {
-                ideology = fascism
-                popularity = 0.5
-            }
-            random_owned_controlled_state = {
-                add_extra_state_shared_building_slots = 2
-                add_building_construction = {
-                    type = dockyard
-                    level = 2
-                    instant_build = yes
-                }
-            }
-        }
-    }
-    focus = {
-        id = GRE_reclaim_vinland
-        icon = GFX_focus_norse
-        prerequisite = { focus = GRE_viking_heritage}
-        x = 0
-        y = 1
-        relative_position_id = GRE_viking_heritage
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_ANNEXATION }
-
-        completion_reward = {
-            unlock_decision_category_tooltip = GRE_form_vinland
-            random_owned_controlled_state = {
-                add_extra_state_shared_building_slots = 2
-                add_building_construction = {
-                    type = dockyard
-                    level = 2
-                    instant_build = yes
-                }
-            }
-        }
-    }
 }
