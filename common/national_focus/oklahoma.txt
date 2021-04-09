@@ -404,7 +404,7 @@ focus_tree = {
         ##### Despite being a Segregationist I actually found a photo a a black trooper standing next to murray at red river bridge which 
         ##means blacks actually served in the army at the time which is suprising  ########
 		completion_reward = {
-            add_ideas = SOK_bufaloo_soilders
+            add_ideas = SOK_Military_Edgenuity
 
 		}
 	}
@@ -734,7 +734,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_timed_idea = { idea = SOK_Little_Deal  days = 600 }
 		}
 	}
 
@@ -757,7 +757,7 @@ focus_tree = {
 		completion_reward = { 
  			#addsgaranteeonnewmexico
 			diplomatic_relation = {
-				country = SOV
+				country = SNM
 				relation = guarantee
 				active = no
 			}
@@ -840,7 +840,7 @@ focus_tree = {
 
 		focus = {
 		id = SOK_subsidized_Tractor_factories
-		icon = GFX_focus_generic_provoke_border_clashes
+		icon = GFX_goal_generic_construct_civ_factory
 		x = 0
 		y = 2
 		relative_position_id = SOK_Little_Deal
@@ -856,10 +856,62 @@ focus_tree = {
 			factor = 2
 		}
 
-		completion_reward = {
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = construction_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = industrial_complex
+						size < 3
+						include_locked = yes
+					}
+				}
+			}
+		}
 
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = {
+				type = industrial_complex
+				level = 3
+				instant_build = yes
+			}
+		}		
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+					instant_build = yes
+				}
+			}
 		}
 	}
+
 
 		focus = {
 		id = SOK_farmers_first_act
@@ -878,7 +930,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_timed_idea = { idea = SOK_Farmers_first  days = 900 }
 		}
 	}
 
@@ -901,7 +953,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_ideas = SOK_OKlahoma_rangers_idea
 		}
 	}
 
@@ -971,7 +1023,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+            add_manpower = 25000
 		}
 	}
 
@@ -992,7 +1044,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_ideas = SOK_squirrel_rifle_marksmen_brigades_idea
 		}
 	}
 
@@ -1013,7 +1065,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_ideas = SOK_Forgieners_Corps
 		}
 	}
 
@@ -1034,7 +1086,8 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_ideas = SOK_Regional_defence_doctrine
+			remove_ideas = SOK_OKlahoma_rangers_idea
 		}
 	}
 
@@ -1056,7 +1109,12 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_tech_bonus = {
+				name = synt
+				bonus = 1.5
+				uses = 1
+				category = synth_resources
+			}
 		}
 	}
 
@@ -1077,7 +1135,12 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_tech_bonus = {
+				name = nukes
+				bonus = 1.0
+				uses = 2
+				category = nuclear
+			}
 		}
 	}
 
@@ -1098,7 +1161,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_ideas = SOK_the_cult_of_bill
 		}
 	}
 
@@ -1130,7 +1193,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			remove_ideas = SOK_Farmers_first
 		}
 	}
 
@@ -1358,7 +1421,7 @@ focus = {
 		}
 
 		completion_reward = {
-
+			remove_ideas = SOK_OKlahoma_rangers_idea
 		}
 	}
 
@@ -1503,7 +1566,7 @@ focus = {
 		}
 
 		completion_reward = {
-
+			remove_ideas = SOK_OKlahoma_rangers_idea
 		}
 	}
 
@@ -1686,6 +1749,10 @@ focus = {
         prerequisite = { focus = SOK_secret_farmers_meetings }
 		cost = 10
 
+		available = {
+			communism > 0.50			
+		}
+
 		mutually_exclusive = { focus = SOK_farmers_take_up_arms }
 
 
@@ -1697,7 +1764,11 @@ focus = {
 		}
 
 		completion_reward = {
-
+			remove_ideas = SOK_OKlahoma_rangers_idea
+			set_politics = {
+				ruling_party = communism
+				elections_allowed = no
+			}
 		}
 	}
 
@@ -1849,7 +1920,21 @@ focus = {
 		}
 
 		completion_reward = {
-
+			remove_ideas = SOK_OKlahoma_rangers_idea
+#			start_civil_war = {
+#				ruling_party = communism
+#				ideology = ROOT
+#				size = 0.8
+#				only_own_territory = no
+#				capital = 282
+#				states = { 
+#					282 533 536 555 529 530 528 
+#				}
+#				keep_unit_leaders = {
+#					750 751 752
+#				}
+#				keep_political_leader = yes
+#			}
 		}
 	}
 
