@@ -58,10 +58,85 @@ continuous_focus_position = { x = 50 y = 2000 }
       #      add_political_power = 50
       #  }
     #}
+
+		focus = {
+		id = SLA_Distribute_Louisiana_Armoury
+		icon = x
+        x = -9
+        y = 0
+
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 6000
+				producer = SLA
+			}
+		}
+	}
+
+		focus = {
+		id = SAL_Local_arms_production
+		icon = GFX_
+		x = 0
+		y = 1
+		relative_position_id = SLA_Distribute_Louisiana_Armoury
+        prerequisite = { focus = SLA_Distribute_Louisiana_Armoury }
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+
     focus = {
         id = SLA_second_red_river_war
         icon = GFX_focus_STX_Red_River_War
-       # prerequisite = { focus = SLA_create_the_jeffersonian_league}
+       prerequisite = { focus = SAL_Local_arms_production}
         available = {
             custom_trigger_tooltip = {
                 tooltip = SLA_red_river_war_has_began_tt
@@ -69,9 +144,9 @@ continuous_focus_position = { x = 50 y = 2000 }
             }
             has_war_with = STX
         }
-        x = -6
-        y = 0
-        relative_position_id = SLA_victory_in_the_red_river_war
+        x = 0
+        y = 1
+        relative_position_id = SAL_Local_arms_production
         cost = 1
         ai_will_do = {
             factor = 100
