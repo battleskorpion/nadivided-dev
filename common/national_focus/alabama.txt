@@ -101,7 +101,7 @@
 		id = SAL_1938election
 		icon = GFX
 		x = 10
-		y = 6
+		y = 5
 		cost = 7
         available = {
 			date > 1938.11.8
@@ -769,7 +769,7 @@
 		y = 1
 		relative_position_id = SAL_Arms_purchase_Act
         prerequisite = { focus = SAL_Arms_purchase_Act }
-		cost = 10
+		cost = 5
 
 		search_filters = {  FOCUS_FILTER_POLITICAL }
 		
@@ -777,9 +777,37 @@
 		ai_will_do = {
 			factor = 2
 		}
+
 		completion_reward = {
-			set_technology = {
-    			motorised_infantry = 1
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
 			}
 		}
 	}
@@ -853,7 +881,7 @@
 		y = 1
 		relative_position_id = SAL_Alabama_Marines
         prerequisite = { focus = SAL_Alabama_Marines }
-		cost = 10
+		cost = 5
 
 		search_filters = {  FOCUS_FILTER_POLITICAL }
 		
@@ -894,7 +922,7 @@
 		y = 1
 		relative_position_id = SAL_Mechanization
         prerequisite = { focus = SAL_Mechanization }
-		cost = 10
+		cost = 5
 
 		search_filters = {  FOCUS_FILTER_POLITICAL }
 		
@@ -926,5 +954,634 @@
 
 		}
 	}
+
+	focus = {
+		id = SAL_Alabamas_Airforce
+		icon = GFX_focus_vote_reenstation_act
+		x = 19
+		y = 0
+		cost = 10
+
+		available_if_capitulated = yes
+
+			modifier = {
+				factor = 25
+			}
+
+		complete_tooltip = {
+			air_experience = 25
+			if = { limit = { has_country_flag = aviation_effort_AB }
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}			
+			add_tech_bonus = {
+				name = air_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = air_doctrine
+			}			
+		}
+
+		completion_reward = {
+			air_experience = 25
+
+			if = {
+				limit = {
+					capital_scope = {
+						NOT = {
+							free_building_slots = {
+								building = air_base
+								size > 1
+							}
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_AB }
+				}
+			}
+			if = {
+				limit = {
+					capital_scope = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+				}
+				capital_scope = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_AB }
+				}
+			}
+			add_tech_bonus = {
+				name = air_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = air_doctrine
+			}
+		}
+	}
+
+		focus = {
+		id = SAL_fighter_modernization
+		icon = GFX_focus_SOK_remove_term_limits
+		x = -1
+		y = 1
+		relative_position_id = SAL_Alabamas_Airforce
+        prerequisite = { focus = SAL_Alabamas_Airforce }
+		cost = 10
+		mutually_exclusive = { focus = SAL_Cas_modernization }
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = fighter_bonus
+				bonus = 1.0
+				uses = 2
+				technology = early_fighter
+				technology = fighter1
+				technology = fighter2
+				technology = fighter3
+				technology = heavy_fighter1
+				technology = heavy_fighter2
+				technology = heavy_fighter3
+			}
+			air_experience = 50
+		}
+	}
+
+		focus = {
+		id = SAL_fighter_doctrines
+		icon = GFX_focus_SOK_remove_term_limits
+		x = 0
+		y = 1
+		relative_position_id = SAL_fighter_modernization
+        prerequisite = { focus = SAL_fighter_modernization }
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name =  air_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = air_doctrine
+			}
+		}
+	}
+
+
+		focus = {
+		id = SAL_Cas_modernization
+		icon = GFX_focus_SOK_remove_term_limits
+		x = 1
+		y = 1
+		relative_position_id = SAL_Alabamas_Airforce
+        prerequisite = { focus = SAL_Alabamas_Airforce }
+		cost = 10
+		mutually_exclusive = { focus = SAL_fighter_modernization }
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 2
+		}
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = CAS_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = cas_bomber
+			}
+		}
+	}
+
+		focus = {
+		id = SAL_Northern_flickers
+		icon = GFX_focus_SOK_remove_term_limits
+		x = -1
+		y = 1
+		relative_position_id = SAL_bomber_focus
+        prerequisite = { focus = SAL_bomber_focus focus = SAL_fighter_doctrines }
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = fighter_bonus
+				bonus = 1.0
+				uses = 2
+				technology = early_fighter
+				technology = fighter1
+				technology = fighter2
+				technology = fighter3
+				technology = heavy_fighter1
+				technology = heavy_fighter2
+				technology = heavy_fighter3
+			}
+		}
+	}
+
+
+		focus = {
+		id = SAL_Air_doctrine_modernzaiton
+		icon = GFX_focus_SOK_remove_term_limits
+		x = 0
+		y = 1
+		relative_position_id = SAL_Northern_flickers
+        prerequisite = { focus = SAL_Northern_flickers  }
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name =  air_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = air_doctrine
+			}
+		}
+	}
+
+		focus = {
+		id = SAL_Alabama_jet_fighters
+		icon = GFX_focus_SOK_remove_term_limits
+		x = 0
+		y = 1
+		relative_position_id = SAL_Air_doctrine_modernzaiton
+        prerequisite = { focus = SAL_Air_doctrine_modernzaiton  }
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+
+		}
+	}
+
+
+		focus = {
+		id = SAL_bomber_focus
+		icon = GFX_focus_SOK_remove_term_limits
+		x = 0
+		y = 1
+		relative_position_id = SAL_Cas_modernization
+        prerequisite = { focus = SAL_Cas_modernization }
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = bomber_bonus
+				bonus = 1.0
+				uses = 2
+				technology = strategic_bomber1
+				technology = strategic_bomber2
+				technology = strategic_bomber3
+				category = tactical_bomber
+			}
+			air_experience = 50
+		}
+	}
+
+	focus = {
+		id = SAL_Establish_Alabama_Navy
+		icon = GFX_focus_vote_reenstation_act
+		x = 23
+		y = 0
+		cost = 10
+
+		available_if_capitulated = yes
+
+			modifier = {
+				factor = 25
+			}
+
+		available = {
+			any_owned_state = {
+				is_coastal = yes
+			}
+		}
+
+		complete_tooltip = {
+			navy_experience = 25
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = {
+				type = dockyard
+				level = 3
+				instant_build = yes
+			}
+		}
+		
+		completion_reward = {
+			navy_experience = 25
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+			}			
+		}
+	}
+
+		focus = {
+		id = SAL_destoyers
+		icon = GFX_focus_SOK_remove_term_limits
+		x = -1
+		y = 1
+		relative_position_id = SAL_Establish_Alabama_Navy
+        prerequisite = { focus = SAL_Establish_Alabama_Navy }
+		cost = 10
+		mutually_exclusive = { focus = SAL_Battle_ships_of_the_south }
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = dd_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = dd_tech
+				}
+			}
+		}
+		focus = {
+		id = SAL_submarines
+		icon = GFX_focus_SOK_remove_term_limits
+		x = 0
+		y = 1
+		relative_position_id = SAL_destoyers
+        prerequisite = { focus = SAL_destoyers }
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = ss_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = ss_tech
+			}
+		}
+	}
+
+		focus = {
+		id = SAL_Cruiser_effort
+		icon = GFX_focus_SOK_remove_term_limits
+		x = 1
+		y = 1
+		relative_position_id = SAL_submarines
+        prerequisite = { focus = SAL_submarines focus = SAL_Fleet_in_being }
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = cr_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = cl_tech
+				category = ca_tech
+			}
+		}
+	}
+
+
+
+		focus = {
+		id = SAL_Battle_ships_of_the_south
+		icon = GFX_focus_SOK_remove_term_limits
+		x = 1
+		y = 1
+		relative_position_id = SAL_Establish_Alabama_Navy
+        prerequisite = { focus = SAL_Establish_Alabama_Navy }
+		cost = 10
+		mutually_exclusive = { focus = SAL_destoyers }
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = fleet_in_being_bonus
+				bonus = 1.0
+				uses = 2
+				category = fleet_in_being_tree
+			}
+		}
+	}
+
+		focus = {
+		id = SAL_Fleet_in_being
+		icon = GFX_focus_SOK_remove_term_limits
+		x = 0
+		y = 1
+		relative_position_id = SAL_Battle_ships_of_the_south
+        prerequisite = { focus = SAL_Battle_ships_of_the_south }
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			navy_experience = 25
+			add_tech_bonus = {
+				name = capital_ships_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = bc_tech
+				category = bb_tech
+				category = cv_tech
+			}
+		}
+	}
+
+		focus = {
+		id = SAL_Carrier_effort
+		icon = GFX_focus_SOK_remove_term_limits
+		x = 0
+		y = 1
+		relative_position_id = SAL_Cruiser_effort
+        prerequisite = { focus = SAL_Cruiser_effort }
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+
+		}
+	}
+
+		focus = {
+		id = SAL_Naval_doctrines
+		icon = GFX_focus_SOK_remove_term_limits
+		x = 0
+		y = 1
+		relative_position_id = SAL_Carrier_effort
+        prerequisite = { focus = SAL_Carrier_effort }
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = sub_op_bonus
+				bonus = 1.0
+				uses = 2
+				technology = convoy_interdiction_ti
+				technology = unrestricted_submarine_warfare
+				technology = wolfpacks
+				technology = advanced_submarine_warfare
+				technology = combined_operations_raiding
+			}
+		}
+	}
+
 
 }
