@@ -1538,7 +1538,7 @@ focus = {
 		}
 
 		completion_reward = {
-
+			add_ideas = SOK_prayer_book_distrabution
 		}
 	}
 
@@ -1852,6 +1852,7 @@ focus = {
 		}
 
 		completion_reward = {
+			add_war_support = 0.05
 			add_ideas = SOK_Total_war_defensive_act_idea
 		}
 	}
@@ -1875,6 +1876,7 @@ focus = {
 		}
 
 		completion_reward = {
+			add_stability = 0.05
 			set_rule = {
 				can_create_factions = yes
 			}
@@ -1898,7 +1900,7 @@ focus = {
 		}
 
 		completion_reward = {
-
+			add_ideas = SOK_tech_sharing
 		}
 	}
 
@@ -1932,14 +1934,12 @@ focus = {
 		}
 
 		completion_reward = {
-add_popularity = {
-				ideology = communism
-				popularity = 0.3
-            }
-                set_politics = {
-				ruling_party = communism
-			}
-	   }
+			add_popularity = {
+							ideology = communism
+							popularity = 0.15
+						}
+				}
+			#event election results dismissed people outraged
 		}
 	
 
@@ -1960,7 +1960,7 @@ add_popularity = {
 		}
 
 		completion_reward = {
-
+			add_timed_idea = { idea = SOK_Secret_meetings  days = 300 }
 		}
 	}
 
@@ -1974,7 +1974,7 @@ focus = {
 		cost = 10
 
 		available = {
-			communism > 0.50			
+			communism > 0.35			
 		}
 
 		mutually_exclusive = { focus = SOK_farmers_take_up_arms }
@@ -1989,6 +1989,7 @@ focus = {
 
 		completion_reward = {
 			remove_ideas = SOK_OKlahoma_rangers_idea
+			add_ideas = SOK_Underground_revolution
 			set_politics = {
 				ruling_party = communism
 				elections_allowed = no
@@ -2005,6 +2006,10 @@ focus = {
         prerequisite = { focus = SOK_Underground_revolution }
 		cost = 10
 
+		available = {
+			has_government = communism
+			}
+
 		search_filters = {  FOCUS_FILTER_POLITICAL }
 		
 		available_if_capitulated = yes
@@ -2013,7 +2018,8 @@ focus = {
 		}
 
 		completion_reward = {
-
+			add_political_power = 150
+			add_stability = 0.10
 		}
 	}
 
@@ -2034,7 +2040,7 @@ focus = {
 		}
 
 		completion_reward = {
-
+			add_ideas = SOK_Collectiviation_of_farms
 		}
 	}
 
@@ -2056,7 +2062,7 @@ focus = {
 		}
 
 		completion_reward = {
-
+			add_ideas = SOK_Work_camps
 		}
 	}
 
@@ -2077,6 +2083,8 @@ focus = {
 		}
 
 		completion_reward = {
+			add_stability = 0.05
+			add_war_support = 0.05
 			set_rule = {
 				can_create_factions = yes
 			}
@@ -2100,8 +2108,59 @@ focus = {
 			factor = 2
 		}
 
-		completion_reward = {
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = production_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = arms_factory
+						size < 2
+						include_locked = yes
+					}
+				}
+			}
+		}
 
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = arms_factory
+				level = 2
+				instant_build = yes
+			}
+		}		
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
 		}
 	}
 
@@ -2122,7 +2181,8 @@ focus = {
 		}
 
 		completion_reward = {
-
+			add_war_support = 0.15
+			add_ideas = SOK_inspired_workers
 		}
 	}
 
