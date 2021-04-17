@@ -14,7 +14,20 @@ focus_tree = {
 	default = no
 
 	continuous_focus_position = { x = 50 y = 1800 }
+#FOCUS_FILTER_STABILITY
+#FOCUS_FILTER_INDUSTRY
+#FOCUS_FILTER_ANNEXATION
+#FOCUS_FILTER_MANPOWER
+#FOCUS_FILTER_POLITICAL
+#FOCUS_FILTER_RESEARCH
+#FOCUS_FILTER_WAR_SUPPORT
 
+##this is event triggered because Bilbo was elected in 35' but doesn't take office 
+###Until january 
+
+###Bilbo has been governor 3 times prior 
+##events will run this####
+###keep in mind there more too this######
 	focus = {
 		id = SMS_Bilbo
 		icon = GFX_
@@ -35,5 +48,182 @@ focus_tree = {
 		completion_reward = {
 		}
 	}
+focus = { 
+		id = SMS_rural_hospitials
+		icon = GFX_
+		x = 2
+		y = 1
+		relative_position_id = SMS_Bilbo
+		cost = 9
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_Bilbo}
+        ###boost research speed and recovery boost pop #add_timed_idea
+		completion_reward = { 
+        add_timed_idea = {
+			idea = SMS_rural_hospitials
+			days = 100
+		    }
 
+		} 
+	}
+    focus = { 
+		id = SMS_pave_them_roads
+		icon = GFX_
+		x = -2
+		y = 1
+		relative_position_id = SMS_Bilbo
+		cost = 9
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_Bilbo}
+        ###infrasture speed
+		completion_reward = { 
+        add_timed_idea = {
+			idea = SMS_pave_them_roads
+			days = 200
+		    }
+
+		} 
+	}
+    focus = { 
+		id = SMS_build_delta_damn
+		icon = GFX_
+		x = 0
+		y = 1
+		relative_position_id = SMS_pave_them_roads
+		cost = 9
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_pave_them_roads}
+        ###infrasture to greater natchez
+		completion_reward = { 
+			add_political_power = 200
+        156 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build =yes
+				}
+			}
+
+		} 
+	}
+	##harvest wild forests allows more jobs, and also more consumer goods trade for wood
+	focus = { 
+		id = SMS_harvest_piney_woods
+		icon = GFX_
+		x = 0
+		y = 1
+		relative_position_id = SMS_rural_hospitials
+		cost = 9
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_rural_hospitials}
+        ###one building slot to misissippi
+		completion_reward = { 
+        159 = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+
+		} 
+	}
+	###biger birth rate #####
+	focus = { 
+		id = SMS_white_children
+		icon = GFX_
+		x = 0
+		y = 1
+		relative_position_id = SMS_build_delta_damn
+		cost = 9
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_build_delta_damn}
+        ###timed monthly_population boost
+		completion_reward = { 
+        add_timed_idea = {
+			idea = SMS_white_children
+			days = 400 
+		    }
+
+		} 
+	}
+	###more schools##
+	focus = { 
+		id = SMS_schools_for_the_poor
+		icon = GFX_
+		x = 0
+		y = 1
+		relative_position_id = SMS_harvest_piney_woods
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_harvest_piney_woods}
+        ###timed monthly_population boost
+		completion_reward = { 
+        add_research_slot = 1
+		} 
+	}
+	###call up the klan#####
+	focus = { 
+		id = SMS_call_up_the_klan
+		icon = GFX_
+		x = 2
+		y = 1
+		relative_position_id = SMS_white_children
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_schools_for_the_poor}
+		prerequisite = { focus = SMS_white_children}
+        ###new general colonel simmons create him and new 6 divisons #elite artillery
+		##also add 250000 manpower 
+		completion_reward = { 
+		add_event = missisippi.2
+		add_
+        add_manpower =25000
+
+		create_corps_commander = {
+               ###longtime KKK Member who will move to missisippi
+                name = "William J Simmons"
+                picture = "SMS_Portrait_william_j_simmons.dds"
+                traits = { 
+                    cavalry_officer
+                     media_personality 
+		
+                     }
+                skill = 2
+                attack_skill = 2
+                defense_skill = 2
+                planning_skill = 2
+                logistics_skill = 3
+            }
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.05
+            }
+	    	army_experience = 75 
+
+		} 
+	}
 }#end
