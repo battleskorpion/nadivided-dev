@@ -9,7 +9,7 @@ focus_tree = {
             tag = SLA
         }
     }
- continuous_focus_position = { x = 50 y = 2000 }
+continuous_focus_position = { x = 50 y = 2000 }
 
 #FOCUS_FILTER_STABILITY
 #FOCUS_FILTER_INDUSTRY
@@ -38,7 +38,26 @@ focus_tree = {
   #  }
   #  focus = {
     #    id = SLA_create_the_jeffersonian_league
-    #    icon = GFX_
+    #    icon = GFX_focus = {
+		id = SMS_Bilbo
+		icon = GFX_
+		x = 1
+		y = 1
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = no
+		available = {
+            always = no
+             }
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		}
+	}
    #     prerequisite = { focus = SLA_elect_huey_long}
    #     x = 0
    #     y = 1
@@ -58,10 +77,85 @@ focus_tree = {
       #      add_political_power = 50
       #  }
     #}
+
+		focus = {
+		id = SLA_Distribute_Louisiana_Armoury
+		icon = x
+        x = -9
+        y = 0
+
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 6000
+				producer = SLA
+			}
+		}
+	}
+
+		focus = {
+		id = SAL_Local_arms_production
+		icon = GFX_
+		x = 0
+		y = 1
+		relative_position_id = SLA_Distribute_Louisiana_Armoury
+        prerequisite = { focus = SLA_Distribute_Louisiana_Armoury }
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+
     focus = {
         id = SLA_second_red_river_war
         icon = GFX_focus_STX_Red_River_War
-       # prerequisite = { focus = SLA_create_the_jeffersonian_league}
+       prerequisite = { focus = SAL_Local_arms_production}
         available = {
             custom_trigger_tooltip = {
                 tooltip = SLA_red_river_war_has_began_tt
@@ -69,9 +163,9 @@ focus_tree = {
             }
             has_war_with = STX
         }
-        x = -12
+        x = 0
         y = 1
-        relative_position_id = SLA_victory_in_the_red_river_war
+        relative_position_id = SAL_Local_arms_production
         cost = 1
         ai_will_do = {
             factor = 100
@@ -222,7 +316,7 @@ focus_tree = {
         x = 0
         y = 1
         relative_position_id = SLA_integrate_eastern_texas
-        cost = 5
+        cost = 1
         ###needstodo 
         ai_will_do = {
             factor = 4000
@@ -492,7 +586,7 @@ focus_tree = {
         relative_position_id = SLA_victory_in_the_red_river_war
         cost = 10
         ai_will_do = {
-            factor = 20
+            factor = 4000
             modifier = {
                 factor = 0
                 date > 1937.5.1
@@ -597,7 +691,7 @@ focus_tree = {
         relative_position_id = SLA_demand_biloxi
         cost = 10
         ai_will_do = {
-            factor = 8
+            factor = 80
         }
         available_if_capitulated = no
         search_filters = { FOCUS_FILTER_ANNEXATION }
@@ -1010,7 +1104,7 @@ focus_tree = {
             }
             has_completed_focus = SLA_second_red_river_war
         }
-        x = 5
+        x = 4
         y = 1
         relative_position_id = SLA_create_the_jeffersonian_league
         cost = 10
@@ -1231,7 +1325,7 @@ focus_tree = {
             #####Battle of Lake Charles, should be hidden 
               country_event = { 
                 id = louisiana.18
-                days = 70 
+                days = 70
             }
 		} 
 	}
@@ -1691,7 +1785,7 @@ focus_tree = {
         icon = GFX_
         #lockuntilafter2ndredriverwar
         prerequisite = { }
-        x = 20
+        x = 13
         y = 1
         relative_position_id = SLA_elect_huey_long
         cost = 5
