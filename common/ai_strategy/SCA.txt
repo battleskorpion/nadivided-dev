@@ -1,0 +1,371 @@
+
+SCA_template_design_1 = {
+	allowed = { original_tag = SCA }
+	enable = {
+		date < 1940.1.1				
+	}
+	abort = { 
+		date > 1940.1.1
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = motorized
+		value = 10
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = cavalry
+		value = 20
+	}
+	
+	ai_strategy = {
+		type = template_prio
+		id = light_armor
+		value = 50
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = medium_armor
+		value = -10
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = heavy_armor
+		value = -50
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = paratroopers
+		value = -50
+	}
+	
+	ai_strategy = {
+		type = template_prio
+		id = infantry
+		value = 60
+	}
+}
+
+SCA_template_design_2 = {
+	allowed = { original_tag = SCA }
+	enable = {
+		date > 1940.1.1				
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = mechanized
+		value = -20
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = cavalry
+		value = -40
+	}
+	
+	ai_strategy = {
+		type = template_prio
+		id = light_armor
+		value = 10
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = medium_armor
+		value = 20
+	}
+	
+	ai_strategy = {
+		type = template_prio
+		id = modern_armor
+		value = 40
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = heavy_armor
+		value = -20
+	}
+
+	ai_strategy = {
+		type = template_prio
+		id = paratroopers
+		value = -50
+	}
+	
+	ai_strategy = {
+		type = template_prio
+		id = infantry
+		value = 10
+	}
+	
+	ai_strategy = {
+		type = template_prio
+		id = marines
+		value = 100
+	}
+}
+
+SCA_garrison_production = {
+	allowed = { original_tag = SCA }
+	enable = {
+		ai_wants_divisions >  12 #Massively decreasing the amount of paratroopers the AI wants
+	}
+	abort = {
+		ai_wants_divisions < 13 #Massively decreasing the amount of paratroopers the AI wants
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = garrison
+		value = 3
+	}
+}
+
+# This will prompt SCA to try and support countries who are fighting against extremist elements.
+# Should improve alt-history situations like democratic Germany fighting the USSR etc.
+SCA_protect_against_extremism = { # Reverse strategy
+	reversed = yes
+
+	enable_reverse = {
+		SCA = {
+			has_government = democratic
+		}
+	}
+
+	enable = {
+		NOT = { tag = SCA }
+		NOT = { has_government = communism }
+		NOT = { has_government = fascism }
+		OR = {
+			AND = {
+				num_of_civilian_factories > 60
+				is_subject = no
+			}
+		}
+		any_of_scopes = {
+			array = enemies
+			NOT = { tag = SCA }
+			OR = {
+				has_government = communism
+				has_government = fascism
+			}
+		}
+	}
+
+	abort = {
+		OR = {
+			has_war = no
+			OR = {
+				has_government = communism
+				has_government = fascism
+			}
+			SCA = {
+				OR = {
+					NOT = {	has_government = democratic }
+					has_war_with = ROOT
+				}
+			}
+		}
+	}
+
+	ai_strategy = {
+		type = support
+		id = "SCA"
+		value = 100
+	}
+}
+
+SCA_naval_role_ratios_historical = {
+	allowed = {
+		has_dlc = "Man the Guns"
+		original_tag = SCA
+	}
+	enable = {
+		always = yes
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_capital_bb
+		value = 10
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_capital_bc
+		value = 0
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_carrier
+		value = 25
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_submarine
+		value = 10
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_screen
+		value = 30 
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_escort
+		value = 20 
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_cruiser_light
+		value = 10
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_cruiser_heavy
+		value = 3
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_mine_sweeper
+		value = 10
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_mine_layer
+		value = 5
+	}
+
+	ai_strategy = {
+		type = unit_ratio
+		id = capital_ship
+		value = 1		 #1 to 2
+	}
+	ai_strategy = {
+		type = unit_ratio
+		id = screen_ship
+		value = 100		 #1 to 2
+	}
+	ai_strategy = {
+		type = unit_ratio
+		id = carrier
+		value = 1		 #1 to 2
+	}
+}
+
+SCA_naval_role_ratios_anti_submarine = {
+	allowed = {
+		has_dlc = "Man the Guns"
+		original_tag = SCA
+	}
+	enable = {
+		anti_submarine_strategy_required_trigger = yes
+	}
+
+	abort = {
+		not = { anti_submarine_strategy_required_trigger = yes }
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_capital_bb
+		value = -10
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_screen
+		value = -20 
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_escort
+		value = 50 
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_cruiser_light
+		value = 40
+	}
+
+	ai_strategy = {
+		type = role_ratio
+		id = naval_cruiser_heavy
+		value = -15
+	}
+}
+
+SCA_semper_fi = {
+	allowed = { original_tag = SCA }
+	enable = {
+		has_war_with = SHI
+	}
+	abort = {
+		SHI = {
+			has_capitulated = yes
+		}
+	}
+	ai_strategy = {
+		type = unit_ratio
+		id = marines
+		value = 5
+	}
+	ai_strategy = {
+		type = template_prio
+		id = marines
+		value = 100
+	}
+}
+
+SCA_build_early_civ = {
+
+	enable = {
+		tag = SCA
+		date < 1938.01.01
+		has_war = no
+	}
+	
+	abort_when_not_enabled = yes
+	
+	ai_strategy = {
+		type = building_target
+		id = industrial_complex
+		value = 2000
+	}
+}
+
+SCA_dont_mess_with_Ohio = {
+
+	enable = {
+		original_tag = SOH
+		
+		NOT = { has_war_with = SOH }
+	}
+	
+	abort = {
+		has_war_with = SOH
+	}
+
+	ai_strategy = {
+		type = contain
+		id = "SOH"			
+		value = -200
+	}
+}

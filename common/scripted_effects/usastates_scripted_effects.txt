@@ -1,0 +1,251 @@
+#	Example:
+# 
+#	example_effect = {
+#		add_political_power = 66
+#		add_popularity = {
+#			ideology = fascism
+#			popularity = 0.33
+#		}
+#	}
+#
+#
+#	In a script file:
+#
+#	effect = {
+#		example_effect = yes
+#	}
+#
+
+###################################
+### NA DIVIDED SCRIPTED EFFECTS ###
+###################################
+
+# TARGET CATHOLIC NATIONS #
+# Adds +15 Opinion of all Christian Nations towards FROM / ROOT country
+target_catholic_nations = {
+	FROM = {
+		COR = {
+			if = {
+				limit = {
+					NOT = {
+						ROOT = {
+							original_tag = COR
+						}
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = christian_positivity_nation_modifier
+				}
+			}
+		}
+		SNJ = {
+			if = {
+				limit = {
+					AND = {
+						SNJ = {
+							has_completed_focus = NJ_catholiczealotry
+						}
+						NOT = {
+							ROOT = {
+								original_tag = COR
+							}
+						}
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = christian_positivity_nation_modifier
+				}
+			}
+		}
+		MCL = {
+			if = {
+				limit = {
+					NOT = {
+						ROOT = {
+							original_tag = MCL
+						}
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = christian_positivity_nation_modifier
+				}
+			}
+		}
+	}
+# end target catholic nations effect	
+}
+
+SFL_fascist_leader_target_country_effect = {
+	SFL = {
+		clear_variable = SFL_invite_fascist_leader_speech_leader_loc
+		clr_country_flag = invite_fascist_leader_speech_leader_country_selected_flag
+	}
+	#if = {
+	#	limit = {
+	#		SFL = {
+	#			has_country_flag = invite_fascist_leader_speech_leader_country_selected_flag
+	#		}
+	#	}
+	#	clr_country_flag = invite_fascist_leader_speech_leader_country_selected_flag
+	#}
+	# this isnt really necessary just left cause it cost me 2 hours of my time, all good though clear above. 
+	# i realized what i did wrong reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+	
+	every_other_country = {
+		if = {
+			limit = {
+				AND = {
+					has_government = fascism
+					NOT = {
+						SFL = {
+							has_country_flag = invite_fascist_leader_speech_leader_country_selected_flag
+						}
+					}
+				}
+			}
+			SFL = {
+				set_variable = { SFL_invite_fascist_leader_speech_leader_loc = PREV.id }
+				set_country_flag = invite_fascist_leader_speech_leader_country_selected_flag
+			}
+			var:SFL.SFL_invite_fascist_leader_speech_leader_loc = {
+				set_country_flag = invite_fascist_leader_speech_leader_target_flag
+			}
+		}
+	}
+# end florida fascist leader from foreign country targeting effect
+}
+
+florida_wargoal_west_florida_countries = {
+	custom_effect_tooltip = florida_wargoal_west_florida_countries_tt
+	hidden_effect = {
+		#every_state = {
+		#	#if = {
+		#		limit = {
+		#			is_west_florida_state = yes
+		#		}
+		#		if = {
+		#			limit = {
+		#				ROOT = {
+		#					NOT = {
+		#						owns_state = PREV.OWNER
+		#					}
+		#				}
+		#			}
+		#			
+		#			ROOT = {
+		#				create_wargoal = {
+		#					type = take_state_focus
+		#					target = PREV.OWNER 
+		#					generator = { PREV }
+		#				}
+		#			}
+		#			if = {
+		#				limit = { 
+		#					OWNER = {
+		#						NOT = {	
+		#							has_relation_modifier = {
+		#								target = ROOT 
+		#								modifier = SFL_claims_west_florida_modifier
+		#							}
+		#						}
+		#					}
+		#				}
+		#				OWNER = {
+		#					add_opinion_modifier = {
+		#						target = ROOT
+		#						modifier = SFL_claims_west_florida_modifier
+		#					}
+		#				}
+		#			}
+		#		}
+		#		
+		#	#}
+		#}
+		every_country = {
+			limit = {
+				any_owned_state = {
+					is_west_florida_state = yes
+				}
+				NOT = {
+					tag = ROOT
+				}
+			}
+			ROOT = {
+				create_wargoal = {
+					type = take_state_focus
+					target = PREV
+					generator = { 13 18 22 23 155 156 159 }
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_relation_modifier = {
+							target = ROOT
+							modifier = SFL_claims_west_florida_modifier
+						}
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = SFL_claims_west_florida_modifier
+				}
+			}
+		}
+	}
+}
+
+increase_dwavern_level = {
+	if = {
+		limit = {
+			NOT = {
+				OR = {
+					has_idea = GRE_dwavern_spirit1
+					has_idea = GRE_dwavern_spirit2
+					has_idea = GRE_dwavern_spirit3
+					has_idea = GRE_dwavern_spirit4
+				}
+			}
+		}
+		add_ideas = GRE_dwavern_spirit1
+	}
+	else_if = {
+		limit = {
+			has_idea = GRE_dwavern_spirit1
+		}
+		swap_ideas = {
+			remove_idea = GRE_dwavern_spirit1
+			add_idea = GRE_dwavern_spirit2
+		}
+	}
+	else_if = {
+		limit = {
+			has_idea = GRE_dwavern_spirit2
+		}
+		swap_ideas = {
+			remove_idea = GRE_dwavern_spirit2
+			add_idea = GRE_dwavern_spirit3
+		}
+	}
+	else_if = {
+		limit = {
+			has_idea = GRE_dwavern_spirit3
+		}
+		swap_ideas = {
+			remove_idea = GRE_dwavern_spirit3
+			add_idea = GRE_dwavern_spirit4
+		}
+	}
+}
+
+
+
+
+
+
+
+######################################
+

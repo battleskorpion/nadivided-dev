@@ -1,0 +1,930 @@
+focus_tree = {
+	id = mississippi
+	
+	country = {
+		factor = 0
+		
+		modifier = {
+			add = 10
+			tag = SMS
+
+		}
+	}
+		
+	default = no
+
+	continuous_focus_position = { x = 50 y = 1800 }
+#FOCUS_FILTER_STABILITY
+#FOCUS_FILTER_INDUSTRY
+#FOCUS_FILTER_ANNEXATION
+#FOCUS_FILTER_MANPOWER
+#FOCUS_FILTER_POLITICAL
+#FOCUS_FILTER_RESEARCH
+#FOCUS_FILTER_WAR_SUPPORT
+
+##this is event triggered because Bilbo was elected in 35' but doesn't take office 
+###Until january 
+
+###Bilbo has been governor 3 times prior 
+##events will run this####
+###keep in mind there more too this######
+	focus = {
+		id = SMS_Bilbo
+		icon = GFX_
+		x = 1
+		y = 1
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = no
+		available = {
+            always = no
+             }
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		}
+	}
+focus = { 
+		id = SMS_rural_hospitials
+		icon = GFX_
+		x = 2
+		y = 1
+		relative_position_id = SMS_Bilbo
+		cost = 9
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_Bilbo}
+        ###boost research speed and recovery boost pop #add_timed_idea
+		completion_reward = { 
+        add_timed_idea = {
+			idea = SMS_rural_hospitials
+			days = 250
+		    }
+
+		} 
+	}
+    focus = { 
+		id = SMS_pave_them_roads
+		icon = GFX_
+		x = -2
+		y = 1
+		relative_position_id = SMS_Bilbo
+		cost = 9
+		search_filters = {  FOCUS_FILTER_INDUSTRY }
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_Bilbo}
+        ###infrasture speed
+		completion_reward = { 
+        add_timed_idea = {
+			idea = SMS_pave_them_roads
+			days = 200
+		    }
+
+		} 
+	}
+    focus = { 
+		id = SMS_build_delta_damn
+		icon = GFX_
+		x = 0
+		y = 1
+		relative_position_id = SMS_pave_them_roads
+		cost = 9
+		search_filters = {  FOCUS_FILTER_INDUSTRY }
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_pave_them_roads}
+        ###infrasture to greater natchez
+		completion_reward = { 
+			add_political_power = 200
+        156 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build =yes
+				}
+			}
+
+		} 
+	}
+	##harvest wild forests allows more jobs, and also more consumer goods trade for wood
+	focus = { 
+		id = SMS_harvest_piney_woods
+		icon = GFX_
+		x = 0
+		y = 1
+		relative_position_id = SMS_rural_hospitials
+		cost = 9
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_rural_hospitials}
+        ###one building slot to misissippi
+		completion_reward = { 
+        159 = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+
+		} 
+	}
+	###biger birth rate #####
+	focus = { 
+		id = SMS_white_children
+		icon = GFX_
+		x = 0
+		y = 1
+		relative_position_id = SMS_build_delta_damn
+		cost = 9
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_build_delta_damn}
+        ###timed monthly_population boost
+		completion_reward = { 
+        add_timed_idea = {
+			idea = SMS_white_children
+			days = 400 
+		    }
+
+		} 
+	}
+	###more schools##
+	focus = { 
+		id = SMS_schools_for_the_poor
+		icon = GFX_
+		x = 0
+		y = 1
+		relative_position_id = SMS_harvest_piney_woods
+		cost = 10
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_harvest_piney_woods}
+        ###timed monthly_population boost
+		completion_reward = { 
+        add_research_slot = 1
+		} 
+	}
+	###call up the klan#####
+	focus = { 
+		id = SMS_call_up_the_klan
+		icon = GFX_
+		x = 2
+		y = 1
+		relative_position_id = SMS_white_children
+		cost = 10
+		search_filters = {  FOCUS_FILTER_MANPOWER }
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_schools_for_the_poor}
+		prerequisite = { focus = SMS_white_children}
+        ###new general colonel simmons create him and new 6 divisons #elite artillery
+		##also add 250000 manpower 
+		completion_reward = { 
+
+			####to spawn in elite calvery with said template
+			country_event = {
+				id  = missisippi.2
+			}
+        add_manpower = 25000
+
+		create_corps_commander = {
+               ###longtime KKK Member who will move to missisippi
+                name = "William J Simmons"
+                picture = "SMS_Portrait_william_j_simmons.dds"
+                traits = { 
+                    cavalry_officer
+                     media_personality 
+		
+                     }
+                skill = 2
+                attack_skill = 2
+                defense_skill = 2
+                planning_skill = 2
+                logistics_skill = 3
+            }
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.05
+            }
+          	army_experience = 75
+			  add_ideas = SMS_night_riders
+		} 
+	}
+	##This triggers when huey asks for Bolixi in which case you can deny or accept###
+	focus = {
+		id = SMS_Bolixi_affair
+		icon = GFX_
+		x = 15
+		y = 1
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = no
+		####Needs to be asked for event 
+		available = {
+            always = no
+             }
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		}
+	}
+	########hell no 
+	focus = {
+		id = SMS_stand_against_king_fish
+		icon = GFX_
+		x = -1
+		y = 1
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = no
+		####Needs to be asked for event 
+      
+
+      relative_position_id = SMS_Bolixi_affair
+	  prerequisite = { focus = SMS_Bolixi_affair}
+		available = {
+            always = no
+             }
+		ai_will_do = {
+			factor = 10
+		}
+            ##########emegerncy act this will block 1939 
+		completion_reward = {
+
+		}
+	}
+	#####
+	focus = {
+		id = SMS_apease_the_kingfish
+		icon = GFX_
+		x = 1
+		y = 1
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = no
+		####Needs to be asked for event 
+      
+
+      relative_position_id = SMS_Bolixi_affair
+	  prerequisite = { focus = SMS_Bolixi_affair}
+		available = {
+            always = no
+             }
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		}
+	}
+	#####1939 election####for now you will be able to pick#####
+	focus = {
+		id = SMS_1939_election
+		icon = GFX_
+		x = 9
+		y = 8
+		cost = 8
+        ####must likely will be locked if you have impeachment crisis#####
+		###or if black belt state exists
+		###Block if in civil war################
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		available = {
+			date > 1939.11.7
+		}
+		available_if_capitulated = no
+		####Needs to be asked for event 
+
+      #relative_position_id = SMS_Bolixi_affair
+	  #prerequisite = { focus = SMS_Bolixi_affair}
+		available = {
+            always = yes
+             }
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+			add_stability = .10
+		}
+	}
+	#####inaugertates wealthy leader ######
+	focus = {
+		id = SMS_the_wealthy_white
+		icon = GFX_
+		x = 2
+		y = 1
+		cost = 7
+		mutually_exclusive = { focus = SMS_return_to_populism }
+        ####must likely will be locked if you have impeachment crisis#####
+		###will lock if person is already populist so if civil war happens 
+		###nations won't ever have same leader####
+		###or if black belt state exists
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = no
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_1939_election
+	  prerequisite = { focus = SMS_1939_election}
+		available = {
+           
+             }
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+			 add_popularity = {
+				ideology = democratic
+				popularity = 0.3
+            }
+                set_politics = {
+				ruling_party = democratic
+			}
+		}
+	}
+	###attract Northern industry#####
+	focus = {
+		id = SMS_attract_northern_industry
+		icon = GFX_
+		x = 1
+		y = 1
+		cost = 5
+        
+		search_filters = {  FOCUS_FILTER_INDUSTRY }
+		
+		available_if_capitulated = no
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_the_wealthy_white
+	  prerequisite = { focus = SMS_the_wealthy_white}
+		available = {
+          
+             }
+		ai_will_do = {
+			factor = 80
+		}
+#####add building slots random ######
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 4
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+			add_political_power = 150 
+		}
+	}
+	######## Under BAWI, advertising and incentives were deployed in hopes of enticing industries to locate to the state. 
+	####Local governments could issue bonds to construct factories that could be leased to companies
+	#### (who were also offered tax breaks).
+	focus = {
+		id = SMS_establish_BAWI
+		icon = GFX_
+		x = 1
+		y = 1
+		cost = 10
+        
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = no
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_attract_northern_industry
+	  prerequisite = { focus = SMS_attract_northern_industry}
+		available = {
+            
+             }
+		ai_will_do = {
+			factor = 80
+		}
+		completion_reward = {
+			
+			add_ideas = SMS_BAWI
+		}
+	}
+	####Begin industralizing south missisippi
+	focus = {
+		id = SMS_industralize_south_mississippi
+		icon = GFX_
+		x = 2
+		y = 1
+		cost = 10
+        available = {
+            OR = {
+                owns_state = 757
+            }
+        }
+		available = {
+            OR = {
+                owns_state = 156
+            }
+        }
+		search_filters = {  FOCUS_FILTER_INDUSTRY }
+		
+		available_if_capitulated = no
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_establish_BAWI
+	  prerequisite = { focus = SMS_establish_BAWI}
+		available = {
+            
+             }
+		ai_will_do = {
+			factor = 80
+		}
+#####add building slots random ######
+		completion_reward = {
+		757 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}	
+			156 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}	
+			
+		}
+	}
+	####fund negro schools
+	focus = {
+		id = SMS_fund_negro_schools
+		icon = GFX_
+		x = -2
+		y = 1
+		cost = 20
+        
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = no
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_establish_BAWI
+	  prerequisite = { focus = SMS_establish_BAWI}
+		available = {
+           
+             }
+		ai_will_do = {
+			factor = 80
+		}
+#####This is White Effort to get more nothern investement and to quell 
+#####black gurillas, this plan won't be popular with whites####
+###effect does weaken support of gurillas somewhat######
+		completion_reward = {
+			add_political_power =  -250
+			remove_ideas = SMS_Black_Rebels
+			add_ideas = SMS_Black_Rebels2
+		}
+	}
+	#build up navy
+	focus = {
+		id = SMS_build_up_navy
+		icon = GFX_
+		x = 0
+		y = 2
+		cost = 10
+        
+		search_filters = {  FOCUS_FILTER_WAR_SUPPORT }
+		
+		available_if_capitulated = no
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_establish_BAWI
+	  prerequisite = { focus = SMS_fund_negro_schools  focus = SMS_industralize_south_mississippi}
+		available = {
+         
+             }
+		ai_will_do = {
+			factor = 80
+		}
+#####add navy output ######
+##add navy to delata region###
+		completion_reward = {
+			add_ideas = SMS_build_up_navy
+			
+		}
+	}
+	#oppose long
+	focus = {
+		id = SMS_oppose_long
+		icon = GFX_
+		x = 0
+		y = 1
+		cost = 1
+          STN = {
+                has_government = democratic
+            }
+			  STN = {
+                has_government = neutrality 
+            }
+		search_filters = {  FOCUS_FILTER_WAR_SUPPORT }
+		
+		available_if_capitulated = no
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_build_up_navy
+	  prerequisite = { focus = SMS_build_up_navy}
+		available = {
+          
+             }
+		ai_will_do = {
+			factor = 180
+		}
+#####add navy output ######
+##add navy to delata region###
+		completion_reward = {
+			add_war_support = .10
+			give_guarantee = STN
+			
+		}
+	}
+	
+	#####Southern Pop ######
+	focus = {
+		id = SMS_return_to_populism
+		icon = GFX_
+		x = -2
+		y = 1
+		cost = 7
+		mutually_exclusive = { focus = SMS_the_wealthy_white}
+        ####must likely will be locked if you have impeachment crisis#####
+		###will lock if person is already populist so if civil war happens 
+		###nations won't ever have same leader####
+		###or if black belt state exists
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = no
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_1939_election
+	  prerequisite = { focus = SMS_1939_election}
+		available = {
+        
+             }
+		ai_will_do = {
+			factor = 50
+		}
+
+		completion_reward = {
+			 add_popularity = {
+				ideology = longism
+				popularity = 0.3
+            }
+                set_politics = {
+				ruling_party = longism
+			}
+		}
+	}
+	focus = {
+		id = SMS_ole_miss_foot_ball
+		icon = GFX_
+		x = 1
+		y = 1
+		cost = 5
+        
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = no
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_return_to_populism
+	  prerequisite = { focus = SMS_return_to_populism}
+		available = {
+           
+             }
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+			add_ideas = SMS_ole_miss_foot_ball
+			add_political_power = 150 
+		}
+	}
+	###Mississippi minute men
+	focus = {
+		id = SMS_mississippi_minute_men
+		icon = GFX_
+		x = -1
+		y = 1
+		cost = 5
+        
+		search_filters = {  FOCUS_FILTER_MANPOWER }
+		
+		available_if_capitulated = no
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_return_to_populism
+	  prerequisite = { focus = SMS_return_to_populism}
+		available = {
+          
+             }
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+			add_ideas = SMS_mississippi_minute_men
+		}
+	}
+	###reach out to huey 
+	focus = {
+		id = SMS_re_establish_ties_with_long
+		icon = GFX_
+		x = 1
+		y = 1
+		cost = 8
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+		search_filters = {  FOCUS_FILTER_MANPOWER }
+		#bypass if already in faction with them 
+		available_if_capitulated = no
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_mississippi_minute_men
+	  prerequisite = { focus = SMS_mississippi_minute_men}
+	   prerequisite = { focus = SMS_ole_miss_foot_ball}
+		available = {
+           
+             }
+		ai_will_do = {
+			factor = 160
+		}
+
+		completion_reward = {
+			
+		}
+	}
+	focus = {
+		id = SMS_farmers_tax_break
+		icon = GFX_
+		x = 1
+		y = 1
+		cost = 8
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+		search_filters = {  FOCUS_FILTER_MANPOWER }
+		
+		available_if_capitulated = no
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_re_establish_ties_with_long
+	   prerequisite = { focus = SMS_re_establish_ties_with_long}
+		available = {
+           
+             }
+		ai_will_do = {
+			factor = 160
+		}
+		completion_reward = {
+	
+			add_timed_idea = {
+			idea = SMS_farmers_tax_break
+			days = 360
+		    }
+		}
+	}
+	####louisiana dollar
+	focus = {
+		id = SMS_louisiana_dollar
+		icon = GFX_
+		x = -1
+		y = 1
+		cost = 10
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		search_filters = {  FOCUS_FILTER_STABILITY }
+		
+		available_if_capitulated = no
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_re_establish_ties_with_long
+	   prerequisite = { focus = SMS_re_establish_ties_with_long}
+		available = {
+            
+             }
+		ai_will_do = {
+			factor = 160
+		}
+
+		completion_reward = {
+			add_ideas = SMS_louisiana_dollar
+		}
+	}
+	####adopt Share the Wealth######
+	focus = {
+		id = SMS_adopt_share_the_wealth
+		icon = GFX_
+		x = 0
+		y = 2
+		cost = 20
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		search_filters = {  FOCUS_FILTER_STABILITY }
+		
+		available_if_capitulated = no
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_re_establish_ties_with_long
+	   prerequisite = { focus = SMS_farmers_tax_break}
+	    prerequisite = { focus = SMS_louisiana_dollar}
+		available = {
+         
+             }
+		ai_will_do = {
+			factor = 160
+		}
+
+		completion_reward = {
+			add_ideas = SMS_share_the_wealth
+		}
+	} 
+	########army### one is planning and other is fire power####
+	focus = {
+		id = SMS_mississippi_army
+		icon = GFX_
+		x = 20
+		y = 5
+		cost = 20
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+		search_filters = {  }
+	
+		available_if_capitulated = no
+		####Needs to be asked for event 
+
+
+		available = {
+         
+             }
+		ai_will_do = {
+			factor = 160
+		}
+
+		completion_reward = {
+			army_experience = 100
+		}
+	}
+	######general wilson is ww 1 and ole miss football star
+	focus = {
+		id = SMS_wilson_way
+		icon = GFX_
+		x = 1
+		y = 1
+		cost = 10
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+		search_filters = {  FOCUS_FILTER_WAR_SUPPORT }
+	
+		available_if_capitulated = no
+		####Needs to be asked for event 
+		prerequisite = { focus = SMS_mississippi_army}
+		relative_position_id = SMS_mississippi_army
+
+		available = {
+         
+             }
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+			army_experience = 100
+		}
+	}
+	#########power through ## boost fire power#####
+	focus = {
+		id = SMS_power_through 
+		icon = GFX_
+		x = 1
+		y = 1
+		cost = 20
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+	    prerequisite = { focus = SMS_wilson_way}
+		relative_position_id = SMS_wilson_way
+		available_if_capitulated = no
+		####Needs to be asked for event 
+
+		available = {
+         
+             }
+		ai_will_do = {
+			factor = 160
+		}
+
+		completion_reward = {
+			army_experience = 100
+		}
+	}
+	#####fox was a ww 1 general highly skilled planner
+	focus = {
+		id = SMS_the_old_fox
+		icon = GFX_
+		x = -1
+		y = 1
+		cost = 20
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+	    prerequisite = { focus = SMS_mississippi_army}
+		relative_position_id = SMS_mississippi_army
+		available_if_capitulated = no
+		####Needs to be asked for event 
+
+		available = {
+         
+             }
+		ai_will_do = {
+			factor = 160
+		}
+
+		completion_reward = {
+			army_experience = 100
+		}
+	}
+	##fox will focus on longterm planning
+	focus = {
+		id = SMS_counting_your_arms
+		icon = GFX_
+		x = -1
+		y = 1
+		cost = 20
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+	    prerequisite = { focus = SMS_the_old_fox}
+		relative_position_id = SMS_the_old_fox
+		available_if_capitulated = no
+		####Needs to be asked for event 
+
+		available = {
+         
+             }
+		ai_will_do = {
+			factor = 160
+		}
+
+		completion_reward = {
+			army_experience = 100
+		}
+	}
+}#end

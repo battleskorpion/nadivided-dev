@@ -1,0 +1,803 @@
+focus_tree = {
+      id = louisiana_focus
+
+    country = {
+        factor = 0
+        
+        modifier = {
+            add = 10
+            tag = SLA
+        }
+    }
+
+    continuous_focus_position = { x = 50 y = 2000 }
+
+#FOCUS_FILTER_STABILITY
+#FOCUS_FILTER_INDUSTRY
+#FOCUS_FILTER_ANNEXATION
+#FOCUS_FILTER_MANPOWER
+#FOCUS_FILTER_POLITICAL
+#FOCUS_FILTER_RESEARCH
+#FOCUS_FILTER_WAR_SUPPORT
+
+#######################################
+#############Huey Long Path############
+#######################################
+    focus = {
+        id = SLA_elect_huey_long
+        icon = GFX_focus_huey_long
+        available = {
+            always = no
+        }
+        x = 40
+        y = 0
+        cost = 10
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = yes
+    }
+    focus = {
+        id = SLA_create_the_jeffersonian_league
+        icon = GFX_
+        prerequisite = { focus = SLA_elect_huey_long}
+        x = 0
+        y = 1
+        relative_position_id = SLA_elect_huey_long
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            set_rule = {
+                can_create_factions = yes
+            }
+            create_faction = JEFFERSONIAN_LEAGUE
+            add_political_power = 50
+        }
+    }
+    focus = {
+        id = SLA_second_red_river_war
+        icon = GFX_
+        prerequisite = { focus = SLA_create_the_jeffersonian_league}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SLA_red_river_war_has_began_tt
+                has_global_flag = red_river_war_has_begun
+            }
+            has_war_with = STX
+        }
+        x = -12
+        y = 1
+        relative_position_id = SLA_create_the_jeffersonian_league
+        cost = 1
+        ai_will_do = {
+            factor = 100
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            custom_effect_tooltip = SLA_red_river_war_information_tt
+        }
+    }
+    focus = {
+        id = SLA_demand_reinforcements
+        icon = GFX_
+        prerequisite = { focus = SLA_second_red_river_war}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SLA_red_river_war_has_began_tt
+                has_global_flag = red_river_war_has_begun
+            }
+        }
+        bypass = {
+            custom_trigger_tooltip = {
+                tooltip = SLA_red_river_war_has_eneded_tt
+                NOT = {
+                    has_global_flag = red_river_war_has_begun
+                }
+            }
+        }
+        x = -1
+        y = 1
+        relative_position_id = SLA_second_red_river_war
+        cost = 9
+        ai_will_do = {
+            factor = 100
+            modifier = {
+                add = -99
+                has_war = no
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_MANPOWER }
+
+        completion_reward = {
+            if = {
+                limit = {
+                    OR = {
+                        has_idea = volunteer_only
+                        has_idea = minutemen_militia_conscription
+                    }
+                }
+                add_ideas = limited_conscription
+            }
+            add_manpower = 10000
+            custom_effect_tooltip = SLA_get_troops_from_deep_south
+            hidden_effect = {
+                load_oob = "SLA_red_riverr_war"
+            }
+        }
+    }
+    focus = {
+        id = SLA_rally_popular_support
+        icon = GFX_
+        prerequisite = { focus = SLA_second_red_river_war}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SLA_red_river_war_has_began_tt
+                has_global_flag = red_river_war_has_begun
+            }
+        }
+        bypass = {
+            custom_trigger_tooltip = {
+                tooltip = SLA_red_river_war_has_eneded_tt
+                NOT = {
+                    has_global_flag = red_river_war_has_begun
+                }
+            }
+        }
+        x = 1
+        y = 1
+        relative_position_id = SLA_second_red_river_war
+        cost = 10
+        ai_will_do = {
+            factor = 10
+            modifier = {
+                add = -9
+                has_war = no
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT}
+
+        completion_reward = {
+            add_stability = 0.05
+            add_war_support = 0.05
+        }
+    }
+    focus = {
+        id = SLA_integrate_eastern_texas
+        icon = GFX_
+        prerequisite = { focus = SLA_demand_reinforcements focus = SLA_rally_popular_support}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SLA_red_river_war_has_eneded_tt
+                NOT = {
+                    has_global_flag = red_river_war_has_begun
+                }
+            }
+            OR = {
+                owns_state = 222
+                owns_state = 223
+                owns_state = 163
+            }
+        }
+        x = 0
+        y = 2
+        relative_position_id = SLA_second_red_river_war
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        
+        completion_reward = {
+            if = {
+                limit = {
+                    owns_state = 222
+                }
+                add_state_core = 222
+            }
+            if = {
+                limit = {
+                    owns_state = 223
+                }
+                add_state_core = 223
+            }
+            if = {
+                limit = {
+                    owns_state = 163
+                }
+                add_state_core = 163
+            }
+        }
+    }
+    focus = {
+        id = SLA_victory_in_the_red_river_war
+        icon = GFX_
+        prerequisite = { focus = SLA_create_the_jeffersonian_league}
+        mutually_exclusive = { focus = SLA_loss_in_the_red_river_war}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SLA_red_river_war_has_eneded_tt
+                NOT = {
+                    has_global_flag = red_river_war_has_begun
+                }
+            }
+            OR = {
+                owns_state = 222
+                owns_state = 223
+                owns_state = 163
+            }
+            has_completed_focus = SLA_second_red_river_war
+        }
+        x = -3
+        y = 1
+        relative_position_id = SLA_create_the_jeffersonian_league
+        cost = 10
+        ai_will_do = {
+            factor = 4
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            add_political_power = 50
+            add_stability = 0.05
+        }
+    }
+    focus = {
+        id = SLA_develop_western_texas
+        icon = GFX_
+        prerequisite = { focus = SLA_victory_in_the_red_river_war}
+        available = {
+            OR = {
+                owns_state = 222
+                owns_state = 223
+                owns_state = 163
+            }
+        }
+        x = -2
+        y = 1
+        relative_position_id = SLA_victory_in_the_red_river_war
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no 
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            if = {
+                limit = {
+                    owns_state = 222
+                    NOT = {
+                        owns_state = 223
+                        owns_state = 163
+                    }
+                }
+                222 = {
+                    add_extra_state_shared_building_slots = 2
+                    add_building_construction = {
+                        type = industrial_complex
+                        level = 1
+                        instant_build = yes
+                    }
+                    add_building_construction = {
+                        type = infrastructure
+                        level = 2
+                        instant_build = yes
+                    }
+                }
+            }
+            else_if = {
+                limit = {
+                    owns_state = 222
+                }
+                222 = {
+                    add_extra_state_shared_building_slots = 1
+                    add_building_construction = {
+                        type = industrial_complex
+                        level = 1
+                        instant_build = yes
+                    }
+                    add_building_construction = {
+                        type = infrastructure
+                        level = 1
+                        instant_build = yes
+                    }
+                }
+            }
+            if = {
+                limit = {
+                    owns_state = 223
+                }
+                223 = {
+                    add_extra_state_shared_building_slots = 1
+                    add_building_construction = {
+                        type = industrial_complex
+                        level = 1
+                        instant_build = yes
+                    }
+                    add_building_construction = {
+                        type = infrastructure
+                        level = 1
+                        instant_build = yes
+                    }
+                }
+            }
+            if = {
+                limit = {
+                    owns_state = 163
+                }
+                163 = {
+                    add_extra_state_shared_building_slots = 1
+                    add_building_construction = {
+                        type = industrial_complex
+                        level = 1
+                        instant_build = yes
+                    }
+                    add_building_construction = {
+                        type = infrastructure
+                        level = 1
+                        instant_build = yes
+                    }
+                }
+            }
+        }
+    }
+    focus = {
+        id = SLA_strengthen_the_homeland
+        icon = GFX_
+        prerequisite = { focus = SLA_victory_in_the_red_river_war}
+        available = {
+            owns_state = 18
+        }
+        bypass = {
+            NOT = {
+                owns_state = 18
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SLA_victory_in_the_red_river_war
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            if = {
+                limit = {
+                    owns_state = 18
+                }
+                18 = {
+                    add_extra_state_shared_building_slots = 2
+                    add_building_construction = {
+                        type = industrial_complex
+                        level = 1
+                        instant_build = yes
+                    }
+                    add_building_construction = {
+                        type = arms_factory
+                        level = 1
+                        instant_build = yes
+                    }
+                    set_building_level = {
+                        type = infrastructure
+                        level = 10
+                        instant_build = yes
+                    }
+                    custom_effect_tooltip = SLA_bunkers_in_state_18
+                    hidden_effect = {
+                        set_building_level = {
+                            type = bunker
+                            level = 3
+                            province = {
+                                id = 1003
+                                id = 1058
+                            }
+                        }
+                        set_building_level = {
+                            type = coastal_bunker
+                            level = 5
+                            province = {
+                                id = 1003
+                                id = 1058
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    focus = {
+        id = SLA_invite_georgia_to_the_league
+        icon = GFX_
+        prerequisite = { focus = SLA_strengthen_the_homeland}
+        available = {
+            is_faction_leader = yes
+            country_exists = SGA
+        }
+        bypass = {
+            OR = {
+                SGA = {
+                    is_in_faction = yes
+                }
+                NOT = {
+                    country_exists = SGA
+                }
+            }
+        }
+        x = 0
+        y = 2 
+        relative_position_id = SLA_victory_in_the_red_river_war
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        
+        completion_reward = {
+            SLA = {
+                add_to_faction = SGA
+            }
+        }
+    }
+    focus = {
+        id = SLA_demand_biloxi
+        icon = GFX_
+        prerequisite = { focus = SLA_invite_georgia_to_the_league}
+        available = {
+            SMS = {
+                OR = {
+                    longism > 0.3
+                    has_opinion = {
+                        target = SLA
+                        value > 59
+                    }
+                }
+            }
+        }
+        x = 0
+        y = 3
+        relative_position_id = SLA_victory_in_the_red_river_war
+        cost = 10
+        ai_will_do = {
+            factor = 2
+            modifier = {
+                factor = 0
+                date > 1937.5.1
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = SMS
+
+        completion_reward = {
+            SMS = {
+                country_event = {
+                    id = louisiana.8
+                }
+            }
+            add_state_claim = 155
+            add_threat = 3
+        }
+    }
+    focus = {
+        id = SLA_nationalize_biloxi
+        icon = GFX_
+        prerequisite = { focus = SLA_demand_biloxi}
+        available = {
+            owns_state = 155
+        }
+        x = -3
+        y = 4
+        relative_position_id = SLA_victory_in_the_red_river_war
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            add_state_core = 155
+            155 = {
+                add_extra_state_shared_building_slots = 3
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                    instant_build = yes
+                }
+                add_building_construction = {
+                    type = dockyard
+                    level = 1
+                    instant_build = yes
+                }
+                add_building_construction = {
+                    type = infrastructure
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SLA_ally_arkansas
+        icon = GFX_
+        prerequisite = { focus = SLA_demand_biloxi}
+        mutually_exclusive = { focus = SLA_invade_arkansas}
+        available = {
+            is_faction_leader = yes
+        }
+        x = -1
+        y = 1
+        relative_position_id = SLA_demand_biloxi
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 0
+                is_historical_focus_on = yes
+            }
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_to_faction = SAR
+        }
+    }
+    focus = {
+        id = SLA_invade_arkansas
+        icon = GFX_
+        prerequisite = { focus = SLA_demand_biloxi}
+        mutually_exclusive = { focus = SLA_ally_arkansas}
+        available = {
+            has_army_manpower = {
+                size > 120000
+            }
+        }
+        x = 1
+        y = 1
+        relative_position_id = SLA_demand_biloxi
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = SAR
+
+        completion_reward = {
+            claim_arkansas = yes
+            create_wargoal = {
+                target = SAR
+                type = annex_everything
+            }
+        }
+    }
+    focus = {
+        id = SLA_nationalize_arksansas
+        icon = GFX_
+        prerequisite = { focus = SLA_invade_arkansas}
+        available = {
+            controls_arkansas_trigger = yes
+        }
+        x = 0
+        y = 1
+        relative_position_id = SLA_invade_arkansas
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            core_arkansas = yes
+        }
+    }
+    focus = {
+        id = SLA_influence_in_the_deep_south
+        icon = GFX_
+        prerequisite = { focus = SLA_nationalize_arksansas focus = SLA_ally_arkansas}
+        available = {
+            any_country = {
+                has_idea = SLA_hueys_influence
+                NOT = {
+                    is_in_faction_with = SLA
+                }
+            }
+        }
+        bypass = {
+            NOT = {
+                any_country = {
+                    has_idea = SLA_hueys_influence
+                    NOT = {
+                        is_in_faction_with = SLA
+                    }
+                }
+            }
+        }
+        x = -1
+        y = 1
+        relative_position_id = SLA_nationalize_arksansas
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            every_country = {
+                limit = {
+                    has_idea = SLA_hueys_influence
+                    NOT = {
+                        is_in_faction_with = SLA
+                    }
+                }
+                SLA = {
+                    add_to_faction = PREV
+                }
+            }
+            every_country = {
+                limit = {
+                    has_idea = SLA_hueys_influence
+                }
+                swap_ideas = {
+                    remove_idea = SLA_hueys_influence
+                    add_idea = SLA_hueys_puppet
+                }
+            }
+        }
+    }
+    focus = {
+        id = SLA_realign_mississippi
+        icon = GFX_
+        prerequisite = { focus = SLA_influence_in_the_deep_south}
+        available = {
+            SMS = {
+                has_government = democratic
+            }
+            has_army_manpower = {
+                size > 150000
+            }
+        }
+        x = 1
+        y = 1
+        relative_position_id = SLA_influence_in_the_deep_south
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            create_wargoal = {
+                target = SMS
+                type = annex_everything
+            }
+            claim_mississippi = yes
+        }
+    }
+    focus = {
+        id = SLA_dominate_tennessee
+        icon = GFX_
+        prerequisite = { focus = SLA_influence_in_the_deep_south}
+        available = {
+            country_exists = STN
+            has_army_manpower = {
+                size > 160000
+            }
+        }
+        bypass = {
+            NOT = {
+                country_exists = STN
+            }
+        }
+        x = -1
+        y = 1
+        relative_position_id = SLA_influence_in_the_deep_south
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                has_completed_focus = SLA_realign_mississippi
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            create_wargoal = {
+                target = STN
+                type = annex_everything
+            }
+            claim_tennessee = yes
+        }
+    }
+    ####################### loss of Red river war
+    focus = {
+        id = SLA_loss_in_the_red_river_war
+        icon = GFX_
+        prerequisite = { focus = SLA_create_the_jeffersonian_league}
+        mutually_exclusive = { focus = SLA_victory_in_the_red_river_war}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SLA_red_river_war_has_eneded_tt
+                NOT = {
+                    has_global_flag = red_river_war_has_begun
+                }
+            }
+            NOT = {
+                owns_state = 222
+                owns_state = 223
+                owns_state = 163
+            }
+            has_completed_focus = SLA_second_red_river_war
+        }
+        x = 3
+        y = 1
+        relative_position_id = SLA_create_the_jeffersonian_league
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_political_power = -50
+            add_war_support = 0.05
+        }
+    }
+    focus = {
+        id = SLA_anti_huey_protests
+        icon = GFX_focus_huey_long
+        ###Needeventwherestudentsinneworleansprotesthim 
+        prerequisite = { focus = SLA_loss_in_the_red_river_war}
+        available = {
+            always = no
+        }
+        x = 0
+        y = 1
+        cost = 10
+        relative_position_id = SLA_loss_in_the_red_river_war
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = yes
+    }
+      focus = {
+        id = SLA_new_orleans_crisis
+        icon = GFX_
+        prerequisite = { focus = SLA_anti_huey_protests}
+        #needseventwhere New orleans secedes huey won't actually attack at first 
+        x = 0
+        y = 1
+        relative_position_id = SLA_anti_huey_protests
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            
+        }
+    }
+}

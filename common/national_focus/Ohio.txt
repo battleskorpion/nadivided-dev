@@ -1,0 +1,2490 @@
+focus_tree = {
+	id = ohio
+	
+	country = {
+		factor = 0
+	
+	modifier = { 
+			add = 8
+			tag = SOH
+		} 
+	} 
+continuous_focus_position = { x = 0001 y = 1000 }
+
+# FOCUS TEMPLATE COPY + PASTE
+#
+# OCTAMAN'S CODE (NO STEALING LOLOLOL)																																															#stfu octOman
+#
+#	focus = {
+#		id = SOH_
+#		icon = GFX_
+#		prerequisite = { focus = }
+#		mutually_exclusive = { focus =  }
+#		x = -3
+#		y = 0
+#		relative_position_id =
+#
+#		cost = 10
+#
+#		ai_will_do = {
+#			factor = 1
+#		}
+#
+#		available = {
+#
+#		}
+#		
+#		bypass = {
+#
+#		}
+#
+#		cancel_if_invalid = yes
+#		continue_if_invalid = no
+#		available_if_capitulated = no
+#		complete_tooltip = {
+#
+#		}
+#
+#		completion_reward = {
+#
+#		}
+#	}
+
+#### NOTES ####
+
+#REMEMBER TO SET TOLEDO AS A DEMILITARIZED ZONE!!!!#
+
+
+
+
+	#------------------------------------------------------------------#
+	#	 NAVY SECTION  yeah i know, naval ohio, watch out skorpion.	   #
+	#------------------------------------------------------------------#
+
+	focus = {
+		id = SOH_naval_ohio
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		x = 17
+		y = 0
+
+		cost = 5
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+
+		}
+
+		bypass = {
+		
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+			navy_experience = 100
+			set_technology = {
+    			 early_destroyer = 1
+			}
+			set_technology = {
+				 early_submarine = 1
+			}
+			set_technology = {
+				 basic_battery = 1
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_form_the_GLNDF
+		icon = GFX_goal_generic_build_navy
+		prerequisite = { focus = SOH_naval_ohio }
+		x = 0
+		y = 1
+		relative_position_id = SOH_naval_ohio
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			navy_experience = 50
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = dockyard
+					level = 3
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_more_dockyards
+		icon = GFX_goal_generic_construct_naval_dockyard
+		prerequisite = { focus = SOH_form_the_GLNDF }
+		x = 0
+		y = 2
+		relative_position_id = SOH_naval_ohio
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+
+		#complete_tooltip = {
+		#	random_owned_controlled_state = { 				
+		#		limit = {
+		#			free_building_slots = {
+		#				building = dockyard
+		#				size > 1
+		#				include_locked = yes
+		#			}
+		#		}
+		#		add_extra_state_shared_building_slots = 2
+		#		add_building_construction = {
+		#			type = dockyard
+		#			level = 2
+		#			instant_build = yes
+		#		}
+		#	}
+		#}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					is_coastal = yes
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = SOH_more_dockyards
+			}
+			
+		}
+	}
+
+	focus = {
+		id = SOH_coastal_forts
+		icon = GFX_goal_generic_fortify_city
+		prerequisite = { focus = SOH_form_the_GLNDF }
+		x = 2
+		y = 2
+		relative_position_id = SOH_naval_ohio
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		available = {
+		}
+
+		bypass = {
+			NOT = {
+				controls_state = 538
+			}
+			NOT = {
+				controls_state = 540
+			}
+			NOT = {
+				controls_state = 48
+		    }
+		
+		    NOT = {
+				controls_state = 39
+			}
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+
+		completion_reward = {
+			every_owned_state = {
+				limit = {
+					is_controlled_by = ROOT
+					OR = {
+						state = 39
+						state = 48
+					}
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					province = {
+						all_provinces = yes
+						limit_to_coastal = yes
+					}
+					level = 4
+					instant_build = yes
+				}
+
+				#Extra fort on naval bases
+				add_building_construction = {
+					type = bunker
+					province = {
+						all_provinces = yes
+						limit_to_naval_base = yes
+					}
+					level = 4
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					province = {
+						all_provinces = yes
+						limit_to_naval_base = yes
+					}
+					level = 4
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_destroyers
+		icon = GFX_goal_generic_navy_anti_submarine
+		prerequisite = { focus = SOH_more_dockyards  }
+		mutually_exclusive = { focus = SOH_submarines }
+		x = -2
+		y = 3
+		relative_position_id = SOH_naval_ohio
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = SOH_destroyer_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = dd_tech
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_submarines
+		icon = GFX_goal_generic_navy_submarine
+		prerequisite = { focus = SOH_more_dockyards }
+		mutually_exclusive = { focus = SOH_destroyers }
+		x = 0
+		y = 3
+		relative_position_id = SOH_naval_ohio
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 2
+		}
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = SOH_submarine_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = ss_tech
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_light_cruisers
+		icon = GFX_goal_generic_navy_cruiser
+		prerequisite = { focus = SOH_destroyers focus = SOH_submarines }
+		x = -2
+		y = 4
+		relative_position_id = SOH_naval_ohio
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = SOH_light_cruisers
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = cl_tech
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_big_ships
+		icon = GFX_goal_generic_navy_battleship
+		prerequisite = { focus = SOH_destroyers focus = SOH_submarines }
+		x = 0
+		y = 4
+		relative_position_id = SOH_naval_ohio
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = SOH_capital_ships
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = bb_tech
+				category = cv_tech
+			}
+		}
+	}
+
+	################################################
+	############################if anyone ever goes naval ohio i will shit myself ######################
+	####### AIR SECTION  hell yeah airplanes VROOOOOOOM ########
+	############################
+
+	focus = {
+		id = SOH_buy_planes
+		icon = GFX_goal_generic_air_doctrine
+		x = 22
+		y = 0
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_equipment_to_stockpile = {
+				type = nav_bomber_equipment_1
+				amount = 50
+				producer = SNJ
+			}
+			if = {
+				limit = {
+					SNJ = { has_tech = tactical_bomber1 }
+				}
+				add_equipment_to_stockpile = {
+					type = tac_bomber_equipment_1
+					amount = -100
+					producer = SNJ
+				}
+				else = {
+					add_equipment_to_stockpile = {
+						type = tac_bomber_equipment_0
+						amount = 100
+						producer = SNJ
+					}	
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_form_GLAF
+		icon = GFX_goal_generic_build_airforce
+		prerequisite = { focus = SOH_buy_planes }
+		x = 0
+		y = 1
+		relative_position_id = SOH_buy_planes
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		complete_tooltip = {
+			air_experience = 25
+			random_state = {				
+				limit = {
+					has_state_flag = SOH_form_GLAF
+				}
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+			add_tech_bonus = {
+				name = SOH_form_GLAF
+				bonus = 1.0
+				uses = 1
+				category = air_doctrine
+			}
+		}
+
+		completion_reward = {
+			air_experience = 25
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = air_base
+						size > 1
+					}
+				}
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = SOH_form_GLAF
+			}
+			add_tech_bonus = {
+				name = SOH_form_GLAF
+				bonus = 1.0
+				uses = 1
+				category = air_doctrine
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_fighters
+		icon = GFX_goal_generic_air_fighter2
+		prerequisite = { focus = SOH_form_GLAF }
+		mutually_exclusive = { focus = SOH_bombers }
+		x = -1
+		y = 2
+		relative_position_id = SOH_buy_planes
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = SOH_fighters
+				bonus = 1.0
+				uses = 1
+				category = light_fighter
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_bombers
+		icon = GFX_goal_generic_occupy_start_war
+		prerequisite = { focus = SOH_form_GLAF }
+		mutually_exclusive = { focus = SOH_fighters }
+		x = 1
+		y = 2
+		relative_position_id = SOH_buy_planes
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 2
+		}
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = SOH_bombers
+				bonus = 1.00
+				uses = 2
+				category = cat_strategic_bomber
+				category = tactical_bomber
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_navbombers
+		icon = GFX_goal_generic_air_naval_bomber
+		prerequisite = { focus = SOH_fighters focus = SOH_coastal_forts }
+		x = -3
+		y = 3
+		relative_position_id = SOH_buy_planes
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = SOH_navbombers
+				bonus = 1.00
+				uses = 2
+				category = naval_air
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_better_fighters
+		icon = GFX_goal_generic_air_fighter
+		prerequisite = { focus = SOH_fighters focus = SOH_bombers }
+		mutually_exclusive = { focus = SOH_better_bombers }
+		x = -1
+		y = 3
+		relative_position_id = SOH_buy_planes
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 25
+		}
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = SOH_better_fighters
+				bonus = 1.0
+				uses = 1
+				technology = early_fighter
+				technology = fighter1
+				technology = fighter2
+				technology = fighter3
+				category = cat_heavy_fighter
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_better_bombers
+		icon = GFX_goal_generic_air_bomber
+		prerequisite = { focus = SOH_fighters focus = SOH_bombers }
+		mutually_exclusive = { focus = SOH_better_fighters }
+		x = 1
+		y = 3
+		relative_position_id = SOH_buy_planes
+
+		cost = 10
+
+		ai_will_do = {
+			factor = 2
+		}
+
+		available = {
+
+		}
+
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+		search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = SOH_better_bombers
+				bonus = 1.0
+				uses = 2
+				category = cat_strategic_bomber
+			}
+		}
+	}
+
+	
+
+
+####################################
+#####The good stuff focus path######
+####################################
+
+
+
+	focus = {
+		id = SOH_the_gang
+		icon = GFX_focus_generic_treaty
+		x = 4
+		y = 0
+		cost = 10
+		ai_will_do = {
+			factor = 45
+		}
+		available_if_capitulated = yes
+		
+		search_filters = { FOCUS_FILTER_POLITICAL }	
+		
+		completion_reward = {
+			add_political_power = 150
+			
+			country_event = { days=0 id = Ohio.1}
+		}
+	}
+	
+	focus = {
+		id = SOH_politics
+		icon = GFX_focus_generic_treaty
+		prerequisite = { focus = SOH_the_gang }
+		x = 2
+		y = 1
+		cost = 10
+	
+		available_if_capitulated = yes
+	
+		ai_will_do = {
+			factor = 75
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }	
+		
+		completion_reward = {
+			add_political_power = 25
+		}
+	}
+	
+	
+	
+	focus = {
+		id = SOH_strong_leadership
+		icon = GFX_focus_generic_treaty
+		prerequisite = { focus = SOH_politics }
+		mutually_exclusive = { focus = SOH_individualism }
+		x = -1
+		y = 1
+		relative_position_id = SOH_politics
+	
+		cost = 10
+	
+		available_if_capitulated = yes
+	
+		ai_will_do = {
+			factor = 50
+				}
+		search_filters = { FOCUS_FILTER_POLITICAL }	
+		
+		completion_reward = {
+			add_timed_idea = { idea = SOH_strong_leadership  days = 2920 }
+		}
+	}
+	
+	focus = {
+		id = SOH_conscription
+		icon = GFX_focus_generic_treaty
+		prerequisite = { focus = SOH_strong_leadership focus = SOH_individualism }
+		x = -3
+		y = 2
+		relative_position_id = SOH_politics
+	
+		cost = 10
+	
+		available_if_capitulated = yes
+	
+		ai_will_do = {
+			factor = 5
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }	
+		
+		completion_reward = {
+			add_timed_idea = { idea = SOH_conscription  days = 1600 }
+			army_experience = 75
+			add_tech_bonus = {
+				name = land_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = land_doctrine
+			}
+		}
+	}
+	
+	focus = {
+		id = SOH_individualism 
+		icon = GFX_focus_generic_treaty
+		prerequisite = { focus = SOH_politics }
+		mutually_exclusive = { focus = SOH_strong_leadership }
+		x = 1
+		y = 1
+		relative_position_id = SOH_politics
+	
+		cost = 10
+	
+		available_if_capitulated = yes
+	
+		ai_will_do = {
+			factor = 75
+				}
+		search_filters = { FOCUS_FILTER_POLITICAL }	
+		
+		completion_reward = {
+			add_political_power = 50
+			add_stability = 0.1
+			add_ideas = SOH_individualism
+		}
+	}
+				
+					
+				
+	focus = {
+		id = SOH_neoliberalism
+		icon = GFX_focus_generic_treaty
+		prerequisite = { focus = SOH_individualism }
+		prerequisite = { focus = SOH_strong_leadership }
+		x = 0
+		y = 4
+		relative_position_id = SOH_politics
+		
+		cost = 10
+		
+		available_if_capitulated = yes
+		
+		ai_will_do = {
+			factor = 75
+				}
+		search_filters = { FOCUS_FILTER_POLITICAL }	
+		
+		completion_reward = {
+			add_ideas = SOH_neoliberalism
+		}
+	}
+	
+	
+	focus = {
+		id = SOH_toledo
+		icon = GFX_focus_generic_treaty
+		prerequisite = { focus = SOH_strong_leadership focus = SOH_individualism }
+		x = 0
+		y = 2
+		relative_position_id = SOH_politics
+	
+		cost = 10
+	
+		ai_will_do = {
+			factor = 1
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }	
+		available = {
+			has_army_manpower = {
+				size > 45000
+			}
+		}
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+	
+		}
+	
+		completion_reward = {
+			39 = { set_demilitarized_zone = no }
+			add_political_power = 20
+			army_experience = 5
+			add_manpower = 10000
+			add_named_threat = { threat = 10 name = SOH_toledo }
+			if = {
+				limit = { SMI = { is_puppet = no } }
+				SMI = {
+					country_event = { id = Ohio.1 }
+				}
+			}
+			
+			add_tech_bonus = {
+				name = land_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = land_doctrine
+			}
+		}		
+	}
+		
+	focus = {
+		id = SOH_aggressive
+		icon = GFX_focus_generic_treaty
+		prerequisite = { focus = SOH_strong_leadership }
+		x = -1
+		y = 3
+		relative_position_id = SOH_politics
+	
+		cost = 10
+	
+		available_if_capitulated = yes
+	
+		ai_will_do = {
+			factor = 50
+				}
+		search_filters = { FOCUS_FILTER_POLITICAL }	
+		
+		completion_reward = {
+			add_ideas = SOH_aggressive
+			#faster war goals, less world tension, etc.#
+			}
+		}
+
+		focus = {
+			id = SOH_defensive
+			icon = GFX_focus_generic_treaty
+			prerequisite = { focus = SOH_individualism }
+			x = 1
+			y = 3
+			relative_position_id = SOH_politics
+	
+			cost = 10
+	
+			available_if_capitulated = yes
+	
+			ai_will_do = {
+				factor = 50
+					}
+			search_filters = { FOCUS_FILTER_POLITICAL }	
+			
+			completion_reward = {
+				add_ideas = SOH_defensive
+				#it's the detterence shit#
+			}
+		}
+
+	############
+	#economics###
+	###############
+	focus = {
+		id = SOH_economy
+		icon = GFX_focus_generic_treaty
+		prerequisite = { focus = SOH_the_gang }
+		x = 6
+		y = 1
+		cost = 10
+		
+		ai_will_do = {
+			factor = 100
+			
+			}
+		
+		
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			add_stability = 0.1
+			
+		}
+	}
+
+	
+	focus = {
+		id = SOH_shortterm
+		icon = GFX_focus_generic_treaty
+		prerequisite = { focus = SOH_economy }
+		mutually_exclusive = { focus = SOH_longterm }
+		x = 0
+		y = 1
+		relative_position_id = SOH_economy
+		cost = 10
+
+		ai_will_do = {
+			factor = 100
+			
+			}
+
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = SOH_mass_produce
+		icon = GFX_focus_generic_treaty
+		prerequisite = { focus = SOH_shortterm }
+		x = 0
+		y = 3
+		relative_position_id = SOH_economy
+		cost = 10
+	
+		ai_will_do = {
+			factor = 100
+			
+			}
+
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			add_timed_idea = { idea = SOH_mass_produce  days = 765 }
+		}
+	}
+		
+	focus = {
+		id = SOH_rapid_expansion
+		icon = GFX_focus_generic_treaty
+		prerequisite = { focus = SOH_longterm focus = SOH_shortterm }
+
+		x = 2
+		y = 2
+		relative_position_id = SOH_economy
+		cost = 10
+
+		ai_will_do = {
+			factor = 200			
+			}
+
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = SOH_industry
+		icon = GFX_focus_generic_treaty
+		prerequisite = { focus = SOH_longterm focus = SOH_shortterm }
+		x = 0
+		y = 2
+		relative_position_id = SOH_economy
+	
+	
+		cost = 10
+	
+		ai_will_do = {
+			factor = 50
+		}
+	
+		available = {
+	
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+		complete_tooltip = {
+	
+		}
+	
+		completion_reward = {
+			remove_ideas = SOH_Business_Deadlock
+			add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 1.0
+				uses = 2
+				category = industry
+			}
+		}
+	}	
+	
+	focus = {
+		id = SOH_Job_Creation_Projects
+		icon = GFX_focus_generic_treaty
+		prerequisite = { focus = SOH_industry }
+		x = 0
+		y = 2
+		relative_position_id = SOH_industry
+	
+	
+		cost = 10
+	
+		ai_will_do = {
+			factor = 100
+		}
+	
+		available = {
+			date > 1938.9.1	
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+		complete_tooltip = {
+	
+		}
+	
+		completion_reward = {
+			remove_ideas = SOH_Great_Deppresion
+		}
+	}
+
+
+
+	###############################
+	#########WAR *stuff*####
+	############a message to any usa states mode redux team sifting through my code: EY YO FUCK YOU REDUX MOD TEAM!! WHY THE HELL YOU LOOKING THROUGH MY CODE DOG, THATS PRETTY FUCKED UP. YOU SHOULD'VE JUST ASKED AND I WOULD'VE GIVEN YOU THE .TXT FILE. SMH MY HEAD MAN.###
+	 
+	###DISCLAIMER: The views of the coder of the Ohio focus tree may or may not reflect the views of *North America Divided*. *North America Divided* does not necessarily support the views stated in the above text###
+	
+	focus = {
+		id = SOH_wargoals
+		icon = GFX_focus_generic_treaty
+		x = 12
+		y = 0
+	
+	
+	
+		cost = 5
+	
+		ai_will_do = {
+			factor = 40
+		}
+	
+		available = {
+			NOT = {
+				has_government = democratic
+			}
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+		complete_tooltip = {
+	
+		}
+	
+		completion_reward = {
+			add_political_power = -10
+				
+				
+		}
+	}	
+		
+	focus = {
+		id = SOH_greaterohio
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_wargoals }
+		relative_position_id = SOH_wargoals
+		cost = 5
+	
+		ai_will_do = {
+			factor = 45
+		}
+	
+		available = {
+	
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+		complete_tooltip = {
+	
+		}
+	
+		completion_reward = {
+			add_timed_idea = { idea = SOH_greaterohio  days = 1100 }
+			# annex_country = {
+    		# 	target = GER
+    		# 	transfer_troops = yes
+			# }
+		}
+	}
+	
+	focus = {
+		id = SOH_unite_the_river
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 2
+		prerequisite = { focus = SOH_greaterohio }
+		relative_position_id = SOH_wargoals
+		cost = 10
+	
+		ai_will_do = {
+			factor = 100
+			modifier = {
+				factor = 0
+				date < 1938.5.1
+			}				
+		}
+	
+		available = {
+					date > 1938.1.1
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+		complete_tooltip = {
+	
+		}
+	
+		completion_reward = {
+			create_wargoal = {
+				type = annex_everything
+				target = SIN
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = SIL
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = SKY
+	
+			}
+		}
+	}
+	
+	focus = {
+		id = SOH_snatch_west_virginia
+		icon = GFX_focus_generic_treaty
+		x = -1
+		y = 3
+		prerequisite = { focus = SOH_unite_the_river }
+		relative_position_id = SOH_wargoals
+		mutually_exclusive = { focus = SOH_respect_virginia }
+		cost = 10
+	
+		ai_will_do = {
+			factor = 41
+		}
+	
+		available = {
+			controls_state = 362
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+		complete_tooltip = {
+	
+		}
+	
+		completion_reward = {
+			create_wargoal = {
+				type = annex_everything
+				target = SWV
+	
+			}
+		}
+	}	
+
+	focus = {
+		id = SOH_60_Day_Offensive
+		icon = GFX_focus_generic_treaty
+		prerequisite = { focus = SOH_snatch_west_virginia }
+		x = -1
+		y = 1
+		relative_position_id = SOH_snatch_west_virginia
+	
+		cost = 5
+	
+		available_if_capitulated = yes
+	
+		ai_will_do = {
+			factor = 100
+				}
+		search_filters = { FOCUS_FILTER_POLITICAL }	
+		
+		completion_reward = {
+			add_timed_idea = { idea = SOH_60_Day_Offensive_Idea  days = 60 }
+			}
+		}
+
+	focus = {
+		id = SOH_respect_virginia
+		icon = GFX_focus_generic_treaty
+		x = 1
+		y = 3
+		prerequisite = { focus = SOH_unite_the_river }
+		relative_position_id = SOH_wargoals
+		mutually_exclusive = { focus = SOH_snatch_west_virginia }
+		cost = 5
+	
+		ai_will_do = {
+			factor = 0
+		}
+	
+		available = {
+	
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+		complete_tooltip = {
+	
+		}
+	
+		completion_reward = {
+			SVA = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = large_increase
+				}
+			}
+		}
+	}	
+	
+	
+	focus = {
+		id = SOH_cores
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 4
+		relative_position_id = SOH_wargoals
+		cost = 10
+		prerequisite = { focus = SOH_snatch_west_virginia focus = SOH_respect_virginia }
+		ai_will_do = {
+			factor = 40
+		}
+	
+		available = {	
+			date > 1939.6.1
+			controls_illinios_trigger = yes
+			controls_indiana_trigger = yes
+			controls_kentucky_trigger = yes
+			if = {
+				limit = {
+					controls_state = 297
+				}
+				controls_west_virginia_trigger = yes
+	
+			}
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+		complete_tooltip = {
+	
+		}
+	
+		completion_reward = {
+			add_ideas = SOH_Resentful_populist
+			add_ideas = SOH_lack_luster_bureaucracy
+			set_cosmetic_tag = GREATER_OHIO
+			core_illinios = yes
+			core_indiana = yes
+			core_kentucky = yes
+			if = {
+				limit = {
+					owns_state = 297
+				}
+				core_west_virginia = yes		
+			}
+
+		}
+	}
+
+	# focus = {
+	# 	id = SOH_Annex_Cleveland
+	# 	icon = GFX_focus_generic_treaty
+	# 	x = 2
+	# 	y = 1
+	# 	prerequisite = { focus = SOH_cores }
+	# 	relative_position_id = SOH_cores
+	# 	cost = 5
+	
+	# 	ai_will_do = {
+	# 		factor = 50
+	# 	}
+	
+	# 	available = {
+
+	# 	}
+		
+	# 	bypass = {
+	
+	# 	}
+	
+	# 	cancel_if_invalid = no
+	# 	continue_if_invalid = yes
+	# 	available_if_capitulated = yes
+	# 	complete_tooltip = {
+	# 		add_research_slot = 1
+	# 	}
+	
+	# 	completion_reward = {
+	# 		annex_country = {
+	# 			transfer_troops = yes
+	# 			target = CLE
+	# 		}
+	# 	}
+	# }
+
+	focus = {
+		id = SOH_New_Found_Money_For_Investment
+		icon = GFX_focus_generic_treaty
+		prerequisite = { focus = SOH_cores }
+		x = 0
+		y = 1
+		relative_position_id = SOH_cores
+		cost = 10
+	
+		available_if_capitulated = yes
+
+		ai_will_do = {
+			factor = 40
+		}
+
+		completion_reward = {
+
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_New_University
+		icon = GFX_focus_generic_treaty
+		x = -4
+		y = 1
+		prerequisite = { focus = SOH_New_Found_Money_For_Investment }
+		relative_position_id = SOH_New_Found_Money_For_Investment
+		cost = 10
+	
+		ai_will_do = {
+			factor = 40
+		}
+	
+		available = {
+	
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
+
+	focus = {
+		id = SOH_Construct_bureaucratic_center
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_New_University }
+		relative_position_id = SOH_New_University
+		cost = 10
+	
+		ai_will_do = {
+			factor = 40
+		}
+	
+		available = {
+	
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			remove_ideas = SOH_lack_luster_bureaucracy
+		}
+	}
+
+	focus = {
+		id = SOH_citizens_of_Ohio
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_Construct_bureaucratic_center }
+		relative_position_id = SOH_Construct_bureaucratic_center
+		cost = 10
+	
+		ai_will_do = {
+			factor = 40
+		}
+	
+		available = {
+	
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			remove_ideas = SOH_Resentful_populist
+		}
+	}
+
+	focus = {
+		id = SOH_Unite_our_political_sphere
+		icon = GFX_focus_generic_treaty
+		x = -2
+		y = 1
+		prerequisite = { focus = SOH_New_Found_Money_For_Investment }
+		relative_position_id = SOH_New_Found_Money_For_Investment
+		mutually_exclusive = { focus = SOH_Seize_Detroit }
+		mutually_exclusive = { focus = SOH_Army_Mutinies }	
+		mutually_exclusive = { focus = SOH_People_Demand_Elections }
+		mutually_exclusive = { focus = SOH_Ohios_farmers_March }
+		cost = 15
+	
+		ai_will_do = {
+			factor = 50
+		}
+	
+		available = {
+			has_government = neutrality
+			}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			add_stability = 0.1
+			add_political_power = 200
+		}
+	}
+
+	focus = {
+		id = SOH_Ohio_Oligarchy
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_Unite_our_political_sphere }
+		relative_position_id = SOH_Unite_our_political_sphere	
+		cost = 15
+	
+		ai_will_do = {
+			factor = 40
+		}
+	
+		available = {
+
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			set_cosmetic_tag = OHIO_ORDER
+			add_ideas = SOH_Olgarchy
+		}
+	}
+
+	focus = {
+		id = SOH_Domination_of_Commerce
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_Ohio_Oligarchy }
+		relative_position_id = SOH_Ohio_Oligarchy	
+		cost = 10
+	
+		ai_will_do = {
+			factor = 40
+		}
+	
+		available = {
+
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			add_ideas = SOH_Domination_of_Commerce
+		}
+	}
+
+	focus = {
+		id = SOH_Seize_Detroit
+		icon = GFX_focus_generic_treaty
+		x = 1
+		y = 1
+		prerequisite = { focus = SOH_New_Found_Money_For_Investment }
+		relative_position_id = SOH_New_Found_Money_For_Investment
+		mutually_exclusive = { focus = SOH_Unite_our_political_sphere }
+		mutually_exclusive = { focus = SOH_Army_Mutinies }	
+		mutually_exclusive = { focus = SOH_People_Demand_Elections }
+		mutually_exclusive = { focus = SOH_Ohios_farmers_March }
+		cost = 10
+	
+		ai_will_do = {
+			factor = 1
+		}
+	
+		available = {
+
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			add_ideas = SOH_Jingoistic_fervor
+			create_wargoal = {
+				type = annex_everything
+				target = SMI
+	
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_The_Mob_Takes_Control
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_Seize_Detroit }
+		relative_position_id = SOH_Seize_Detroit
+
+		cost = 10
+	
+		ai_will_do = {
+			factor = 40
+		}
+	
+		available = {
+			fascism > 0.50
+			}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			set_cosmetic_tag = IMPERIAL_OHIO
+			set_politics = {
+				ruling_party = fascism
+				elections_allowed = no
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_Mafia_Rule
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_The_Mob_Takes_Control }
+		relative_position_id = SOH_The_Mob_Takes_Control
+
+		cost = 10
+	
+		ai_will_do = {
+			factor = 40
+		}
+	
+		available = {
+
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			add_ideas = SOH_Mafia_Rule_idea
+		}
+	}
+
+	focus = {
+		id = SOH_Seize_The_Great_Lakes
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_Mafia_Rule }
+		relative_position_id = SOH_Mafia_Rule
+
+		cost = 25
+	
+		ai_will_do = {
+			factor = 40
+		}
+	
+		available = {
+
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			create_wargoal = {
+				type = annex_everything
+				target = SWI
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = SMI
+	
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_Open_Another_Front_To_invade_Ontario
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_Seize_The_Great_Lakes }
+		relative_position_id = SOH_Seize_The_Great_Lakes
+
+		cost = 10
+	
+		ai_will_do = {
+			factor = 40
+		}
+	
+		available = {
+
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			create_wargoal = {
+				type = annex_everything
+				target = SMN
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_Ontario_Is_Ours
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_Open_Another_Front_To_invade_Ontario }
+		relative_position_id = SOH_Open_Another_Front_To_invade_Ontario
+
+		cost = 10
+	
+		ai_will_do = {
+			factor = 40
+		}
+	
+		available = {
+
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			create_wargoal = {
+				type = annex_everything
+				target = PON
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_Army_Mutinies
+		icon = GFX_focus_generic_treaty
+		x = 4
+		y = 1
+		prerequisite = { focus = SOH_New_Found_Money_For_Investment }
+		relative_position_id = SOH_New_Found_Money_For_Investment
+		mutually_exclusive = { focus = SOH_Unite_our_political_sphere }
+		mutually_exclusive = { focus = SOH_Seize_Detroit }
+		mutually_exclusive = { focus = SOH_People_Demand_Elections }
+		mutually_exclusive = { focus = SOH_Ohios_farmers_March }
+		cost = 5
+	
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			add_ideas = SOH_Army_Mutinies_idea
+		}
+	}
+
+	focus = {
+		id = SOH_Trial_Of_the_Ohio_Gang
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_Army_Mutinies }
+		relative_position_id = SOH_Army_Mutinies
+
+		cost = 10
+	
+		ai_will_do = {
+			factor = 40
+		}
+	
+		available = {
+			has_government = communism
+			}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			set_cosmetic_tag = COMMUNAL_OHIO
+			add_war_support = 0.1
+		}
+	}
+
+	focus = {
+		id = SOH_Spread_The_Revolution
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_Trial_Of_the_Ohio_Gang }
+		relative_position_id = SOH_Trial_Of_the_Ohio_Gang
+
+		cost = 10
+	
+		ai_will_do = {
+			factor = 40
+		}
+	
+		available = {
+
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			add_ideas = SOH_Spread_The_Revoultion
+		}
+	}
+
+	focus = {
+		id = SOH_Liberate_the_Proletariate_Of_Pennsylvania
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_Spread_The_Revolution }
+		relative_position_id = SOH_Spread_The_Revolution
+
+		cost = 10
+	
+		ai_will_do = {
+			factor = 40
+		}
+	
+		available = {
+
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+		complete_tooltip = {
+		}
+	
+		completion_reward = {
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = SPA
+	
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_Liberate_New_York
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_Liberate_the_Proletariate_Of_Pennsylvania }
+		relative_position_id = SOH_Liberate_the_Proletariate_Of_Pennsylvania
+
+		cost = 20
+	
+		ai_will_do = {
+			factor = 40
+		}
+	
+		available = {
+
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+		complete_tooltip = {
+		}
+	
+		completion_reward = {
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = SNY
+	
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_The_Coast
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_Liberate_New_York }
+		relative_position_id = SOH_Liberate_New_York
+
+		cost = 25
+	
+		ai_will_do = {
+			factor = 40
+		}
+	
+		available = {
+
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+		complete_tooltip = {
+		}
+	
+		completion_reward = {
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = SNJ	
+			}
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = SDE	
+			}
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = SMD	
+			}
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = NYC	
+			}
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = SCT	
+			}
+			create_wargoal = {
+				type = puppet_wargoal_focus
+				target = SRI	
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_People_Demand_Elections
+		icon = GFX_focus_generic_treaty
+		x = 7
+		y = 1
+		prerequisite = { focus = SOH_New_Found_Money_For_Investment }
+		relative_position_id = SOH_New_Found_Money_For_Investment
+		mutually_exclusive = { focus = SOH_Unite_our_political_sphere }
+		mutually_exclusive = { focus = SOH_Seize_Detroit }
+		mutually_exclusive = { focus = SOH_Army_Mutinies }
+		mutually_exclusive = { focus = SOH_Ohios_farmers_March }
+		cost = 5
+	
+		ai_will_do = {
+			factor = 60
+		}
+
+		available = {
+
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			add_ideas = SOH_People_Demand_Elections_idea
+		}
+	}
+
+	focus = {
+		id = SOH_Free_Trade_Utopia
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_People_Demand_Elections }
+		relative_position_id = SOH_People_Demand_Elections
+		cost = 10
+	
+		ai_will_do = {
+			factor = 40
+		}
+
+		available = {
+			democratic > 0.45
+			}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			set_politics = {
+				ruling_party = democratic
+				elections_allowed = yes
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_Create_Ohio_Second_Amendment
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_Free_Trade_Utopia }
+		relative_position_id = SOH_Free_Trade_Utopia
+		cost = 10
+	
+		ai_will_do = {
+			factor = 40
+		}
+
+		available = {
+
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			add_ideas = SOH_Create_Second_Amendment_idea
+		}
+	}
+
+	focus = {
+		id = SOH_Ohios_farmers_March
+		icon = GFX_focus_generic_treaty
+		x = 10
+		y = 1
+		prerequisite = { focus = SOH_New_Found_Money_For_Investment }
+		relative_position_id = SOH_New_Found_Money_For_Investment
+		mutually_exclusive = { focus = SOH_Unite_our_political_sphere }
+		mutually_exclusive = { focus = SOH_Seize_Detroit }
+		mutually_exclusive = { focus = SOH_Army_Mutinies }
+		mutually_exclusive = { focus = SOH_People_Demand_Elections }
+		cost = 5
+	
+		ai_will_do = {
+			factor = 30
+		}
+
+		available = {
+
+			}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			add_ideas = SOH_The_Farmers_Outrage_Idea 
+		}
+	}
+
+	focus = {
+		id = SOH_Farmers_Reief
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_Ohios_farmers_March }
+		relative_position_id = SOH_Ohios_farmers_March
+
+		cost = 10
+	
+		ai_will_do = {
+			factor = 30
+		}
+
+		available = {
+			progressivism > 0.45
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			add_ideas = SOH_The_Farmers_Relief 
+			set_politics = {
+				ruling_party = progressivism
+				elections_allowed = yes
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_Create_Social_Security_Act
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_Farmers_Reief }
+		relative_position_id = SOH_Farmers_Reief
+
+		cost = 5
+	
+		ai_will_do = {
+			factor = 30
+		}
+
+		available = {
+
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			add_stability = 0.2
+		}
+	}
+
+	focus = {
+		id = SOH_Thriving_Agriculture
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_Create_Social_Security_Act }
+		relative_position_id = SOH_Create_Social_Security_Act
+
+		cost = 10
+	
+		ai_will_do = {
+			factor = 30
+		}
+
+		available = {
+
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			add_ideas = SOH_Thriving_Agriculture_Idea 
+		}
+	}
+
+	focus = {
+		id = SOH_Seize_Tennessee
+		icon = GFX_focus_generic_treaty
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_Thriving_Agriculture }
+		relative_position_id = SOH_Thriving_Agriculture
+
+		cost = 20
+	
+		ai_will_do = {
+			factor = 40
+		}
+	
+		available = {
+
+		}
+		
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+		complete_tooltip = {
+		}
+	
+		completion_reward = {
+			create_wargoal = {
+				type = annex_everything
+				target = STN
+	
+			}
+		}
+	}
+
+}	

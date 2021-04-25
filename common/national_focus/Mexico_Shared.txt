@@ -1,0 +1,2564 @@
+focus_tree = {
+    id = mexico_independent_states_focus
+
+    country = {
+        factor = 0
+
+        modifier = {
+            add = 10
+            OR = {
+                tag = BAJ
+                tag = MSO
+                tag = MCH
+                tag = MCO
+                tag = MNL
+                tag = MTA
+                tag = MSI
+                tag = MCM
+                tag = MGR
+                tag = MMO
+                tag = MOX
+                tag = MCI
+                tag = MTB
+                tag = MYU
+                tag = MCA
+                tag = MQR
+            }
+        }
+    }
+    default = no
+
+    continuous_focus_position = { x = 50 y = 1350 }
+
+#######################################
+##############look Inwards#############
+#######################################
+    focus = {
+        id = MSH_look_inwards
+        icon = GFX_focus_mexico_star
+        mutually_exclusive = { focus = MSH_forge_our_own_destiny}
+        mutually_exclusive = { focus = MSH_look_outwards}
+        x = 3
+        y = 0
+        cost = 5
+        ai_will_do = {
+            factor = 5
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            add_stability = 0.05
+        }
+    }
+    focus = {
+        id = MSH_collaborate_with_the_cartels
+        icon = GFX_focus_mex_caudillo_private_armies
+        prerequisite = { focus = MSH_look_inwards}
+        mutually_exclusive = { focus = MSH_collaborate_with_the_old_government}
+        x = 2
+        y = 1
+        relative_position_id = MSH_look_inwards
+        cost = 5
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 10
+                OR = {
+                    tag = MCM
+                }
+            }
+            modifier = {
+                factor = 2
+                OR = {
+                    tag = MSI
+                    tag = MCO
+                    tag = MTA
+                    tag = MNL
+                }
+            }
+            modifier = {
+                factor = 1.5
+                OR = {
+                    tag = BAJ
+                    tag = MSO
+                    tag = MCH
+                }
+            }
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_popularity = {
+                popularity = 0.1
+                ideology = fascism
+            }
+        }
+    }
+    focus = {
+        id = MSH_pledge_our_support
+        icon = GFX_focus_integrate
+        prerequisite = { focus = MSH_collaborate_with_the_cartels}
+        available = {
+            country_exists = MDC
+            MDC = {
+                any_owned_state = {
+                    OR = {
+                        has_state_flag = MDC_high_comp
+                        has_state_flag = MDC_low_comp
+                        has_state_flag = MDC_near_revolt
+                    }
+                }
+            }
+        }
+        x = -1
+        y = 1
+        relative_position_id = MSH_collaborate_with_the_cartels
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        
+        completion_reward = {
+            MDC = {
+                add_political_power = 50
+            }
+        }
+    }
+    focus = {
+        id = MSH_send_weapons
+        icon = GFX_goal_generic_small_arms
+        prerequisite = { focus = MSH_pledge_our_support}
+        available = {
+            country_exists = MDC
+        }
+        bypass = {
+            NOT = {
+                MDC = {
+                    any_owned_state = {
+                        OR = {
+                            has_state_flag = MDC_high_comp
+                            has_state_flag = MDC_low_comp
+                            has_state_flag = MDC_near_revolt
+                        }
+                    }
+                }
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = MSH_pledge_our_support
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            MDC = {
+                add_equipment_to_stockpile = {
+                    type = infantry_equipment
+                    amount = 2500
+                    producer = ROOT
+                }
+            }
+        }
+    }
+    focus = {
+        id = MSH_rewarded_for_our_aid
+        icon = GFX_focus_generic_concessions
+        prerequisite = { focus = MSH_send_weapons}
+        available = {
+            country_exists = MDC
+            NOT = {
+                MDC = {
+                    any_owned_state = {
+                        OR = {
+                            has_state_flag = MDC_high_comp
+                            has_state_flag = MDC_low_comp
+                            has_state_flag = MDC_near_revolt
+                        }
+                    }
+                }
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = MSH_send_weapons
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_stability = 0.07
+            add_war_support = 0.07
+        }
+    }
+    focus = {
+        id = MSH_rightful_expansion_of_our_territory
+        icon = GFX_focus_mex_redeem_aztlan
+        prerequisite = { focus = MSH_rewarded_for_our_aid}
+        x = 0
+        y = 1
+        relative_position_id = MSH_rewarded_for_our_aid
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            random_neighbor_country = {
+                limit = {
+                    # is_a_state_of_mexico = yes
+                    NOT = {
+                        tag = MEX
+                        tag = MCL
+                        tag = MAC
+                        tag = MDC
+                    }
+                }
+                ROOT = {
+                    create_wargoal = {
+                        target = PREV
+                        type = annex_everything
+                    }
+                }
+                every_owned_state = {
+                    ROOT = {
+                        add_state_claim = PREV
+                    }
+                }
+            }
+        }
+    }
+    focus = {
+        id = MSH_advice_from_juan_nepomuceno_guerra
+        icon = GFX_focus_political_advice
+        prerequisite = { focus = MSH_collaborate_with_the_cartels}
+        x = 1
+        y = 1
+        relative_position_id = MSH_collaborate_with_the_cartels
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            custom_effect_tooltip = MSH_unlock_juan_nepomuceno_guerra_advisor_tt
+        }
+    }
+    focus = {
+        id = MSH_militarized_teachings
+        icon = GFX_focus_upgrade_troops
+        prerequisite = { focus = MSH_advice_from_juan_nepomuceno_guerra}
+        x = 0
+        y = 1
+        relative_position_id = MSH_advice_from_juan_nepomuceno_guerra
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MANPOWER }
+
+        completion_reward = {
+            add_ideas = militarism_focus
+        }
+    }
+    focus = {
+        id = MSH_collaborate_with_the_old_government
+        icon = GFX_focus_mexico_coorporate
+        prerequisite = { focus = MSH_look_inwards}
+        mutually_exclusive = { focus = MSH_collaborate_with_the_cartels}
+        x = -3
+        y = 1
+        relative_position_id = MSH_look_inwards
+        cost = 5
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 4
+                OR = {
+                    tag = MMO
+                }
+            }
+            modifier = {
+                factor = 3
+                OR = {
+                    tag = MCM
+                    tag = MGR
+                    tag = MOX
+                    tag = MQR
+                }
+            }
+            modifier = {
+                factor = 2
+                OR = {
+                    tag = MCI
+                    tag = MTB
+                    tag = MCA
+                    tag = MYU
+                }
+            }
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_popularity = {
+                popularity = 0.1
+                ideology = democratic
+            }
+        }
+    }
+    focus = {
+        id = MSH_invite_advisors
+        icon = GFX_focus_generic_military_academy
+        prerequisite = { focus = MSH_collaborate_with_the_old_government}
+        x = 1
+        y = 1
+        relative_position_id = MSH_collaborate_with_the_old_government
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            custom_effect_tooltip = MSH_adalberto_tejeda_olivares_minister_tt
+            add_political_power = 50
+        }
+    }
+    focus = {
+        id = MSH_invite_private_business
+        icon = GFX_goal_generic_intelligence_exchange
+        prerequisite = { focus = MSH_collaborate_with_the_old_government}
+        x = -1
+        y = 1
+        relative_position_id = MSH_collaborate_with_the_old_government
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            custom_effect_tooltip = MSH_designer_petroleos_mexicanos_tt
+        }
+    }
+    focus = {
+        id = MSH_independent_collaboration
+        icon = GFX_goal_generic_improve_relations
+        prerequisite = { focus = MSH_invite_private_business focus = MSH_invite_advisors}
+        x = 0
+        y = 2
+        relative_position_id = MSH_collaborate_with_the_old_government
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_war_support = 0.05
+            add_stability = 0.05
+        }
+    }
+    focus = {
+        id = MSH_research_collaboration
+        icon = GFX_goal_generic_scientific_exchange
+        prerequisite = { focus = MSH_independent_collaboration}
+        available = {
+            country_exists = MEX
+        }
+        x = -2
+        y = 1
+        relative_position_id = MSH_independent_collaboration
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+			if = {
+				limit = {
+					NOT = {
+						MEX = { is_in_tech_sharing_group = MEX_technological_cooperation_tech_group } 
+                    }
+				}
+				MEX = { add_to_tech_sharing_group = MEX_technological_cooperation_tech_group }
+			}
+			add_to_tech_sharing_group = MEX_technological_cooperation_tech_group
+        }
+    }
+    focus = {
+        id = MSH_industrial_collaboration
+        icon = GFX_focus_share_industry
+        prerequisite = { focus = MSH_independent_collaboration}
+        available = {
+            country_exists = MEX
+        }
+        x = 0
+        y = 1
+        relative_position_id = MSH_independent_collaboration
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MSH_army_collaboration
+        icon = GFX_focus_joint_military_training
+        prerequisite = { focus = MSH_independent_collaboration}
+        available = {
+            country_exists = MEX
+        }
+        x = 2
+        y = 1
+        relative_position_id = MSH_independent_collaboration
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_MANPOWER }
+
+        completion_reward = {
+            army_experience = 50
+            add_manpower = 15000
+        }
+    }
+#######################################
+##############own desitny##############
+#######################################
+    focus = {
+        id = MSH_forge_our_own_destiny
+        icon = GFX_focus_generic_home_defense
+        mutually_exclusive = { focus = MSH_look_inwards}
+        mutually_exclusive = { focus = MSH_look_outwards}
+        x = 14
+        y = 0
+        cost = 10
+        ai_will_do = {
+            factor = 2
+            modifier = {
+                factor = 0
+                tag = MCM
+            }
+            modifier = {
+                factor = 0.5
+                OR = {
+                    tag = MMO
+                    tag = MQR
+                }
+            }
+            modifier = {
+                factor = 2
+                OR = {
+                    tag = MYU
+                    tag = MOX
+                    tag = MSO
+                    tag = MCH
+                }
+            }
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_war_support = 0.1
+        }
+    }
+    focus = {
+        id = MSH_fan_nationalism
+        icon = GFX_focus_expand_the_minutemen
+        prerequisite = { focus = MSH_forge_our_own_destiny}
+        x = -2
+        y = 1
+        relative_position_id = MSH_forge_our_own_destiny
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 3
+                OR = {
+                    manpower_per_military_factory < 10000
+                    num_divisions > 12
+                }
+                
+            }
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MANPOWER }
+
+        completion_reward = {
+            add_ideas = militarism_focus
+        }
+    }
+    focus = {
+        id = MSH_take_out_loans_to_buy_weapons
+        icon = GFX_goal_generic_investments
+        prerequisite = { focus = MSH_fan_nationalism}
+        prerequisite = { focus = MSH_focus_on_military_industry}
+        x = 2
+        y = 2
+        relative_position_id = MSH_fan_nationalism
+        cost = 5
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                stockpile_ratio = {
+                    archetype = infantry_equipment
+                    ratio < 0.8
+                }
+            }
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_timed_idea = {
+                idea = MSH_paying_off_debt
+                days = 180
+            }
+            add_equipment_to_stockpile = {
+                type = infantry_equipment
+                amount = 20000
+            }
+        }
+    }
+    focus = {
+        id = MSH_war_games
+        icon = GFX_goal_generic_army_doctrines
+        prerequisite = { focus = MSH_fan_nationalism}
+        x = 0
+        y = 1
+        relative_position_id = MSH_fan_nationalism
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 0.75
+                uses = 2
+                category = land_doctrine
+            }
+        }
+    }
+    focus = {
+        id = MSH_claim_ourselves_as_the_rightful_ruler_of_mexico
+        icon = GFX_focus_mexico_star
+        prerequisite = { focus = MSH_war_games}
+        x = 0
+        y = 2
+        relative_position_id = MSH_fan_nationalism
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            claim_all_of_mexico = yes
+        }
+    }
+    focus = {
+        id = MSH_expand_our_influence
+        icon = GFX_focus_mex_jefe_maximo
+        prerequisite = { focus = MSH_claim_ourselves_as_the_rightful_ruler_of_mexico}
+        bypass = {
+            NOT = {
+                any_neighbor_country = {
+                    is_a_state_of_mexico = yes
+                    NOT = {
+                        tag = MEX
+                        tag = MCL
+                        tag = MAC
+                        tag = MDC
+                    }
+                }
+            }
+        }
+        x = 0
+        y = 3
+        relative_position_id = MSH_fan_nationalism
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 0
+                date < 1938.06.01
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            random_neighbor_country = {
+                limit = {
+                    is_a_state_of_mexico = yes
+                    NOT = {
+                        tag = MEX
+                        tag = MCL
+                        tag = MAC
+                        tag = MDC
+                    }
+                }
+                ROOT = {
+                    create_wargoal = {
+                        target = PREV
+                        type = annex_everything
+                    }
+                }
+            }
+        }
+    }
+    focus = {
+        id = MSH_create_the_department_of_war_declaration
+        icon = GFX_focus_paper_stacked
+        prerequisite = { focus = MSH_claim_ourselves_as_the_rightful_ruler_of_mexico}
+        x = -2
+        y = 3
+        relative_position_id = MSH_fan_nationalism
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                has_completed_focus = MSH_expand_our_influence
+            }
+            modifier = {
+                factor = 0
+                date < 1938.06.01
+            }
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_ideas = MSH_department_of_war_declaration
+        }
+    }
+    focus = {
+        id = MSH_take_down_the_old_government
+        icon = GFX_focus_mexico_civil_war
+        prerequisite = { focus = MSH_expand_our_influence}
+        bypass = {
+            NOT = {
+                country_exists = MEX
+                country_exists = MCL
+                country_exists = MAC
+            }
+        }
+        x = 1
+        y = 4
+        relative_position_id = MSH_fan_nationalism
+        cost = 10
+        ai_will_do = {
+            factor = 2
+            modifier = {
+                factor = 0
+                NOT = {
+                    has_border_war_with = MEX
+                }
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            if = {
+                limit = {
+                    country_exists = MEX
+                }
+                create_wargoal = {
+                    target = MEX
+                    type = annex_everything
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MCL
+                }
+                create_wargoal = {
+                    target = MCL
+                    type = annex_everything
+                }
+            }
+            if = {
+                limit = {
+                    country_exists = MAC
+                }
+                create_wargoal = {
+                    target = MAC
+                    type = annex_everything
+                }
+            }
+        }
+    }
+    focus = {
+        id = MSH_take_down_the_cartels
+        icon = GFX_focus_mexico_haciendas_denied
+        prerequisite = { focus = MSH_expand_our_influence}
+        bypass = {
+            NOT = {
+                country_exists = MDC
+            }
+        }
+        x = -1
+        y = 4
+        relative_position_id = MSH_fan_nationalism
+        cost = 10
+        ai_will_do = {
+            factor = 2
+            modifier = {
+                factor = 0
+                NOT = {
+                    has_border_war_with = MDC
+                }
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            create_wargoal = {
+                target = MDC
+                type = annex_everything
+            }
+        }
+    }
+    focus = {
+        id = MSH_proclaim_a_new_mexico
+        icon = GFX_focus_mexico_star
+        prerequisite = { focus = MSH_take_down_the_cartels}
+        prerequisite = { focus = MSH_take_down_the_old_government}
+        available = {
+            own_mexico_proper = yes
+            own_the_cartels = yes
+            count_triggers = {
+                amount = 3
+                own_baja_california = yes
+                own_chihuahua = yes
+                own_coahuila = yes
+                own_nuevo_leon = yes
+                own_sinaloa = yes
+                own_sonora = yes
+                own_tamaulipas = yes
+            }
+            count_triggers = {
+                amount = 3
+                own_campeche = yes
+                own_chiapas = yes
+                own_guerrero = yes
+                own_morelos = yes
+                own_oaxaca = yes
+                own_quintatna_roo = yes
+                own_tabasco = yes
+                own_yucatan = yes
+            }
+        }
+        x = 0
+        y = 5
+        relative_position_id = MSH_fan_nationalism
+        cost = 10
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            core_all_of_mexico = yes
+        }
+    }
+    focus = {
+        id = MSH_expand_local_industry
+        icon = GFX_focus_ask_for_company_support
+        prerequisite = { focus = MSH_forge_our_own_destiny}
+        x = 2
+        y = 1
+        relative_position_id = MSH_forge_our_own_destiny
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 3
+                OR = {
+                    num_of_civilian_factories < 10
+                    num_of_military_factories < 8
+                }
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MSH_focus_on_civillian_industry
+        icon = GFX_focus_industry
+        prerequisite = { focus = MSH_expand_local_industry}
+        mutually_exclusive = { focus = MSH_focus_on_military_industry}
+        x = 1
+        y = 1
+        relative_position_id = MSH_expand_local_industry
+        cost = 15
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                num_of_civilian_factories < 10
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 2
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MSH_focus_on_military_industry
+        icon = GFX_focus_company_supported_war
+        prerequisite = { focus = MSH_expand_local_industry}
+        mutually_exclusive = { focus = MSH_focus_on_civillian_industry}
+        x = -1
+        y = 1
+        relative_position_id = MSH_expand_local_industry
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                num_of_military_factories < 8
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MSH_raid_old_military_bases
+        icon = GFX_focus_destroy_military_factories
+        prerequisite = { focus = MSH_forge_our_own_destiny focus = MSH_collaborate_with_the_cartels}
+        mutually_exclusive = { focus = MSH_rennovate_old_military_bases}
+        x = -6
+        y = 2
+        relative_position_id = MSH_forge_our_own_destiny
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            country_event = {
+                id = MSH.1
+            }
+        }
+    }
+    focus = {
+        id = MSH_rennovate_old_military_bases
+        icon = GFX_goal_generic_construct_mil_factory
+        prerequisite = { focus = MSH_forge_our_own_destiny}
+        mutually_exclusive = { focus = MSH_raid_old_military_bases}
+        x = -4
+        y = 2
+        relative_position_id = MSH_forge_our_own_destiny
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+            }
+        }
+    }
+#######################################
+#############Look Outwards#############
+#######################################
+    focus = {
+        id = MSH_look_outwards
+        icon = GFX_focus_north_america
+        mutually_exclusive = { focus = MSH_look_inwards}
+        mutually_exclusive = { focus = MSH_forge_our_own_destiny}
+        x = 24
+        y = 0
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_political_power = 75
+        }
+    }
+    focus = {
+        id = MSH_collaborate_with_california
+        icon = GFX_goal_generic_improve_relations
+        prerequisite = { focus = MSH_look_outwards}
+        mutually_exclusive = { focus = MSH_collaborate_with_texas}
+        x = -4
+        y = 1
+        relative_position_id = MSH_look_outwards
+        cost = 5
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 4
+                OR = {
+                    tag = BAJ
+                }
+            }
+            modifier = {
+                factor = 3
+                OR = {
+                    tag = MSO
+                    tag = MCH
+                    tag = MSI
+                }
+            }
+            modifier = {
+                factor = 2
+                OR = {
+                    tag = MCO
+                    tag = MNL
+                    tag = MTA
+                }
+            }
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_popularity = {
+                ideology = communism
+                popularity = 0.1
+            }
+        }
+    }
+    focus = {
+        id = MSH_californian_shipping_industry
+        icon = GFX_focus_naval_supremacy
+        prerequisite = { focus = MSH_collaborate_with_california}
+        available = {
+            any_owned_state = {
+                is_coastal = yes
+            }
+        }
+        x = -1
+        y = 1
+        relative_position_id = MSH_collaborate_with_california
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                any_owned_state = {
+                    is_coastal = yes
+                }
+            }
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                limit = {
+                    is_coastal = yes
+                }
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = dockyard
+                    level = 2
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                limit = {
+                    is_coastal = yes
+                }
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = dockyard
+                    level = 2
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MSH_embrace_the_radicals_of_california
+        icon = GFX_goal_support_communism
+        prerequisite = { focus = MSH_collaborate_with_california}
+        x = 1
+        y = 1
+        relative_position_id = MSH_collaborate_with_california
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            set_politics = {
+                ruling_party = communism
+            }
+        }
+    }
+    focus = {
+        id = MSH_accept_the_workers_plea
+        icon = GFX_focus_por_workers_of_iberia
+        prerequisite = { focus = MSH_embrace_the_radicals_of_california}
+        x = 1
+        y = 2
+        relative_position_id = MSH_collaborate_with_california
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_popularity = {
+                ideology = communism
+                popularity = 0.1
+            }
+            add_political_power = 50
+        }
+    }
+    focus = {
+        id = MSH_workers_on_the_frontlines
+        icon = GFX_focus_expand_the_minutemen
+        prerequisite = { focus = MSH_accept_the_workers_plea}
+        x = 1
+        y = 3
+        relative_position_id = MSH_collaborate_with_california
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                manpower_per_military_factory < 5000
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_MANPOWER }
+
+        completion_reward = {
+            if = {
+                limit = {
+                    has_idea = militarism_focus
+                }
+                add_manpower = 50000
+            }
+            else = {
+                add_ideas = militarism_focus
+            }
+        }
+    }
+    focus = {
+        id = MSH_efficeint_production
+        icon = GFX_focus_union_factories
+        prerequisite = { focus = MSH_workers_on_the_frontlines}
+        x = 1
+        y = 4
+        relative_position_id = MSH_collaborate_with_california
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_ideas = MSH_efficient_production_methods
+        }
+    }
+    focus = {
+        id = MSH_build_closer_ties_with_the_states
+        icon = GFX_focus_north_america_diplomacy
+        prerequisite = { focus = MSH_collaborate_with_california focus = MSH_collaborate_with_texas}
+        x = 0
+        y = 2
+        relative_position_id = MSH_look_outwards
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            add_political_power = 50
+            add_stability = 0.05
+        }
+    }
+    focus = {
+        id = MSH_adopt_american_business_models
+        icon = GFX_focus_generic_industry_2
+        prerequisite = { focus = MSH_build_closer_ties_with_the_states}
+        x = -1
+        y = 1
+        relative_position_id = MSH_build_closer_ties_with_the_states
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                num_of_civilian_factories < 10
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 2
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MSH_adopt_american_navies
+        icon = GFX_goal_generic_navy_carrier
+        prerequisite = { focus = MSH_build_closer_ties_with_the_states}
+        available = {
+            any_owned_state = {
+                is_coastal = yes
+            }
+        }
+        x = 1
+        y = 1
+        relative_position_id = MSH_build_closer_ties_with_the_states
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            navy_experience = 75
+            random_owned_controlled_state = {
+                limit = {
+                    is_coastal = yes
+                }
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = dockyard
+                    level = 2
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MSH_adopt_american_sized_armies
+        icon = GFX_focus_chi_army_reform
+        prerequisite = { focus = MSH_adopt_american_navies focus = MSH_adopt_american_business_models}
+        x = 0
+        y = 2
+        relative_position_id = MSH_build_closer_ties_with_the_states
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                manpower_per_military_factory < 5000
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_MANPOWER }
+
+        completion_reward = {
+            army_experience = 50
+            if = {
+                limit = {
+                    has_idea = militarism_focus
+                }
+                add_manpower = 50000
+            }
+            else = {
+                add_ideas = militarism_focus
+            }
+        }
+    }
+    focus = {
+        id = MSH_collaborate_with_texas
+        icon = GFX_goal_generic_improve_relations
+        prerequisite = { focus = MSH_look_outwards}
+        mutually_exclusive = { focus = MSH_collaborate_with_california}
+        x = 4
+        y = 1
+        relative_position_id = MSH_look_outwards
+        cost = 5
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 4
+                OR = {
+                    tag = MTA
+                }
+            }
+            modifier = {
+                factor = 3
+                OR = {
+                    tag = MNL
+                    tag = MCO
+                }
+            }
+            modifier = {
+                factor = 2
+                OR = {
+                    tag = MSO
+                    tag = MCH
+                    tag = MSI
+                    tag = BAJ
+                }
+            }
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_popularity = {
+                ideology = longism
+                popularity = 0.1
+            }
+        }
+    }
+    focus = {
+        id = MSH_adopt_tenants_of_southern_populism
+        icon = GFX_focus_ideology_populism
+        prerequisite = { focus = MSH_collaborate_with_texas}
+        x = -1
+        y = 1
+        relative_position_id = MSH_collaborate_with_texas
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            set_politics = {
+                ruling_party = longism
+            }
+        }
+    }
+    focus = {
+        id = MSH_improve_quality_of_life
+        icon = GFX_focus_request_foreign_aid
+        prerequisite = { focus = MSH_adopt_tenants_of_southern_populism}
+        x = 0
+        y = 1
+        relative_position_id = MSH_adopt_tenants_of_southern_populism
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_stability = 0.05
+            add_popularity = {
+                popularity = 0.10
+                ideology = longism
+            }
+        }
+    }
+    focus = {
+        id = MSH_ensure_unity
+        icon = GFX_goal_generic_national_unity
+        prerequisite = { focus = MSH_improve_quality_of_life}
+        x = 0
+        y = 1
+        relative_position_id = MSH_improve_quality_of_life
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_ideas = why_we_fight_focus
+        }
+    }
+    focus = {
+        id = MSH_protect_our_new_way_of_life
+        icon = GFX_goal_generic_defence
+        prerequisite = { focus = MSH_ensure_unity}
+        x = 0
+        y = 1
+        relative_position_id = MSH_ensure_unity
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            if = {
+                limit = {
+                    has_idea = militarism_focus
+                }
+                add_manpower = 50000
+            }
+            else = {
+                add_ideas = militarism_focus
+            }
+        }
+    }
+    focus = {
+        id = MSH_expand_our_resource_extraction
+        icon = GFX_goal_generic_oil_refinery
+        prerequisite = { focus = MSH_collaborate_with_texas}
+        x = 1
+        y = 1
+        relative_position_id = MSH_collaborate_with_texas
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                type = oil
+                amount = 48
+                state = THIS
+            }
+        }
+    }
+#######################################
+#############generic trees#############
+#######################################
+    focus = {
+        id = MSH_expand_our_industry
+        icon = GFX_focus_industry
+        x = 33
+        y = 0
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                num_of_civilian_factories < 10
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MSH_expand_civilian_industry
+        icon = GFX_goal_generic_construct_civilian
+        prerequisite = { focus = MSH_expand_our_industry}
+        x = -1
+        y = 1
+        relative_position_id = MSH_expand_our_industry
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                num_of_civilian_factories < 10
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 2
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MSH_expand_civilian_industry2
+        icon = GFX_goal_generic_construct_civ_factory
+        prerequisite = { focus = MSH_expand_civilian_industry}
+        x = -1
+        y = 2
+        relative_position_id = MSH_expand_our_industry
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                num_of_civilian_factories < 10
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MSH_research_initiative
+        icon = GFX_focus_research
+        prerequisite = { focus = MSH_expand_civilian_industry2}
+        x = 0
+        y = 3
+        relative_position_id = MSH_expand_our_industry
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_research_slot = 1
+        }
+    }
+    focus = {
+        id = MSH_fund_universities
+        icon = GFX_focus_research2
+        prerequisite = { focus = MSH_research_initiative}
+        x = 0
+        y = 4
+        relative_position_id = MSH_expand_our_industry
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_research_slot = 1
+        }
+    }
+    focus = {
+        id = MSH_expand_military_industry
+        icon = GFX_focus_ask_for_company_support
+        prerequisite = { focus = MSH_expand_our_industry}
+        x = 1
+        y = 1
+        relative_position_id = MSH_expand_our_industry
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                num_of_military_factories < 8
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = arms_factory
+                    level = 2
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MSH_expand_military_industry2
+        icon = GFX_goal_generic_construct_mil_factory
+        prerequisite = { focus = MSH_expand_military_industry}
+        x = 1
+        y = 2
+        relative_position_id = MSH_expand_our_industry
+        cost = 10
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                num_of_military_factories < 8
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = MSH_expand_dockyards
+        icon = GFX_goal_generic_construct_naval_dockyard
+        prerequisite = { focus = MSH_expand_military_industry}
+        x = 2
+        y = 3
+        relative_position_id = MSH_expand_our_industry
+        cost = 15
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                num_of_naval_factories < 5
+            }
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                limit = {
+                    is_coastal = yes
+                }
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = dockyard
+                    level = 2
+                    instant_build = yes
+                }
+            }
+            random_owned_controlled_state = {
+                limit = {
+                    is_coastal = yes
+                }
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = dockyard
+                    level = 1
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+		id = MSH_army_effort
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 38
+		y = 0
+		cost = 10
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			army_experience = 75
+			add_tech_bonus = {
+				name = land_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = land_doctrine
+			}
+		}
+	}
+
+	focus = {
+		id = MSH_equipment_effort
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = MSH_army_effort }
+		x = -1
+		y = 1
+		relative_position_id = MSH_army_effort
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 1
+				category = infantry_weapons
+				category = artillery
+			}
+		}
+	}
+
+	focus = {
+		id = MSH_motorization_effort
+		icon = GFX_goal_generic_army_motorized
+		prerequisite = { focus = MSH_army_effort }
+		bypass = { has_tech = motorised_infantry }
+		x = 1
+		y = 1
+		relative_position_id = MSH_army_effort
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = motorized_bonus
+				bonus = 3.0
+				technology = motorised_infantry
+			}
+		}
+	}
+
+	focus = {
+		id = MSH_doctrine_effort
+		icon = GFX_goal_generic_army_doctrines
+		prerequisite = { focus = MSH_army_effort }
+		x = 0
+		y = 2
+		relative_position_id = MSH_army_effort
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			army_experience = 5
+			add_tech_bonus = {
+				name = land_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = land_doctrine
+			}
+		}
+	}
+
+	focus = {
+		id = MSH_equipment_effort_2
+		icon = GFX_goal_generic_army_artillery
+		prerequisite = { focus = MSH_equipment_effort }
+		x = 0
+		y = 2
+		relative_position_id = MSH_equipment_effort
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 1
+				category = infantry_weapons
+				category = artillery
+			}
+		}
+	}
+
+	focus = {
+		id = MSH_mechanization_effort
+		icon = GFX_goal_generic_build_tank
+		prerequisite = { focus = MSH_motorization_effort }
+		x = 0
+		y = 2
+		relative_position_id = MSH_motorization_effort
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = motorized_bonus
+				ahead_reduction = 2
+				uses = 1
+				category = motorized_equipment
+			}
+		}
+	}
+
+	focus = {
+		id = MSH_doctrine_effort_2
+		icon = GFX_goal_generic_army_doctrines
+		prerequisite = { focus = MSH_doctrine_effort }
+		x = 0
+		y = 2
+		relative_position_id = MSH_doctrine_effort
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			army_experience = 5
+			add_tech_bonus = {
+				name = land_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = land_doctrine
+			}
+		}
+	}
+
+	focus = {
+		id = MSH_equipment_effort_3
+		icon = GFX_goal_generic_army_artillery2
+		prerequisite = { focus = MSH_equipment_effort_2 }
+		x = 0
+		y = 2
+		relative_position_id = MSH_equipment_effort_2
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				ahead_reduction = 2
+				uses = 1
+				category = infantry_weapons
+				category = artillery
+			}
+		}
+	}
+
+	focus = {
+		id = MSH_armor_effort
+		icon = GFX_goal_generic_army_tanks
+		prerequisite = { focus = MSH_mechanization_effort }
+		x = 0
+		y = 2
+		relative_position_id = MSH_mechanization_effort
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = armor_bonus
+				bonus = 1.0
+				uses = 2
+				category = armor
+			}
+		}
+	}
+
+	focus = {
+		id = MSH_special_forces
+		icon = GFX_goal_generic_special_forces
+		prerequisite = { focus = MSH_equipment_effort_3 }
+		prerequisite = { focus = MSH_doctrine_effort_2 }
+		prerequisite = { focus = MSH_armor_effort }
+		x = 1
+		y = 1
+		relative_position_id = MSH_equipment_effort_3
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = special_forces
+			add_tech_bonus = {
+				name = special_forces_bonus
+				bonus = 1.0
+				uses = 1
+				technology = paratroopers
+				technology = paratroopers2
+				technology = marines
+				technology = marines2
+				technology = tech_mountaineers
+				technology = tech_mountaineers2
+			}
+		}
+	}
+    focus = {
+		id = MSH_aviation_effort
+		icon = GFX_goal_generic_build_airforce
+		x = 42
+		y = 0
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		complete_tooltip = {
+			air_experience = 25
+			if = { limit = { has_country_flag = aviation_effort_AB }
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}			
+			add_tech_bonus = {
+				name = air_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = air_doctrine
+			}			
+		}
+
+		completion_reward = {
+			air_experience = 25
+
+			if = {
+				limit = {
+					capital_scope = {
+						NOT = {
+							free_building_slots = {
+								building = air_base
+								size > 1
+							}
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_AB }
+				}
+			}
+			if = {
+				limit = {
+					capital_scope = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+				}
+				capital_scope = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_AB }
+				}
+			}
+			add_tech_bonus = {
+				name = air_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = air_doctrine
+			}
+		}
+	}
+
+	focus = {
+		id = MSH_fighter_focus
+		icon = GFX_goal_generic_air_fighter
+		prerequisite = { focus = MSH_aviation_effort }
+		mutually_exclusive = { focus = MSH_bomber_focus }
+		x = -1
+		y = 1
+		relative_position_id = MSH_aviation_effort
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = fighter_bonus
+				bonus = 1.0
+				uses = 2
+				technology = early_fighter
+				technology = fighter1
+				technology = fighter2
+				technology = fighter3
+				technology = heavy_fighter1
+				technology = heavy_fighter2
+				technology = heavy_fighter3
+			}
+		}
+	}
+
+	focus = {
+		id = MSH_bomber_focus
+		icon = GFX_goal_generic_air_bomber
+		prerequisite = { focus = MSH_aviation_effort }
+		mutually_exclusive = { focus = MSH_fighter_focus }
+		x = 1
+		y = 1
+		relative_position_id = MSH_aviation_effort
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = bomber_bonus
+				bonus = 1.0
+				uses = 2
+				technology = strategic_bomber1
+				technology = strategic_bomber2
+				technology = strategic_bomber3
+				category = tactical_bomber
+			}
+		}
+	}
+
+	focus = {
+		id = MSH_aviation_effort_2
+		icon = GFX_goal_generic_air_doctrine
+		prerequisite = { focus = MSH_bomber_focus focus = MSH_fighter_focus }
+		x = -1
+		y = 1
+		relative_position_id = MSH_bomber_focus
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		complete_tooltip = {
+			air_experience = 25
+			if = { limit = { has_country_flag = aviation_effort_2_AB }
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+			add_tech_bonus = {
+				name =  air_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = air_doctrine
+			}
+		}
+		completion_reward = {
+			air_experience = 25
+			if = {
+				limit = {
+					capital_scope = {
+						OR = {
+							NOT = { is_controlled_by = ROOT }
+							NOT = {
+								free_building_slots = {
+									building = air_base
+									size > 1
+								}
+							}
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_2_AB }
+				}
+			}
+			if = {
+				limit = {
+					capital_scope = {
+						is_controlled_by = ROOT
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+				}
+				capital_scope = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}				
+					ROOT = { set_country_flag = aviation_effort_2_AB }
+				}
+			}
+			add_tech_bonus = {
+				name =  air_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = air_doctrine
+			}
+		}
+	}
+
+	focus = {
+		id = MSH_CAS_effort
+		icon = GFX_goal_generic_CAS
+		prerequisite = { focus = MSH_aviation_effort_2 }
+		prerequisite = { focus = MSH_motorization_effort }
+		x = -1
+		y = 1
+		relative_position_id = MSH_aviation_effort_2
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = CAS_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = cas_bomber
+			}
+		}
+	}
+
+	focus = {
+		id = MSH_rocket_effort
+		icon = GFX_focus_rocketry
+		prerequisite = { focus = MSH_aviation_effort_2 }
+        prerequisite = { focus = MSH_research_initiative}
+		x = 0
+		y = 2
+		relative_position_id = MSH_aviation_effort_2
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = jet_rocket_bonus
+				ahead_reduction = 2
+				uses = 2
+				category = rocketry
+				category = jet_technology
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.25
+				always = yes
+			}
+		}
+	}
+
+	focus = {
+		id = MSH_NAV_effort
+		icon = GFX_goal_generic_air_naval_bomber
+		prerequisite = { focus = MSH_aviation_effort_2 }
+		prerequisite = { focus = MSH_flexible_navy }
+		x = 1
+		y = 1
+		relative_position_id = MSH_aviation_effort_2
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = nav_bomber_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = naval_bomber
+			}
+		}
+	}
+    focus = {
+		id = MSH_naval_effort
+		icon = GFX_goal_generic_construct_naval_dockyard
+		x = 46
+		y = 0
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		available = {
+			any_state = {
+				is_coastal = yes
+				is_controlled_by = ROOT
+			}
+		}
+
+		complete_tooltip = {
+			navy_experience = 25
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = {
+				type = dockyard
+				level = 3
+				instant_build = yes
+			}
+		}
+		
+		completion_reward = {
+			navy_experience = 25
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+			}			
+		}
+	}
+
+	focus = {
+		id = MSH_flexible_navy
+		icon = GFX_goal_generic_build_navy
+		prerequisite = { focus = MSH_naval_effort }
+		mutually_exclusive = { focus = MSH_large_navy }
+		x = -1
+		y = 1
+		relative_position_id = MSH_naval_effort
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = sub_op_bonus
+				bonus = 1.0
+				uses = 2
+				technology = convoy_interdiction_ti
+				technology = unrestricted_submarine_warfare
+				technology = wolfpacks
+				technology = advanced_submarine_warfare
+				technology = combined_operations_raiding
+			}
+		}
+	}
+
+	focus = {
+		id = MSH_large_navy
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		prerequisite = { focus = MSH_naval_effort }
+		mutually_exclusive = { focus = MSH_flexible_navy }
+		x = 1
+		y = 1
+		relative_position_id = MSH_naval_effort
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = fleet_in_being_bonus
+				bonus = 1.0
+				uses = 2
+				category = fleet_in_being_tree
+			}
+		}
+	}
+
+	focus = {
+		id = MSH_submarine_effort
+		icon = GFX_goal_generic_navy_submarine
+		prerequisite = { focus = MSH_flexible_navy focus = MSH_large_navy }
+		x = 0
+		y = 1
+		relative_position_id = MSH_flexible_navy
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = ss_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = ss_tech
+			}
+		}
+	}
+
+	focus = {
+		id = MSH_cruiser_effort
+		icon = GFX_goal_generic_navy_cruiser
+		prerequisite = { focus = MSH_large_navy focus = MSH_flexible_navy }
+		x = 0
+		y = 1
+		relative_position_id = MSH_large_navy
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = cr_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = cl_tech
+				category = ca_tech
+			}
+		}
+	}
+
+	focus = {
+		id = MSH_destroyer_effort
+		icon = GFX_goal_generic_wolf_pack
+		prerequisite = { focus = MSH_submarine_effort }
+		x = 0
+		y = 1
+		relative_position_id = MSH_submarine_effort
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = dd_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = dd_tech
+			}
+		}
+	}
+
+	focus = {
+		id = MSH_capital_ships_effort
+		icon = GFX_goal_generic_navy_battleship
+		prerequisite = { focus = MSH_cruiser_effort }
+		x = 0
+		y = 1
+		relative_position_id = MSH_cruiser_effort
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			navy_experience = 25
+			add_tech_bonus = {
+				name = capital_ships_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = bc_tech
+				category = bb_tech
+				category = cv_tech
+			}
+		}
+	}
+}
