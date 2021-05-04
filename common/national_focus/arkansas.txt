@@ -47,6 +47,7 @@ continuous_focus_position = { x = 20 y = 2000 }
 		}
  
  		completion_reward = {
+		add_manpower = 3000
 			country_event = {
 						id  = arkansas.2	
 					} 			
@@ -69,6 +70,7 @@ continuous_focus_position = { x = 20 y = 2000 }
 		}
     
 		completion_reward = {
+		add_manpower = 3000
 			country_event = {
 						id  = arkansas.3	
 					} 			
@@ -89,8 +91,13 @@ continuous_focus_position = { x = 20 y = 2000 }
 
 		ai_will_do = {
 			factor = 160
-		
 			} 
+
+		completion_reward = {
+			add_political_power = 150
+			add_stability = -0.02
+		}
+
 	    }
 
 	#1936election
@@ -639,7 +646,7 @@ continuous_focus_position = { x = 20 y = 2000 }
         x = 0
         y = 1
         relative_position_id = SAR_spread_unionism
-		cost = 10 
+		cost = 5
 		available_if_capitulated = yes
 		prerequisite { focus = SAR_spread_unionism focus = SAR_begin_integration}
 		ai_will_do {
@@ -647,8 +654,7 @@ continuous_focus_position = { x = 20 y = 2000 }
 		}
 		####addgeneralsamfaubus
 	completion_reward = { 
-			
-            add_ideas = SAR_arkansas_peoples_army 
+			 
 			remove_ideas = SAR_Unpaid_army 
 
 		}
@@ -1176,7 +1182,7 @@ focus = {
 		icon =GFX_focus_vote_reenstation_act
 		x = -17
 		y = 0
-		cost = 10 
+		cost = 5
         available = {has_government = fascism}
         available = {has_government = democratic}
 		available = {
@@ -1188,7 +1194,7 @@ focus = {
 		ai_will_do {
 			factor = 160
 
-}
+	}
 }
 		
 	#twomoreyearsofcazhort
@@ -2226,7 +2232,201 @@ focus = {
 		###event to minnasoata
 		
               
-	   }
-	}							
+	   		}
+		}							
+
+	focus = { 
+		id = SAR_Modernizing_Arkansas_army
+		icon =GFX_focus_vote_reenstation_act
+		x = -5
+		y = 0
+		cost = 5
+
+		available = {
+				NOT = {
+					has_idea = SAR_Unpaid_army
+			}
+		}
+
+		###Obviously elections are done if they get defeated
+		available_if_capitulated = no 
+		prerequisite { }
+		ai_will_do {
+			factor = 160
+			}
+		completion_reward = {
+			set_technology = {
+    			interwar_antiair = 1
+			}
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 1
+				category = infantry_weapons
+				category = artillery
+			}
+		}
+
+	
+}
+
+	focus = {
+		id = SAR_People_army_arkansas
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SAR_Modernizing_Arkansas_army }
+		x = -1
+		y = 1
+		relative_position_id = SAR_Modernizing_Arkansas_army
+		cost = 10
+        mutually_exclusive = { focus = SAR_Proffesionalism }
+		ai_will_do = {
+			factor = 20
+		}
+
+		available = {
+			has_government = communism
+			}
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+            add_ideas = SAR_arkansas_peoples_army			
+		}
+	}
+
+	focus = {
+		id = SAR_Arkansas_doctrines
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SAR_People_army_arkansas 
+						focus = SAR_Proffesionalism
+		
+		}
+		x = 1
+		y = 1
+		relative_position_id = SAR_People_army_arkansas
+		cost = 5
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			army_experience = 5
+			add_tech_bonus = {
+				name = land_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = land_doctrine
+			}
+		}
+	}
+
+	focus = {
+		id = SAR_equipment_effort
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SAR_Arkansas_doctrines }
+		x = -2
+		y = 1
+		relative_position_id = SAR_Arkansas_doctrines
+		cost = 10
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 1
+				category = infantry_weapons
+				category = artillery
+			}
+		}
+	}
+
+	focus = {
+		id = SAR_Arkansas_doctrines2
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SAR_Arkansas_doctrines }
+		x = 0
+		y = 1
+		relative_position_id = SAR_Arkansas_doctrines
+		cost = 10
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			army_experience = 5
+			add_tech_bonus = {
+				name = land_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = land_doctrine
+			}
+		}
+	}
+
+
+	focus = {
+		id = SAR_Proffesionalism
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SAR_Modernizing_Arkansas_army }
+		x = 1
+		y = 1
+		relative_position_id = SAR_Modernizing_Arkansas_army
+		cost = 5
+        mutually_exclusive = { focus = SAR_People_army_arkansas }
+		ai_will_do = {
+			factor = 20
+		}
+
+		available = {
+			NOT = {
+				has_government = communism
+			}
+		}
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = SAR_Proffesionalism_idea
+		}
+	}
+
+	focus = {
+		id = SAR_Arkansas_indigenous_armor_designs
+		icon = GFX_goal_generic_army_tanks
+		prerequisite = { focus = SAR_Arkansas_doctrines }
+		x = 2
+		y = 1
+		relative_position_id = SAR_Arkansas_doctrines
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = armor_bonus
+				bonus = 1.0
+				uses = 2
+				category = armor
+			}
+		}
+	}
+
+
 	}
 
