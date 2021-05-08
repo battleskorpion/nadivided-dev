@@ -1125,26 +1125,51 @@ focus = {
 }
 		
 	#enforceprohibiton
+
 	focus = { 
 		id = SAR_enforce_prohibition
-		icon =GFX
-		x = 10
-		y = 7
-		cost = 10 
+		icon =GFX_focus_STX_CrushBootleggers
+        prerequisite = { focus = SAR_pay_the_klan}
+        x = 0
+        y = 1
+        relative_position_id = SAR_pay_the_klan
+		cost = 5 
 		available_if_capitulated = yes
-		prerequisite { focus = SAR_pay_the_klan}
+
 		ai_will_do {
 			factor = 1
 	}
 	completion_reward = {
 		add_stability = .10
+		}
 	}
+
+	focus = { 
+		id = SAR_harsh_prison_labour
+		icon =GFX
+        prerequisite = { focus = SAR_enforce_prohibition}
+        x = 1
+        y = 1
+        relative_position_id = SAR_enforce_prohibition
+		cost = 10 
+		available_if_capitulated = yes
+        prerequisite = { focus = SAR_klu_klux_army}
+		ai_will_do {
+			factor = 1
 	}
-			
+	completion_reward = {
+		add_stability = -0.05
+		add_timed_idea = {
+			idea = SAR_chain_gangs 
+			days = 150
+		    }
+		}
+	}		
+
 	#kluxkluxarmy
 	focus = { 
 		id = SAR_klu_klux_army
-		icon = GFX_focus_STX_CrushBootleggers
+		icon = x
 		x = 12
 		y = 7
 		cost = 10 
@@ -1157,14 +1182,33 @@ focus = {
 		remove_ideas = SAR_Unpaid_army
 	}
 }
-		
+
+	focus = { 
+		id = SAR_Deputize_clanmembers
+		icon =GFX
+        prerequisite = { focus = SAR_klu_klux_army}
+        prerequisite = { focus = SAR_texarkana_military_excercises}
+        x = 1
+        y = 1
+        relative_position_id = SAR_klu_klux_army
+		cost = 5
+		available_if_capitulated = yes
+
+		ai_will_do {
+			factor = 1
+	}
+	completion_reward = {
+		add_stability = -0.05
+		}
+	}
+
 	#texarkanamilitaryexercises
 	focus = { 
 		id = SAR_texarkana_military_excercises
 		icon =GFX
 		x = 14
 		y = 7
-		cost = 10 
+		cost = 10
 		available_if_capitulated = yes
 		prerequisite { focus = SAR_nationalize_plantations}
 		ai_will_do {
@@ -2594,7 +2638,7 @@ focus = {
 
 	focus = { 
 		id = SAR_Creating_A_Navy
-		icon =GFX_focus_vote_reenstation_act
+		icon =GFX_focus_SAR_navy
 		x = 13
 		y = 0
 		cost = 5
@@ -2722,7 +2766,7 @@ focus = {
 
 	focus = {
 		id = SAR_Receive_naval_council
-		icon = GFX_goal_generic_small_arms
+		icon = GFX_focus_SAR_naval_coucil
 		prerequisite = { focus = SAR_Creating_A_Navy }
 		x = -1
 		y = 1
@@ -2743,7 +2787,7 @@ focus = {
 
 	focus = {
 		id = SAR_Catfish_navy
-		icon = GFX_goal_generic_small_arms
+		icon = GFX_focus_SAR_catfish_navy
 		prerequisite = { focus = SAR_Receive_naval_council focus = SAR_Arkansas_submarines }
 		x = 1
 		y = 1
@@ -2771,7 +2815,7 @@ focus = {
 
 	focus = {
 		id = SAR_Give_them_both_barrels
-		icon = GFX_goal_generic_small_arms
+		icon = GFX_focus_SAR_both_barrels
 		prerequisite = { focus = SAR_Catfish_navy }
 		x = 0
 		y = 1
@@ -2792,7 +2836,7 @@ focus = {
 
 	focus = {
 		id = SAR_naval_doctrine
-		icon = GFX_goal_generic_small_arms
+		icon = GFX_focus_SAR_naval_doctrines
 		prerequisite = { focus = SAR_Catfish_navy }
 		x = 2
 		y = 1
@@ -2818,7 +2862,7 @@ focus = {
 
 	focus = {
 		id = SAR_The_southern_kings_of_Sea
-		icon = GFX_goal_generic_small_arms
+		icon = GFX_focus_SAR_southernkingsofsea
 		prerequisite = { focus = SAR_Catfish_navy }
 		x = -2
 		y = 1
@@ -2848,7 +2892,7 @@ focus = {
 
 	focus = {
 		id = SAR_Arkansas_submarines
-		icon = GFX_goal_generic_small_arms
+		icon = GFX_focus_SAR_submarine
 		prerequisite = { focus = SAR_Creating_A_Navy }
 		x = 1
 		y = 1
@@ -2875,7 +2919,7 @@ focus = {
 
 		focus = { 
 		id = SAR_Disrupt_the_vote
-		icon = GFX_focus_sar_faubus
+		icon = GFX_focus_SAR_handcox
 		mutually_exclusive = { focus = SAR_adkins}
 		mutually_exclusive = { focus = SAR_fulbright }
 		mutually_exclusive = { focus = SAR_faubus }
@@ -2900,25 +2944,13 @@ focus = {
 				popularity = 0.15
             }
 
-			create_country_leader = {
-				name = "Sam Faubus"
-				picture = "SAR_Portrait_sam_faubus.dds"
-				expire = "1965.1.1"
-				ideology = progressive_socialism
-				traits = {
-					headstrong
-					cornered_fox
-					triumphant_revolutionary
-		
-				}
-			}
 	   }
 
 	}
 
 	focus = { 
 		id = SAR_Bomb_Poling_stations
-		icon =GFX_focus_vote_reenstation_act
+		icon =GFX_focus_SAR_bombing_poling_station
 		prerequisite = { focus = SAR_Disrupt_the_vote }
 		x = -1
 		y = 1
@@ -2941,7 +2973,7 @@ focus = {
 
 	focus = { 
 		id = SAR_Bomb_the_Arkansas_State_Capitol
-		icon =GFX_focus_vote_reenstation_act
+		icon =GFX_focus_SAR_bomb_capitol
 		prerequisite = { focus = SAR_Disrupt_the_vote }
 		x = 1
 		y = 1
@@ -2964,7 +2996,7 @@ focus = {
 
 	focus = { 
 		id = SAR_Blacks_march
-		icon =GFX_focus_vote_reenstation_act
+		icon =GFX_focus_SAR_blacks_march
 		prerequisite = { focus = SAR_Bomb_the_Arkansas_State_Capitol }
 		x = -1
 		y = 1
@@ -3000,7 +3032,7 @@ focus = {
 
 	focus = { 
 		id = SAR_Nationhood_of_ArchKansas
-		icon =GFX_focus_vote_reenstation_act
+		icon =GFX_focus_SAR_nationhood_arkansas
 		prerequisite = { focus = SAR_Blacks_march }
 		x = 0
 		y = 1
@@ -3022,7 +3054,7 @@ focus = {
 
 	focus = { 
 		id = SAR_Invite_Black_migrants
-		icon =GFX_focus_vote_reenstation_act
+		icon =GFX_focus_SAR_invite_black_migrants
 		prerequisite = { focus = SAR_Nationhood_of_ArchKansas }
 		x = 1
 		y = 1
@@ -3056,7 +3088,7 @@ focus = {
 
 	focus = { 
 		id = SAR_Urbanization_push
-		icon =GFX_focus_vote_reenstation_act
+		icon =GFX_focus_SAR_urbanization
 		prerequisite = { focus = SAR_Invite_Black_migrants }
 		x = 1
 		y = 1
@@ -3076,7 +3108,7 @@ focus = {
 
 	focus = { 
 		id = SAR_Help_liberate_our_brothers_from_oppression
-		icon =GFX_focus_vote_reenstation_act
+		icon =GFX_focus_SAR_bomb_liberation_campaign
 		prerequisite = { focus = SAR_Root_out_KKK }
 		x = -3
 		y = 1
@@ -3096,7 +3128,7 @@ focus = {
 
 	focus = { 
 		id = SAR_The_new_order
-		icon =GFX_focus_vote_reenstation_act
+		icon =GFX_focus_SAR_new_order
 		prerequisite = {  focus = SAR_Root_out_KKK }
 		prerequisite = { focus = SAR_Invite_Black_migrants }
 		x = -1
@@ -3117,7 +3149,7 @@ focus = {
 
 	focus = { 
 		id = SAR_Root_out_KKK
-		icon =GFX_focus_vote_reenstation_act
+		icon =GFX_focus_SAR_arrest_kkk
 		prerequisite = { focus = SAR_Nationhood_of_ArchKansas }
 		x = -1
 		y = 1
