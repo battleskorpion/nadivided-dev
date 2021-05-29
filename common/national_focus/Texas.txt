@@ -3748,6 +3748,7 @@ focus_tree = {
     focus = {
         id = STX_the_second_red_river_war
         icon = GFX_focus_STX_Red_River_War
+       mutually_exclusive = { focus = STX_Texas_pacifist_movement}
         prerequisite = { focus = STX_Organize_our_forces}
         available = {
             custom_trigger_tooltip = {
@@ -3780,6 +3781,84 @@ focus_tree = {
             }
             add_ideas = limited_conscription
         }
+    }
+
+    focus = {
+        id = STX_Texas_pacifist_movement
+        icon = GFX_focus_STX_pacifist_texas
+        prerequisite = { focus = STX_Organize_our_forces}
+       mutually_exclusive = { focus = STX_the_second_red_river_war} 
+        available = {
+            has_idea = STX_Texas_pacifists
+        }
+        bypass = {
+
+        }
+        x = 4
+        y = 1
+        relative_position_id = STX_Organize_our_forces
+        cost = 10
+        ai_will_do = {
+            factor = 100
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_RED_RIVER_WAR FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            add_war_support = -0.20
+            add_stability = -0.05
+            add_popularity = {
+                ideology = communism
+                popularity = 0.03
+            }
+            add_popularity = {
+                ideology = progressivism
+                popularity = 0.15
+            }
+        }
+    }
+
+    focus = {
+        id = STX_Texas_rangers_unneeded
+        icon = GFX_focus_STX_Texas_Rangers_very_weak
+        prerequisite = { focus = STX_Texas_pacifist_movement}
+
+        x = 0
+        y = 1
+        relative_position_id = STX_Texas_pacifist_movement
+        cost = 10
+        ai_will_do = {
+            factor = 100
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_RED_RIVER_WAR FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            decrease_texas_ranger_level = yes
+            add_stability = -0.05
+        }
+        
+    }
+
+    focus = {
+        id = STX_send_apology_to_oklahoma
+        icon = GFX_goal_generic_improve_relations
+        prerequisite = { focus = STX_Texas_rangers_unneeded}
+
+        x = 0
+        y = 1
+        relative_position_id = STX_Texas_rangers_unneeded
+        cost = 10
+        ai_will_do = {
+            factor = 100
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_RED_RIVER_WAR FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            add_political_power = -150
+        }
+        
     }
 
     focus = {
@@ -3888,7 +3967,7 @@ focus_tree = {
     focus = {
         id = STX_a_just_war
         icon = GFX_goal_generic_neutrality_focus
-        prerequisite = { focus = STX_enact_temporary_conscription focus = STX_let_the_rangers_handle_it}
+        prerequisite = { focus = STX_enact_temporary_conscription focus = STX_let_the_rangers_handle_it focus = STX_send_apology_to_oklahoma}
         x = -1
         y = 1
         relative_position_id = STX_enact_temporary_conscription
@@ -4305,6 +4384,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_RESEARCH }
 
         completion_reward = {
+            remove_ideas = STX_Texas_pacifists
             add_tech_bonus = {
                 bonus = 0.8
                 uses = 1
@@ -4711,6 +4791,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_WAR_SUPPORT }
 
         completion_reward = {
+            remove_ideas = STX_Texas_pacifists
             add_war_support = 0.05
             country_event = {
                 id = texas.16
@@ -5161,6 +5242,7 @@ focus_tree = {
         available_if_capitulated = no
         
         completion_reward = {
+            remove_ideas = STX_Texas_pacifists
             custom_effect_tooltip = STX_spend_25_development_money_tt
             add_to_variable = { STX_money = -25 }
             every_owned_state = {
@@ -5487,6 +5569,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_RESEARCH } 
 
         completion_reward = {
+            remove_ideas = STX_Texas_pacifists
             add_tech_bonus = {
                 bonus = 0.75
                 uses = 1
@@ -5752,6 +5835,7 @@ focus_tree = {
         available_if_capitulated = yes
 
         completion_reward = {
+            remove_ideas = STX_Texas_pacifists
             add_popularity = {
                 ideology = communism
                 popularity = -0.07
@@ -7451,6 +7535,7 @@ focus_tree = {
         available_if_capitulated = no
 
         completion_reward = {
+            remove_ideas = STX_Texas_pacifists
             SLA = {
                 country_event = {
                     id = texas.33
@@ -7566,6 +7651,7 @@ focus_tree = {
         available_if_capitulated = yes
 
         completion_reward = {
+            remove_ideas = STX_Texas_pacifists
             add_popularity = {
                 ideology = fascism
                 popularity = 0.1
@@ -9017,6 +9103,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
+            remove_ideas = STX_Texas_pacifists
 			add_popularity = {
 			ideology = communism
 			popularity = 0.20
