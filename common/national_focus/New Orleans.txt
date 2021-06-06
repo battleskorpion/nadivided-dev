@@ -54,7 +54,7 @@ focus_tree = {
 
 		completion_reward = {
 			add_manpower = 6500	
-			add_timed_idea = { idea = ORL_police_dupties  days = 60 }			
+			add_timed_idea = { idea = ORL_police_dupties  days = 90 }			
 		}
 	}
 
@@ -1048,7 +1048,101 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
+			navy_experience = 25
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+			}			
 		}
 	}
 
@@ -1065,9 +1159,12 @@ focus_tree = {
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		available_if_capitulated = yes
 
-		completion_reward = {
-
-		}
+			add_tech_bonus = {
+				name = secret_bonus
+				bonus = 1.0
+				uses = 4
+				category = radar
+			}
 	}
 
 	focus = {
@@ -1100,7 +1197,13 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
+			add_tech_bonus = {
+				name = nav_bomber_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = naval_bomber
+			}
 		}
 	}
 
@@ -1171,7 +1274,14 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
+			add_ideas = special_forces
+			add_tech_bonus = {
+				name = special_forces_bonus
+				bonus = 1.0
+				uses = 2
+				technology = paratroopers
+				technology = paratroopers2
+			}
 		}
 	}
 
