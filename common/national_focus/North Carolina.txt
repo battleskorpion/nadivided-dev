@@ -328,7 +328,7 @@ focus = {
 		id = SNC_align_with_huey_long
 		icon = GFX_goal_generic_small_arms
 		prerequisite = { focus = SNC_hoey_presidency }
-		x = 2
+		x = 3
 		y = 1
 		relative_position_id = SNC_hoey_presidency
 		cost = 10
@@ -381,7 +381,7 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
+          add_ideas =  SNC_share_the_wealth
 		}
 	}
 	focus = {
@@ -397,9 +397,28 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
+         add_popularity = {
+				ideology = communism
+				popularity = 0.10
+            }
+		}
+	}
+	focus = {
+		id = SNC_we_follow_the_sickle
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SNC_every_man_a_comrade }
+		x = 0
+		y = 1
+		relative_position_id = SNC_every_man_a_comrade
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
 
 		}
 	}
+	######communists
 	focus = {
 		id = SNC_we_follow_the_sickle
 		icon = GFX_goal_generic_small_arms
@@ -625,6 +644,7 @@ focus = {
 		id = SNC_approch_south_carolina
 		icon = GFX_goal_generic_small_arms
 		prerequisite = { focus = SNC_influence_our_neighbors }
+		mutually_exclusive = { focus = SNC_claim_south_carolina}
 		x = 1
 		y = 2
 		relative_position_id = SNC_influence_our_neighbors
@@ -652,11 +672,12 @@ focus = {
 		}
 	}
 #
-
+#####plainly seize the state###############
 	focus = {
 		id = SNC_claim_south_carolina
 		icon = GFX_goal_generic_small_arms
 		prerequisite = { focus = SNC_influence_our_neighbors }
+		mutually_exclusive = { focus = SNC_approch_south_carolina}
 		x = -1
 		y = 2
 		relative_position_id = SNC_influence_our_neighbors
@@ -689,13 +710,14 @@ focus = {
 		id = SNC_approch_tennessee
 		icon = GFX_goal_generic_small_arms
 		prerequisite = { focus = SNC_influence_our_neighbors }
+		mutually_exclusive = { focus = SNC_claim_southwest_territory}
 		x = -3
 		y = 2
 		relative_position_id = SNC_influence_our_neighbors
 		cost = 10
 
 		available_if_capitulated = yes
-
+         
 		completion_reward = {
 
 		}
@@ -705,6 +727,7 @@ focus = {
 		id = SNC_claim_southwest_territory
 		icon = GFX_goal_generic_small_arms
 		prerequisite = { focus = SNC_influence_our_neighbors }
+		mutually_exclusive = { focus = SNC_approch_tennessee}
 		x = -5
 		y = 2
 		relative_position_id = SNC_influence_our_neighbors
@@ -864,7 +887,7 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
+          add_political_power = 150
 		}
 	}
 #
@@ -904,7 +927,8 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
+        add_stability = 0.05
+	    
 		}
 	}
 #
@@ -915,14 +939,17 @@ focus = {
 		x = 0
 		y = 1
 		relative_position_id = SNC_by_gods_grace
-		cost = 10
+		cost = 7
         ai_will_do = {
 			factor = 160
 		}
 		available_if_capitulated = yes
 
 		completion_reward = {
-
+              country_event = {
+		 
+				id  = north_carolina.x
+			} 
 		}
 	}
 #
@@ -938,9 +965,15 @@ focus = {
 			factor = 160
 		}
 		available_if_capitulated = yes
-
+       
 		completion_reward = {
-
+         add_tech_bonus = {
+				bonus = 1.0
+				uses = 2
+				category = land_doctrine
+ 
+			}
+			army_experience = 30
 		}
 	}
 #
@@ -956,7 +989,7 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
+          add_ideas = SNC_control_the_media
 		}
 	}
 #
@@ -972,7 +1005,9 @@ focus = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
+               country_event = {
+				id  = north_carolina.x
+			}
 		}
 	}
 #
@@ -990,7 +1025,11 @@ focus = {
 			factor = 160
 		}
 		completion_reward = {
-
+         add_manpower = 10000
+		   add_popularity = {
+				ideology = fascism
+				popularity = 0.05
+            }
 		}
 	}
 #
@@ -1007,8 +1046,34 @@ focus = {
 ai_will_do = {
 			factor = 160
 		}
+		####spread fascism to Virginia and SC for a while
 		completion_reward = {
+                add_ideas =  SNC_Spread_his_teachings  
+				set_rule = {
+				can_create_factions = yes
+			}
+			set_rule = {
+				can_join_factions = yes
+			}          
+		}
+	}
+	focus = {
+		id = SNC_silvershirt_legions
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SNC_the_true_enemy_of_america }
+		prerequisite = { focus = SNC_Spread_his_teachings }
+		x = -1
+		y = 1
+		relative_position_id = SNC_the_true_enemy_of_america
+		cost = 8
 
+		available_if_capitulated = yes
+ai_will_do = {
+			factor = 160
+		}
+		
+		completion_reward = {
+              add_ideas =  SNC_silvershirt_legions           
 		}
 	}
 #
@@ -1025,7 +1090,38 @@ ai_will_do = {
 		ai_will_do = {
 			factor = 160
 		}
+		#add a few factories#####
 		completion_reward = {
+           random_owned_controlled_state = {
+				limit = {
+ 					free_building_slots = {
+ 						building = industrial_complex
+ 						size > 1
+ 						include_locked = yes
+ 					}
+ 				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+        random_owned_controlled_state = {
+				limit = {
+ 					free_building_slots = {
+ 						building = industrial_complex
+ 						size > 1
+ 						include_locked = yes
+ 					}
+ 				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
 
 		}
 	}
@@ -1041,9 +1137,13 @@ ai_will_do = {
 		available_if_capitulated = yes
 ai_will_do = {
 			factor = 160
-		}
+		} 
+		##grab attack
 		completion_reward = {
-
+          country_event = {
+		 
+				id  = north_carolina.x
+			}
 		}
 	}
 #
@@ -1062,7 +1162,7 @@ ai_will_do = {
 			factor = 160
 		}
 		completion_reward = {
-
+            add_war_support = 0.04
 		}
 	}
 #
@@ -1078,7 +1178,7 @@ ai_will_do = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
+           add_war_support = 0.05
 		}
 	}
 #
@@ -1094,7 +1194,11 @@ ai_will_do = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
+           claim_virginia = yes
+            create_wargoal = {
+                target = SVA
+                type = annex_everything
+            }
 		}
 	}
 #
@@ -1110,7 +1214,11 @@ ai_will_do = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
+                  SNC_claim_south_carolina = yes
+            create_wargoal = {
+                target = SSC
+                type = annex_everything
+            }      
 		}
 	}
 #
@@ -1126,7 +1234,11 @@ ai_will_do = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
+             claim_tennessee = yes
+            create_wargoal = {
+                target = STN
+                type = annex_everything
+            }
 		}
 	}
 #
@@ -1140,9 +1252,21 @@ ai_will_do = {
 		cost = 10
         mutually_exclusive = { focus = SNC_attack_the_jeffesonians }
 		available_if_capitulated = yes
-
+         available = {
+            custom_trigger_tooltip = {
+                tooltip = STX_huey_leads_louisiana_tt
+                SLA = {
+                    has_country_flag = SLA_huey_is_leader
+                }
+            }
+            country_exists = SLA
+        }
 		completion_reward = {
-
+         	SLA = {
+				country_event = {
+					id  = north_carolina.x	
+				} 
+			}
 		}
 	}
 #
@@ -1158,7 +1282,7 @@ ai_will_do = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
+          add_ideas = SNC_Partician_the_south
 		}
 	}
 #
@@ -1176,7 +1300,7 @@ ai_will_do = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-
+          add_ideas = SNC_the_confederacy_reborn
 		}
 	}
 #
@@ -1190,9 +1314,15 @@ ai_will_do = {
 		cost = 10
          mutually_exclusive = { focus = SNC_ally_huey}
 		available_if_capitulated = yes
-
+        available = {
+            country_exists = SLA
+        }
 		completion_reward = {
-
+                  SNC_claim_louisiana = yes
+            create_wargoal = {
+                target = SLA
+                type = annex_everything
+            }
 		}
 	}
 	focus = {
@@ -1205,13 +1335,45 @@ ai_will_do = {
 		cost = 10
 
 		available_if_capitulated = yes
-
+           available = {
+            OR = {
+                owns_state = 752
+            }
+          }
+          available = {
+            OR = {
+                owns_state = 19
+            }
+          }
+          available = {
+            OR = {
+                 owns_state = 20
+            }
+          }
+          available = {
+            OR = {
+                  owns_state = 753
+            }
+          }
+          available = {
+            OR = {
+                   owns_state = 21
+            }
+          }
+          available = {
+            OR = {
+                    owns_state = 754
+            }
+          }
+          available = {
+            OR = {
+                     owns_state =  75
+                
+            }
+          }
 		completion_reward = {
-
+             core_louisiana = yes
 		}
 	}
 #
 }#end
-
-
-
