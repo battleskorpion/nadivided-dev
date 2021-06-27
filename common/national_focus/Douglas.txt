@@ -1512,4 +1512,186 @@ focus = {
         }
     }
 
+	focus = {
+		id = DOU_Establish_Our_navy
+		icon = GFX_goal_generic_construct_naval_dockyard
+		x = 20
+		y = 1
+		cost = 2
+
+		#search_filters = {  FOCUS_FILTER_RESEARCH }
+		##they can ai spawn later####
+		available_if_capitulated = yes
+		available = {
+         owns_state = 155
+		}
+		ai_will_do = {
+			factor = 100
+		}
+
+		completion_reward = {
+			navy_experience = 50
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 5
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				155 = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 5
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 5
+					add_building_construction = {
+						type = dockyard
+						level = 5
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 5
+							include_locked = yes
+						}
+					}
+				}
+
+			}			
+		}
+	}
+
+	focus = {
+		id = DOU_flexible_navy
+		icon = GFX_goal_generic_build_navy
+		prerequisite = { focus = DOU_Establish_Our_navy }
+		mutually_exclusive = { focus = DOU_large_navy }
+		x = -1
+		y = 1
+		relative_position_id = DOU_Establish_Our_navy
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = sub_op_bonus
+				bonus = 1.0
+				uses = 2
+				technology = convoy_interdiction_ti
+				technology = unrestricted_submarine_warfare
+				technology = wolfpacks
+				technology = advanced_submarine_warfare
+				technology = combined_operations_raiding
+			}
+		}
+	}
+
+	focus = {
+		id = DOU_large_navy
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		prerequisite = { focus = DOU_Establish_Our_navy }
+		mutually_exclusive = { focus = DOU_flexible_navy }
+		x = 1
+		y = 1
+		relative_position_id = DOU_Establish_Our_navy
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = fleet_in_being_bonus
+				bonus = 1.0
+				uses = 2
+				category = fleet_in_being_tree
+			}
+		}
+	}
+
+	focus = {
+		id = DOU_submarine_effort
+		icon = GFX_goal_generic_navy_submarine
+		prerequisite = { focus = DOU_flexible_navy focus = DOU_large_navy }
+		x = 1
+		y = 1
+		relative_position_id = DOU_flexible_navy
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = ss_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = ss_tech
+			}
+		}
+	}
+
 }
