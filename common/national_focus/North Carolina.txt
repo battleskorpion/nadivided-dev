@@ -799,7 +799,7 @@ focus = {
 		id = SNC_Ellen_dawson
 		icon = GFX_focus_SNC_ellendawson
 		prerequisite = { focus = SNC_distribue_the_wealth }
-		x = 4
+		x = 5
 		y = 1
 		relative_position_id = SNC_distribue_the_wealth
 		mutually_exclusive = { focus = SNC_every_man_a_king}
@@ -823,7 +823,7 @@ focus = {
 		id = SNC_every_person_a_comrade
 		icon = GFX_focus_SNC_every_man_a_comrade
 		prerequisite = { focus = SNC_Ellen_dawson }
-		x = 4
+		x = 5
 		y = 2
 		relative_position_id = SNC_distribue_the_wealth
 
@@ -1634,6 +1634,25 @@ focus = {
 	}
 #
 	focus = {
+		id = SNC_Populist_troopers
+		icon = GFX_
+		prerequisite = { focus = SNC_Mass_Populist_propaganda }
+		x = -2
+		y = 1
+		relative_position_id = SNC_Mass_Populist_propaganda
+		cost = 10
+
+		available_if_capitulated = yes
+          ai_will_do = {
+			factor = 160
+		}
+		completion_reward = {
+
+		}
+	}
+#
+
+	focus = {
 		id = SNC_new_rifles
 		icon = GFX_
 		prerequisite = { focus = SNC_Mass_Populist_propaganda }
@@ -1725,7 +1744,7 @@ focus = {
 
 		available_if_capitulated = yes
         ai_will_do = {
-			factor = 160
+			factor = 1
 		}
 		completion_reward = {
             	add_tech_bonus = {
@@ -1735,7 +1754,44 @@ focus = {
 			}
 		}
 	}
+	focus = {
+		id = SNC_advananced_reaserch
+		icon = GFX_
+		prerequisite = { focus = SNC_Raleigh_project }
+		prerequisite = { focus = SNC_Electronics_Research }
+		x = 1
+		y = 1
+		relative_position_id = SNC_Raleigh_project
+		cost = 12
+
+		available_if_capitulated = yes
+        ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+
+		}
+	}
 #
+	focus = {
+		id = SNC_Electronics_Research
+		icon = GFX_
+		prerequisite = { focus = SNC_establish_SRD_program }
+		x = 4
+		y = 1
+		relative_position_id = SNC_establish_SRD_program
+		cost = 10
+
+		available_if_capitulated = yes
+          ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+
+		}
+	}
+#
+
 	focus = {
 		id = SNC_pool_military_resources1
 		icon = GFX_focus_SNC_pool_military_resources
@@ -2088,6 +2144,23 @@ ai_will_do = {
               add_ideas =  SNC_silvershirt_legions           
 		}
 	}
+	focus = {
+		id = SNC_fortify_our_capital
+		icon = GFX_
+		prerequisite = { focus = SNC_silvershirt_legions }
+		x = 2
+		y = 1
+		relative_position_id = SNC_silvershirt_legions
+		cost = 10
+
+		available_if_capitulated = yes
+          ai_will_do = {
+			factor = 40
+		}
+		completion_reward = {
+
+		}
+	}
 #
 	focus = {
 		id = SNC_silver_legion_commandos
@@ -2129,9 +2202,171 @@ ai_will_do = {
 		}
 	}
 #
+	focus = {
+		id = SNC_synthetic_research
+		icon = GFX_
+		prerequisite = { focus = SNC_fund_higher_education }
+		x = 0
+		y = 1
+		relative_position_id = SNC_fund_higher_education
+		cost = 10
 
+		available_if_capitulated = yes
+          ai_will_do = {
+			factor = 40
+		}
+		completion_reward = {
 
+		}
+	}
+#
+	focus = {
+		id = SNC_Increase_fuel_storage
+		icon = GFX_
+		prerequisite = { focus = SNC_synthetic_research }
+		x = 2
+		y = 1
+		relative_position_id = SNC_synthetic_research
+		cost = 10
 
+		available_if_capitulated = yes
+          ai_will_do = {
+			factor = 40
+		}
+		completion_reward = {
+
+		}
+	}
+#
+
+	focus = {
+		id = SNC_Pelly_Naval_plan
+		icon = GFX_
+		prerequisite = { focus = SNC_synthetic_research }
+		x = 0
+		y = 1
+		relative_position_id = SNC_synthetic_research
+		cost = 10
+
+		available_if_capitulated = yes
+          ai_will_do = {
+			factor = 40
+		}
+		available = {
+			any_owned_state = {
+				is_coastal = yes
+			}
+		}
+
+		complete_tooltip = {
+			navy_experience = 25
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = {
+				type = dockyard
+				level = 3
+				instant_build = yes
+			}
+		}
+		
+		completion_reward = {
+			navy_experience = 25
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+			}			
+		}
+	}
+#
 	focus = {
 		id = SNC_focus_on_domestic_affairs
 		icon = GFX_focus_SNC_focus_on_domestic
