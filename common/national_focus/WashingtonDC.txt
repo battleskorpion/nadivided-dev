@@ -10,7 +10,7 @@ focus_tree = {
 		}
 	}
 
-	continuous_focus_position = { x = 20 y = 1100 }
+	continuous_focus_position = { x = 20 y = 1300 }
 
 #
 
@@ -32,6 +32,7 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
+			add_manpower = 25000
 			country_event = {
 				id = WashingtonDC.1
 			}
@@ -382,7 +383,7 @@ focus_tree = {
 		prerequisite = { focus = WDC_rally_the_people focus = WDC_socialist_lessons focus = WDC_republican_lessons focus = WDC_democratic_lessons}
 		x = 6
 		y = 5
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 1
 		}
@@ -390,6 +391,7 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
+			add_political_power = 75
 			create_field_marshal = {
 				name = "MacArthur"
 				picture = "Portrait_USA_Douglas_MacArthur.dds"
@@ -418,7 +420,7 @@ focus_tree = {
 		icon = GFX_focus_attack_maryland_fire
 		prerequisite = { focus = WDC_call_macarther}
 		x = 6
-		y = 6
+		y = 7
 		cost = 5
 		ai_will_do = {
 			factor = 1
@@ -438,17 +440,11 @@ focus_tree = {
 	}	
 #
 	focus = {
-		id = WDC_integrate_maryland
-		icon = GFX_focus_integrate
-		prerequisite = { focus = WDC_strike_maryland}
-		available = {
-			custom_trigger_tooltip = {
-				tooltip = owns_maryland_tt
-				controls_maryland_trigger = yes
-			}
-		}
+		id = WDC_rebuild_war_machine
+		icon = GFX_goal_generic_construct_mil_factory
+		prerequisite = { focus = WDC_call_macarther}
 		x = 6
-		y = 7
+		y = 6
 		cost = 5
 		ai_will_do = {
 			factor = 1
@@ -457,10 +453,64 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			custom_effect_tooltip = core_maryland_tt
-			hidden_effect = {
-				core_maryland = yes
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
 			}
+		}			
+	}	
+#
+
+	focus = {
+		id = WDC_integrate_maryland
+		icon = GFX_focus_integrate
+		prerequisite = { focus = WDC_rebuild_war_machine}
+		available = {
+			#custom_trigger_tooltip = {
+			#	tooltip = owns_maryland_tt
+				controls_maryland_trigger = yes
+			#}
+		}
+		x = 6
+		y = 8
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = no
+
+		completion_reward = {
+			remove_ideas = WDC_A_shell_of_our_former_selves
+			#custom_effect_tooltip = core_maryland_tt
+			#hidden_effect = {
+				core_maryland = yes
+			#}
 		}
 	}
 #
@@ -483,7 +533,7 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			add_manpower = 1000
+			add_manpower = 25000
 			custom_effect_tooltip = militia_tt
 		}
 	}
@@ -502,7 +552,7 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			add_manpower = 1000
+			add_manpower = 25000
 			custom_effect_tooltip = militia2_tt
 		}
 	}
@@ -942,6 +992,13 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
+			create_wargoal = {
+   			type = annex_everything
+    		target = SPA
+			}			
+		}
+
+		#completion_reward = {
 			SPA = {
 				country_event = {
 					id = WashingtonDC.4
@@ -949,7 +1006,7 @@ focus_tree = {
 			}
 			custom_effect_tooltip = pennsylvania_inform_tt
 		}
-	}
+	#}
 #
 	focus = {
 		id = WDC_integrate_pennsylvania
@@ -2235,18 +2292,14 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			WDC = {
-				add_equipment_to_stockpile = {
-					type = strat_bomber_equipment_1
-					amount = 100
-					producer = WDC
-				}
-				add_equipment_to_stockpile = {
-					type = strat_bomber_equipment_2
-					amount = 100
-					producer = WDC
-				}
+		add_tech_bonus = {
+				name = cat_strategic_bomber_bonus
+				bonus = 1.0
+				uses = 2
+				category = cat_strategic_bomber
 			}
+
+
 		}
 	}
 #
@@ -6538,6 +6591,10 @@ focus_tree = {
 			set_rule = {
                 can_create_factions = yes
             }
+				start_civil_war = {
+				ideology = neutrality
+				size = 0.5
+			}
 		}
 	}
 #

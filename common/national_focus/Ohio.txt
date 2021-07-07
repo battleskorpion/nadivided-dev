@@ -894,8 +894,7 @@ continuous_focus_position = { x = 0001 y = 1000 }
 	focus = {
 		id = SOH_neoliberalism
 		icon = GFX_focus_generic_treaty
-		prerequisite = { focus = SOH_individualism }
-		prerequisite = { focus = SOH_strong_leadership }
+		prerequisite = { focus = SOH_individualism focus = SOH_strong_leadership }
 		x = 0
 		y = 4
 		relative_position_id = SOH_politics
@@ -911,31 +910,6 @@ continuous_focus_position = { x = 0001 y = 1000 }
 		
 		completion_reward = {
 			add_ideas = SOH_neoliberalism
-		}
-	}
-	
-	focus = {
-		id = SOH_bastion_of_freedom
-		icon = GFX_focus_generic_treaty
-		prerequisite = { focus = SOH_individualism }
-		prerequisite = { focus = SOH_defensive }
-		prerequisite = { focus = SOH_slow_and_steady focus = SOH_mass_produce }
-		x = 2
-		y = 5
-		relative_position_id = SOH_politics
-		
-		cost = 20
-		
-		available_if_capitulated = yes
-		
-		ai_will_do = {
-			factor = 75
-				}
-		search_filters = { FOCUS_FILTER_POLITICAL }	
-		
-		completion_reward = {
-			add_manpower = 12000
-			add_timed_idea = { idea = SOH_bastion_of_freedom  days = 600 }
 		}
 	}
 	
@@ -1062,50 +1036,14 @@ continuous_focus_position = { x = 0001 y = 1000 }
 			
 		}
 	}
-	focus = {
-		id = SOH_longterm
-		icon = GFX_focus_generic_treaty
-		prerequisite = { focus = SOH_economy }
-		mutually_exclusive = { focus = SOH_shortterm }
-		x = -1
-		y = 1
-		relative_position_id = SOH_economy
-		cost = 10
-	
-		available_if_capitulated = yes
 
-		ai_will_do = {
-			factor = 75			
-			}
-
-		completion_reward = {
-			add_timed_idea = { idea = SOH_longterm  days = 800 }
-		}
-	}
 	
-	focus = {
-		id = SOH_slow_and_steady
-		icon = GFX_focus_generic_treaty
-		prerequisite = { focus = SOH_longterm } 
-		x = -1
-		y = 3
-		relative_position_id = SOH_economy
-		cost = 10
-		
-		available_if_capitulated = yes
-		
-		completion_reward = {
-			add_ideas = SOH_slow_and_steady
-			add_timed_idea = { idea = SOH_longterm  days = 1500 }
-		}
-	}
-			
 	focus = {
 		id = SOH_shortterm
 		icon = GFX_focus_generic_treaty
 		prerequisite = { focus = SOH_economy }
 		mutually_exclusive = { focus = SOH_longterm }
-		x = 1
+		x = 0
 		y = 1
 		relative_position_id = SOH_economy
 		cost = 10
@@ -1118,7 +1056,36 @@ continuous_focus_position = { x = 0001 y = 1000 }
 		available_if_capitulated = yes
 	
 		completion_reward = {
-			add_timed_idea = { idea = SOH_shortterm  days = 290 }
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
 		}
 	}
 	
@@ -1126,7 +1093,7 @@ continuous_focus_position = { x = 0001 y = 1000 }
 		id = SOH_mass_produce
 		icon = GFX_focus_generic_treaty
 		prerequisite = { focus = SOH_shortterm }
-		x = 1
+		x = 0
 		y = 3
 		relative_position_id = SOH_economy
 		cost = 10
@@ -1148,7 +1115,7 @@ continuous_focus_position = { x = 0001 y = 1000 }
 		icon = GFX_focus_generic_treaty
 		prerequisite = { focus = SOH_longterm focus = SOH_shortterm }
 
-		x = 3
+		x = 2
 		y = 2
 		relative_position_id = SOH_economy
 		cost = 10
@@ -1410,7 +1377,7 @@ continuous_focus_position = { x = 0001 y = 1000 }
 		}
 	
 		available = {
-	
+			controls_state = 362
 		}
 		
 		bypass = {
@@ -1424,6 +1391,21 @@ continuous_focus_position = { x = 0001 y = 1000 }
 	
 		}
 	
+		completion_reward = {
+		hidden_effect = {
+			air_experience = 100
+			if = {
+				limit = { is_ai = yes }
+				add_manpower = 25000
+				add_equipment_to_stockpile = {
+					type = fighter_equipment_0
+					amount = 210
+					producer = WDC
+					}
+				}
+			}
+		}
+
 		completion_reward = {
 			create_wargoal = {
 				type = annex_everything
@@ -1466,7 +1448,7 @@ continuous_focus_position = { x = 0001 y = 1000 }
 		cost = 5
 	
 		ai_will_do = {
-			factor = 0
+			factor = 41
 		}
 	
 		available = {
@@ -1533,8 +1515,8 @@ continuous_focus_position = { x = 0001 y = 1000 }
 		}
 	
 		completion_reward = {
-			add_ideas = SOH_Resentful_populist
-			add_ideas = SOH_lack_luster_bureaucracy
+#			add_ideas = SOH_Resentful_populist
+#			add_ideas = SOH_lack_luster_bureaucracy
 			set_cosmetic_tag = GREATER_OHIO
 			core_illinios = yes
 			core_indiana = yes

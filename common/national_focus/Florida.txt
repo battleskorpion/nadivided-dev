@@ -1042,7 +1042,7 @@ focus_tree = {
 
 
 		ai_will_do = {
-			factor = 2			
+			factor = 80			
 		}
 
 		bypass = {
@@ -1682,7 +1682,7 @@ focus_tree = {
 	focus = { 
 		id = SFL_election_of_1936
 		icon = GFX_focus_vote_reenstation_act
-		x = 30
+		x = 25
 		y = 0
 		cost = 2
 		available_if_capitulated = yes 
@@ -1698,7 +1698,7 @@ focus_tree = {
 	focus = { 
 		id = SFL_let_democracy_win
 		icon = GFX_goal_support_democracy
-		x = 25
+		x = 20
 		y = 1
 		cost = 10
 		ai_will_do = { factor = 40 }
@@ -1728,7 +1728,7 @@ focus_tree = {
 	
 	focus = { 
 		id = SFL_fire_general_lowry
-		#icon = #
+		icon = GFX_focus_SFL_firegeneralLowry
 		x = 1
 		y = 1
 		relative_position_id = SFL_let_democracy_win
@@ -1743,65 +1743,68 @@ focus_tree = {
 	
 	focus = { 
 		id = SFL_ready_for_war
-		#icon = #
+		icon = GFX_focus_SFL_ready_for_war
 		x = 1
 		y = 2
 		relative_position_id = SFL_let_democracy_win
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_fire_general_lowry }
-		
+		ai_will_do = { factor = 80 }
 		completion_reward = { 
 			add_war_support = 0.10
 		} 
 	}
 	
-	focus = { 
-		id = SFL_strike_cost
-		#icon = #
-		x = 1
-		y = 3
-		relative_position_id = SFL_let_democracy_win
-		cost = 10
-		available_if_capitulated = yes 
-		prerequisite = { focus = SFL_ready_for_war }
+	#focus = { 
+	#	id = SFL_strike_cost
+	#	#icon = #
+	#	x = 1
+	#	y = 3
+	#	relative_position_id = SFL_let_democracy_win
+	#	cost = 10
+	#	available_if_capitulated = yes 
+	#	prerequisite = { focus = SFL_ready_for_war }
 		
-		completion_reward = { 
-			add_stability = -0.05
-			add_ideas = SFL_strike_cost_idea
-		} 
-	}
+	#	completion_reward = { 
+	#		add_stability = -0.05
+	#		add_ideas = SFL_strike_cost_idea
+	#	} 
+	#}
 	
 	focus = { 
 		id = SFL_arrest_damned_lowry
-		#icon = #
+		icon = GFX_focus_SFL_arrest_lowery
 		x = 1
 		y = 3
 		relative_position_id = SFL_let_democracy_win
 		cost = 18
 		available_if_capitulated = yes 
+		ai_will_do = { factor = 80 }
 		prerequisite = { focus = SFL_ready_for_war }
-		
+		#event 
 		completion_reward = { 
-			remove_unit_leader = 7001
-			set_country_flag = lowry_arrested
-			
-			
-			
+			#remove_unit_leader = 7001
+			#set_country_flag = lowry_arrested
+			#event to see lowry arrested
+			#event = florida.17
 			add_political_power = -250
 		} 
 	}
 	
 	focus = { 
 		id = SFL_deal_with_strikers
-		#icon = #
+		icon = GFX_focus_SFL_deal_with_strikers
+		ai_will_do = {
+            factor = 40
+       		 }
 		x = 1
 		y = 4
 		relative_position_id = SFL_let_democracy_win
 		cost = 12
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_arrest_damned_lowry }
-		
+		ai_will_do = { factor = 80 }
 		completion_reward = { 
 			#event "Maybe either send in strike breakers or give into demands." 
 			add_stability = -0.05
@@ -1813,37 +1816,44 @@ focus_tree = {
 	}
 	
 	focus = { 
-		id = SFL_bonus_bill_or_else #"pay up focus" 
-		#icon = #
+		id = SFL_bonus_bill_or_else 
+		icon = GFX_focus_SFL_bonusbillorelse
 		x = 1
 		y = 5
+		ai_will_do = {
+            factor = 40
+        }
 		relative_position_id = SFL_let_democracy_win
 		cost = 8
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_deal_with_strikers }
-		
+		ai_will_do = { factor = 160 }
 		completion_reward = { 
 			#"I think we need focus where user has to pick between bonus bill and release of Lowry or civil war
 			#	Civil war will be between new fascist state vs Democrat Florida though fascist leader can’t be Lowry
 			#	Because he’s in jail
 			#	If he pays bonus bill then you loose 250 political power and increase fascism" 
 			#(do event) 
-			
-			event = florida.4
+			country_event = {
+				id  = florida.4
+			} 
 		} 
 	}
 	
 	#"police state focus" 
 	focus = {
 		id = SFL_police_state_now
-		#icon = #
+		icon = GFX_focus_SFL_police_state_now
 		x = 1
 		y = 1
+		ai_will_do = {
+            factor = 40
+        }
 		relative_position_id = SFL_bonus_bill_or_else
 		cost = 13
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_bonus_bill_or_else }
-		
+		ai_will_do = { factor = 80 }
 		completion_reward = {
 			#"Police state focus" which adds 10K men to manpower with boost to stability but -300 PP
 			add_manpower = 10000
@@ -1877,7 +1887,7 @@ focus_tree = {
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_generalismo }
-		
+		ai_will_do = { factor = 20 }
 		completion_reward = { 
 			custom_effect_tooltip = SFL_invite_fascist_leader_speech_effect_tt
 			var:SFL_invite_fascist_leader_speech_leader_loc = {
@@ -1892,14 +1902,14 @@ focus_tree = {
 	
 	focus = { 
 		id = SFL_march_on_tallahassee
-		#icon = #
+		icon = GFX_focus_SFL_march_on_tallahassee
 		x = -1
 		y = 3
 		relative_position_id = SFL_let_democracy_win
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_invite_fascist_leader_speech }
-		
+		ai_will_do = { factor = 2 }
 		completion_reward = { 
 			set_rule = {
 				can_create_factions = yes
@@ -1961,7 +1971,7 @@ focus_tree = {
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_march_on_tallahassee }
-		
+		ai_will_do = { factor = 160 }
 		bypass = {
 			custom_trigger_tooltip = {
 				tooltip = SFL_construction_effort_tt
@@ -2023,11 +2033,13 @@ focus_tree = {
 		icon = GFX_focus_southern_unity
 		x = -1
 		y = 5
+		ai_will_do = {
+            factor = 10
+        	}
 		relative_position_id = SFL_let_democracy_win
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_industralize_northern_florida }
-		
 		completion_reward = { 
 			add_timed_idea = {
 				idea = SFL_southern_unity_idea
@@ -2045,7 +2057,7 @@ focus_tree = {
 	
 	focus = { 
 		id = SFL_baby_boom
-		#icon = #
+		icon = GFX_focus_SFL_florida_baby_boom
 		x = -2
 		y = 6
 		relative_position_id = SFL_let_democracy_win
@@ -2060,7 +2072,7 @@ focus_tree = {
 	
 	focus = { 
 		id = SFL_florida_fire_power
-		icon = GFX_focus_florida_fire_power
+		icon = GFX_focus_SFL_flordia_firepower
 		x = -2
 		y = 7
 		relative_position_id = SFL_let_democracy_win
@@ -2075,7 +2087,7 @@ focus_tree = {
 	
 	focus = { 
 		id = SFL_tampa_bay_factories
-		#icon = #
+		icon = GFX_goal_generic_construct_mil_factory
 		x = -2
 		y = 8
 		relative_position_id = SFL_let_democracy_win
@@ -2097,9 +2109,12 @@ focus_tree = {
 	
 	focus = { 
 		id = SFL_lowry_youth_camp
-		#icon = #
+		icon = GFX_focus_SFL_lowry_youthcamp
 		x = 0
 		y = 6
+		ai_will_do = {
+            factor = 10
+        	}
 		relative_position_id = SFL_let_democracy_win
 		cost = 10
 		available_if_capitulated = yes 
@@ -2112,7 +2127,7 @@ focus_tree = {
 	
 	focus = { 
 		id = SFL_jacksonville_work_camps
-		#icon = #
+		icon = GFX_focus_SFL_jackworkcamp
 		x = 0
 		y = 7
 		relative_position_id = SFL_let_democracy_win
@@ -2133,7 +2148,7 @@ focus_tree = {
 	
 	focus = { 
 		id = SFL_ban_unions
-		#icon = #
+		icon = GFX_goal_generic_war_with_comintern
 		x = 0
 		y = 8
 		relative_position_id = SFL_let_democracy_win
@@ -2168,7 +2183,7 @@ focus_tree = {
 	focus = { 
 		id = SFL_cancel_elections
 		icon = GFX_focus_voting_cancelled
-		x = 35
+		x = 30
 		y = 1
 		cost = 10
 		ai_will_do = { factor = 80 }
@@ -2194,7 +2209,7 @@ focus_tree = {
 	#Kick Fascists Out of Army
 	focus = { 
 		id = SFL_kick_fascists_out_army
-		#icon = #
+		icon = GFX_focus_refuse_support
 		x = -3
 		y = 1
 		relative_position_id = SFL_cancel_elections
@@ -2224,7 +2239,7 @@ focus_tree = {
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_kick_fascists_out_army }
-		
+		ai_will_do = { factor = 10 }
 		completion_reward = { 
 			add_ideas = SFL_florida_army_idea_a
 		} 
@@ -2233,7 +2248,7 @@ focus_tree = {
 	#Spread the Sunshine
 	focus = { 
 		id = SFL_spread_sunshine
-		#icon = #
+		icon = GFX_focus_SFL_spread_sunshine
 		x = -1
 		y = 1
 		relative_position_id = SFL_army_of_florida
@@ -2248,7 +2263,7 @@ focus_tree = {
 	
 	focus = { 
 		id = SFL_claim_mobile
-		#icon = #
+		icon = GFX_focus_SFL_claimalabama
 		x = -1
 		y = 2
 		relative_position_id = SFL_army_of_florida
@@ -2265,7 +2280,7 @@ focus_tree = {
 	
 	focus = { 
 		id = SFL_claim_bolixi
-		#icon = #
+		icon = GFX_focus_SFL_mississippi
 		x = -1
 		y = 3
 		relative_position_id = SFL_army_of_florida
@@ -2282,7 +2297,7 @@ focus_tree = {
 	
 	focus = { 
 		id = SFL_claim_baton_rouge
-		#icon = #
+		icon = GFX_focus_SFL_louisiana
 		x = -1
 		y = 4
 		relative_position_id = SFL_army_of_florida
@@ -2317,7 +2332,7 @@ focus_tree = {
 	
 	focus = { 
 		id = SFL_militia_defense
-		#icon = #
+		icon = GFX_focus_SFL_militia
 		x = 1
 		y = 1
 		relative_position_id = SFL_army_of_florida
@@ -2334,7 +2349,7 @@ focus_tree = {
 	#Focus "Invite Northern Veterans" 
 	focus = { 
 		id = SFL_northern_vets
-		#icon = #
+		icon = GFX_focus_SFL_northern_vets
 		x = 1
 		y = 2
 		relative_position_id = SFL_army_of_florida
@@ -2350,7 +2365,7 @@ focus_tree = {
 	
 	focus = { 
 		id = SFL_bully_senate
-		#icon = #
+		icon = GFX_focus_SFL_bully_dog
 		x = 1
 		y = 3
 		relative_position_id = SFL_army_of_florida
@@ -2369,7 +2384,7 @@ focus_tree = {
 	
 	focus = { 
 		id = SFL_pass_bonus_bill
-		#icon = #
+		icon = GFX_focus_SFL_pay_the_bonus
 		x = 1
 		y = 4
 		relative_position_id = SFL_army_of_florida
@@ -2389,7 +2404,7 @@ focus_tree = {
 		# Jiggs is nickname of that Marine General
 		# https://en.wikipedia.org/wiki/Roy_Geiger
 		
-		#icon = #
+		icon = GFX_focus_SFL_jigs_academy
 		x = 1
 		y = 5
 		relative_position_id = SFL_army_of_florida
@@ -2412,7 +2427,7 @@ focus_tree = {
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_cancel_elections }
-		
+		ai_will_do = { factor = 40 }
 		completion_reward = {
 			#assuming infrastructure
 			random_owned_controlled_state = {
@@ -2609,7 +2624,7 @@ focus_tree = {
 	
 	focus = { 
 		id = SFL_yulee_naval_yards
-		#icon = #
+		icon = GFX_goal_generic_construct_naval_dockyard
 		x = 0
 		y = 6
 		relative_position_id = SFL_cancel_elections
@@ -2649,7 +2664,7 @@ focus_tree = {
 	focus = { 
 		id = SFL_nine_month_schools
 		
-		#icon = 
+		icon = GFX_focus_STX_police_school
 		x = 0
 		y = 7
 		relative_position_id = SFL_cancel_elections
@@ -2673,7 +2688,7 @@ focus_tree = {
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_cancel_elections }
-		
+		ai_will_do = { factor = 160 }
 		completion_reward = { 
 			add_ideas = SFL_semmes_plan_idea
 		} 
@@ -2701,7 +2716,9 @@ focus_tree = {
 	focus = { 
 		id = SFL_pearl_antilles
 		#rebuild navy
-		
+		ai_will_do = {
+            factor = 20
+        	}
 		icon = GFX_focus_attack_cuba
 		x = 3
 		y = 3
@@ -2722,8 +2739,16 @@ focus_tree = {
 	focus = { 
 		id = SFL_nationalize_cuba
 		#rebuild navy
-		
-		#icon = #
+
+		available = {
+			owns_state = 606
+			owns_state = 477
+			owns_state = 606
+			owns_state = 478
+			owns_state = 603
+		}
+
+		icon = GFX_focus_SFL_floridacuba
 		x = 3
 		y = 4
 		relative_position_id = SFL_cancel_elections
@@ -2741,7 +2766,7 @@ focus_tree = {
 		id = SFL_welcome_cuban_militia
 		#rebuild navy
 		
-		#icon = #
+		icon = GFX_focus_SFL_cuban_militias
 		x = 3
 		y = 5
 		relative_position_id = SFL_cancel_elections
@@ -2758,8 +2783,15 @@ focus_tree = {
 	focus = { 
 		id = SFL_invite_american_refugees
 		#rebuild navy
-		
-		#icon = #
+		available = {
+            if = {
+  controls_state = 604
+}
+ if = {
+  controls_state = 603 #juevend
+}
+}
+		icon = GFX_focus_SFL_invite_american_refugees
 		x = 3
 		y = 6
 		relative_position_id = SFL_cancel_elections
@@ -2768,51 +2800,33 @@ focus_tree = {
 		prerequisite = { focus = SFL_welcome_cuban_militia }
 		
 		completion_reward = { 
-			random_owned_controlled_state = {
-				limit = {
-					region = 146 #cuba
-				}
-				add_extra_state_shared_building_slots = 1
-			}
-			random_owned_controlled_state = {
-				limit = {
-					region = 146 #cuba
-				}
-				add_extra_state_shared_building_slots = 1
-			}
-			random_owned_controlled_state = {
-				limit = {
-					region = 146 #cuba
-				}
-				add_extra_state_shared_building_slots = 1
-			}
-			random_owned_controlled_state = {
-				limit = {
-					region = 146 #cuba
-				}
-				add_extra_state_shared_building_slots = 1
-			}
-			random_owned_controlled_state = {
-				limit = {
-					region = 146 #cuba
-				}
-				add_extra_state_shared_building_slots = 1
-			}
-		} 
-		
-		 }
+			
+			 604 = {
+    add_extra_state_shared_building_slots = 3
+			 }
+			 603 = {
+    add_extra_state_shared_building_slots = 3
+			 }
+			  12= {
+    add_extra_state_shared_building_slots = 3
+			 }
+		}
+	}
 	       #rasingblacktaxes
+
 	        focus = { 
 		id = SFL_raising_blacks_taxes
 		#Fredconehatesblacks
 		
-		#icon = #
+		icon = GFX_focus_SFL_raising_black_taxes
 		x = 0
 		y = 1
 		relative_position_id = SFL_police_state_now
 		cost = 10
 		available_if_capitulated = yes 
+		ai_will_do = { factor = 160 }
 		prerequisite = { focus = SFL_police_state_now }
+
 		#decreasestabilitybut increase political power and increase factory output 
 		completion_reward = { 
 			add_political_power = 200
@@ -2829,7 +2843,11 @@ focus_tree = {
 	#1940election
 	focus = { 
 		id = SFL_1940_election
+		icon = GFX_focus_vote_reenstation_act
 		#election needs to be locked
+		ai_will_do = {
+            factor = 320
+       		 }
 		available = {
 			date > 1940.11.8
 		}
@@ -2851,13 +2869,14 @@ focus_tree = {
 	focus = { 
 		id = SFL_cattism
 		#sidneycattjr
-		
-		#icon = #
+		mutually_exclusive = { focus = SFL_whitehairism }
+		icon = GFX_focus_SFL_Cattism
 		x = -3
 		y = 2
 		relative_position_id = SFL_1940_election
 		cost = 1
 		available_if_capitulated = yes 
+		ai_will_do = { factor = 50 }
 		prerequisite = { focus = SFL_1940_election}
 		#INAUGERATES CATT JR
 		completion_reward = { 
@@ -2877,7 +2896,7 @@ focus_tree = {
 		id = SFL_pass_relief_bill
 		#
 		
-		#icon = #
+		icon = GFX_focus_SFL_pass_relief_view
 		x = -1
 		y = 1
 		relative_position_id = SFL_cattism
@@ -2897,7 +2916,7 @@ focus_tree = {
 	focus = { 
 		id = SFL_florida_prohibition
 		#election needs to be locked
-		#icon = #
+		icon = GFX_focus_partial_prohibition
 		x = 1
 		y = 1
 		relative_position_id = SFL_cattism
@@ -2914,7 +2933,7 @@ focus_tree = {
 		id = SFL_vice_divisions
 		#war support &  event toward Cuba. this causes Bahama's incident where 10 Cuban Rum runners are shoot to death and ship skuttled by Vice Division. 
 		
-		#icon = #
+		icon = GFX_focus_SFL_vice_Divisions
 		x = 0
 		y = 1
 		relative_position_id = SFL_florida_prohibition
@@ -2923,7 +2942,7 @@ focus_tree = {
 		prerequisite = { focus = SFL_florida_prohibition }
 		# war support & event. Cuba should have to pick between war or money and apology
 		completion_reward = { 
-			
+			add_manpower = 50000
 		} 
     }
     #endpopery
@@ -2931,7 +2950,7 @@ focus_tree = {
 		id = SFL_end_popery
 		#Fredconehatesblacks
 		
-		#icon = #
+		icon = GFX_focus_SFL_end_popery
 		x = 0
 		y = 1
 		relative_position_id = SFL_pass_relief_bill
@@ -2946,7 +2965,7 @@ focus_tree = {
 		} 
     
     #floridasegregationlaws
-	focus = { 
+	#focus = { 
 		id = SFL_florida_segregation_laws
 		
 		
@@ -2972,13 +2991,13 @@ focus_tree = {
 				popularity = -0.05
 			}
 		} 
-	} 
+	#} 
     #sidneycattroadway
 	focus = { 
 		id = SFL_sidney_catt_roadway
 		#Fredconehatesblacks
 		
-		#icon = #
+		icon = GFX_goal_generic_construct_infrastructure
 		x = 0
 		y = 1
 		relative_position_id = SFL_vice_divisions
@@ -3002,13 +3021,13 @@ focus_tree = {
 		id = SFL_our_friend_huey
 		#Fredconehatesblacks
 		
-		#icon = #
-		x = 1
+		icon = GFX_focus_SFL_huey_long
+		x = -1
 		y = 1
-		relative_position_id = SFL_florida_segregation_laws SFL_sidney_catt_roadway
+		relative_position_id = SFL_sidney_catt_roadway
 		cost = 7
 		available_if_capitulated = yes 
-		prerequisite = { focus = SFL_florida_segregation_laws focus = SFL_sidney_catt_roadway }
+		prerequisite = { focus = SFL_sidney_catt_roadway focus = SFL_end_popery }
 		#ask Louisiana to join Jeffersonian League 
 		 available = {
             custom_trigger_tooltip = {
@@ -3032,7 +3051,7 @@ focus_tree = {
 		id = SFL_florida_legionares
 		#Fredconehatesblacks
 		
-		#icon = #
+		icon = GFX_focus_SFL_florida_legionaries
 		x = -2
 		y = 1
 		relative_position_id = SFL_our_friend_huey
@@ -3042,9 +3061,9 @@ focus_tree = {
 		#5elitedivisions and add field marshal lowry back into game
 		completion_reward = { 
 			create_field_marshal = {
-				name = "Sumter L. Lowry Jr."
-				picture = "portrait_sumter_l_lowry_jr.dds"
-				id = 7001
+				name = "Sumter de Leon Lowry Jr"
+				picture = "portrait_sumter_l_lowry_.dds"
+				#id = 7001
 				traits = { 
 				bearer_of_artillery
 				infantry_officer
@@ -3059,6 +3078,7 @@ focus_tree = {
 			}
 		
 			#re-add field marshal lowry
+			#add artiellerhy
 			country_event = {
 				id  = florida.8	
 			} 
@@ -3069,7 +3089,7 @@ focus_tree = {
 		id = SFL_nationalize_railway_system
 		
 		
-		#icon = #
+		icon = GFX_focus_SFL_nationalzie_railway_system
 		x = 0
 		y = 1
 		relative_position_id = SFL_our_friend_huey
@@ -3142,8 +3162,10 @@ focus_tree = {
 	focus = { 
 		id = SFL_share_the_wealth_program
 		#Fredconehatesblacks
-		
-		#icon = #
+		ai_will_do = {
+           	 factor = 10
+        	}
+		icon = GFX_focus_SFL_share_the_wealth
 		x = 2
 		y = 1
 		relative_position_id = SFL_our_friend_huey
@@ -3155,5 +3177,160 @@ focus_tree = {
 			add_ideas = SFL_share_the_wealth_program
 		}  
 # 
+}
+#### new treee
+focus = { 
+		id = SFL_whitehairism
+		#francispwhitehair
+	        mutually_exclusive = { focus = SFL_cattism }
+		icon = GFX_focus_SFL_whitehair
+		x = 3
+		y = 2
+		relative_position_id = SFL_1940_election
+		ai_will_do = { factor = 50 }
+		cost = 1
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_1940_election}
+		#MR WHITEHAIR###Note prior error
+		completion_reward = { 
+			
+			add_political_power = 50
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.3
+			}
+            create_country_leader = {
+				name = "Francis P Whitehair"
+				picture = "Portrait_SFL_francis_whitehair.dds"
+				expire = "1965.1.1"
+				ideology = conservatism 
+				traits = {
+			}
+         }
+                
+	   }	
+}
+     #florida debt 
+	   focus = { 
+		id = SFL_pay_off_debts
+		#francispwhitehair
+		
+		icon = GFX_focus_pab_goal_budget
+		x = -1
+		y = 1
+		relative_position_id = SFL_whitehairism
+		cost = 8
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_whitehairism}
+		#MR WHITEHAIR
+		completion_reward = { 
+			
+			add_political_power = -150
+			add_stability = 0.30
+			#florida debt 
+		}
+
+	   }
+	   focus = { 
+		id = SFL_raise_business_taxes
+		#francispwhitehair
+		
+		icon = GFX_focus_PON_raise_taxes
+		x = 1
+		y = 1
+		relative_position_id = SFL_whitehairism
+		cost = 8
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_whitehairism}
+		#MR WHITEHAIR
+		completion_reward = { 
+		    add_ideas = SFL_raise_business_taxes
+		    days = 250
+		
+	   }	
+	}
+
+	###beach
+	 focus = { 
+		id = SFL_daytona_beach
+		#francispwhitehair
+		
+		icon = GFX_goal_generic_construct_infrastructure
+		x = 0
+		y = 2
+		relative_position_id = SFL_whitehairism
+		cost = 8
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_pay_off_debts }
+		prerequisite = { focus = SFL_raise_business_taxes }
+		#MR WHITEHAIR
+		completion_reward = { 
+			16 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 3
+					instant_build =yes
+				}
+			}
+		    
+}
+	 }
+	 ###beach
+	 focus = { 
+		id = SFL_air_conditioners
+		#francispwhitehair
+		
+		icon = GFX_focus_SFL_icebox
+		x = 0
+		y = 1
+		relative_position_id = SFL_daytona_beach
+		cost = 8
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_daytona_beach }
+		#boostingpopulation major
+		completion_reward = { 
+		   add_ideas = SFL_air_conditioners 
+}
+	 }
+	 ###beach
+	 focus = { 
+		id = SFL_tourism
+		#francispwhitehair
+		
+		icon = GFX_focus_SFL_tourism
+		x = 0
+		y = 1
+		relative_position_id = SFL_air_conditioners
+		cost = 8
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_air_conditioners }
+		#MR WHITEHAIR
+		completion_reward = { 
+			add_political_power = 150
+			add_ideas = SFL_tourism
+		}
+}
+###beach
+	 focus = { 
+		id = SFL_sun_belt_era
+		#francispwhitehair
+		#DURING DIXIE UPDATE THIS FOCUS WILL ALSO BE EVENT TO JOIN SOUTHERN DEFENSE PACT
+		icon = GFX_focus_SFL_sunbeltera
+		x = 0
+		y = 1
+		relative_position_id = SFL_tourism
+		cost = 8
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_tourism }
+		
+		#MR WHITEHAIR
+		completion_reward = { 
+		    add_ideas = SFL_sun_belt_era
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.2
+            }
+               
+	 }
 }
 }

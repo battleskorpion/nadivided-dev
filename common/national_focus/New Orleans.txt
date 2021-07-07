@@ -1,0 +1,1986 @@
+
+focus_tree = {
+	id = neworleans_focus
+	country = {
+		factor = 0
+		modifier = {
+			add = 10
+			tag = ORL
+		}
+	}
+	default = yes
+	reset_on_civilwar = no
+
+	continuous_focus_position = { x = 50 y = 1800 }
+
+	initial_show_position = {
+		focus = industrial_effort
+	}
+		focus = {
+		id = ORL_Ask_Catholic_Church_to_legitimize_our_state
+		icon = GFX_focus_ORL_catholic_church
+		x = 1
+		y = 0
+		cost = 1
+
+		mutually_exclusive = { focus = ORL_Liberty_through_force }
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+        ai_will_do = {
+            factor = 100
+        }
+
+		completion_reward = {
+ #loadoob
+
+			add_popularity = {
+			ideology = progressivism
+			popularity = -0.05
+			}
+
+		}
+	}
+
+	focus = {
+		id = ORL_militarize_our_police
+		icon = GFX_focus_ORL_militarize_police
+		prerequisite = { focus = ORL_Ask_Catholic_Church_to_legitimize_our_state
+						focus = ORL_Liberty_through_force
+		 }
+		x = 1
+		y = 1
+		relative_position_id = ORL_Ask_Catholic_Church_to_legitimize_our_state
+		cost = 10
+
+        ai_will_do = {
+            factor = 100
+        }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_manpower = 6500	
+			add_timed_idea = { idea = ORL_police_dupties  days = 90 }			
+		}
+	}
+
+	focus = {
+		id = ORL_Liberty_through_force
+		icon = GFX_focus_ORL_liberty_through_force
+		x = 3
+		y = 0
+		cost = 2
+
+		mutually_exclusive = { focus = ORL_Ask_Catholic_Church_to_legitimize_our_state }
+
+        ai_will_do = {
+            factor = 100
+        }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+ #loadoob
+			add_popularity = {
+			ideology = progressivism
+			popularity = 0.05
+			}
+
+		}
+	}
+
+	focus = {
+		id = ORL_Frenchquarter_militarism
+		icon = GFX_focus_ORL_french_militarism
+		prerequisite = { focus = ORL_militarize_our_police }
+		prerequisite = { focus = ORL_Ask_Catholic_Church_to_legitimize_our_state }
+
+		x = -5
+		y = 1
+		relative_position_id = ORL_militarize_our_police
+		cost = 10
+
+        ai_will_do = {
+            factor = 100
+        }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = ORL_Catholic_Militarism
+			add_popularity = {
+			ideology = neutrality
+			popularity = 0.05
+			}
+		}
+	}
+
+	focus = {
+		id = ORL_Purchase_weapons_from_Qubec
+		icon = GFX_focus_ORL_purchase_weapons_from_qubec
+		prerequisite = { focus = ORL_militarize_our_police }
+		x = 0
+		y = 1
+		relative_position_id = ORL_militarize_our_police
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+        ai_will_do = {
+            factor = 100
+        }
+
+		completion_reward = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 1000
+				producer = SLA
+			}
+		}
+	}
+
+	focus = {
+		id = ORL_Purchase_Artillery
+		icon = GFX_focus_ORL_purchase_artillery
+		prerequisite = { focus = ORL_Purchase_weapons_from_Qubec }
+		x = -3
+		y = 1
+		relative_position_id = ORL_Purchase_weapons_from_Qubec
+		cost = 5
+
+        ai_will_do = {
+            factor = 25
+        }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_equipment_to_stockpile = {
+				type = artillery_equipment_1
+				amount = 500
+				producer = SLA
+			}
+
+		}
+	}
+
+
+	focus = {
+		id = ORL_local_arms_production
+		icon = GFX_focus_ORL_local_arm_factories
+		prerequisite = { focus = ORL_Purchase_weapons_from_Qubec }
+		x = -1
+		y = 1
+		relative_position_id = ORL_Purchase_weapons_from_Qubec
+		cost = 5
+		ai_will_do = {
+			factor = 150
+		}
+
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = production_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = arms_factory
+						size < 3
+						include_locked = yes
+					}
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = {
+				type = arms_factory
+				level = 3
+				instant_build = yes
+			}
+		}		
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = arms_factory
+					level = 3
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = ORL_establish_University_of_New_Orleans
+		icon = GFX_focus_ORL_uofORL
+		prerequisite = { focus = ORL_Purchase_weapons_from_Qubec }
+		x = 1
+		y = 1
+		relative_position_id = ORL_Purchase_weapons_from_Qubec
+		cost = 5
+
+        ai_will_do = {
+            factor = 50
+        }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
+
+	focus = {
+		id = ORL_Hire_mercs
+		icon = GFX_focus_ORL_hire_mercs
+		prerequisite = { focus = ORL_Purchase_weapons_from_Qubec }
+		x = 3
+		y = 1
+		relative_position_id = ORL_Purchase_weapons_from_Qubec
+		cost = 5
+
+        ai_will_do = {
+            factor = 75
+        }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_manpower = 25400			
+			add_political_power = -75			
+			add_ideas = ORL_mercenary_army
+		}
+	}
+
+	focus = {
+		id = ORL_Rationing
+		icon = GFX_focus_ORL_rationing
+		prerequisite = { focus = ORL_Purchase_Artillery }
+		x = 1
+		y = 1
+		relative_position_id = ORL_Purchase_Artillery
+		cost = 10
+
+        ai_will_do = {
+            factor = 100
+        }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = ORL_rationing
+		}
+	}
+
+	focus = {
+		id = ORL_Schools_of_Defense
+		icon = GFX_focus_ORL_School_of_defense
+		prerequisite = { focus = ORL_local_arms_production }
+		x = 1
+		y = 1
+		relative_position_id = ORL_local_arms_production
+		cost = 8
+
+        ai_will_do = {
+            factor = 100
+        }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = ORL_Defensive_Doctrines
+		}
+	}
+
+	focus = {
+		id = ORL_Fortify_the_city
+		icon = GFX_focus_ORL_fortify_the_city
+		prerequisite = { focus = ORL_establish_University_of_New_Orleans }
+		x = 1
+		y = 1
+		relative_position_id = ORL_establish_University_of_New_Orleans
+		cost = 10
+
+        ai_will_do = {
+            factor = 50
+        }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			752 = {			
+			add_building_construction = {
+  	 			type = bunker
+    			level = 2
+   				instant_build = yes
+   				province = 1003
+					}	
+			add_building_construction = {
+  	 			type = bunker
+    			level = 2
+   				instant_build = yes
+   				province = 5928
+					}	
+			add_building_construction = {
+  	 			type = bunker
+    			level = 2
+   				instant_build = yes
+   				province = 4585
+					}	
+				}
+
+		}
+	}
+
+
+	focus = {
+		id = ORL_Arm_the_workers
+		icon = GFX_focus_ORL_arm_the_workers
+		prerequisite = { focus = ORL_militarize_our_police }
+		prerequisite = { focus = ORL_Liberty_through_force }	
+		 
+		x = 5
+		y = 1
+		relative_position_id = ORL_militarize_our_police
+		cost = 10
+
+        ai_will_do = {
+            factor = 100
+        }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_popularity = {
+			ideology = progressivism
+			popularity = 0.05
+			}
+			add_manpower = 8500	
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 2500
+				producer = SLA
+			}
+		}
+	}
+
+	focus = {
+		id = ORL_End_prohibition
+		icon = GFX_focus_ORL_end_prohibition
+		prerequisite = { focus = ORL_Arm_the_workers }
+	
+        ai_will_do = {
+            factor = 100
+        }
+
+		x = 0
+		y = 1
+		relative_position_id = ORL_Arm_the_workers
+		cost = 3
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_stability = -0.10
+			add_timed_idea = { idea = ORL_Liqour_flowing  days = 360 }			
+			add_popularity = {
+			ideology = progressivism
+			popularity = 0.05
+			}
+		}
+	}
+
+	focus = {
+		id = ORL_legalize_gambling
+		icon = GFX_focus_ORL_legalize_gambling
+		prerequisite = { focus = ORL_Arm_the_workers }
+	
+		 
+		x = 2
+		y = 1
+		relative_position_id = ORL_Arm_the_workers
+		cost = 5
+
+        ai_will_do = {
+            factor = 100
+        }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_stability = -0.10
+			add_ideas = ORL_Gambling_tax
+		}
+	}
+
+
+	focus = {
+		id = ORL_Declare_catholicism_state_religion
+		icon = GFX_focus_ORL_catholic_state_relgion
+		prerequisite = { focus = ORL_Frenchquarter_militarism }
+		x = 0
+		y = 1
+		relative_position_id = ORL_Frenchquarter_militarism
+		cost = 3
+
+        ai_will_do = {
+            factor = 100
+        }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			#changeideology?
+            add_war_support = 0.20
+			add_popularity = {
+			ideology = neutrality
+			popularity = 0.05
+			}
+		}
+	}
+
+	focus = {
+		id = ORL_Po_boy_logistics
+		icon = GFX_focus_ORL_po_boy_logistics
+		prerequisite = { focus = ORL_Frenchquarter_militarism }
+		x = -2
+		y = 1
+		relative_position_id = ORL_Frenchquarter_militarism
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+        ai_will_do = {
+            factor = 25
+        }
+
+		completion_reward = {
+			add_stability = 0.10
+			add_tech_bonus = {
+				name = log
+				bonus = 1.0
+				uses = 1
+				category = logistics_tech
+			}
+		}
+	}
+
+	focus = {
+		id = ORL_Re_establish_control_over_LA
+		icon = GFX_focus_ORL_re_establish_control_over_sla
+		prerequisite = { focus = ORL_Declare_catholicism_state_religion focus = ORL_End_prohibition }
+		x = 5
+		y = 3
+		relative_position_id = ORL_Declare_catholicism_state_religion
+		cost = 5
+
+
+        ai_will_do = {
+            factor = 150
+        }
+
+
+		available = {
+			controls_state = 18			
+			controls_state = 752	
+			controls_state = 20
+			controls_state = 754
+			controls_state = 21
+#takeawayarcadiastuff
+			OR = {
+            has_completed_focus = ORL_Declare_catholicism_state_religion
+            has_completed_focus = ORL_End_prohibition
+			}
+		}
+
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_state_core = 18	
+			add_state_core = 752	
+			add_state_core = 19	
+			add_state_core = 20	
+			add_state_core = 75
+			add_state_core = 754
+		}
+	}
+
+
+	focus = {
+		id = ORL_Reintegration_of_Arcaida
+		icon = GFX_focus_eng_move_to_secure_the_dominions
+		prerequisite = { focus = ORL_Re_establish_control_over_LA }
+	
+		 
+		x = 0
+		y = 1
+		relative_position_id = ORL_Re_establish_control_over_LA
+		cost = 4
+
+        ai_will_do = {
+            factor = 2000
+        }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+#annex Arcaida
+			annex_country = { target = SAC transfer_troops = yes }
+		}
+	}
+
+	focus = {
+		id = ORL_Our_first_election
+		icon = GFX_focus_vote_reenstation_act
+		x = 20
+		y = 0
+		cost = 1
+
+        ai_will_do = {
+            factor = 50
+        }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+        available = {
+
+            has_completed_focus = ORL_Reintegration_of_Arcaida
+
+        }
+		completion_reward = {
+
+
+			add_popularity = {
+			ideology = communism
+			popularity = -0.05
+			}
+
+		}
+	}
+
+	focus = {
+		id = ORL_Jazz_republic
+		icon = GFX_focus_orl_jazz_republic
+		prerequisite = { focus = ORL_Our_first_election}
+		x = -6
+		y = 1
+		relative_position_id = ORL_Our_first_election
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			set_cosmetic_tag = ORLJAZZ
+            set_politics = {
+				ruling_party = democratic
+			}
+			add_popularity = {
+			ideology = democratic
+			popularity = 0.10
+			}
+            create_country_leader = {
+				name = "Louis Armstrong"
+				picture = "leader_louis_armstrong.dds"
+				expire = "1965.1.1"
+				ideology = liberalism
+				traits = {
+
+	           }
+			}
+
+		}
+	}
+
+	focus = {
+		id = ORL_smoother_roads
+		icon = GFX_focus_orl_smoother_roads
+		prerequisite = { focus = ORL_Jazz_republic}
+		x = -1
+		y = 1
+		relative_position_id = ORL_Jazz_republic
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			752 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 3
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = ORL_Regulation_cuts
+		icon = GFX_focus_orl_regulation_cuts
+		prerequisite = { focus = ORL_Jazz_republic}
+		x = 1
+		y = 1
+		relative_position_id = ORL_Jazz_republic
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = ORL_cut_regulations
+			}
+		}
+	
+
+	focus = {
+		id = ORL_End_segregation
+		icon = GFX_focus_orl_desegrigation
+		prerequisite = { focus = ORL_Regulation_cuts}
+		x = -1
+		y = 1
+		relative_position_id = ORL_Regulation_cuts
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_popularity = {
+			ideology = democratic
+			popularity = 0.25
+			}
+		}
+	}
+
+	focus = {
+		id = ORL_Rythems_of_progress
+		icon = GFX_focus_orl_rythems_of_progress
+		prerequisite = { focus = ORL_End_segregation}
+		x = -1
+		y = 1
+		relative_position_id = ORL_End_segregation
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = ORL_Music_at_work
+		}
+	}
+
+	focus = {
+		id = ORL_gov_run_record_labels
+		icon = GFX_focus_orl_gov_music_records
+		prerequisite = { focus = ORL_Rythems_of_progress}
+		x = 0
+		y = 1
+		relative_position_id = ORL_Rythems_of_progress
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = ORL_Record_boom
+		}
+	}
+
+	focus = {
+		id = ORL_Dominate_music_industry
+		icon = GFX_focus_orl_dominate_music_industry
+		prerequisite = { focus = ORL_gov_run_record_labels}
+		x = 0
+		y = 1
+		relative_position_id = ORL_gov_run_record_labels
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}			
+		}
+	}
+
+	focus = {
+		id = ORL_the_dream_of_Jazz_city
+		icon = GFX_focus_orl_dream_of_jazz_city
+		prerequisite = { focus = ORL_Dominate_music_industry focus = ORL_aggressive_stance}
+		x = 1
+		y = 1
+		relative_position_id = ORL_Dominate_music_industry
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			752 = {
+				add_manpower = 50000
+				add_extra_state_shared_building_slots = 3
+			}			
+		}
+	}
+
+	focus = {
+		id = ORL_Trial_of_democrats
+		icon = GFX_focus_orl_trail_of_democrats
+		prerequisite = { focus = ORL_Rythems_of_progress}
+		x = -2
+		y = 1
+		relative_position_id = ORL_Rythems_of_progress
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_popularity = {
+			ideology = fascism
+			popularity = -0.10
+			}
+			add_popularity = {
+			ideology = neutrality
+			popularity = -0.10
+			}
+			country_event = {
+				id  = neworleans.1
+			}
+			
+		}
+	}
+
+	focus = {
+		id = ORL_Hire_new_economic_planners
+		icon = GFX_focus_orl_hire_industry
+		prerequisite = { focus = ORL_Trial_of_democrats}
+		x = 0
+		y = 2
+		relative_position_id = ORL_Trial_of_democrats
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = ORL_Economic_plan
+		}
+	}
+
+	focus = {
+		id = ORL_Patriotic_jazz
+		icon = GFX_focus_orl_patriotic_jazz
+		prerequisite = { focus = ORL_End_segregation}
+		x = 1
+		y = 1
+		relative_position_id = ORL_End_segregation
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = ORL_Patriots_of_jazz
+		}
+	}
+
+	focus = {
+		id = ORL_protect_what_we_love
+		icon = GFX_focus_orl_protect_what_we_love
+		prerequisite = { focus = ORL_Patriotic_jazz}
+		x = 0
+		y = 1
+		relative_position_id = ORL_Patriotic_jazz
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			752 = {			
+			add_building_construction = {
+  	 			type = bunker
+    			level = 5
+   				instant_build = yes
+   				province = 1003
+					}	
+			add_building_construction = {
+  	 			type = bunker
+    			level = 5
+   				instant_build = yes
+   				province = 5928
+					}	
+			add_building_construction = {
+  	 			type = bunker
+    			level = 5
+   				instant_build = yes
+   				province = 4585
+					}	
+				}
+		}
+	}
+
+	focus = {
+		id = ORL_aggressive_stance
+		icon = GFX_focus_orl_aggresive_stance
+		prerequisite = { focus = ORL_protect_what_we_love}
+		x = 0
+		y = 1
+		relative_position_id = ORL_protect_what_we_love
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = ORL_aggressive_stance_idea
+            add_war_support = 0.20
+		}
+	}
+
+	focus = {
+		id = ORL_Recruit_the_greats
+		icon = GFX_focus_orl_recruit_the_greats
+		prerequisite = { focus = ORL_Jazz_republic}
+		x = -3
+		y = 1
+		relative_position_id = ORL_Jazz_republic
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+					create_corps_commander = {
+					name = "Fats Walker"
+					picture = "portrait_fats_walker.dds"
+					traits = {
+						}
+						skill = 1
+						
+					attack_skill = 1
+					defense_skill = 1
+					planning_skill = 1
+					logistics_skill = 1
+				}
+					create_corps_commander = {
+					name = "Louis Armstrong"
+					picture = "leader_louis_armstrong_old.dds"
+					traits = {
+					politically_connected
+						}
+						skill = 1
+						
+					attack_skill = 1
+					defense_skill = 1
+					planning_skill = 1
+					logistics_skill = 1
+				}
+				create_corps_commander = {
+					name = "Coleman Hawkins"
+					picture = "portrait_coleman_hawkins.dds"
+					traits = {
+						}
+						skill = 1
+						
+					attack_skill = 1
+					defense_skill = 1
+					planning_skill = 1
+					logistics_skill = 1
+				}
+				create_corps_commander = {
+					name = "Duke Ellington"
+					picture = "portrait_duke_elington.dds"
+					traits = {
+						}
+						skill = 1
+						
+					attack_skill = 1
+					defense_skill = 1
+					planning_skill = 1
+					logistics_skill = 1
+				}
+				
+			}
+		}
+	
+
+	focus = {
+		id = ORL_Army_of_improvisation
+		icon = GFX_focus_orl_army_of_improv
+		prerequisite = { focus = ORL_Recruit_the_greats}
+		x = 0
+		y = 1
+		relative_position_id = ORL_Recruit_the_greats
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+			bonus = 0.75
+			uses = 1
+			category = land_doctrine
+				}
+			}
+		}
+	
+
+
+	focus = {
+		id = ORL_walmsley
+		icon = GFX_focus_orl_walmsley
+		prerequisite = { focus = ORL_Our_first_election}
+		x = 0
+		y = 1
+		relative_position_id = ORL_Our_first_election
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+
+			add_popularity = {
+			ideology = neutrality
+			popularity = 0.05
+			}
+		}
+	}
+
+	focus = {
+		id = ORL_Enforce_segregated_schools
+		icon = GFX_focus_orl_segrigation
+		prerequisite = { focus = ORL_walmsley}
+		x = 1
+		y = 1
+		relative_position_id = ORL_walmsley
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+		add_ideas = ORL_segregated_schools
+		}
+	}
+
+	focus = {
+		id = ORL_ask_to_join_SDC
+		icon = GFX_focus_SAR_join_sdl
+		prerequisite = { focus = ORL_Enforce_segregated_schools}
+		x = 0
+		y = 1
+		relative_position_id = ORL_Enforce_segregated_schools
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = no
+		bypass = {
+		is_in_faction_with = SNC
+		has_government = fascism
+		has_government = communism
+		has_government = neutrality
+		}
+
+		completion_reward = {
+		SNC = { add_to_faction = ORL }
+
+		}
+	}
+
+	focus = {
+		id = ORL_Purge_jeffersonian_democrats
+		icon = GFX_focus_orl_purge_democrats
+		prerequisite = { focus = ORL_ask_to_join_SDC}
+		x = 0
+		y = 1
+		relative_position_id = ORL_ask_to_join_SDC
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+		add_popularity = {
+		ideology = fascism
+		popularity = -0.10
+		}
+			}
+	}
+
+	focus = {
+		id = ORL_SDL_tech_sharing
+		icon = GFX_focus_orl_tech_sharing
+		prerequisite = { focus = ORL_Purge_jeffersonian_democrats}
+		x = 0
+		y = 1
+		relative_position_id = ORL_Purge_jeffersonian_democrats
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+		add_to_tech_sharing_group = SNC_research
+
+		}
+	}
+
+	focus = {
+		id = ORL_New_Orleans_military_parade
+		icon = GFX_focus_orl_parade
+		prerequisite = { focus = ORL_walmsley}
+		x = -1
+		y = 1
+		relative_position_id = ORL_walmsley
+		cost = 3
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			army_experience = 10
+		}
+	}
+
+	focus = {
+		id = ORL_fighter_modernization
+		icon = GFX_focus_orl_fighter_moderization
+		prerequisite = { focus = ORL_New_Orleans_military_parade}
+		x = 0
+		y = 1
+		relative_position_id = ORL_New_Orleans_military_parade
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+		add_tech_bonus = {
+				name = air_doc_bonus
+				bonus = 2.0
+				uses = 1
+				category = air_doctrine
+			}
+
+		}
+	}
+
+	focus = {
+		id = ORL_Establish_new_orleans_commando
+		icon = GFX_focus_orl_new_orleens_comandos
+		prerequisite = { focus = ORL_fighter_modernization}
+		x = 0
+		y = 1
+		relative_position_id = ORL_fighter_modernization
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+		add_ideas = ORL_cajun_commando
+		
+		}
+	}
+
+	focus = {
+		id = ORL_Office_of_Civilian_Defense
+		icon = GFX_focus_orl_office_of_civil_defence
+		prerequisite = { focus = ORL_Establish_new_orleans_commando}
+		x = 0
+		y = 1
+		relative_position_id = ORL_Establish_new_orleans_commando
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+		add_ideas = ORL_ocd
+		
+		}
+	}
+
+	focus = {
+		id = ORL_Guy_Mohoney_feild_manuel
+		icon = GFX_focus_orl_guy_mahoney_feild_manuel
+		prerequisite = { focus = ORL_New_Orleans_military_parade}
+		x = -2
+		y = 1
+		relative_position_id = ORL_New_Orleans_military_parade
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+		add_tech_bonus = {
+		bonus = 0.5
+		uses = 2
+		category = land_doctrine
+			}
+
+		}
+	}
+
+	focus = {
+		id = ORL_Industrial_plan
+		icon = GFX_focus_orl_industrial_plan
+		prerequisite = { focus = ORL_Guy_Mohoney_feild_manuel}
+		x = 0
+		y = 1
+		relative_position_id = ORL_Guy_Mohoney_feild_manuel
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_INDUSTRY }
+		available_if_capitulated = yes
+
+		completion_reward = {
+		752 = {
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+
+			}
+		}
+	}
+	focus = {
+		id = ORL_Cajun_leadership
+		icon = GFX_focus_orl_cajun_leadership
+		prerequisite = { focus = ORL_Industrial_plan}
+		x = 0
+		y = 1
+		relative_position_id = ORL_Industrial_plan
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+		add_ideas = ORL_cajun_officers
+
+		}
+	}
+
+	focus = {
+		id = ORL_Ask_Guy_To_hire_us_mercs
+		icon = GFX_focus_orl_guy_mahoney_mercs
+		prerequisite = { focus = ORL_Cajun_leadership}
+		x = 1
+		y = 1
+		relative_position_id = ORL_Cajun_leadership
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+		add_ideas = ORL_guy_mercs
+		}
+	}
+
+	focus = {
+		id = ORL_establish_our_navy
+		icon = GFX_goal_generic_construct_naval_dockyard
+		prerequisite = { focus = ORL_walmsley focus = ORL_Chep_Morrison}
+		x = 3
+		y = 1
+		relative_position_id = ORL_walmsley
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			navy_experience = 25
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+			}			
+		}
+	}
+
+
+	focus = {
+		id = ORL_purchase_radar_tech
+		icon = GFX_goal_generic_secret_weapon
+		prerequisite = { focus = ORL_establish_our_navy}
+		x = 0
+		y = 1
+		relative_position_id = ORL_establish_our_navy
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = no
+		
+		completion_reward = {
+		752 = {
+				add_building_construction = {
+					type = radar_station
+					level = 2
+					instant_build = yes
+				}
+			}
+
+		}		
+	}
+
+	focus = {
+		id = ORL_Ship_building_boom
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		prerequisite = { focus = ORL_purchase_radar_tech}
+		x = 0
+		y = 1
+		relative_position_id = ORL_purchase_radar_tech
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = no
+
+		completion_reward = {
+		add_ideas = ORL_shipbuilding
+
+		}
+	}
+
+	focus = {
+		id = ORL_purchase_NavaL_bombers
+		icon = GFX_goal_generic_air_naval_bomber
+		prerequisite = { focus = ORL_establish_our_navy}
+		x = 2
+		y = 1
+		relative_position_id = ORL_establish_our_navy
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = nav_bomber_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = naval_bomber
+			}
+		}
+	}
+
+	focus = {
+		id = ORL_Chep_Morrison
+		icon = GFX_focus_orl_chep
+		prerequisite = { focus = ORL_Our_first_election}
+		x = 9
+		y = 1
+		relative_position_id = ORL_Our_first_election
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_popularity = {
+			ideology = progressivism
+			popularity = 0.05
+			}
+		}
+	}
+
+	focus = {
+		id = ORL_Create_militarized_boyscouts
+		icon = GFX_focus_orl_militarized_boyscouts
+		prerequisite = { focus = ORL_Chep_Morrison}
+		x = 0
+		y = 1
+		relative_position_id = ORL_Chep_Morrison
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = no
+
+		completion_reward = {
+        add_ideas =  ORL_create_militarized_boyscouts 
+		}
+	}
+
+	focus = {
+		id = ORL_Professionalize_army
+		icon = GFX_focus_orl_professionalize_army
+		prerequisite = { focus = ORL_Create_militarized_boyscouts}
+		x = 0
+		y = 1
+		relative_position_id = ORL_Create_militarized_boyscouts
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+           add_ideas = ORL_Professionalize_army
+		}
+	}
+
+	focus = {
+		id = ORL_Chep_Paratroopers
+		icon = GFX_focus_orl_chet_paratroopers
+		prerequisite = { focus = ORL_Professionalize_army}
+		x = 0
+		y = 1
+		relative_position_id = ORL_Professionalize_army
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = special_forces
+			add_tech_bonus = {
+				name = special_forces_bonus
+				bonus = 1.0
+				uses = 2
+				technology = paratroopers
+				technology = paratroopers2
+			}
+		}
+	}
+
+	focus = {
+		id = ORL_New_establish_orleans_trade_center
+		icon = GFX_focus_orl_global_trade
+		prerequisite = { focus = ORL_Chep_Paratroopers}
+		x = 0
+		y = 1
+		relative_position_id = ORL_Chep_Paratroopers
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+		add_ideas = ORL_trade_center
+
+		}
+	}
+
+	focus = {
+		id = ORL_Morrison_economic_plan
+		icon = GFX_focus_orl_morrison_economics
+		prerequisite = { focus = ORL_Chep_Morrison}
+		x = 2
+		y = 1
+		relative_position_id = ORL_Chep_Morrison
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_INDUSTRY }
+		available_if_capitulated = yes
+
+		completion_reward = {
+            add_tech_bonus = {
+				bonus = 1.75
+				uses = 2
+				category = industry
+			}
+		}
+	}
+
+	focus = {
+		id = ORL_End_segregation_in_armed_forces
+		icon = GFX_focus_orl_desetgriation_armed_forces
+		prerequisite = { focus = ORL_Morrison_economic_plan}
+		x = 0
+		y = 1
+		relative_position_id = ORL_Morrison_economic_plan
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+		add_manpower = 25000
+		#conscription_factor = 0.3
+        add_ideas =  ORL_End_segregation_in_armed_forces
+		}
+	}
+
+	focus = {
+		id = ORL_New_orleans_urban_renewal
+		icon = GFX_focus_orl_urban_reneual
+		prerequisite = { focus = ORL_End_segregation_in_armed_forces}
+		x = 0
+		y = 1
+		relative_position_id = ORL_End_segregation_in_armed_forces
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			752 = {
+				add_extra_state_shared_building_slots = 3
+			}
+		}
+	}
+
+	focus = {
+		id = ORL_Sun_Belt_metropolis
+		icon = GFX_focus_orl_sunbelt_metropolis
+		prerequisite = { focus = ORL_New_orleans_urban_renewal}
+		x = 0
+		y = 1
+		relative_position_id = ORL_New_orleans_urban_renewal
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+		add_extra_state_shared_building_slots = 3
+		752 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			752 = {
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+					instant_build = yes
+				}
+			}
+
+		}
+	}
+
+	focus = {
+		id = ORL_Pardon_Democrats
+		icon = GFX_focus_orl_pardon_democrats
+		prerequisite = { focus = ORL_Chep_Morrison}
+		x = -2
+		y = 1
+		relative_position_id = ORL_Chep_Morrison
+		cost = 8
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		available_if_capitulated = yes
+
+		completion_reward = {
+            add_stability = -0.05
+			add_popularity = {
+			ideology = progressivism
+			popularity = 0.05
+			}			
+		}
+	}
+
+	focus = {
+		id = ORL_clean_up_the_corruption_of_Robert_Maestri
+		icon = GFX_focus_orl_clean_corruption_ofRobert_Maestri
+		prerequisite = { focus = ORL_Pardon_Democrats}
+		x = 0
+		y = 1
+		relative_position_id = ORL_Pardon_Democrats
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		available_if_capitulated = yes
+
+		completion_reward = {
+          	add_popularity = {
+				ideology = progressivism
+				popularity = 0.05
+			}
+			752 = {
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			add_ideas = ORL_anti_corruption
+			
+		}
+	}
+
+	focus = {
+		id = ORL_Invite_european_refugees
+		icon = GFX_focus_orl_invite_europeans
+		prerequisite = { focus = ORL_clean_up_the_corruption_of_Robert_Maestri}
+		x = 0
+		y = 1
+		relative_position_id = ORL_clean_up_the_corruption_of_Robert_Maestri
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			752 = {
+				add_manpower = 60000
+			}
+			753 = {
+				add_manpower = 25000
+			}
+			19 = {
+				add_manpower = 25000
+			}
+			20 = {
+				add_manpower = 25000
+			}
+		}
+	}
+
+	focus = {
+		id = ORL_Humanitarian_effort
+		icon = GFX_focus_orl_humanitarian_effort
+		prerequisite = { focus = ORL_Invite_european_refugees}
+		x = 0
+		y = 1
+		relative_position_id = ORL_Invite_european_refugees
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+		add_research_slot = 1
+
+		}
+	}
+
+	focus = {
+		id = ORL_Our_new_economy
+		icon = GFX_goal_generic_production
+		x = 34
+		y = 0
+		cost = 1
+
+        ai_will_do = {
+            factor = 150
+        }
+
+		search_filters = {  FOCUS_FILTER_INDUSTRY }
+		available_if_capitulated = yes
+        available = {
+            has_completed_focus = ORL_Morrison_economic_plan
+            has_completed_focus = ORL_Industrial_plan
+            has_completed_focus = ORL_Hire_new_economic_planners
+        }
+		completion_reward = {
+
+
+			add_popularity = {
+			ideology = communism
+			popularity = -0.05
+			}
+
+		}
+	}
+
+
+	focus = {
+		id = ORL_Autarky
+		icon = GFX_focus_orl_autarky
+		prerequisite = { focus = ORL_Our_new_economy}
+		x = -1
+		y = 1
+		relative_position_id = ORL_Our_new_economy
+		cost = 10
+
+        ai_will_do = {
+            factor = 1
+        }
+
+        available = {
+            has_completed_focus = ORL_Our_new_economy
+        }
+
+		mutually_exclusive = { focus = ORL_internationalist_outlook }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+		add_ideas = ORL_autarky
+		}
+	}
+
+	focus = {
+		id = ORL_New_orleans_industry
+		icon = GFX_focus_orl_new_industry
+		prerequisite = { focus = ORL_Autarky focus = ORL_internationalist_outlook}
+		x = 1
+		y = 1
+		relative_position_id = ORL_Autarky
+		cost = 10
+
+        ai_will_do = {
+            factor = 150
+        }
+
+        available = {
+            has_completed_focus = ORL_Our_new_economy
+        }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+		752 = {
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+					instant_build = yes
+				}
+
+			}
+		}
+	}
+	focus = {
+		id = ORL_Defensive_industry
+		icon = GFX_focus_orl_defensive_industry
+		prerequisite = { focus = ORL_New_orleans_industry}
+		prerequisite = { focus = ORL_internationalist_outlook}
+		x = 1
+		y = 1
+		relative_position_id = ORL_New_orleans_industry
+		cost = 10
+
+        ai_will_do = {
+            factor = 150
+        }  
+  
+        available = {
+
+        }
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+		752 = {			
+			add_building_construction = {
+  	 			type = bunker
+    			level = 2
+   				instant_build = yes
+   				province = 4585
+				}	
+
+			}
+			752 = {			
+			add_building_construction = {
+  	 			type = bunker
+    			level = 2
+   				instant_build = yes
+   				province = 5937
+				}	
+
+			}
+			752 = {
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+		
+			}	
+		}	
+	}
+	focus = {
+		id = ORL_Synthetic_resources_development
+		icon = GFX_focus_orl_synthetic_resources
+		prerequisite = { focus = ORL_New_orleans_industry}
+		prerequisite = { focus = ORL_Autarky}
+		x = -1
+		y = 1
+		relative_position_id = ORL_New_orleans_industry
+		cost = 10
+
+        ai_will_do = {
+            factor = 1
+        }
+
+        available = {
+
+        }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = synt
+				bonus = 1.5
+				uses = 1
+				category = synth_resources
+			}
+		}
+	}
+
+	focus = {
+		id = ORL_Synthetic_resources_development2
+		icon = GFX_focus_orl_synthetic_resources2
+		prerequisite = { focus = ORL_Synthetic_resources_development}
+		x = 0
+		y = 2
+		relative_position_id = ORL_Synthetic_resources_development
+		cost = 10
+
+        ai_will_do = {
+            factor = 1
+        }
+
+        available = {
+
+        }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = synt
+				bonus = 1.5
+				uses = 2
+				category = synth_resources
+			}
+		}
+	}
+
+	focus = {
+		id = ORL_Standardization_of_tools_to_metric_system
+		icon = GFX_goal_generic_construct_civ_factory
+		prerequisite = { focus = ORL_Synthetic_resources_development focus = ORL_Defensive_industry}
+		x = 1
+		y = 1
+		relative_position_id = ORL_Synthetic_resources_development
+		cost = 10
+
+        ai_will_do = {
+            factor = 150
+        }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+		add_ideas = ORL_metric_system
+
+		}
+	}
+
+	focus = {
+		id = ORL_public_housing_projects
+		icon = GFX_focus_orl_housing_project
+		prerequisite = { focus = ORL_Defensive_industry}
+		prerequisite = { focus = ORL_Defensive_industry}
+		x = 0
+		y = 2
+		relative_position_id = ORL_Defensive_industry
+		cost = 10
+
+        ai_will_do = {
+            factor = 150
+        }
+
+        available = {
+
+        }
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			752 = {
+				add_manpower = 50000
+				add_extra_state_shared_building_slots = 1
+			}
+			753 = {
+				add_manpower = 10000
+			}
+		}
+	}
+
+	focus = {
+		id = ORL_internationalist_outlook
+		icon = GFX_focus_orl_international_trade
+		prerequisite = { focus = ORL_Our_new_economy}
+		x = 1
+		y = 1
+		relative_position_id = ORL_Our_new_economy
+		cost = 10
+
+        ai_will_do = {
+            factor = 150
+        }
+
+        available = {
+            has_completed_focus = ORL_Our_new_economy
+        }
+
+		mutually_exclusive = { focus = ORL_Autarky }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+		add_ideas = ORL_internationalist
+		set_rule = {
+		can_create_factions = yes
+			}		
+		}
+	}
+
+}

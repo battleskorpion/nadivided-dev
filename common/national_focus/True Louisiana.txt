@@ -1,0 +1,712 @@
+focus_tree = {
+     id = truelouisiana_focus
+
+    country = {
+        factor = 0
+        
+        modifier = {
+            add = 10
+            tag = STL
+        }
+    }
+  continuous_focus_position = { x = 50 y = 2000 }
+
+#FOCUS_FILTER_STABILITY
+#FOCUS_FILTER_INDUSTRY
+#FOCUS_FILTER_ANNEXATION
+#FOCUS_FILTER_MANPOWER
+#FOCUS_FILTER_POLITICAL
+#FOCUS_FILTER_RESEARCH
+#FOCUS_FILTER_WAR_SUPPORT
+
+#######################################
+#############civil war############
+#######################################
+
+
+focus = {
+        id = STL_army_of_true_louisiana
+        icon = GFX_focus_STX_Red_River_War
+       
+        available = {
+           
+            }
+    search_filters = { FOCUS_FILTER_MANPOWER }
+        x = 5
+        y = 1
+        #relative_position_id = SLA_victory_in_the_red_river_war
+        cost = 1
+        search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+        ai_will_do = {
+            factor = 160
+        }
+        available_if_capitulated = no
+        ####spawn army####
+        completion_reward = {
+          country_event = {
+				id  = truelouisiana.2
+			}
+			add_ideas = STL_righteous_army
+        }
+    }
+    focus = { 
+		id = STL_ask_bilbo_for_aide
+		icon = GFX_focus_STL_bilbo_ask_bilbo_for_aid
+		x = 0
+		y = 1
+		relative_position_id = STL_army_of_true_louisiana
+		cost = 1
+		available_if_capitulated = yes 
+		prerequisite = { focus = STL_army_of_true_louisiana }
+		 ai_will_do = {
+            factor = 160
+        }
+		completion_reward = { 
+		add_ideas = bilbo_aid
+			
+			}
+		
+	}
+ 
+    focus = { 
+		id = STL_doctrine_effort
+		icon = GFX_goal_generic_army_doctrines
+		x = 2
+		y = 1
+		relative_position_id = STL_ask_bilbo_for_aide
+		cost = 1
+		available_if_capitulated = yes 
+		prerequisite = { focus = STL_ask_bilbo_for_aide }
+		 ai_will_do = {
+            factor = 160
+        }
+		completion_reward = {
+			army_experience = 5
+			add_tech_bonus = {
+				name = land_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = land_doctrine
+			}
+		}
+		
+	} 
+
+     focus = { 
+		id = STL_bibles_for_everyone
+		icon = GFX_focus_pab_goal_rewrite_bible
+		x = 0
+		y = 1
+		relative_position_id = STL_ask_bilbo_for_aide
+		cost = 1
+		available_if_capitulated = yes 
+		prerequisite = { focus = STL_ask_bilbo_for_aide}
+		 ai_will_do = {
+            factor = 160
+        }
+		completion_reward = { 
+			add_stability = .05
+			add_event = 
+			
+			}
+		
+	}
+    #####end of civil war####
+    focus = { 
+		id = STL_end_civil_war
+		icon = GFX_focus_STL_end_civil_war
+		x = 0
+		y = 1
+        available = {
+            OR = {
+                owns_state = 752
+            }
+          }
+          available = {
+            OR = {
+                owns_state = 19
+            }
+          }
+          available = {
+            OR = {
+                 owns_state = 20
+            }
+          }
+          available = {
+            OR = {
+                  owns_state = 753
+            }
+          }
+          available = {
+            OR = {
+                   owns_state = 21
+            }
+          }
+          available = {
+            OR = {
+                    owns_state = 754
+            }
+          }
+          available = {
+            OR = {
+                     owns_state =  75
+                
+            }
+          }
+		relative_position_id = STL_bibles_for_everyone
+		cost = 1
+		available_if_capitulated = yes 
+		prerequisite = { focus = STL_bibles_for_everyone }
+		 ai_will_do = {
+            factor = 160
+        }
+		completion_reward = { 
+			add_stability = .05
+			   20 = {
+           add_core_of = STL
+        }
+		   752 = {
+           add_core_of = STL
+        }
+		   19 = {
+           add_core_of = STL
+        }
+		 18 = {
+           add_core_of = STL
+        }
+
+			}
+		
+	}
+    focus = { 
+		id = STL_new_constitional_convention
+		icon = GFX_focus_STL_new_con
+		x = 0
+		y = 1
+		relative_position_id = STL_end_civil_war
+		cost = 1
+		 search_filters = { FOCUS_FILTER_POLITICAL }
+		available_if_capitulated = yes 
+		prerequisite = { focus = STL_end_civil_war }
+		 ai_will_do = {
+            factor = 160
+        }
+		completion_reward = { 
+			#event to choose leader#####
+            ##they will choose a leader event 
+            ##with spirit###add a few negative spirits like cajun resistance##
+			###event will also kill louisiana offically
+               country_event = {
+				id  = truelouisiana.3
+			} 
+                   
+			}
+		
+	}
+    ####Locked because they need need to recover first 
+    focus = { 
+		id = STL_share_the_wealth
+		icon = GFX_focus_SLA_share_the_wealth
+		x = 0
+		y = 1
+		 search_filters = { FOCUS_FILTER_RESEARCH }
+		  search_filters = { FOCUS_FILTER_INDUSTRY }
+		relative_position_id = STL_new_constitional_convention
+		cost = 1
+		available_if_capitulated = no
+		prerequisite = { focus = STL_new_constitional_convention }
+		 ai_will_do = {
+            factor = 320
+        }
+        ###this is because it could OP them too early 
+         available = {
+			date > 1940.01.01
+		}
+           available = {
+  has_stability > 0.7
+  has_political_power > 300
+}
+		completion_reward = { 
+			add_ideas = STL_share_the_wealth
+			}
+		
+	}
+    #####populist tree
+    focus = { 
+		id = STL_uncle_earl
+		icon = GFX_focus_STL_earl
+		x = 4
+		y = 1
+		 search_filters = { FOCUS_FILTER_POLITICAL }
+		relative_position_id = STL_new_constitional_convention
+		cost = 1
+		available_if_capitulated = yes 
+		prerequisite = { focus = STL_new_constitional_convention}
+		available = {
+		always = no
+        }
+		 ai_will_do = {
+            factor = 160
+        }
+		completion_reward = { 
+			#will require spirit uncle earl######
+            #####just
+			set_politics = {
+		ruling_party = longism
+	    }
+		set_capital = 18
+	
+			}
+		
+	}
+    focus = { 
+		id = STL_return_to_longism
+		icon = GFX_focus_SLA_huey_domination_plan
+		x = 1
+		y = 1
+		relative_position_id = STL_uncle_earl
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = STL_uncle_earl}
+		 ai_will_do = {
+            factor = 160
+        }
+		completion_reward = { 
+	         add_popularity = {
+				ideology = longism
+				popularity = 0.1
+			}
+            add_political_power = 200
+			}
+		
+	}
+    focus = { 
+		id = STL_rebuild_louisiana
+		icon = GFX_focus_STL_rebuild_louisiana
+		x = -1
+		y = 1
+		relative_position_id = STL_uncle_earl
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = STL_uncle_earl}
+		 ai_will_do = {
+            factor = 160
+        }
+		completion_reward = { 
+			add_ideas = STL_rebuild_louisiana
+			}
+		
+	}
+   focus  = { 
+		id = STL_ban_the_klan
+		icon = GFX_focus_STL_ban_the_clan
+		x = 0
+		y = 1
+		relative_position_id = STL_rebuild_louisiana
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = STL_rebuild_louisiana}
+		 ai_will_do = {
+            factor = 160
+        }
+		completion_reward = { 
+			add_popularity = {
+				ideology = fascism
+				popularity = -0.1
+			}
+			
+			}
+		
+	}
+    focus = { 
+		id = STL_pass_religious_freedom_bill
+		icon = GFX_focus_STL_religious_freedoms
+		x = 0
+		y = 1
+		relative_position_id = STL_return_to_longism
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = STL_return_to_longism}
+		 ai_will_do = {
+            factor = 160
+        }
+		completion_reward = { 
+			  add_ideas = STL_religious_freedom_bill
+			  
+			}
+		
+	}
+    focus  = { 
+		id = STL_end_poll_tax
+		icon = GFX_focus_STL_ban_pol_tax
+		x = 0
+		y = 1
+		relative_position_id = STL_pass_religious_freedom_bill
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = STL_pass_religious_freedom_bill}
+		 ai_will_do = {
+            factor = 160
+        }
+		completion_reward = { 
+			  add_stability = 0.10
+			
+			}
+		
+	}
+    focus  = { 
+		id = STL_isolationism
+		icon = GFX_focus_STL_isolationism
+		x = 0
+		y = 1
+		relative_position_id = STL_ban_the_klan
+		cost = 8
+		available_if_capitulated = yes 
+		prerequisite = { focus = STL_ban_the_klan}
+		 ai_will_do = {
+            factor = 160
+        }
+		completion_reward = { 
+		     add_war_support = 0.10
+             add_stability = 0.10
+			
+			}
+		
+	}
+    focus  = { 
+		id = STL_populist_dream
+		icon = GFX_focus_SLA_suitman
+		x = 0
+		y = 1
+		relative_position_id = STL_end_poll_tax
+		cost = 1
+		available_if_capitulated = yes 
+		prerequisite = { focus = STL_isolationism }
+        prerequisite = { focus = STL_end_poll_tax }
+		 ai_will_do = {
+            factor = 160
+        }
+        ###wil
+		completion_reward = { 
+            add_ideas = STL_populist_dream
+			
+			}
+		
+	}
+    focus = { 
+		id = STL_continue_the_crusade
+		icon = GFX_focus_STL_join_southern_comitee
+		x = -4
+		y = 1
+		relative_position_id = STL_new_constitional_convention
+		cost = 1
+		available_if_capitulated = yes 
+		 search_filters = { FOCUS_FILTER_POLITICAL }
+		prerequisite = { focus = STL_new_constitional_convention }
+		available = {
+		always = no
+        }
+		 ai_will_do = {
+            factor = 160
+        }
+		completion_reward = { 
+			add_war_support = 0.05
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.25
+			}
+			
+			
+			}
+		
+	}
+    ###smith isn't anti-catholic
+    focus = { 
+		id = STL_stamp_out_papalism 
+		icon = GFX_focus_STL_crush_popism
+		x = -1
+		y = 1
+		relative_position_id = STL_continue_the_crusade
+		cost = 1
+		available_if_capitulated = yes 
+		prerequisite = { focus = STL_continue_the_crusade }
+		 ai_will_do = {
+            factor = 160
+        }
+		completion_reward = {
+		add_ideas = STL_anti_catholic
+			#event protastantism is declared offical religion#######
+			####baton shreveport is bombed neg stability#######
+			 
+            country_event = {
+                id = truelouisiana.5
+                days = 10
+            }
+        
+			}
+		
+	}
+     focus = { 
+		id = STL_reward_our_friends
+		icon = GFX_focus_STL_reward_our_friends
+		x = 1
+		y = 1
+		relative_position_id = STL_continue_the_crusade
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = STL_continue_the_crusade }
+		 ai_will_do = {
+            factor = 160
+        }
+		completion_reward = { 
+		    add_political_power = 150
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.1
+			}
+			add_manpower = 30000
+			}
+		
+	}
+
+	focus = { 
+		id = STL_motorized_army
+		icon = GFX_goal_generic_army_motorized
+		x = 3
+		y = 1
+		relative_position_id = STL_reward_our_friends
+		cost = 1
+		available_if_capitulated = yes 
+		prerequisite = { focus = STL_reward_our_friends focus = STL_rebuild_louisiana }
+		#prerequisite = { focus = STL_rebuild_louisiana }
+		 ai_will_do = {
+            factor = 160
+        }
+		completion_reward = { 
+				add_tech_bonus = {
+				bonus = 1.0
+				uses = 4
+				category = motorized_equipment
+			}
+			
+			}
+	}
+	focus = { 
+		id = STL_research_modernization
+		icon = GFX_focus_research
+		x = 0
+		y = 1
+		relative_position_id = STL_motorized_army
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = STL_motorized_army }
+
+		 ai_will_do = {
+            factor = 160
+        }
+		completion_reward = { 
+				add_research_slot = 1
+			
+			}
+	}
+     focus = { 
+		id = STL_jeffersonian_democracy
+		icon = GFX_focus_SAL_dixie_jeffersonian_democratic_dominance
+		x = 0
+		y = 1
+		relative_position_id = STL_stamp_out_papalism
+		cost = 6
+		available_if_capitulated = yes 
+		prerequisite = { focus = STL_stamp_out_papalism }
+		 ai_will_do = {
+            factor = 160
+        }
+		completion_reward = { 
+			 add_political_power = 200
+			add_ideas = STL_jefferson
+			}
+		
+	}
+     focus = { 
+		id = STL_onward_christian_soilder
+		icon = GFX_focus_STL_onword_christian_soldier
+		x = 0
+		y = 1
+		relative_position_id = STL_reward_our_friends
+		cost = 1
+		available_if_capitulated = yes 
+		prerequisite = { focus = STL_reward_our_friends }
+		 ai_will_do = {
+            factor = 160
+        }
+		completion_reward = { 
+			add_ideas = STL_onward_christian_soilder
+			
+			}
+		
+	}
+     focus = { 
+		id = STL_rebuild_north_louisiana
+		icon = GFX_focus_STL_re_buildnorth_louisiana
+		x = 0
+		y = 1
+		relative_position_id = STL_jeffersonian_democracy
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = STL_jeffersonian_democracy}
+		 ai_will_do = {
+            factor = 160
+        }
+		completion_reward = { 
+		754 = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+			21 = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+			75 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+			}
+		
+	}
+    focus = { 
+		id = STL_fortify_against_socialism
+		icon = GFX_focus_STL_fortify_against_socialism
+		x = 0
+		y = 1
+		relative_position_id = STL_onward_christian_soilder
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = STL_onward_christian_soilder}
+		 ai_will_do = {
+            factor = 160
+        }
+		completion_reward = { 
+			#build forts on arkansas border#######
+			add_ideas = STL_fortify_against_socialism
+			
+			}
+		
+	}
+     focus = { 
+		id = STL_thank_bilbo
+		icon = GFX_focus_STL_thank_bilbo
+		x = 0
+		y = 1
+		relative_position_id = STL_fortify_against_socialism
+		cost = 1
+		available_if_capitulated = yes 
+		 available = {
+            SMS = {
+                has_government = fascism
+            }
+            
+        }
+		prerequisite = { focus = STL_onward_christian_soilder focus = STL_rebuild_north_louisiana}
+		 ai_will_do = {
+            factor = 160
+        }
+        ####Mississippi has to exist#####
+        ###Mississippi must be fascist
+        ##this gaurentees mississippi####
+        ##set rule can join  faction 
+        #can form faction
+		completion_reward = { 
+		
+			STL = {give_guarantee = SMS}
+			}
+		
+	}
+
+    focus = { 
+		id = STL_join_southern_committee
+		icon = GFX_focus_SOUTHERN_COMITEEE
+		x = -2
+		y = 1
+		relative_position_id = STL_fortify_against_socialism
+		cost = 1
+		available_if_capitulated = yes 
+		 available = {
+            SGA = {
+                has_government = fascism
+            }
+            
+        }
+		prerequisite = { focus = STL_onward_christian_soilder focus = STL_rebuild_north_louisiana}
+		 ai_will_do = {
+            factor = 160
+        }
+        ####georgia must be fascist##
+        ####georgia also must have faction
+		completion_reward = { 
+			 SGA = {
+                country_event = {
+                    id = truelouisiana.6
+                }
+            }
+			}
+		
+	}
+    
+    
+}
