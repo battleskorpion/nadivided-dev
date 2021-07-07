@@ -1,6 +1,6 @@
 # North America Divided
 
- NOTE: ASK BEFORE USING ANYTHING NATIVE TO OUR MOD. THANK YOU FOR YOUR CONSIDERATION. WE WILL ALMOST ALWAYS ACCEPT :)
+NOTE: We recommend contacting us before using anything native to our mod (such as the map). We gladly allow use of the map and etc. though we may want to mention some warnings or advice. 
 
  If youre going to be using development / github branches of the mod, 
  Github Desktop (https://desktop.github.com) is highly reccommended, 
