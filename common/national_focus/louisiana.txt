@@ -87,7 +87,7 @@ focus_tree = {
 		focus = {
 		id = SLA_Distribute_Louisiana_Armoury
 		icon = GFX_focus_SLA_distribute_armoury
-        x = -9
+        x = -11
         y = 1
 
 		cost = 5
@@ -187,6 +187,128 @@ focus_tree = {
             custom_effect_tooltip = SLA_red_river_war_information_tt
         }
     }
+
+    focus = {
+        id = SLA_total_victory_over_texas
+        icon = GFX_focus_STX_Red_River_War
+       prerequisite = { focus = SLA_second_red_river_war}
+
+        mutually_exclusive = { focus = SLA_integrate_eastern_texas}
+
+        available = {
+	
+        NOT = {
+            country_exists = STX
+            has_war_with = STX
+            }
+        }
+        x = 3
+        y = 2
+        relative_position_id = SLA_second_red_river_war
+        cost = 1
+        ai_will_do = {
+            factor = 100
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+			add_timed_idea = { idea = SLA_Political_over_extention  days = 100 }
+			add_timed_idea = { idea = SLA_Strained_resources  days = 400 }
+        }
+    }
+
+    focus = {
+        id = SLA_share_the_oil
+        icon = GFX_focus_STX_Red_River_War
+       prerequisite = { focus = SLA_total_victory_over_texas}
+
+        mutually_exclusive = { focus = SLA_harsh_treatment}
+
+        available = {
+
+        }
+        x = -1
+        y = 1
+        relative_position_id = SLA_total_victory_over_texas
+        cost = 1
+        ai_will_do = {
+            factor = 100
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            
+        }
+    }
+
+    focus = {
+        id = SLA_Divide_texas
+        icon = GFX_focus_STX_Red_River_War
+       prerequisite = { focus = SLA_share_the_oil}
+
+        available = {
+
+        }
+        x = 0
+        y = 2
+        relative_position_id = SLA_share_the_oil
+        cost = 1
+        ai_will_do = {
+            factor = 100
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            
+        }
+    }
+
+    focus = {
+        id = SLA_harsh_treatment
+        icon = GFX_focus_STX_Red_River_War
+       prerequisite = { focus = SLA_total_victory_over_texas}
+
+        mutually_exclusive = { focus = SLA_share_the_oil}
+
+        available = {
+
+        }
+        x = 1
+        y = 1
+        relative_position_id = SLA_total_victory_over_texas
+        cost = 1
+        ai_will_do = {
+            factor = 100
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            
+        }
+    }
+
+    focus = {
+        id = SLA_Occupy_texas
+        icon = GFX_focus_STX_Red_River_War
+       prerequisite = { focus = SLA_harsh_treatment}
+
+        available = {
+
+        }
+        x = 0
+        y = 2
+        relative_position_id = SLA_harsh_treatment
+        cost = 1
+        ai_will_do = {
+            factor = 100
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            
+        }
+    }
+
     focus = {
         id = SLA_demand_reinforcements
         icon = GFX_focus_SLA_reinforcements
@@ -277,6 +399,9 @@ focus_tree = {
         id = SLA_integrate_eastern_texas
         icon = GFX_focus_SLA_integrate_eastern_texas
         prerequisite = { focus = SLA_demand_reinforcements focus = SLA_rally_popular_support}
+
+        mutually_exclusive = { focus = SLA_total_victory_over_texas}
+
         available = {
             custom_trigger_tooltip = {
                 tooltip = SLA_red_river_war_has_eneded_tt
@@ -342,6 +467,32 @@ focus_tree = {
        #temporary idea
         }
     }
+
+    focus = {
+        id = SLA_the_new_king_fish
+        icon = GFX_focus_SLA_suitman
+        #prerequisite = { focus = SLA_create_the_jeffersonian_league}
+        mutually_exclusive = { focus = SLA_loss_in_the_red_river_war}
+        mutually_exclusive = { focus = SLA_victory_in_the_red_river_war}
+        available = {
+            has_completed_focus = SLA_total_victory_over_texas
+        }
+        x = -5
+        y = 1
+        relative_position_id = SLA_create_the_jeffersonian_league
+        cost = 10
+        ai_will_do = {
+            factor = 160
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            add_political_power = -50
+            add_stability = 0.05
+        }
+    }
+
     focus = {
         id = SLA_victory_in_the_red_river_war
         icon = GFX_focus_SLA_suitman
@@ -379,7 +530,7 @@ focus_tree = {
     focus = {
         id = SLA_develop_western_texas
         icon = GFX_focus_SLA_demand_territory
-        prerequisite = { focus = SLA_victory_in_the_red_river_war}
+        prerequisite = { focus = SLA_victory_in_the_red_river_war focus = SLA_the_new_king_fish}
         available = {
             OR = {
                 owns_state = 222
@@ -479,7 +630,7 @@ focus_tree = {
     focus = {
         id = SLA_strengthen_the_homeland
         icon = GFX_focus_SLA_strengthin_the_homeland
-        prerequisite = { focus = SLA_victory_in_the_red_river_war}
+        prerequisite = { focus = SLA_victory_in_the_red_river_war focus = SLA_the_new_king_fish}
         available = {
             owns_state = 18
         }
@@ -1217,6 +1368,7 @@ focus_tree = {
         id = SLA_loss_in_the_red_river_war
         icon = GFX_focus_generic_treaty
         mutually_exclusive = { focus = SLA_victory_in_the_red_river_war}
+        mutually_exclusive = { focus = SLA_the_new_king_fish}
         available = {
             custom_trigger_tooltip = {
                 tooltip = SLA_red_river_war_has_eneded_tt
