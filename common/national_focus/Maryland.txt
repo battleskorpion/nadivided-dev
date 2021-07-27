@@ -1,0 +1,608 @@
+focus_tree = {
+    id = maryland_focus
+
+    country = {
+        factor = 0
+        modifier = {
+            add = 10
+            tag = SMD
+        }
+    }
+
+    default = no
+
+    #FOCUS_FILTER_STABILITY
+    #FOCUS_FILTER_INDUSTRY
+    #FOCUS_FILTER_ANNEXATION
+    #FOCUS_FILTER_MANPOWER
+    #FOCUS_FILTER_POLITICAL
+    #FOCUS_FILTER_RESEARCH
+    #FOCUS_FILTER_WAR_SUPPORT
+
+    continuous_focus_position = { x = 50 y = 1350 }
+
+#######################################
+###########Ritchie dies ###########
+#######################################
+    focus = {
+        id = SMD_Valle_dictorship
+        icon = GFX_focus_destroy_military_factories
+        available = {
+           always = no  
+        }
+        x = 2
+        y = 0
+        cost = 10
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_political_power = 150
+        }
+    }
+     focus = {
+        id = SMD_denouce_hoover
+        icon = GFX_focus_destroy_military_factories
+        available = {
+            
+        }
+        x = 0
+        y = 1
+        cost = 3
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_Valle_dictorship}
+        relative_position_id = SMD_Valle_dictorship
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_war_support = 0.05
+            ##let D.C know you hate them 
+             WDC = {
+          country_event = {
+				id  = maryland.2
+			}
+			}
+        }
+    }
+     focus = {
+        id = SMD_military_investment_question
+        icon = GFX_focus_destroy_military_factories
+        available = {
+            
+        }
+        x = 0
+        y = 1
+        cost = 9
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_denouce_hoover}
+        relative_position_id = SMD_denouce_hoover
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            #choose between putting 3 military factories in 
+            #Baltimore, or 1 military and 2 slots in in Ocean City region
+            #NOTE Baltimore is likley to quickly face invasion####
+              country_event = {
+				id  = maryland.3
+			}
+        
+        }
+    }
+focus = {
+        id = SMD_maryland_marine_corps
+        icon = GFX_focus_destroy_military_factories
+        available = {
+            
+        }
+        x = 0
+        y = 1
+        cost = 9
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_military_investment_question}
+        relative_position_id = SMD_military_investment_question
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = SMD_maryland_marine_corps
+            
+        
+        }
+    }
+    focus = {
+        id = SMD_legacy_of_fort_henry
+        icon = GFX_focus_destroy_military_factories
+        mutually_exclusive = { focus = SMD_heavy_tank_project }
+        available = {
+            
+        }
+        x = -1
+         y = 1
+        cost = 2
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_maryland_marine_corps}
+        relative_position_id = SMD_maryland_marine_corps
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = SMD_legacy_of_fort_henry
+            
+        
+        }
+    }
+
+    focus = {
+        id = SMD_heavy_tank_project
+        icon = GFX_focus_destroy_military_factories
+        mutually_exclusive = { focus = SMD_legacy_of_fort_henry}
+        available = {
+            
+        }
+        x = 1
+         y = 1
+        cost = 2
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_maryland_marine_corps}
+        relative_position_id = SMD_maryland_marine_corps
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+       add_timed_idea = {
+       idea = SMD_heavy_tanks_project
+        days = 600
+        }
+            add_tech_bonus = {
+				bonus = 1.0
+				uses = 3
+				category = cat_heavy_armor
+			}
+        
+        }
+    }
+
+    focus = {
+        id = SMD_ending_isolationism
+        icon = GFX_focus_destroy_military_factories
+        available = {
+             NOT = {
+            country_exists = WDC
+            }
+        }
+        x = -1
+        y = 1
+        cost = 9
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_legacy_of_fort_henry focus = SMD_heavy_tank_project}
+        relative_position_id = SMD_heavy_tank_project
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+        add_war_support = 0.05
+        
+        }
+    }
+    focus = {
+        id = SMD_integrating_bonus_army
+        icon = GFX_focus_destroy_military_factories
+        ###get this idea when you pass bonus bill via event army
+        available = {
+           has_idea = SMD_satisified_bonus_army 
+        }
+        x = 3
+        y = 1
+        cost = 9
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_ending_isolationism}
+        relative_position_id = SMD_ending_isolationism
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        ##consription boost and weekly 30 manpower#####
+        completion_reward = {
+            add_ideas = SMD_integrationing_bonus_army
+            
+        
+        }
+    }
+    focus = {
+        id = SMD_join_southern_committee
+        icon = GFX_focus_destroy_military_factories
+        ###get this idea when you pass bonus bill via event army
+          mutually_exclusive = { focus = SMD_revenge_for_chesapeake_bay_war }
+        available = {
+            SGA  = { has_government = fascism } 
+          SGA = {  is_faction_leader = yes}
+        }
+        x = -3
+        y = 1
+        cost = 9
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_ending_isolationism}
+        relative_position_id = SMD_ending_isolationism
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        ##consription boost and weekly 30 manpower#####
+        completion_reward = {
+            SGA = {
+          country_event = {
+				id  = maryland.5
+			}
+            }
+        
+        }
+    }
+    focus = {
+        id = SMD_revenge_for_chesapeake_bay_war
+        icon = GFX_focus_destroy_military_factories
+        ###get this idea when you pass bonus bill via event army
+        available = {
+            SGA  = { has_government = fascism } 
+          SGA = {  is_faction_leader = yes}
+        }
+          mutually_exclusive = { focus = SMD_join_southern_committee }
+        x = 0
+        y = 1
+        cost = 9
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_ending_isolationism}
+        relative_position_id = SMD_ending_isolationism
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        ##consription boost and weekly 30 manpower#####
+        completion_reward = {
+           add_popularity = {
+				ideology = fascism
+				popularity = 0.10
+			}
+            	set_rule = {
+				can_create_factions = yes
+			}
+			create_faction = SMD_ANTI_NEW_JERSEY_PACT
+        
+        }
+    }
+    focus = {
+        id = SMD_deal_with_delaware
+        icon = GFX_focus_destroy_military_factories
+        ###get this idea when you pass bonus bill via event army
+        available = {
+           
+        }
+        x = 0
+        y = 1
+        cost = 9
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_revenge_for_chesapeake_bay_war}
+        relative_position_id = SMD_revenge_for_chesapeake_bay_war
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        ##consription boost and weekly 30 manpower#####
+        completion_reward = {
+           ##Delware goes 50, 50 if they accept they gain 20% fascism increase.
+           #if they deny they get attacked##########
+        SDE = {
+          country_event = {
+				id  = maryland.6
+			}
+            }
+        }
+    }
+    focus = {
+        id = SMD_settle_veterans_in_delaware
+        icon = GFX_focus_destroy_military_factories
+        ###get this idea when you pass bonus bill via event army
+          
+        available = {
+           is_in_faction_with = SDE 
+           has_completed_focus = SMD_integrating_bonus_army
+        }
+        x = 1
+        y = 1
+        cost = 11
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_deal_with_delaware}
+        relative_position_id = SMD_deal_with_delaware
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+       
+        completion_reward = {
+           core_delaware = yes
+        
+        }
+    }
+    focus = {
+        id = SMD_integrate_dixie_identity
+        icon = GFX_focus_destroy_military_factories
+        ###get this idea when you pass bonus bill via event army
+        available = {
+          
+        }
+        x = 0
+        y = 1
+        cost = 4
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_join_southern_committee}
+        relative_position_id = SMD_join_southern_committee
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        ##consription boost and weekly 30 manpower#####
+        completion_reward = {
+           add_ideas = SMD_integrate_dixie_identity
+        
+        }
+    }
+###DEMOCRATIC PATH ##REP
+###event will only be allowed if D.C is gone 
+##Valle Promises an election in 38' 
+    focus = {
+        id = SMD_1938_referendum_question
+        icon = GFX_focus_destroy_military_factories
+
+        ###D.C must be dead because thats main reason for Valles justification for 
+        ##MUST BE IN THE YEAR OF 1938###
+        ##
+       available = {
+         
+              NOT = {
+            country_exists = WDC
+            }
+            fascism < 0.60
+            date < 1939.01.01
+             date > 1937.12.31
+        }
+        x = 9
+        y = 0
+        cost = 2
+        ai_will_do = {
+            factor = 200
+        }
+        
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        ##player can pick between rigging election or allowing fair election
+        completion_reward = {
+          country_event = {
+				id  = maryland.4
+			}
+        }
+    }
+    focus = {
+        id = SMD_embrace_peace
+        icon = GFX_focus_destroy_military_factories
+        available = {
+            
+        }
+        x = -1
+        y = 1
+        cost = 3
+        ai_will_do = {
+            factor = 5
+        }
+        prerequisite = { focus = SMD_1938_referendum_question}
+        relative_position_id = SMD_1938_referendum_question
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_STABILITY}
+        completion_reward = {
+            add_stability = 0.10
+        }
+    }
+    focus = {
+        id = SMD_pass_anti_lynching_legislation
+        icon = GFX_focus_destroy_military_factories
+        available = {
+            
+        }
+        x = 1
+        y = 1
+        cost = 10
+        ai_will_do = {
+            factor = 5
+        }
+        prerequisite = { focus = SMD_1938_referendum_question}
+        relative_position_id = SMD_1938_referendum_question
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_STABILITY }
+        completion_reward = {
+            remove_idea = SMD_lynch_mobs
+        }
+    }
+     focus = {
+        id = SMD_protect_delaware_soverignity 
+        icon = GFX_focus_destroy_military_factories
+        available = {
+            
+        }
+        x = 1
+        y = 1
+        cost = 10
+        ai_will_do = {
+            factor = 5
+        }
+        prerequisite = { focus = SMD_embrace_peace}
+        prerequisite = { focus = SMD_pass_anti_lynching_legislation}
+        relative_position_id = SMD_embrace_peace
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_STABILITY }
+        completion_reward = {
+            give_guarantee = SDE
+            add_war_support = 0.02
+        }
+    }
+    ###Via event 
+
+    ###if you use bonus army on protesters, then don't pass bonus bill youll get them to march on Baltimore
+    focus = {
+        id = SMD_bonus_army_takeover
+        icon = GFX_focus_destroy_military_factories
+        available = {
+           always = no  
+        }
+        x = -5
+        y = 2
+        cost = 10
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+           add_stability = -0.05
+            add_popularity = {
+				ideology = longism
+				popularity = 0.10
+			}
+			set_politics = {
+				ruling_party = longism
+			}
+        }
+    }
+  #keep in mind they have personal vendetta on these guys##
+    focus = {
+        id = SMD_take_out_the_feds
+        icon = GFX_focus_destroy_military_factories
+        available = {
+            
+        }
+        x = 0
+        y = 1
+        cost = 9
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_bonus_army_takeover}
+        relative_position_id = SMD_bonus_army_takeover
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+           add_war_support = 0.20
+           declare_war_on = {
+            target = WDC
+            type = annex_everything
+            }
+        
+        }
+    }
+      focus = {
+        id = SMD_execute_political_crooks
+        icon = GFX_focus_destroy_military_factories
+        available = {
+        owns_state = 44
+
+        }
+        x = 0
+        y = 1
+        cost = 4
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_take_out_the_feds}
+        relative_position_id = SMD_take_out_the_feds
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MANPOWER }
+        completion_reward = {
+           44 = {
+				add_manpower = -100000
+			}
+            add_state_core = 44
+        
+        }
+    }
+    focus = {
+        id = SMD_d_c_armory
+        icon = GFX_focus_destroy_military_factories
+        available = {
+        owns_state = 44
+
+        }
+        x = 0
+        y = 1
+        cost = 4
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_execute_political_crooks}
+        relative_position_id = SMD_execute_political_crooks
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MANPOWER }
+        completion_reward = {
+           44 = {
+               add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+                    type = arms_factory
+                    level = 2
+                    instant_build = yes
+                }
+			}
+           
+        
+        }
+    }
+    focus = {
+        id = SMD_invite_more_veterans
+        icon = GFX_focus_destroy_military_factories
+        available = {
+        owns_state = 44
+
+        }
+        x = 2
+        y = 1
+        cost = 4
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_execute_political_crooks}
+        relative_position_id = SMD_execute_political_crooks
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MANPOWER }
+        completion_reward = {
+          add_manpower = 25000
+        army_experience = 100
+        }
+    }
+    focus = {
+        id = SMD_veteran_housing_program
+        icon = GFX_focus_destroy_military_factories
+        available = {
+        owns_state = 44
+
+        }
+        x = 0
+        y = 1
+        cost = 4
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_invite_more_veterans}
+        relative_position_id = SMD_invite_more_veterans
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MANPOWER }
+        completion_reward = {
+         add_ideas = SMD_veteran_housing_program
+        }
+    }
+}
