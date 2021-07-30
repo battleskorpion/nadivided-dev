@@ -306,6 +306,27 @@ focus_tree = {
 	}
 
 	focus = {
+		id = ORL_Weapons_mass_production
+		icon = GFX_focus_gen_equipment_effort
+		prerequisite = { focus = ORL_Rationing }
+		x = 0
+		y = 1
+		relative_position_id = ORL_Rationing
+		cost = 10
+
+        ai_will_do = {
+            factor = 100
+        }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_timed_idea = { idea = ORL_Weapons_mass_production_idea  days = 100 }	
+		}
+	}
+
+	focus = {
 		id = ORL_Schools_of_Defense
 		icon = GFX_focus_ORL_School_of_defense
 		prerequisite = { focus = ORL_local_arms_production }
@@ -332,6 +353,27 @@ focus_tree = {
 			target = STL
 			}
 			
+		}
+	}
+
+	focus = {
+		id = ORL_Claim_all_of_louisiana
+		icon = GFX_focus_ORL_rationing
+		prerequisite = { focus = ORL_Schools_of_Defense }
+		x = 0
+		y = 1
+		relative_position_id = ORL_Schools_of_Defense
+		cost = 10
+
+        ai_will_do = {
+            factor = 100
+        }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			claim_louisiana = yes
 		}
 	}
 
@@ -376,6 +418,75 @@ focus_tree = {
 		}
 	}
 
+	focus = {
+		id = ORL_invest_in_arms_production
+		icon = GFX_focus_ORL_local_arm_factories
+		prerequisite = { focus = ORL_Fortify_the_city }
+		x = 0
+		y = 1
+		relative_position_id = ORL_Fortify_the_city
+		cost = 10
+
+		ai_will_do = {
+			factor = 150
+		}
+
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = production_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = arms_factory
+						size < 2
+						include_locked = yes
+					}
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = arms_factory
+				level = 3
+				instant_build = yes
+			}
+		}		
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
 
 	focus = {
 		id = ORL_Arm_the_workers
@@ -518,9 +629,10 @@ focus_tree = {
 		id = ORL_Re_establish_control_over_LA
 		icon = GFX_focus_ORL_re_establish_control_over_sla
 		prerequisite = { focus = ORL_Declare_catholicism_state_religion focus = ORL_End_prohibition }
-		x = 5
-		y = 3
-		relative_position_id = ORL_Declare_catholicism_state_religion
+		prerequisite = { focus = ORL_Claim_all_of_louisiana }
+		x = 0
+		y = 1
+		relative_position_id = ORL_Claim_all_of_louisiana
 		cost = 5
 
 
