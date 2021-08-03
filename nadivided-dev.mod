@@ -54,4 +54,5 @@ tags={
 }
 name="North America Divided (DEV VERSION)"
 supported_version="1.10.*"
+path="mod/nadivided-dev"
 remote_file_id="2095618478"
