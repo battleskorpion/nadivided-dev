@@ -1682,7 +1682,7 @@ focus_tree = {
 	focus = { 
 		id = SFL_election_of_1936
 		icon = GFX_focus_vote_reenstation_act
-		x = 25
+		x = 24
 		y = 0
 		cost = 2
 		available_if_capitulated = yes 
@@ -1698,8 +1698,9 @@ focus_tree = {
 	focus = { 
 		id = SFL_let_democracy_win
 		icon = GFX_goal_support_democracy
-		x = 20
+		x = -6
 		y = 1
+		relative_position_id = SFL_election_of_1936
 		cost = 10
 		ai_will_do = { factor = 40 }
 		available_if_capitulated = yes 
@@ -1725,11 +1726,11 @@ focus_tree = {
 
 		} 
 	}
-	
+
 	focus = { 
-		id = SFL_fire_general_lowry
+		id = SFL_fred_cone_radio_speech
 		icon = GFX_focus_SFL_firegeneralLowry
-		x = 1
+		x = 4
 		y = 1
 		relative_position_id = SFL_let_democracy_win
 		cost = 10
@@ -1740,13 +1741,27 @@ focus_tree = {
 			remove_unit_leader = 7001
 		} 
 	}
+
+	focus = { 
+		id = SFL_fire_general_lowry
+		icon = GFX_focus_SFL_firegeneralLowry
+		x = 0
+		y = 1
+		relative_position_id = SFL_Re_Elect_fred_cone
+		cost = 10
+		available_if_capitulated = yes 
+
+		completion_reward = { 
+			remove_unit_leader = 7001
+		} 
+	}
 	
 	focus = { 
 		id = SFL_ready_for_war
 		icon = GFX_focus_SFL_ready_for_war
-		x = 1
-		y = 2
-		relative_position_id = SFL_let_democracy_win
+		x = 0
+		y = 1
+		relative_position_id = SFL_fire_general_lowry
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_fire_general_lowry }
@@ -1775,9 +1790,9 @@ focus_tree = {
 	focus = { 
 		id = SFL_arrest_damned_lowry
 		icon = GFX_focus_SFL_arrest_lowery
-		x = 1
-		y = 3
-		relative_position_id = SFL_let_democracy_win
+		x = 0
+		y = 1
+		relative_position_id = SFL_ready_for_war
 		cost = 18
 		available_if_capitulated = yes 
 		ai_will_do = { factor = 80 }
@@ -1798,9 +1813,9 @@ focus_tree = {
 		ai_will_do = {
             factor = 40
        		 }
-		x = 1
-		y = 4
-		relative_position_id = SFL_let_democracy_win
+		x = 0
+		y = 1
+		relative_position_id = SFL_arrest_damned_lowry
 		cost = 12
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_arrest_damned_lowry }
@@ -1818,12 +1833,13 @@ focus_tree = {
 	focus = { 
 		id = SFL_bonus_bill_or_else 
 		icon = GFX_focus_SFL_bonusbillorelse
-		x = 1
-		y = 5
+		x = 0
+		y = 1
+		relative_position_id = SFL_deal_with_strikers
 		ai_will_do = {
             factor = 40
         }
-		relative_position_id = SFL_let_democracy_win
+
 		cost = 8
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_deal_with_strikers }
@@ -1844,7 +1860,7 @@ focus_tree = {
 	focus = {
 		id = SFL_police_state_now
 		icon = GFX_focus_SFL_police_state_now
-		x = 1
+		x = 0
 		y = 1
 		ai_will_do = {
             factor = 40
@@ -1864,14 +1880,14 @@ focus_tree = {
 	
 	focus = { 
 		id = SFL_generalismo
-		icon = GFX_focus_generic_manpower
+		icon = GFX_focus_SFL_general_lowry
 		x = -1
 		y = 1
 		relative_position_id = SFL_let_democracy_win
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_let_democracy_win }
-		mutually_exclusive = { focus = SFL_fire_general_lowry }
+		mutually_exclusive = { focus = SFL_Elect_fred_cone }
 		completion_reward = { 
 			add_ideas = SFL_generalismo_training_idea
 		} 
@@ -2185,12 +2201,40 @@ focus_tree = {
 			florida_wargoal_west_florida_countries = yes
 		} 
 	}
-	
+
+	focus = { 
+		id = SFL_
+		icon = GFX_focus_voting_cancelled
+		x = 6
+		y = 1
+		relative_position_id = SFL_election_of_1936
+		cost = 10
+		ai_will_do = { factor = 80 }
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_election_of_1936 }
+		mutually_exclusive = { focus = SFL_let_democracy_win } 
+		
+		completion_reward = { 
+			custom_effect_tooltip = SFL_cancel_elections_effect_tt
+			hidden_effect = {
+				set_temp_variable = { florida_party_current = current_party_ideology_group }
+				
+				set_politics = {
+					ruling_party = var:florida_party_current		#necessary otherwise crash really just wanna cancel elections
+					elections_allowed = no 
+				}
+			}
+			add_stability = -0.10
+			add_political_power = -75
+		} 
+	}
+
 	focus = { 
 		id = SFL_cancel_elections
 		icon = GFX_focus_voting_cancelled
-		x = 30
+		x = 6
 		y = 1
+		relative_position_id = SFL_election_of_1936
 		cost = 10
 		ai_will_do = { factor = 80 }
 		available_if_capitulated = yes 
@@ -2856,14 +2900,14 @@ focus_tree = {
        		 }
 		available = {
 			date > 1940.11.8
+            has_completed_focus = SFL_raising_blacks_taxes 
 		}
 		#icon = #
-		x = 0
-		y = 3
-		relative_position_id = SFL_raising_blacks_taxes
+		x = 40
+		y = 0
+
 		cost = 7
 		available_if_capitulated = yes 
-		prerequisite = { focus = SFL_raising_blacks_taxes}
 		
 		completion_reward = { 
 			add_political_power = 450
