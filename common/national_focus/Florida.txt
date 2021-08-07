@@ -1936,7 +1936,7 @@ focus_tree = {
 
 	focus = {
 		id = SFL_reach_our_to_weapon_designers
-		icon = GFX_goal_generic_small_arms
+		icon = GFX_focus_gen_equipment_effort3
 		prerequisite = { focus = SFL_weapons_factories2 }
 		prerequisite = { focus = SFL_weapons_factories }
 		x = -1
@@ -3167,6 +3167,133 @@ focus_tree = {
 
 		completion_reward = {
 
+		}
+	}
+
+	focus = { 
+		id = SFL_dockyards_effort
+		icon = GFX_focus_refuse_support
+		x = -7
+		y = 1
+		relative_position_id = SFL_cancel_elections
+		cost = 5
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_cancel_elections }
+		available_if_capitulated = yes
+
+		available = {
+			any_state = {
+				is_coastal = yes
+				is_controlled_by = ROOT
+			}
+		}
+
+		complete_tooltip = {
+			navy_experience = 25
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = {
+				type = dockyard
+				level = 3
+				instant_build = yes
+			}
+		}
+		
+		completion_reward = {
+			navy_experience = 25
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = SFL_naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = SFL_naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = SFL_naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = SFL_naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+			}			
 		}
 	}
 
