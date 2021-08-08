@@ -1682,7 +1682,7 @@ focus_tree = {
 	focus = { 
 		id = SFL_election_of_1936
 		icon = GFX_focus_vote_reenstation_act
-		x = 25
+		x = 24
 		y = 0
 		cost = 2
 		available_if_capitulated = yes 
@@ -1698,13 +1698,14 @@ focus_tree = {
 	focus = { 
 		id = SFL_let_democracy_win
 		icon = GFX_goal_support_democracy
-		x = 20
+		x = -4
 		y = 1
+		relative_position_id = SFL_election_of_1936
 		cost = 10
 		ai_will_do = { factor = 40 }
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_election_of_1936 }
-		mutually_exclusive = { focus = SFL_cancel_elections }
+		mutually_exclusive = { focus = SFL_David_Sholtz }
 		
 		completion_reward = { 
 			add_political_power = 50
@@ -1725,17 +1726,31 @@ focus_tree = {
 
 		} 
 	}
-	
+
 	focus = { 
-		id = SFL_fire_general_lowry
-		icon = GFX_focus_SFL_firegeneralLowry
-		x = 1
+		id = SFL_fred_cone_radio_speech
+		icon = GFX_focus_SFL_fredcone
+		x = 5
 		y = 1
 		relative_position_id = SFL_let_democracy_win
-		cost = 10
+		cost = 1
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_let_democracy_win }
 		mutually_exclusive = { focus = SFL_generalismo }
+		completion_reward = { 
+			add_political_power = 20
+		} 
+	}
+
+	focus = { 
+		id = SFL_fire_general_lowry
+		icon = GFX_focus_SFL_firegeneralLowry
+		x = 0
+		y = 1
+		relative_position_id = SFL_fred_cone_radio_speech
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_fred_cone_radio_speech }
 		completion_reward = { 
 			remove_unit_leader = 7001
 		} 
@@ -1744,9 +1759,9 @@ focus_tree = {
 	focus = { 
 		id = SFL_ready_for_war
 		icon = GFX_focus_SFL_ready_for_war
-		x = 1
-		y = 2
-		relative_position_id = SFL_let_democracy_win
+		x = 0
+		y = 1
+		relative_position_id = SFL_fire_general_lowry
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_fire_general_lowry }
@@ -1756,6 +1771,292 @@ focus_tree = {
 		} 
 	}
 	
+	focus = { 
+		id = SFL_Fred_Cones_war_industry
+		icon = GFX_focus_SFL_ready_for_war
+		x = 3
+		y = 1
+		relative_position_id = SFL_ready_for_war
+		cost = 5
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_ready_for_war }
+		ai_will_do = { factor = 80 }
+		completion_reward = { 
+
+		} 
+	}
+
+	focus = {
+		id = SFL_weapons_factories
+		icon = GFX_goal_generic_construct_mil_factory
+		prerequisite = { focus = SFL_Fred_Cones_war_industry }
+		x = -1
+		y = 1
+		relative_position_id = SFL_Fred_Cones_war_industry
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_INDUSTRY  }
+		
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 80			
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = SFL_production_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = arms_factory
+						size < 2
+						include_locked = yes
+					}
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = arms_factory
+				level = 2
+				instant_build = yes
+			}
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SFL_weapons_factories2
+		icon = GFX_goal_generic_construct_mil_factory
+		prerequisite = { focus = SFL_Fred_Cones_war_industry }
+		x = 1
+		y = 1
+		relative_position_id = SFL_Fred_Cones_war_industry
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_INDUSTRY  }
+		
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 80			
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = SFL_production_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = arms_factory
+						size < 2
+						include_locked = yes
+					}
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = arms_factory
+				level = 2
+				instant_build = yes
+			}
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SFL_reach_our_to_weapon_designers
+		icon = GFX_focus_gen_equipment_effort3
+		prerequisite = { focus = SFL_weapons_factories2 }
+		prerequisite = { focus = SFL_weapons_factories }
+		x = -1
+		y = 1
+		relative_position_id = SFL_weapons_factories2
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 1
+				category = infantry_weapons
+				category = artillery
+			}
+		}
+	}
+
+	focus = {
+		id = SFL_Bonds_sale_campaign
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SFL_reach_our_to_weapon_designers }
+		x = -1
+		y = 1
+		relative_position_id = SFL_reach_our_to_weapon_designers
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = SFL_Professional_Engineering
+		icon = GFX_focus_research
+		prerequisite = { focus = SFL_Bonds_sale_campaign }
+		prerequisite = { focus = SFL_Production_boom }
+		x = 1
+		y = 1
+		relative_position_id = SFL_Bonds_sale_campaign
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
+
+	focus = {
+		id = SFL_better_bombers
+		icon = GFX_
+		prerequisite = { focus = SFL_Professional_Engineering }
+		x = 1
+		y = 1
+		relative_position_id = SFL_Professional_Engineering
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = bomber_bonus
+				bonus = 1.0
+				uses = 2
+				technology = strategic_bomber1
+				technology = strategic_bomber2
+				technology = strategic_bomber3
+				category = tactical_bomber
+			}
+		}
+	}
+
+	focus = {
+		id = SFL_better_fighters
+		icon = GFX_goal_generic_air_fighter
+		prerequisite = { focus = SFL_Professional_Engineering }
+		x = -1
+		y = 1
+		relative_position_id = SFL_Professional_Engineering
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = fighter_bonus
+				bonus = 1.0
+				uses = 2
+				technology = early_fighter
+				technology = fighter1
+				technology = fighter2
+				technology = fighter3
+				technology = heavy_fighter1
+				technology = heavy_fighter2
+				technology = heavy_fighter3
+			}
+		}
+	}
+
+	focus = {
+		id = SFL_Production_boom
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SFL_reach_our_to_weapon_designers }
+		x = 1
+		y = 1
+		relative_position_id = SFL_reach_our_to_weapon_designers
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+
+		}
+	}
+
 	#focus = { 
 	#	id = SFL_strike_cost
 	#	#icon = #
@@ -1775,9 +2076,9 @@ focus_tree = {
 	focus = { 
 		id = SFL_arrest_damned_lowry
 		icon = GFX_focus_SFL_arrest_lowery
-		x = 1
-		y = 3
-		relative_position_id = SFL_let_democracy_win
+		x = 0
+		y = 1
+		relative_position_id = SFL_ready_for_war
 		cost = 18
 		available_if_capitulated = yes 
 		ai_will_do = { factor = 80 }
@@ -1798,9 +2099,9 @@ focus_tree = {
 		ai_will_do = {
             factor = 40
        		 }
-		x = 1
-		y = 4
-		relative_position_id = SFL_let_democracy_win
+		x = 0
+		y = 1
+		relative_position_id = SFL_arrest_damned_lowry
 		cost = 12
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_arrest_damned_lowry }
@@ -1818,12 +2119,13 @@ focus_tree = {
 	focus = { 
 		id = SFL_bonus_bill_or_else 
 		icon = GFX_focus_SFL_bonusbillorelse
-		x = 1
-		y = 5
+		x = 0
+		y = 1
+		relative_position_id = SFL_deal_with_strikers
 		ai_will_do = {
             factor = 40
         }
-		relative_position_id = SFL_let_democracy_win
+
 		cost = 8
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_deal_with_strikers }
@@ -1844,7 +2146,7 @@ focus_tree = {
 	focus = {
 		id = SFL_police_state_now
 		icon = GFX_focus_SFL_police_state_now
-		x = 1
+		x = 0
 		y = 1
 		ai_will_do = {
             factor = 40
@@ -1864,14 +2166,14 @@ focus_tree = {
 	
 	focus = { 
 		id = SFL_generalismo
-		icon = GFX_focus_generic_manpower
-		x = -1
+		icon = GFX_focus_SFL_general_lowry
+		x = -3
 		y = 1
 		relative_position_id = SFL_let_democracy_win
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_let_democracy_win }
-		mutually_exclusive = { focus = SFL_fire_general_lowry }
+		mutually_exclusive = { focus = SFL_fred_cone_radio_speech }
 		completion_reward = { 
 			add_ideas = SFL_generalismo_training_idea
 		} 
@@ -1881,9 +2183,10 @@ focus_tree = {
 		id = SFL_invite_fascist_leader_speech
 		dynamic = yes
 		icon = GFX_focus_political_advice
-		x = -1
-		y = 2
-		relative_position_id = SFL_let_democracy_win
+		x = 0
+		y = 1
+		relative_position_id = SFL_generalismo
+
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_generalismo }
@@ -1903,9 +2206,10 @@ focus_tree = {
 	focus = { 
 		id = SFL_march_on_tallahassee
 		icon = GFX_focus_SFL_march_on_tallahassee
-		x = -1
-		y = 3
-		relative_position_id = SFL_let_democracy_win
+		x = 0
+		y = 1
+		relative_position_id = SFL_invite_fascist_leader_speech
+
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_invite_fascist_leader_speech }
@@ -1957,6 +2261,11 @@ focus_tree = {
 				set_politics = {
 					ruling_party = fascism
 				}
+					country_event = {
+   			 id = florida.2
+    			days = 10
+   
+			}
 			}
 		}
 	}
@@ -1965,9 +2274,9 @@ focus_tree = {
 	focus = { 
 		id = SFL_industralize_northern_florida
 		icon = GFX_goal_generic_construction
-		x = -1
-		y = 4
-		relative_position_id = SFL_let_democracy_win
+		x = 0
+		y = 1
+		relative_position_id = SFL_march_on_tallahassee
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_march_on_tallahassee }
@@ -2027,16 +2336,598 @@ focus_tree = {
 		}
 	}
 	
+	focus = {
+		id = SFL_improve_northern_florida_railroads
+		icon = GFX_goal_generic_construct_infrastructure
+		prerequisite = { focus = SFL_industralize_northern_florida }
+		x = 5
+		y = 1
+		relative_position_id = SFL_industralize_northern_florida
+		cost = 10
+
+		available_if_capitulated = yes
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = SFL_infrastructure_effort_tt
+				all_owned_state = {			
+					free_building_slots = {
+						building = infrastructure
+						size < 2
+					}
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_building_construction = {
+				type = infrastructure
+				level = 2
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = infrastructure
+				level = 2
+				instant_build = yes
+			}
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = infrastructure
+										size > 1
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = infrastructure
+										size > 1
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SFL_Weapons_plants_in_Gainesville
+		icon = GFX_goal_generic_construct_mil_factory
+		prerequisite = { focus = SFL_improve_northern_florida_railroads }
+		x = 1
+		y = 1
+		relative_position_id = SFL_improve_northern_florida_railroads
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_INDUSTRY  }
+		
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 80			
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = SFL_production_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = arms_factory
+						size < 2
+						include_locked = yes
+					}
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = arms_factory
+				level = 2
+				instant_build = yes
+			}
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SFL_synthetic_development
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SFL_Weapons_plants_in_Gainesville }
+		x = 0
+		y = 1
+		relative_position_id = SFL_Weapons_plants_in_Gainesville
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = synt
+				bonus = 1.5
+				uses = 1
+				category = synth_resources
+			}
+		}
+	}
+
+	focus = {
+		id = SFL_drain_swamps
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SFL_synthetic_development }
+		prerequisite = { focus = SFL_The_jacksonville_plants }
+		x = -1
+		y = 1
+		relative_position_id = SFL_synthetic_development
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = SFL_Mass_produced_rifles
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SFL_drain_swamps }
+
+		x = -1
+		y = 1
+		relative_position_id = SFL_drain_swamps
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = SFL_lowry_special_forces
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SFL_Mass_produced_rifles }
+
+		x = 1
+		y = 1
+		relative_position_id = SFL_Mass_produced_rifles
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = special_forces
+			add_tech_bonus = {
+				name = special_forces_bonus
+				bonus = 1.0
+				uses = 1
+				technology = paratroopers
+				technology = paratroopers2
+				technology = marines
+				technology = marines2
+				technology = tech_mountaineers
+				technology = tech_mountaineers2
+			}
+		}
+	}
+
+	focus = {
+		id = SFL_well_payed_workforce
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SFL_drain_swamps }
+
+		x = 1
+		y = 1
+		relative_position_id = SFL_drain_swamps
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = SFL_well_payed_researchers
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SFL_well_payed_workforce }
+
+		x = 1
+		y = 1
+		relative_position_id = SFL_well_payed_workforce
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
+
+	focus = {
+		id = SFL_The_jacksonville_plants
+		icon = GFX_goal_generic_construct_civ_factory
+		prerequisite = { focus = SFL_Construct_paper_factory }
+		x = 0
+		y = 1
+		relative_position_id = SFL_Construct_paper_factory
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_INDUSTRY  }
+		
+		available_if_capitulated = yes
+
+
+		
+		ai_will_do = {
+			factor = 2
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = SFL_construction_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = industrial_complex
+						size < 2
+						include_locked = yes
+					}					
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}			
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 2
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 2
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SFL_Construct_paper_factory
+		icon = GFX_goal_generic_construct_civ_factory
+		prerequisite = { focus = SFL_improve_northern_florida_railroads }
+		x = -1
+		y = 1
+		relative_position_id = SFL_improve_northern_florida_railroads
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_INDUSTRY  }
+		
+		available_if_capitulated = yes
+
+
+		
+		ai_will_do = {
+			factor = 2
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = SFL_construction_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = industrial_complex
+						size < 2
+						include_locked = yes
+					}					
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}			
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 2
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 2
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = { 
+		id = SFL_military_research_corps
+		icon = GFX_
+		x = -2
+		y = 1
+		relative_position_id = SFL_industralize_northern_florida
+		ai_will_do = {
+            factor = 10
+        	}
+
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_industralize_northern_florida }
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
+
+	focus = { 
+		id = SFL_theory_corps
+		icon = GFX_
+		x = -2
+		y = 1
+		relative_position_id = SFL_military_research_corps
+		ai_will_do = {
+            factor = 10
+        	}
+
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_military_research_corps }
+		completion_reward = {
+			army_experience = 5
+			add_tech_bonus = {
+				name = land_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = land_doctrine
+			}
+		}
+	}
+
+	focus = { 
+		id = SFL_Operational_command_headquarters
+		icon = GFX_
+		x = 0
+		y = 1
+		relative_position_id = SFL_theory_corps
+		ai_will_do = {
+            factor = 10
+        	}
+
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_theory_corps }
+		completion_reward = { 
+		
+		} 
+	}
+
+	focus = { 
+		id = SFL_promote_meritocracy
+		icon = GFX_
+		x = 0
+		y = 1
+		relative_position_id = SFL_Operational_command_headquarters
+		ai_will_do = {
+            factor = 10
+        	}
+
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_Operational_command_headquarters }
+		completion_reward = { 
+		
+		} 
+	}
+
+	focus = { 
+		id = SFL_advanced_electronics_development
+		icon = GFX_
+		x = 0
+		y = 1
+		relative_position_id = SFL_military_research_corps
+		ai_will_do = {
+            factor = 10
+        	}
+
+		cost = 5
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_military_research_corps }
+
+		completion_reward = {
+			army_experience = 5
+			add_tech_bonus = {
+				name = e
+				bonus = 1.5
+				uses = 1
+				category = electronics
+			}
+		}		
+	}
+
+	focus = { 
+		id = SFL_new_rifle_design
+		icon = GFX_
+		x = 0
+		y = 1
+		relative_position_id = SFL_advanced_electronics_development
+		ai_will_do = {
+            factor = 10
+        	}
+
+		cost = 5
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_advanced_electronics_development }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 1
+				category = infantry_weapons
+			}
+		}		
+	}
+
+	focus = { 
+		id = SFL_florida_resource_council
+		icon = GFX_
+		x = 0
+		y = 1
+		relative_position_id = SFL_new_rifle_design
+		ai_will_do = {
+            factor = 10
+        	}
+
+		cost = 5
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_new_rifle_design }
+
+		completion_reward = {
+
+		}		
+	}
+
 	#southern unity
 	focus = { 
 		id = SFL_southern_unity
 		icon = GFX_focus_southern_unity
-		x = -1
-		y = 5
+		x = 0
+		y = 1
+		relative_position_id = SFL_industralize_northern_florida
 		ai_will_do = {
             factor = 10
         	}
-		relative_position_id = SFL_let_democracy_win
+
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_industralize_northern_florida }
@@ -2058,9 +2949,9 @@ focus_tree = {
 	focus = { 
 		id = SFL_baby_boom
 		icon = GFX_focus_SFL_florida_baby_boom
-		x = -2
-		y = 6
-		relative_position_id = SFL_let_democracy_win
+		x = 0
+		y = 1
+		relative_position_id = SFL_southern_unity
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_southern_unity }
@@ -2073,9 +2964,9 @@ focus_tree = {
 	focus = { 
 		id = SFL_florida_fire_power
 		icon = GFX_focus_SFL_flordia_firepower
-		x = -2
-		y = 7
-		relative_position_id = SFL_let_democracy_win
+		x = 0
+		y = 1
+		relative_position_id = SFL_baby_boom
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_baby_boom }
@@ -2088,9 +2979,9 @@ focus_tree = {
 	focus = { 
 		id = SFL_tampa_bay_factories
 		icon = GFX_goal_generic_construct_mil_factory
-		x = -2
-		y = 8
-		relative_position_id = SFL_let_democracy_win
+		x = 0
+		y = 1
+		relative_position_id = SFL_florida_fire_power
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_florida_fire_power }
@@ -2110,12 +3001,13 @@ focus_tree = {
 	focus = { 
 		id = SFL_lowry_youth_camp
 		icon = GFX_focus_SFL_lowry_youthcamp
-		x = 0
-		y = 6
+		x = 2
+		y = 1
+		relative_position_id = SFL_southern_unity
 		ai_will_do = {
             factor = 10
         	}
-		relative_position_id = SFL_let_democracy_win
+
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_southern_unity }
@@ -2129,8 +3021,8 @@ focus_tree = {
 		id = SFL_jacksonville_work_camps
 		icon = GFX_focus_SFL_jackworkcamp
 		x = 0
-		y = 7
-		relative_position_id = SFL_let_democracy_win
+		y = 1
+		relative_position_id = SFL_lowry_youth_camp
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_lowry_youth_camp }
@@ -2150,8 +3042,8 @@ focus_tree = {
 		id = SFL_ban_unions
 		icon = GFX_goal_generic_war_with_comintern
 		x = 0
-		y = 8
-		relative_position_id = SFL_let_democracy_win
+		y = 1
+		relative_position_id = SFL_jacksonville_work_camps
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_jacksonville_work_camps }
@@ -2166,9 +3058,9 @@ focus_tree = {
 	focus = { 
 		id = SFL_claim_west_florida
 		icon = GFX_focus_spa_supremacy_of_the_communion
-		x = -1
-		y = 9
-		relative_position_id = SFL_let_democracy_win
+		x = 1
+		y = 1
+		relative_position_id = SFL_tampa_bay_factories
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_tampa_bay_factories focus = SFL_ban_unions }
@@ -2179,17 +3071,85 @@ focus_tree = {
 			florida_wargoal_west_florida_countries = yes
 		} 
 	}
-	
+
 	focus = { 
-		id = SFL_cancel_elections
-		icon = GFX_focus_voting_cancelled
-		x = 30
+		id = SFL_Lowry_president_for_life
+		icon = GFX_
+		x = 1
 		y = 1
+		relative_position_id = SFL_claim_west_florida
 		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_claim_west_florida  }
+		
+		completion_reward = { 
+
+		} 
+	}
+
+	focus = { 
+		id = SFL_the_cult_of_lowry
+		icon = GFX_
+		x = -1
+		y = 1
+		relative_position_id = SFL_claim_west_florida
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_claim_west_florida  }
+		
+		completion_reward = { 
+
+		} 
+	}
+
+	focus = { 
+		id = SFL_David_Sholtz
+		icon = GFX_focus_SFL_david_sholtz
+		x = 11
+		y = 1
+		relative_position_id = SFL_election_of_1936
+		cost = 1
 		ai_will_do = { factor = 80 }
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_election_of_1936 }
 		mutually_exclusive = { focus = SFL_let_democracy_win } 
+		
+		completion_reward = { 
+			add_stability = 0.05			
+		} 
+	}
+
+	focus = {
+		id = SFL_Arms_purchase_from_shady_source
+		icon = GFX_
+		prerequisite = { focus = SFL_David_Sholtz }
+		x = 2
+		y = 1
+		relative_position_id = SFL_David_Sholtz
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_stability = -0.05
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 9200
+				producer = SFL
+			}  
+		}
+	}
+
+	focus = { 
+		id = SFL_cancel_elections
+		icon = GFX_focus_voting_cancelled
+		x = 0
+		y = 1
+		relative_position_id = SFL_David_Sholtz
+		cost = 10
+		ai_will_do = { factor = 80 }
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_David_Sholtz }
 		
 		completion_reward = { 
 			custom_effect_tooltip = SFL_cancel_elections_effect_tt
@@ -2201,11 +3161,230 @@ focus_tree = {
 					elections_allowed = no 
 				}
 			}
-			add_stability = -0.10
+			add_stability = -0.15
 			add_political_power = -75
 		} 
 	}
 	
+	focus = {
+		id = SFL_Nationalize_Key_industries
+		icon = GFX_goal_generic_construct_civ_factory
+		prerequisite = { focus = SFL_cancel_elections }
+		x = -5
+		y = 1
+		relative_position_id = SFL_cancel_elections
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_INDUSTRY  }
+		
+		available_if_capitulated = yes
+
+
+		
+		ai_will_do = {
+			factor = 2
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = SFL_construction_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = industrial_complex
+						size < 2
+						include_locked = yes
+					}					
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}			
+		}
+
+		completion_reward = {
+			add_stability = -0.02
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 2
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 2
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SFL_Help_the_unemployed_find_work
+		icon = GFX_focus_research
+		prerequisite = { focus = SFL_Nationalize_Key_industries }
+		x = 0
+		y = 1
+		relative_position_id = SFL_Nationalize_Key_industries
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = { 
+		id = SFL_dockyards_effort
+		icon = GFX_focus_refuse_support
+		x = -7
+		y = 1
+		relative_position_id = SFL_cancel_elections
+		cost = 5
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_cancel_elections }
+		available_if_capitulated = yes
+
+		available = {
+			any_state = {
+				is_coastal = yes
+				is_controlled_by = ROOT
+			}
+		}
+
+		complete_tooltip = {
+			navy_experience = 25
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = {
+				type = dockyard
+				level = 3
+				instant_build = yes
+			}
+		}
+		
+		completion_reward = {
+			navy_experience = 25
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = SFL_naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = SFL_naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = SFL_naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = SFL_naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+			}			
+		}
+	}
+
 	#Kick Fascists Out of Army
 	focus = { 
 		id = SFL_kick_fascists_out_army
@@ -2267,7 +3446,7 @@ focus_tree = {
 		x = -1
 		y = 2
 		relative_position_id = SFL_army_of_florida
-		cost = 10
+		cost = 5
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_spread_sunshine }
 		
@@ -2284,7 +3463,7 @@ focus_tree = {
 		x = -1
 		y = 3
 		relative_position_id = SFL_army_of_florida
-		cost = 10
+		cost = 5
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_claim_mobile }
 		
@@ -2301,7 +3480,7 @@ focus_tree = {
 		x = -1
 		y = 4
 		relative_position_id = SFL_army_of_florida
-		cost = 10
+		cost = 5
 		available_if_capitulated = yes 
 		prerequisite = { focus = SFL_claim_bolixi }
 		
@@ -2393,8 +3572,8 @@ focus_tree = {
 		prerequisite = { focus = SFL_bully_senate }
 		
 		completion_reward = { 
-			add_political_power = 500
-			add_war_support = 0.2
+			add_political_power = 100
+			add_war_support = 0.05
 			add_ideas = sfl_bonus_bill_idea
 		} 
 	}
@@ -2417,7 +3596,23 @@ focus_tree = {
 			add_ideas = SFL_Jiggs_Academy
 		} 
 	}
-	
+
+	focus = {
+		id = SFL_Jiggs_Academy_science_Department
+		icon = GFX_focus_research
+		prerequisite = { focus = SFL_Jiggs_Academy }
+		x = 0
+		y = 1
+		relative_position_id = SFL_Jiggs_Academy
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
+
 	focus = { 
 		id = SFL_rebuild_economy
 		icon = GFX_goal_generic_construct_civ_factory
@@ -2682,7 +3877,7 @@ focus_tree = {
 		#rebuild navy
 		
 		icon = GFX_focus_upgrade_ships
-		x = 3
+		x = 2
 		y = 1
 		relative_position_id = SFL_cancel_elections
 		cost = 10
@@ -2693,14 +3888,77 @@ focus_tree = {
 			add_ideas = SFL_semmes_plan_idea
 		} 
 	}
+
+	focus = { 
+		id = SFL_Fighter_scheme
+		#rebuild navy
+		
+		icon = GFX_focus_upgrade_ships
+		x = 4
+		y = 1
+		relative_position_id = SFL_cancel_elections
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_cancel_elections }
+		ai_will_do = { factor = 160 }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = fighter_bonus
+				bonus = 1.0
+				uses = 2
+				technology = early_fighter
+				technology = fighter1
+				technology = fighter2
+				technology = fighter3
+				technology = heavy_fighter1
+				technology = heavy_fighter2
+				technology = heavy_fighter3
+			}
+		}
+	}
+
+	focus = { 
+		id = SFL_develop_radar
+		#rebuild navy
+		
+		icon = GFX_focus_upgrade_ships
+		x = 2
+		y = 2
+		relative_position_id = SFL_semmes_plan
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_semmes_plan }
+		ai_will_do = { factor = 160 }
+		completion_reward = { 
+
+		} 
+	}
 	
+	focus = { 
+		id = SFL_build_up_supply_ports
+		#rebuild navy
+		
+		icon = GFX_focus_upgrade_ships
+		x = 0
+		y = 1
+		relative_position_id = SFL_develop_radar
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_develop_radar }
+		ai_will_do = { factor = 160 }
+		completion_reward = { 
+
+		} 
+	}
+
 	#Destroyers
 	focus = { 
 		id = SFL_destroyers_semmes_plan
 		#rebuild navy
 		
 		icon = GFX_focus_generic_destroyer
-		x = 3
+		x = 2
 		y = 2
 		relative_position_id = SFL_cancel_elections
 		cost = 10
@@ -2720,7 +3978,7 @@ focus_tree = {
             factor = 20
         	}
 		icon = GFX_focus_attack_cuba
-		x = 3
+		x = 2
 		y = 3
 		relative_position_id = SFL_cancel_elections
 		cost = 10
@@ -2749,7 +4007,7 @@ focus_tree = {
 		}
 
 		icon = GFX_focus_SFL_floridacuba
-		x = 3
+		x = 2
 		y = 4
 		relative_position_id = SFL_cancel_elections
 		cost = 10
@@ -2761,13 +4019,112 @@ focus_tree = {
 		} 
 	}
 	
+	focus = {
+		id = SFL_move_the_capitol_to_miami
+		icon = GFX_
+		prerequisite = { focus = SFL_nationalize_cuba }
+		mutually_exclusive = { focus = SFL_move_the_capitol_to_havana }
+		x = 4
+		y = 1
+		relative_position_id = SFL_nationalize_cuba
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			set_capital = 11
+		}
+	}
+
+	focus = {
+		id = SFL_miami_fortress_complex
+		icon = GFX_
+		prerequisite = { focus = SFL_nationalize_cuba }
+		x = 0
+		y = 1
+		relative_position_id = SFL_move_the_capitol_to_miami
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			set_capital = 11
+		}
+	}
+
+	focus = {
+		id = SFL_move_the_capitol_to_havana
+		icon = GFX_
+		prerequisite = { focus = SFL_nationalize_cuba }
+		mutually_exclusive = { focus = SFL_move_the_capitol_to_miami }
+		x = 6
+		y = 1
+		relative_position_id = SFL_nationalize_cuba
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			set_capital = 478
+		}
+	}
+
+	focus = {
+		id = SFL_fortify_the_shores_of_cuba
+		icon = GFX_
+		prerequisite = { focus = SFL_move_the_capitol_to_havana }
+		mutually_exclusive = { focus = SFL_move_the_capitol_to_havana }
+		x = 0
+		y = 1
+		relative_position_id = SFL_move_the_capitol_to_havana
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			set_capital = 478
+		}
+	}
+
+	focus = {
+		id = SFL_integrate_cuban_intellectuals
+		icon = GFX_focus_research
+		prerequisite = { focus = SFL_nationalize_cuba }
+		x = 2
+		y = 1
+		relative_position_id = SFL_nationalize_cuba
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
+
+	focus = {
+		id = SFL_Build_radar_in_Cuba
+		icon = GFX_
+		prerequisite = { focus = SFL_integrate_cuban_intellectuals }
+		x = 0
+		y = 1
+		relative_position_id = SFL_integrate_cuban_intellectuals
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+
+		}
+	}
+
 	#welcome cuban militia
 	focus = { 
 		id = SFL_welcome_cuban_militia
 		#rebuild navy
 		
 		icon = GFX_focus_SFL_cuban_militias
-		x = 3
+		x = 2
 		y = 5
 		relative_position_id = SFL_cancel_elections
 		cost = 7
@@ -2785,14 +4142,14 @@ focus_tree = {
 		#rebuild navy
 		available = {
             if = {
-  controls_state = 604
-}
- if = {
-  controls_state = 603 #juevend
-}
-}
+  		controls_state = 604
+		}
+ 		if = {
+  		controls_state = 603 #juevend
+		}
+		}
 		icon = GFX_focus_SFL_invite_american_refugees
-		x = 3
+		x = 2
 		y = 6
 		relative_position_id = SFL_cancel_elections
 		cost = 10
@@ -2802,13 +4159,13 @@ focus_tree = {
 		completion_reward = { 
 			
 			 604 = {
-    add_extra_state_shared_building_slots = 3
+    			add_extra_state_shared_building_slots = 3
 			 }
 			 603 = {
-    add_extra_state_shared_building_slots = 3
+    			add_extra_state_shared_building_slots = 3
 			 }
 			  12= {
-    add_extra_state_shared_building_slots = 3
+   				add_extra_state_shared_building_slots = 3
 			 }
 		}
 	}
@@ -2839,7 +4196,27 @@ focus_tree = {
 			
 		} 
 	}
-	
+
+	focus = { 
+		id = SFL_A_promise_for_democracy
+		icon = GFX_goal_support_democracy
+		x = 0
+		y = 1
+		relative_position_id = SFL_raising_blacks_taxes
+		cost = 1
+		available_if_capitulated = yes 
+		ai_will_do = { factor = 160 }
+		prerequisite = { focus = SFL_raising_blacks_taxes }
+
+
+		completion_reward = { 
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.10
+			}			
+		} 
+	}
+
 	#1940election
 	focus = { 
 		id = SFL_1940_election
@@ -2850,14 +4227,14 @@ focus_tree = {
        		 }
 		available = {
 			date > 1940.11.8
+            has_completed_focus = SFL_A_promise_for_democracy 
 		}
 		#icon = #
-		x = 0
-		y = 3
-		relative_position_id = SFL_raising_blacks_taxes
+		x = 52
+		y = 0
+
 		cost = 7
 		available_if_capitulated = yes 
-		prerequisite = { focus = SFL_raising_blacks_taxes}
 		
 		completion_reward = { 
 			add_political_power = 450
@@ -2927,7 +4304,92 @@ focus_tree = {
 		completion_reward = { 
 			add_ideas = SFL_florida_prohibition
 	}
-    }
+}
+
+	focus = {
+		id = SFL_crusade_against_liquor
+		icon = GFX_
+		prerequisite = { focus = SFL_florida_prohibition }
+		x = 2
+		y = 1
+		relative_position_id = SFL_florida_prohibition
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_war_support = 0.10
+		}
+	}
+
+	focus = {
+		id = SFL_militarization_against_the_booze
+		icon = GFX_
+		prerequisite = { focus = SFL_crusade_against_liquor }
+		x = 0
+		y = 1
+		relative_position_id = SFL_crusade_against_liquor
+		cost = 5
+		ai_will_do = {
+			factor = 80			
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = SFL_production_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = arms_factory
+						size < 2
+						include_locked = yes
+					}
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = arms_factory
+				level = 2
+				instant_build = yes
+			}
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
     #vicedivisons
 	focus = { 
 		id = SFL_vice_divisions
@@ -2963,7 +4425,35 @@ focus_tree = {
 		} 
 	
 		} 
-    
+
+	focus = {
+		id = SFL_catholic_deterrent
+		icon = GFX_focus_wonderweapons
+		prerequisite = { focus = SFL_end_popery }
+		x = -2
+		y = 1
+		relative_position_id = SFL_end_popery
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = nuclear_bonus
+				ahead_reduction = 2
+				category = nuclear
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.25
+				always = yes
+			}
+		}
+	}
+
     #floridasegregationlaws
 	#focus = { 
 		id = SFL_florida_segregation_laws
@@ -3178,6 +4668,25 @@ focus_tree = {
 		}  
 # 
 }
+
+	focus = { 
+		id = SFL_share_the_knowledge
+		#Fredconehatesblacks
+		ai_will_do = {
+           	 factor = 10
+        	}
+		icon = GFX_focus_research
+		x = 4
+		y = 1
+		relative_position_id = SFL_our_friend_huey
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SFL_our_friend_huey focus = SFL_tourism }
+		completion_reward = { 
+			add_research_slot = 1
+		}  
+# 
+}
 #### new treee
 focus = { 
 		id = SFL_whitehairism
@@ -3249,6 +4758,149 @@ focus = {
 		
 	   }	
 	}
+
+	   focus = { 
+		id = SFL_fund_new_industry
+		
+		icon = GFX_
+		x = 1
+		y = 1
+		relative_position_id = SFL_raise_business_taxes
+		cost = 8
+		available_if_capitulated = yes
+		prerequisite = { focus = SFL_raise_business_taxes}
+
+		ai_will_do = {
+			factor = 80			
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = SFL_production_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = arms_factory
+						size < 1
+						include_locked = yes
+					}
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	   focus = { 
+		id = SFL_fund_new_industry2
+		
+		icon = GFX_
+		x = 0
+		y = 1
+		relative_position_id = SFL_fund_new_industry
+		cost = 8
+		available_if_capitulated = yes
+		prerequisite = { focus = SFL_fund_new_industry}
+
+		ai_will_do = {
+			factor = 80			
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = SFL_production_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = arms_factory
+						size < 1
+						include_locked = yes
+					}
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
 
 	###beach
 	 focus = { 
@@ -3333,4 +4985,275 @@ focus = {
                
 	 }
 }
+
+	focus = { 
+		id = SFL_bonus_bill_army
+		icon = GFX_focus_vote_reenstation_act
+		#election needs to be locked
+		ai_will_do = {
+            factor = 320
+       		 }
+		available = {
+            has_completed_focus = SFL_pass_bonus_bill 
+		}
+		#icon = #
+		x = 44
+		y = 0
+
+		cost = 7
+		available_if_capitulated = yes 
+		
+		completion_reward = { 
+			army_experience = 10
+			add_war_support = 0.03
+		} 
+	}
+
+	focus = {
+		id = SFL_offer_veterans_positions
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SFL_bonus_bill_army }
+		x = -2
+		y = 1
+		relative_position_id = SFL_bonus_bill_army
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = SFL_Artillery_is_our_best_friend
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SFL_offer_veterans_positions }
+		x = 0
+		y = 1
+		relative_position_id = SFL_offer_veterans_positions
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = SFL_anti_aircraft_investment
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SFL_Artillery_is_our_best_friend }
+		x = 0
+		y = 1
+		relative_position_id = SFL_Artillery_is_our_best_friend
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = SFL_modernization_of_our_doctrines
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SFL_anti_aircraft_investment }
+		prerequisite = { focus = SFL_Boost_our_armaments_industry }
+		x = 1
+		y = 1
+		relative_position_id = SFL_anti_aircraft_investment
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			army_experience = 5
+			add_tech_bonus = {
+				name = land_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = land_doctrine
+			}
+		}
+	}
+
+	focus = {
+		id = SFL_bonus_paratroopers
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SFL_modernization_of_our_doctrines }
+		x = 0
+		y = 1
+		relative_position_id = SFL_modernization_of_our_doctrines
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = infantry
+				bonus = 1.0
+				uses = 1
+				category = para_tech
+			}
+		}
+	}
+
+	focus = {
+		id = SFL_purchase_small_arms_design
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SFL_bonus_bill_army }
+		x = 0
+		y = 1
+		relative_position_id = SFL_bonus_bill_army
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = SFL_prioritize_flamethrowers
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SFL_purchase_small_arms_design }
+		x = 0
+		y = 1
+		relative_position_id = SFL_purchase_small_arms_design
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = SFL_Boost_our_armaments_industry
+		icon = GFX_goal_generic_construct_mil_factory
+		prerequisite = { focus = SFL_prioritize_flamethrowers }
+		x = 0
+		y = 1
+		relative_position_id = SFL_prioritize_flamethrowers
+		cost = 10
+
+		search_filters = { FOCUS_FILTER_INDUSTRY  }
+		
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 80			
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = SFL_production_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = arms_factory
+						size < 2
+						include_locked = yes
+					}
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = arms_factory
+				level = 2
+				instant_build = yes
+			}
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+
+	focus = {
+		id = SFL_bonus_tanks
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SFL_bonus_bill_army }
+		x = 2
+		y = 1
+		relative_position_id = SFL_bonus_bill_army
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = SFL_bonus_motorized
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = SFL_bonus_tanks }
+		x = 0
+		y = 1
+		relative_position_id = SFL_bonus_tanks
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+
+		}
+	}
+
+	focus = {
+		id = SFL_machining_efficiency_effort
+		icon = GFX_
+		prerequisite = { focus = SFL_bonus_motorized }
+		x = 0
+		y = 1
+		relative_position_id = SFL_bonus_motorized
+		cost = 5
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+
+		}
+	}
+
 }
