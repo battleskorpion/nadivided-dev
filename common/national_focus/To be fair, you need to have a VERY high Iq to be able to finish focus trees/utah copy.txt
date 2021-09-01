@@ -11,8 +11,8 @@ focus_tree = {
 	}
 	default = no
 	continuous_focus_position = {
-		x = -60
-		y = 2500
+		x = 60
+		y = 250
 	}
 	focus = {
 		id = SUT_defense_of_utah
@@ -21,8 +21,8 @@ focus_tree = {
 		ai_will_do = {
 			factor = 1
 		}
-		x = 10
-		y = 0
+		x = 1
+		y = 2
 		completion_reward = {
 			add_political_power = 150
 		}
@@ -37,12 +37,13 @@ focus_tree = {
 		mutually_exclusive = { focus = SUT_nonaligned }
 		mutually_exclusive = { focus = SUT_communism }
 		prerequisite = {
+			focus = SUT_rally_the_mormons
 		}
 		ai_will_do = {
 			factor = 0
 		}
 		x = -7
-		y = 1
+		y = 6
 		completion_reward = {
 			#add_ideas = SUT_beehive_endorsement
 		}
@@ -167,8 +168,8 @@ focus_tree = {
 		cost = 10
 		prerequisite = { focus = SUT_defense_of_utah 
 				}
-		x = 4
-		y = 1
+		x = 10
+		y = 3
 		relative_position_id = SUT_defense_of_utah
 		completion_reward = {
 		}
@@ -181,8 +182,8 @@ focus_tree = {
 		prerequisite = {
 			focus = SUT_industry
 		}
-		x = 0
-		y = 1
+		x = 2
+		y = 2
 		relative_position_id = SUT_industry 
 		
 		completion_reward = {
@@ -287,13 +288,13 @@ focus_tree = {
 		id = SUT_desert_industry
 		icon = GFX_goal_HEA_focus_wings_of_the_angels
 		cost = 5
-		available = {
-			has_completed_focus = SUT_prop_up_economy
-		}
+		
 		prerequisite = {
+			focus = SUT_prop_up_economy
 		}
-		x = 20
-		y = 0
+		x = 3
+		y = 1
+		relative_position_id = SUT_prop_up_economy
 		completion_reward = {
 			swap_ideas = {
 				add_idea = SUT_desert_industry
@@ -666,7 +667,384 @@ focus_tree = {
 			add_research_slot = 1
 		}
 	}
-##########military Tree################################################################
+#######################COMMUNISM######################################################################################
+	focus = {
+		id = SUT_communism
+		icon = GFX_goal_generic_support_communism
+		cost = 10
+		mutually_exclusive = { focus = SUT_nonaligned }
+		mutually_exclusive = { focus = SUT_beehive_endorsement }
+		prerequisite = { focus = SUT_industry 
+				}
+		ai_will_do = {
+			factor = 25
+		}
+		x = -4
+		y = 1
+		relative_position_id = SUT_industry
+		completion_reward = {
+		}
+	}
+
+	##########FASCISM BEE HIVE################################################################
+	focus = {
+		id = SUT_mountain_defense
+		icon = GFX_Focus_generic_provoke_border_clashes
+		
+		x = 0
+		y = 2
+		relative_position_id = SUT_beehive_path
+		
+		cost = 1
+		
+		prerequisite = { 
+			focus = SUT_beehive_path
+		}
+		
+		completion_reward = {
+			
+		}
+		
+		ai_will_do = {
+			factor = 10
+			
+			modifier = {
+				factor = 0
+				is_historical_focus_on = yes
+			}
+		}
+	}
+	
+	focus = {
+		id = SUT_the_hive
+		icon = GFX_focus_the_hive
+		
+		x = -1
+		y = 1
+		relative_position_id = SUT_mountain_defense
+		
+		cost = 2
+		
+		prerequisite = { 
+			focus = SUT_mountain_defense
+		}
+		
+		mutually_exclusive = {}
+		
+		available = {}
+		
+		bypass = {}
+		
+		completion_reward = {
+			set_rule = { can_create_factions = yes }
+			create_faction = The_Hive
+		}
+		
+		ai_will_do = {
+			factor = 10
+		}
+	}
+	
+	focus = {
+		id = SUT_southern_industry
+		icon = GFX_focus_generic_industry_3
+		
+		x = 1
+		y = 1
+		relative_position_id = SUT_mountain_defense
+		
+		cost = 2
+		
+		prerequisite = { 
+			focus = SUT_mountain_defense
+		}
+		
+		completion_reward = {
+			if = {
+				limit = {
+					300 = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = yes
+						}
+					}
+				}
+				300 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+		}
+		
+		ai_will_do = {
+			factor = 10
+		}
+	}
+	
+	focus = {
+		id = SUT_invite_navajo
+		icon = GFX_focus_invite_navajo
+		
+		x = -2
+		y = 2
+		relative_position_id = SUT_mountain_defense
+		
+		cost = 3
+		
+		prerequisite = { 
+			focus = SUT_the_hive
+		}
+	
+		completion_reward = {
+		
+		}
+		
+		ai_will_do = {
+			factor = 10
+		}
+	}
+	
+	focus = {
+		id = SUT_beehive_mils
+		icon = GFX_goal_generic_construct_mil_factory
+		
+		x = 0
+		y = 2
+		relative_position_id = SUT_mountain_defense
+		
+		cost = 3
+		
+		prerequisite = { 
+			focus = SUT_the_hive
+		}
+		prerequisite = { 
+			focus = SUT_southern_industry
+		}
+		
+		completion_reward = {
+			random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+		
+		ai_will_do = {
+			factor = 10
+		}
+	}
+	
+	focus = {
+		id = SUT_beehive_industry
+		icon = GFX_Goal_continuous_repairments
+		
+		x = 1
+		y = 1
+		relative_position_id = SUT_southern_industry
+		
+		cost = 3
+		
+		prerequisite = { 
+			focus = SUT_southern_industry
+		}
+		
+		mutually_exclusive = {}
+		
+		available = {}
+		
+		bypass = {}
+		
+		completion_reward = {
+			if = {
+				limit = {
+					300 = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = yes
+						}
+					}
+				}
+				300 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+		}
+		
+		ai_will_do = {
+			factor = 10
+		}
+	}
+	
+	focus = {
+		id = SUT_invite_arizona
+		icon = GFX_focus_invite_arizona
+		
+		x = 0
+		y = 2
+		relative_position_id = SUT_the_hive
+		
+		cost = 4
+		
+		prerequisite = { 
+			focus = SUT_invite_navajo
+			focus = SUT_beehive_mils
+		}
+
+		completion_reward = {
+			
+		}
+		
+		ai_will_do = {
+			factor = 10
+		}
+	}
+	
+	focus = {
+		id = SUT_ready_to_attack
+		icon = GFX_focus_rally_people
+		
+		x = 1
+		y = 3
+		relative_position_id = SUT_mountain_defense
+		
+		cost = 4
+		
+		prerequisite = { 
+			focus = SUT_beehive_industry
+			focus = SUT_beehive_mils
+		}
+
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = SUT_passive_pollenaters
+				add_idea = SUT_awake_and_angry
+			}
+		}
+		
+		ai_will_do = {
+			factor = 10
+		}
+	}
+	
+	focus = {
+		id = SUT_beehive_mils2
+		icon = GFX_goal_generic_construct_mil_factory
+		
+		x = 0
+		y = 4
+		relative_position_id = SUT_mountain_defense
+		
+		cost = 5
+		
+		prerequisite = { 
+			focus = SUT_invite_arizona
+		}
+		prerequisite = { 
+			focus = SUT_beehive_mils
+		}
+		prerequisite = { 
+			focus = SUT_ready_to_attack
+		}
+
+		completion_reward = {
+			random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+		
+		ai_will_do = {
+			factor = 10
+		}
+	}
+	
+	focus = {
+		id = SUT_beehive_mils3
+		icon = GFX_goal_generic_construct_mil_factory
+		
+		x = 0
+		y = 5
+		relative_position_id = SUT_mountain_defense
+		
+		cost = 7
+		
+		prerequisite = { 
+			focus = SUT_beehive_mils2
+		}
+		
+	
+		completion_reward = {
+			random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+		
+		ai_will_do = {
+			factor = 10
+		}
+	}
+	
+
+	####Nuetrality############################################################################################################
 	focus = {
 		id = SUT_army
 		icon = GFX_Focus_chi_army_reform
@@ -715,6 +1093,7 @@ focus_tree = {
 		}
 		prerequisite = { focus = SUT_army 
 		}
+
 		relative_position_id = SUT_defense_of_utah
 		available_if_capitulated = yes
 
@@ -744,23 +1123,7 @@ focus_tree = {
 			}
 		}
 	}
-	focus = {
-		id = SUT_air_games
-		icon = GFX_
-		cost = 10
-		prerequisite = { 
-			focus = SUT_buy_aircraft
-				}
-		ai_will_do = {
-			factor = 50
-		}
-		x = 0
-		y = 1
-		relative_position_id = SUT_buy_aircraft
-		completion_reward = {
-			
-		}
-	}
+
 	focus = {
 		id = SUT_tanks
 		icon = GFX_goal_generic_army_tanks
@@ -770,7 +1133,7 @@ focus_tree = {
 		ai_will_do = {
 			factor = 50
 		}
-		x = 0
+		x = 4
 		y = 1
 		relative_position_id = SUT_army
 		completion_reward = {
@@ -782,15 +1145,14 @@ focus_tree = {
 		id = SUT_artillery
 		icon = GFX_goal_generic_army_artillery
 		cost = 10
-		prerequisite = { 
-			focus = SUT_tanks
+		prerequisite = { focus = SUT_army 
 				}
 		ai_will_do = {
 			factor = 50
 		}
-		x = 0
+		x = 6
 		y = 1
-		relative_position_id = SUT_tanks
+		relative_position_id = SUT_army
 		completion_reward = {
 			
 		}
@@ -800,98 +1162,27 @@ focus_tree = {
 		id = SUT_doctrine
 		icon = GFX_goal_generic_position_armies
 		cost = 10
-		prerequisite = { focus = SUT_guns 
+		prerequisite = { focus = SUT_army 
 				}
 		ai_will_do = {
 			factor = 50
 		}
-		x = 0
+		x = 8
 		y = 1
-		relative_position_id = SUT_guns
+		relative_position_id = SUT_army
 		completion_reward = {
 			
 		}
 	}
 	focus = {
-		id = SUT_our_time_in_the_sea
-		icon = GFX_focus_industry
-		cost = 10
-		prerequisite = { focus = SUT_defense_of_utah 
-				}
-		x = -4
-		y = 1
-		relative_position_id = SUT_defense_of_utah
-		completion_reward = {
-		}
-	}
-
-	focus = {
-		id = SUT_develop_mormon_ports
-		icon = GFX_goal_generic_construct_infrastructure
-		cost = 5
-		prerequisite = {
-			focus = SUT_our_time_in_the_sea
-		}
-		x = 0
-		y = 1
-		relative_position_id = SUT_our_time_in_the_sea
-		
-		completion_reward = {
-
-		}
-	}
-
-	focus = {
-		id = SUT_latter_day_academy
-		icon = GFX_focus_research
-		cost = 10
-		prerequisite = {
-			focus = SUT_develop_mormon_ports
-		}
-		x = 0
-		y = 1
-		available = {
-			has_full_control_of_state = 49
-			}
-		relative_position_id = SUT_develop_mormon_ports
-		completion_reward = {
-
-		}
-	}
-
-	focus = {
-		id = SUT_the_mormon_battleship
-		icon = GFX_focus_increase_minimum_wage
-		cost = 10
-		prerequisite = {
-			focus = SUT_latter_day_academy
-		}
-		x = 0
-		y = 1
-		relative_position_id = SUT_latter_day_academy
-		completion_reward = {
-			swap_ideas = {
-				add_idea = SUT_lackluster_economy
-				remove_idea = SUT_failing_economy
-			}
-		}
-	}
-
-
-
-
-
-
-###########################################################################
-	focus = {
 		id = SUT_rally_the_mormons
 		icon = GFX_rally_the_mormons
 		cost = 10
-		prerequisite = {
-		}
-		x = -5
-		y = 0
-
+		prerequisite = { focus = SUT_army 
+				}
+		x = 0
+		y = 2
+		relative_position_id = SUT_defense_of_utah
 		completion_reward = {
 
 		}
@@ -904,9 +1195,9 @@ focus_tree = {
 		mutually_exclusive = { focus = SUT_communism }
 		prerequisite = { focus = SUT_rally_the_mormons 
 				}
-		relative_position_id = SUT_rally_the_mormons
-		x = 3
-		y = 1
+		x = 0
+		y = 4
+		relative_position_id = SUT_defense_of_utah
 		completion_reward = {
 			add_political_power = 150
 			add_stability = 0.1
@@ -918,12 +1209,16 @@ focus_tree = {
 		icon = GFX_
 		
 		x = 0
-		y = 6
-		relative_position_id = SUT_rally_the_mormons	
+		y = 4
+		relative_position_id = SUT_nonaligned
+		
 		cost = 10
+		
 		prerequisite = {
-
+			focus = SUT_nonaligned
+			focus = SUT_utah_path
 		}
+		
 		completion_reward = {
 			set_rule = { can_create_factions = yes }
 			create_faction = Desert_shield
@@ -988,7 +1283,7 @@ focus_tree = {
 		
 		
 		available = {
-			NOT = { has_war_with = SAZ }
+			NOT = { has_war_with = SAR }
 			SAR = { has_government = nuetrality } 
 		}
 		
