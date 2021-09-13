@@ -21,13 +21,13 @@ focus_tree = {
 		ai_will_do = {
 			factor = 1
 		}
-		x = 20
+		x = 25
 		y = 0
 		completion_reward = {
 			add_political_power = 150
 		}
 	}
-
+#######Miltiary Tree##################################################################
 	
 #####FASCISM PATH################################################################################################################################
 	focus = {
@@ -69,7 +69,7 @@ focus_tree = {
 	}
 
 	focus = {
-		id = SUT_army_propaganda
+		id = SUT_foreign_aid_propaganda
 		icon = GFX_Focus_generic_little_entente
 		cost = 3
 		prerequisite = {
@@ -205,7 +205,7 @@ old code
 		id = SUT_mormons_in_politics
 		icon = GFX_rally_the_mormons
 		prerequisite = { focus = SUT_create_the_mormon_republic}
-		x = -3
+		x = -1
 		y = 1
 		relative_position_id = SUT_create_the_mormon_republic
 		cost = 10
@@ -223,7 +223,7 @@ old code
 		id = SUT_form_the_new_consitution
 		icon = GFX_rally_the_mormons
 		prerequisite = { focus = SUT_mormons_in_politics}
-		x = 0
+		x = -1
 		y = 1
 		relative_position_id = SUT_mormons_in_politics
 		cost = 10
@@ -241,7 +241,25 @@ old code
 		id = SUT_leagalize_polgamy
 		icon = GFX_rally_the_mormons
 		prerequisite = { focus = SUT_form_the_new_consitution}
-		x = 0
+		x = -1
+		y = 1
+		relative_position_id = SUT_form_the_new_consitution
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_political_power = 50
+			add_stability = 0.05
+		}
+	}
+	focus = {
+		id = SUT_create_mormon_council
+		icon = GFX_rally_the_mormons
+		prerequisite = { focus = SUT_form_the_new_consitution}
+		x = 1
 		y = 1
 		relative_position_id = SUT_form_the_new_consitution
 		cost = 10
@@ -258,10 +276,12 @@ old code
 	focus = {
 		id = SUT_enforce_mormon_claims
 		icon = GFX_goal_generic_forceful_treaty
-		prerequisite = { focus = SUT_create_the_mormon_republic}
+		prerequisite = { 
+
+		}
 		cancel_if_invalid = yes
 		x = 0
-		y = 2
+		y = 10
 		relative_position_id = SUT_the_populist_front
 		cost = 10
 		ai_will_do = {
@@ -304,6 +324,34 @@ old code
 					instant_build = yes
 				}
 			}
+		}
+	}
+	focus = {
+		id = SUT_mormon_research
+		icon = GFX_goal_generic_scientific_exchange
+		cost = 5
+		prerequisite = {
+			focus = SUT_mormon_industries
+		}
+		x = 0
+		y = 1
+		relative_position_id = SUT_mormon_industries
+		completion_reward = {
+			#add_ideas = SUT_mormon_research
+		}
+	}
+	focus = {
+		id = SUT_mormon_research
+		icon = GFX_goal_generic_scientific_exchange
+		cost = 5
+		prerequisite = {
+			focus = SUT_mormon_industries
+		}
+		x = 0
+		y = 1
+		relative_position_id = SUT_mormon_industries
+		completion_reward = {
+			#add_ideas = SUT_mormon_research
 		}
 	}
 	focus = {
@@ -377,8 +425,8 @@ old code
 		}
 		cancel_if_invalid = yes
 		x = 0
-		y = 4
-		relative_position_id = SUT_the_populist_front
+		y = 2
+		relative_position_id = SUT_enforce_mormon_claims
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -404,8 +452,8 @@ old code
 		prerequisite = { focus = SUT_sieze_remaining_mormon_land}
 		cancel_if_invalid = yes
 		x = 0
-		y = 5
-		relative_position_id = SUT_the_populist_front
+		y = 3
+		relative_position_id = SUT_enforce_mormon_claims
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -449,9 +497,10 @@ old code
 		id = SUT_industry
 		icon = GFX_focus_industry
 		cost = 10
-		prerequisite = { focus = SUT_defense_of_utah 
+		prerequisite = { 
+			focus = SUT_defense_of_utah
 				}
-		x = 4
+		x = 0
 		y = 1
 		relative_position_id = SUT_defense_of_utah
 		completion_reward = {
@@ -570,13 +619,14 @@ old code
 	focus = {
 		id = SUT_desert_industry
 		icon = GFX_goal_HEA_focus_wings_of_the_angels
-		cost = 5
+		cost = 5 
 		available = {
-			has_completed_focus = SUT_prop_up_economy
+		has_completed_focus = SUT_prop_up_economy
 		}
 		prerequisite = {
+			focus = SUT_prop_up_economy
 		}
-		x = 20
+		x = 25
 		y = 5
 		completion_reward = {
 			swap_ideas = {
@@ -586,130 +636,59 @@ old code
 		}
 	}
 
-	focus = {
-		id = SUT_civ_factories
-		icon = GFX_goal_generic_construct_civ_factory
-		cost = 5
-		prerequisite = {
-			focus = SUT_desert_industry
-		}
-		x = -2
-		y = 1
-		relative_position_id = SUT_desert_industry
-		completion_reward = {
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 1
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = industrial_complex
-										size > 1
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-				}
-			}
-		}
-	}
+	#focus = {
+	#	id = SUT_civ_factories
+	#	icon = GFX_goal_generic_construct_civ_factory
+	#	cost = 5
+	#	prerequisite = {
+	#		focus = SUT_desert_industry
+	#	}
+	#	x = -2
+	#	y = 1
+	#	relative_position_id = SUT_desert_industry
+	#	completion_reward = {
+	#		
+	#	}
+	#}
 
-	focus = {
-		id = SUT_mil_factories
-		icon = GFX_focus_generic_tank_production
-		cost = 5
-		prerequisite = {
-			focus = SUT_desert_industry
-		}
-		x = 2
-		y = 1
-		relative_position_id = SUT_desert_industry
-		completion_reward = {
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = arms_factory
-						size > 1
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = arms_factory
-										size > 1
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = arms_factory
-					level = 2
-					instant_build = yes
-				}
-			}
-		}
-		
-	}
+	#focus = {
+	#	id = SUT_mil_factories
+	#	icon = GFX_focus_generic_tank_production
+	#	cost = 5
+	#	prerequisite = {
+	#		focus = SUT_desert_industry
+	#	}
+	#	x = 2
+	#	y = 1
+	#	relative_position_id = SUT_desert_industry
+	#	completion_reward = {
+#
+	#	}
+	#	
+	#}
 
-	focus = {
-		id = SUT_mormon_research
-		icon = GFX_goal_generic_scientific_exchange
-		cost = 5
-		prerequisite = {
-			focus = SUT_desert_industry
-		}
-		x = 0
-		y = 1
-		relative_position_id = SUT_desert_industry
-		completion_reward = {
-			#add_ideas = SUT_mormon_research
-		}
-	}
+
 
 	focus = {
 		id = SUT_civilian_industry
 		icon = GFX_goal_continuous_repairments
 		cost = 5
 		prerequisite = {
-			focus = SUT_civ_factories
+			focus = SUT_desert_industry
 		}
 		mutually_exclusive = {
 			focus = SUT_military_industry
 		}
 		x = -2
 		y = 1
-		relative_position_id = SUT_mormon_research
+		relative_position_id = SUT_desert_industry
 		completion_reward = {
 			#add_ideas = SUT_civilian_industry
 		}
 	}
 
 	focus = {
-		id = SUT_infrastructure_effort2
+		id = SUT_expansion_of_dolomite_mines
 		icon = GFX_goal_generic_construct_infrastructure
 		cost = 5
 		prerequisite = {
@@ -720,62 +699,10 @@ old code
 		y = 1
 		relative_position_id = SUT_civilian_industry
 		completion_reward = {
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = infrastructure
-						size > 2
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = infrastructure
-										size > 1
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes
-				}
+			
 			}
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = infrastructure
-						size > 1
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = infrastructure
-										size > 1
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes
-				}
-			}
-		}
 	}
+
 
 	focus = {
 		id = SUT_foreign_factories
@@ -790,7 +717,7 @@ old code
 		completion_reward = {
 			add_offsite_building = {
 				type = industrial_complex
-				level = 4
+				level = 3
 			}
 		}
 	}
@@ -803,7 +730,7 @@ old code
 			focus = SUT_foreign_factories
 		}
 		prerequisite = {
-			focus = SUT_infrastructure_effort2
+			focus = SUT_expansion_of_dolomite_mines
 		}
 		x = 0
 		y = 2
@@ -823,14 +750,14 @@ old code
 		icon = GFX_goal_generic_construct_mil_factory
 		cost = 5
 		prerequisite = {
-			focus = SUT_mil_factories
+			focus = SUT_desert_industry
 		}
 		mutually_exclusive = {
 			focus = SUT_civilian_industry
 		}
 		x = 2
 		y = 1
-		relative_position_id = SUT_mormon_research
+		relative_position_id = SUT_desert_industry
 		completion_reward = {
 			add_ideas = SUT_military_industry
 		}
@@ -849,7 +776,7 @@ old code
 		completion_reward = {
 			add_offsite_building = {
 				type = arms_factory
-				level = 4
+				level = 3
 			}	
 		}
 	}
@@ -869,7 +796,7 @@ old code
 		completion_reward = {
 			add_tech_bonus = {
 				name = Salt_lake_bonus
-				bonus = 1.5
+				bonus = 1
 				uses = 4
 				category = electronics
 				category = nuclear
@@ -880,7 +807,7 @@ old code
 	
 
 	focus = {
-		id = SUT_oil
+		id = SUT_orem_steel_works
 		icon = GFX_generic_oil_refinery
 		cost = 5
 		prerequisite = {
@@ -895,8 +822,28 @@ old code
 		completion_reward = {
 			441  = {
 				add_resource = {
-					type = oil
-					amount = 20
+					type = steel
+					amount = 45
+				}
+			}
+		}
+	}
+	focus = {
+		id = SUT_remington_plants
+		icon = GFX_generic_oil_refinery
+		cost = 5
+		prerequisite = {
+			focus = SUT_orem_steel_works
+		}
+
+		x = 1
+		y = 1
+		relative_position_id = SUT_orem_steel_works
+		completion_reward = {
+			441  = {
+				add_resource = {
+					type = steel
+					amount = 45
 				}
 			}
 		}
@@ -911,7 +858,7 @@ old code
 		}
 		x = -3
 		y = 1
-		relative_position_id = SUT_oil
+		relative_position_id = SUT_orem_steel_works
 		completion_reward = {
 			add_ideas = SUT_sandy_beach
 		}
@@ -922,11 +869,11 @@ old code
 		icon = GFX_focus_generic_combined_arms
 		cost = 5
 		prerequisite = {
-			focus = SUT_oil
+			focus = SUT_orem_steel_works
 		}
 		x = -1
 		y = 1
-		relative_position_id = SUT_oil
+		relative_position_id = SUT_orem_steel_works
 		completion_reward = {
 			add_ideas = SUT_sand_storm
 		}
@@ -943,16 +890,19 @@ old code
 		ai_will_do = {
 			factor = 10
 		}
+		available = {
+			has_
+		}
 		x = -2
 		y = 2
-		relative_position_id = SUT_oil
+		relative_position_id = SUT_orem_steel_works
 		completion_reward = {
 			add_research_slot = 1
 		}
 	}
 ##########military Tree################################################################
 	focus = {
-		id = SUT_army
+		id = SUT_foreign_aid
 		icon = GFX_Focus_chi_army_reform
 		cost = 10
 		prerequisite = { focus = SUT_defense_of_utah 
@@ -960,7 +910,7 @@ old code
 		ai_will_do = {
 			factor = 50
 		}
-		x = 0
+		x = 3
 		y = 1
 		relative_position_id = SUT_defense_of_utah
 		completion_reward = {
@@ -972,14 +922,15 @@ old code
 		id = SUT_guns
 		icon = GFX_goal_generic_small_arms
 		cost = 10
-		prerequisite = { focus = SUT_army 
+		prerequisite = { 
+			focus = SUT_tanks
 				}
 		ai_will_do = {
 			factor = 50
 		}
-		x = -2
-		y = 1
-		relative_position_id = SUT_army
+		x = 0
+		y = 2
+		relative_position_id = SUT_foreign_aid
 		completion_reward = {
 			
 		}
@@ -989,7 +940,7 @@ old code
 	focus = {
 		id = SUT_buy_aircraft
 		icon = GFX_goal_generic_air_doctrine
-		x = 2
+		x = 5
 		y = 2
 
 		cost = 10
@@ -997,7 +948,7 @@ old code
 		ai_will_do = {
 			factor = 10
 		}
-		prerequisite = { focus = SUT_army 
+		prerequisite = { focus = SUT_foreign_aid 
 		}
 		relative_position_id = SUT_defense_of_utah
 		available_if_capitulated = yes
@@ -1029,80 +980,29 @@ old code
 		}
 	}
 	focus = {
-		id = SUT_air_games
-		icon = GFX_
-		cost = 10
-		prerequisite = { 
-			focus = SUT_buy_aircraft
-				}
-		ai_will_do = {
-			factor = 50
-		}
-		x = 0
-		y = 1
-		relative_position_id = SUT_buy_aircraft
-		completion_reward = {
-			
-		}
-	}
-	focus = {
 		id = SUT_tanks
 		icon = GFX_goal_generic_army_tanks
 		cost = 10
-		prerequisite = { focus = SUT_army 
+		prerequisite = { focus = SUT_foreign_aid 
 				}
 		ai_will_do = {
 			factor = 50
 		}
 		x = 0
 		y = 1
-		relative_position_id = SUT_army
+		relative_position_id = SUT_foreign_aid
 		completion_reward = {
 			
 		}
 	}
 
-	focus = {
-		id = SUT_artillery
-		icon = GFX_goal_generic_army_artillery
-		cost = 10
-		prerequisite = { 
-			focus = SUT_tanks
-				}
-		ai_will_do = {
-			factor = 50
-		}
-		x = 0
-		y = 1
-		relative_position_id = SUT_tanks
-		completion_reward = {
-			
-		}
-	}
-
-	focus = {
-		id = SUT_doctrine
-		icon = GFX_goal_generic_position_armies
-		cost = 10
-		prerequisite = { focus = SUT_guns 
-				}
-		ai_will_do = {
-			factor = 50
-		}
-		x = 0
-		y = 1
-		relative_position_id = SUT_guns
-		completion_reward = {
-			
-		}
-	}
 	focus = {
 		id = SUT_our_time_in_the_sea
 		icon = GFX_focus_industry
 		cost = 10
 		prerequisite = { focus = SUT_defense_of_utah 
 				}
-		x = -4
+		x = -3
 		y = 1
 		relative_position_id = SUT_defense_of_utah
 		completion_reward = {
@@ -1562,12 +1462,15 @@ old code
 		
 		x = 70
 		y = 1
-		relative_position_id = SUT
+		relative_position_id = SUT_form_the_new_consitution
 		
 		cost = 3
 		
 		prerequisite = {
-			focus = SUT_
+			focus = SUT_create_mormon_council
+		}
+		prerequisite = {
+			focus = SUT_leagalize_polgamy
 		}
 		completion_reward = {
 		}
