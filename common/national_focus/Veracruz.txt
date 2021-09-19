@@ -1,0 +1,183 @@
+focus_tree = {
+  id = veracruz_focus_tree
+
+  country = {
+    factor = 0
+    modifier = {
+      add = 10
+      tag = MVE
+    }
+  }
+  initial_show_position = {
+    x = 0
+  }
+  continuous_focus_position = { x = 50 y = 1000 }
+
+#FOCUS_FILTER_STABILITY
+#FOCUS_FILTER_INDUSTRY
+#FOCUS_FILTER_ANNEXATION
+#FOCUS_FILTER_MANPOWER
+#FOCUS_FILTER_POLITICAL
+#FOCUS_FILTER_RESEARCH
+#FOCUS_FILTER_WAR_SUPPORT
+#FOCUS_FILTER_CHI_INFLATION
+#FOCUS_FILTER_USA_CONGRESS
+#FOCUS_FILTER_TFV_AUTONOMY
+#FOCUS_FILTER_INTERNAL_AFFAIRS
+
+###################################
+### Delay the Election... Again ###
+###################################
+  focus = {
+    id = MVE_delay_the_election
+    icon = GFX_
+    mutually_exclusive = { focus = MVE_oppose_adalberto_tejeda_olivares}
+    x = 3
+    y = 0
+    cost = 5
+    ai_will_do = {
+      factor = 1
+    }
+    available_if_capitulated = yes
+    search_filters = { FOCUS_FILTER_POLITICAL }
+
+    completion_reward = {
+      add_political_power = 75
+      add_ideas = MVE_democratic_protests
+    }
+  }
+  focus = {
+    id = MVE_our_time_to_strike
+    icon = GFX_
+    prerequisite = { focus = MVE_delay_the_election}
+    available = {
+      custom_trigger_tooltip = {
+        tooltip = mexican_civil_war_has_begun_tt
+        MEX = {
+          OR = {
+            has_war_with = MAC
+            has_war_with = MCL
+          }
+        }
+      }
+    }
+    x = -2
+    y = 1
+    relative_position_id = MVE_delay_the_election
+    cost = 5
+    ai_will_do = {
+      factor = 2
+    }
+    available_if_capitulated = no
+    search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+
+    completion_reward = {
+      add_war_support = 0.05
+    }
+  }
+  focus = {
+    id = MVE_strike_a_deal_with_the_haciendas
+    icon = GFX_
+    prerequisite = { focus = MVE_our_time_to_strike}
+    mutually_exclusive = { focus = MVE_take_advantage_of_the_chaos}
+    available = {
+      country_exists = MAC
+      MAC = {
+        OR = {
+          has_war_with = MEX
+          has_war_with = MCL
+        }
+      }
+    }
+    x = -1
+    y = 1
+    relative_position_id = MVE_our_time_to_strike
+    cost = 5
+    ai_will_do = {
+      factor = 3
+    }
+    available_if_capitulated = no
+
+    completion_reward = {
+
+    }
+  }
+  focus = {
+    id = MVE_take_advantage_of_the_chaos
+    icon = GFX_
+    prerequisite = { focus = MVE_our_time_to_strike}
+    mutually_exclusive = { focus = MVE_strike_a_deal_with_the_haciendas}
+    x = 1
+    y = 1
+    relative_position_id = MVE_our_time_to_strike
+    cost = 5
+    ai_will_do = {
+      factor = 2
+    }
+    available_if_capitulated = no
+
+    completion_reward = {
+      
+    }
+  }
+  focus = {
+    id = MVE_focus_on_matters_of_the_state
+    icon = GFX_
+    prerequisite = { focus = MVE_delay_the_election}
+    x = 2
+    y = 1
+    relative_position_id = MVE_delay_the_election
+    cost = 5
+    ai_will_do = {
+      factor = 1
+    }
+    available_if_capitulated = yes
+    search_filters = { FOCUS_FILTER_STABILITY }
+
+    completion_reward = {
+      add_stability = 0.05
+    }
+  }
+#################################
+### The Elections Must Go On! ###
+#################################
+  focus = {
+    id = MVE_oppose_adalberto_tejeda_olivares
+    icon = GFX_
+    mutually_exclusive = { focus = MVE_delay_the_election}
+    x = 7
+    y = 0
+    cost = 5
+    ai_will_do = {
+      factor = 1
+    }
+    available_if_capitulated = yes
+    search_filters = { FOCUS_FILTER_STABILITY }
+
+    completion_reward = {
+      add_stability = 0.05
+    }
+  }
+#################################
+### Reclaim Southern Veracruz ###
+#################################
+  focus = {
+    id = MVE_in_memory_of_our_fallen_brothers
+    icon = GFX_
+    # prerequisite = { focus = }
+    mutually_exclusive = { focus = MVE_focus_on_what_we_have}
+    x = 10
+    y = 5
+  }
+##################################
+### Focus on Northern Veracruz ###
+##################################
+  focus = {
+    id = MVE_focus_on_what_we_have
+    icon = GFX_
+    # prerequisite = { focus = }
+    mutually_exclusive = { focus = MVE_in_memory_of_our_fallen_brothers}
+    x = 12
+    y = 5
+  }
+}
