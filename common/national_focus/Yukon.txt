@@ -20,7 +20,7 @@ focus_tree = {
 		icon = GFX_
 		x = 1
 		y = 1
-		cost = 10
+		cost = 5
 
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		
@@ -29,7 +29,7 @@ focus_tree = {
 
 		}
 		ai_will_do = {
-			factor = 10
+			factor = 5
 		}
 
 		completion_reward = {
@@ -37,6 +37,136 @@ focus_tree = {
 		}
 	}
 	
+		focus = {
+		id = PYT_Start_weapons_Production
+		icon = GFX_
+		x = -3
+		y = 1
+		relative_position_id = PYT_the_future_of_the_north
+        prerequisite = { focus = PYT_the_future_of_the_north }
+		cost = 5
+
+        mutually_exclusive = { focus = PYT_Invest_in_a_hospital }
+        mutually_exclusive = { focus = PYT_Construct_canned_meat_factory }
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 400
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+		focus = {
+		id = PYT_Invest_in_a_hospital
+		icon = GFX_
+		x = 0
+		y = 1
+		relative_position_id = PYT_the_future_of_the_north
+        prerequisite = { focus = PYT_the_future_of_the_north }
+		cost = 5
+
+        mutually_exclusive = { focus = PYT_Start_weapons_Production }
+        mutually_exclusive = { focus = PYT_Construct_canned_meat_factory }
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			add_timed_idea = { idea = PYT_We_have_a_doctor  days = 900 }			
+			}
+	}
+
+		focus = {
+		id = PYT_Construct_canned_meat_factory
+		icon = GFX_
+		x = 3
+		y = 1
+		relative_position_id = PYT_the_future_of_the_north
+        prerequisite = { focus = PYT_the_future_of_the_north }
+		cost = 5
+
+        mutually_exclusive = { focus = PYT_Start_weapons_Production }
+        mutually_exclusive = { focus = PYT_Invest_in_a_hospital }
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
 		focus = {
 		id = PYT_Elect_a_candidate
 		icon = GFX_
@@ -138,7 +268,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_research_slot = 1
 			}
 	}
 
@@ -182,6 +312,10 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			swap_ideas = {
+				remove_idea = PYT_Cabin_council_idea
+				add_idea = PYT_fledgling_government
+			}
 
 			}
 	}
@@ -204,6 +338,10 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			add_popularity = {
+			ideology = fascism
+			popularity = 0.05
+			}
 			create_corps_commander = {
 				name = "Albert Johnson"
 				picture = "Portrait_Albert_Johnson.dds"
@@ -242,7 +380,16 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_popularity = {
+			ideology = fascism
+			popularity = 0.10
+			}
+			498 = {
+				add_manpower = 1000 
+			}
+			443 = {
+				add_manpower = 100
+			}
 		}
 	}
 
@@ -263,7 +410,16 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 1000
+				producer = PYT
+			}            
+			add_equipment_to_stockpile = {
+				type = support_equipment_1
+				amount = 100
+				producer = PYT
+			}
 		}
 	}
 
@@ -284,7 +440,9 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			499 = {
+				add_manpower = 5000
+			}
 		}
 	}
 
@@ -305,7 +463,12 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_stability = 0.05
+			add_war_support = 0.05			
+			add_popularity = {
+			ideology = fascism
+			popularity = 0.05
+			}
 		}
 	}
 
@@ -413,7 +576,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_research_slot = 1
 		}
 	}
 
@@ -522,7 +685,36 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 
