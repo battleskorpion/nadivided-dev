@@ -24,7 +24,7 @@ focus_tree = {
 #######################################
 ###########Ritchie dies ###########
 #######################################
-  focus = {
+   focus = {
         id = SVA_training_army
         icon = GFX_focus_destroy_military_factories
         available = {
@@ -636,6 +636,97 @@ focus_tree = {
         set_politics = {
 				ruling_party = fascism
 			}
+        }
+    }
+     focus = {
+        id = SVA_fund_surplus
+        icon = GFX_focus_destroy_military_factories
+        available = {
+         
+
+        }
+        x = 15
+        y = 0
+        cost = 5
+        ai_will_do = {
+            factor = 100
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        ###SHOULD BE EVENT BECAUSE OTHERWISE YOU'LL ALWAYS GO FASCIST 
+        completion_reward = {
+           
+        }
+    }
+    focus = {
+        id = SVA_army_high_command
+        icon = GFX_focus_destroy_military_factories
+        available = {
+         has_war_support > 0.65
+
+        }
+        x = 0
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 100
+        }
+          prerequisite = { focus = SVA_fund_surplus}
+
+        relative_position_id = SVA_fund_surplus
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        ###SHOULD BE EVENT BECAUSE OTHERWISE YOU'LL ALWAYS GO FASCIST 
+        completion_reward = {
+           
+        }
+    }
+    focus = {
+        id = SVA_moseley_doctrine
+        icon = GFX_focus_destroy_military_factories
+        available = {
+         
+
+        }
+        x = -2
+        y = 1
+        cost = 5
+        mutually_exclusive = { focus = SVA_marshal_doctrine}
+        ai_will_do = {
+            factor = 100
+        }
+          prerequisite = { focus = SVA_army_high_command}
+
+        relative_position_id = SVA_army_high_command
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        ###SHOULD BE EVENT BECAUSE OTHERWISE YOU'LL ALWAYS GO FASCIST 
+        completion_reward = {
+           
+        }
+    }
+    focus = {
+        id = SVA_marshal_doctrine
+        icon = GFX_focus_destroy_military_factories
+        available = {
+         
+
+        }
+        x = 2
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 100
+        }
+        mutually_exclusive = { focus = SVA_moseley_doctrine}
+          prerequisite = { focus = SVA_army_high_command}
+
+        relative_position_id = SVA_army_high_command
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        ###SHOULD BE EVENT BECAUSE OTHERWISE YOU'LL ALWAYS GO FASCIST 
+        completion_reward = {
+           
         }
     }
     focus = {
@@ -1346,7 +1437,7 @@ focus_tree = {
         mutually_exclusive = { focus = SVA_reform_the_confederacy}
         x = 1
         y = 1
-        cost = 5
+        cost = 8
         ai_will_do = {
             factor = 10
         }
@@ -1427,4 +1518,44 @@ focus_tree = {
             }
         }
     }
+      focus = {
+        id = SVA_arkansas_gambit
+        icon = GFX_focus_destroy_military_factories
+        available = {
+            
+        }
+         
+        x = 1
+        y = 1
+        cost = 6
+        ai_will_do = {
+            factor = 10
+        }
+         prerequisite = { focus = SVA_reform_the_confederacy}
+        relative_position_id = SVA_reform_the_confederacy
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        ###]Arkansas may be owned by louisiana 
+        completion_reward = {
+               every_country = {
+   limit = { 
+    OR = { #states of arkansas
+  controls_state = 759
+   controls_state = 310
+    controls_state = 121
+    controls_state = 338
+
+   }
+}
+
+  SVA = {
+         declare_war_on = {
+               target = PREV
+               type = annex_everything
+         }
+   }
+        }
+        }
+    }
+
 }
