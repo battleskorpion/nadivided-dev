@@ -148,7 +148,7 @@ focus_tree = {
  
     focus = {
         id = SMD_Developing_our_industries
-        icon = GFX_
+        icon = GFX_focus_SVA_industry
         available = {
         
 
@@ -176,7 +176,7 @@ focus_tree = {
 
     focus = {
         id = SMD_fuel_the_war_industries
-        icon = GFX_
+        icon = GFX_focus_SVA_fuelwarindustry
         available = {
         
 
@@ -198,7 +198,7 @@ focus_tree = {
 
     focus = {
         id = SMD_Nationalize_key_industries
-        icon = GFX_
+        icon = GFX_focus_SVA_nationalize_industries
         available = {
         
 
@@ -220,7 +220,7 @@ focus_tree = {
 
     focus = {
         id = SMD_Modernized_army
-        icon = GFX_
+        icon = GFX_focus_SVA_army_modernization
         available = {
         
 
@@ -369,7 +369,7 @@ focus_tree = {
  
     focus = {
         id = SMD_Develop_univesites
-        icon = GFX_
+        icon = GFX_focus_SVA_research
         available = {
         
 
@@ -392,7 +392,7 @@ focus_tree = {
  
     focus = {
         id = SMD_Emergency_conscription_act
-        icon = GFX_
+        icon = GFX_focus_SVA_emergency_conscription
         available = {
         
 
@@ -414,7 +414,7 @@ focus_tree = {
  
     focus = {
         id = SMD_war_industries_act
-        icon = GFX_
+        icon = GFX_focus_SVA_war_economy
         available = {
         
 
@@ -792,7 +792,7 @@ focus_tree = {
     fascism > 0.35
 }   
         }
-        x = 11
+        x = 14
         y = 0
         cost = 10
         ai_will_do = {
@@ -1182,6 +1182,193 @@ focus_tree = {
          }
         }
     }
+
+    focus = {
+        id = SMD_develop_military_industries
+        icon = GFX_focus_SVA_war_economy
+        available = {
+        
+
+        }
+        x = -3
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SVA_army_rule }
+        relative_position_id = SVA_army_rule
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MANPOWER }
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+    } 
+ 
+     focus = {
+        id = SVA_Invest_in_our_navy
+        icon = GFX_goal_generic_construct_naval_dockyard
+        available = {
+            
+        }
+        x = 5
+        y = 1
+        cost = 10
+        ai_will_do = {
+            factor = 10
+        }
+         prerequisite = { focus = SVA_army_rule}
+        relative_position_id = SVA_army_rule
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_STABILITY }
+        
+		complete_tooltip = {
+			navy_experience = 25
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = {
+				type = dockyard
+				level = 3
+				instant_build = yes
+			}
+		}
+		
+		completion_reward = {
+			navy_experience = 25
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 23
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+			}			
+		}
+    }
+
      focus = {
         id = SVA_blame_jews
         icon = GFX_focus_SVA_blame_jews
