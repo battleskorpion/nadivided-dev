@@ -1604,41 +1604,57 @@ focus_tree = {
             }
         }
     }
-    #focus = {
-        id = SNY_anti_stalinist_rhetoric
-        icon = GFX_
+    focus = {
+        id = SNY_transitional_communism
+        icon = GFX_focus_generic_strike_at_democracy3
         prerequisite = { focus = SNY_the_march_on_albany}
         available = {
             has_government = communism
         }
-        x = -1
+        x = 0
         y = 1
         relative_position_id = SNY_the_march_on_albany
-        cost = 10
+        cost = 9
         ai_will_do = {
             factor = 1
         }
         available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+        search_filters = { FOCUS_FILTER_POLITICAL }
 
         completion_reward = {
-            add_political_power = -30
-            add_stability = 0.05
-            add_war_support = 0.05
+            add_political_power = 50
+            add_popularity = {
+                ideology = communism
+                popularity = 0.05
+            }
         }
-    #}
-
+    }
     focus = {
-        id = SNY_empower_the_unions
-        icon = GFX_focus_union_factories
-        prerequisite = { focus = SNY_the_march_on_albany}
-
+        id = SNY_first_stage_transitional_communism
+        icon = GFX_focus_SNY_first_stage
+        prerequisite = { focus = SNY_transitional_communism}
         available = {
             has_government = communism
         }
-        x = -1
+        x = 0
         y = 1
-        relative_position_id = SNY_the_march_on_albany
+        relative_position_id = SNY_transitional_communism
+        cost = 1
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = yes
+    }
+    focus = {
+        id = SNY_empower_the_unions
+        icon = GFX_focus_union_factories
+        prerequisite = { focus = SNY_first_stage_transitional_communism}
+        available = {
+            has_government = communism
+        }
+        x = -2
+        y = 1
+        relative_position_id = SNY_first_stage_transitional_communism
         cost = 10
         ai_will_do = {
             factor = 1
@@ -1662,15 +1678,79 @@ focus_tree = {
         }
     }
     focus = {
-        id = SNY_remove_the_powers_of_the_senate
-        icon = GFX_goal_generic_forceful_treaty
+        id = SNY_remove_fdrs_legacy
+        icon = GFX_goal_generic_army_doctrines
+        prerequisite = { focus = SNY_first_stage_transitional_communism}
+        available = {
+            has_government = communism
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_first_stage_transitional_communism
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            remove_ideas = SNY_legacy_of_FDRs_impeachment
+        }
+    }
+    focus = {
+        id = SNY_reject_the_views_of_the_soviet_union
+        icon = GFX_focus_SNY_reject_stalin
+        prerequisite = { focus = SNY_first_stage_transitional_communism}
+        available = {
+            has_government = communism
+        }
+        x = 2
+        y = 1
+        relative_position_id = SNY_first_stage_transitional_communism
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_political_power = 25
+            add_stability = 0.05
+            add_war_support = 0.05
+            country_event = {
+                id = new_york.41
+            }
+        }
+    }
+    focus = {
+        id = SNY_second_stage_transitional_communism
+        icon = GFX_focus_SNY_second_stage
+        prerequisite = { focus = SNY_empower_the_unions}
+        prerequisite = { focus = SNY_remove_fdrs_legacy}
         prerequisite = { focus = SNY_reject_the_views_of_the_soviet_union}
         available = {
             has_government = communism
         }
-        x = -3
+        x = 0
         y = 1
-        relative_position_id = SNY_reject_the_views_of_the_soviet_union
+        relative_position_id = SNY_remove_fdrs_legacy
+        cost = 1
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = yes
+    }
+    focus = {
+        id = SNY_remove_the_powers_of_the_senate
+        icon = GFX_goal_generic_forceful_treaty
+        prerequisite = { focus = SNY_second_stage_transitional_communism}
+        available = {
+            has_government = communism
+        }
+        x = -1
+        y = 1
+        relative_position_id = SNY_second_stage_transitional_communism
         cost = 5
         ai_will_do = {
             factor = 1
@@ -1720,7 +1800,7 @@ focus_tree = {
     focus = {
         id = SNY_communism_in_pennsylvania
         icon = GFX_focus_generic_join_comintern
-        prerequisite = { focus = SNY_reject_the_views_of_the_soviet_union}
+        prerequisite = { focus = SNY_second_stage_transitional_communism}
         available = {
             has_government = communism
             country_exists = SPA
@@ -1728,9 +1808,9 @@ focus_tree = {
         bypass = {
             controls_pennsylvania_trigger = yes
         }
-        x = 0
+        x = 2
         y = 1
-        relative_position_id = SNY_reject_the_views_of_the_soviet_union
+        relative_position_id = SNY_second_stage_transitional_communism
         cost = 10
         ai_will_do = {
             factor = 1
@@ -1932,72 +2012,117 @@ focus_tree = {
         }
     }
     focus = {
-        id = SNY_remove_fdrs_legacy
-        icon = GFX_goal_generic_army_doctrines
-        prerequisite = { focus = SNY_the_march_on_albany}
+        id = SNY_third_stage_transitional_communism
+        icon = GFX_focus_SNY_third_stage
+        prerequisite = { focus = SNY_make_congress_obsolete}
+        prerequisite = { focus = SNY_proclaim_the_american_peoples_republic}
         available = {
             has_government = communism
         }
         x = 1
+        y = 3
+        relative_position_id = SNY_make_congress_obsolete
+        cost = 1
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+    }
+    focus = {
+        id = SNY_fully_replace_capitalism
+        icon = GFX_focus_eng_crush_the_dream
+        prerequisite = { focus = SNY_third_stage_transitional_communism}
+        available = {
+            has_government = communism
+        }
+        x = 0
         y = 1
-        relative_position_id = SNY_the_march_on_albany
-        cost = 10
+        relative_position_id = SNY_third_stage_transitional_communism
+        cost = 9
         ai_will_do = {
             factor = 1
         }
-        available_if_capitulated = yes
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
 
         completion_reward = {
-            remove_ideas = SNY_legacy_of_FDRs_impeachment
+            add_ideas = SNY_a_fully_communist_system
         }
     }
     focus = {
-        id = SNY_reject_the_views_of_the_soviet_union
-        icon = GFX_
-        prerequisite = { focus = SNY_remove_fdrs_legacy}
-        prerequisite = { focus = SNY_empower_the_unions}
+        id = SNY_let_unions_run_the_factories
+        icon = GFX_focus_union_factories
+        prerequisite = { focus = SNY_fully_replace_capitalism}
+        mutually_exclusive = { focus = SNY_have_all_factories_be_run_by_the_state}
         available = {
             has_government = communism
         }
         x = -1
         y = 1
-        relative_position_id = SNY_remove_fdrs_legacy
+        relative_position_id = SNY_fully_replace_capitalism
         cost = 10
         ai_will_do = {
-            factor = 1
+            factor = 3
         }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
 
         completion_reward = {
-            add_political_power = 25
-            add_stability = 0.05
-            add_war_support = 0.05
+            swap_ideas = {
+                add_idea = SNY_industrial_unionism
+                remove_idea = SNY_a_fully_communist_system
+            }
         }
     }
     focus = {
-        id = SNY_transitional_communism
-        icon = GFX_focus_generic_strike_at_democracy3
-        prerequisite = { focus = SNY_reject_the_views_of_the_soviet_union}
+        id = SNY_have_all_factories_be_run_by_the_state
+        icon = GFX_goal_generic_soviet_construction
+        prerequisite = { focus = SNY_fully_replace_capitalism}
+        mutually_exclusive = { focus = SNY_let_unions_run_the_factories}
         available = {
             has_government = communism
         }
-        x = 3
+        x = 1
         y = 1
-        relative_position_id = SNY_reject_the_views_of_the_soviet_union
+        relative_position_id = SNY_fully_replace_capitalism
         cost = 10
         ai_will_do = {
             factor = 1
         }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_POLITICAL }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_MANPOWER }
 
         completion_reward = {
-            add_political_power = 50
+            swap_ideas = {
+                add_idea = SNY_totalitarian_communism
+                remove_idea = SNY_a_fully_communist_system
+            }
+        }
+    }
+    focus = {
+        id = SNY_reorganize_the_state
+        icon = GFX_focus_generic_soviet_politics
+        prerequisite = { focus = SNY_fully_replace_capitalism}
+        available = { 
+            has_government = communism
+        }
+        x = 0
+        y = 2
+        relative_position_id = SNY_fully_replace_capitalism
+        cost = 15
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
             add_popularity = {
                 ideology = communism
-                popularity = 0.05
+                popularity = 0.2
             }
+            add_stability = 0.1
+            add_war_support = 0.1
         }
     }
     focus = {
@@ -2183,11 +2308,6 @@ focus_tree = {
         id = SNY_gain_the_support_of_congress_members
         icon = GFX_focus_integrate
         prerequisite = { focus = SNY_the_army_makes_a_demonstration}
-        available = {
-            NOT = {
-                has_completed_focus = SNY_the_armys_coup
-            }
-        }
         x = -2
         y = 1
         relative_position_id = SNY_the_army_makes_a_demonstration
@@ -2210,11 +2330,6 @@ focus_tree = {
         id = SNY_gain_the_support_of_the_people
         icon = GFX_focus_integrate
         prerequisite = { focus = SNY_the_army_makes_a_demonstration}
-        available = {
-            NOT = {
-                has_completed_focus = SNY_the_armys_coup
-            }
-        }
         x = 2
         y = 1
         relative_position_id = SNY_the_army_makes_a_demonstration
@@ -2494,6 +2609,9 @@ focus_tree = {
         prerequisite = { focus = SNY_create_an_army_advisory_council focus = SNY_the_new_england_campaign}
         available = {
             country_exists = SPA
+            NOT = {
+                has_completed_focus = SNY_the_navy_coups_the_coup
+            }
         }
         x = 1
         y = 1
@@ -2540,6 +2658,7 @@ focus_tree = {
         available = {
             NOT = {
                 has_idea = SNY_navy_troubles
+                has_completed_focus = SNY_the_navy_coups_the_coup
             }
         }
         x = 0
@@ -2562,6 +2681,9 @@ focus_tree = {
         available = {
             any_owned_state = {
                 industrial_complex > 2
+            }
+            NOT = {
+                has_completed_focus = SNY_the_navy_coups_the_coup
             }
         }
         x = 0
@@ -2604,6 +2726,9 @@ focus_tree = {
                 country_exists = SNH
                 country_exists = SVT
                 country_exists = SME
+            }
+            NOT = {
+                has_completed_focus = SNY_the_navy_coups_the_coup
             }
         }
         x = 0
@@ -2964,7 +3089,7 @@ focus_tree = {
     focus = {
         id = SNY_new_jerseys_final_hour
         icon = GFX_
-        prerequisite = { focus = SNY_crush_resistance focus = SNY_slow_integration}a
+        prerequisite = { focus = SNY_crush_resistance focus = SNY_slow_integration}
         available = {
             country_exists = SNJ
         }
