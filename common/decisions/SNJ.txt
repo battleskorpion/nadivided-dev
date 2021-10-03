@@ -6,6 +6,11 @@ SNJ_chesapeake_war_imminent = {
             hidden_trigger = {
                 always = no
             }
+#            divisions_in_state = {
+#                type = Marines
+#                size > 2
+#                state = 203
+#            }
         }
         activation = {
             has_global_flag = chesa_war_imminent
@@ -21,7 +26,7 @@ SNJ_chesapeake_war_imminent = {
         }
         cancel_if_not_visible = yes
         is_good = no                    ###Very very bad
-        days_mission_timeout = 10
+        days_mission_timeout = 200
         fire_only_once = yes
 #        war_with_on_timeout = SDE
 #        war_with_on_timeout = SMD
@@ -31,4 +36,120 @@ SNJ_chesapeake_war_imminent = {
             complete_national_focus = SNJ_operation_thunderdome
         }
     }
+
+    SNJ_hasten_preparations = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            has_global_flag = chesa_war_imminent
+        }
+        cost = 50
+        visible = {
+            hidden_trigger = {
+                tag = SNJ
+                has_global_flag = chesa_war_imminent
+                NOT = {
+                    has_global_flag = chesa_war_finished_buildup
+                }
+            }
+        }
+        cancel_if_not_visible = yes
+        is_good = no
+        fire_only_once = yes
+
+        complete_effect  = {
+            add_days_mission_timeout = {
+                mission = SNJ_chesa_war_imminent
+            days = -50
+            }
+            add_to_variable = {
+                var = var_SNJ_chesa
+                value = -1
+            }
+        }
+    }
+
+    SNJ_lengthen_preparations = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            has_global_flag = chesa_war_imminent
+        }
+        cost = 50
+        visible = {
+            hidden_trigger = {
+                tag = SNJ
+                has_global_flag = chesa_war_imminent
+                NOT = {
+                    has_global_flag = chesa_war_finished_buildup
+                }
+            }
+        }
+        cancel_if_not_visible = yes
+        is_good = no
+        fire_only_once = yes
+
+        complete_effect  = {
+            add_days_mission_timeout = {
+                mission = SNJ_chesa_war_imminent
+            days = 50
+            }
+            add_to_variable = {
+                var = var_SNJ_chesa
+                value = 1
+            }
+        }
+    }
+    
+#####SNJ_chesa_war_move_marines#=#{
+#########icon#=#GFX_decision_revolt
+#
+#########available#=#{
+#################divisions_in_state#=#{
+#####################type#=#Marines
+#####################size#>#2
+#####################state#=#203
+#################}
+#########}
+#########activation#=#{
+#############has_global_flag#=#chesa_war_imminent
+#############NOT#=#{
+#################divisions_in_state#=#{
+#####################type#=#Marines
+#####################size#>#2
+#####################state#=#203
+#################}
+#############}
+#########}
+#########visible#=#{
+############hidden_trigger#=#{
+################tag#=#SNJ
+################has_global_flag#=#chesa_war_imminent
+################NOT#=#{
+####################has_global_flag#=#chesa_war_finished_buildup
+####################divisions_in_state#=#{
+########################type#=#Marines
+########################size#>#2
+########################state#=#203
+####################}
+################}
+############}
+########}
+########cancel_if_not_visible#=#yes
+########is_good#=#no#######################Very#very#bad
+########days_mission_timeout#=#3#
+########fire_only_once#=#no
+
+########complete_effect#=#{
+########}
+########timeout_effect#=#{
+############SNJ#=#{
+################country_event#=#newjersey.10
+############}
+############add_days_mission_timeout#=#{
+################mission#=#SNJ_chesa_war_imminent
+################days#=#3
+############}
+########}
+#####}
 }
