@@ -1,0 +1,306 @@
+SNJ_chesapeake_war_imminent = {
+    SNJ_chesa_war_imminent = {
+        icon = GFX_decision_revolt
+
+        available = {
+            hidden_trigger = {
+                always = no
+            }
+#            divisions_in_state = {
+#                type = Marines
+#                size > 2
+#                state = 203
+#            }
+        }
+        activation = {
+            has_global_flag = chesa_war_imminent
+        }
+        visible = {
+            hidden_trigger = {
+                tag = SNJ
+                has_global_flag = chesa_war_imminent
+                NOT = {
+                    has_global_flag = chesa_war_finished_buildup
+                }
+            }
+        }
+        cancel_if_not_visible = yes
+        is_good = no                    ###Very very bad
+        days_mission_timeout = 200
+        fire_only_once = yes
+#        war_with_on_timeout = SDE
+#        war_with_on_timeout = SMD
+
+        timeout_effect = {
+            set_global_flag = chesa_war_finished_buildup
+            complete_national_focus = SNJ_operation_thunderdome
+        }
+    }
+
+    SNJ_hasten_preparations = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            has_global_flag = chesa_war_imminent
+        }
+        cost = 50
+        visible = {
+            hidden_trigger = {
+                tag = SNJ
+                has_global_flag = chesa_war_imminent
+                NOT = {
+                    has_global_flag = chesa_war_finished_buildup
+                }
+            }
+        }
+        cancel_if_not_visible = yes
+        is_good = yes
+        fire_only_once = yes
+
+        complete_effect  = {
+            add_days_mission_timeout = {
+                mission = SNJ_chesa_war_imminent
+            days = -50
+            }
+            add_to_variable = {
+                var = var_SNJ_chesa
+                value = -1
+            }
+        }
+    }
+
+    SNJ_lengthen_preparations = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            has_global_flag = chesa_war_imminent
+        }
+        cost = 50
+        visible = {
+            hidden_trigger = {
+                tag = SNJ
+                has_global_flag = chesa_war_imminent
+                NOT = {
+                    has_global_flag = chesa_war_finished_buildup
+                }
+            }
+        }
+        cancel_if_not_visible = yes
+        is_good = yes
+        fire_only_once = yes
+
+        complete_effect  = {
+            add_days_mission_timeout = {
+                mission = SNJ_chesa_war_imminent
+            days = 50
+            }
+            add_to_variable = {
+                var = var_SNJ_chesa
+                value = 1
+            }
+        }
+    }
+    
+#####SNJ_chesa_war_move_marines#=#{
+#########icon#=#GFX_decision_revolt
+#
+#########available#=#{
+#################divisions_in_state#=#{
+#####################type#=#Marines
+#####################size#>#2
+#####################state#=#203
+#################}
+#########}
+#########activation#=#{
+#############has_global_flag#=#chesa_war_imminent
+#############NOT#=#{
+#################divisions_in_state#=#{
+#####################type#=#Marines
+#####################size#>#2
+#####################state#=#203
+#################}
+#############}
+#########}
+#########visible#=#{
+############hidden_trigger#=#{
+################tag#=#SNJ
+################has_global_flag#=#chesa_war_imminent
+################NOT#=#{
+####################has_global_flag#=#chesa_war_finished_buildup
+####################divisions_in_state#=#{
+########################type#=#Marines
+########################size#>#2
+########################state#=#203
+####################}
+################}
+############}
+########}
+########cancel_if_not_visible#=#yes
+########is_good#=#no#######################Very#very#bad
+########days_mission_timeout#=#3#
+########fire_only_once#=#no
+
+########complete_effect#=#{
+########}
+########timeout_effect#=#{
+############SNJ#=#{
+################country_event#=#newjersey.10
+############}
+############add_days_mission_timeout#=#{
+################mission#=#SNJ_chesa_war_imminent
+################days#=#3
+############}
+########}
+#####}
+}
+
+SNJ_chesapeake_war_SMD_surrender = {
+    surrender_to_NJ = {
+        icon = GFX_decision_revolt
+
+        available = {
+            OR = {
+                NOT = {
+                    SNJ = {
+                        controls_state = 413
+                    }
+                }
+                NOT = {
+                    SNJ = {
+                        controls_state = 412
+                    }
+                }
+                NOT = {
+                    SNJ = {
+                        controls_state = 411
+                    }
+                }
+                NOT = {
+                    SNJ = {
+                        controls_state = 205
+                    }
+                }
+                NOT = {
+                    SNJ = {
+                        controls_state = 204
+                    }
+                }
+#                NOT = {
+#                    SNJ = {
+#                        controls_state = 136
+#                    }
+#                }
+            }
+        }
+        activation = {
+            OR = {
+                SMD = {
+                    surrender_progress > 0.5
+                }
+                SNJ = {
+                    controls_delaware_trigger = yes
+                    controls_state = 204
+                    controls_state = 205
+                }
+            }
+            NOT = {
+                has_global_flag = chesa_war_finished
+            }
+        }
+        visible = {
+        }
+        cancel_if_not_visible = yes
+        is_good = no
+        days_mission_timeout = 5
+        fire_only_once = no
+
+        timeout_effect = {
+            SMD = {
+                country_event = {
+                    id = newjersey.11
+                }
+            }
+        }
+    }
+}
+
+SNJ_chesapeake_war_failure = {
+    SNJ_chesa_war_failure = {
+        icon = GFX_decision_revolt
+
+        available = {
+            OR = {
+                NOT = {
+                    SDE = {
+                        has_full_control_of_state = 413
+                    }
+                }
+                NOT = {
+                    SDE = {
+                        has_full_control_of_state = 412
+                    }
+                }
+                NOT = {
+                    SDE = {
+                        has_full_control_of_state = 411
+                    }
+                }
+                NOT = {
+                    SMD = {
+                        has_full_control_of_state = 205
+                    }
+                }
+                NOT = {
+                    SMD = {
+                        has_full_control_of_state = 204
+                    }
+                }
+                NOT = {
+                    SMD = {
+                        has_full_control_of_state = 136
+                    }
+                }
+            }  
+        }
+        activation = {
+            AND = {
+                SDE = {
+                    has_full_control_of_state = 413
+                }
+                SDE = {
+                    has_full_control_of_state = 412
+                }
+                SDE = {
+                    has_full_control_of_state = 411
+                }
+                SMD = {
+                    has_full_control_of_state = 205
+                }
+                SMD = {
+                    has_full_control_of_state = 204
+                }
+                SMD = {
+                    has_full_control_of_state = 136
+                }  
+            }
+            SNJ = {
+                has_war_with = SMD
+            } 
+        }
+        visible = {
+
+        }
+        cancel_if_not_visible = yes
+        is_good = no                    ###Very very bad
+        days_mission_timeout = 60
+        fire_only_once = no
+
+        timeout_effect = {
+            SNJ = {
+                country_event = {
+                    id = newjersey.15
+                }
+            }
+        }
+    }
+}
