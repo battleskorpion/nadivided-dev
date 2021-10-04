@@ -8,7 +8,7 @@ focus_tree = {
 			tag = ORL
 		}
 	}
-	default = yes
+	# default = yes
 	reset_on_civilwar = no
 
 	continuous_focus_position = { x = 50 y = 1800 }
@@ -33,7 +33,12 @@ focus_tree = {
 
 		completion_reward = {
  #loadoob
-
+            add_manpower = 8600
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 400
+				producer = ORL
+			} 			
 			add_popularity = {
 			ideology = progressivism
 			popularity = -0.05
@@ -83,6 +88,12 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
+            add_manpower = 11000
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 600
+				producer = ORL
+			} 	
  #loadoob
 			add_popularity = {
 			ideology = progressivism
@@ -138,8 +149,8 @@ focus_tree = {
 		completion_reward = {
 			add_equipment_to_stockpile = {
 				type = infantry_equipment
-				amount = 1000
-				producer = SLA
+				amount = 6000
+				producer = PQC
 			}
 		}
 	}
@@ -306,6 +317,27 @@ focus_tree = {
 	}
 
 	focus = {
+		id = ORL_Weapons_mass_production
+		icon = GFX_focus_gen_equipment_effort
+		prerequisite = { focus = ORL_Rationing }
+		x = 0
+		y = 1
+		relative_position_id = ORL_Rationing
+		cost = 10
+
+        ai_will_do = {
+            factor = 100
+        }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_timed_idea = { idea = ORL_Weapons_mass_production_idea  days = 100 }	
+		}
+	}
+
+	focus = {
 		id = ORL_Schools_of_Defense
 		icon = GFX_focus_ORL_School_of_defense
 		prerequisite = { focus = ORL_local_arms_production }
@@ -323,6 +355,36 @@ focus_tree = {
 
 		completion_reward = {
 			add_ideas = ORL_Defensive_Doctrines
+			create_wargoal = {
+			type = annex_everything
+			target = SLA
+			}
+			create_wargoal = {
+			type = annex_everything
+			target = STL
+			}
+			
+		}
+	}
+
+	focus = {
+		id = ORL_Claim_all_of_louisiana
+		icon = GFX_focus_ORL_rationing
+		prerequisite = { focus = ORL_Schools_of_Defense }
+		x = 0
+		y = 1
+		relative_position_id = ORL_Schools_of_Defense
+		cost = 10
+
+        ai_will_do = {
+            factor = 100
+        }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			claim_louisiana = yes
 		}
 	}
 
@@ -367,6 +429,75 @@ focus_tree = {
 		}
 	}
 
+	focus = {
+		id = ORL_invest_in_arms_production
+		icon = GFX_focus_ORL_local_arm_factories
+		prerequisite = { focus = ORL_Fortify_the_city }
+		x = 0
+		y = 1
+		relative_position_id = ORL_Fortify_the_city
+		cost = 10
+
+		ai_will_do = {
+			factor = 150
+		}
+
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = production_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = arms_factory
+						size < 2
+						include_locked = yes
+					}
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = arms_factory
+				level = 3
+				instant_build = yes
+			}
+		}		
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
 
 	focus = {
 		id = ORL_Arm_the_workers
@@ -509,9 +640,10 @@ focus_tree = {
 		id = ORL_Re_establish_control_over_LA
 		icon = GFX_focus_ORL_re_establish_control_over_sla
 		prerequisite = { focus = ORL_Declare_catholicism_state_religion focus = ORL_End_prohibition }
-		x = 5
-		y = 3
-		relative_position_id = ORL_Declare_catholicism_state_religion
+		prerequisite = { focus = ORL_Claim_all_of_louisiana }
+		x = 0
+		y = 1
+		relative_position_id = ORL_Claim_all_of_louisiana
 		cost = 5
 
 
@@ -523,10 +655,8 @@ focus_tree = {
 		available = {
 			controls_state = 18			
 			controls_state = 752	
-			controls_state = 20
 			controls_state = 754
 			controls_state = 21
-#takeawayarcadiastuff
 			OR = {
             has_completed_focus = ORL_Declare_catholicism_state_religion
             has_completed_focus = ORL_End_prohibition
@@ -538,12 +668,7 @@ focus_tree = {
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_state_core = 18	
-			add_state_core = 752	
-			add_state_core = 19	
-			add_state_core = 20	
-			add_state_core = 75
-			add_state_core = 754
+			core_louisiana = yes
 		}
 	}
 
@@ -565,6 +690,14 @@ focus_tree = {
 
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		available_if_capitulated = yes
+		available = {
+		}
+		bypass = {
+		NOT = {
+		country_exists = SAC
+		}
+		}
+			
 
 		completion_reward = {
 #annex Arcaida
@@ -587,7 +720,7 @@ focus_tree = {
 		available_if_capitulated = yes
         available = {
 
-            has_completed_focus = ORL_Reintegration_of_Arcaida
+            has_completed_focus = ORL_Re_establish_control_over_LA
 
         }
 		completion_reward = {
@@ -604,6 +737,8 @@ focus_tree = {
 	focus = {
 		id = ORL_Jazz_republic
 		icon = GFX_focus_orl_jazz_republic
+		mutually_exclusive = { focus = ORL_walmsley }
+		mutually_exclusive = { focus = ORL_Chep_Morrison }
 		prerequisite = { focus = ORL_Our_first_election}
 		x = -6
 		y = 1
@@ -761,6 +896,44 @@ focus_tree = {
 	}
 
 	focus = {
+		id = ORL_Abolish_country_and_western
+		icon = GFX_focus_orl_ban_country
+		prerequisite = { focus = ORL_Dominate_music_industry}
+		x = 0
+		y = 2
+		relative_position_id = ORL_Dominate_music_industry
+		cost = 10
+
+		mutually_exclusive = { focus = ORL_allow_country_and_western }
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = ORL_Country_banned_idea
+		}
+	}
+
+	focus = {
+		id = ORL_allow_country_and_western
+		icon = GFX_focus_orl_allow_country
+		prerequisite = { focus = ORL_Dominate_music_industry}
+		x = 2
+		y = 2
+		relative_position_id = ORL_Dominate_music_industry
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		mutually_exclusive = { focus = ORL_Abolish_country_and_western }
+
+		completion_reward = {
+			add_ideas = ORL_Country_tollerated			
+		}
+	}
+
+	focus = {
 		id = ORL_the_dream_of_Jazz_city
 		icon = GFX_focus_orl_dream_of_jazz_city
 		prerequisite = { focus = ORL_Dominate_music_industry focus = ORL_aggressive_stance}
@@ -777,6 +950,125 @@ focus_tree = {
 				add_manpower = 50000
 				add_extra_state_shared_building_slots = 3
 			}			
+		}
+	}
+
+	focus = {
+		id = ORL_Claim_Texas
+		icon = GFX_focus_orl_atexas
+		prerequisite = { focus = ORL_the_dream_of_Jazz_city }
+		x = -4
+		y = 2
+		relative_position_id = ORL_the_dream_of_Jazz_city
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			claim_texas = yes		
+		}
+	}
+
+	focus = {
+		id = ORL_Claim_arkansas
+		icon = GFX_focus_orl_aarkansas
+		prerequisite = { focus = ORL_the_dream_of_Jazz_city }
+		x = -2
+		y = 2
+		relative_position_id = ORL_the_dream_of_Jazz_city
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			claim_arkansas = yes			
+		}
+	}
+
+	focus = {
+		id = ORL_Claim_Mississippi
+		icon = GFX_focus_orl_amississippi
+		prerequisite = { focus = ORL_the_dream_of_Jazz_city }
+		x = 0
+		y = 2
+		relative_position_id = ORL_the_dream_of_Jazz_city
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			claim_mississippi = yes			
+		}
+	}
+
+	focus = {
+		id = ORL_Claim_Alabama
+		icon = GFX_focus_orl_aalabama
+		prerequisite = { focus = ORL_the_dream_of_Jazz_city }
+		x = 2
+		y = 2
+		relative_position_id = ORL_the_dream_of_Jazz_city
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			claim_alabama = yes			
+		}
+	}
+
+	focus = {
+		id = ORL_Claim_Georgia
+		icon = GFX_focus_orl_ageorgia
+		prerequisite = { focus = ORL_the_dream_of_Jazz_city }
+		x = 4
+		y = 2
+		relative_position_id = ORL_the_dream_of_Jazz_city
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			claim_georgia = yes			
+		}
+	}
+
+	focus = {
+		id = ORL_the_dream_of_Jazz_nation
+		icon = GFX_focus_orl_Jazz_nation
+		prerequisite = { focus = ORL_the_dream_of_Jazz_city }
+		prerequisite = { focus = ORL_Claim_Texas }
+		prerequisite = { focus = ORL_Claim_arkansas }
+		prerequisite = { focus = ORL_Claim_Mississippi }
+		prerequisite = { focus = ORL_Claim_Alabama }
+		prerequisite = { focus = ORL_Claim_Georgia }
+		x = 0
+		y = 4
+		relative_position_id = ORL_the_dream_of_Jazz_city
+		cost = 10
+
+        available = {
+			controls_state = 165			
+			controls_state = 338		
+			controls_state = 241			
+			controls_state = 23		
+			controls_state = 74			
+
+		}
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			core_texas = yes	
+			core_arkansas = yes
+			core_mississippi = yes	
+			core_alabama = yes
+			core_georgia = yes	
 		}
 	}
 
@@ -813,7 +1105,7 @@ focus_tree = {
 		icon = GFX_focus_orl_hire_industry
 		prerequisite = { focus = ORL_Trial_of_democrats}
 		x = 0
-		y = 2
+		y = 1
 		relative_position_id = ORL_Trial_of_democrats
 		cost = 10
 
@@ -822,6 +1114,54 @@ focus_tree = {
 
 		completion_reward = {
 			add_ideas = ORL_Economic_plan
+		}
+	}
+
+	focus = {
+		id = ORL_Contracted_labour
+		icon = GFX_focus_orl_contracted_workers
+		prerequisite = { focus = ORL_Hire_new_economic_planners}
+		x = 0
+		y = 1
+		relative_position_id = ORL_Hire_new_economic_planners
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_timed_idea = { idea = ORL_Contracted_labour_idea  days = 90 }	
+		}
+	}
+
+	focus = {
+		id = ORL_New_Orleans_Batton_rouge_rail_line
+		icon = GFX_focus_orl_rail
+		prerequisite = { focus = ORL_Contracted_labour }
+		x = 0
+		y = 1
+		relative_position_id = ORL_Contracted_labour
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_timed_idea = { idea = ORL_railway_boost_idea  days = 120 }	
+			18 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 3
+					instant_build = yes
+				}
+			}			
+			752 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
 		}
 	}
 
@@ -989,13 +1329,15 @@ focus_tree = {
 	focus = {
 		id = ORL_walmsley
 		icon = GFX_focus_orl_walmsley
+		mutually_exclusive = { focus = ORL_Jazz_republic }
+		mutually_exclusive = { focus = ORL_Chep_Morrison }
 		prerequisite = { focus = ORL_Our_first_election}
 		x = 0
 		y = 1
 		relative_position_id = ORL_Our_first_election
 		cost = 10
 
-		search_filters = {  FOCUS_FILTER_RESEARCH }
+		
 		available_if_capitulated = yes
 
 		completion_reward = {
@@ -1245,6 +1587,8 @@ focus_tree = {
 	focus = {
 		id = ORL_establish_our_navy
 		icon = GFX_goal_generic_construct_naval_dockyard
+		mutually_exclusive = { focus = ORL_walmsley }
+		mutually_exclusive = { focus = ORL_Jazz_republic }
 		prerequisite = { focus = ORL_walmsley focus = ORL_Chep_Morrison}
 		x = 3
 		y = 1

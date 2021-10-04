@@ -33,7 +33,7 @@ focus_tree = {
 	focus = {
 		id = SMS_Bilbo
 		icon = GFX_focus_SMS_bilbo
-		x = 1
+		x = -2
 		y = 1
 		cost = 5
 
@@ -72,6 +72,37 @@ focus = {
 
 		} 
 	}
+
+	focus = { 
+		id = SMS_Ambulances
+		icon = GFX_focus_SMS_ambulances
+		x = 2
+		y = 1
+		available = {
+				has_tech = motorised_infantry
+		}
+
+
+		relative_position_id = SMS_rural_hospitials
+		cost = 5
+
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_rural_hospitials}
+        ###timed monthly_population boost
+		ai_will_do = {
+			factor = 400
+		}
+		completion_reward = { 
+			add_tech_bonus = {
+				name = recon
+				bonus = 2
+				uses = 1
+				category =  hospital_tech
+			}	
+		} 
+	}
+
+
     focus = { 
 		id = SMS_infrastructure1
 		icon = GFX_focus_SMS_georgia_railway
@@ -185,6 +216,7 @@ focus = {
 
 		} 
 	}
+
 	###biger birth rate #####
 	focus = { 
 		id = SMS_white_children
@@ -214,7 +246,7 @@ focus = {
 	focus = { 
 		id = SMS_Jackson_housing_program
 		icon = GFX_focus_SMS_jackson_housing
-		x = -1
+		x = -2
 		y = 1
 		relative_position_id = SMS_white_children
 		cost = 5
@@ -253,6 +285,118 @@ focus = {
 				add_manpower = 5000
 			}
 		}
+	}
+
+	focus = { 
+		id = SMS_legalize_liquor
+		icon = GFX_focus_SMS_liqour
+		x = -1
+		y = 1
+		mutually_exclusive = { focus = SMS_enforce_prohibition}
+
+		relative_position_id = SMS_Clean_water_initiative
+		cost = 5
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_Clean_water_initiative}
+
+		completion_reward = { 
+			remove_ideas = SMS_Booze_smugglers
+        	add_timed_idea = {
+				idea = SMS_liqour_flowing
+				days = 45
+		    }
+		}
+	}
+
+	focus = { 
+		id = SMS_wiskey_factories
+		icon = GFX_focus_SMS_wiskey_factories
+		x = 0
+		y = 1
+
+		relative_position_id = SMS_legalize_liquor
+		cost = 5
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_legalize_liquor}
+
+		completion_reward = { 
+        757 = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+
+		} 
+	}
+
+
+	focus = { 
+		id = SMS_enforce_prohibition
+		icon = GFX_focus_STX_Prohibition
+		x = 1
+		y = 1
+
+		mutually_exclusive = { focus = SMS_legalize_liquor}
+		relative_position_id = SMS_Clean_water_initiative
+		cost = 5
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_Clean_water_initiative}
+
+		completion_reward = { 
+        	add_timed_idea = {
+				idea = SMS_Dry_county
+				days = 45
+		    }
+		}
+	}
+
+	focus = { 
+		id = SMS_fund_the_churches
+		icon = GFX_focus_SMS_fundchurch
+		x = 0
+		y = 1
+
+
+		relative_position_id = SMS_enforce_prohibition
+		cost = 10
+
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_enforce_prohibition}
+        ###timed monthly_population boost
+		ai_will_do = {
+			factor = 400
+		}
+		completion_reward = { 
+        	add_timed_idea = {
+				idea = SMS_Clergy_cooperation
+				days = 100
+		    }
+		} 
 	}
 
     focus = { 
@@ -300,7 +444,7 @@ focus = {
 	focus = { 
 		id = SMS_modernization_of_education
 		icon = GFX_focus_SMS_modernization_of_eduaction
-		x = 1
+		x = 3
 		y = 1
 		relative_position_id = SMS_schools_for_the_poor
 		cost = 10
@@ -315,6 +459,403 @@ focus = {
 			remove_ideas = SMS_Backwoods_educations
 		} 
 	}
+
+	focus = { 
+		id = SMS_Develop_our_army
+		icon = GFX_focus_SMS_develop_our_army
+		x = -2
+		y = 1
+
+		mutually_exclusive = { focus = SMS_Mississippian_airforce}
+		mutually_exclusive = { focus = SMS_Develop_our_navy}
+		relative_position_id = SMS_modernization_of_education
+		cost = 10
+
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_modernization_of_education}
+        ###timed monthly_population boost
+		ai_will_do = {
+			factor = 400
+		}
+		completion_reward = {
+			army_experience = 25
+			add_tech_bonus = {
+				name = land_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = land_doctrine
+			}
+		}
+	}
+
+	focus = { 
+		id = SMS_modernization_of_infantry_weapons
+		icon = GFX_focus_SMS_small_arms_improvements
+		x = 0
+		y = 1
+		relative_position_id = SMS_Develop_our_army
+		cost = 10
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_Develop_our_army}
+        ###timed monthly_population boost
+		ai_will_do = {
+			factor = 400
+		}
+		completion_reward = { 
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 1
+				category = infantry_weapons
+			}
+		} 
+	}
+
+	focus = { 
+		id = SMS_Mississippian_airforce
+		icon = GFX_focus_SMS_develop_our_airforces
+		x = 0
+		y = 1
+		mutually_exclusive = { focus = SMS_Develop_our_army}
+		mutually_exclusive = { focus = SMS_Develop_our_navy}
+
+		relative_position_id = SMS_modernization_of_education
+		cost = 10
+
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_modernization_of_education}
+        ###timed monthly_population boost
+		ai_will_do = {
+			factor = 25
+		}
+		completion_reward = {
+			air_experience = 25
+
+			if = {
+				limit = {
+					capital_scope = {
+						NOT = {
+							free_building_slots = {
+								building = air_base
+								size > 1
+							}
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_AB }
+				}
+			}
+			if = {
+				limit = {
+					capital_scope = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+				}
+				capital_scope = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_AB }
+				}
+			}
+			add_tech_bonus = {
+				name = air_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = air_doctrine
+			}
+		}
+	}
+
+	focus = { 
+		id = SMS_Develop_modern_fighters
+		icon = GFX_focus_SMS_modern_fighters
+		x = 0
+		y = 1
+		relative_position_id = SMS_Mississippian_airforce
+		cost = 10
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_Mississippian_airforce}
+        ###timed monthly_population boost
+		ai_will_do = {
+			factor = 400
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = fighter_bonus
+				bonus = 1.0
+				uses = 2
+				technology = early_fighter
+				technology = fighter1
+				technology = fighter2
+				technology = fighter3
+				technology = heavy_fighter1
+				technology = heavy_fighter2
+				technology = heavy_fighter3
+			}
+			air_experience = 50
+		}
+	}
+
+	focus = { 
+		id = SMS_construct_military_plants
+		icon = GFX_focus_SMS_military_plants
+		x = -1
+		y = 1
+		relative_position_id = SMS_Develop_modern_fighters
+		cost = 10
+
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_Develop_modern_fighters focus = SMS_modernization_of_infantry_weapons }
+        ###timed monthly_population boost
+		ai_will_do = {
+			factor = 400
+		}
+		completion_reward = {
+			156 = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = { 
+		id = SMS_Develop_our_navy
+		icon = GFX_focus_SMS_develop_our_navy
+		x = 2
+		y = 1
+		mutually_exclusive = { focus = SMS_Develop_our_army}
+		mutually_exclusive = { focus = SMS_Mississippian_airforce}
+		relative_position_id = SMS_modernization_of_education
+		cost = 10
+
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_modernization_of_education}
+        ###timed monthly_population boost
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = sub_op_bonus
+				bonus = 1.0
+				uses = 2
+				technology = convoy_interdiction_ti
+				technology = unrestricted_submarine_warfare
+				technology = wolfpacks
+				technology = advanced_submarine_warfare
+				technology = combined_operations_raiding
+			}
+		}
+
+	}
+
+	focus = { 
+		id = SMS_lease_our_dockyards_to_great_Britian
+		icon = GFX_focus_SMS_naval_deal_with_gb
+		x = 0
+		y = 1
+		relative_position_id = SMS_Develop_our_navy
+		cost = 10
+
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_Develop_our_navy}
+        ###timed monthly_population boost
+		ai_will_do = {
+			factor = 400
+		}
+		completion_reward = { 
+        	add_timed_idea = {
+				idea = SMS_dockyards_leased
+				days = 150
+		    }
+		} 
+	}
+
+	focus = { 
+		id = SMS_Develop_submarines
+		icon = GFX_focus_SMS_submarine
+		x = 2
+		y = 1
+		relative_position_id = SMS_Develop_our_navy
+		cost = 10
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_Develop_our_navy}
+        ###timed monthly_population boost
+		ai_will_do = {
+			factor = 400
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = ss_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = ss_tech
+			}
+		}
+	}
+
+	focus = { 
+		id = SMS_biloxi_naval_dockyards
+		icon = GFX_focus_SMS_biloxinavalyards
+		x = 0
+		y = 1
+		relative_position_id = SMS_lease_our_dockyards_to_great_Britian
+		cost = 10
+
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_lease_our_dockyards_to_great_Britian}
+        ###timed monthly_population boost
+		ai_will_do = {
+			factor = 400
+		}
+		completion_reward = {
+			navy_experience = 25
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+			}			
+		}
+	}
+
 	###call up the klan#####
 	focus = { 
 		id = SMS_call_up_the_klan
@@ -360,11 +901,171 @@ focus = {
 			  add_ideas = SMS_night_riders
 		} 
 	}
+
+	focus = { 
+		id = SMS_klan_propaganda
+		icon = GFX_focus_pab_propaganda
+		x = -1
+		y = 1
+
+		mutually_exclusive = { focus = SMS_promote_decent_against_klan}
+		relative_position_id = SMS_call_up_the_klan
+		cost = 5
+
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_call_up_the_klan}
+        ###timed monthly_population boost
+		ai_will_do = {
+			factor = 25
+		}
+		completion_reward = { 
+			add_stability = .05
+			 add_popularity = {
+				ideology = fascism
+				popularity = 0.06
+            }
+		} 
+	}
+
+	focus = { 
+		id = SMS_secret_police
+		icon = GFX_focus_SMS_secret_police
+		x = 0
+		y = 1
+
+
+		relative_position_id = SMS_klan_propaganda
+		cost = 10
+
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_klan_propaganda}
+        ###timed monthly_population boost
+		ai_will_do = {
+			factor = 400
+		}
+		completion_reward = { 
+			add_stability = .05
+			add_tech_bonus = {
+				name = police
+				bonus = 1.0
+				uses = 1
+				category = military_police_tech
+			}
+		} 
+	}
+
+	focus = { 
+		id = SMS_root_out_the_rebels
+		icon = GFX_focus_SMS_root_out_rebels
+		x = 0
+		y = 1
+
+
+		relative_position_id = SMS_secret_police
+		cost = 10
+
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_secret_police}
+        ###timed monthly_population boost
+		ai_will_do = {
+			factor = 400
+		}
+		completion_reward = { 
+        	add_timed_idea = {
+				idea = SMS_Purge_the_resistance
+				days = 70
+		    }
+		} 
+	}
+
+	focus = { 
+		id = SMS_promote_decent_against_klan
+		icon = GFX_focus_sms_kkk_decent
+		x = 1
+		y = 1
+
+		mutually_exclusive = { focus = SMS_klan_propaganda}
+		relative_position_id = SMS_call_up_the_klan
+		cost = 5
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_call_up_the_klan}
+        ###timed monthly_population boost
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = { 
+			add_stability = -.05
+			 add_popularity = {
+				ideology = longism
+				popularity = 0.05
+            }
+			 add_popularity = {
+				ideology = democratic
+				popularity = 0.07
+            }
+		} 
+	}
+
+	focus = { 
+		id = SMS_progressive_partisans
+		icon = GFX_focus_sms_partisans
+		x = 0
+		y = 1
+
+		available = {
+			fascism < 0.40
+		}
+
+		relative_position_id = SMS_promote_decent_against_klan
+		cost = 10
+
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_promote_decent_against_klan}
+        ###timed monthly_population boost
+		ai_will_do = {
+			factor = 400
+		}
+		completion_reward = { 
+			remove_ideas = SMS_klan_army
+			add_ideas = SMS_Mississippi_partisans_idea
+        	add_timed_idea = {
+				idea = SMS_progressive_partisans_idea
+				days = 50
+		    }
+		} 
+	}
+
+	focus = { 
+		id = SMS_pardon_the_rebels
+		icon = GFX_focus_sms_pardon_the_rebels
+		x = 0
+		y = 1
+
+		available = {
+			fascism < 0.15
+		}
+
+		relative_position_id = SMS_progressive_partisans
+		cost = 10
+
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMS_progressive_partisans}
+        ###timed monthly_population boost
+		ai_will_do = {
+			factor = 400
+		}
+		completion_reward = { 
+			remove_ideas = SMS_Black_Rebels
+			add_ideas = SMS_Black_Rebels2
+		} 
+	}
+
 	##This triggers when huey asks for Bolixi in which case you can deny or accept###
 	focus = {
 		id = SMS_Bolixi_affair
 		icon = GFX_focus_expand_the_minutemen
-		x = 18
+		x = 19
 		y = 0
 		cost = 5
  
@@ -426,7 +1127,6 @@ focus = {
       
 
       relative_position_id = SMS_stand_against_king_fish
-	  prerequisite = { focus = SMS_stand_against_king_fish}
 	  prerequisite {focus = SMS_1939_election}
 		available = {
             
@@ -479,6 +1179,32 @@ focus = {
 		level = 6
 				}
 			} 
+		}
+	}
+
+	focus = {
+		id = SMS_Klan_Cavalry
+		icon = GFX_focus_SMS_klan_cav
+		x = 4
+		y = 2
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		available_if_capitulated = yes
+		####Needs to be asked for event 
+      
+
+      relative_position_id = SMS_fortify_jackson
+	  prerequisite = { focus = SMS_fortify_jackson}
+		available = {
+            
+             }
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+			add_ideas = SMS_Klan_Cavalry_idea
 		}
 	}
 
@@ -630,20 +1356,167 @@ focus = {
 		}
 
 		completion_reward = {
-	   remove_ideas = SMS_Black_Rebels
+			remove_ideas = SMS_Black_Rebels
 			add_ideas = SMS_Black_Rebels2
-		add_war_support = .20
-		add_manpower = 25000
-		add_ideas = SMS_klan_death_sqauds
+			add_war_support = .20
+			add_manpower = 25000
+			add_ideas = SMS_klan_death_sqauds
 
             
 		}
 	}
+
+	###Klan boy scouts
+	focus = {
+		id = SMS_klan_boyscouts
+		icon = GFX_focus_SMS_boyscouts
+		x = -2
+		y = 1
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_WAR_SUPPORT }
+	
+		available_if_capitulated = no
+		####Needs to be asked for event 
+      
+
+      relative_position_id = SMS_clense_colleges
+	  prerequisite = { focus = SMS_clense_colleges}
+	  
+		available = {
+            
+             }
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+        	add_timed_idea = {
+				idea = SMS_Boyscout_recuritment_drive
+				days = 100
+		    }	
+		}
+	}
+
+	focus = {
+		id = SMS_next_generation_of_leaders
+		icon = GFX_focus_SMS_next_gen
+		x = 0
+		y = 1
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_WAR_SUPPORT }
+	
+		available_if_capitulated = no
+		####Needs to be asked for event 
+      
+
+      relative_position_id = SMS_klan_boyscouts
+	  prerequisite = { focus = SMS_klan_boyscouts}
+	  
+		available = {
+            
+             }
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+			add_ideas = SMS_tallented_young_officers
+		}
+	}
+
+	focus = {
+		id = SMS_Klanmandos
+		icon = GFX_focus_SMS_klanmandos
+		x = 3
+		y = 1
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		available_if_capitulated = yes
+		####Needs to be asked for event 
+      
+
+      relative_position_id = SMS_klan_death_sqauds
+	  prerequisite = { focus = SMS_klan_death_sqauds}
+	  prerequisite = { focus = SMS_Klan_military_complexes}
+	  prerequisite = { focus = SMS_Klan_Cavalry}
+		available = {
+            
+             }
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+			add_ideas = SMS_Klanmandos_idea
+		}
+	}
+
+	focus = {
+		id = SMS_Klan_medical_corps
+		icon = GFX_focus_SMS_kkkmedical
+		x = -1
+		y = 1
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		available_if_capitulated = yes
+		####Needs to be asked for event 
+      
+
+      relative_position_id = SMS_Klanmandos
+	  prerequisite = { focus = SMS_Klanmandos}
+
+		available = {
+            
+             }
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = motorized_bonus
+				bonus = 1.5
+				category = hospital_tech
+			}
+		}
+	}
+
+	focus = {
+		id = SMS_Klan_marines
+		icon = GFX_focus_SMS_marines
+		x = 1
+		y = 1
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		available_if_capitulated = yes
+		####Needs to be asked for event 
+      
+
+      relative_position_id = SMS_Klan_medical_corps
+	  prerequisite = { focus = SMS_Klan_medical_corps}
+
+		available = {
+            
+             }
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+			add_ideas = SMS_Klan_marines
+		}
+	}
+
 	####red suspender nationalism 
 	focus = {
 		id = SMS_crush_party_system
 		icon = GFX_focus_SMS_crush_party_system
-		x = 1
+		x = 0
 		y = 2
 		cost = 8
 
@@ -668,15 +1541,14 @@ focus = {
             
 		}
 	}
-	#####jamica plan is tooo
+
 	focus = {
-		id = SMS_jamica_plan
-		icon = GFX_focus_SMS_jamaica_plan
-		x = 1
-		y = 2
+		id = SMS_Forced_labour_camps
+		icon = GFX_focus_SMS_forced_labour
+		x = -1
+		y = 1
 		cost = 8
 
-		search_filters = {  FOCUS_ }
 	
 		available_if_capitulated = no
 		####Needs to be asked for event 
@@ -691,17 +1563,287 @@ focus = {
 		ai_will_do = {
 			factor = 10
 		}
+
+		completion_reward = {
+			add_ideas = SMS_extreme_forced_labour
+		}
+	}
+
+	focus = {
+		id = SMS_nationalize_key_industries
+		icon = GFX_focus_SMS_nationalize_key_industries
+		x = 0
+		y = 1
+		cost = 8
+
+
+	
+		available_if_capitulated = no
+		####Needs to be asked for event 
+      
+
+      relative_position_id = SMS_Forced_labour_camps
+	  prerequisite = { focus = SMS_Forced_labour_camps}
+	  
+		available = {
+            
+             }
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+			add_ideas = SMS_klan_resource_control			
+		}
+	}
+
+	#####jamica plan is tooo
+	focus = {
+		id = SMS_jamica_plan
+		icon = GFX_focus_SMS_jamaica_plan
+		x = 1
+		y = 2
+		cost = 8
+
+		search_filters = {  FOCUS_ }
+	
+		available_if_capitulated = no
+      
+
+      relative_position_id = SMS_crush_party_system
+	  prerequisite = { focus = SMS_crush_party_system}
+	  
+		available = {
+            
+             }
+		ai_will_do = {
+			factor = 10
+		}
             ####remove remove_ideas = SMS_Black_Rebels2
 		completion_reward = {
-			######send this to jamica in which you loose pop but loose idea
+		remove_ideas = SMS_Black_Rebels2
+		remove_ideas = SMS_Black_Rebels3
 		    
-	    country_event = {
-				id  = missisippi.5
-			} 
+	    JAM = {
+          country_event = {
+				id  = mississippi.20
+			}
+			}
+			157 = {
+            add_manpower = -150000
+            }
+			758 = {
+                add_manpower = -100000
+            }
+			479 = {
+                add_manpower = 250000
+            }
+			
             
 		}
 	}
 	#####
+
+	focus = {
+		id = SMS_Restrict_unions_to_Klan_members_only
+		icon = GFX_focus_SMS_klan_unions
+		x = -2
+		y = 1
+		cost = 5
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+
+		
+		available_if_capitulated =  yes
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_jamica_plan
+	   prerequisite = { focus = SMS_jamica_plan}
+		available = {
+           
+             }
+		ai_will_do = {
+			factor = 160
+		}
+		completion_reward = {
+        	add_timed_idea = {
+				idea = SMS_Klan_run_unions
+				days = 150
+		    }	
+		}
+	}
+
+	focus = {
+		id = SMS_Unite_florida
+		icon = GFX_focus_SMS_florida
+		x = 0
+		y = 1
+		cost = 5
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+
+		
+		available_if_capitulated =  yes
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_jamica_plan
+	   prerequisite = { focus = SMS_jamica_plan}
+		available = {
+           
+             }
+		ai_will_do = {
+			factor = 160
+		}
+		completion_reward = {
+			create_wargoal = {
+   			type = annex_everything
+    		target = SFL
+			}
+		}
+	}
+
+	focus = {
+		id = SMS_appeal_to_the_klan_in_florida
+		icon = GFX_focus_SMS_klan_florida
+		x = 0
+		y = 1
+		cost = 5
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+
+		
+		available_if_capitulated =  yes
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_Unite_florida
+	   prerequisite = { focus = SMS_Unite_florida}
+		available = {
+			owns_state = 232           
+			owns_state = 11             
+			owns_state = 12      
+			owns_state = 17      
+
+             }
+		ai_will_do = {
+			factor = 160
+		}
+		completion_reward = {
+				core_florida = yes
+		}
+	}
+
+	focus = {
+		id = SMS_invade_yucatan
+		icon = GFX_focus_SMS_invade_yukitan
+		x = 2
+		y = 1
+		cost = 5
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+
+		
+		available_if_capitulated =  yes
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_jamica_plan
+	   prerequisite = { focus = SMS_jamica_plan}
+		available = {
+           
+             }
+		ai_will_do = {
+			factor = 160
+		}
+		completion_reward = {
+			create_wargoal = {
+   			type = annex_everything
+    		target = MYU
+			}
+		}
+	}
+
+	focus = {
+		id = SMS_claim_the_entire_peninsula
+		icon = GFX_focus_SMS_the_whole_penisula
+		x = 0
+		y = 1
+		cost = 5
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+
+		
+		available_if_capitulated =  yes
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_invade_yucatan
+	   prerequisite = { focus = SMS_invade_yucatan}
+		available = {
+           
+             }
+		ai_will_do = {
+			factor = 160
+		}
+		completion_reward = {
+			create_wargoal = {
+   			type = annex_everything
+    		target = MQR
+			}
+			create_wargoal = {
+   			type = annex_everything
+    		target = BLZ
+			}
+			create_wargoal = {
+   			type = annex_everything
+    		target = MCA
+			}
+			create_wargoal = {
+   			type = annex_everything
+    		target = GUA
+			}
+		}
+	}
+
+	focus = {
+		id = SMS_Forced_english_educational_schools
+		icon = GFX_focus_SMS_english_schools
+		x = 0
+		y = 1
+		cost = 5
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+
+		
+		available_if_capitulated =  yes
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_claim_the_entire_peninsula
+	   prerequisite = { focus = SMS_claim_the_entire_peninsula}
+		available = {
+			owns_state = 468           
+			owns_state = 566  
+			owns_state = 569  
+			owns_state = 467  
+			owns_state = 468  
+			owns_state = 570  
+			owns_state = 469  
+ 			owns_state = 567  
+ 			owns_state = 564
+ 			owns_state = 466  
+  			owns_state = 227  
+  			owns_state = 470  
+             }
+		ai_will_do = {
+			factor = 160
+		}
+		completion_reward = {
+			add_state_core = 468
+			add_state_core = 566
+			add_state_core = 569
+			add_state_core = 467
+			add_state_core = 468
+			add_state_core = 570
+			add_state_core = 469
+			add_state_core = 567
+			add_state_core = 564
+			add_state_core = 466
+			add_state_core = 227
+			add_state_core = 470
+		}
+	}
+
 	focus = {
 		id = SMS_apease_the_kingfish
 		icon = GFX_focus_STX_mendties_huey
@@ -847,6 +1989,117 @@ focus = {
 
 		completion_reward = {
 			add_political_power = 50
+
+		}
+	}
+
+	focus = {
+		id = SMS_construct_the_Wirt_Adams_line
+		icon = GFX_focus_SMS_fortify_jackson
+		x = 2
+		y = 1
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+
+      relative_position_id = SMS_Elect_hugh
+	  prerequisite = { focus = SMS_Elect_hugh focus = SMS_bilbo_again}
+		available = {
+           
+             }
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+			759 = {	
+			add_building_construction = {
+  	 			type = bunker
+    			level = 1
+   				instant_build = yes
+   				province = 5965
+					}	
+			add_building_construction = {
+  	 			type = bunker
+    			level = 1
+   				instant_build = yes
+   				province = 8026
+					}	
+			add_building_construction = {
+  	 			type = bunker
+    			level = 1
+   				instant_build = yes
+   				province = 1320
+					}	
+			}
+			121 = {	
+			add_building_construction = {
+  	 			type = bunker
+    			level = 1
+   				instant_build = yes
+   				province = 8085
+					}	
+			add_building_construction = {
+  	 			type = bunker
+    			level = 1
+   				instant_build = yes
+   				province = 1319
+					}	
+			add_building_construction = {
+  	 			type = bunker
+    			level = 1
+   				instant_build = yes
+   				province = 8084
+					}	
+			}
+			338 = {	
+			add_building_construction = {
+  	 			type = bunker
+    			level = 1
+   				instant_build = yes
+   				province = 8087
+					}	
+			add_building_construction = {
+  	 			type = bunker
+    			level = 1
+   				instant_build = yes
+   				province = 8088
+					}	
+			add_building_construction = {
+  	 			type = bunker
+    			level = 1
+   				instant_build = yes
+   				province = 1359
+					}	
+			add_building_construction = {
+  	 			type = bunker
+    			level = 1
+   				instant_build = yes
+   				province = 8093
+					}	
+			add_building_construction = {
+  	 			type = bunker
+    			level = 1
+   				instant_build = yes
+   				province = 1463
+					}	
+			}
+			347 = {	
+			add_building_construction = {
+  	 			type = bunker
+    			level = 1
+   				instant_build = yes
+   				province = 1567
+					}	
+			add_building_construction = {
+  	 			type = bunker
+    			level = 1
+   				instant_build = yes
+   				province = 4866
+					}	
+				}
 		}
 	}
 
@@ -906,6 +2159,67 @@ focus = {
 			add_political_power = 150 
 		}
 	}
+
+	###Klan boy scouts
+	focus = {
+		id = SMS_Mississippian_national_guard
+		icon = GFX_focus_sms_mississippi_national_guard
+		x = -2
+		y = 1
+		cost = 8
+
+		search_filters = {  FOCUS_FILTER_WAR_SUPPORT }
+	
+		available_if_capitulated = no
+		####Needs to be asked for event 
+      
+
+      relative_position_id = SMS_attract_northern_industry
+	  prerequisite = { focus = SMS_attract_northern_industry}
+	  
+		available = {
+            
+             }
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+        	add_timed_idea = {
+				idea = SMS_Establishing_Naitonal_guard
+				days = 80
+		    }
+		}
+	}
+
+	focus = {
+		id = SMS_offer_military_positions_to_blacks
+		icon = GFX_focus_sms_positions_to_blacks
+		x = 0
+		y = 1
+		cost = 8
+
+		search_filters = {  FOCUS_FILTER_WAR_SUPPORT }
+	
+		available_if_capitulated = no
+		####Needs to be asked for event 
+      
+
+      relative_position_id = SMS_Mississippian_national_guard
+	  prerequisite = { focus = SMS_Mississippian_national_guard}
+	  
+		available = {
+            
+             }
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+			add_ideas = SMS_Multi_racial_army
+		}
+	}
+
 	######## Under BAWI, advertising and incentives were deployed in hopes of enticing industries to locate to the state. 
 	####Local governments could issue bonds to construct factories that could be leased to companies
 	#### (who were also offered tax breaks).
@@ -930,7 +2244,10 @@ focus = {
 			factor = 320
 		}
 		completion_reward = {
-			
+			 add_popularity = {
+				ideology = democratic
+				popularity = 0.05
+            }			
 			add_ideas = SMS_BAWI
 		}
 	}
@@ -991,7 +2308,7 @@ focus = {
 		icon = GFX_focus_SMS_black_schools
 		x = -2
 		y = 1
-		cost = 20
+		cost = 10
         
 		search_filters = {  FOCUS_FILTER_POLITICAL }
 		
@@ -1012,7 +2329,8 @@ focus = {
 		completion_reward = {
 			add_political_power =  -250
 			remove_ideas = SMS_Black_Rebels
-			add_ideas = SMS_Black_Rebels2
+			remove_ideas = SMS_Black_Rebels2
+			add_ideas = SMS_Black_Rebels3
 		}
 	}
 
@@ -1147,7 +2465,7 @@ focus = {
 		icon = GFX_focus_SMS_oppose_huey
 		x = 0
 		y = 1
-		cost = 1
+		cost = 2
           STN = {
                 has_government = democratic
             }
@@ -1170,17 +2488,98 @@ focus = {
 #####add navy output ######
 ##add navy to delata region###
 		completion_reward = {
+			remove_ideas = SLA_hueys_influence
+			 add_popularity = {
+				ideology = democratic
+				popularity = 0.2
+            }
 			add_war_support = .10
 			give_guarantee = STN
 			
 		}
 	}
 	
+	focus = {
+		id = SMS_Institute_conscription
+		icon = GFX_focus_sms_conscription
+		x = -2
+		y = 1
+		cost = 5
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+
+		available_if_capitulated =  yes
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_oppose_long
+	   prerequisite = { focus = SMS_oppose_long}
+		available = {
+            has_war = yes         
+             }
+		ai_will_do = {
+			factor = 160
+		}
+		completion_reward = {
+			add_ideas = Service_by_Requirement
+		}
+	}
+
+	focus = {
+		id = SMS_Factory_conversion_effort
+		icon = GFX_focus_sms_factory_conversion
+		x = 0
+		y = 1
+		cost = 5
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+		
+		available_if_capitulated =  yes
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_oppose_long
+	   prerequisite = { focus = SMS_oppose_long}
+		available = {
+            has_war = yes            
+             }
+		ai_will_do = {
+			factor = 160
+		}
+		completion_reward = {
+        	add_timed_idea = {
+				idea = SMS_Factory_conversion_effort_idea
+				days = 350
+		    }			
+		}
+	}
+
+	focus = {
+		id = SMS_Print_Propaganda_posters
+		icon = GFX_focus_sms_print_propaganda_poster
+		x = 2
+		y = 1
+		cost = 5
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+		search_filters = {  FOCUS_FILTER_WAR_SUPPORT }
+		
+		available_if_capitulated =  yes
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_oppose_long
+	   prerequisite = { focus = SMS_oppose_long}
+		available = {
+            has_war = yes            
+             }
+		ai_will_do = {
+			factor = 160
+		}
+		completion_reward = {
+				add_war_support = 0.2
+		}
+	}
+
 	#####Southern Pop ######
 	focus = {
 		id = SMS_return_to_populism
 		icon = GFX_focus_SMS_mike_connor
-		x = -3
+		x = -4
 		y = 1
 		cost = 7
 		mutually_exclusive = { focus = SMS_Elect_hugh}
@@ -1327,6 +2726,57 @@ focus = {
 		    }
 		}
 	}
+
+	focus = {
+		id = SMS_Paramilitary_farmers
+		icon = GFX_focus_sms_paramilitary_farmers
+		x = 1
+		y = 1
+		cost = 8
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+		search_filters = {  FOCUS_FILTER_MANPOWER }
+		
+		available_if_capitulated =  yes
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_farmers_tax_break
+	   prerequisite = { focus = SMS_farmers_tax_break}
+		available = {
+           
+             }
+		ai_will_do = {
+			factor = 160
+		}
+		completion_reward = {
+			add_ideas = SMS_paramilitary_farmers_idea
+		}
+	}
+
+	focus = {
+		id = SMS_craft_legion
+		icon = GFX_focus_sms_craft_legion
+		x = 0
+		y = 1
+		cost = 8
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+		search_filters = {  FOCUS_FILTER_MANPOWER }
+		
+		available_if_capitulated =  yes
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_Paramilitary_farmers
+	   prerequisite = { focus = SMS_Paramilitary_farmers}
+		available = {
+           
+             }
+		ai_will_do = {
+			factor = 160
+		}
+		completion_reward = {
+			add_ideas = SMS_craft_legion_idea
+		}
+	}
+
 	####louisiana dollar
 	focus = {
 		id = SMS_louisiana_dollar
@@ -1360,7 +2810,7 @@ focus = {
 		icon = GFX_focus_SMS_adopt_share_the_wealth
 		x = 0
 		y = 2
-		cost = 20
+		cost = 10
         #Louisina exist bypass, or if huey isn't in charge bypass###
 		search_filters = {  FOCUS_FILTER_POLITICAL }
 		search_filters = {  FOCUS_FILTER_STABILITY }
@@ -1382,6 +2832,36 @@ focus = {
 			add_ideas = SMS_share_the_wealth
 		}
 	} 
+
+	focus = {
+		id = SMS_share_the_wealth_with_everyone
+		icon = GFX_focus_sms_share_the_wealth_equally
+		x = 2
+		y = 2
+		cost = 8
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+		search_filters = {  FOCUS_FILTER_MANPOWER }
+		
+		available_if_capitulated =  yes
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_adopt_share_the_wealth
+	   prerequisite = { focus = SMS_adopt_share_the_wealth}
+		available = {
+           
+             }
+		ai_will_do = {
+			factor = 160
+		}
+
+		completion_reward = {
+			add_political_power =  -150
+			remove_ideas = SMS_Black_Rebels
+			remove_ideas = SMS_Black_Rebels2
+			add_ideas = SMS_Black_Rebels3
+		}			
+	}
+
 #######
 	focus = {
 		id = SMS_deal_with_tycoons
@@ -1461,14 +2941,98 @@ focus = {
         add_research_slot = 1
 		}
 	} 
+
+	focus = {
+		id = SMS_techsharing
+		icon = GFX_focus_sms_tech_sharing
+		x = -2
+		y = 1
+		cost = 5
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+		search_filters = {  FOCUS_FILTER_MANPOWER }
+		
+		available_if_capitulated =  yes
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_University_development
+	   prerequisite = { focus = SMS_University_development}
+		available = {
+           
+             }
+		ai_will_do = {
+			factor = 160
+		}
+		completion_reward = {
+			add_ideas = SMS_techsharing_ideas
+		}
+	}
+
+	focus = {
+		id = SMS_Mississippi_atomic_program
+		icon = GFX_focus_pab_atomic_bomb
+		x = 0
+		y = 1
+		cost = 5
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+		search_filters = {  FOCUS_FILTER_MANPOWER }
+		
+		available_if_capitulated =  yes
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_University_development
+	   prerequisite = { focus = SMS_University_development}
+		available = {
+           
+             }
+		ai_will_do = {
+			factor = 160
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = nukes
+				bonus = 1.0
+				uses = 2
+				category = nuclear
+			}	
+		}
+	}
+
+	focus = {
+		id = SMS_Populist_propaganda_campaigns
+		icon = GFX_focus_sms_propaganda_effort
+		x = 2
+		y = 1
+		cost = 5
+        #Louisina exist bypass, or if huey isn't in charge bypass###
+		search_filters = {  FOCUS_FILTER_MANPOWER }
+		
+		available_if_capitulated =  yes
+		####Needs to be asked for event 
+
+      relative_position_id = SMS_University_development
+	   prerequisite = { focus = SMS_University_development}
+		available = {
+            has_war = yes            
+             }
+		ai_will_do = {
+			factor = 160
+		}
+		completion_reward = {
+				add_war_support = 0.15
+			 add_popularity = {
+				ideology = longism
+				popularity = 0.3
+            }
+		}
+	}
 	########army### one is planning and other is fire power####
 	focus = {
 		id = SMS_mississippi_army
 		icon = GFX_focus_SMS_mississippiarmy
-		x = 27
+		x = 28
 
 		y = 0
-		cost = 20
+		cost = 10
         #Louisina exist bypass, or if huey isn't in charge bypass###
 		search_filters = {  }
 	
@@ -1530,7 +3094,7 @@ focus = {
 		 
 
 		available = {
-         
+            has_completed_focus = SMS_the_old_fox_conner         
              }
 		ai_will_do = {
 			factor = 160
@@ -1570,31 +3134,6 @@ focus = {
 		}
 	}
 	#########power through ## boost fire power#####
-#
-	focus = {
-		id = SMS_Ordenace_manufacturing
-		icon = GFX_
-		x = 0
-		y = 1
-		cost = 20
-     
-		search_filters = {  FOCUS_FILTER_POLITICAL }
-	    prerequisite = { focus = SMS_wilson_way}
-		relative_position_id = SMS_wilson_way
-		available_if_capitulated = no
-		 
-
-		available = {
-         
-             }
-		ai_will_do = {
-			factor = 160
-		}
-
-		completion_reward = {
-
-		}
-	}
 
 #
 	focus = {
@@ -1611,7 +3150,7 @@ focus = {
 		 
 
 		available = {
-         
+            has_completed_focus = SMS_wilson_way                  
              }
 		ai_will_do = {
 			factor = 160
@@ -1642,7 +3181,7 @@ focus = {
 		 
 
 		available = {
-         
+            has_completed_focus = SMS_wilson_way         
              }
 		ai_will_do = {
 			factor = 160
@@ -1767,7 +3306,6 @@ focus = {
 		}
 	}
 
-#
 		focus = {
 		id = SMS_tupelo_military_academy 
 		icon = GFX_focus_SMS_tulepo_military_exersises
@@ -1779,21 +3317,19 @@ focus = {
 		
 		available_if_capitulated = yes
 		 
-      
+		available = {
+            has_completed_focus = SMS_wilson_way                  
+             }      
 
       relative_position_id = SMS_mississippi_army
 	  prerequisite = { focus = SMS_mississippi_army}
-		available = {
-          
-             }
-		ai_will_do = {
-			factor = 10
-		}
-
-		completion_reward = {
-	       add_ideas =  SMS_tupelo_military_academy 
+	  
+	completion_reward = {
+	add_ideas =  SMS_tupelo_military_academy 
 		}
 	}
+		
+		
 		focus = {
 		id = SMS_School_of_logistics
 		icon = GFX_focus_upgrade_troops
@@ -1930,7 +3466,7 @@ focus = {
 		 
 
 		available = {
-         
+            has_completed_focus = SMS_the_old_fox_conner         
              }
 		ai_will_do = {
 			factor = 160
@@ -1956,7 +3492,7 @@ focus = {
 		 
 
 		available = {
-         
+            has_completed_focus = SMS_the_old_fox_conner         
              }
 		ai_will_do = {
 			factor = 160
@@ -2085,10 +3621,10 @@ focus = {
 	focus = {
 		id = SMS_A_modern_SMS
 		icon = GFX_focus_SMS_modern_sms
-		x = 37
+		x = 38
 
 		y = 0
-		cost = 20
+		cost = 10
         #Louisina exist bypass, or if huey isn't in charge bypass###
 		search_filters = {  }
 	
@@ -2536,6 +4072,10 @@ add_resource = {
 			}
 		}
 	}
+
+
+
+
 }#end
 
 

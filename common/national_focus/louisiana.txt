@@ -87,7 +87,7 @@ focus_tree = {
 		focus = {
 		id = SLA_Distribute_Louisiana_Armoury
 		icon = GFX_focus_SLA_distribute_armoury
-        x = -9
+        x = -11
         y = 1
 
 		cost = 5
@@ -187,6 +187,140 @@ focus_tree = {
             custom_effect_tooltip = SLA_red_river_war_information_tt
         }
     }
+
+    focus = {
+        id = SLA_total_victory_over_texas
+        icon = GFX_focus_SLA_total_victory
+       prerequisite = { focus = SLA_second_red_river_war}
+
+        mutually_exclusive = { focus = SLA_integrate_eastern_texas}
+
+        available = {
+	
+        NOT = {
+            country_exists = STX
+            has_war_with = STX
+            }
+        }
+        x = 3
+        y = 2
+        relative_position_id = SLA_second_red_river_war
+        cost = 1
+        ai_will_do = {
+            factor = 100
+	    modifier = {
+          factor = 0
+         date > 1939.1.1
+         }
+         }
+        ###Later in timeline Huey will have more pull and push to really integrate them into his empire rather than in 37' where he's still somewhat of a powerful Governor
+	##By 39' he is dictator to the point he could easily end elections### likewise tension from RR War has had time to die down some
+        available_if_capitulated = no
+
+        completion_reward = {
+            country_event = louisiana.30
+			add_timed_idea = { idea = SLA_Political_overextention  days = 100 }
+        }
+    }
+
+    focus = {
+        id = SLA_share_the_oil
+        icon = GFX_focus_SLA_share_the_oil
+       prerequisite = { focus = SLA_Divide_texas}
+
+        available = {
+
+        }
+        x = -1
+        y = 2
+        relative_position_id = SLA_total_victory_over_texas
+        cost = 10
+        ai_will_do = {
+            factor = 100
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_stability = 0.02
+            163 = {
+                add_compliance = 40 
+            }            
+            223 = {
+                add_compliance = 15 
+            }     
+            222 = {
+                add_compliance = 10
+            } 
+
+        }
+    }
+
+    focus = {
+        id = SLA_Divide_texas
+        icon = GFX_focus_SLA_divide_texas
+       prerequisite = { focus = SLA_total_victory_over_texas}
+        mutually_exclusive = { focus = SLA_Occupy_texas}
+        available = {
+            always = no
+        }
+        x = -1
+        y = 1
+        relative_position_id = SLA_total_victory_over_texas
+        cost = 0.1
+        ai_will_do = {
+            factor = 100
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+
+        }
+    }
+
+    focus = {
+        id = SLA_harsh_treatment
+        icon = GFX_focus_SLA_harsh_treatment
+       prerequisite = { focus = SLA_Occupy_texas }
+
+        available = {
+
+        }
+        x = 1
+        y = 2
+        relative_position_id = SLA_total_victory_over_texas
+        cost = 10
+        ai_will_do = {
+            factor = 100
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+			add_timed_idea = { idea = SLA_Harsh_occupation  days = 900 }   
+        }
+    }
+
+    focus = {
+        id = SLA_Occupy_texas
+        icon = GFX_focus_SLA_occupy_texas
+        prerequisite = { focus = SLA_total_victory_over_texas}
+        mutually_exclusive = { focus = SLA_Divide_texas }
+        available = {
+            always = no
+        }
+        x = 1
+        y = 1
+        relative_position_id = SLA_total_victory_over_texas
+        cost = 0.1
+        ai_will_do = {
+            factor = 100
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+			add_timed_idea = { idea = SLA_Industrial_overextention  days = 600 }   
+        }
+    }
+
     focus = {
         id = SLA_demand_reinforcements
         icon = GFX_focus_SLA_reinforcements
@@ -277,6 +411,9 @@ focus_tree = {
         id = SLA_integrate_eastern_texas
         icon = GFX_focus_SLA_integrate_eastern_texas
         prerequisite = { focus = SLA_demand_reinforcements focus = SLA_rally_popular_support}
+
+        mutually_exclusive = { focus = SLA_total_victory_over_texas}
+
         available = {
             custom_trigger_tooltip = {
                 tooltip = SLA_red_river_war_has_eneded_tt
@@ -342,6 +479,32 @@ focus_tree = {
        #temporary idea
         }
     }
+
+    focus = {
+        id = SLA_the_new_king_fish
+        icon = GFX_focus_SLA_the_king_fish
+        #prerequisite = { focus = SLA_create_the_jeffersonian_league}
+        mutually_exclusive = { focus = SLA_loss_in_the_red_river_war}
+        mutually_exclusive = { focus = SLA_victory_in_the_red_river_war}
+        available = {
+            has_completed_focus = SLA_total_victory_over_texas
+        }
+        x = -5
+        y = 1
+        relative_position_id = SLA_create_the_jeffersonian_league
+        cost = 10
+        ai_will_do = {
+            factor = 160
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            add_political_power = -50
+            add_stability = 0.05
+        }
+    }
+
     focus = {
         id = SLA_victory_in_the_red_river_war
         icon = GFX_focus_SLA_suitman
@@ -379,7 +542,7 @@ focus_tree = {
     focus = {
         id = SLA_develop_western_texas
         icon = GFX_focus_SLA_demand_territory
-        prerequisite = { focus = SLA_victory_in_the_red_river_war}
+        prerequisite = { focus = SLA_victory_in_the_red_river_war focus = SLA_the_new_king_fish}
         available = {
             OR = {
                 owns_state = 222
@@ -479,7 +642,7 @@ focus_tree = {
     focus = {
         id = SLA_strengthen_the_homeland
         icon = GFX_focus_SLA_strengthin_the_homeland
-        prerequisite = { focus = SLA_victory_in_the_red_river_war}
+        prerequisite = { focus = SLA_victory_in_the_red_river_war focus = SLA_the_new_king_fish}
         available = {
             owns_state = 18
         }
@@ -892,7 +1055,7 @@ focus_tree = {
         x = -1
         y = 1
         relative_position_id = SLA_national_infrasture_project
-        cost = 20
+        cost = 11
         ai_will_do = {
             factor = 4000
         }
@@ -931,7 +1094,7 @@ focus_tree = {
         completion_reward = {
 
          hidden_effect = {
-             add_political_power = 100
+             add_political_power = 300
             country_event = {
                 id = louisiana.27
                 days = 10
@@ -1007,7 +1170,7 @@ focus_tree = {
         x = 2
         y = 1
         relative_position_id = SLA_hueys_domination_plan
-        cost = 20
+        cost = 10
         ai_will_do = {
             factor = 4000
         }
@@ -1217,6 +1380,7 @@ focus_tree = {
         id = SLA_loss_in_the_red_river_war
         icon = GFX_focus_generic_treaty
         mutually_exclusive = { focus = SLA_victory_in_the_red_river_war}
+        mutually_exclusive = { focus = SLA_the_new_king_fish}
         available = {
             custom_trigger_tooltip = {
                 tooltip = SLA_red_river_war_has_eneded_tt
@@ -1322,7 +1486,7 @@ focus_tree = {
 		y = 2
 		relative_position_id = SLA_new_orleans_crisis
          mutually_exclusive = { focus = SLA_long_fall_out }
-		cost = 10
+		cost = 6
         #prerequisite = { focus = SLA_new_orleans_crisis }
 		available_if_capitulated = yes 
 		prerequisite = { focus = SLA_new_orleans_crisis }
@@ -1337,7 +1501,7 @@ focus_tree = {
 			#	idea = SFL_social_stability_idea
 			#	days = 250
 			#}
-            add_political_power = 50
+            add_political_power = 250
 		} 
 	}
     #####long would need to be dead for this #######
@@ -1797,7 +1961,19 @@ focus_tree = {
         completion_reward = { 
         add_stability = .15
         add_ideas = SLA_our_cajun_friends
-
+         retire_country_leader = yes
+	 
+	 create_country_leader = {
+	
+	name = "Allen Ellender"
+	picture = "portrait_allen_ellender.dds"
+	expire = "1965.1.1"
+	ideology = moderatism
+	traits = {
+		political_dancer 
+		dealbroker 
+	}
+}
 		} 
 	}
     #####call in baton rouge provisional army ###
@@ -1887,7 +2063,12 @@ focus_tree = {
 		relative_position_id = SLA_prepare_to_take_on_texas
 		cost = 10
 		available_if_capitulated = no
-        
+        available = {
+		OR = {
+		controls_state = 338
+		owns_state = 338
+		}
+		}
 		prerequisite = { focus = SLA_prepare_to_take_on_texas }
 		#goalwillbe to puppet them  
 		completion_reward = { 
@@ -1979,10 +2160,7 @@ focus_tree = {
 		prerequisite = { focus = SLA_denouce_arkansas_unstableness }
 		#goalwillbe to puppet them  
 		completion_reward = { 
-			create_wargoal = {
-            target = SAR
-            type = puppet_wargoal_focus
-            }
+		core_arkansas = yes
 			}
 		}
 
@@ -2037,13 +2215,41 @@ focus_tree = {
 		x = 0
 		y = 2
 		relative_position_id = SLA_reach_out_to_lemke
-		cost = 10
+		cost = 7
 		available_if_capitulated = no
         
 		prerequisite = { focus = SLA_reach_out_to_lemke focus = SLA_hueys_domination_plan }
  
 		completion_reward = { 
-				core_arkansas = yes
+		add_political_power = -150
+		759 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 3
+					instant_build = yes
+				}
+			}
+			310 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 3
+					instant_build = yes
+				}
+			}
+			338 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			338 = {
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
             }
         }
 
@@ -2217,6 +2423,84 @@ focus_tree = {
 				add_research_slot = 1
 				}
          }	
+
+         focus = {
+        id = SLA_tulane_rubber_projects
+        icon = GFX_focus_rubber
+        #lockuntilafter2ndredriverwar
+        prerequisite = { focus = SLA_tulane_technology_classes}
+        x = 0
+        y = 1
+        relative_position_id = SLA_tulane_technology_classes
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        #search_filters = { FOCUS_FILTER_POLITICAL }
+
+          completion_reward = { 
+			add_tech_bonus = {
+				name = synt
+				bonus = 1.5
+				uses = 1
+				category = synth_resources
+			}
+				}
+         }	
+
+         focus = {
+        id = SLA_synthetic_rubber_plants
+        icon = GFX_focus_synth_facility
+        #lockuntilafter2ndredriverwar
+        prerequisite = { focus = SLA_tulane_rubber_projects}
+        x = 0
+        y = 1
+        relative_position_id = SLA_tulane_rubber_projects
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        #search_filters = { FOCUS_FILTER_POLITICAL }
+
+        available = { has_tech = synth_oil_experiments }
+
+          completion_reward = { 
+            custom_effect_tooltip = SLA_research_syth_tt
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = synthetic_refinery 
+						size > 2
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = synthetic_refinery
+										size > 2
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 2
+					instant_build = yes
+				    }
+			    }
+			}
+        }	
+
      focus = {
         id = SLA_jackson_armory
         icon = GFX_focus_generic_jackson
@@ -2281,6 +2565,7 @@ focus_tree = {
         #search_filters = { FOCUS_FILTER_POLITICAL }
         #add military factory random,plus military army_experience
         completion_reward = {
+            remove_ideas = SLA_Poor_motorization
 			add_tech_bonus = {
 				name = infantry_artillery_bonus
 				bonus = 3.0
