@@ -2209,6 +2209,11 @@ focus_tree = {
         id = SNY_expose_lehmans_corruption
         icon = GFX_
         prerequisite = { focus = SNY_hire_a_lawyer_to_deal_with_the_empeachment focus = SNY_deal_with_the_empeachment_personally}
+        available = {
+            NOT = {
+                has_completed_focus = SNY_the_impeachment_trail
+            }
+        }
         x = -1
         y = 1
         relative_position_id = SNY_hire_a_lawyer_to_deal_with_the_empeachment
@@ -2219,6 +2224,7 @@ focus_tree = {
         available_if_capitulated = no
         
         completion_reward = {
+            custom_effect_tooltip = SNY_increase_the_chance_for_the_trail_to_be_a_success_tt
             country_event = {
                 id = new_york.38
             }
@@ -2228,6 +2234,11 @@ focus_tree = {
         id = SNY_expose_lehmans_mistakes
         icon = GFX_
         prerequisite = { focus = SNY_hire_a_lawyer_to_deal_with_the_empeachment focus = SNY_deal_with_the_empeachment_personally}
+        available = {
+            NOT = {
+                has_completed_focus = SNY_the_impeachment_trail
+            }
+        }
         x = 1
         y = 1
         relative_position_id = SNY_hire_a_lawyer_to_deal_with_the_empeachment
@@ -2247,6 +2258,11 @@ focus_tree = {
         id = SNY_expose_lehmans_backdoor_dealings
         icon = GFX_
         prerequisite = { focus = SNY_hire_a_lawyer_to_deal_with_the_empeachment focus = SNY_deal_with_the_empeachment_personally}
+        available = {
+            NOT = {
+                has_completed_focus = SNY_the_impeachment_trail
+            }
+        }
         x = 3
         y = 1
         relative_position_id = SNY_hire_a_lawyer_to_deal_with_the_empeachment
@@ -2259,6 +2275,125 @@ focus_tree = {
         completion_reward = {
             country_event = {
                 id = new_york.40
+            }
+        }
+    }
+    focus = {
+        id = SNY_the_impeachment_trail
+        icon = GFX_
+        prerequisite = { focus = SNY_expose_lehmans_corruption focus = SNY_expose_lehmans_mistakes focus = SNY_expose_lehmans_backdoor_dealings}
+        x = 2
+        y = 1
+        relative_position_id = SNY_expose_lehmans_corruption
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            custom_effect_tooltip = SNY_success_will_be_determined_by_the_lawyer_and_the_evidence_tt
+            hidden_effect = {
+                if = {
+                    limit = {
+                        has_completed_focus = SNY_deal_with_the_empeachment_personally
+                    }  
+                    if = {
+                        limit = {
+                            count_triggers = {
+                                amount = 3
+                                has_completed_focus = SNY_expose_lehmans_mistakes
+                                has_completed_focus = SNY_expose_lehmans_corruption
+                                has_completed_focus = SNY_expose_lehmans_backdoor_dealings
+                            }
+                        }
+                        country_event = {
+                            id = new_york.45
+                        }
+                    } else_if = {
+                        limit = {
+                            count_triggers = {
+                                amount = 2
+                                has_completed_focus = SNY_expose_lehmans_mistakes
+                                has_completed_focus = SNY_expose_lehmans_corruption
+                                has_completed_focus = SNY_expose_lehmans_backdoor_dealings
+                            }
+                        }
+                        random_list = {
+                            80 = {
+                                country_event = {
+                                    id = new_york.45
+                                }
+                            }
+                            20 = {
+                                country_event = {
+                                    id = new_york.46
+                                }
+                            }
+                        }
+                    } else {
+                        random_list = {
+                            50 = {
+                                country_event = {
+                                    id = new_york.45
+                                }
+                            }
+                            50 = {
+                                country_event = {
+                                    id = new_york.46
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    if = {
+                        limit = {
+                            count_triggers = {
+                                amount = 3
+                                has_completed_focus = SNY_expose_lehmans_mistakes
+                                has_completed_focus = SNY_expose_lehmans_corruption
+                                has_completed_focus = SNY_expose_lehmans_backdoor_dealings
+                            }
+                        }
+                        random_list = {
+                            90 = {
+                                country_event = {
+                                    id = new_york.45
+                                }
+                            }
+                            10 = {
+                                country_event = {
+                                    id = new_york.46
+                                }
+                            }
+                        }
+                    } else_if = {
+                        limit = {
+                            count_triggers = {
+                                amount = 2
+                                has_completed_focus = SNY_expose_lehmans_mistakes
+                                has_completed_focus = SNY_expose_lehmans_corruption
+                                has_completed_focus = SNY_expose_lehmans_backdoor_dealings
+                            }
+                        }
+                        random_list = {
+                            50 = {
+                                country_event = {
+                                    id = new_york.45
+                                }
+                            }
+                            50 = {
+                                country_event = {
+                                    id = new_york.46
+                                }
+                            }
+                        }
+                    } else {
+                        country_event = {
+                            id = new_york.46
+                        }
+                    }
+                }
             }
         }
     }
