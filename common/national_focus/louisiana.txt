@@ -84,6 +84,199 @@ focus_tree = {
       #  }
     #}
 
+
+		focus = {
+		id = SLA_Ask_the_swamp_folks_for_help
+		icon = GFX_focus_SLA_swamp_folk
+        x = -8
+        y = 1
+
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+            add_ideas = SLA_Swamp_folk
+
+		}
+	}
+
+		focus = {
+		id = SLA_Home_made_swamp_guns
+		icon = GFX_focus_SLA_swamp_guns
+        x = -1
+        y = 1
+
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		relative_position_id = SLA_Ask_the_swamp_folks_for_help
+        prerequisite = { focus = SLA_Ask_the_swamp_folks_for_help }
+
+
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 1000
+				producer = SLA
+			}
+			add_timed_idea = { idea = SLA_swamp_guns  days = 100 }
+		}
+	}
+
+		focus = {
+		id = SLA_Beat_Sense_into_our_army
+		icon = GFX_focus_SLA_beatthem
+        x = 1
+        y = 1
+
+		cost = 7.2
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		relative_position_id = SLA_Home_made_swamp_guns
+        prerequisite = { focus = SLA_Cinemas_for_the_poor }
+        prerequisite = { focus = SLA_Home_made_swamp_guns }
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+            remove_ideas = SLA_undisciplined_army
+		}
+	}
+
+		focus = {
+		id = SLA_Cinemas_for_the_poor
+		icon = GFX_focus_SLA_cinema
+        x = 1
+        y = 1
+
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		relative_position_id = SLA_Ask_the_swamp_folks_for_help
+        prerequisite = { focus = SLA_Ask_the_swamp_folks_for_help }
+
+
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+            add_war_support = 0.05
+		}
+	}
+
+		focus = {
+		id = SLA_Public_infrastructure_works
+		icon = GFX_goal_generic_construct_infrastructure
+        x = 1
+        y = 1
+
+		cost = 7.2
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		relative_position_id = SLA_Cinemas_for_the_poor
+        prerequisite = { focus = SLA_Cinemas_for_the_poor }
+
+
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 2
+		}
+		completion_reward = {
+			18 = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = infrastructure
+										size > 1
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			19 = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = infrastructure
+										size > 1
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+			752 = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = infrastructure
+										size > 1
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
 		focus = {
 		id = SLA_Distribute_Louisiana_Armoury
 		icon = GFX_focus_SLA_distribute_armoury
@@ -1049,8 +1242,9 @@ focus_tree = {
         prerequisite = { focus = SLA_anti_disease_prevention_center focus = SLA_national_infrasture_project focus = SLA_take_back_new_orleans}
         ###needs memphis area, more wealthy people needed to tax#####
         available = {
-            owns_state = 518
-            owns_state = 361
+            owns_state = 223
+            owns_state = 222
+			date > 1939.06.1
         }
         x = -1
         y = 1
@@ -1078,8 +1272,8 @@ focus_tree = {
         icon = GFX_focus_SLA_huey_domination_plan
         prerequisite = { focus = SLA_share_the_wealth_program}
         available = {
-            owns_state = 518
-            owns_state = 361
+			date > 1940.01.1
+            war_support > 0.8
         }
         x = 0
         y = 1
@@ -1092,9 +1286,8 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_POLITICAL }
 
         completion_reward = {
-
+             add_political_power = 125
          hidden_effect = {
-             add_political_power = 300
             country_event = {
                 id = louisiana.27
                 days = 10
