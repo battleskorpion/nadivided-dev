@@ -1176,11 +1176,10 @@ focus_tree = {
     focus = {
         id = SNY_paramilitary_encouragment
         icon = GFX_goal_support_fascism
-        prerequisite = { focus = SNY_divert_more_funding_to_the_military}
-        x = 0
+        prerequisite = { focus = SNY_strengthen_the_army}
+        x = -2
         y = 1
-        relative_position_id = SNY_divert_more_funding_to_the_military
-        mutually_exclusive = { focus = SNY_military_backs_down}
+        relative_position_id = SNY_strengthen_the_army
         cost = 10
         ai_will_do = {
             factor = 1
@@ -1218,6 +1217,10 @@ focus_tree = {
         icon = GFX_focus_NYC_NYhas_demand_reperations
         available = {
             date > 1939.1.1
+            NOT = {
+                has_completed_focus = SNY_fdr_prepares_a_rebellion
+                has_completed_focus = SNY_the_army_makes_a_demonstration
+            }
         }
         bypass = {
             NOT = {
@@ -2394,6 +2397,211 @@ focus_tree = {
                         }
                     }
                 }
+            }
+        }
+    }
+    focus = {
+        id = SNY_charles_poletti_holds_an_emergency_election
+        icon = GFX_
+        prerequisite = { focus = SNY_the_impeachment_trail}
+        mutually_exclusive = { focus = SNY_charles_poletti_prepares_a_rebellion focus = SNY_fdr_prepares_a_rebellion}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SNY_impeachment_was_a_success_tt
+                always = no
+            }
+        }
+        x = -3
+        y = 1
+        relative_position_id = SNY_the_impeachment_trail
+        cost = 5
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+    }
+    focus = {
+        id = SNY_charles_poletti_prepares_a_rebellion
+        icon = GFX_
+        prerequisite = { focus = SNY_the_impeachment_trail}
+        mutually_exclusive = { focus = SNY_charles_poletti_holds_an_emergency_election focus = SNY_fdr_prepares_a_rebellion}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SNY_impeachment_was_a_failure_tt
+                always = no
+            }
+        }
+        x = 1
+        y = 1
+        relative_position_id = SNY_the_impeachment_trail
+        cost = 5
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+    }
+    focus = {
+        id = SNY_fdr_prepares_a_rebellion
+        icon = GFX_
+        prerequisite = { focus = SNY_the_impeachment_trail}
+        mutually_exclusive = { focus = SNY_charles_poletti_holds_an_emergency_election focus = SNY_charles_poletti_prepares_a_rebellion}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SNY_impeachment_was_a_failure_tt
+                always = no
+            }
+            custom_trigger_tooltip = {
+                tooltip = SNY_fdr_has_come_back_tt
+                always = no
+            }
+        }
+        x = 5
+        y = 1
+        relative_position_id = SNY_the_impeachment_trail
+        cost = 5
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+    }
+    focus = {
+        id = SNY_blame_lehman_of_rigging_the_trail
+        icon = GFX_
+        prerequisite = { focus = SNY_charles_poletti_prepares_a_rebellion}
+        x = 0
+        y = 1
+        relative_position_id = SNY_charles_poletti_prepares_a_rebellion
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            add_stability = 0.05
+            country_event = {
+                id = new_york.50
+            }
+        }
+    }
+    focus = {
+        id = SNY_gain_the_support_of_democratic_senators
+        icon = GFX_
+        prerequisite = { focus = SNY_blame_lehman_of_rigging_the_trail}
+        x = 0
+        y = 1
+        relative_position_id = SNY_blame_lehman_of_rigging_the_trail
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_political_power = 50
+            add_popularity = {
+                ideology = democratic
+                popularity = 0.5
+            }
+        }
+    }
+    focus = {
+        id = SNY_put_up_fliers
+        icon = GFX_
+        prerequisite = { focus = SNY_charles_poletti_prepares_a_rebellion focus = SNY_fdr_prepares_a_rebellion}
+        x = 2
+        y = 1
+        relative_position_id = SNY_charles_poletti_prepares_a_rebellion
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_war_support = 0.05
+        }
+    }
+    focus = {
+        id = SNY_work_with_the_army
+        icon = GFX_
+        prerequisite = { focus = SNY_put_up_fliers}
+        x = 0
+        y = 1
+        relative_position_id = SNY_put_up_fliers
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            custom_effect_tooltip = SNY_we_will_get_more_troops_in_the_rebellion_tt
+        }
+    }
+    focus = {
+        id = SNY_fdr_returns_to_new_york
+        icon = GFX_
+        prerequisite = { focus = SNY_fdr_prepares_a_rebellion}
+        x = 0
+        y = 1
+        relative_position_id = SNY_fdr_prepares_a_rebellion
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+        
+        completion_reward = {
+            add_war_support = 0.05
+            add_stability = 0.05
+        }
+    }
+    focus = {
+        id = SNY_friends_in_congress
+        icon = GFX_
+        prerequisite = { focus = SNY_fdr_returns_to_new_york}
+        x = 0
+        y = 1
+        relative_position_id = SNY_fdr_returns_to_new_york
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_political_power = 50
+            add_popularity = {
+                ideology = progressivism
+                popularity = 0.07
+            }
+            country_event = {
+                id = new_york.53
+            }
+        }
+    }
+    focus = {
+        id = SNY_challenge_lehman
+        icon = GFX_
+        prerequisite = { focus = SNY_gain_the_support_of_democratic_senators focus = SNY_work_with_the_army focus = SNY_friends_in_congress}
+        x = 2
+        y = 1
+        relative_position_id = SNY_gain_the_support_of_democratic_senators
+        cost = 5
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            country_event = {
+                id = new_york.54
             }
         }
     }
