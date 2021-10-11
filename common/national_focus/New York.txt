@@ -1160,13 +1160,7 @@ focus_tree = {
                 tooltip = SNY_attack_on_albany_has_occured_tt
                 has_country_flag = SNY_attack_on_albany
             }
-            custom_trigger_tooltip = {
-                tooltip = SNY_amry_has_a_lot_of_influence_tt
-                OR = {
-                    has_country_flag = SNY_army_influence3
-                    has_country_flag = SNY_army_influence4
-                }
-            }
+            has_completed_focus = SNY_the_army_makes_a_demonstration
         }
         x = 20
         y = 8
@@ -1187,7 +1181,7 @@ focus_tree = {
         x = -6
         y = 1
         relative_position_id = SNY_strengthen_the_army
-        cost = 10
+        cost = 7
         ai_will_do = {
             factor = 1
         }
@@ -1209,7 +1203,7 @@ focus_tree = {
         x = 0
         y = 1
         relative_position_id = SNY_basic_tactical_education
-        cost = 10
+        cost = 7
         ai_will_do = {
             factor = 1
         }
@@ -1231,7 +1225,7 @@ focus_tree = {
         x = 0
         y = 1
         relative_position_id = SNY_improved_tactical_education
-        cost = 10
+        cost = 7
         ai_will_do = {
             factor = 1
         }
@@ -1253,7 +1247,7 @@ focus_tree = {
         x = 0
         y = 1
         relative_position_id = SNY_advanced_tactical_education
-        cost = 10
+        cost = 7
         ai_will_do = {
             factor = 1
         }
@@ -1404,7 +1398,7 @@ focus_tree = {
         completion_reward = {
             navy_experience = 50
             add_tech_bonus = {
-                bonus = 0.75
+                bonus = 0.6
                 uses = 2
                 category = naval_doctrine
             }
@@ -1459,6 +1453,97 @@ focus_tree = {
         }
     }
     focus = {
+        id = SNY_land_domination_initiative
+        icon = GFX_
+        prerequisite = { focus = SNY_divert_more_funding_to_the_military}
+        x = 0
+        y = 1
+        relative_position_id = SNY_divert_more_funding_to_the_military
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 0.5
+                uses = 1
+                category = infantry_tech
+            }
+            add_ideas = SNY_land_domination_initiative_idea
+        }
+    }
+    focus = {
+        id = SNY_soft_attack_dominance
+        icon = GFX_
+        prerequisite = { focus = SNY_land_domination_initiative}
+        x = 0
+        y = 1
+        relative_position_id = SNY_land_domination_initiative
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 0.8
+                uses = 2
+                ahead_reduction = 1
+                category = artillery
+                category = rocketry
+            }
+        }
+    }
+    focus = {
+        id = SNY_hard_attack_dominance
+        icon = GFX_
+        prerequisite = { focus = SNY_soft_attack_dominance}
+        x = 0
+        y = 1
+        relative_position_id = SNY_soft_attack_dominance
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 0.8
+                uses = 2
+                ahead_reduction = 1
+                category = cat_anti_tank
+                category = armor
+            }
+        }
+    }
+    focus = {
+        id = SNY_complete_land_domination
+        icon = GFX_
+        prerequisite = { focus = SNY_hard_attack_dominance}
+        x = 0 
+        y = 1
+        relative_position_id = SNY_hard_attack_dominance
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        
+        completion_reward = {
+            swap_ideas = {
+                add_idea = SNY_complete_land_domination_idea
+                remove_idea = SNY_land_domination_initiative_idea
+            }
+        }
+    }
+    focus = {
         id = SNY_bring_the_airforce_up_to_standard
         icon = GFX_
         prerequisite = { focus = SNY_divert_more_funding_to_the_military}
@@ -1478,6 +1563,181 @@ focus_tree = {
                 bonus = 1
                 uses = 1
                 category = air_equipment
+            }
+        }
+    }
+    focus = {
+        id = SNY_focus_on_land_air_domination
+        icon = GFX_
+        prerequisite = { focus = SNY_bring_the_airforce_up_to_standard}
+        mutually_exclusive = { focus = SNY_focus_on_complete_destruction}
+        x = -1
+        y = 1
+        relative_position_id = SNY_bring_the_airforce_up_to_standard
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                ahead_reduction = 1
+                category = light_fighter
+            }
+            random_owned_controlled_state = {
+                limit = {
+                    free_building_slots = {
+                        building = air_base 
+                        size > 2
+                        include_locked = yes
+                    }
+                }
+                add_building_construction = {
+                    type = air_base
+                    level = 3
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_focus_on_complete_destruction
+        icon = GFX_
+        prerequisite = { focus = SNY_bring_the_airforce_up_to_standard}
+        mutually_exclusive = { focus = SNY_focus_on_land_air_domination}
+        x = 1
+        y = 1
+        relative_position_id = SNY_bring_the_airforce_up_to_standard
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                ahead_reduction = 1
+                category = tactical_bomber
+                category = cat_strategic_bomber
+            }
+            random_owned_controlled_state = {
+                limit = {
+                    free_building_slots = {
+                        building = air_base 
+                        size > 2
+                        include_locked = yes
+                    }
+                }
+                add_building_construction = {
+                    type = air_base
+                    level = 3
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_teach_the_airforce_some_tricks
+        icon = GFX_
+        prerequisite = { focus = SNY_bring_the_airforce_up_to_standard}
+        x = 0
+        y = 2
+        relative_position_id = SNY_bring_the_airforce_up_to_standard
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 0.75
+                uses = 2
+                category = air_doctrine
+            }
+        }
+    }
+    focus = {
+        id = SNY_rain_hell_from_the_sky
+        icon = GFX_
+        prerequisite = { focus = SNY_focus_on_land_air_domination}
+        prerequisite = { focus = SNY_teach_the_airforce_some_tricks}
+        x = 0
+        y = 2
+        relative_position_id = SNY_focus_on_land_air_domination
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                ahead_reduction = 1
+                category = cas_bomber
+            }
+            random_owned_controlled_state = {
+                limit = {
+                    free_building_slots = {
+                        building = air_base 
+                        size > 2
+                        include_locked = yes
+                    }
+                }
+                add_building_construction = {
+                    type = air_base
+                    level = 3
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_protect_our_shores
+        icon = GFX_
+        prerequisite = { focus = SNY_focus_on_complete_destruction}
+        prerequisite = { focus = SNY_teach_the_airforce_some_tricks}
+        x = 0
+        y = 2
+        relative_position_id = SNY_focus_on_complete_destruction
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                ahead_reduction = 1
+                category = naval_bomber
+            }
+            random_owned_controlled_state = {
+                limit = {
+                    free_building_slots = {
+                        building = air_base 
+                        size > 2
+                        include_locked = yes
+                    }
+                }
+                add_building_construction = {
+                    type = air_base
+                    level = 3
+                    instant_build = yes
+                }
             }
         }
     }
@@ -2542,6 +2802,7 @@ focus_tree = {
         available_if_capitulated = no
 
         completion_reward = {
+            custom_effect_tooltip = SNY_increase_the_chance_for_the_trail_to_be_a_success_tt
             country_event = {
                 id = new_york.39
             }
@@ -2566,6 +2827,7 @@ focus_tree = {
         available_if_capitulated = no
 
         completion_reward = {
+            custom_effect_tooltip = SNY_increase_the_chance_for_the_trail_to_be_a_success_tt
             country_event = {
                 id = new_york.40
             }
