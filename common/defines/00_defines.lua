@@ -31,87 +31,87 @@ NDiplomacy = {
 	MIN_OPINION_VALUE = -100,						-- Min opinion value cap.
 	BASE_TRUCE_PERIOD = 30,							-- Base truce period in days.
 	TRUCE_PERIOD_AFTER_KICKING_FROM_FACTION = 30,				-- Truce period after kicking someone from faction in days.
-	NUM_DAYS_TO_ENABLE_KICKING_NEW_MEMBERS_OF_FACTION = 90,			-- Number of days before being able to kick a new member of faction 
-	NUM_DAYS_TO_ENABLE_REINVITE_KICKED_NATIONS = 90,			-- Number of days before being able to re invite a kicked nation to your faction
-	BASE_NEGATIVE_OPINION_AFTER_BEING_KICKED = 20,				-- Negative opinion that will be received after kicking a nation
-	DECAY_RATE_OF_NEGATIVE_OPINION_AFTER_BEING_KICKED = 1,			-- Weekly decay rate of the negative opinion
+	NUM_DAYS_TO_ENABLE_KICKING_NEW_MEMBERS_OF_FACTION = 90,		-- Number of days before being able to kick a new member of faction 
+	NUM_DAYS_TO_ENABLE_REINVITE_KICKED_NATIONS = 60,			-- Number of days before being able to re invite a kicked nation to your faction
+	BASE_NEGATIVE_OPINION_AFTER_BEING_KICKED = 40,				-- Negative opinion that will be received after kicking a nation
+	DECAY_RATE_OF_NEGATIVE_OPINION_AFTER_BEING_KICKED = 2,		-- Weekly decay rate of the negative opinion
 	TRUCE_BREAK_COST_PP = 200,						-- Base cost in PP of breaking a truce by joining a war or accepting a call to war ( you cannot declare war yourself until the truce if up ), this is then multiplied by the time left on the truce ( so once half the truce is up it only cost 50% of this )
 	BASE_PEACE_PUPPET_FACTOR = 100,					-- Base factor for puppet in %.
 	BASE_PEACE_LIBERATE_FACTOR = 100,				-- Base factor for liberate in %.
-	BASE_PEACE_TAKE_UNCONTROLLED_STATE_FACTOR = 10.0, -- Base factor for taking state you do not control
-	BASE_PEACE_TAKE_FACTION_CONTROLLED_STATE_FACTOR = 0.5, -- Base factor for taking state you do not control, but someone in faction does
+	BASE_PEACE_TAKE_UNCONTROLLED_STATE_FACTOR = 5.0, 			-- Base factor for taking state you do not control 
+	BASE_PEACE_TAKE_FACTION_CONTROLLED_STATE_FACTOR = 0.5, 		-- Base factor for taking state you do not control, but someone in faction does
 	BASE_PEACE_FORCE_GOVERNMENT_COST = 100, 		-- Base cost for forcing a country to change government.
 	BASE_IMPROVE_RELATION_COST = 10,                -- Political power cost to initiate relation improvement
-	BASE_IMPROVE_RELATION_SAME_IDEOLOGY_GROUP_MAINTAIN_COST = 0.2, -- Political power cost each update when boosting relations with nation of same ideology
-	BASE_IMPROVE_RELATION_DIFFERENT_IDEOLOGY_GROUP_MAINTAIN_COST = 0.4,    -- Political power cost each update when boosting relations with nation of different ideology
+	BASE_IMPROVE_RELATION_SAME_IDEOLOGY_GROUP_MAINTAIN_COST = 0.2, 			-- Political power cost each update when boosting relations with nation of same ideology
+	BASE_IMPROVE_RELATION_DIFFERENT_IDEOLOGY_GROUP_MAINTAIN_COST = 0.4,    	-- Political power cost each update when boosting relations with nation of different ideology
 	BASE_SEND_ATTACHE_COST = 100,					-- Political power cost to send attache
 	BASE_SEND_ATTACHE_CP_COST = 50.0,				-- Command Power sent attache usage cost
-	BASE_GENERATE_WARGOAL_DAILY_PP = 0.2,	-- Daily pp cost for generation of wargoals
+	BASE_GENERATE_WARGOAL_DAILY_PP = 0.2,			-- Daily pp cost for generation of wargoals
 	WARGOAL_VERSUS_MAJOR_AT_WAR_REDUCTION = -0.75, 	-- reduction of pp cost for wargoal vs major at war.
-	WARGOAL_WORLD_TENSION_REDUCTION = -0.5,			-- Reduction of pp cost for wargoal at 100% world tension, scales linearly
-	WARGOAL_JUSTIFY_TENSION_FROM_PRODUCTION = 30.0,	-- Base value scaled by production capacity of country compared to biggest country
-	MIN_WARGOAL_JUSTIFY_COST = 2.0,					-- It always takes atleast 10 days to justify a wargoal
-	WARGOAL_PER_JUSTIFY_AND_WAR_COST_FACTOR = 1.5,	-- Cost factor per nation at war with or justifying against
+	WARGOAL_WORLD_TENSION_REDUCTION = -0.6,			-- Reduction of pp cost for wargoal at 100% world tension, scales linearly
+	WARGOAL_JUSTIFY_TENSION_FROM_PRODUCTION = 25.0,	-- Base value scaled by production capacity of country compared to biggest country	-- base 30	
+	MIN_WARGOAL_JUSTIFY_COST = 2.0,					-- It always takes at least 10 days to justify a wargoal
+	WARGOAL_PER_JUSTIFY_AND_WAR_COST_FACTOR = 1.35,	-- Cost factor per nation at war with or justifying against	-- base 1.5
 	BASE_BOOST_PARTY_POPULARITY_DAILY_PP = 0.25, 	-- Daily pp cost for boost party popularity
 	BASE_BOOST_PARTY_POPULARITY_DAILY_DRIFT = 0.1, 	-- Daily amount of popularity that will be added by the activity.
-	BASE_STAGE_COUP_DAILY_PP = 0.5,					-- Daily pp cost for staging a coup
+	BASE_STAGE_COUP_DAILY_PP = 0.5,					-- Daily pp cost for staging a coup	
 	BASE_STAGE_COUP_TOTAL_COST = 200, 				-- Equipment consume factor for stage coup.
-	NAP_EXPIRY_MONTHS = 48,                         -- NAPs expire after this many months
-	NAP_UNBREAKABLE_MONTHS = 12,                    -- NAPS cannot be broken for this many months
-	NAP_FORCE_BALANCE_RULE_MONTHS = 6,        		-- The NAP border force balance rule changes with this interval
+	NAP_EXPIRY_MONTHS = 60,                         -- NAPs expire after this many months	-- default 48
+	NAP_UNBREAKABLE_MONTHS = 8,                 	-- NAPS cannot be broken for this many months	-- default 12
+	NAP_FORCE_BALANCE_RULE_MONTHS = 4,        		-- The NAP border force balance rule changes with this interval	-- default 6
 	NAP_BREAK_FORCE_BALANCE_1 = 2.0,              	-- 2-1 brigades along the border required to break NAP
 	NAP_BREAK_FORCE_BALANCE_2 = 1.0,              	-- 1-1 brigades along the border required to break NAP
 	NAP_BREAK_FORCE_BALANCE_3 = 0.5,              	-- 1-2 brigades along the border required to break NAP
 	VERY_GOOD_OPINION = 50,							-- Threshold for a country that has a very good opinion of you.
 	VERY_BAD_OPINION = -50,							-- Threshold for a country that has a very bad opinion of you.
-	DIPLOMACY_HOURS_BETWEEN_REQUESTS = 24,			-- How long a country must wait before sending a new diplomatic request.
+	DIPLOMACY_HOURS_BETWEEN_REQUESTS = 12,			-- How long a country must wait before sending a new diplomatic request.
 	TROOP_FEAR = 1, 								-- Impact on troops on borders when deciding how willing a nation is to trade
 	FLEET_FEAR = 1,									-- Impact on troops on borders when deciding how willing a nation is to trade
 	IC_TO_EQUIPMENT_COUP_RATIO = 0.1,				-- Ratio for calculating cost of staging coup
-	VOLUNTEERS_PER_TARGET_PROVINCE = 0.05,			-- Each province owned by the target country contributes this amount of volunteers to the limit.
-	VOLUNTEERS_PER_COUNTRY_ARMY = 0.05,				-- Each army unit owned by the source country contributes this amount of volunteers to the limit.
-	VOLUNTEERS_RETURN_EQUIPMENT = 0.95,				-- Returning volunteers keep this much equipment
-	VOLUNTEERS_TRANSFER_SPEED = 14,					-- days to transfer a unit to another nation
-	VOLUNTEERS_DIVISIONS_REQUIRED = 30,				-- This many divisons are required for the country to be able to send volunteers.
-	TENSION_STATE_VALUE = 2,						-- Tension value gained by annexing one state
-	TENSION_CIVIL_WAR_IMPACT = 0.2,					-- civil war multiplier on tension.
-	TENSION_NO_CB_WAR = 15,							-- Amount of tension generated by a no-CB wargoal
-	TENSION_CB_WAR = 5,								-- Amount of tension generated by a war with a CB
-	TENSION_ANNEX_NO_CLAIM = 2,						-- Amount of tension generated by annexing a state you don't have claims on
-	TENSION_ANNEX_CLAIM = 1,						-- Amount of tension generated by annexing a state you DO have claims on
+	VOLUNTEERS_PER_TARGET_PROVINCE = 0.07,			-- Each province owned by the target country contributes this amount of volunteers to the limit.	-- default 0.05
+	VOLUNTEERS_PER_COUNTRY_ARMY = 0.07,				-- Each army unit owned by the source country contributes this amount of volunteers to the limit.	-- default 0.05
+	VOLUNTEERS_RETURN_EQUIPMENT = 0.97,				-- Returning volunteers keep this much equipment	-- default 0.95
+	VOLUNTEERS_TRANSFER_SPEED = 12,					-- days to transfer a unit to another nation		-- default 14
+	VOLUNTEERS_DIVISIONS_REQUIRED = 24,				-- This many divisons are required for the country to be able to send volunteers.	-- default 30
+	TENSION_STATE_VALUE = 0.75,						-- Tension value gained by annexing one state		-- default 2
+	TENSION_CIVIL_WAR_IMPACT = 0.15,				-- civil war multiplier on tension.					-- default 0.2
+	TENSION_NO_CB_WAR = 8,							-- Amount of tension generated by a no-CB wargoal	-- default 15
+	TENSION_CB_WAR = 5,								-- Amount of tension generated by a war with a CB	-- default 5
+	TENSION_ANNEX_NO_CLAIM = 1.5,					-- Amount of tension generated by annexing a state you don't have claims on			-- default 2.0
+	TENSION_ANNEX_CLAIM = 0.8,						-- Amount of tension generated by annexing a state you DO have claims on			-- default 1.0
 	TENSION_ANNEX_CORE = 0.5,						-- Amount of tension generated by annexing a state that is your core
-	TENSION_PUPPET = 2,								-- Amount of tension generated by puppeting (per state)
-	TENSION_VOLUNTEER_FORCE_DIVISION = 0.2,			-- Amount of tension generated for each sent division
+	TENSION_PUPPET = 1.25,							-- Amount of tension generated by puppeting (per state)								-- default 1.5
+	TENSION_VOLUNTEER_FORCE_DIVISION = 0.1,			-- Amount of tension generated for each sent division								-- default 0.2
 	TENSION_DECAY = 0.1,							-- Each months tension decays this much
 	TENSION_SIZE_FACTOR = 1.0,						-- All action tension values are multiplied by this value
 	TENSION_TIME_SCALE_START_DATE = "1936.1.1.12",	-- Starting at this date, the tension values will be scaled down (will be equal to 1 before that)
-	TENSION_TIME_SCALE_MONTHLY_FACTOR = -0.005,		-- Timed tension scale will be modified by this amount starting with TENSION_TIME_SCALE_START_DATE
-	TENSION_TIME_SCALE_MIN = 0.25,					-- Timed tension scale won't decrease under this value
-	TENSION_GUARANTEE = -5,
-	TENSION_FACTION_JOIN = 4,
+	TENSION_TIME_SCALE_MONTHLY_FACTOR = -0.007,		-- Timed tension scale will be modified by this amount starting with TENSION_TIME_SCALE_START_DATE	-- default -0.005
+	TENSION_TIME_SCALE_MIN = 0.20,					-- Timed tension scale won't decrease under this value
+	TENSION_GUARANTEE = -6,							-- default -5
+	TENSION_FACTION_JOIN = 2,						-- default 4
 	TENSION_JOIN_ATTACKER = 2,						-- scale of the amount of tension added when country joins attacker side
 	TENSION_PEACE_FACTOR = 0.25,					-- scale of the amount of tension (from war declaration) reduced when peace is completed.
 	TENSION_LIBERATE = -1,							-- Amount of tension generated by liberating a country. 
 	TENSION_CAPITULATE = 0.75,						-- Scale of the amount of tension created by a countries capitulation.
 	GUARANTEE_COST = 25,							-- Scale with the number of already guaranteed countries.
-	REVOKE_GUARANTEE_COST = 25,
+	REVOKE_GUARANTEE_COST = 15,						-- default 25
 	MP_NUM_WINNERS_FOR_PEACE_PAUSE = 0,				-- Number of human players as winners needed for peace conference to pause and open for everyone in multiplayer, needs to fullfill MP_NUM_LOSERS_FOR_PEACE_PAUSE as well.
 	MP_NUM_LOSERS_FOR_PEACE_PAUSE = 0,				-- Number of human players as losers needed for peace conference to pause and open for everyone in multiplayer, needs to fullfill MP_NUM_WINNERS_FOR_PEACE_PAUSE as well.
-	BASE_CONDITIONAL_PEACE_WARESCORE_RATIO = 0.5, 	-- Warscore ratio needed for the losing side to able to surrender.
-	BASE_CONDITIONAL_PEACE_MONTHS = 6,				-- War length must be before a surrender i possible.
+	BASE_CONDITIONAL_PEACE_WARESCORE_RATIO = 0.7, 	-- Warscore ratio needed for the losing side to able to surrender.		-- default 0.5
+	BASE_CONDITIONAL_PEACE_MONTHS = 2,				-- War length must be before a surrender i possible.					-- default 6
 	JOINING_NAP_WAR_PENALTY = 0.2,					-- War support penalty for breaking non-breakable NAP
-	BREAKING_GUARANTEE_PENALTY = 0.2,				-- War support penalty for breaking guarantee
+	BREAKING_GUARANTEE_PENALTY = 0.1,				-- War support penalty for breaking guarantee							-- default 0.2
 	PEACE_SCORE_PER_PASS = 0.2,						-- When you pass in a peace deal you gain this percent of your original score
-	MAX_REMEMBERED_LEASED_IC = 1000,				-- Maximum of leased equipment value that is remembered for opinion bonus
-	MAX_OPINION_FOR_LEASED_IC = 30,					-- Positive opinion when remembering the MAX_REMEMBERED_LEASED_IC equipment
-	MONTHLY_LEASED_IC_DECAY = 35,					-- How much of leased equipment is being "forgot" each month
-	OPINION_PER_VOLUNTEER = 3,						-- Opinion bonus per one sent volunteer division
+	MAX_REMEMBERED_LEASED_IC = 2000,				-- Maximum of leased equipment value that is remembered for opinion bonus	-- default 1000
+	MAX_OPINION_FOR_LEASED_IC = 30,					-- Positive opinion when remembering the MAX_REMEMBERED_LEASED_IC equipment	-- default 30
+	MONTHLY_LEASED_IC_DECAY = 15,					-- How much of leased equipment is being "forgot" each month				-- default 35
+	OPINION_PER_VOLUNTEER = 2,						-- Opinion bonus per one sent volunteer division							-- default 3
 	MAX_OPINION_FROM_VOLUNTEERS = 30,				-- Opinion bonus per one sent volunteer division
 	OPINION_FOR_DEMO_FROM_WT_GENERATION = -2.0,		-- How much less do democracies like us if we generate world tension
-	NOT_READY_FOR_WAR_BASE = -50,					-- AI should be unwilling to enter accept a call to war if not ready for war against the relevant enemies.
-	FRONT_IS_DANGEROUS = -100,						-- AI should be unwilling to enter accept a call to war if front is too dangerous.
-	NOT_READY_FOR_WAR_VAL_PER_DAY_SINCE_CALL = 1,	-- Value modifying the not ready base over time.
-	PEACE_MIN_SCORE = 0.3,							-- Value how much of your score you are always allowed to take
+	NOT_READY_FOR_WAR_BASE = -30,					-- AI should be unwilling to enter accept a call to war if not ready for war against the relevant enemies.	-- default -50
+	FRONT_IS_DANGEROUS = -110,						-- AI should be unwilling to enter accept a call to war if front is too dangerous.
+	NOT_READY_FOR_WAR_VAL_PER_DAY_SINCE_CALL = 1.5,	-- Value modifying the not ready base over time.				-- default 1
+	PEACE_MIN_SCORE = 0.3,							-- Value how much of your score you are always allowed to take	-- (no change) -- dankwizard420 endorsed this goddamn message	-- f*** all you damn b******	-- we remain professional round these parts
 	TAKE_STATES_PUPPET_COST_MULT = 0.5,				-- Cost multiplier for feeding states to a puppet that you have created, assuming the puppet currently owns the states
 	TAKE_STATES_LIBERATE_COST_MULT = 0.5,			-- Cost multiplier for feeding states to a country that has been liberated, assuming the country has cores on the states
 	TAKE_STATES_CHANGE_GOV_COST_MULT = 0.5,			-- Cost multiplier for feeding states to a country you are changing government on, assuming they currently own the states
@@ -120,42 +120,42 @@ NDiplomacy = {
 	RESOURCE_SENT_AUTONOMY_DAILY_BASE = 0.0,		-- If puppet provides resources to its master they increasy their autonomy by at least this amount
 	RESOURCE_SENT_AUTONOMY_DAILY_FACTOR = 0.005,	-- If puppet provides resources to its master they increasy their autonomy by the resources factored by this
 	WAR_SCORE_AUTONOMY_BASE = 0.0,					-- Value added if any war score is contributed by puppet
-	WAR_SCORE_AUTONOMY_FACTOR = 0.6,				-- If puppet generates war score it get a boost to independence 
+	WAR_SCORE_AUTONOMY_FACTOR = 0.7,				-- If puppet generates war score it get a boost to independence 	-- default 0.6
 	LL_TO_OVERLORD_AUTONOMY_DAILY_BASE = 0.0,		-- If puppet lend leases equipment to overlord of at least same tech level as they have, they gain autonomy
-	LL_TO_OVERLORD_AUTONOMY_DAILY_FACTOR = 0.05,	-- If puppet lend leases equipment to overlord of at least same tech level as they have, they gain autonomy
+	LL_TO_OVERLORD_AUTONOMY_DAILY_FACTOR = 0.06,	-- If puppet lend leases equipment to overlord of at least same tech level as they have, they gain autonomy	-- default 0.5
 	LL_TO_PUPPET_AUTONOMY_DAILY_BASE = 0.0,			-- If overlord lend leases equipment to puppet of higher tech level as they have, puppet losses autonomy
-	LL_TO_PUPPET_AUTONOMY_DAILY_FACTOR = -0.01,		-- If overlord lend leases equipment to puppet of higher tech level as they have, puppet losses autonomy
-	AUTONOMY_FREEDOM_FROM_CAPITULATE = 0.5,         -- if overlord capitulate you get this
+	LL_TO_PUPPET_AUTONOMY_DAILY_FACTOR = -0.015,	-- If overlord lend leases equipment to puppet of higher tech level as they have, puppet losses autonomy	-- default -0.01
+	AUTONOMY_FREEDOM_FROM_CAPITULATE = 0.6,         -- if overlord capitulate you get this		-- default 0.5
 	ATTACHE_TO_SUBJECT_EFFECT = -0.05,				-- If overlord sent attaches to the subject it losses autonomy
 	ATTACHE_TO_OVERLORD_EFFECT = 0.05,				-- If subject sent attaches to the overlord it gains autonomy
 	
 	AUTONOMY_LEVEL_CHANGE_PP_COST_BASE = 50.0,		-- Base cost of changing level of autonomy
-	AUTONOMY_LEVEL_CHANGE_PP_ANNEX = 300,			-- Annexation cost
-	AUTONOMY_LEVEL_CHANGE_PP_FREE = 300,			-- Break free cost
+	AUTONOMY_LEVEL_CHANGE_PP_ANNEX = 250,			-- Annexation cost		-- base 300
+	AUTONOMY_LEVEL_CHANGE_PP_FREE = 200,			-- Break free cost		-- base 300
 	MAX_SCORE_DIFF_TO_CHANGE_AUTONOMY = 10,			-- The max diff between current freedom score and the cap for next or previous level allowed for changing
-	MASTER_BUILD_AUTONOMY_FACTOR = -0.7,            -- scales autonomy gain from construction by this
-	VICTORY_POINT_WORTH_FACTOR = 10,				-- multiplier when calcualting proince worth (surrender)
-	VICTORY_POINT_WORTH_FACTOR_WARSCORE = 0.2,		-- multiplier when calcualting province worth with autonomy/warscore
+	MASTER_BUILD_AUTONOMY_FACTOR = -0.7,            -- scales autonomy gain from construction by this	
+	VICTORY_POINT_WORTH_FACTOR = 10,				-- multiplier when calcualating proince worth (surrender)
+	VICTORY_POINT_WORTH_FACTOR_WARSCORE = 0.17,		-- multiplier when calcualating province worth with autonomy/warscore			-- default 0.2	-- if the game says "desync from warscore" dankwizard420 is god, "prime number bad"		
 	CAPITAL_CAPITULATE_BONUS_SCORE = 150,			-- extra bonus when deciding who to capitulate to (applied to capital holder)
-	CAPITAL_CAPITULATE_BONUS_SCORE_MUL = 1.5,		-- extra bonus multiplier when deciding who to capitulate to (applied to capital holder)
-	IDEOLOGY_JOIN_FACTION_MIN_LEVEL = 0.3,			-- ideology limit required to join faction
-	JOIN_FACTION_LIMIT_CHANGE_AT_WAR = 0.5,			-- if in defensive war this or your modifier is counted as limit to join factions (so if you have 80% join limit this now means you can join at 50%)
-	LICENSE_ACCEPTANCE_OPINION_FACTOR = 0.2,		-- Opinion modifier for acceptance of license production requests.
-	LICENSE_ACCEPTANCE_PUPPET_BASE = 20,			-- Acceptance modifier for puppets requesting production licenses.
-	LICENSE_ACCEPTANCE_TECH_DIFFERENCE = 5, 		-- Acceptance modifier for each year of technology difference.
-	LICENSE_ACCEPTANCE_TECH_DIFFERENCE_BASE = 20,    -- Acceptance base for tech difference
-	LICENSE_ACCEPTANCE_SAME_FACTION = 20,			-- Acceptance modifier for being in the same faction
+	CAPITAL_CAPITULATE_BONUS_SCORE_MUL = 1.3,		-- extra bonus multiplier when deciding who to capitulate to (applied to capital holder)	-- default 1.5
+	IDEOLOGY_JOIN_FACTION_MIN_LEVEL = 0.3,			-- ideology limit required to join faction			
+	JOIN_FACTION_LIMIT_CHANGE_AT_WAR = 0.5,			-- if in defensive war this or your modifier is counted as limit to join factions (so if you have 80% join limit this now means you can join at 50%)	
+	LICENSE_ACCEPTANCE_OPINION_FACTOR = 0.25,		-- Opinion modifier for acceptance of license production requests.		-- default 0.2
+	LICENSE_ACCEPTANCE_PUPPET_BASE = 25,			-- Acceptance modifier for puppets requesting production licenses.		-- default 20
+	LICENSE_ACCEPTANCE_TECH_DIFFERENCE = 7, 		-- Acceptance modifier for each year of technology difference.			-- default 5
+	LICENSE_ACCEPTANCE_TECH_DIFFERENCE_BASE = 25,   -- Acceptance base for tech difference									-- default 20
+	LICENSE_ACCEPTANCE_SAME_FACTION = 35,			-- Acceptance modifier for being in the same faction					-- default 20	-- you should really share with me if we're in a faction bc sharing is caring <3
 
-	WARGOAL_COST_LEND_LEASE = -0.25,                -- cost modifier to wargoaljustification for LL
-	WARGOAL_COST_DOCKING_RIGHTS = -0.2,             -- cost modifier to wargoaljustification for dockign rights
- 	WARGOAL_COST_VOLUNTEERS = -0.5,                 -- cost modifier to wargoaljustification for volunteers
+	WARGOAL_COST_LEND_LEASE = -0.25,                -- cost modifier to wargoal justification for LL					
+	WARGOAL_COST_DOCKING_RIGHTS = -0.2,             -- cost modifier to wargoal justification for docking rights
+ 	WARGOAL_COST_VOLUNTEERS = -0.5,                 -- cost modifier to wargoal justification for volunteers
 
 	ASSUME_FACTION_LEADERSHIP_PP_COST = 200,				-- Political power cost to assume faction leadership
-	ASSUME_FACTION_LEADERSHIP_MIN_MANPOWER_RATIO = 2,		-- The minimum ratio of manpower that a country must have compared to the current leader in order to assume leadership.
-	ASSUME_FACTION_LEADERSHIP_MIN_FACTORY_RATIO = 1.5,		-- The minimum ratio of factories that a country must have compared to the current leader in order to assume leadership.
-	ASSUME_FACTION_LEADERSHIP_COOLDOWN_DAYS = 180,			-- Number of days after formation of faction or change in leadership before another country is allowed to assume leadership.
-	ASSUME_FACTION_SPYMASTER_COOLDOWN_DAYS = 180,			-- Number of days after change of Spy Master before another country is allowed to become Spy Master.
-	FACTION_LEADERSHIP_CHANGE_ALERT_THRESHOLD = 0.8,		-- Threshold for showing an alert when a faction member is close to being able to assume leadership of the faction that a player currently leads.
+	ASSUME_FACTION_LEADERSHIP_MIN_MANPOWER_RATIO = 1.75,	-- The minimum ratio of manpower that a country must have compared to the current leader in order to assume leadership.		-- default 2
+	ASSUME_FACTION_LEADERSHIP_MIN_FACTORY_RATIO = 1.75,		-- The minimum ratio of factories that a country must have compared to the current leader in order to assume leadership.		-- default 1.5
+	ASSUME_FACTION_LEADERSHIP_COOLDOWN_DAYS = 120,			-- Number of days after formation of faction or change in leadership before another country is allowed to assume leadership.	-- default 180
+	ASSUME_FACTION_SPYMASTER_COOLDOWN_DAYS = 120,			-- Number of days after change of Spy Master before another country is allowed to become Spy Master.							-- default 180
+	FACTION_LEADERSHIP_CHANGE_ALERT_THRESHOLD = 0.85,		-- Threshold for showing an alert when a faction member is close to being able to assume leadership of the faction that a player currently leads.	-- default 0.8
 	FACTION_LEADERSHIP_CHANGE_NOT_SUBJECT_WEIGHT = 2,		-- Importance of subject status when determining how close a faction member is to being able to assume leadership.
 	FACTION_LEADERSHIP_CHANGE_NOT_CAPITULATED_WEIGHT = 2,	-- Importance of capitulation status when determining how close a faction member is to being able to assume leadership.
 	FACTION_LEADERSHIP_CHANGE_IN_ALL_WARS_WEIGHT = 1,		-- Importance not being in all faction leader wars when determining how close a faction member is to being able to assume leadership.
@@ -172,15 +172,15 @@ NCountry = {
 	SUPPLY_FROM_DAMAGED_INFRA = 0.3,                -- damaged infrastructure counts as this in supply calcs
 	SUPPLY_BASE_MULT = 1,							-- multiplier on supply base values
 	SUPPLY_BONUS_FROM_INPUT = 0.25,					-- % of supply bonus from input area.
-	SUPPLY_PATH_MAX_DISTANCE = 15,					-- When supply route reach more than X nodes, the manpower+equipment delivery speed reach 100% penalty.
+	SUPPLY_PATH_MAX_DISTANCE = 25,					-- When supply route reach more than X nodes, the manpower+equipment delivery speed reach 100% penalty.		-- default 15
 	POPULATION_YEARLY_GROWTH_BASE = 0.015,			-- basic population growth per year, used for monthly manpower gain
 	RESISTANCE_STRENGTH_FROM_VP = 0.001,			-- How much strength ticking speed gives each VP score.
-	RESISTANCE_STRENGTH_FROM_NEIGHBORS = 0.5, 		-- Multiplies how much resistance can spread from one state to its neighbors, a state will spread whatever is highest of its victorypoints resistance increase or half of any of its neighbors spread, multiplied by this
-	RESISTANCE_DECAY_WHEN_NO_GROWTH = 0.005,		-- Resistance will fall by this much each day if there is nothing increasing it ( no VPs and no spread from neighbors )
+	RESISTANCE_STRENGTH_FROM_NEIGHBORS = 0.4, 		-- default 0.5 -- Multiplies how much resistance can spread from one state to its neighbors, a state will spread whatever is highest of its victorypoints resistance increase or half of any of its neighbors spread, multiplied by this	
+	RESISTANCE_DECAY_WHEN_NO_GROWTH = 0.007,		-- Resistance will fall by this much each day if there is nothing increasing it ( no VPs and no spread from neighbors )		-- default 0.005
 	REINFORCEMENT_DIVISION_PRIORITY_COUNT = 3, 		-- How many priority stages we have in division template? 0)Reserves, 1)Normal, 2)Elite.
 	REINFORCEMENT_DIVISION_PRIORITY_DEFAULT = 1, 	-- Each template by default is 1)Normal
-	REINFORCEMENT_THEATER_GROUP_PRIORITY_DEFAULT = 1,-- Each theater group by default is 1)Normal
-	REINFORCEMENT_THEATRE_PRIORITY_COUNT = 3,		-- Same as with divisions...
+	REINFORCEMENT_THEATER_GROUP_PRIORITY_DEFAULT = 1,	-- Each theater group by default is 1)Normal
+	REINFORCEMENT_THEATRE_PRIORITY_COUNT = 3,			-- Same as with divisions...
 	REINFORCEMENT_THEATRE_PRIORITY_DEFAULT = 1,
 	REINFORCEMENT_AIRBASE_PRIORITY_COUNT = 3,
 	REINFORCEMENT_AIRBASE_PRIORITY_DEFAULT = 1,
@@ -219,8 +219,8 @@ NCountry = {
 	MIN_WAR_SUPPORT = 0.0,
 	MAX_WAR_SUPPORT = 1.0,
 	FRONT_PROVINCE_SCORE = 20,    					-- Max province score of a front. Used for the hostile troop alert
-	MAJOR_IC_RATIO = 3,                             -- difference in total factories needed to be considered major with respect to other nation
-	MAJOR_MIN_FACTORIES = 35,						-- need at least these many factories to become a major
+	MAJOR_IC_RATIO = 1,                             -- default 3 -- difference in total factories needed to be considered major with respect to other nation
+	MAJOR_MIN_FACTORIES = 1,						-- default 35 (or 50 before?) -- need at least these many factories to become a major
 	MAX_INTELLIGENCE_DIFFERENCE = 10.0,				-- (Old Intel) Max difference in intelligence levels between countries
 	INTEL_FROM_ALLIANCE_FACTOR = 0.3,				-- Multiplied to the difference between a country intel and the maximum value in the alliance to compute the amount of intel that flows from the alliance to that country. 0 means no alliance contribution, 1 means a country intel's is the same as the max in the alliance.
 	MAX_INTELLIGENCE_DATA_DEVIATION = 1.0,          -- (Old Intel) Max deviation in estimating default espionage values ( 0.0 - 1.0 )
@@ -242,8 +242,8 @@ NCountry = {
 	POLITICAL_POWER_CAP = 2000.0,					-- Max amount of political power country should have
 	RESISTANCE_IMPORTANT_LEVEL = 0.25,				-- Level when resistance becomes dangerous
 	RESISTANCE_IMPORTANT_COUNTRY_LEVEL = 0.25,		-- Level when average resistance in a country becomes dangerous
-	MIN_MAJOR_COUNTRIES	= 25,						-- MIN_MAJOR_COUNTRIES countries with most factories will be considered as major countries
-	ADDITIONAL_MAJOR_COUNTRIES_IC_RATIO = 0.7,		-- Countries will also be considered major when having more factories that the average of top MIN_MAJOR_COUNTRIES countries' factories times ADDITIONAL_MAJOR_COUNTRIES_IC_RATIO
+	MIN_MAJOR_COUNTRIES	= 100 ,						-- was 25, default 7 or 8? -- MIN_MAJOR_COUNTRIES countries with most factories will be considered as major countries
+	ADDITIONAL_MAJOR_COUNTRIES_IC_RATIO = 0.1,		-- default 0.7 -- Countries will also be considered major when having more factories that the average of top MIN_MAJOR_COUNTRIES countries' factories times ADDITIONAL_MAJOR_COUNTRIES_IC_RATIO 
 	BASE_TENSION_MAJOR_COUNTRY_INDEX = 1,			-- Which major country should be considered the base country when scaling generated world tension. 0 is the country with the most factories, 1 is the second most-factories country etc. This number has to be lower than MIN_MAJOR_COUNTRIES
 	MIN_NAVAL_SUPPLY_EFFICIENCY = 0.1,				-- Min ratio when supplies will be considered delivered from the capital by naval path
 	PARADROP_AIR_SUPERIORITY_RATIO = 0.7,			-- Min ratio of air superiority for paradropping
@@ -371,32 +371,41 @@ NCountry = {
 NResistance = {
 	INITIAL_STATE_RESISTANCE = 1.0,							-- initial resistance percentage of a state once it is captured
 	INITIAL_STATE_COMPLIANCE = 0.0,							-- initial compliance percentage of a state once it is captured
-	COMPLIANCE_FACTOR_ON_STATE_CONTROLLER_CHANGE = -0.5,	-- compliance factor that applies when the state controller changes (in between allies, compliance is zeroed if it is taken by original country)
-	RESISTANCE_COOLDOWN_WHEN_DISABLED = -0.25,				-- resistance cooldown when the state is taken back by its original owner (compliance is zeroed in that case)
+	COMPLIANCE_FACTOR_ON_STATE_CONTROLLER_CHANGE = -0.3,	-- default -0.5	-- compliance factor that applies when the state controller changes (in between allies, compliance is zeroed if it is taken by original country)	
+	RESISTANCE_COOLDOWN_WHEN_DISABLED = -0.20,				-- default -0.25 -- resistance cooldown when the state is taken back by its original owner (compliance is zeroed in that case)
 	
 	RESISTANCE_TARGET_BASE = 35.0,							-- base resistance target percentage
 	
 	RESISTANCE_TARGET_MODIFIER_HAS_CLAIM = -5.0,			-- resistance target modifier in % for states we have claim
 
 	RESISTANCE_TARGET_MODIFIER_PER_STABILITY_LOSS = 0.2,	-- resistance target modifier per stability below 100%
-	RESISTANCE_TARGET_MODIFIER_PER_COMPLIANCE = -0.5,		-- resistance target modifier per compliance %
+	RESISTANCE_TARGET_MODIFIER_PER_COMPLIANCE = -0.65,		-- resistance target modifier per compliance %			-- default -0.5
 	
 	RESISTANCE_TARGET_MODIFIER_IS_AT_PEACE = -10.0,			-- resistance target modifier when we are at peace
 	
 	RESISTANCE_TARGET_MODIFIER_STATE_VP = {					-- resistance target modifier pairs for vp. first entry is total vp in state and second entry is amount of target modifier that applies for that threshold
-		0,   0.0, -- 0 - 5
-		5,   5.0, -- 5 - 20
-		20,  10.0, -- 20 - 50
-		50,  20.0, -- 50 - ...
+		0,   0.0, 		-- 0 - 3							-- edited values ofc. 
+		3,   2.0, 		-- 3 - 5
+		5,   5.0, 		-- 5 - 10
+		10,  7.0, 		-- 10 - 15
+		15,  8.5, 		-- 15 - 20
+		20,  10.0, 		-- 20 - 30
+		30,  12.0, 		-- 30 - 40
+		40,  15.0, 		-- 40 - 50 
+		50,  18.0, 		-- 50 - 60
+		60,  19.5,  	-- 60 - 70
+		70,  21.0, 		-- 70 - 85
+		85,  23.0, 		-- 85 - 100
+		100, 25.0,		-- 100 - ...
 	},
 
 	RESISTANCE_TARGET_MODIFIER_OCCUPIED_CAPITULATED = 10.0, -- resistance target modifier when the enemy is capitulated
 	
-	RESISTANCE_TARGET_MODIFIER_OCCUPIED_IS_EXILE_MIN = 2.0,   -- min & max resistance target modifier resistance target modifier for exile countries. interpolated using legitimacy
+	RESISTANCE_TARGET_MODIFIER_OCCUPIED_IS_EXILE_MIN = 2.0, 	-- min & max resistance target modifier resistance target modifier for exile countries. interpolated using legitimacy
 	RESISTANCE_TARGET_MODIFIER_OCCUPIED_IS_EXILE_MAX = 20.0,
 
-	RESISTANCE_TARGET_MODIFIER_POP_LOW = -20.0,			-- how much we reduce the resistance target
-	RESISTANCE_TARGET_MODIFIER_POP_VERY_LOW = -50.0,			-- resistance target modifier in % for states we have claim
+	RESISTANCE_TARGET_MODIFIER_POP_LOW = -25.0,			-- how much we reduce the resistance target	-- default -20
+	RESISTANCE_TARGET_MODIFIER_POP_VERY_LOW = -60.0,	-- resistance target modifier in % for states we have claim -- default -50.0
 	
 	RESISTANCE_POP_LOW_CUTOFF = 10000,
 	RESISTANCE_POP_VERY_LOW_CUTOFF = 1000,
@@ -407,10 +416,13 @@ NResistance = {
 	RESISTANCE_DECAY_MIN = 0.01, -- min resistance decay
 	RESISTANCE_DECAY_MAX = 100.0, -- nax resistance decay
 	
-	RESISTANCE_DECAY_MODIFIER_HAS_CLAIM = 25.0, -- resistance decay modifier for our claims
+	RESISTANCE_DECAY_MODIFIER_HAS_CLAIM = 35.0, -- resistance decay modifier for our claims		-- default 25
 	RESISTANCE_DECAY_MODIFIER_FACTORS = {  -- resistance decay modifier when resistance hits a certain percentage
+		5,  -70, -- added
+		7,  -60, -- added
 		10, -50, -- below 10% it has a -50% modifier on decay
 		20, -25, -- below 20% it has a -25% modifier on decay
+		25, -10, -- added
 	},
 	
 	MIN_DAMAGE_TO_GARRISONS_MODIFIER = 0.1, -- modifier that applies to losses from resistance attack to garrisons at most can be reduced to this amount
@@ -424,7 +436,7 @@ NResistance = {
 	COMPLIANCE_GROWTH_MAX = 100.0, -- max compliance grow
 	
 	COMPLIANCE_GROWTH_IS_AT_PEACE = 10, -- compliance growth buff at peace
-	COMPLIANCE_GROWTH_HAS_CLAIM = 5, -- compliance growth buff if state has a claim
+	COMPLIANCE_GROWTH_HAS_CLAIM = 7, -- compliance growth buff if state has a claim -- default 5
 	
 	COMPLIANCE_DECAY_AT_MAX_COMPLIANCE = -0.083, -- as compliance increases, it gets a decay rate depending on its value. compliance should stabilize at some value until its growth changes
 	COMPLIANCE_DECAY_PER_EXILE_LEGITIMACY = -0.015, -- higher legitimacy will give higher decay to compliance
@@ -441,31 +453,29 @@ NResistance = {
 	
 	GARRISON_MANPOWER_MIN_DELIVERY_SPEED = 0.7,	-- Minimum base delivery speed if the chunk can't be calculated.
 	GARRISON_MANPOWER_REINFORCEMENT_SPEED = 2000.0,	-- Modifier for garrison manpower reinforcement.  This value is the maximum to be delivered which is then modified by distance
-	GARRISON_EQUIPMENT_DELIVERY_SPEED = 4.0,	-- Modifier for garrison equipment reinforcement speed
+	GARRISON_EQUIPMENT_DELIVERY_SPEED = 5.0,	-- Modifier for garrison equipment reinforcement speed		-- default 4.0
 	
 	GARRISON_STR_POW_MANPOWER = 2,	--Scales impact of manpower deficiency by raising that deficiency to the number here. Formula: efficiency = 1.0 - manpower_deficiency^GARRISON_STR_POW_MANPOWER
 	GARRISON_STR_POW_EQUIPMENT = 3,	--Scales impact of euqipment deficiency by raising that deficiency to the number here. Formula: efficiency = 1.0 - equipment_deficiency^GARRISON_STR_POW_EQUIPMENT
 
-	SUPPRESSION_NEEDED_BY_RESISTANCE_POINT = 0.75, -- Number of suppression point we need for each 1% of resistance
+	SUPPRESSION_NEEDED_BY_RESISTANCE_POINT = 0.70, 	-- default 0.75 -- Number of suppression point we need for each 1% of resistance		
 	SUPPRESSION_NEEDED_LOWER_CAP = 10.0,	-- if resistance is lower than this value then we always act as though it is at the define for the purpose of suppresion requirements
-	SUPPRESSION_NEEDED_UPPER_CAP = 50.0, -- if resistance is greater than this value then we always act as though it is at the define for the purpose of suppresion requirements
+	SUPPRESSION_NEEDED_UPPER_CAP = 50.0, 	-- if resistance is greater than this value then we always act as though it is at the define for the purpose of suppresion requirements
 	
 	GARRISON_MANPOWER_LOST_BY_ATTACK = 0.018, 	-- Ratio of manpower lost by garrison at each attack on garrison (this number will be reduced by the hardness of garrison template)
 	GARRISON_EQUIPMENT_LOST_BY_ATTACK = 0.02, 	-- Ratio of equipment lost by garrison at each attack on garrison (this number will be reduced by the hardness of garrison template)
 	MAXIMUM_GARRISON_HARDNESS_WHEN_ATTACKED = 0.90,   -- Cap to be sure that garrison will suffer lost in attack, even with a almost 100% hardness
 	
-	FOREIGN_MANPOWER_MIN_THRESHOLD = 5000,		 -- The minimum number of Manpower that AI will accept to give at once, in order to avoid many weird little transfer.
-	MANPOWER_BUFFER_TO_NOT_GIVE_MINOR = 0.3, -- To determine how much AI can give as foreign manpower, we calculate how much manpower we use, and add this buffer. The result is what we want to keep, for minor countries. So higher this number is, lower we will give Manpower.
-	MANPOWER_BUFFER_TO_NOT_GIVE_MAJOR = 0.6, -- To determine how much AI can give as foreign manpower, we calculate how much manpower we use, and add this buffer. The result is what we want to keep, for major countries. So higher this number is, lower we will give Manpower.
+	FOREIGN_MANPOWER_MIN_THRESHOLD = 2500,		-- default 5000 -- The minimum number of Manpower that AI will accept to give at once, in order to avoid many weird little transfer.	
+	MANPOWER_BUFFER_TO_NOT_GIVE_MINOR = 0.3, 	-- To determine how much AI can give as foreign manpower, we calculate how much manpower we use, and add this buffer. The result is what we want to keep, for minor countries. So higher this number is, lower we will give Manpower.
+	MANPOWER_BUFFER_TO_NOT_GIVE_MAJOR = 0.45, 	-- default 0.6 -- To determine how much AI can give as foreign manpower, we calculate how much manpower we use, and add this buffer. The result is what we want to keep, for major countries. So higher this number is, lower we will give Manpower.
 	MAX_GARRISON_RATIO_WE_AGREE_TO_SUPPORT = 3.0,	-- The part of the manpower needed by the foreign garrison, that AI will agree to support with our manpower. If negative number, AI will not take into consideration the need, and just calculate how much they can give.
-	FOREIGN_MANPOWER_AI_COOLDOWN_DAYS = 30,		 -- Number of days after an AI give us manpower before the AI accept to give more.
+	FOREIGN_MANPOWER_AI_COOLDOWN_DAYS = 21, 	-- default 30 -- Number of days after an AI give us manpower before the AI accept to give more.
 
 	INITIAL_HISTORY_RESISTANCE = 0.0,			-- resistance value for initial colony states
 	INITIAL_HISTORY_COMPLIANCE = 70.0,			-- compliance value for initial colony states
 	INITIAL_GARRISON_STRENGTH = 1,				-- garrison value for initial colony states
-	
 	STATE_COMPLIANCE_DECAY_FOR_LOST_STATES = 0.05, -- daily compliance decay for the states you lost control of
-	
 },
 
 NProduction = {
@@ -521,15 +531,15 @@ NProduction = {
 },
 
 NTechnology = {
-	MAX_SUBTECHS = 3,						-- Max number of sub technologies a technology can have.
-	BASE_RESEARCH_POINTS_SAVED = 30.0,		-- Base amount of research points a country can save per slot.
+	MAX_SUBTECHS = 5,						-- default 3 (if issues see here) -- Max number of sub technologies a technology can have.
+	BASE_RESEARCH_POINTS_SAVED = 50.0,		-- default 30.0 -- Base amount of research points a country can save per slot.
 	BASE_YEAR_AHEAD_PENALTY_FACTOR = 2,		-- Base year ahead penalty
 	BASE_TECH_COST = 85,					-- Base cost for a tech. multiplied with tech cost and ahead of time penalties
 	MAX_TECH_SHARING_BONUS = 0.5, 			-- Max technology sharing bonus that can be applied instantly
 	LICENSE_PRODUCTION_TECH_BONUS = 0.2,	-- License production tech bonus
 	
-	DEFAULT_XP_RESEARCH_COST = 100,			-- default xp cost of a research to speed up the process
-	DEFAULT_XP_RESEARCH_BONUS = 1.0,		-- default research bonus gained when xp is used to research an item
+	DEFAULT_XP_RESEARCH_COST = 75,			-- default 100 -- default xp cost of a research to speed up the process
+	DEFAULT_XP_RESEARCH_BONUS = 0.8,		-- default 1.0 -- default research bonus gained when xp is used to research an item
 	MIN_RESEARCH_SPEED = 0.1,				-- research speed can't go below this value
 },
 
@@ -537,15 +547,15 @@ NPolitics = {
 	BASE_LEADER_TRAITS = 3,				-- Base amount of leader traits.
 	MAX_RANDOM_LEADERS = 1,				-- Maximum amount random leader to have per party.
 	BASE_POLITICAL_POWER_INCREASE = 2,	-- Weekly increase of PP.
-	ARMY_LEADER_COST = 5,					-- cost for recruiting new leaders, 'this value' * number_of_existing_leaders_of_type
-	NAVY_LEADER_COST = 5,					-- cost for recruiting new leaders, 'this value' * number_of_existing_leaders_of_type
-	LEADER_TRAITS_XP_SHOW = 0.05,			-- Amount of XP a trait needs to be shown in tooltips of a leader.
-	REVOLTER_PARTY_POPULARITY = 0.4,		-- Revolter party loses 80% popularity when the civil war breaks out
+	ARMY_LEADER_COST = 4,				-- default 5-- cost for recruiting new leaders, 'this value' * number_of_existing_leaders_of_type
+	NAVY_LEADER_COST = 4,				-- default 5 -- cost for recruiting new leaders, 'this value' * number_of_existing_leaders_of_type
+	LEADER_TRAITS_XP_SHOW = 0.05,		-- Amount of XP a trait needs to be shown in tooltips of a leader.
+	REVOLTER_PARTY_POPULARITY = 0.4,	-- Revolter party loses 80% popularity when the civil war breaks out
 	MIN_OVERTHROWN_GOVERNMENT_SUPPORT_RATIO = 0.4, -- Min possible support for new government after puppeting the government
 	NUM_OCCUPATION_POLICIES = 4,		-- Number of potential occupation policies
 	DEFAULT_OCCUPATION_POLICY = 1,		-- Defaullt value for occupation policy
 	INSTANT_WIN_REVOLTER_POPULARITY_RATIO = 0.4, -- Min party popularity for instant win in one province state
-	INSTANT_WIN_POPULARITY_WIN = 50, -- New party popularity
+	INSTANT_WIN_POPULARITY_WIN = 50, 	-- New party popularity
 },
 
 NBuildings = {
@@ -554,21 +564,21 @@ NBuildings = {
 	AIRBASE_CAPACITY_MULT = 200,		-- Each level of airbase building multiplied by this, gives capacity (max operational value). Value is int. 1 for each airplane.
 	ROCKETSITE_CAPACITY_MULT = 100,		-- Each level of rocketsite building multiplied by this, gives capacity (max operational value). Value is int. 1 for each rocket.
 	NAVALBASE_REPAIR_MULT = 0.05,		-- Each level of navalbase building repairs X strength and can repair as many ships as its level
-	RADAR_RANGE_BASE = 20,				-- Radar range base, first level radar will be this + min, best radar will be this + max
-	RADAR_RANGE_MIN = 20,				-- Radar range (from state center to province center) in measure of map pixels. Exluding techs.
-	RADAR_RANGE_MAX = 200,				-- Range is interpolated between building levels 1-15.
+	RADAR_RANGE_BASE = 30,				-- default 20 	-- Radar range base, first level radar will be this + min, best radar will be this + max
+	RADAR_RANGE_MIN = 30,				-- default 20 	-- Radar range (from state center to province center) in measure of map pixels. Exluding techs.
+	RADAR_RANGE_MAX = 300,				-- default 20 	-- Range is interpolated between building levels 1-15.
 	RADAR_INTEL_EFFECT = 40,			-- Province covered by radar increases intel by 10 (where 255 is max). Province may be covered by multiple radars, then the value sums up.
-	SABOTAGE_FACTORY_DAMAGE = 100.0,		-- How much damage takes a factory building in sabotage when state is occupied. Damage is mult by (1 + resistance strength), i.e. up to 2 x base value.
-	BASE_FACTORY_REPAIR = 0.3,			-- Default repair rate before factories are taken into account
-	BASE_FACTORY_REPAIR_FACTOR = 2.0,	-- Factory speed modifier when repairing.
-	SUPPLY_PORT_LEVEL_THROUGHPUT = 3,   -- supply throughput per level of naval base
-	INFRA_TO_SUPPLY = 2,
+	SABOTAGE_FACTORY_DAMAGE = 100,		-- How much damage takes a factory building in sabotage when state is occupied. Damage is mult by (1 + resistance strength), i.e. up to 2 x base value.
+	BASE_FACTORY_REPAIR = 0.4,			-- default 0.3 	-- Default repair rate before factories are taken into account
+	BASE_FACTORY_REPAIR_FACTOR = 2.25,	-- default 2.0 	-- Factory speed modifier when repairing.
+	SUPPLY_PORT_LEVEL_THROUGHPUT = 4, 	-- default 3	-- supply throughput per level of naval base
+	INFRA_TO_SUPPLY = 3,				-- default 2
  	INFRA_TO_SUPPLY_COEFF = 1,
 	MAX_SHARED_SLOTS = 25,				-- Max slots shared by factories
 	OWNER_CHANGE_EXTRA_SHARED_SLOTS_FACTOR = 0.5, --Scale factor of extra shared slots when state owner change.
 	DESTRUCTION_COOLDOWN_IN_WAR = 30,	-- Number of days cooldown between removal of buildings in war times
 	
-	INFRASTRUCTURE_RESOURCE_BONUS = 0.1, -- multiplactive resource bonus for each level of (non damaged) infrastructure
+	INFRASTRUCTURE_RESOURCE_BONUS = 0.08, -- default 0.1 -- multiplactive resource bonus for each level of (non damaged) infrastructure
 },
 
 NDeployment = {
@@ -1126,11 +1136,11 @@ NAir = {
 NNavy = {
 	-- Convoy Priorities START
 	NAVAL_INVASION_PRIORITY = 1,									-- Default convoy priority for naval invasions
-	NAVAL_TRANSFER_PRIORITY = 1,									-- Default convoy priority for naval transports
-	SUPPLY_PRIORITY = 2,											-- Default convoy priority for supplying units via sea
-	RESOURCE_LENDLEASE_PRIORITY = 3,								-- Default convoy priority for export lend lease
-	RESOURCE_EXPORT_PRIORITY = 4,									-- Default convoy priority for export trade
-	RESOURCE_ORIGIN_PRIORITY = 5,									-- Default convoy priority for resources shipped internally
+	NAVAL_TRANSFER_PRIORITY = 2,									-- Default convoy priority for naval transports				-- default 1
+	SUPPLY_PRIORITY = 3,											-- Default convoy priority for supplying units via sea		-- default 2
+	RESOURCE_LENDLEASE_PRIORITY = 4,								-- Default convoy priority for export lend lease			-- default 3
+	RESOURCE_EXPORT_PRIORITY = 5,									-- Default convoy priority for export trade					-- default 4
+	RESOURCE_ORIGIN_PRIORITY = 6,									-- Default convoy priority for resources shipped internally -- default 5
 	-- Convoy Priorities END
 	
 	ADMIRAL_TASKFORCE_CAP = 10,										-- admirals will start getting penalties after this amount of taskforces
@@ -1201,14 +1211,14 @@ NNavy = {
 	LEADER_EXPERIENCE_SCALE = 1.0,
 	BATTLE_NAME_VP_FACTOR = 100,									-- Name is given by ((VP value) * BATTLE_NAME_VP_FACTOR) / (Distance VP -> battle)
 	BATTLE_NAME_VP_CUTOFF = 1.0,									-- If best score of above calculation is below this, name will be that of region.
-	AMPHIBIOUS_LANDING_PENALTY = -0.7,								-- amphibious landing penalty
+	AMPHIBIOUS_LANDING_PENALTY = -0.55,								-- amphibious landing penalty									-- default -0.7
 	AMPHIBIOUS_INVADE_SPEED_BASE = 0.5, 							-- every hour movement progress on amphibious invasion
-	AMPHIBIOUS_INVADE_MOVEMENT_COST = 24.0, 						-- total progress cost of movement while amphibious invading
+	AMPHIBIOUS_INVADE_MOVEMENT_COST = 22.0, 						-- total progress cost of movement while amphibious invading	-- default 24.0
 	AMPHIBIOUS_INVADE_ATTACK_LOW = 0.2, 							-- low and high cap of attack modifier scale. Scale interpolated by invasion progress.
 	AMPHIBIOUS_INVADE_ATTACK_HIGH = 1.0,
 	AMPHIBIOUS_INVADE_DEFEND_LOW = 1.5, 							-- low and high cap of defend modifier scale. Scale interpolated by invasion progress.
 	AMPHIBIOUS_INVADE_DEFEND_HIGH = 1.0,
-	AMPHIBIOUS_INVADE_LANDING_PENALTY_DECREASE = 3.5, 				-- scale of bonus that decreases "amphibious penalty" during combat, relative to invading transporter tech.
+	AMPHIBIOUS_INVADE_LANDING_PENALTY_DECREASE = 4.0, 				-- scale of bonus that decreases "amphibious penalty" during combat, relative to invading transporter tech.		-- default 3.5
 	BASE_CARRIER_SORTIE_EFFICIENCY = 0.5,							-- factor of planes that can sortie by default from a carrier
 	CONVOY_ATTACK_BASE_FACTOR = 0.15,                               -- base % of convoys that get intercepted
 	NAVAL_SPEED_MODIFIER = 0.1,	                    				-- basic speed control
@@ -1269,17 +1279,17 @@ NNavy = {
 	},
 	
 	HOLD_MISSION_MOVEMENT_COST = 1.0,								-- ships on hold cost this much fuel while moving
-	ON_BASE_FUEL_COST = 0.0,										-- ships that waits at naval bases cost this ratio
+	ON_BASE_FUEL_COST = 0.02,										-- ships that waits at naval bases cost this ratio		-- default 0.00
 	IN_COMBAT_FUEL_COST = 2.0,										-- ships in combat will get this ratio for fuel cost
 	TRAINING_FUEL_COST_FOR_ESCORT_SHIPS = 0.15,						-- ships that are on training mission but not training (ie they are at max xp and training will cancel at max xp) will consume this ratio of fuel
-	
+
 	MAX_FUEL_FLOW_MULT = 2.0, -- max fuel flow ratio for ships, which will be multiplied by supply
 	FUEL_COST_MULT = 0.10, -- fuel multiplier for all naval missions
 	
 	OUT_OF_FUEL_SPEED_FACTOR = -0.75,
 	OUT_OF_FUEL_RANGE_FACTOR = -0.75,
 	OUT_OF_FUEL_ATTACK_FACTOR = -0.5,
-	OUT_OF_FUEL_TORPEDO_FACTOR = -0.8,
+	OUT_OF_FUEL_TORPEDO_FACTOR = -0.7,		-- default -0.8
 
 	MISSION_SPREADS = {  -- mission spreads in the case a ship join combat, which is calculated for number of ships that will be in combat. 1 means no ship will be at start
 		0.0, -- HOLD 
@@ -1340,8 +1350,8 @@ NNavy = {
 		0.25, -- STRIKE FORCE 
 		0.2, -- CONVOY RAIDING
 		0.2, -- CONVOY ESCORT
-		0.2, -- MINES PLANTING	
-		0.2, -- MINES SWEEPING	
+		0.3, -- MINES PLANTING		-- default 0.2
+		0.2, -- MINES SWEEPING		
 		0.2, -- TRAIN
 		0.3, -- RESERVE_FLEET
 		0.2, -- NAVAL_INVASION_SUPPORT
@@ -1383,12 +1393,12 @@ NNavy = {
 	SUPREMACY_PER_SHIP_PER_IC = 0.005,
 	SUPREMACY_PER_SHIP_BASE = 100.0,
 
-	NAVAL_MINES_IN_REGION_MAX = 1000.0,								-- Max number of mines that can be layed by the ships. The value should be hidden from the user, as we present % so it's an abstract value that should be used for balancing.
-	NAVAL_MINES_PLANTING_SPEED_MULT = 0.01,						-- Value used to overall balance of the speed of planting naval mines
+	NAVAL_MINES_IN_REGION_MAX = 800.0,								-- Max number of mines that can be layed by the ships. The value should be hidden from the user, as we present % so it's an abstract value that should be used for balancing.	-- default 1000
+	NAVAL_MINES_PLANTING_SPEED_MULT = 0.01,							-- Value used to overall balance of the speed of planting naval mines
 	NAVAL_MINES_SWEEPING_SPEED_MULT = 0.009,						-- Value used to overall balance of the speed of sweeping naval mines
 	NAVAL_MINES_DECAY_AT_PEACE_TIME = 0.25,							-- How fast mines are decaying in peace time. Planting mines in peace time may be exploitable, so it's blocked atm. That's why after war we should decay them too.
 	NAVAL_MINES_SWEEPERS_REDUCTION_ON_PENALTY_EFFECT = 3.3,			-- How much is the task force's sweeping attribute reducing the penalty effect.
-	NAVAL_MINES_INTEL_DIFF_FACTOR = 0.1,					-- Better our decryption over enemy encryption will reduce the penalties from the enemy mines in the region. This value is a factor to be used for balancing.
+	NAVAL_MINES_INTEL_DIFF_FACTOR = 0.1,							-- Better our decryption over enemy encryption will reduce the penalties from the enemy mines in the region. This value is a factor to be used for balancing.
 	NAVAL_MINES_NAVAL_SUPREMACY_FACTOR = 1.0,						-- Factor for max amount of mines increasing naval supremacy
 	
 	ATTRITION_WHILE_MOVING_FACTOR = 1.5,							-- attrition multiplier while moving & doing missions
@@ -1785,7 +1795,7 @@ NAI = {
 	PLAN_FRONT_SECTION_MIN_LENGTH = 10,			-- When two front sections together are this short they will be merged for the AI
 	PLAN_MIN_SIZE_FOR_FALLBACK = 50,			-- A country with less provinces than this will not draw fallback plans, but rather station their troops along the front
 	SEND_VOLUNTEER_EVAL_BASE_DISTANCE = 175.0,  -- How far away it will evaluate sending volunteers if not a major power
-	SEND_VOLUNTEER_EVAL_MAJOER_POWER = 1.0, 	-- How willing major powers are to send volunteers.
+	SEND_VOLUNTEER_EVAL_MAJOER_POWER = 1.0, 	-- How willing major powers are to send volunteers.	-- missspelling??????
 	SEND_VOLUNTEER_EVAL_CONTAINMENT_FACTOR = 0.1, -- How much AI containment factors into its evaluation of sending volunteers.
 	GIVE_STATE_CONTROL_MIN_CONTROLLED = 1,		-- AI needs to control more than this number of states before considering giving any away
 	GIVE_STATE_CONTROL_MIN_CONTROL_DIFF = 2,	-- The difference in number of controlled states compared to war participation needs to be bigger than this for the AI to consider giving a state to a country
@@ -2026,7 +2036,7 @@ NAI = {
 	REGION_CONVOY_DANGER_DAILY_DECAY = 1,				-- When convoys are sunk it generates threat in the region which the AI uses to prio nalval missions
 
 	PRODUCTION_LINE_SWITCH_SURPLUS_NEEDED_MODIFIER = 0.2,	-- Is modified by efficency modifiers.
-	PLAN_ACTIVATION_MAJOR_WEIGHT_FACTOR = 5.0,			-- AI countries will hold on activating plans if stronger countries have plans in the same location. Majors count extra (value of 1 will negate this)
+	PLAN_ACTIVATION_MAJOR_WEIGHT_FACTOR = 3.0,			-- AI countries will hold on activating plans if stronger countries have plans in the same location. Majors count extra (value of 1 will negate this)			-- default 5.0
 	PLAN_ACTIVATION_PLAYER_WEIGHT_FACTOR = 50.0,		-- AI countries will hold on activating plans if player controlled countries have plans in the same location. Majors count extra (value of 1 will negate this)
 	AREA_DEFENSE_BASE_IMPORTANCE = 3,					-- Area defense order base importance value (used for determining order of troop selections)
 	AREA_DEFENSE_CIVIL_WAR_IMPORTANCE = 10000,			-- Area defense order importance value when a country is in a civil war as target or revolter.
@@ -2460,8 +2470,8 @@ NAI = {
 NFocus = {
 	FOCUS_POINT_DAYS = 7,						-- Each point takes a week
 	FOCUS_PROGRESS_PEACE = 1,					-- Progress during peace
-	FOCUS_PROGRESS_WAR = 1,					-- Progress during war
-	MAX_SAVED_FOCUS_PROGRESS = 10,				-- This much progress can be saved while not having a focus selected
+	FOCUS_PROGRESS_WAR = 1,						-- Progress during war
+	MAX_SAVED_FOCUS_PROGRESS = 21,				-- This much progress can be saved while not having a focus selected	-- default 10
 },
 
 NOperatives = {
