@@ -1,14 +1,10 @@
 SNY_remove_hopes_of_democracy = {
-###Not on map###
+    ###Not on map###
     SNY_begin_the_process = {
-        icon = GFX_decision_generic_speech
+        icon = GFX_
 
         available = {
             original_tag = SNY
-            OR = {
-                has_completed_focus = SNY_the_march_on_albany
-                has_completed_focus = SNY_the_armys_coup
-            }
         }
         visible = {
             NOT = {
@@ -30,13 +26,18 @@ SNY_remove_hopes_of_democracy = {
             hidden_effect = {
                 set_country_flag = SNY_getting_rid_of_democracy
                 every_owned_state = {
-                    set_state_flag = SNY_high_democracy_support
+                    limit = {
+                        is_core_of = SNY
+                    }
+                    add_dynamic_modifier = {
+                        modifier = SNY_high_democracy_support
+                    }
                 }
             }
         }
     }
     SNY_silence_outspoken_congressmen = {
-        icon = GFX_decision_generic_police_action
+        icon = GFX_
 
         available = {
             original_tag = SNY
@@ -58,7 +59,7 @@ SNY_remove_hopes_of_democracy = {
             add_stability = -0.05
         }
         modifier = { #Stability is earned back all the way
-            stability_weekly = 0.007
+            stability_weekly = 0.005
         }
         remove_effect = {
             add_popularity = {
@@ -72,85 +73,24 @@ SNY_remove_hopes_of_democracy = {
         }
     }
     SNY_crush_hopes_of_democracy = {
-        icon = GFX_decision_generic_military
+        icon = GFX_
 
-        activation = {
-            has_country_flag = SNY_getting_rid_of_democracy
-        }
-        is_good = no
         available = {
-            hidden_trigger = {
-                always = no
+            original_tag = SNY
+            every_owned_state = {
+                OR = {
+                    NOT = {
+                        has_dynamic_modifier = {
+                            modifier = SNY_high_democracy_support
+                        }
+                    }
+                    NOT = {
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                        has_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                    }
+                }
             }
-            # original_tag = SNY
-            # custom_trigger_tooltip = {
-            #     tooltip = SNY_no_states_with_high_support_for_democracy_tt
-            #     every_owned_state = {
-            #         NOT = {
-            #             has_state_flag = SNY_high_democracy_support
-            #         }
-            #     }
-            # }
-            # count_triggers = {
-            #     amount = 3
-            #     291 = {
-            #         has_state_flag = SNY_low_democracy_support
-            #     }
-            #     278 = {
-            #         has_state_flag = SNY_low_democracy_support
-            #     }
-            #     279 = {
-            #         has_state_flag = SNY_low_democracy_support
-            #     }
-            #     277 = {
-            #         has_state_flag = SNY_low_democracy_support
-            #     }
-            #     622 = {
-            #         has_state_flag = SNY_low_democracy_support
-            #     }
-            #     281 = {
-            #         has_state_flag = SNY_low_democracy_support
-            #     }
-            #     280 = {
-            #         has_state_flag = SNY_low_democracy_support
-            #     }
-            #     282 = {
-            #         has_state_flag = SNY_low_democracy_support
-            #     }
-            #     100 = {
-            #         has_state_flag = SNY_low_democracy_support
-            #     }
-            #     283 = {
-            #         has_state_flag = SNY_low_democracy_support
-            #     }
-            #     414 = {
-            #         has_state_flag = SNY_low_democracy_support
-            #     }
-            #     276 = {
-            #         has_state_flag = SNY_low_democracy_support
-            #     }
-            #     274 = {
-            #         has_state_flag = SNY_low_democracy_support
-            #     }
-            #     275 = {
-            #         has_state_flag = SNY_low_democracy_support
-            #     }
-            #     250 = {
-            #         has_state_flag = SNY_low_democracy_support
-            #     }
-            #     29 = {
-            #         has_state_flag = SNY_low_democracy_support
-            #     }
-            #     273 = {
-            #         has_state_flag = SNY_low_democracy_support
-            #     }
-            #     272 = {
-            #         has_state_flag = SNY_low_democracy_support
-            #     }
-            #     790 = {
-            #         has_state_flag = SNY_low_democracy_support
-            #     }
-            # }
         }
         visible = {
             hidden_trigger = {
@@ -159,250 +99,32 @@ SNY_remove_hopes_of_democracy = {
             NOT = {
                 has_completed_focus = SNY_charles_poletti_makes_a_speech
             }
-        }
-        cancel_if_not_visible = yes
-        fire_only_once = yes
-        days_mission_timeout = 140
-        timeout_effect = {
-            remove_ideas = SNY_failing_democracy
-            add_popularity = {
-                ideology = democratic
-                popularity = -0.2
-            }
-            add_popularity = {
-                ideology = progressivism
-                popularity = -0.2
-            }
-            custom_effect_tooltip = SNY_democratic_civil_war_tt
-            hidden_effect = {
-                create_dynamic_country = {
-                    original_tag = SNY
-                    set_cosmetic_tag = DEMOCRATIC_NEW_YORK
-                    # every_state = { #Why won't you work!????
-                    #     limit = {
-                    #         has_state_flag = SNY_high_democracy_support
-                    #     }
-                    #     every_country = {
-                    #         limit = {
-                    #             original_tag = SNY
-                    #             has_cometic_tag = DEMOCRATIC_NEW_YORK
-                    #         }
-                    #         transfer_state = PREV
-                    #     }
-                    # }
-                    every_state = {
-                        limit = {
-                            is_core_of = SNY
-                        }
-                        clr_state_flag = SNY_medium_democracy_support
-                    }
-                    transfer_state = 291
-                    set_capital = 291
-                    if = {
-                        limit = {
-                            278 = {
-                                has_state_flag = SNY_high_democracy_support
-                            }
-                        }
-                        transfer_state = 278
-                    }
-                    if = {
-                        limit = {
-                            279 = {
-                                has_state_flag = SNY_high_democracy_support
-                            }
-                        }
-                        transfer_state = 279
-                    }
-                    if = {
-                        limit = {
-                            277 = {
-                                has_state_flag = SNY_high_democracy_support
-                            }
-                        }
-                        transfer_state = 277
-                    }
-                    if = {
-                        limit = {
-                            622 = {
-                                has_state_flag = SNY_high_democracy_support
-                            }
-                        }
-                        transfer_state = 622
-                    }
-                    if = {
-                        limit = {
-                            281 = {
-                                has_state_flag = SNY_high_democracy_support
-                            }
-                        }
-                        transfer_state = 281
-                    }
-                    if = {
-                        limit = {
-                            280 = {
-                                has_state_flag = SNY_high_democracy_support
-                            }
-                        }
-                        transfer_state = 280
-                    }
-                    if = {
-                        limit = {
-                            282 = {
-                                has_state_flag = SNY_high_democracy_support
-                            }
-                        }
-                        transfer_state = 282
-                    }
-                    if = {
-                        limit = {
-                            100 = {
-                                has_state_flag = SNY_high_democracy_support
-                            }
-                        }
-                        transfer_state = 100
-                    }
-                    if = {
-                        limit = {
-                            283 = {
-                                has_state_flag = SNY_high_democracy_support
-                            }
-                        }
-                        transfer_state = 283
-                    }
-                    if = {
-                        limit = {
-                            414 = {
-                                has_state_flag = SNY_high_democracy_support
-                            }
-                        }
-                        transfer_state = 414
-                    }
-                    if = {
-                        limit = {
-                            276 = {
-                                has_state_flag = SNY_high_democracy_support
-                            }
-                        }
-                        transfer_state = 276
-                    }
-                    if = {
-                        limit = {
-                            274 = {
-                                has_state_flag = SNY_high_democracy_support
-                            }
-                        }
-                        transfer_state = 274
-                    }
-                    if = {
-                        limit = {
-                            275 = {
-                                has_state_flag = SNY_high_democracy_support
-                            }
-                        }
-                        transfer_state = 275
-                    }
-                    if = {
-                        limit = {
-                            250 = {
-                                has_state_flag = SNY_high_democracy_support
-                            }
-                        }
-                        transfer_state = 250
-                    }
-                    if = {
-                        limit = {
-                            29 = {
-                                has_state_flag = SNY_high_democracy_support
-                            }
-                        }
-                        transfer_state = 29
-                    }
-                    if = {
-                        limit = {
-                            273 = {
-                                has_state_flag = SNY_high_democracy_support
-                            }
-                        }
-                        transfer_state = 273
-                    }
-                    if = {
-                        limit = {
-                            272 = {
-                                has_state_flag = SNY_high_democracy_support
-                            }
-                        }
-                        transfer_state = 272
-                    }
-                    if = {
-                        limit = {
-                            790 = {
-                                has_state_flag = SNY_high_democracy_support
-                            }
-                        }
-                        transfer_state = 790
-                    }
-                    # every_owned_state = { #This won't work either
-                    #     create_unit = {
-                    #         division = "name = \"Volunteer Division\" division_template = \"Volunteer Division\" start_experience_factor = 0.2 start_equipment_factor = 0.8"
-                    #         owner = THIS
-                    #     }
-                    #     create_unit = {
-                    #         division = "name = \"Volunteer Division\" division_template = \"Volunteer Division\" start_experience_factor = 0.2 start_equipment_factor = 0.8"
-                    #         owner = THIS
-                    #     }
-                    #     create_unit = {
-                    #         division = "name = \"Volunteer Division\" division_template = \"Volunteer Division\" start_experience_factor = 0.2 start_equipment_factor = 0.8"
-                    #         owner = THIS
-                    #     }
-                    #     clr_state_flag = SNY_high_democracy_support
-                    # }
-                    load_oob = "DNY_civil_war"
-                    create_country_leader = {
-	
-                        name = "Charles Poletti"
-                        picture = "gfx//leaders//SNY//leader_Charles_Poletti.dds"
-                        expire = "1965.1.1"
-                        ideology = progressivism_ideology
-                        traits = {
-                            experienced_lawyer
-                        }
-                    }
-                    set_popularities = {
-                        democratic = 50
-                        progressivism = 50
-                    }
-                    set_politics = {
-                        ruling_party = progressivism
-                        elections_allowed = no
-                        last_election = "1936.1.1"
-                        election_frequency = 48
-                    }
-                    country_event = {
-                        id = new_york.43
-                        days = 10
-                        random = 0
-                    }
-                    SNY = {
-                        country_event = {
-                            id = new_york.44
-                            days = 12
-                            random = 0
-                        }
+            any_owned_state = {
+                NOT = {
+                    has_dynamic_modifier = {
+                        modifier = SNY_high_democracy_support
                     }
                 }
             }
         }
+        cancel_if_not_visible = yes
+        fire_only_once = yes
+        cost = 25
+        complete_effect = {
+            remove_ideas = SNY_failing_democracy
+        }
     }
 ###On map###
     SNY_291_removing_democracy = {
-        icon = GFX_unshakable_liberty
+        icon = GFX_
 
         available = {
             original_tag = SNY
-            custom_trigger_tooltip = {
-                tooltip = SNY_democracy_is_too_strong_there_tt
-                always = no
+            291 = {
+                OR = {
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
             }
         }
         visible = {
@@ -415,9 +137,9 @@ SNY_remove_hopes_of_democracy = {
             owns_state = 291
             291 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
-                    has_state_flag = SNY_low_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
             }
         }
@@ -428,40 +150,49 @@ SNY_remove_hopes_of_democracy = {
         }
         cancel_if_not_visible = yes
         fire_only_once = no
+        cost = 10
+        ai_will_do = {
+            base = 50
+            modifier = {
+                factor = 2
+                has_political_power > 100
+            }
+        }
         days_remove = 35
+        remove_effect = {
+            if = {
+                limit = {
+                    291 = {
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    }
+                }
+                291 = {
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
+                }
+                add_political_power = 25
+            } else_if = {
+                limit = {
+                    291 = {
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    }
+                }
+                291 = {
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                }
+            }
+        }
     }
     SNY_278_removing_democracy = {
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy1
-            trigger = {
-                278 = {
-                    has_state_flag = SNY_high_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy2
-            trigger = {
-                278 = {
-                    has_state_flag = SNY_medium_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy3
-            trigger = {
-                278 = {
-                    has_state_flag = SNY_low_democracy_support
-                }
-            }
-        }
+        icon = GFX_
 
         available = {
             original_tag = SNY
             278 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
@@ -475,9 +206,9 @@ SNY_remove_hopes_of_democracy = {
             owns_state = 278
             278 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
-                    has_state_flag = SNY_low_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
             }
         }
@@ -488,7 +219,7 @@ SNY_remove_hopes_of_democracy = {
         }
         cancel_if_not_visible = yes
         fire_only_once = no
-        cost = 25
+        cost = 10
         ai_will_do = {
             base = 50
             modifier = {
@@ -501,59 +232,36 @@ SNY_remove_hopes_of_democracy = {
             if = {
                 limit = {
                     278 = {
-                        has_state_flag = SNY_medium_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                     }
                 }
                 278 = {
-                    clr_state_flag =  SNY_medium_democracy_support
-                    set_state_flag =  SNY_low_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
-                add_political_power = 5
+                add_political_power = 25
             } else_if = {
                 limit = {
                     278 = {
-                        has_state_flag = SNY_high_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
                     }
                 }
                 278 = {
-                    clr_state_flag =  SNY_high_democracy_support
-                    set_state_flag =  SNY_medium_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
     }
     SNY_279_removing_democracy = {
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy1
-            trigger = {
-                279 = {
-                    has_state_flag = SNY_high_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy2
-            trigger = {
-                279 = {
-                    has_state_flag = SNY_medium_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy3
-            trigger = {
-                279 = {
-                    has_state_flag = SNY_low_democracy_support
-                }
-            }
-        }
+        icon = GFX_
 
         available = {
             original_tag = SNY
             279 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
@@ -567,9 +275,9 @@ SNY_remove_hopes_of_democracy = {
             owns_state = 279
             279 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
-                    has_state_flag = SNY_low_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
             }
         }
@@ -580,7 +288,7 @@ SNY_remove_hopes_of_democracy = {
         }
         cancel_if_not_visible = yes
         fire_only_once = no
-        cost = 25
+        cost = 10
         ai_will_do = {
             base = 50
             modifier = {
@@ -593,59 +301,36 @@ SNY_remove_hopes_of_democracy = {
             if = {
                 limit = {
                     279 = {
-                        has_state_flag = SNY_medium_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                     }
                 }
                 279 = {
-                    clr_state_flag =  SNY_medium_democracy_support
-                    set_state_flag =  SNY_low_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
-                add_political_power = 5
+                add_political_power = 25
             } else_if = {
                 limit = {
                     279 = {
-                        has_state_flag = SNY_high_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
                     }
                 }
                 279 = {
-                    clr_state_flag =  SNY_high_democracy_support
-                    set_state_flag =  SNY_medium_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
     }
     SNY_277_removing_democracy = {
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy1
-            trigger = {
-                277 = {
-                    has_state_flag = SNY_high_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy2
-            trigger = {
-                277 = {
-                    has_state_flag = SNY_medium_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy3
-            trigger = {
-                277 = {
-                    has_state_flag = SNY_low_democracy_support
-                }
-            }
-        }
+        icon = GFX_
 
         available = {
             original_tag = SNY
             277 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
@@ -659,9 +344,9 @@ SNY_remove_hopes_of_democracy = {
             owns_state = 277
             277 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
-                    has_state_flag = SNY_low_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
             }
         }
@@ -672,7 +357,7 @@ SNY_remove_hopes_of_democracy = {
         }
         cancel_if_not_visible = yes
         fire_only_once = no
-        cost = 25
+        cost = 10
         ai_will_do = {
             base = 50
             modifier = {
@@ -685,59 +370,36 @@ SNY_remove_hopes_of_democracy = {
             if = {
                 limit = {
                     277 = {
-                        has_state_flag = SNY_medium_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                     }
                 }
                 277 = {
-                    clr_state_flag =  SNY_medium_democracy_support
-                    set_state_flag =  SNY_low_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
-                add_political_power = 5
+                add_political_power = 25
             } else_if = {
                 limit = {
                     277 = {
-                        has_state_flag = SNY_high_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
                     }
                 }
                 277 = {
-                    clr_state_flag =  SNY_high_democracy_support
-                    set_state_flag =  SNY_medium_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
     }
     SNY_622_removing_democracy = {
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy1
-            trigger = {
-                622 = {
-                    has_state_flag = SNY_high_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy2
-            trigger = {
-                622 = {
-                    has_state_flag = SNY_medium_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy3
-            trigger = {
-                622 = {
-                    has_state_flag = SNY_low_democracy_support
-                }
-            }
-        }
+        icon = GFX_
 
         available = {
             original_tag = SNY
             622 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
@@ -751,9 +413,9 @@ SNY_remove_hopes_of_democracy = {
             owns_state = 622
             622 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
-                    has_state_flag = SNY_low_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
             }
         }
@@ -764,7 +426,7 @@ SNY_remove_hopes_of_democracy = {
         }
         cancel_if_not_visible = yes
         fire_only_once = no
-        cost = 25
+        cost = 10
         ai_will_do = {
             base = 50
             modifier = {
@@ -777,59 +439,36 @@ SNY_remove_hopes_of_democracy = {
             if = {
                 limit = {
                     622 = {
-                        has_state_flag = SNY_medium_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                     }
                 }
                 622 = {
-                    clr_state_flag =  SNY_medium_democracy_support
-                    set_state_flag =  SNY_low_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
-                add_political_power = 5
+                add_political_power = 25
             } else_if = {
                 limit = {
                     622 = {
-                        has_state_flag = SNY_high_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
                     }
                 }
                 622 = {
-                    clr_state_flag =  SNY_high_democracy_support
-                    set_state_flag =  SNY_medium_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
     }
     SNY_281_removing_democracy = {
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy1
-            trigger = {
-                281 = {
-                    has_state_flag = SNY_high_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy2
-            trigger = {
-                281 = {
-                    has_state_flag = SNY_medium_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy3
-            trigger = {
-                281 = {
-                    has_state_flag = SNY_low_democracy_support
-                }
-            }
-        }
+        icon = GFX_
 
         available = {
             original_tag = SNY
             281 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
@@ -843,9 +482,9 @@ SNY_remove_hopes_of_democracy = {
             owns_state = 281
             281 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
-                    has_state_flag = SNY_low_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
             }
         }
@@ -856,7 +495,7 @@ SNY_remove_hopes_of_democracy = {
         }
         cancel_if_not_visible = yes
         fire_only_once = no
-        cost = 25
+        cost = 10
         ai_will_do = {
             base = 50
             modifier = {
@@ -869,59 +508,36 @@ SNY_remove_hopes_of_democracy = {
             if = {
                 limit = {
                     281 = {
-                        has_state_flag = SNY_medium_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                     }
                 }
                 281 = {
-                    clr_state_flag =  SNY_medium_democracy_support
-                    set_state_flag =  SNY_low_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
-                add_political_power = 5
+                add_political_power = 25
             } else_if = {
                 limit = {
                     281 = {
-                        has_state_flag = SNY_high_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
                     }
                 }
                 281 = {
-                    clr_state_flag =  SNY_high_democracy_support
-                    set_state_flag =  SNY_medium_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
     }
     SNY_280_removing_democracy = {
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy1
-            trigger = {
-                280 = {
-                    has_state_flag = SNY_high_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy2
-            trigger = {
-                280 = {
-                    has_state_flag = SNY_medium_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy3
-            trigger = {
-                280 = {
-                    has_state_flag = SNY_low_democracy_support
-                }
-            }
-        }
+        icon = GFX_
 
         available = {
             original_tag = SNY
             280 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
@@ -935,9 +551,9 @@ SNY_remove_hopes_of_democracy = {
             owns_state = 280
             280 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
-                    has_state_flag = SNY_low_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
             }
         }
@@ -948,7 +564,7 @@ SNY_remove_hopes_of_democracy = {
         }
         cancel_if_not_visible = yes
         fire_only_once = no
-        cost = 25
+        cost = 10
         ai_will_do = {
             base = 50
             modifier = {
@@ -961,59 +577,36 @@ SNY_remove_hopes_of_democracy = {
             if = {
                 limit = {
                     280 = {
-                        has_state_flag = SNY_medium_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                     }
                 }
                 280 = {
-                    clr_state_flag =  SNY_medium_democracy_support
-                    set_state_flag =  SNY_low_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
-                add_political_power = 5
+                add_political_power = 25
             } else_if = {
                 limit = {
                     280 = {
-                        has_state_flag = SNY_high_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
                     }
                 }
                 280 = {
-                    clr_state_flag =  SNY_high_democracy_support
-                    set_state_flag =  SNY_medium_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
     }
     SNY_282_removing_democracy = {
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy1
-            trigger = {
-                282 = {
-                    has_state_flag = SNY_high_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy2
-            trigger = {
-                282 = {
-                    has_state_flag = SNY_medium_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy3
-            trigger = {
-                282 = {
-                    has_state_flag = SNY_low_democracy_support
-                }
-            }
-        }
+        icon = GFX_
 
         available = {
             original_tag = SNY
             282 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
@@ -1027,9 +620,9 @@ SNY_remove_hopes_of_democracy = {
             owns_state = 282
             282 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
-                    has_state_flag = SNY_low_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
             }
         }
@@ -1040,7 +633,7 @@ SNY_remove_hopes_of_democracy = {
         }
         cancel_if_not_visible = yes
         fire_only_once = no
-        cost = 25
+        cost = 10
         ai_will_do = {
             base = 50
             modifier = {
@@ -1053,59 +646,36 @@ SNY_remove_hopes_of_democracy = {
             if = {
                 limit = {
                     282 = {
-                        has_state_flag = SNY_medium_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                     }
                 }
                 282 = {
-                    clr_state_flag =  SNY_medium_democracy_support
-                    set_state_flag =  SNY_low_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
-                add_political_power = 5
+                add_political_power = 25
             } else_if = {
                 limit = {
                     282 = {
-                        has_state_flag = SNY_high_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
                     }
                 }
                 282 = {
-                    clr_state_flag =  SNY_high_democracy_support
-                    set_state_flag =  SNY_medium_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
     }
     SNY_100_removing_democracy = {
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy1
-            trigger = {
-                100 = {
-                    has_state_flag = SNY_high_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy2
-            trigger = {
-                100 = {
-                    has_state_flag = SNY_medium_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy3
-            trigger = {
-                100 = {
-                    has_state_flag = SNY_low_democracy_support
-                }
-            }
-        }
+        icon = GFX_
 
         available = {
             original_tag = SNY
             100 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
@@ -1119,9 +689,9 @@ SNY_remove_hopes_of_democracy = {
             owns_state = 100
             100 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
-                    has_state_flag = SNY_low_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
             }
         }
@@ -1132,7 +702,7 @@ SNY_remove_hopes_of_democracy = {
         }
         cancel_if_not_visible = yes
         fire_only_once = no
-        cost = 25
+        cost = 10
         ai_will_do = {
             base = 50
             modifier = {
@@ -1145,59 +715,36 @@ SNY_remove_hopes_of_democracy = {
             if = {
                 limit = {
                     100 = {
-                        has_state_flag = SNY_medium_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                     }
                 }
                 100 = {
-                    clr_state_flag =  SNY_medium_democracy_support
-                    set_state_flag =  SNY_low_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
-                add_political_power = 5
+                add_political_power = 25
             } else_if = {
                 limit = {
                     100 = {
-                        has_state_flag = SNY_high_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
                     }
                 }
                 100 = {
-                    clr_state_flag =  SNY_high_democracy_support
-                    set_state_flag =  SNY_medium_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
     }
     SNY_283_removing_democracy = {
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy1
-            trigger = {
-                283 = {
-                    has_state_flag = SNY_high_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy2
-            trigger = {
-                283 = {
-                    has_state_flag = SNY_medium_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy3
-            trigger = {
-                283 = {
-                    has_state_flag = SNY_low_democracy_support
-                }
-            }
-        }
+        icon = GFX_
 
         available = {
             original_tag = SNY
             283 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
@@ -1211,9 +758,9 @@ SNY_remove_hopes_of_democracy = {
             owns_state = 283
             283 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
-                    has_state_flag = SNY_low_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
             }
         }
@@ -1224,7 +771,7 @@ SNY_remove_hopes_of_democracy = {
         }
         cancel_if_not_visible = yes
         fire_only_once = no
-        cost = 25
+        cost = 10
         ai_will_do = {
             base = 50
             modifier = {
@@ -1237,59 +784,36 @@ SNY_remove_hopes_of_democracy = {
             if = {
                 limit = {
                     283 = {
-                        has_state_flag = SNY_medium_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                     }
                 }
                 283 = {
-                    clr_state_flag =  SNY_medium_democracy_support
-                    set_state_flag =  SNY_low_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
-                add_political_power = 5
+                add_political_power = 25
             } else_if = {
                 limit = {
                     283 = {
-                        has_state_flag = SNY_high_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
                     }
                 }
                 283 = {
-                    clr_state_flag =  SNY_high_democracy_support
-                    set_state_flag =  SNY_medium_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
     }
     SNY_414_removing_democracy = {
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy1
-            trigger = {
-                414 = {
-                    has_state_flag = SNY_high_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy2
-            trigger = {
-                414 = {
-                    has_state_flag = SNY_medium_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy3
-            trigger = {
-                414 = {
-                    has_state_flag = SNY_low_democracy_support
-                }
-            }
-        }
+        icon = GFX_
 
         available = {
             original_tag = SNY
             414 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
@@ -1303,9 +827,9 @@ SNY_remove_hopes_of_democracy = {
             owns_state = 414
             414 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
-                    has_state_flag = SNY_low_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
             }
         }
@@ -1316,7 +840,7 @@ SNY_remove_hopes_of_democracy = {
         }
         cancel_if_not_visible = yes
         fire_only_once = no
-        cost = 25
+        cost = 10
         ai_will_do = {
             base = 50
             modifier = {
@@ -1329,59 +853,36 @@ SNY_remove_hopes_of_democracy = {
             if = {
                 limit = {
                     414 = {
-                        has_state_flag = SNY_medium_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                     }
                 }
                 414 = {
-                    clr_state_flag =  SNY_medium_democracy_support
-                    set_state_flag =  SNY_low_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
-                add_political_power = 5
+                add_political_power = 25
             } else_if = {
                 limit = {
                     414 = {
-                        has_state_flag = SNY_high_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
                     }
                 }
                 414 = {
-                    clr_state_flag =  SNY_high_democracy_support
-                    set_state_flag =  SNY_medium_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
     }
     SNY_276_removing_democracy = {
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy1
-            trigger = {
-                276 = {
-                    has_state_flag = SNY_high_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy2
-            trigger = {
-                276 = {
-                    has_state_flag = SNY_medium_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy3
-            trigger = {
-                276 = {
-                    has_state_flag = SNY_low_democracy_support
-                }
-            }
-        }
+        icon = GFX_
 
         available = {
             original_tag = SNY
             276 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
@@ -1395,9 +896,9 @@ SNY_remove_hopes_of_democracy = {
             owns_state = 276
             276 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
-                    has_state_flag = SNY_low_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
             }
         }
@@ -1408,7 +909,7 @@ SNY_remove_hopes_of_democracy = {
         }
         cancel_if_not_visible = yes
         fire_only_once = no
-        cost = 25
+        cost = 10
         ai_will_do = {
             base = 50
             modifier = {
@@ -1421,59 +922,36 @@ SNY_remove_hopes_of_democracy = {
             if = {
                 limit = {
                     276 = {
-                        has_state_flag = SNY_medium_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                     }
                 }
                 276 = {
-                    clr_state_flag =  SNY_medium_democracy_support
-                    set_state_flag =  SNY_low_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
-                add_political_power = 5
+                add_political_power = 25
             } else_if = {
                 limit = {
                     276 = {
-                        has_state_flag = SNY_high_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
                     }
                 }
                 276 = {
-                    clr_state_flag =  SNY_high_democracy_support
-                    set_state_flag =  SNY_medium_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
     }
     SNY_274_removing_democracy = {
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy1
-            trigger = {
-                274 = {
-                    has_state_flag = SNY_high_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy2
-            trigger = {
-                274 = {
-                    has_state_flag = SNY_medium_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy3
-            trigger = {
-                274 = {
-                    has_state_flag = SNY_low_democracy_support
-                }
-            }
-        }
+        icon = GFX_
 
         available = {
             original_tag = SNY
             274 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
@@ -1487,9 +965,9 @@ SNY_remove_hopes_of_democracy = {
             owns_state = 274
             274 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
-                    has_state_flag = SNY_low_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
             }
         }
@@ -1500,7 +978,7 @@ SNY_remove_hopes_of_democracy = {
         }
         cancel_if_not_visible = yes
         fire_only_once = no
-        cost = 25
+        cost = 10
         ai_will_do = {
             base = 50
             modifier = {
@@ -1513,59 +991,36 @@ SNY_remove_hopes_of_democracy = {
             if = {
                 limit = {
                     274 = {
-                        has_state_flag = SNY_medium_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                     }
                 }
                 274 = {
-                    clr_state_flag =  SNY_medium_democracy_support
-                    set_state_flag =  SNY_low_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
-                add_political_power = 5
+                add_political_power = 25
             } else_if = {
                 limit = {
                     274 = {
-                        has_state_flag = SNY_high_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
                     }
                 }
                 274 = {
-                    clr_state_flag =  SNY_high_democracy_support
-                    set_state_flag =  SNY_medium_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
     }
     SNY_275_removing_democracy = {
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy1
-            trigger = {
-                275 = {
-                    has_state_flag = SNY_high_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy2
-            trigger = {
-                275 = {
-                    has_state_flag = SNY_medium_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy3
-            trigger = {
-                275 = {
-                    has_state_flag = SNY_low_democracy_support
-                }
-            }
-        }
+        icon = GFX_
 
         available = {
             original_tag = SNY
             275 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
@@ -1579,9 +1034,9 @@ SNY_remove_hopes_of_democracy = {
             owns_state = 275
             275 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
-                    has_state_flag = SNY_low_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
             }
         }
@@ -1592,7 +1047,7 @@ SNY_remove_hopes_of_democracy = {
         }
         cancel_if_not_visible = yes
         fire_only_once = no
-        cost = 25
+        cost = 10
         ai_will_do = {
             base = 50
             modifier = {
@@ -1605,59 +1060,36 @@ SNY_remove_hopes_of_democracy = {
             if = {
                 limit = {
                     275 = {
-                        has_state_flag = SNY_medium_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                     }
                 }
                 275 = {
-                    clr_state_flag =  SNY_medium_democracy_support
-                    set_state_flag =  SNY_low_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
-                add_political_power = 5
+                add_political_power = 25
             } else_if = {
                 limit = {
                     275 = {
-                        has_state_flag = SNY_high_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
                     }
                 }
                 275 = {
-                    clr_state_flag =  SNY_high_democracy_support
-                    set_state_flag =  SNY_medium_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
     }
     SNY_250_removing_democracy = {
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy1
-            trigger = {
-                250 = {
-                    has_state_flag = SNY_high_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy2
-            trigger = {
-                250 = {
-                    has_state_flag = SNY_medium_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy3
-            trigger = {
-                250 = {
-                    has_state_flag = SNY_low_democracy_support
-                }
-            }
-        }
+        icon = GFX_
 
         available = {
             original_tag = SNY
             250 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
@@ -1671,9 +1103,9 @@ SNY_remove_hopes_of_democracy = {
             owns_state = 250
             250 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
-                    has_state_flag = SNY_low_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
             }
         }
@@ -1684,7 +1116,7 @@ SNY_remove_hopes_of_democracy = {
         }
         cancel_if_not_visible = yes
         fire_only_once = no
-        cost = 25
+        cost = 10
         ai_will_do = {
             base = 50
             modifier = {
@@ -1697,59 +1129,36 @@ SNY_remove_hopes_of_democracy = {
             if = {
                 limit = {
                     250 = {
-                        has_state_flag = SNY_medium_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                     }
                 }
                 250 = {
-                    clr_state_flag =  SNY_medium_democracy_support
-                    set_state_flag =  SNY_low_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
-                add_political_power = 5
+                add_political_power = 25
             } else_if = {
                 limit = {
                     250 = {
-                        has_state_flag = SNY_high_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
                     }
                 }
                 250 = {
-                    clr_state_flag =  SNY_high_democracy_support
-                    set_state_flag =  SNY_medium_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
     }
     SNY_29_removing_democracy = {
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy1
-            trigger = {
-                29 = {
-                    has_state_flag = SNY_high_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy2
-            trigger = {
-                29 = {
-                    has_state_flag = SNY_medium_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy3
-            trigger = {
-                29 = {
-                    has_state_flag = SNY_low_democracy_support
-                }
-            }
-        }
+        icon = GFX_
 
         available = {
             original_tag = SNY
             29 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
@@ -1763,9 +1172,9 @@ SNY_remove_hopes_of_democracy = {
             owns_state = 29
             29 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
-                    has_state_flag = SNY_low_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
             }
         }
@@ -1776,7 +1185,7 @@ SNY_remove_hopes_of_democracy = {
         }
         cancel_if_not_visible = yes
         fire_only_once = no
-        cost = 25
+        cost = 10
         ai_will_do = {
             base = 50
             modifier = {
@@ -1789,59 +1198,36 @@ SNY_remove_hopes_of_democracy = {
             if = {
                 limit = {
                     29 = {
-                        has_state_flag = SNY_medium_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                     }
                 }
                 29 = {
-                    clr_state_flag =  SNY_medium_democracy_support
-                    set_state_flag =  SNY_low_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
-                add_political_power = 5
+                add_political_power = 25
             } else_if = {
                 limit = {
                     29 = {
-                        has_state_flag = SNY_high_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
                     }
                 }
                 29 = {
-                    clr_state_flag =  SNY_high_democracy_support
-                    set_state_flag =  SNY_medium_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
     }
     SNY_273_removing_democracy = {
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy1
-            trigger = {
-                273 = {
-                    has_state_flag = SNY_high_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy2
-            trigger = {
-                273 = {
-                    has_state_flag = SNY_medium_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy3
-            trigger = {
-                273 = {
-                    has_state_flag = SNY_low_democracy_support
-                }
-            }
-        }
+        icon = GFX_
 
         available = {
             original_tag = SNY
             273 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
@@ -1855,9 +1241,9 @@ SNY_remove_hopes_of_democracy = {
             owns_state = 273
             273 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
-                    has_state_flag = SNY_low_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
             }
         }
@@ -1868,7 +1254,7 @@ SNY_remove_hopes_of_democracy = {
         }
         cancel_if_not_visible = yes
         fire_only_once = no
-        cost = 25
+        cost = 10
         ai_will_do = {
             base = 50
             modifier = {
@@ -1881,59 +1267,36 @@ SNY_remove_hopes_of_democracy = {
             if = {
                 limit = {
                     273 = {
-                        has_state_flag = SNY_medium_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                     }
                 }
                 273 = {
-                    clr_state_flag =  SNY_medium_democracy_support
-                    set_state_flag =  SNY_low_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
-                add_political_power = 5
+                add_political_power = 25
             } else_if = {
                 limit = {
                     273 = {
-                        has_state_flag = SNY_high_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
                     }
                 }
                 273 = {
-                    clr_state_flag =  SNY_high_democracy_support
-                    set_state_flag =  SNY_medium_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
     }
     SNY_272_removing_democracy = {
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy1
-            trigger = {
-                272 = {
-                    has_state_flag = SNY_high_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy2
-            trigger = {
-                272 = {
-                    has_state_flag = SNY_medium_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy3
-            trigger = {
-                272 = {
-                    has_state_flag = SNY_low_democracy_support
-                }
-            }
-        }
+        icon = GFX_
 
         available = {
             original_tag = SNY
             272 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
@@ -1947,9 +1310,9 @@ SNY_remove_hopes_of_democracy = {
             owns_state = 272
             272 = {
                 OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
-                    has_state_flag = SNY_low_democracy_support
+                    has_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    has_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
             }
         }
@@ -1960,7 +1323,7 @@ SNY_remove_hopes_of_democracy = {
         }
         cancel_if_not_visible = yes
         fire_only_once = no
-        cost = 25
+        cost = 10
         ai_will_do = {
             base = 50
             modifier = {
@@ -1973,115 +1336,23 @@ SNY_remove_hopes_of_democracy = {
             if = {
                 limit = {
                     272 = {
-                        has_state_flag = SNY_medium_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                     }
                 }
                 272 = {
-                    clr_state_flag =  SNY_medium_democracy_support
-                    set_state_flag =  SNY_low_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_medium_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_low_democracy_support }
                 }
-                add_political_power = 5
+                add_political_power = 25
             } else_if = {
                 limit = {
                     272 = {
-                        has_state_flag = SNY_high_democracy_support
+                        has_dynamic_modifier = { modifier = SNY_high_democracy_support }
                     }
                 }
                 272 = {
-                    clr_state_flag =  SNY_high_democracy_support
-                    set_state_flag =  SNY_medium_democracy_support
-                }
-            }
-        }
-    }
-    SNY_790_removing_democracy = {
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy1
-            trigger = {
-                790 = {
-                    has_state_flag = SNY_high_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy2
-            trigger = {
-                790 = {
-                    has_state_flag = SNY_medium_democracy_support
-                }
-            }
-        }
-        icon = {
-            key = GFX_SNY_crush_hope_of_democracy3
-            trigger = {
-                790 = {
-                    has_state_flag = SNY_low_democracy_support
-                }
-            }
-        }
-
-        available = {
-            original_tag = SNY
-            790 = {
-                OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
-                }
-            }
-        }
-        visible = {
-            hidden_trigger = {
-                has_country_flag = SNY_getting_rid_of_democracy
-            }
-            NOT = {
-                has_completed_focus = SNY_charles_poletti_makes_a_speech
-            }
-            owns_state = 790
-            790 = {
-                OR = {
-                    has_state_flag = SNY_high_democracy_support
-                    has_state_flag = SNY_medium_democracy_support
-                    has_state_flag = SNY_low_democracy_support
-                }
-            }
-        }
-        on_map_mode = map_only
-        highlight_state_targets = { state = 790}
-        highlight_states = {
-            state = 790
-        }
-        cancel_if_not_visible = yes
-        fire_only_once = no
-        cost = 25
-        ai_will_do = {
-            base = 50
-            modifier = {
-                factor = 2
-                has_political_power > 100
-            }
-        }
-        days_remove = 35
-        remove_effect = {
-            if = {
-                limit = {
-                    790 = {
-                        has_state_flag = SNY_medium_democracy_support
-                    }
-                }
-                790 = {
-                    clr_state_flag =  SNY_medium_democracy_support
-                    set_state_flag =  SNY_low_democracy_support
-                }
-                add_political_power = 5
-            } else_if = {
-                limit = {
-                    790 = {
-                        has_state_flag = SNY_high_democracy_support
-                    }
-                }
-                790 = {
-                    clr_state_flag =  SNY_high_democracy_support
-                    set_state_flag =  SNY_medium_democracy_support
+                    remove_dynamic_modifier = { modifier = SNY_high_democracy_support }
+                    add_dynamic_modifier = { modifier = SNY_medium_democracy_support }
                 }
             }
         }
@@ -2089,7 +1360,7 @@ SNY_remove_hopes_of_democracy = {
 }
 SNY_public_works_administration = {
     SNY_create_the_new_york_state_thruway = {
-        icon = GFX_decision_generic_construction
+        icon = GFX_
 
         available = {
             original_tag = SNY
@@ -2144,7 +1415,7 @@ SNY_public_works_administration = {
         }
     }
     SNY_clear_and_repurpose_the_albany_slums = {
-        icon = GFX_decision_generic_construction
+        icon = GFX_
 
         available = {
             original_tag = SNY
@@ -2182,7 +1453,7 @@ SNY_public_works_administration = {
         }
     }
     SNY_dam_niagara_falls = {
-        icon = GFX_decision_generic_construction
+        icon = GFX_
 
         available = {
             original_tag = SNY
@@ -2240,108 +1511,5 @@ SNY_public_works_administration = {
     }
 }
 SNY_american_peoples_republic = {
-    SNY_integrate_pennsylvania = {
-        icon = GFX_decision_hol_exchange_intelligence_data
-        available = {
-            controls_pennsylvania_trigger = yes
-        }
-        visible = {
-            OR = {
-                controls_pennsylvania_trigger = yes
-                has_completed_focus = SNY_communism_in_pennsylvania
-            }
-        }
-        cancel_if_not_visible = yes
-        fire_only_once = yes
-        cost = 250
-        days_remove = 50
-        ai_will_do = {
-            base = 100
-        }
-        remove_effect = {
-            core_pennsylvania = yes
-            # hidden_effect = {
-            #     set_country_flag = SNY_PA_com_cored
-            # }
-        }
-    }
-    SNY_integraete_the_great_lakes = {
-        icon = GFX_decision_hol_exchange_intelligence_data
-        available = {
-            controls_great_lakes_trigger = yes
-        }
-        visible = {
-            OR = {
-                controls_great_lakes_trigger = yes
-                has_completed_focus = SNY_communism_in_the_great_lakes
-            }
-        }
-        cancel_if_not_visible = yes
-        fire_only_once = yes
-        cost = 200
-        days_remove = 75
-        ai_will_do = {
-            base = 100
-        }
-        remove_effect = {
-            core_ohio = yes
-            core_indiana = yes
-            core_illinios = yes
-            core_michigan = yes
-            core_wisconsin = yes
-            # hidden_effect = {
-            #     set_country_flag = SNY_GL_com_cored
-            # }
-        }
-    }
-    SNY_integrate_new_england = {
-        icon = GFX_decision_hol_exchange_intelligence_data
-        available = {
-            controls_new_england_trigger = yes
-        }
-        visible = {
-            OR = {
-                controls_new_england_trigger = yes
-                has_completed_focus = SNY_communism_in_new_england
-            }
-        }
-        cancel_if_not_visible = yes
-        fire_only_once = yes
-        cost = 175
-        days_remove = 60
-        ai_will_do = {
-            base = 100
-        }
-        remove_effect = {
-            core_all_new_england = yes
-            # hidden_effect = {
-            #     set_country_flag = SNY_NE_com_cored
-            # }
-        }
-    }
-    SNY_integrate_new_jersey = {
-        icon = GFX_decision_hol_exchange_intelligence_data
-        available = {
-            controls_new_jersey_trigger = yes
-        }
-        visible = {
-            OR = {
-                controls_new_jersey_trigger = yes
-                has_completed_focus = SNY_communism_in_new_jersey
-            }
-        }
-        cancel_if_not_visible = yes
-        fire_only_once = yes
-        cost = 80
-        days_remove = 45
-        ai_will_do = {
-            base = 100
-        }
-        remove_effect = {
-            core_new_jersey = yes
-            # hidden_effect = {
-            #     set_country_flag = SNY_NJ_com_cored
-            # }
-        }
-    }
+    
 }
