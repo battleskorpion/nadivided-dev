@@ -3378,6 +3378,251 @@ focus_tree = {
         }
     }
     focus = {
+        id = SNY_confront_new_york_city
+        icon = GFX_
+        prerequisite = { focus = SNY_challenge_lehman}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SNY_fdr_leads_the_country_tt
+                AND = {
+                    has_completed_focus = SNY_fdr_prepares_a_rebellion
+                    has_completed_focus = SNY_challenge_lehman
+                }
+            }
+        }
+        x = 3
+        y = 1
+        relative_position_id = SNY_challenge_lehman
+        cost = 2
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            NYC = {
+                country_event = {
+                    id = new_york.59
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_nyc_apologieses
+        icon = GFX_
+        prerequisite = { focus = SNY_confront_new_york_city}
+        mutually_exclusive = { focus = SNY_prepare_to_take_nyc_back_through_force}
+        available = {
+            always = no
+        }
+        x = -1
+        y = 1
+        relative_position_id = SNY_confront_new_york_city
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+    }
+    focus = {
+        id = SNY_fdr_visits_nyc
+        icon = GFX_
+        prerequisite = { focus = SNY_nyc_apologieses}
+        x = 0
+        y = 1
+        relative_position_id = SNY_nyc_apologieses
+        cost = 8
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            add_political_power = 50
+            add_stability = 0.05
+            country_event = {
+                id = new_york.62
+            }
+        }
+    }
+    focus = {
+        id = SNY_bring_the_new_deal_to_nyc
+        icon = GFX_
+        prerequisite = { focus = SNY_fdr_visits_nyc}
+        available = {
+            has_completed_focus = SNY_introduce_the_new_deal
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_fdr_visits_nyc
+        cost = 8
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            if = {
+                limit = {
+                    OR = {
+                        SNY = {
+                            owns_state = 27
+                        }
+                        NYC = {
+                            owns_state = 27
+                        }
+                    }
+                }
+                27 = {
+                    add_extra_state_shared_building_slots = 1
+                    add_building_construction = {
+                        type = industrial_complex
+                        level = 1
+                        instant_build = yes
+                    }
+                }
+            }
+            if = {
+                limit = {
+                    OR = {
+                        SNY = {
+                            owns_state = 202
+                        }
+                        NYC = {
+                            owns_state = 202
+                        }
+                    }
+                }
+                202 = {
+                    add_extra_state_shared_building_slots = 1
+                    add_building_construction = {
+                        type = industrial_complex
+                        level = 1
+                        instant_build = yes
+                    }
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_prepare_to_take_nyc_back_through_force
+        icon = GFX_
+        prerequisite = { focus = SNY_confront_new_york_city}
+        mutually_exclusive = { focus = SNY_nyc_apologieses}
+        available = {
+            always = no
+        }
+        x = 1
+        y = 1
+        relative_position_id = SNY_confront_new_york_city
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+    }
+    focus = {
+        id = SNY_poise_the_navy_to_invade_nyc
+        icon = GFX_
+        prerequisite = { focus = SNY_prepare_to_take_nyc_back_through_force}
+        x = 0
+        y = 1
+        relative_position_id = SNY_prepare_to_take_nyc_back_through_force
+        cost = 8
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            navy_experience = 50
+            if = {
+                limit = {
+                    owns_state = 291
+                }
+                291 = {
+                    add_extra_state_shared_building_slots = 2
+                    add_building_construction = {
+                        type = dockyard
+                        level = 2
+                        instant_build = yes
+                    }
+                    set_building_level = {
+                        type = naval_base
+                        level = 10
+                        instant_build = yes
+                        province = 3432
+                    }
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_challenge_nycs_leader
+        icon = GFX_
+        prerequisite = { focus = SNY_poise_the_navy_to_invade_nyc}
+        x = 0
+        y = 1
+        relative_position_id = SNY_poise_the_navy_to_invade_nyc
+        cost = 8
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_war_support = 0.05
+            country_event = {
+                id = new_york.63
+            }
+        }
+    }
+    focus = {
+        id = SNY_justice_has_been_brought
+        icon = GFX_
+        prerequisite = { focus = SNY_challenge_nycs_leader focus = SNY_bring_the_new_deal_to_nyc}
+        available = {
+            OR = {
+                has_completed_focus = SNY_bring_the_new_deal_to_nyc
+                AND = {
+                    owns_state = 26
+                    owns_state = 27
+                    owns_state = 28
+                    owns_state = 202
+                }
+            }
+        }
+        x = -1
+        y = 1
+        relative_position_id = SNY_challenge_nycs_leader
+        cost = 8
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            remove_ideas = SNY_independent_new_york_city
+            add_state_core = 26
+            add_state_core = 27
+            add_state_core = 28
+            add_state_core = 202
+            if = {
+                limit = {
+                    has_completed_focus = SNY_nyc_apologieses
+                }
+                NYC = {
+                    country_event = {
+                        id = new_york.66
+                    }
+                }
+            }
+        }
+    }
+    focus = {
         id = SNY_the_army_makes_a_demonstration
         icon = GFX_goal_generic_allies_build_infantry
         prerequisite = { focus = SNY_postpone_the_elections}
