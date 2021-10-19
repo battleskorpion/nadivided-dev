@@ -150,7 +150,7 @@ focus_tree = {
 
  
     focus = {
-        id = SMD_Developing_our_industries
+        id = SVA_Developing_our_industries
         icon = GFX_focus_SVA_industry
         available = {
         
@@ -178,7 +178,7 @@ focus_tree = {
     } 
 
     focus = {
-        id = SMD_fuel_the_war_industries
+        id = SVA_fuel_the_war_industries
         icon = GFX_focus_SVA_fuelwarindustry
         available = {
         
@@ -190,17 +190,17 @@ focus_tree = {
         ai_will_do = {
             factor = 10
         }
-        prerequisite = { focus = SMD_Developing_our_industries }
-        relative_position_id = SMD_Developing_our_industries
+        prerequisite = { focus = SVA_Developing_our_industries }
+        relative_position_id = SVA_Developing_our_industries
         available_if_capitulated = yes
         search_filters = {  }
         completion_reward = {
-            add_ideas = SMD_war_industries
+            add_ideas = SVA_war_industries
         }
     } 
 
     focus = {
-        id = SMD_Nationalize_key_industries
+        id = SVA_Nationalize_key_industries
         icon = GFX_focus_SVA_nationalize_industries
         available = {
         
@@ -212,44 +212,15 @@ focus_tree = {
         ai_will_do = {
             factor = 10
         }
-        prerequisite = { focus = SMD_fuel_the_war_industries }
-        relative_position_id = SMD_fuel_the_war_industries
+        prerequisite = { focus = SVA_fuel_the_war_industries }
+        relative_position_id = SVA_fuel_the_war_industries
         available_if_capitulated = yes
         search_filters = {  }
         completion_reward = {
-            add_ideas = SMD_nationalized_companies
+            add_ideas = SVA_nationalized_companies
         }
     } 
 
-    focus = {
-        id = SMD_Modernized_army
-        icon = GFX_focus_SVA_army_modernization
-        available = {
-        
-
-        }
-        x = 0
-        y = 1
-        cost = 5
-        ai_will_do = {
-            factor = 10
-        }
-        prerequisite = { focus = SMD_Nationalize_key_industries }
-        relative_position_id = SMD_Nationalize_key_industries
-        available_if_capitulated = yes
-        search_filters = {  }
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = infantry_artillery_bonus
-				bonus = 1.0
-				uses = 1
-				category = infantry_weapons
-				category = artillery
-			}
-		}
-        
-    } 
 
     focus = {
         id = SVA_defend_maryland_states_rights
@@ -371,7 +342,7 @@ focus_tree = {
     }
  
     focus = {
-        id = SMD_Develop_univesites
+        id = SVA_Develop_univesites
         icon = GFX_focus_SVA_research
         available = {
         
@@ -394,7 +365,7 @@ focus_tree = {
  
  
     focus = {
-        id = SMD_Emergency_conscription_act
+        id = SVA_Emergency_conscription_act
         icon = GFX_focus_SVA_emergency_conscription
         available = {
         
@@ -406,8 +377,8 @@ focus_tree = {
         ai_will_do = {
             factor = 10
         }
-        prerequisite = { focus = SMD_Develop_univesites }
-        relative_position_id = SMD_Develop_univesites
+        prerequisite = { focus = SVA_Develop_univesites }
+        relative_position_id = SVA_Develop_univesites
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_MANPOWER }
         completion_reward = {
@@ -416,7 +387,7 @@ focus_tree = {
     } 
  
     focus = {
-        id = SMD_Create_electoral_districts_in_west_virginia
+        id = SVA_Create_electoral_districts_in_west_virginia
         icon = GFX_focus_SVA_emergency_conscription
         available = {
         
@@ -428,9 +399,9 @@ focus_tree = {
         ai_will_do = {
             factor = 10
         }
-        prerequisite = { focus = SMD_Emergency_conscription_act }
-        prerequisite = { focus = SMD_war_industries_act }
-        relative_position_id = SMD_Emergency_conscription_act
+        prerequisite = { focus = SVA_Emergency_conscription_act }
+        prerequisite = { focus = SVA_war_industries_act }
+        relative_position_id = SVA_Emergency_conscription_act
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_MANPOWER }
         completion_reward = {
@@ -439,7 +410,7 @@ focus_tree = {
     } 
 
     focus = {
-        id = SMD_war_industries_act
+        id = SVA_war_industries_act
         icon = GFX_focus_SVA_war_economy
         available = {
         
@@ -451,8 +422,8 @@ focus_tree = {
         ai_will_do = {
             factor = 10
         }
-        prerequisite = { focus = SMD_Develop_univesites }
-        relative_position_id = SMD_Develop_univesites
+        prerequisite = { focus = SVA_Develop_univesites }
+        relative_position_id = SVA_Develop_univesites
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_MANPOWER }
         completion_reward = {
@@ -1205,16 +1176,124 @@ focus_tree = {
         }
         x = 21
         y = 0
-        cost = 5
-        ai_will_do = {
-            factor = 100
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_POLITICAL }
+        cost = 10
+				modifier = {
+				factor = 25
+			}
 
-        completion_reward = {
-           
-        }
+		available = {
+			any_owned_state = {
+				is_coastal = yes
+			}
+		}
+
+		complete_tooltip = {
+			navy_experience = 25
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = {
+				type = dockyard
+				level = 3
+				instant_build = yes
+			}
+		}
+		
+		completion_reward = {
+			navy_experience = 25
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+			}			
+		}
     }
 
      focus = {
@@ -1236,7 +1315,12 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_POLITICAL }
 
         completion_reward = {
-        
+			add_tech_bonus = {
+				name = fleet_in_being_bonus
+				bonus = 1.0
+				uses = 2
+				category = fleet_in_being_tree
+			}        
         }
     }
      focus = {
@@ -1256,9 +1340,18 @@ focus_tree = {
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
 
-        completion_reward = {
-        
-        }
+ 		completion_reward = {
+			navy_experience = 25
+			add_tech_bonus = {
+				name = capital_ships_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = bc_tech
+				category = bb_tech
+				category = cv_tech
+			}
+		}
     }
      focus = {
         id = SVA_A_Vast_Fleet
@@ -1279,8 +1372,11 @@ focus_tree = {
 
         completion_reward = {
 #+10%naval_output          
+            add_ideas = SVA_A_Vast_Fleet_idea
         }
     } 
+
+
      focus = {
         id = SVA_Carrier_development
         icon = GFX_focus_SCA_carrier
@@ -1299,7 +1395,13 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_POLITICAL }
 
         completion_reward = {
-      
+			add_tech_bonus = {
+				name = cr_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = cv_tech
+			}      
         }
     } 
      focus = {
@@ -1321,7 +1423,16 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_POLITICAL }
 
         completion_reward = {
-        
+			add_tech_bonus = {
+				name = sub_op_bonus
+				bonus = 1.0
+				uses = 2
+				technology = convoy_interdiction_ti
+				technology = unrestricted_submarine_warfare
+				technology = wolfpacks
+				technology = advanced_submarine_warfare
+				technology = combined_operations_raiding
+			}        
         }
     }
      focus = {
@@ -1342,7 +1453,13 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_POLITICAL }
 
         completion_reward = {
-        
+			add_tech_bonus = {
+				name = ss_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = ss_tech
+			}        
         }
     }
      focus = {
@@ -1363,7 +1480,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_POLITICAL }
 
         completion_reward = {
-#+5%naval_output        
+            add_ideas = SVA_Submarine_flotillas_idea     
         }
     } 
      focus = {
@@ -1382,9 +1499,53 @@ focus_tree = {
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         ###SHOULD BE EVENT BECAUSE OTHERWISE YOU'LL ALWAYS GO FASCIST 
-        completion_reward = {
-           
-        }
+		complete_tooltip = {
+
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+
+		completion_reward = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 2000
+				producer = SVA
+			}             
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
     }
     focus = {
         id = SVA_army_high_command
@@ -1407,9 +1568,34 @@ focus_tree = {
         ###SHOULD BE EVENT BECAUSE 'OTHERWISE YOU'LL ALWAYS GO FASCIST'?
         #@sibs idk about this-dank
         completion_reward = {
-           
+           remove_ideas = SVA_Disagreeable_High_Command
         }
     }
+
+    focus = {
+        id = SVA_offer_postitions_to_grads
+        icon = GFX_focus_create_the_minutemen
+        available = {
+         has_war_support > 0.55
+
+        }
+        x = 2
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 100
+        }
+          prerequisite = { focus = SVA_fund_surplus}
+
+        relative_position_id = SVA_fund_surplus
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_ideas = SVA_verginia_officers
+        }
+    }
+
     focus = {
         id = SVA_moseley_doctrine
         icon = GFX_focus_SVA_mosley_doctrine
@@ -1431,7 +1617,11 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_POLITICAL }
         ###SHOULD BE EVENT BECAUSE OTHERWISE YOU'LL ALWAYS GO FASCIST 
         completion_reward = {
-           
+        add_popularity = {
+            ideology = fascism
+            popularity = 0.05
+         }           
+         add_war_support = 0.05
         }
     }
 
@@ -1453,7 +1643,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_POLITICAL }
 
         completion_reward = {
-#recruitment+repairspeed        
+            add_ideas = SVA_Civilian_Conservation_corps_idea
         }
     }
 
@@ -1477,6 +1667,7 @@ focus_tree = {
 
         completion_reward = {
 #10%infantryattack        
+            add_ideas = SVA_blood_of_the_bayonet_idea
         }
     }
 
@@ -1526,6 +1717,7 @@ focus_tree = {
 
         completion_reward = {
 #5%casdamagereduction        
+            add_ideas = SVA_camouflage_priority_idea
         }
     }
 
@@ -1548,7 +1740,8 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_POLITICAL }
 
         completion_reward = {
-#+armorattack+tankreliablility        
+
+            add_ideas = SVA_Quality_tanks_idea
         }
     }
 
@@ -1571,6 +1764,7 @@ focus_tree = {
 
         completion_reward = {
 #special_forces_cap+attack_bonus        
+            add_ideas = SVA_Trench_raiders_idea
         }
     }
 
@@ -1593,6 +1787,7 @@ focus_tree = {
 
         completion_reward = {
 #4%recruitment+5%noncore        
+            add_ideas = SVA_Fanatical_army_idea
         }
     }
 
@@ -1617,6 +1812,7 @@ focus_tree = {
 
         completion_reward = {
 #-tankcost-tankreliablility            
+            add_ideas = SVA_Quantity_tanks_idea
         }
     }
 
@@ -1641,6 +1837,7 @@ focus_tree = {
 
         completion_reward = {
 #10%infantrydefence           
+            add_ideas = SVA_dirt_of_the_shovel_idea
         }
     }
 
@@ -1665,7 +1862,12 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_POLITICAL }
         ###SHOULD BE EVENT BECAUSE OTHERWISE YOU'LL ALWAYS GO FASCIST 
         completion_reward = {
-           
+			add_tech_bonus = {
+				name = land_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = land_doctrine
+			}           
         }
     }
 
@@ -1688,7 +1890,12 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_POLITICAL }
 
         completion_reward = {
-#recruitment+5%army_org        
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 1
+				category = infantry_weapons
+			}       
         }
     }
 
@@ -1733,6 +1940,7 @@ focus_tree = {
 
         completion_reward = {
 #special_forces_cap        
+            add_ideas = SVA_Commando_focus_idea
         }
     }
 
@@ -1754,7 +1962,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_POLITICAL }
 
         completion_reward = {
-        
+            add_ideas = SVA_SVA_Army_war_college_idea
         }
     }
 
@@ -1890,7 +2098,12 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_POLITICAL }
 
         completion_reward = {
-        
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.1
+				uses = 1
+				category = artillery
+			}          
         }
     }
 
@@ -1921,7 +2134,7 @@ focus_tree = {
     }
  
     focus = {
-        id = SMD_imprison_researchers
+        id = SVA_imprison_researchers
         icon = GFX_focus_SVA_imprision_researchers
         available = {
         
@@ -1955,8 +2168,8 @@ focus_tree = {
         ai_will_do = {
             factor = 10
         }
-         prerequisite = { focus = SMD_imprison_researchers}
-        relative_position_id = SMD_imprison_researchers
+         prerequisite = { focus = SVA_imprison_researchers}
+        relative_position_id = SVA_imprison_researchers
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         ###1% increae 
@@ -2225,14 +2438,14 @@ focus_tree = {
         completion_reward = {
          add_stability = -0.10
         add_popularity = {
-         ideology = fascism
-       popularity = 0.05
+            ideology = fascism
+            popularity = 0.05
          }
         }
     }
 
     focus = {
-        id = SMD_develop_military_industries
+        id = SVA_develop_military_industries
         icon = GFX_focus_SVA_Police_weapons_complex
         available = {
         
@@ -2418,7 +2631,7 @@ focus_tree = {
     }
 
      focus = {
-        id = SVA_blame_jews
+        id = SVA_blame_jews #rename anti-semetic propaganda
         icon = GFX_focus_SVA_blame_jews
         available = {
             
@@ -2436,6 +2649,8 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_POLITICAL }
         ###1% increae 
         completion_reward = {
+         add_war_support = 0.05
+         add_stability = -0.10
           add_popularity = {
          ideology = fascism
        popularity = 0.05
@@ -2608,7 +2823,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_STABILITY }
         
         completion_reward = {
-         
+            add_ideas = SVA_harsh_control_of_movement
         }
     }
      focus = {
@@ -2976,7 +3191,7 @@ focus_tree = {
     }
 
     focus = {
-        id = SMD_royal_research_investment
+        id = SVA_royal_research_investment
         icon = GFX_focus_SVA_royal_research
         available = {
         
@@ -2998,7 +3213,7 @@ focus_tree = {
     } 
 
     focus = {
-        id = SMD_Agricultural_research_fund
+        id = SVA_Agricultural_research_fund
         icon = GFX_focus_SVA_Agricultural_research_fund
         available = {
         
@@ -3010,18 +3225,18 @@ focus_tree = {
         ai_will_do = {
             factor = 10
         }
-        prerequisite = { focus = SMD_royal_research_investment}
-        relative_position_id = SMD_royal_research_investment
+        prerequisite = { focus = SVA_royal_research_investment}
+        relative_position_id = SVA_royal_research_investment
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_MANPOWER }
         completion_reward = {
             add_timed_idea = {
-            idea = SMD_Bumpercrops days = 1060 }
+            idea = SVA_Bumpercrops days = 1060 }
         }
     } 
 
     focus = {
-        id = SMD_Agricultural_industry
+        id = SVA_Agricultural_industry
         icon = GFX_focus_SVA_agri_industry
         available = {
         
@@ -3033,10 +3248,10 @@ focus_tree = {
         ai_will_do = {
             factor = 10
         }
-        prerequisite = { focus = SMD_Agricultural_research_fund}
-        relative_position_id = SMD_Agricultural_research_fund
+        prerequisite = { focus = SVA_Agricultural_research_fund}
+        relative_position_id = SVA_Agricultural_research_fund
  
-        mutually_exclusive = { focus = SMD_invest_in_war_industry} 
+        mutually_exclusive = { focus = SVA_invest_in_war_industry} 
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_MANPOWER }
         completion_reward = {
@@ -3060,7 +3275,7 @@ focus_tree = {
     } 
 
     focus = {
-        id = SMD_invest_in_war_industry
+        id = SVA_invest_in_war_industry
         icon = GFX_focus_SVA_war_industries
         available = {
         
@@ -3072,9 +3287,9 @@ focus_tree = {
         ai_will_do = {
             factor = 10
         }
-        prerequisite = { focus = SMD_Agricultural_research_fund}
-        relative_position_id = SMD_Agricultural_research_fund
-        mutually_exclusive = { focus = SMD_Agricultural_industry}
+        prerequisite = { focus = SVA_Agricultural_research_fund}
+        relative_position_id = SVA_Agricultural_research_fund
+        mutually_exclusive = { focus = SVA_Agricultural_industry}
 
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_MANPOWER }
