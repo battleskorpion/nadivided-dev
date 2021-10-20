@@ -430,7 +430,7 @@ focus_tree = {
         x = -1
         y = 1
         relative_position_id = SNY_clear_hoovervilles
-        cost = 15
+        cost = 10
         ai_will_do = {
             factor = 2
         }
@@ -464,7 +464,7 @@ focus_tree = {
         x = 1
         y = 1
         relative_position_id = SNY_clear_hoovervilles
-        cost = 15
+        cost = 10
         ai_will_do = {
             factor = 1
         }
@@ -628,6 +628,27 @@ focus_tree = {
                     amount = 8
                     state = THIS
                 }
+            }
+        }
+    }
+    focus = {
+        id = SNY_open_a_chromium_mine
+        icon = GFX_focus_generic_chromium
+        prerequisite = { focus = SNY_reopen_the_steel_mills}
+        x = 0
+        y = 1
+        relative_position_id = SNY_reopen_the_steel_mills
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_resource = {
+                type = chromium
+                amount = 24
+                state = 277
             }
         }
     }
@@ -2784,6 +2805,32 @@ focus_tree = {
         }
     }
     focus = {
+        id = SNY_persecute_the_mafia
+        icon = GFX_
+        prerequisite = { focus = SNY_expose_lehmans_corruption}
+        available = {
+            NOT = {
+                has_completed_focus = SNY_work_with_the_new_york_mafia
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_expose_lehmans_corruption
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            swap_ideas = {
+                add_idea = SNY_political_deadlock
+                remove_idea = SNY_political_violence
+            }
+        }
+    }
+    focus = {
         id = SNY_expose_lehmans_mistakes
         icon = GFX_
         prerequisite = { focus = SNY_hire_a_lawyer_to_deal_with_the_empeachment focus = SNY_deal_with_the_empeachment_personally}
@@ -2812,6 +2859,7 @@ focus_tree = {
         id = SNY_expose_lehmans_backdoor_dealings
         icon = GFX_
         prerequisite = { focus = SNY_hire_a_lawyer_to_deal_with_the_empeachment focus = SNY_deal_with_the_empeachment_personally}
+        mutually_exclusive = { focus = SNY_work_with_the_new_york_mafia}
         available = {
             NOT = {
                 has_completed_focus = SNY_the_impeachment_trail
@@ -2830,6 +2878,119 @@ focus_tree = {
             custom_effect_tooltip = SNY_increase_the_chance_for_the_trail_to_be_a_success_tt
             country_event = {
                 id = new_york.40
+            }
+        }
+    }
+    focus = {
+        id = SNY_work_with_the_new_york_mafia
+        icon = GFX_
+        prerequisite = { focus = SNY_hire_a_lawyer_to_deal_with_the_empeachment focus = SNY_deal_with_the_empeachment_personally}
+        mutually_exclusive = { focus = SNY_expose_lehmans_backdoor_dealings}
+        available = {
+            NOT = {
+                has_completed_focus = SNY_persecute_the_mafia
+            }
+        }
+        x = 5
+        y = 1
+        relative_position_id = SNY_hire_a_lawyer_to_deal_with_the_empeachment
+        cost = 3
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            custom_effect_tooltip = SNY_we_wont_be_able_to_invite_fdr_tt
+            custom_effect_tooltip = SNY_increase_the_chance_for_the_trail_to_be_a_success_tt
+            country_event = {
+                id = new_york.71
+            }
+        }
+    }
+    focus = {
+        id = SNY_hire_experienced_mafia_as_enforcers
+        icon = GFX_
+        prerequisite = { focus = SNY_work_with_the_new_york_mafia}
+        available = {
+            NOT = {
+                has_completed_focus = SNY_pay_off_our_debt_to_the_mafia
+            }
+        }
+        x = -1
+        y = 1
+        relative_position_id = SNY_work_with_the_new_york_mafia
+        cost = 5
+        ai_will_do = {
+            factor = 4
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_idea = SNY_indebted_to_the_italian_mafia1
+                    }
+                }
+                add_ideas = SNY_indebted_to_the_italian_mafia1
+            }
+            else_if = {
+                limit = {
+                    has_idea = SNY_indebted_to_the_italian_mafia1
+                }
+                swap_ideas = {
+                    add_idea = SNY_indebted_to_the_italian_mafia2
+                    remove_idea = SNY_indebted_to_the_italian_mafia1
+                }
+            }
+            add_ideas = SNY_private_police
+        }
+    }
+    focus = {
+        id = SNY_promise_the_mafia_a_safe_place_in_albany
+        icon = GFX_
+        prerequisite = { focus = SNY_work_with_the_new_york_mafia}
+        available = {
+            NOT = {
+                has_completed_focus = SNY_pay_off_our_debt_to_the_mafia
+            }
+        }
+        x = 1
+        y = 1
+        relative_position_id = SNY_work_with_the_new_york_mafia
+        cost = 5
+        ai_will_do = {
+            factor = 4
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_idea = SNY_indebted_to_the_italian_mafia1
+                    }
+                }
+                add_ideas = SNY_indebted_to_the_italian_mafia1
+            }
+            else_if = {
+                limit = {
+                    has_idea = SNY_indebted_to_the_italian_mafia1
+                }
+                swap_ideas = {
+                    add_idea = SNY_indebted_to_the_italian_mafia2
+                    remove_idea = SNY_indebted_to_the_italian_mafia1
+                }
+            }
+            if = {
+                limit = {
+                    has_dlc = "La Resistance"
+                }
+                add_ideas = SNY_local_mafia_hub_lar
+            }
+            else = {
+                add_ideas = SNY_local_mafia_hub
             }
         }
     }
@@ -2864,6 +3025,7 @@ focus_tree = {
                                 has_completed_focus = SNY_expose_lehmans_mistakes
                                 has_completed_focus = SNY_expose_lehmans_corruption
                                 has_completed_focus = SNY_expose_lehmans_backdoor_dealings
+                                has_completed_focus = SNY_work_with_the_new_york_mafia
                             }
                         }
                         country_event = {
@@ -2876,6 +3038,7 @@ focus_tree = {
                                 has_completed_focus = SNY_expose_lehmans_mistakes
                                 has_completed_focus = SNY_expose_lehmans_corruption
                                 has_completed_focus = SNY_expose_lehmans_backdoor_dealings
+                                has_completed_focus = SNY_work_with_the_new_york_mafia
                             }
                         }
                         random_list = {
@@ -2912,6 +3075,7 @@ focus_tree = {
                                 has_completed_focus = SNY_expose_lehmans_mistakes
                                 has_completed_focus = SNY_expose_lehmans_corruption
                                 has_completed_focus = SNY_expose_lehmans_backdoor_dealings
+                                has_completed_focus = SNY_work_with_the_new_york_mafia
                             }
                         }
                         random_list = {
@@ -2933,6 +3097,7 @@ focus_tree = {
                                 has_completed_focus = SNY_expose_lehmans_mistakes
                                 has_completed_focus = SNY_expose_lehmans_corruption
                                 has_completed_focus = SNY_expose_lehmans_backdoor_dealings
+                                has_completed_focus = SNY_work_with_the_new_york_mafia
                             }
                         }
                         random_list = {
@@ -3052,6 +3217,30 @@ focus_tree = {
             factor = 2
         }
         available_if_capitulated = no
+    }
+    focus = {
+        id = SNY_ask_the_mafia_for_weapons
+        icon = GFX_
+        prerequisite = { focus = SNY_charles_poletti_prepares_a_rebellion}
+        available = {
+            has_completed_focus = SNY_work_with_the_new_york_mafia
+        }
+        x = -2
+        y = 2
+        relative_position_id = SNY_charles_poletti_prepares_a_rebellion
+        cost = 5
+        ai_will_do = {
+            factor = 4
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_equipment_to_stockpile = {
+                type = infantry_equipment
+                amount = 2000
+                producer = SNY
+            }
+        }
     }
     focus = {
         id = SNY_fdr_prepares_a_rebellion
@@ -3285,10 +3474,12 @@ focus_tree = {
             }
             every_owned_state = {
                 limit = {
-                    state = 291
-                    state = 280
-                    state = 27
-                    state = 202
+                    OR = {
+                        state = 291
+                        state = 280
+                        state = 27
+                        state = 202
+                    }
                 }
                 add_manpower = 15000
             }
@@ -3315,12 +3506,49 @@ focus_tree = {
             }
             every_owned_state = {
                 limit = {
-                    state = 29
-                    state = 790
-                    state = 27
-                    state = 202
+                    OR = {
+                        state = 29
+                        state = 790
+                        state = 27
+                        state = 202
+                    }
                 }
                 add_manpower = 15000
+            }
+        }
+    }
+    focus = {
+        id = SNY_pay_off_our_debt_to_the_mafia
+        icon = GFX_
+        prerequisite = { focus = SNY_italitan_connections}
+        available = {
+            OR = {
+                has_idea = SNY_indebted_to_the_italian_mafia1
+                has_idea = SNY_indebted_to_the_italian_mafia2
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_italitan_connections
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            if = {
+                limit = {
+                    has_idea = SNY_indebted_to_the_italian_mafia1
+                }
+                remove_ideas = SNY_indebted_to_the_italian_mafia1
+            }
+            else_if = {
+                limit = {
+                    has_idea = SNY_indebted_to_the_italian_mafia2
+                }
+                remove_ideas = SNY_indebted_to_the_italian_mafia2
             }
         }
     }
@@ -3328,6 +3556,11 @@ focus_tree = {
         id = SNY_pardon_new_yorks_italian_mafia
         icon = GFX_
         prerequisite = { focus = SNY_italitan_connections}
+        # available = {
+        #     NOT = {
+        #         has_completed_focus = SNY_persecute_the_mafia
+        #     }
+        # }
         x = 1
         y = 2
         relative_position_id = SNY_italitan_connections
