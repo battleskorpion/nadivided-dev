@@ -1484,14 +1484,13 @@ country_event = { #The Rebellion Starts
     fire_only_once = yes
 
     option = { #This is Lehman's Final Hour!
-        name = new_york.55.a
-        set_politics = {
-            ruling_party = progressivism
-            elections_allowed = no
-        }
         if = {
             limit = {
                 has_completed_focus = SNY_fdr_prepares_a_rebellion
+            }
+            set_politics = {
+                ruling_party = progressivism
+                elections_allowed = no
             }
             create_country_leader = {
 	
@@ -1509,18 +1508,22 @@ country_event = { #The Rebellion Starts
                 popularity = 0.1
             }
         } else = {
+            set_politics = {
+                ruling_party = democratic
+                elections_allowed = no
+            }
             create_country_leader = {
 	
                 name = "Charles Poletti"
                 picture = "gfx//leaders//SNY//leader_Charles_Poletti.dds"
                 expire = "1965.1.1"
-                ideology = progressivism_ideology
+                ideology = liberalism
                 traits = {
                     experienced_lawyer
                 }
             }
             add_popularity = {
-                ideology = progressivism
+                ideology = democratic
                 popularity = 0.1
             }
         }
@@ -1638,7 +1641,7 @@ country_event = { #The delayed Election
     option = { #The only Real Outcome
         name = new_york.57.a
         set_politics = {
-            ruling_party = progressivism
+            ruling_party = democratic
             elections_allowed = no
         }
         create_country_leader = {
@@ -1646,7 +1649,7 @@ country_event = { #The delayed Election
             name = "Charles Poletti"
             picture = "gfx//leaders//SNY//leader_Charles_Poletti.dds"
             expire = "1965.1.1"
-            ideology = progressivism_ideology
+            ideology = liberalism
             traits = {
                 experienced_lawyer
             }
@@ -2062,7 +2065,7 @@ country_event = { #Invitation to The Federalist League
     option = { #We Accept!
         name = new_york.75.a
         ai_chance = {
-            factor = 40
+            factor = 20
             modifier = {
                 add = 20
                 SNY = {
@@ -2077,6 +2080,13 @@ country_event = { #Invitation to The Federalist League
                 }
             }
             modifier = {
+                add = -40
+                has_opinion = {
+                    opinion < -20
+                    target = SNY
+                }
+            }
+            modifier = {
                 add = 20
                 OR = {
                     AND = {
@@ -2085,7 +2095,7 @@ country_event = { #Invitation to The Federalist League
                     }
                     AND = {
                         tag = SNJ
-                        # has_completed_focus #Whatever the Union focus for SNJ is
+                        has_completed_focus = SNJ_american_dream_purpose
                         always = no
                     }
                     #Add other countries as they become loyal to the Union
@@ -2095,11 +2105,14 @@ country_event = { #Invitation to The Federalist League
         SNY = {
             add_to_faction = ROOT
         }
+        hidden_effect = {
+            set_country_flag = in_SNY_faction_for_union
+        }
     }
     option = { #Independence is way Better!
         name = new_york.75.b
         ai_chance = {
-            factor = 60
+            factor = 80
             modifier = {
                 add = -20
                 SNY = {
@@ -2110,6 +2123,13 @@ country_event = { #Invitation to The Federalist League
                 add = -40
                 has_opinion = {
                     opinion > 60
+                    target = SNY
+                }
+            }
+            modifier = {
+                add = 40
+                has_opinion = {
+                    opinion < -20
                     target = SNY
                 }
             }
@@ -2179,25 +2199,188 @@ country_event = { #Our Invitation is Refused!
                     has_event_target = SNY_federal_target
                 }
                 OR = {
-                    has_added_tension_amount > 20
+                    has_added_tension_amount > 15
                     has_government = communism
                     has_government = fascism
                 }
             }
+            
         }
-        random_country = {
-            limit = {
-                has_event_target = SNY_federal_target
-            }
-            SNY = {
-                create_wargoal = {
-                    type = liberate_wargoal
-                    target = PREV
-                }
+        SNY = {
+            create_wargoal = {
+                type = liberate_wargoal
+                target = SNY_federal_target
             }
         }
         hidden_effect = {
             clear_global_event_target = SNY_federal_target
         }
+    }
+}
+country_event = { #Invitation to the Democratic League
+    id = new_york.77
+    title = new_york.75.t
+    desc = new_york.77.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+        option = { #We Accept!
+        name = new_york.77.a
+        ai_chance = {
+            factor = 60
+            modifier = {
+                add = 40
+                has_opinion = {
+                    opinion > 60
+                    target = SNY
+                }
+            }
+            modifier = {
+                add = -40
+                has_opinion = {
+                    opinion < -20
+                    target = SNY
+                }
+            }
+        }
+        SNY = {
+            add_to_faction = ROOT
+        }
+        hidden_effect = {
+            set_country_flag = in_SNY_faction_for_protection #They can't be annexed easily
+        }
+    }
+    option = { #We Don't Need their Damned Projection
+        name = new_york.77.b
+        ai_chance = {
+            factor = 40
+            modifier = {
+                add = -40
+                has_opinion = {
+                    opinion > 60
+                    target = SNY
+                }
+            }
+            modifier = {
+                add = 40
+                has_opinion = {
+                    opinion < -20
+                    target = SNY
+                }
+            }
+        }
+        custom_effect_tooltip = SNY_bastion_of_demoracy_warning_tt
+        SNY = {
+            country_event = {
+                id = new_york.76.a
+            }
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    SNY = {
+                        has_completed_focus = SNY_bastion_of_democracy
+                    }
+                }
+                ROOT = {
+                    save_global_event_target_as = SNY_federal_target
+                }
+            }
+        }
+    }
+}
+country_event = { #Complete Invitation To the Union
+    id = new_york.78
+    title = new_york.78.t
+    desc = new_york.78.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Brotherhood was Won, We Will Join the Union
+        name = new_york.78.a
+        ai_chance = {
+            factor = 40
+            modifier = {
+                add = -60
+                NOT = {
+                    has_country_flag = in_SNY_faction_for_union
+                }
+            }
+            modifier = {
+                add = 40
+                has_opinion = {
+                    opinion > 60
+                    target = SNY
+                }
+            }
+        }
+        SNY = {
+            annex_country = {
+                target = ROOT
+                transfer_troops = yes
+            }
+        }
+    }
+    option = { #Let's Compromise
+        name = new_york.78.b
+        ai_chance = {
+            factor = 40
+            modifier = {
+                add = -40
+                NOT = {
+                    has_country_flag = in_SNY_faction_for_union
+                }
+            }
+        }
+        SNY = {
+            if = {
+                limit = {
+                    has_dlc = "Together for Victory"
+                }
+                set_autonomy = {
+                    target = ROOT
+                    autonomy_state = autonomy_article_state
+                }
+            }
+            else {
+                puppet = ROOT
+            }
+        }
+    }
+    option = { #The Current Situation Suits Us
+        name = new_york.78.c
+        ai_chance = {
+            factor = 20
+            modifier = {
+                add = 80
+                NOT = {
+                    has_country_flag = in_SNY_faction_for_union
+                }
+            }
+            modifier = {
+                add = -40
+                has_opinion = {
+                    opinion > 60
+                    target = SNY
+                }
+            }
+        }
+    }
+}
+country_event = { #Our Invitation to the Union has been Refused
+    id = new_york.79
+    title = new_york.79.t
+    desc = new_york.79.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Oh Well
+        name = new_york.79.a
     }
 }
