@@ -3755,7 +3755,7 @@ focus_tree = {
                         is_in_faction_with = SNY
                         has_added_tension_amount > 15
                     }
-                    is_a_state_of_the_united_states = yes
+                    is_a_country_making_up_the_former_united_states = yes
                     has_government = democratic
                 }
                 country_event = {
@@ -3786,7 +3786,7 @@ focus_tree = {
                         is_in_faction_with = SNY
                         has_added_tension_amount > 15
                     }
-                    is_a_state_of_the_united_states = yes
+                    is_a_country_making_up_the_former_united_states = yes
                     has_government = longism
                 }
                 country_event = {
@@ -3820,7 +3820,7 @@ focus_tree = {
                         is_in_faction_with = SNY
                         has_added_tension_amount > 15
                     }
-                    is_a_state_of_the_united_states = yes
+                    is_a_country_making_up_the_former_united_states = yes
                     has_government = progressivism
                 }
                 country_event = {
@@ -3851,7 +3851,7 @@ focus_tree = {
                         is_in_faction_with = SNY
                         has_added_tension_amount > 15
                     }
-                    is_a_state_of_the_united_states = yes
+                    is_a_country_making_up_the_former_united_states = yes
                     has_government = neutrality
                 }
                 country_event = {
@@ -3983,7 +3983,7 @@ focus_tree = {
                 custom_trigger_tooltip = {
                     tooltip = SNY_at_least_one_country_in_the_union
                     any_country = {
-                        is_a_state_of_the_united_states = yes
+                        is_a_country_making_up_the_former_united_states = yes
                         is_in_faction_with = SNY
                         has_country_flag = in_SNY_faction_for_union
                     }
@@ -4014,7 +4014,7 @@ focus_tree = {
             else {
                 random_country = {
                     limit = {
-                        is_a_state_of_the_united_states = yes
+                        is_a_country_making_up_the_former_united_states = yes
                         is_in_faction_with = SNY
                         has_country_flag = in_SNY_faction_for_union
                     }
@@ -4024,6 +4024,956 @@ focus_tree = {
                 }
             }
             custom_effect_tooltip = SNY_unlock_a_decision_to_annex_faction_members
+        }
+    }
+    focus = {
+        id = SNY_proclaim_the_new_union
+        icon = GFX_
+        prerequisite = { focus = SNY_begin_recreating_the_union}
+        available = {
+            owns_state = 44
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_begin_recreating_the_union
+        cost = 7
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            custom_effect_tooltip = SNY_gain_claims_on_the_united_states_tt
+            hidden_effect = {
+                claim_the_united_state = yes 
+            }
+            add_state_core = 44
+            set_cosmetic_tag = UNITED_STATES_BIG
+            add_ideas = SNY_no_legitimacy
+        }
+    }
+    focus = {
+        id = SNY_economy_of_the_new_union
+        icon = GFX_
+        prerequisite = { focus = SNY_proclaim_the_new_union}
+        x = -16
+        y = 1
+        relative_position_id = SNY_proclaim_the_new_union
+        cost = 7
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    level = 1
+                    type = industrial_complex
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_create_the_tennessee_valley_authority
+        icon = GFX_
+        prerequisite = { focus = SNY_economy_of_the_new_union}
+        available = {
+            controls_tennessee_trigger = yes
+        }
+        x = -2
+        y = 1
+        relative_position_id = SNY_economy_of_the_new_union
+        cost = 7
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        
+        completion_reward = {
+            520 = {
+                add_extra_state_shared_building_slots = 1
+                add_compliance = 20
+                add_dynamic_modifier = {
+                    modifier = SNY_improved_by_the_tennessee_valley_authority
+                    scope = THIS
+                }
+            }
+            518 = {
+                add_extra_state_shared_building_slots = 1
+                add_compliance = 20
+                add_dynamic_modifier = {
+                    modifier = SNY_improved_by_the_tennessee_valley_authority
+                    scope = THIS
+                }
+            }
+            custom_effect_tooltip = SNY_unlocks_decisions_to_expand_the_bonuses_of_the_authority_tt
+        }
+    }
+    focus = {
+        id = SNY_finish_the_hoover_dam
+        icon = GFX_
+        prerequisite = { focus = SNY_create_the_tennessee_valley_authority}
+        available = {
+            owns_state = 641
+            owns_state = 611
+            NOT = {
+                SCA = {
+                    has_completed_focus = SCA_completion_of_hoover_dam
+                }
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_create_the_tennessee_valley_authority
+        cost = 7
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            641 = {
+                add_extra_state_shared_building_slots = 3
+                add_compliance = 20
+                set_state_name = "Hoover Dam"
+            }
+            611 = {
+                add_extra_state_shared_building_slots = 3
+                add_compliance = 20
+            }
+        }
+    }
+    focus = {
+        id = SNY_pass_the_social_security_act
+        icon = GFX_
+        prerequisite = { focus = SNY_economy_of_the_new_union}
+        x = 0
+        y = 1
+        relative_position_id = SNY_economy_of_the_new_union
+        cost = 7
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            add_ideas = SNY_social_security_act
+        }
+    }
+    focus = {
+        id = SNY_pass_the_securites_act
+        icon = GFX_
+        prerequisite = { focus = SNY_economy_of_the_new_union}
+        x = 2
+        y = 1
+        relative_position_id = SNY_economy_of_the_new_union
+        cost = 7
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            add_ideas = SNY_securites_act
+        }
+    }
+    focus = {
+        id = SNY_back_onto_the_world_stage
+        icon = GFX_
+        prerequisite = { focus = SNY_proclaim_the_new_union}
+        available = {
+            OR = {
+                has_idea = SNY_moderate_legitimacy
+                has_idea = SNY_high_legitimacy
+                has_idea = SNY_heir_to_the_union
+            }
+        }
+        x = -10
+        y = 1
+        relative_position_id = SNY_proclaim_the_new_union
+        cost = 2
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_political_power = 25
+        }
+    }
+    focus = {
+        id = SNY_foriegn_affairs
+        icon = GFX_
+        prerequisite = { focus = SNY_back_onto_the_world_stage}
+        x = -1
+        y = 1
+        relative_position_id = SNY_back_onto_the_world_stage
+        cost = 2
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_political_power = 25
+        }
+    }
+    focus = {
+        id = SNY_support_the_anglo_german_side_of_the_war
+        icon = GFX_
+        prerequisite = { focus = SNY_foriegn_affairs}
+        mutually_exclusive = {focus = SNY_support_the_french_italian_soviet_side_of_the_war}
+        available = {
+            has_equipment = {
+                infantry_equipment > 9999
+            }
+            has_equipment = {
+                support_equipment > 1999
+            }
+            has_equipment = {
+                artillery_equipment > 499
+            }
+        }
+        x = -1
+        y = 1
+        relative_position_id = SNY_foriegn_affairs
+        cost = 5
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_equipment_to_stockpile = {
+                type = infantry_equipment
+                amount = -10000
+            }
+            add_equipment_to_stockpile = {
+                type = support_equipment
+                amount = -2000
+            }
+            add_equipment_to_stockpile = {
+                type = artillery_equipment
+                amount = -500
+            }
+            ###Information Event for the Anglo/German Side of the War
+        }
+    }
+    focus = {
+        id = SNY_support_the_french_italian_soviet_side_of_the_war
+        icon = GFX_
+        prerequisite = { focus = SNY_foriegn_affairs}
+        mutually_exclusive = { focus = SNY_support_the_anglo_german_side_of_the_war}
+        available = {
+            has_equipment = {
+                infantry_equipment > 9999
+            }
+            has_equipment = {
+                support_equipment > 1999
+            }
+            has_equipment = {
+                artillery_equipment > 499
+            }
+        }
+        x = 1
+        y = 1
+        relative_position_id = SNY_foriegn_affairs
+        cost = 5
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_equipment_to_stockpile = {
+                type = infantry_equipment
+                amount = -10000
+            }
+            add_equipment_to_stockpile = {
+                type = support_equipment
+                amount = -2000
+            }
+            add_equipment_to_stockpile = {
+                type = artillery_equipment
+                amount = -500
+            }
+            ###Information Event for the French/Italo/Soviet Side of the War
+        }
+    }
+    focus = {
+        id = SNY_the_manhatten_project
+        icon = GFX_
+        prerequisite = { focus = SNY_support_the_anglo_german_side_of_the_war focus = SNY_support_the_french_italian_soviet_side_of_the_war}
+        x = 1
+        y = 2
+        relative_position_id = SNY_support_the_anglo_german_side_of_the_war
+        cost = 7
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                ahead_reduction = 2
+                category = nuclear
+            }
+        }
+    }
+    focus = {
+        id = SNY_the_roaring_american_economy
+        icon = GFX_
+        prerequisite = { focus = SNY_pass_the_social_security_act}
+        prerequisite = { focus = SNY_pass_the_securites_act}
+        prerequisite = { focus = SNY_support_the_anglo_german_side_of_the_war focus = SNY_support_the_french_italian_soviet_side_of_the_war}
+        x = 1
+        y = 2
+        relative_position_id = SNY_pass_the_social_security_act
+        cost = 7
+        ai_will_do = {
+            factor = 5
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            add_ideas = SNY_the_roaring_american_economy
+        }
+    }
+    focus = {
+        id = SNY_supply_manpower
+        icon = GFX_
+        prerequisite = { focus = SNY_support_the_anglo_german_side_of_the_war}
+        available = {
+            has_manpower > 1000000
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_support_the_anglo_german_side_of_the_war
+        cost = 5
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 0
+                has_manpower < 2500000
+            }
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_manpower = -1000000
+        }
+    }
+    focus = {
+        id = SNY_supply_advanced_weaponry
+        icon = GFX_
+        prerequisite = { focus = SNY_support_the_french_italian_soviet_side_of_the_war}
+        available = {
+            has_equipment = {
+                anti_air_equipment > 1999
+            }
+            has_equipment = {
+                anti_tank_equipment > 2499
+            }
+            has_equipment = {
+                motorized_equipment > 4999
+            }
+            has_equipment = {
+                mechanized_equipment > 999
+            }
+            has_equipment = {
+                light_tank_equipment > 999
+            }
+            has_equipment = {
+                medium_tank_equipment > 499
+            }
+            has_equipment = {
+                heavy_tank_equipment > 249
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_support_the_french_italian_soviet_side_of_the_war
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_equipment_to_stockpile = {
+                type = anti_air_equipment
+                amount = -2000
+            }
+            add_equipment_to_stockpile = {
+                type = anti_tank_equipment
+                amount = -2500
+            }
+            add_equipment_to_stockpile = {
+                type = motorized_equipment
+                amount = -5000
+            }
+            add_equipment_to_stockpile = {
+                type = mechanized_equipment
+                amount = -1000
+            }
+            add_equipment_to_stockpile = {
+                type = light_tank_equipment
+                amount = -1000
+            }
+            add_equipment_to_stockpile = {
+                type = medium_tank_equipment
+                amount = -500
+            }
+            add_equipment_to_stockpile = {
+                type = heavy_tank_equipment
+                amount = -250
+            }
+        }
+    }
+    focus = {
+        id = SNY_threaten_japan
+        icon = GFX_
+        prerequisite = { focus = SNY_foriegn_affairs}
+        available = {
+            OR = {
+                has_navy_size = {
+                    size > 9
+                    type = capital_ship
+                }
+                has_navy_size = {
+                    size > 4
+                    type = carrier
+                }
+            }
+            OR = {
+                has_navy_size = {
+                    size > 149
+                    type = screen_ship
+                }
+                has_navy_size = {
+                    size > 199
+                    type = submarine
+                }
+            }
+            has_navy_size = {
+                type = convoy
+                size > 199
+            }
+        }
+        x = 3
+        y = 2
+        relative_position_id = SNY_foriegn_affairs
+        cost = 5
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_WAR_SUPPORT }
+
+        completion_reward = {
+            add_war_support = 0.05
+            ###Add random event for Japan backing down
+        }
+    }
+    focus = {
+        id = SNY_save_china
+        icon = GFX_
+        prerequisite = { focus = SNY_threaten_japan}
+        available = {
+            has_equipment = {
+                infantry_equipment > 9999
+            }
+            has_equipment = {
+                support_equipment > 1999
+            }
+            has_equipment = {
+                artillery_equipment > 499
+            }
+        }
+        x = -1
+        y = 1
+        relative_position_id = SNY_threaten_japan
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_equipment_to_stockpile = {
+                type = infantry_equipment
+                amount = -10000
+            }
+            add_equipment_to_stockpile = {
+                type = support_equipment
+                amount = -2000
+            }
+            add_equipment_to_stockpile = {
+                type = artillery_equipment
+                amount = -500
+            }
+            ###Add random event for Chinese Insurgents Pushing Back Japan
+        }
+    }
+    focus = {
+        id = SNY_save_indonesia
+        icon = GFX_
+        prerequisite = { focus = SNY_threaten_japan}
+        available = {
+            has_completed_focus = SNY_support_the_anglo_german_side_of_the_war
+            has_equipment = {
+                infantry_equipment > 9999
+            }
+            has_equipment = {
+                support_equipment > 1999
+            }
+            has_equipment = {
+                artillery_equipment > 499
+            }
+        }
+        x = 1
+        y = 1
+        relative_position_id = SNY_threaten_japan
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_equipment_to_stockpile = {
+                type = infantry_equipment
+                amount = -10000
+            }
+            add_equipment_to_stockpile = {
+                type = support_equipment
+                amount = -2000
+            }
+            add_equipment_to_stockpile = {
+                type = artillery_equipment
+                amount = -500
+            }
+            ###Add Random Event for Indonesian Insurgents pushing back Japan
+        }
+    }
+    focus = {
+        id = SNY_domestic_affairs
+        icon = GFX_
+        prerequisite = { focus = SNY_back_onto_the_world_stage}
+        x = 5
+        y = 1
+        relative_position_id = SNY_back_onto_the_world_stage
+        cost = 2
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_political_power = 25
+        }
+    }
+    focus = {
+        id = SNY_reach_out_to_ontario
+        icon = GFX_
+        prerequisite = { focus = SNY_domestic_affairs}
+        available = {
+            country_exists = PON
+            PON = {
+                has_opinion = {
+                    target = SNY
+                    value > 40
+                }
+            }
+        }
+        bypass = {
+            is_in_faction_with = PON
+        }
+        x = -1
+        y = 1
+        relative_position_id = SNY_domestic_affairs
+        cost = 3
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            PON = {
+                country_event = {
+                    id = new_york.80
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_give_PON_a_headstart
+        icon = GFX_
+        prerequisite = { focus = SNY_reach_out_to_ontario}
+        available = {
+            is_in_faction_with = PON
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_reach_out_to_ontario
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            every_country = {
+                limit = {
+                    is_canadian_province_trigger = yes
+                    NOT = {
+                        tag = PON
+                    }
+                }
+                PON = {
+                    create_wargoal = {
+                        type = annex_everything
+                        target = PREV
+                    }
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_reach_out_to_mexico
+        icon = GFX_
+        prerequisite = { focus = SNY_domestic_affairs}
+        available = {
+            country_exists = MEX
+            MEX = {
+                has_opinion = {
+                    target = SNY
+                    value > 40
+                }
+            }
+        }
+        bypass = {
+            is_in_faction_with = MEX
+        }
+        x = 1
+        y = 1
+        relative_position_id = SNY_domestic_affairs
+        cost = 3
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            MEX = {
+                country_event = {
+                    id = new_york.81
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_give_MEX_a_headstart
+        icon = GFX_
+        prerequisite = { focus = SNY_reach_out_to_mexico}
+        available = {
+            is_in_faction_with = MEX
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_reach_out_to_mexico
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            every_country = {
+                limit = {
+                    is_a_state_of_mexico = yes
+                    NOT = {
+                        tag = MEX
+                    }
+                }
+                PON = {
+                    create_wargoal = {
+                        type = annex_everything
+                        target = PREV
+                    }
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_reclaim_our_legitimacy
+        icon = GFX_
+        prerequisite = { focus = SNY_proclaim_the_new_union}
+        x = -2
+        y = 1
+        relative_position_id = SNY_proclaim_the_new_union
+        cost = 2
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            add_political_power = 25
+        }
+    }
+    focus = {
+        id = SNY_reinvigorate_the_NFL_and_MLB
+        icon = GFX_
+        prerequisite = { focus = SNY_reclaim_our_legitimacy}
+        available = {
+            controls_ohio_trigger = yes
+        }
+        x = -1
+        y = 1
+        relative_position_id = SNY_reclaim_our_legitimacy
+        cost = 7
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_STABILITY }
+
+        completion_reward = {
+            add_stability = 0.05
+            689 = {
+                add_compliance = 20
+            }
+            536 = {
+                add_compliance = 20
+            }
+            ###Add MLB and NFL event
+            if = {
+                limit = {
+                    has_idea = SNY_moderate_legitimacy
+                }
+                swap_ideas = {
+                    remove_idea = SNY_moderate_legitimacy
+                    add_idea = SNY_high_legitimacy
+                }
+            }
+            else_if = {
+                limit = {
+                    has_idea = SNY_low_legitimacy
+                }
+                swap_ideas = {
+                    remove_idea = SNY_low_legitimacy
+                    add_idea = SNY_moderate_legitimacy
+                }
+            }
+            else_if = {
+                limit = {
+                    has_idea = SNY_no_legitimacy
+                }
+                swap_ideas = {
+                    remove_idea = SNY_no_legitimacy
+                    add_idea = SNY_low_legitimacy
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_our_original_homeland
+        icon = GFX_
+        prerequisite = { focus = SNY_reclaim_our_legitimacy}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SNY_owns_the_13_colonies_tt
+                controls_maine_trigger = yes
+                controls_vermont_trigger = yes #Not actually part of the 13 colonies but whatever
+                controls_new_hampshire_trigger = yes
+                controls_massachusetts_trigger = yes
+                controls_rhode_island_trigger = yes
+                controls_connecticut_trigger = yes
+                controls_new_york_trigger = yes
+                controls_pennsylvania_trigger = yes
+                controls_new_jersey_trigger = yes
+                controls_delaware_trigger = yes
+                controls_maryland_trigger = yes
+                controls_virginia_trigger = yes
+                controls_north_carolina_trigger = yes
+                controls_south_carolina_trigger = yes
+                controls_state = 44
+            }
+        }
+        x = 1
+        y = 1
+        relative_position_id = SNY_reclaim_our_legitimacy
+        cost = 7
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            custom_effect_tooltip = SNY_complaince_in_these_states_tt
+            hidden_effect = {
+                every_owned_state = {
+                    limit = {
+                        OR = {
+                            is_core_of = SME
+                            is_core_of = SVT
+                            is_core_of = SNH
+                            is_core_of = SMA
+                            is_core_of = SRI
+                            is_core_of = SCT
+                            is_core_of = SNY
+                            is_core_of = SPA
+                            is_core_of = SNJ
+                            is_core_of = SDE
+                            is_core_of = SMD
+                            is_core_of = SVA
+                            is_core_of = SNC
+                            is_core_of = SSC
+                            state = 44
+                        }
+                    }
+                    add_compliance = 20
+                }
+            }
+            ###Event about the USA Rising Once again
+            if = {
+                limit = {
+                    has_idea = SNY_moderate_legitimacy
+                }
+                swap_ideas = {
+                    remove_idea = SNY_moderate_legitimacy
+                    add_idea = SNY_high_legitimacy
+                }
+            }
+            else_if = {
+                limit = {
+                    has_idea = SNY_low_legitimacy
+                }
+                swap_ideas = {
+                    remove_idea = SNY_low_legitimacy
+                    add_idea = SNY_moderate_legitimacy
+                }
+            }
+            else_if = {
+                limit = {
+                    has_idea = SNY_no_legitimacy
+                }
+                swap_ideas = {
+                    remove_idea = SNY_no_legitimacy
+                    add_idea = SNY_low_legitimacy
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_ruler_of_the_mississippi
+        icon = GFX_
+        prerequisite = { focus = SNY_our_original_homeland}
+        available = {
+            owns_state = 18
+            owns_state = 19
+            owns_state = 752
+            owns_state = 753
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_our_original_homeland
+        cost = 7
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            18 = {
+                add_compliance= 20
+            }
+            19 = {
+                add_compliance = 20
+            }
+            752 = {
+                add_compliance = 20
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = dockyard
+                    level = 1
+                    instant_build = yes
+                }
+            }
+            753 = {
+                add_compliance = 20
+            }
+            ###Event about the importance of the Mississippi
+            if = {
+                limit = {
+                    has_idea = SNY_moderate_legitimacy
+                }
+                swap_ideas = {
+                    remove_idea = SNY_moderate_legitimacy
+                    add_idea = SNY_high_legitimacy
+                }
+            }
+            else_if = {
+                limit = {
+                    has_idea = SNY_low_legitimacy
+                }
+                swap_ideas = {
+                    remove_idea = SNY_low_legitimacy
+                    add_idea = SNY_moderate_legitimacy
+                }
+            }
+            else_if = {
+                limit = {
+                    has_idea = SNY_no_legitimacy
+                }
+                swap_ideas = {
+                    remove_idea = SNY_no_legitimacy
+                    add_idea = SNY_low_legitimacy
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_the_rightful_heir_to_the_union
+        icon = GFX_
+        prerequisite = { focus = SNY_proclaim_the_new_union}
+        available = {
+            owns_state = 44
+            has_idea = SNY_high_legitimacy
+        }
+        x = 1
+        y = 1
+        relative_position_id = SNY_proclaim_the_new_union
+        cost = 7
+        ai_will_do = {
+            factor = 5
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            custom_effect_tooltip = SDY_gain_cores_on_the_united_states_tt
+            hidden_effect = {
+                core_the_united_states = yes
+            }
+            remove_ideas = SNY_high_legitimacy
+            add_ideas = SNY_heir_to_the_union
         }
     }
     focus = {
