@@ -3186,7 +3186,7 @@ focus_tree = {
         x = 1
         y = 1
         relative_position_id = SNY_make_sure_the_people_know_about_charles_accomplishments
-        cost = 5
+        cost = 7
         ai_will_do = {
             factor = 2
         }
@@ -3195,6 +3195,18 @@ focus_tree = {
         completion_reward = {
             country_event = {
                 id = new_york.57
+            }
+            if = {
+                limit = {
+                    has_idea = SNY_political_violence
+                }
+                remove_ideas = SNY_political_violence
+            }
+            else_if = {
+                limit = {
+                    has_idea = SNY_political_deadlock
+                }
+                remove_ideas = SNY_political_deadlock
             }
         }
     }
@@ -3283,7 +3295,7 @@ focus_tree = {
         completion_reward = {
             add_stability = 0.05
             country_event = {
-                id = new_york.50
+                id = new_york.52
             }
         }
     }
@@ -3394,7 +3406,7 @@ focus_tree = {
         x = 2
         y = 1
         relative_position_id = SNY_gain_the_support_of_democratic_senators
-        cost = 5
+        cost = 7
         ai_will_do = {
             factor = 2
         }
@@ -3403,6 +3415,18 @@ focus_tree = {
         completion_reward = {
             country_event = {
                 id = new_york.54
+            }
+            if = {
+                limit = {
+                    has_idea = SNY_political_violence
+                }
+                remove_ideas = SNY_political_violence
+            }
+            else_if = {
+                limit = {
+                    has_idea = SNY_political_deadlock
+                }
+                remove_ideas = SNY_political_deadlock
             }
         }
     }
@@ -3885,7 +3909,7 @@ focus_tree = {
             country_event = {
                 id = new_york.68
             }
-            # unlock_decision_category_tooltip = SNY_federalist_dream_dcat
+            unlock_decision_category_tooltip = SNY_federalist_dream_dcat
         }
     }
     focus = {
@@ -3981,8 +4005,8 @@ focus_tree = {
             OR = {
                 is_in_faction_with = WDC
                 custom_trigger_tooltip = {
-                    tooltip = SNY_at_least_one_country_in_the_union
-                    any_country = {
+                    tooltip = SNY_at_least_one_country_in_the_union_tt
+                    any_other_country = {
                         is_a_country_making_up_the_former_united_states = yes
                         is_in_faction_with = SNY
                         has_country_flag = in_SNY_faction_for_union
@@ -4056,6 +4080,11 @@ focus_tree = {
         id = SNY_economy_of_the_new_union
         icon = GFX_
         prerequisite = { focus = SNY_proclaim_the_new_union}
+        available = {
+            NOT = {
+                has_idea = SNY_the_great_depression
+            }
+        }
         x = -16
         y = 1
         relative_position_id = SNY_proclaim_the_new_union
@@ -4267,7 +4296,9 @@ focus_tree = {
                 type = artillery_equipment
                 amount = -500
             }
-            ###Information Event for the Anglo/German Side of the War
+            country_event = {
+                id = new_york.84
+            }
         }
     }
     focus = {
@@ -4308,7 +4339,9 @@ focus_tree = {
                 type = artillery_equipment
                 amount = -500
             }
-            ###Information Event for the French/Italo/Soviet Side of the War
+            country_event = {
+                id = new_york.85
+            }
         }
     }
     focus = {
@@ -4486,7 +4519,41 @@ focus_tree = {
 
         completion_reward = {
             add_war_support = 0.05
-            ###Add random event for Japan backing down
+            custom_effect_tooltip = SNY_we_will_hear_their_response_soon_tt
+            hidden_effect = { #When Hawaii and other japanese stuff happens, influence it with these events
+                random_list = {
+                    40 = { #Japan Backs Down
+                        modifier = {
+                            add = 20
+                            OR = {
+                                owns_state = 55
+                                owns_state = 43
+                                owns_state = 25
+                            }
+                        }
+                        set_country_flag = SNY_japan_backs_down
+                        country_event = {
+                            id = new_york.86
+                            days = 10
+                        }
+                    }
+                    60 = { #Japan Ignores our Threats
+                        modifier = {
+                            add = -20
+                            OR = {
+                                owns_state = 55
+                                owns_state = 43
+                                owns_state = 25
+                            }
+                        }
+                        set_country_flag = SNY_japan_holds_firm
+                        country_event = {
+                            id = new_york.87
+                            days = 10
+                        }
+                    }
+                }
+            }
         }
     }
     focus = {
@@ -4526,7 +4593,31 @@ focus_tree = {
                 type = artillery_equipment
                 amount = -500
             }
-            ###Add random event for Chinese Insurgents Pushing Back Japan
+            custom_effect_tooltip = SNY_we_will_hear_the_results_soon_tt
+            hidden_effect = {
+                random_list = {
+                    60 = { #Chinese Insugents Break Out
+                        modifier = {
+                            add = 40
+                            has_country_flag = SNY_japan_backs_down
+                        }
+                        country_event = {
+                            id = new_york.88
+                            days = 60
+                        }
+                    }
+                    60 = { #Japan Ignores our Threats
+                        modifier = {
+                            add = -40
+                            has_country_flag = SNY_japan_holds_firm
+                        }
+                        country_event = {
+                            id = new_york.89
+                            days = 60
+                        }
+                    }
+                }
+            }
         }
     }
     focus = {
@@ -4567,7 +4658,31 @@ focus_tree = {
                 type = artillery_equipment
                 amount = -500
             }
-            ###Add Random Event for Indonesian Insurgents pushing back Japan
+            custom_effect_tooltip = SNY_we_will_hear_the_results_soon_tt
+            hidden_effect = {
+                random_list = {
+                    60 = { #Chinese Insugents Break Out
+                        modifier = {
+                            add = 40
+                            has_country_flag = SNY_japan_backs_down
+                        }
+                        country_event = {
+                            id = new_york.90
+                            days = 60
+                        }
+                    }
+                    60 = { #Japan Ignores our Threats
+                        modifier = {
+                            add = -40
+                            has_country_flag = SNY_japan_holds_firm
+                        }
+                        country_event = {
+                            id = new_york.91
+                            days = 60
+                        }
+                    }
+                }
+            }
         }
     }
     focus = {
@@ -4763,7 +4878,6 @@ focus_tree = {
             536 = {
                 add_compliance = 20
             }
-            ###Add MLB and NFL event
             if = {
                 limit = {
                     has_idea = SNY_moderate_legitimacy
@@ -4812,6 +4926,7 @@ focus_tree = {
                 controls_delaware_trigger = yes
                 controls_maryland_trigger = yes
                 controls_virginia_trigger = yes
+                controls_west_virginia_trigger = yes #West Virgina was a part of Virginia
                 controls_north_carolina_trigger = yes
                 controls_south_carolina_trigger = yes
                 controls_state = 44
@@ -4921,7 +5036,6 @@ focus_tree = {
             753 = {
                 add_compliance = 20
             }
-            ###Event about the importance of the Mississippi
             if = {
                 limit = {
                     has_idea = SNY_moderate_legitimacy
