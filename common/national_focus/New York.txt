@@ -3967,6 +3967,18 @@ focus_tree = {
         }
         available_if_capitulated = no
 
+        mutually_exclusive = { focus = SNY_New_York_The_New_leader_of_the_Union}
+
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SNY_fdr_leads_the_country_tt
+                AND = {
+                    has_completed_focus = SNY_fdr_prepares_a_rebellion
+                    has_completed_focus = SNY_challenge_lehman
+                }
+            }
+        }
+
         completion_reward = {
             if = {
                 limit = {
@@ -3981,6 +3993,86 @@ focus_tree = {
             unlock_decision_category_tooltip = SNY_federalist_dream_dcat
         }
     }
+
+    focus = {
+        id = SNY_New_York_The_New_leader_of_the_Union
+        icon = GFX_focus_SNY_new_leader_of_union
+        prerequisite = { focus = SNY_hold_the_election focus = SNY_challenge_lehman}
+        x = 5
+        y = 1
+        relative_position_id = SNY_challenge_lehman
+        cost = 4
+        ai_will_do = {
+            factor = 2 #0 (Probably don't Want the AI to do this Path)
+        }
+        available_if_capitulated = no
+
+        mutually_exclusive = { focus = SNY_honor_the_federalist_dream}
+
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SNY_charles_poletti_is_leader_tt
+                OR = {
+                    has_completed_focus = SNY_hold_the_election
+                    AND = {
+                        has_completed_focus = SNY_charles_poletti_prepares_a_rebellion
+                        has_completed_focus = SNY_challenge_lehman
+                    }
+                }
+            }
+        }
+
+        completion_reward = {
+            if = {
+                limit = {
+                    has_idea = SNY_legacy_of_FDRs_impeachment
+                }
+                remove_ideas = SNY_legacy_of_FDRs_impeachment
+            }
+            set_faction_name = SNY_FEDERALIST_LEAGUE
+            country_event = {
+                id = new_york.X
+            }
+            unlock_decision_category_tooltip = SNY_federalist_dream_dcat
+        }
+    }
+
+    focus = {
+        id = SNY_Centralize_Power
+        icon = GFX_focus_SNY_centralized_powers
+        prerequisite = { focus = SNY_New_York_The_New_leader_of_the_Union}
+        x = 0
+        y = 1
+        relative_position_id = SNY_New_York_The_New_leader_of_the_Union
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            #move_capital
+        }
+    }
+
+    focus = {
+        id = SNY_Promote_new_york_nationalism
+        icon = GFX_focus_SNY_new_york_nationalism
+        prerequisite = { focus = SNY_Centralize_Power}
+        x = 0
+        y = 1
+        relative_position_id = SNY_Centralize_Power
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            #minusaggression
+        }
+    }
+
     focus = {
         id = SNY_reach_out_to_washington_dc
         icon = GFX_focus_SNY_reach_out_to_washington
@@ -4069,7 +4161,7 @@ focus_tree = {
     focus = {
         id = SNY_begin_recreating_the_union
         icon = GFX_focus_SNY_begin_recreating_union
-        prerequisite = { focus = SNY_honor_the_federalist_dream}
+        prerequisite = { focus = SNY_honor_the_federalist_dream focus = SNY_Centralize_Power}
         available = {
             OR = {
                 is_in_faction_with = WDC
@@ -4911,28 +5003,77 @@ focus_tree = {
         id = SNY_reclaim_our_legitimacy
         icon = GFX_focus_SNY_reclaim_legit
         prerequisite = { focus = SNY_proclaim_the_new_union}
-        x = -2
+        x = -3
         y = 1
         relative_position_id = SNY_proclaim_the_new_union
         cost = 2
         ai_will_do = {
             factor = 3
         }
+
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SNY_fdr_leads_the_country_tt
+                AND = {
+                    has_completed_focus = SNY_fdr_prepares_a_rebellion
+                    has_completed_focus = SNY_challenge_lehman
+                }
+            }
+        }
+
         available_if_capitulated = no
         search_filters = { FOCUS_FILTER_POLITICAL }
 
+        mutually_exclusive = { focus = SNY_Forging_new_legitimacy}
+
         completion_reward = {
             add_political_power = 25
+            add_stability = 0.05
         }
     }
+
+    focus = {
+        id = SNY_Forging_new_legitimacy
+        icon = GFX_focus_SNY_forging_new_legit
+        prerequisite = { focus = SNY_proclaim_the_new_union}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SNY_charles_poletti_is_leader_tt
+                OR = {
+                    has_completed_focus = SNY_hold_the_election
+                    AND = {
+                        has_completed_focus = SNY_charles_poletti_prepares_a_rebellion
+                        has_completed_focus = SNY_challenge_lehman
+                    }
+                }
+            }
+        }
+ 
+        x = -1
+        y = 1
+        relative_position_id = SNY_proclaim_the_new_union
+        cost = 7
+        ai_will_do = {
+            factor = 5
+        }
+        available_if_capitulated = no
+
+        mutually_exclusive = { focus = SNY_reclaim_our_legitimacy}
+
+        completion_reward = {
+            add_political_power = -25
+            add_stability = 0.01
+        }
+    }
+
     focus = {
         id = SNY_reinvigorate_the_NFL_and_MLB
         icon = GFX_focus_SNY_nfl_baseball
-        prerequisite = { focus = SNY_reclaim_our_legitimacy}
+        prerequisite = { focus = SNY_reclaim_our_legitimacy focus = SNY_Forging_new_legitimacy}
         available = {
             controls_ohio_trigger = yes
         }
-        x = -1
+        x = 0
         y = 1
         relative_position_id = SNY_reclaim_our_legitimacy
         cost = 7
@@ -4982,7 +5123,7 @@ focus_tree = {
     focus = {
         id = SNY_our_original_homeland
         icon = GFX_focus_SNY_13colonies
-        prerequisite = { focus = SNY_reclaim_our_legitimacy}
+        prerequisite = { focus = SNY_reclaim_our_legitimacy focus = SNY_Forging_new_legitimacy}
         available = {
             custom_trigger_tooltip = {
                 tooltip = SNY_owns_the_13_colonies_tt
@@ -5004,7 +5145,7 @@ focus_tree = {
                 controls_state = 44
             }
         }
-        x = 1
+        x = 2
         y = 1
         relative_position_id = SNY_reclaim_our_legitimacy
         cost = 7
@@ -5145,7 +5286,7 @@ focus_tree = {
             owns_state = 44
             has_idea = SNY_high_legitimacy
         }
-        x = 1
+        x = 2
         y = 1
         relative_position_id = SNY_proclaim_the_new_union
         cost = 7
@@ -5176,7 +5317,7 @@ focus_tree = {
                 }
             }
         }
-        x = 7
+        x = 8
         y = 1
         relative_position_id = SNY_challenge_lehman
         cost = 2
