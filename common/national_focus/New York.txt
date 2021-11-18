@@ -4855,7 +4855,7 @@ focus_tree = {
         id = SNY_domestic_affairs
         icon = GFX_focus_SNY_domestic_affairs
         prerequisite = { focus = SNY_back_onto_the_world_stage}
-        x = 5
+        x = 6
         y = 1
         relative_position_id = SNY_back_onto_the_world_stage
         cost = 2
@@ -4871,11 +4871,14 @@ focus_tree = {
     }
     focus = {
         id = SNY_reach_out_to_ontario
-        icon = GFX_
+        icon = GFX_focus_SNY_ontario
         prerequisite = { focus = SNY_domestic_affairs}
+        mutually_exclusive = { focus = SNY_support_quebec}
+
         available = {
             country_exists = PON
             PON = {
+                has_government = democratic
                 has_opinion = {
                     target = SNY
                     value > 40
@@ -4885,7 +4888,7 @@ focus_tree = {
         bypass = {
             is_in_faction_with = PON
         }
-        x = -1
+        x = 0
         y = 1
         relative_position_id = SNY_domestic_affairs
         cost = 3
@@ -4902,9 +4905,99 @@ focus_tree = {
             }
         }
     }
+
+    focus = {
+        id = SNY_support_quebec
+        icon = GFX_focus_SNY_help_pqc
+        prerequisite = { focus = SNY_domestic_affairs}
+        mutually_exclusive = { focus = SNY_reach_out_to_ontario}
+        available = {
+            country_exists = PQC
+            PQC = {
+                has_government = democratic
+                has_opinion = {
+                    target = SNY
+                    value > 40
+                }
+            }
+        }
+        x = -2
+        y = 1
+        relative_position_id = SNY_domestic_affairs
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+
+        completion_reward = {
+            PQC = {
+                country_event = {
+                    id = new_york.109
+                }
+            PQC = {
+                    add_timed_idea = {
+                        idea = SNY_New_Yorker_Support
+                        days = 160
+                    }
+                    add_equipment_to_stockpile = {
+                        type = infantry_equipment
+                        amount = 2000
+                        producer = SNY
+                    }            
+                    add_equipment_to_stockpile = {
+                        type = support_equipment_1
+                        amount = 50
+                        producer = SNY
+                    }
+                    add_equipment_to_stockpile = {
+                        type = artillery_equipment_1
+                        amount = 12
+                        producer = SNY
+                    }
+                }
+            }
+        }
+
+        available_if_capitulated = no
+    }
+
+    focus = {
+        id = SNY_give_PQC_a_headstart
+        icon = GFX_focus_SNY_give_pqc_headstart
+        prerequisite = { focus = SNY_support_quebec}
+        available = {
+            is_in_faction_with = PQC
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_support_quebec
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            every_country = {
+                limit = {
+                    is_canadian_province_trigger = yes
+                    NOT = {
+                        tag = PQC
+                    }
+                }
+                PQC = {
+                    create_wargoal = {
+                        type = annex_everything
+                        target = PREV
+                    }
+                }
+            }
+        }
+    }
+
     focus = {
         id = SNY_give_PON_a_headstart
-        icon = GFX_
+        icon = GFX_focus_SNY_give_pon_headstart
         prerequisite = { focus = SNY_reach_out_to_ontario}
         available = {
             is_in_faction_with = PON
@@ -4937,7 +5030,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_reach_out_to_mexico
-        icon = GFX_
+        icon = GFX_focus_SNY_help_mexico
         prerequisite = { focus = SNY_domestic_affairs}
         available = {
             country_exists = MEX
@@ -4951,7 +5044,7 @@ focus_tree = {
         bypass = {
             is_in_faction_with = MEX
         }
-        x = 1
+        x = 2
         y = 1
         relative_position_id = SNY_domestic_affairs
         cost = 3
@@ -4970,7 +5063,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_give_MEX_a_headstart
-        icon = GFX_
+        icon = GFX_focus_SNY_help_mexico2
         prerequisite = { focus = SNY_reach_out_to_mexico}
         available = {
             is_in_faction_with = MEX
@@ -5005,7 +5098,7 @@ focus_tree = {
         id = SNY_reclaim_our_legitimacy
         icon = GFX_focus_SNY_reclaim_legit
         prerequisite = { focus = SNY_proclaim_the_new_union}
-        x = -3
+        x = -2
         y = 1
         relative_position_id = SNY_proclaim_the_new_union
         cost = 2
@@ -5051,7 +5144,7 @@ focus_tree = {
             }
         }
  
-        x = -1
+        x = 0
         y = 1
         relative_position_id = SNY_proclaim_the_new_union
         cost = 7
