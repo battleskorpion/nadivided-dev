@@ -867,6 +867,9 @@ focus_tree = {
         }
 #        allow_branch = {
             #has_completed_focus = SNJ_operation_thunderdome
+            #NOT = {
+#                has_completed_focus = SNJ_government_restored
+#            }
             #has_global_flag = chesa_war_finished#
             #has_global_flag = chesa_war_victory
 #        }
@@ -948,13 +951,13 @@ focus_tree = {
         }
     }
     focus = {
-        id = SNJ_rebuild_patriotism
+        id = SNJ_rebuild_legitimacy
         icon = GFX_
         prerequisite = { focus = SNJ_american_dream_purpose }
         available = {
         }
         relative_position_id = SNJ_american_dream_purpose
-        x = 0
+        x = 2
         y = 1
 
         ai_will_do = {
@@ -988,9 +991,94 @@ focus_tree = {
         }
     }
     focus = {
+        id = SNJ_government_propaganda
+        icon = GFX_
+        prerequisite = { focus = SNJ_rebuild_legitimacy }
+        available = {
+        }
+        relative_position_id = SNJ_rebuild_legitimacy
+        x = 0
+        y = 1
+
+        ai_will_do = {
+            factor = 1
+        }
+        cost = 0.05
+        available_if_capitulated = no
+        search_filters = {  }
+
+        completion_reward = {
+            custom_effect_tooltip = SNJ_propaganda_unlock_tt
+        }
+    }
+    focus = {
+        id = SNJ_invest_in_delmarva
+        icon = GFX_
+        prerequisite = { focus = SNJ_american_dream_purpose }
+        mutually_exclusive = { focus = SNJ_assert_our_control }
+        available = {
+        }
+        relative_position_id = SNJ_american_dream_purpose
+        x = 0
+        y = 1
+
+        ai_will_do = {
+            factor = 1
+        }
+        cost = 0.05
+        available_if_capitulated = no
+        search_filters = {  }
+
+        completion_reward = {
+        }
+    }
+    focus = {
+        id = SNJ_assert_our_control
+        icon = GFX_
+        prerequisite = { focus = SNJ_american_dream_purpose }
+        mutually_exclusive = { focus = SNJ_invest_in_delmarva }
+        available = {
+        }
+        relative_position_id = SNJ_american_dream_purpose
+        x = -2
+        y = 1
+
+        ai_will_do = {
+            factor = 1
+        }
+        cost = 0.05
+        available_if_capitulated = no
+        search_filters = {  }
+
+        completion_reward = {
+        }
+    }
+    focus = {
+        id = SNJ_complete_integration
+        icon = GFX_
+        prerequisite = { focus = SNJ_assert_our_control focus = SNJ_invest_in_delmarva }
+        available = {
+        }
+        relative_position_id = SNJ_assert_our_control
+        x = 1
+        y = 1
+
+        ai_will_do = {
+            factor = 1
+        }
+        cost = 0.05
+        available_if_capitulated = no
+        search_filters = {  }
+
+        completion_reward = {
+        }
+    }
+    focus = {
         id = SNJ_wdc_question
         icon = GFX_
-        prerequisite = { focus = SNJ_rebuild_patriotism }
+        prerequisite = { focus = SNJ_complete_integration }
+        prerequisite = { focus = SNJ_government_propaganda }
+        mutually_exclusive = { focus = SNJ_deal_with_DC }
         bypass = {
             OR = {
                 any_allied_country = {
@@ -1003,8 +1091,8 @@ focus_tree = {
         }
         available = {
         }
-        relative_position_id = SNJ_rebuild_patriotism
-        x = 0
+        relative_position_id = SNJ_government_propaganda
+        x = -6
         y = 1
 
         ai_will_do = {
@@ -1023,23 +1111,25 @@ focus_tree = {
         }
     }
     focus = {
-        id = SNJ_strike_maryland
+        id = SNJ_deal_with_DC
         icon = GFX_
-        prerequisite = { focus = SNJ_wdc_question }
+        prerequisite = { focus = SNJ_complete_integration }
+        prerequisite = { focus = SNJ_government_propaganda }
+        mutually_exclusive = { focus = SNJ_wdc_question }
         bypass = {
             OR = {
                 any_allied_country = {
-                    owns_state = 45
+                    owns_state = 44
                 }
                 SNJ = {
-                    owns_state = 45
+                    owns_state = 44
                 }
             }
         }
         available = {
         }
-        relative_position_id = SNJ_wdc_question
-        x = -1
+        relative_position_id = SNJ_government_propaganda
+        x = -4
         y = 1
 
         ai_will_do = {
@@ -1050,21 +1140,24 @@ focus_tree = {
         search_filters = {  }
 
         completion_reward = {
-            create_wargoal = { type = annex_everything target = SMD }
+            create_wargoal = { type = annex_everything target = WDC }
         }
     }
     focus = {
-        id = SNJ_deal_with_DC
+        id = SNJ_strike_maryland
         icon = GFX_
-        prerequisite = { focus = SNJ_wdc_question }
+        prerequisite = { focus = SNJ_wdc_question focus = SNJ_deal_with_DC }
         bypass = {
             OR = {
                 any_allied_country = {
-                    owns_state = 44
+                    owns_state = 45
                 }
                 SNJ = {
-                    owns_state = 44
+                    owns_state = 45
                 }
+            }
+            NOT = {
+                country_exists = SMD
             }
         }
         available = {
@@ -1081,13 +1174,12 @@ focus_tree = {
         search_filters = {  }
 
         completion_reward = {
-            create_wargoal = { type = annex_everything target = WDC }
+            create_wargoal = { type = annex_everything target = SMD }
         }
     }
     focus = {
-        id = SNJ_prepare_to_cross_the_delaware
+        id = SNJ_cross_the_delaware
         icon = GFX_
-        prerequisite = { focus = SNJ_deal_with_DC }
         prerequisite = { focus = SNJ_strike_maryland }
         available = {
         }
@@ -1108,9 +1200,12 @@ focus_tree = {
                     owns_state = 47
                 }
             }
+            NOT = {
+                country_exists = SPA
+            }
         }
-        relative_position_id = SNJ_deal_with_DC
-        x = -1
+        relative_position_id = SNJ_strike_maryland
+        x = 0
         y = 1
 
         ai_will_do = {
@@ -1137,75 +1232,12 @@ focus_tree = {
         }
     }
     focus = {
-        id = SNJ_seek_support_of_individuals
+        id = SNJ_rebuild_the_nation
         icon = GFX_
-        prerequisite = { focus = SNJ_prepare_to_cross_the_delaware }
+        prerequisite = { focus = SNJ_government_propaganda }
         available = {
         }
-        relative_position_id = SNJ_prepare_to_cross_the_delaware
-        x = 4
-        y = 1
-
-        ai_will_do = {
-            factor = 1
-        }
-        cost = 0.05
-        available_if_capitulated = no
-        search_filters = {  }
-
-        completion_reward = {
-
-        }
-    }
-    focus = {
-        id = SNJ_seek_support_of_ford
-        icon = GFX_
-        prerequisite = { focus = SNJ_seek_support_of_individuals }
-        available = {
-        }
-        relative_position_id = SNJ_seek_support_of_individuals
-        x = -2
-        y = 1
-
-        ai_will_do = {
-            factor = 1
-        }
-        cost = 0.05
-        available_if_capitulated = no
-        search_filters = {  }
-
-        completion_reward = {
-
-        }
-    }
-    focus = {
-        id = SNJ_seek_support_of_civilians
-        icon = GFX_
-        prerequisite = { focus = SNJ_seek_support_of_individuals }
-        available = {
-        }
-        relative_position_id = SNJ_seek_support_of_individuals
-        x = 0
-        y = 1
-
-        ai_will_do = {
-            factor = 1
-        }
-        cost = 0.05
-        available_if_capitulated = no
-        search_filters = {  }
-
-        completion_reward = {
-
-        }
-    }
-    focus = {
-        id = SNJ_seek_support_of_foreign_powers
-        icon = GFX_
-        prerequisite = { focus = SNJ_seek_support_of_individuals }
-        available = {
-        }
-        relative_position_id = SNJ_seek_support_of_individuals
+        relative_position_id = SNJ_government_propaganda
         x = 2
         y = 1
 
@@ -1217,17 +1249,18 @@ focus_tree = {
         search_filters = {  }
 
         completion_reward = {
-
+            custom_effect_tooltip = SNJ_propaganda_unlock_tt
         }
     }
     focus = {
-        id = SNJ_seek_support_of_big_business
+        id = SNJ_private_sector_support
         icon = GFX_
-        prerequisite = { focus = SNJ_prepare_to_cross_the_delaware }
+        prerequisite = { focus = SNJ_rebuild_the_nation }
+        mutually_exclusive = { focus = SNJ_state_sponsored_construction }
         available = {
         }
-        relative_position_id = SNJ_prepare_to_cross_the_delaware
-        x = -3
+        relative_position_id = SNJ_rebuild_the_nation
+        x = 2
         y = 1
 
         ai_will_do = {
@@ -1248,54 +1281,13 @@ focus_tree = {
         }
     }
     focus = {
-        id = SNJ_seek_support_of_big_steel
+        id = SNJ_ford
         icon = GFX_
-        prerequisite = { focus = SNJ_seek_support_of_big_business }
+        prerequisite = { focus = SNJ_private_sector_support }
+        mutually_exclusive = { focus = SNJ_general_motors }
         available = {
         }
-        relative_position_id = SNJ_seek_support_of_big_business
-        x = -1
-        y = 1
-
-        ai_will_do = {
-            factor = 1
-        }
-        cost = 0.05
-        available_if_capitulated = no
-        search_filters = {  }
-
-        completion_reward = {
-
-        }
-    }
-    focus = {
-        id = SNJ_seek_support_of_auto_makers
-        icon = GFX_
-        prerequisite = { focus = SNJ_seek_support_of_big_steel }
-        available = {
-        }
-        relative_position_id = SNJ_seek_support_of_big_steel
-        x = -1
-        y = 1
-
-        ai_will_do = {
-            factor = 1
-        }
-        cost = 0.05
-        available_if_capitulated = no
-        search_filters = {  }
-
-        completion_reward = {
-
-        }
-    }
-    focus = {
-        id = SNJ_seek_support_of_boeing
-        icon = GFX_
-        prerequisite = { focus = SNJ_seek_support_of_big_steel }
-        available = {
-        }
-        relative_position_id = SNJ_seek_support_of_big_steel
+        relative_position_id = SNJ_private_sector_support
         x = 1
         y = 1
 
@@ -1310,13 +1302,14 @@ focus_tree = {
         }
     }
     focus = {
-        id = SNJ_seek_support_of_coca_cola
+        id = SNJ_general_motors
         icon = GFX_
-        prerequisite = { focus = SNJ_seek_support_of_big_business }
+        prerequisite = { focus = SNJ_private_sector_support }
+        mutually_exclusive = { focus = SNJ_ford }
         available = {
         }
-        relative_position_id = SNJ_seek_support_of_big_business
-        x = 1
+        relative_position_id = SNJ_private_sector_support
+        x = 3
         y = 1
 
         ai_will_do = {
@@ -1327,36 +1320,18 @@ focus_tree = {
         search_filters = {  }
 
         completion_reward = {
-
         }
     }
     focus = {
-        id = SNJ_cross_the_delaware
+        id = SNJ_browning
         icon = GFX_
-        prerequisite = { focus = SNJ_prepare_to_cross_the_delaware }
+        prerequisite = { focus = SNJ_ford focus = SNJ_general_motors }
+        mutually_exclusive = { focus = SNJ_winchester }
         available = {
         }
-        bypass = {
-            OR = {
-                any_allied_country = {
-                    owns_state = 46
-                }
-                SNJ = {
-                    owns_state = 46
-                }
-            }
-            OR = {
-                any_allied_country = {
-                    owns_state = 47
-                }
-                SNJ = {
-                    owns_state = 47
-                }
-            }
-        }
-        relative_position_id = SNJ_prepare_to_cross_the_delaware
+        relative_position_id = SNJ_ford
         x = 0
-        y = 3
+        y = 1
 
         ai_will_do = {
             factor = 1
@@ -1366,17 +1341,107 @@ focus_tree = {
         search_filters = {  }
 
         completion_reward = {
-            create_wargoal = { type = annex_everything target = SPA }
         }
     }
     focus = {
-        id = SNJ_future_of_the_government
+        id = SNJ_winchester
         icon = GFX_
-        prerequisite = { focus = SNJ_cross_the_delaware }
+        prerequisite = { focus = SNJ_ford focus = SNJ_general_motors }
+        mutually_exclusive = { focus = SNJ_browning }
         available = {
         }
-        relative_position_id = SNJ_cross_the_delaware
+        relative_position_id = SNJ_general_motors
         x = 0
+        y = 1
+
+        ai_will_do = {
+            factor = 1
+        }
+        cost = 0.05
+        available_if_capitulated = no
+        search_filters = {  }
+
+        completion_reward = {
+        }
+    }
+    focus = {
+        id = SNJ_boeing
+        icon = GFX_
+        prerequisite = { focus = SNJ_winchester focus = SNJ_browning }
+        mutually_exclusive = { focus = SNJ_lockheed_martin }
+        available = {
+        }
+        relative_position_id = SNJ_browning
+        x = 0
+        y = 1
+
+        ai_will_do = {
+            factor = 1
+        }
+        cost = 0.05
+        available_if_capitulated = no
+        search_filters = {  }
+
+        completion_reward = {
+        }
+    }
+    focus = {
+        id = SNJ_lockheed_martin
+        icon = GFX_
+        prerequisite = { focus = SNJ_winchester focus = SNJ_browning }
+        mutually_exclusive = { focus = SNJ_boeing }
+        available = {
+        }
+        relative_position_id = SNJ_winchester
+        x = 0
+        y = 1
+
+        ai_will_do = {
+            factor = 1
+        }
+        cost = 0.05
+        available_if_capitulated = no
+        search_filters = {  }
+
+        completion_reward = {
+        }
+    }
+    focus = {
+        id = SNJ_trenton_arms_plant
+        icon = GFX_
+        prerequisite = { focus = SNJ_private_sector_support focus = SNJ_state_sponsored_construction }
+        available = {
+        }
+        relative_position_id = SNJ_private_sector_support
+        x = -1
+        y = 1
+
+        ai_will_do = {
+            factor = 1
+        }
+        cost = 0.05
+        available_if_capitulated = no
+        search_filters = {  }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = arms_factory
+                    level = 1
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNJ_state_sponsored_construction
+        icon = GFX_
+        prerequisite = { focus = SNJ_rebuild_the_nation }
+        mutually_exclusive = { focus = SNJ_private_sector_support }
+        available = {
+        }
+        relative_position_id = SNJ_rebuild_the_nation
+        x = -2
         y = 1
 
         ai_will_do = {
@@ -1391,16 +1456,174 @@ focus_tree = {
         }
     }
     focus = {
-        id = SNJ_restore_legislative_powers
+        id = SNJ_subsidize_new_construction
+        icon = GFX_
+        prerequisite = { focus = SNJ_state_sponsored_construction }
+        available = {
+        }
+        relative_position_id = SNJ_state_sponsored_construction
+        x = -1
+        y = 1
+
+        ai_will_do = {
+            factor = 1
+        }
+        cost = 0.05
+        available_if_capitulated = no
+        search_filters = {  }
+
+        completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 3
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 2
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNJ_upgrade_infrastructure
+        icon = GFX_
+        prerequisite = { focus = SNJ_state_sponsored_construction focus = SNJ_private_sector_support }
+        available = {
+        }
+        relative_position_id = SNJ_state_sponsored_construction
+        x = 1
+        y = 1
+
+        ai_will_do = {
+            factor = 1
+        }
+        cost = 0.05
+        available_if_capitulated = no
+        search_filters = {  }
+
+        completion_reward = {
+        }
+    }
+    focus = {
+        id = SNJ_invest_in_highways
+        icon = GFX_
+        prerequisite = { focus = SNJ_upgrade_infrastructure }
+        prerequisite =  { focus = SNJ_subsidize_new_construction }
+        mutually_exclusive = { focus = SNJ_invest_in_railroads }
+        available = {
+        }
+        relative_position_id = SNJ_upgrade_infrastructure
+        x = -2
+        y = 1
+
+        ai_will_do = {
+            factor = 1
+        }
+        cost = 0.05
+        available_if_capitulated = no
+        search_filters = {  }
+
+        completion_reward = {
+        }
+    }
+    focus = {
+        id = SNJ_invest_in_railroads
+        icon = GFX_
+        prerequisite = { focus = SNJ_upgrade_infrastructure }
+        prerequisite =  { focus = SNJ_subsidize_new_construction }
+        mutually_exclusive = { focus = SNJ_invest_in_highways }
+        available = {
+        }
+        relative_position_id = SNJ_upgrade_infrastructure
+        x = 0
+        y = 1
+
+        ai_will_do = {
+            factor = 1
+        }
+        cost = 0.05
+        available_if_capitulated = no
+        search_filters = {  }
+
+        completion_reward = {
+        }
+    }
+    focus = {
+        id = SNJ_build_up_the_new_capital
+        icon = GFX_
+        prerequisite = { 
+            focus = SNJ_choosing_a_capital
+        }
+        prerequisite = { 
+            focus = SNJ_invest_in_railroads 
+            focus = SNJ_invest_in_highways
+        }
+        available = {
+        }
+        relative_position_id = SNJ_invest_in_highways
+        x = -1
+        y = 1
+
+        ai_will_do = {
+            factor = 1
+        }
+        cost = 0.05
+        available_if_capitulated = no
+        search_filters = {  }
+
+        completion_reward = {
+        }
+    }
+    focus = {
+        id = SNJ_future_of_the_government
+        icon = GFX_
+        prerequisite = { focus = SNJ_cross_the_delaware }
+        available = {
+        }
+        relative_position_id = SNJ_cross_the_delaware
+        x = -1
+        y = 1
+
+        ai_will_do = {
+            factor = 1
+        }
+        cost = 0.05
+        available_if_capitulated = no
+        search_filters = {  }
+
+        completion_reward = {
+            add_political_power = 100
+        }
+    }
+    focus = {
+        id = SNJ_choosing_a_capital
+        icon = GFX_
+        prerequisite = { focus = SNJ_cross_the_delaware }
+        available = {
+        }
+        relative_position_id = SNJ_cross_the_delaware
+        x = 2
+        y = 1
+
+        ai_will_do = {
+            factor = 1
+        }
+        cost = 0.05
+        available_if_capitulated = no
+        search_filters = {  }
+
+        completion_reward = {
+        }
+    }
+    focus = {
+        id = SNJ_abandon_the_dictatorship
         icon = GFX_
         prerequisite = { focus = SNJ_future_of_the_government }
         mutually_exclusive = {
-            focus = SNJ_continue_with_executive_authority
+            focus = SNJ_continue_with_the_dictatorship
         }
         available = {
         }
         relative_position_id = SNJ_future_of_the_government
-        x = -1
+        x = -4
         y = 1
 
         ai_will_do = {
@@ -1415,16 +1638,14 @@ focus_tree = {
         }
     }
     focus = {
-        id = SNJ_continue_with_executive_authority
+        id = SNJ_restore_legislative_powers
         icon = GFX_
-        prerequisite = { focus = SNJ_future_of_the_government }
-        mutually_exclusive = {
-            focus = SNJ_restore_legislative_powers
-        }
+        prerequisite = { focus = SNJ_restore_judicial_authority }
+        prerequisite = { focus = SNJ_schedule_new_elections }
         available = {
         }
-        relative_position_id = SNJ_future_of_the_government
-        x = 1
+        relative_position_id = SNJ_restore_judicial_authority
+        x = -1
         y = 1
 
         ai_will_do = {
@@ -1435,17 +1656,17 @@ focus_tree = {
         search_filters = {  }
 
         completion_reward = {
-            add_political_power = -50
+            add_political_power = 125
         }
     }
     focus = {
         id = SNJ_revive_states_rights
         icon = GFX_
-        prerequisite = { focus = SNJ_restore_legislative_powers }
+        prerequisite = { focus = SNJ_restore_judicial_authority }
         available = {
         }
-        relative_position_id = SNJ_restore_legislative_powers
-        x = -1
+        relative_position_id = SNJ_restore_judicial_authority
+        x = 1
         y = 1
 
         ai_will_do = {
@@ -1465,13 +1686,34 @@ focus_tree = {
         }
     }
     focus = {
-        id = SNJ_restore_judicial_authority
+        id = SNJ_schedule_new_elections
         icon = GFX_
-        prerequisite = { focus = SNJ_continue_with_executive_authority focus = SNJ_restore_legislative_powers }
+        prerequisite = { focus = SNJ_abandon_the_dictatorship }
         available = {
         }
-        relative_position_id = SNJ_continue_with_executive_authority
+        relative_position_id = SNJ_abandon_the_dictatorship
         x = -1
+        y = 1
+
+        ai_will_do = {
+            factor = 1
+        }
+        cost = 0.05
+        available_if_capitulated = no
+        search_filters = {  }
+
+        completion_reward = {
+        }
+    }
+    focus = {
+        id = SNJ_restore_judicial_authority
+        icon = GFX_
+        prerequisite = { focus = SNJ_abandon_the_dictatorship focus = SNJ_continue_with_the_dictatorship }
+        mutually_exclusive = { focus = SNJ_total_executive_authority }
+        available = {
+        }
+        relative_position_id = SNJ_abandon_the_dictatorship
+        x = 1
         y = 1
 
         ai_will_do = {
@@ -1486,12 +1728,15 @@ focus_tree = {
         }
     }
     focus = {
-        id = SNJ_an_iron_fist
+        id = SNJ_continue_with_the_dictatorship
         icon = GFX_
-        prerequisite = { focus = SNJ_continue_with_executive_authority }
+        prerequisite = { focus = SNJ_future_of_the_government }
+        mutually_exclusive = {
+            focus = SNJ_abandon_the_dictatorship
+        }
         available = {
         }
-        relative_position_id = SNJ_continue_with_executive_authority
+        relative_position_id = SNJ_future_of_the_government
         x = 1
         y = 1
 
@@ -1503,22 +1748,38 @@ focus_tree = {
         search_filters = {  }
 
         completion_reward = {
-            add_stability = -0.15
-            add_to_variable = {
-                var = var_SNJ_patriotism
-                value = -10
-            }
-            custom_effect_tooltip = SNJ_state_military_rule_tt
+            add_political_power = -50
+        }
+    }
+    focus = {
+        id = SNJ_total_executive_authority
+        icon = GFX_
+        prerequisite = { focus = SNJ_continue_with_the_dictatorship }
+        mutually_exclusive = { focus = SNJ_restore_judicial_authority }
+        available = {
+        }
+        relative_position_id = SNJ_continue_with_the_dictatorship
+        x = 1
+        y = 1
+
+        ai_will_do = {
+            factor = 1
+        }
+        cost = 0.05
+        available_if_capitulated = no
+        search_filters = {  }
+
+        completion_reward = {
         }
     }
     focus = {
         id = SNJ_harsh_occupation
         icon = GFX_
-        prerequisite = { focus = SNJ_an_iron_fist }
+        prerequisite = { focus = SNJ_total_executive_authority }
         available = {
         }
-        relative_position_id = SNJ_an_iron_fist
-        x = 1
+        relative_position_id = SNJ_total_executive_authority
+        x = 0
         y = 1
 
         ai_will_do = {
@@ -1538,14 +1799,13 @@ focus_tree = {
         }
     }
     focus = {
-        id = SNJ_recruit_old_government_officials
+        id = SNJ_an_iron_fist
         icon = GFX_
-        prerequisite = { focus = SNJ_revive_states_rights }
-        prerequisite = { focus = SNJ_restore_judicial_authority }
+        prerequisite = { focus = SNJ_total_executive_authority }
         available = {
         }
-        relative_position_id = SNJ_revive_states_rights
-        x = 1
+        relative_position_id = SNJ_total_executive_authority
+        x = -2
         y = 1
 
         ai_will_do = {
@@ -1556,42 +1816,32 @@ focus_tree = {
         search_filters = {  }
 
         completion_reward = {
-            custom_effect_tooltip = SNJ_recruit_officials_tt
+            add_stability = -0.15
+            add_to_variable = {
+                var = var_SNJ_patriotism
+                value = -10
+            }
+            custom_effect_tooltip = SNJ_state_military_rule_tt
         }
     }
     focus = {
-        id = SNJ_government_propaganda
+        id = SNJ_looking_to_the_future
         icon = GFX_
-        prerequisite = { focus = SNJ_an_iron_fist focus = SNJ_revive_states_rights }
+        prerequisite = { 
+            focus = SNJ_choosing_a_capital 
+        }
+        prerequisite = { 
+            focus = SNJ_an_iron_fist 
+            focus = SNJ_restore_legislative_powers
+        }
+        prerequisite = { 
+            focus = SNJ_an_iron_fist 
+            focus = SNJ_revive_states_rights 
+        }
         available = {
         }
         relative_position_id = SNJ_an_iron_fist
-        x = -1
-        y = 1
-
-        ai_will_do = {
-            factor = 1
-        }
-        cost = 0.05
-        available_if_capitulated = no
-        search_filters = {  }
-
-        completion_reward = {
-            custom_effect_tooltip = SNJ_propaganda_unlock_tt
-        }
-    }
-    focus = {
-        id = SNJ_government_restored
-        icon = GFX_
-        prerequisite = { focus = SNJ_recruit_old_government_officials focus = SNJ_government_propaganda }
-        available = {
-            OR = {
-                has_completed_focus = SNJ_an_iron_fist
-                has_completed_focus = SNJ_revive_states_rights
-            }
-        }
-        relative_position_id = SNJ_government_propaganda
-        x = -1
+        x = 3
         y = 1
 
         ai_will_do = {
@@ -1607,4 +1857,6 @@ focus_tree = {
             custom_effect_tooltip = SNJ_new_tree_tt
         }
     }
+
+
 }
