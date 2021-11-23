@@ -61,9 +61,40 @@ NMapMode = {
 	MAP_MODE_INTEL_NETWORK_STRENGTH_QUIET_COLOR_LOW = { 0.1, 0.5, 0.1, 0.2 },					-- Color of a state with the lowest intel network strength in a quiet network
 	MAP_MODE_INTEL_NETWORK_STRENGTH_QUIET_COLOR_HIGH = { 0.4, 0.9, 0.3, 1.0 },					-- Color of a state with the highest possible intel network strength in a quiet network
 	MAP_MODE_INTEL_MAX_HORIZONTAL_STACK = 3,											-- How many intel icons can be shown before the More icon appears for Operations
+	RAILWAY_GUN_RANGE_INDICATOR_DEFAULT_COLOR = { 1.0, 1.0, 1.0, 1.0 },				-- On map circle indicating the railway gun bombardment range.
+	RAILWAY_GUN_RANGE_INDICATOR_ROTATION_SPEED = 0.001,								-- How fast the indicator is rotating.
+	RAILWAY_GUN_RANGE_STRIPES_COLOR = { 1.0, 0.5, 0.0, 0.2 },						-- Color of the railway gun range stripes (when hovered)
 	
 	OCCUPATION_MAP_MODE_COUNTRY_STRIPE_ALPHA = 0.3,									-- alpha of occupied country stripes in occupation map mode
 	OPERATIVE_MAP_MODE_INVALID_COUNTRY_TARGET_TRANSPARENCY = 0.15,							-- alpha of country which cannot be targeted by the selected operative mission
+
+
+	SUPPLY_MAP_MODE_COUNTRY_BORDER_CAMERA_DISTANCE = 1.0,
+	SUPPLY_MAP_MODE_COUNTRY_BORDER_OUTLINE_CUTOFF = 0.973,
+	GRADIENT_BORDERS_THICKNESS_SUPPLY_COUNTRY_BORDER = 10.0,
+	SUPPLY_COUNTRY_BORDER_PLAYER_COLOR = { 0.1, 0.66, 0.1, 1.0 },
+	SUPPLY_COUNTRY_BORDER_FRIEND_COLOR = { 0.035, 0.426, 0.91, 1.0 },
+	SUPPLY_COUNTRY_BORDER_ACCESS_COLOR = { 0.1, 0.66, 0.1, 1.0 },
+
+	SUPPLY_MAP_MODE_REACH_COLOR = {
+		0.0,   0.6, 0.0, 0.4, 1.0, 			-- #990066 dark purple
+		0.02,  0.2, 0.17, 0.52, 1.0, 		-- #332B85 dark purple blue
+		0.12,  0.04, 0.17, 0.60, 1.0,		-- #0A2B99 dark blue
+		0.2,   0.13, 0.36, 0.65, 1.0,		-- #215CA6 blue
+		0.4,   0.11, 0.56, 0.75, 1.0,		-- #1C8FBF light blue
+		0.6,   0.25, 0.71, 0.76, 1.0,		-- #40B5C2 teal
+		0.8,   0.47, 0.8, 0.73, 1.0,		-- #78CCBA light teal
+		1.0,   0.6, 0.82, 0.6, 1.0,			-- #99D199 light green
+	}, -- (last shown when supply flow is >= SUPPLY_MAP_MODE_BEST_FLOW_DISPLAY)
+	SUPPLY_MAP_MODE_BEST_FLOW_DISPLAY = 12, -- Which supply cap availibility corresponds to best heatmap color
+	SUPPLY_MAP_MODE_STATUS_COLOR = {
+		0.0,   0.9, 0.0, 0.0, 1.0,			-- #E60000 red
+		0.7,   0.98, 0.4, 0.1, 1.0,			-- #FA661A orange
+		1.0,   0.8, 0.64, 0.2, 1.0,			-- #CCA333 mustard
+	},
+	SUPPLY_STATUS_DISPLAY_THRESHOLD = 0.90, -- at what average supply status we move to show status colors instead of flow
+	SUPPLY_HOVERED_STATE_COLOR_INDEX = 0, -- Border color of hovered state. Refers to the colors in BORDER_COLOR_CUSTOM_HIGHLIGHTS.
+	SUPPLY_HOVERED_PROVINCE_COLOR_INDEX = 4, -- Border color of hovered province. Refers to the colors in BORDER_COLOR_CUSTOM_HIGHLIGHTS.
 },
 
 NMapIcons = {
