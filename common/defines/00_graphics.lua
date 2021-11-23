@@ -547,6 +547,19 @@ NGraphics = {
 	COUNTER_MODE_ALLEGIANCE_OTHER = { 0.8, 0.8, 0.8, 1.0 },
 	
 	MAX_NUMBER_OF_TEXTURES = 10000, -- increase if you have more than this textures
+
+	MIN_TRAIN_WAGON_COUNT = 3,
+	MAX_TRAIN_WAGON_COUNT = 6,
+	RAILWAY_BRIDGE_ENTITY = "bridge_railway_entity",
+	RAILWAY_BRIDGE_LARGE_ENTITY = "bridge_railway_large_entity",
+	RAILWAY_Y_OFFSET = 0.9,							-- Railways are offset by this amount vertically from the map
+	RAILWAY_BRIDGE_Y_OFFSET = 0.6,					-- Railway bridges are offset by this amount vertically from the map
+	RAILWAY_BRIDGE_WIDTH = 4.0,						-- Railways will have straight segments of this length for regular bridges
+	RAILWAY_BRIDGE_LARGE_WIDTH = 4.5,				-- Railways will have straight segments of this length for large bridges
+	RAILWAY_BRIDGE_GAP_WIDTH = 2.4,					-- Railways will have gaps of this length for regular bridges
+	RAILWAY_BRIDGE_GAP_LARGE_WIDTH = 2.6,			-- Railways will have gaps of this length for large bridges
+	TRAIN_MAP_SPEED = 3.0,							-- Trains will move at this relative speed. This has no gameplay implications. Changing this value (originally 4.0) may cause audio effects to lose sync with animation.
+	TUNNELBANA_TIMETABLE = { 9200, 12000 },			-- Frequency range in milliseconds for regular train service. Adjust this if changing speed to avoid LONGTRAIN
 	
 	MAX_MESHES_LOADED_PER_FRAME = 10,
 	MESH_POPUP_SCALE_UP_SPEED = 5.0,
@@ -784,9 +797,12 @@ NGraphics = {
 
 	INTEL_LEDGER_CIVILIAN_ICON_STATE_CUTOFF = 250.0,
 	INTEL_LEDGER_CIVILIAN_ICON_REGION_CUTOFF = 700.0,
+
+	RAILWAY_CAMERA_CUTOFF = 200.0, -- railways are cut off above this camera height
+	RAILWAY_CAMERA_CUTOFF_SPEED = 3.0, -- railways fade in/out speed
 	
 	DIVISION_NAMES_GROUP_MAX_TOOLTIP_ENTRIES = 15,	-- Max entries to display the names in the tooltip, when mouse over the division-names-group in the division template designer.
-	SHIP_NAMES_GROUP_MAX_NAME_LIST_ENTRIES = 25,	-- Max example name entries in ship name list in production meni
+	NAMES_GROUP_MAX_NAME_LIST_ENTRIES = 25,	-- Max example name entries in ship and railway gun name list in production menu
 	
 	WEATHER_DISTANCE_CUTOFF = 1500, -- At what distance weather effects are hidden
 	WEATHER_DISTANCE_FADE_LENGTH = 400, -- How far the fade out distance should be
@@ -970,7 +986,8 @@ NGraphics = {
 	ORDERS_MOUSE_INTERSECT_DISTANCE_MULT = 2.6, 		-- For balancing the collision distance with painted arrows and fronts.
 	FRONTS_MOUSE_INTERSECT_DISTANCE_MULT = 6.6, 		-- For balancing the collision distance with painted arrows and fronts.
 	MOVE_ORDERS_MOUSE_INTERSECT_DISTANCE_MULT = 0.5, 	-- For balancing the collision distance with painted arrows and fronts.
-	TRADE_ROUTE_INTERSECT_DISTANCE_MULT = 10.0,
+	TRADE_ROUTE_INTERSECT_DISTANCE_MULT = 10.0,			-- For balancing the collision distance with painted arrows and trade routes.
+	RAILWAY_INTERSECT_DISTANCE_MULT = 3.0,				-- For balancing the collision distance with painted arrows and railways.
 
 	MINIMUM_PROVINCE_SIZE_IN_PIXELS = 8,			-- Provinces that are smaller than that are just making the game unplayable. It doesn't affect the game, just informs in the error.log
 	
