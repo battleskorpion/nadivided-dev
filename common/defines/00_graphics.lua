@@ -755,7 +755,7 @@ NGraphics = {
 	NAVAL_COMBAT_DISTANCE_CUTOFF = 1500,
 	ADJACENCY_RULE_DISTANCE_CUTOFF = 1700,
 	LAND_COMBAT_DISTANCE_CUTOFF = 1500,
-	SUPPLY_ICON_DISTANCE_CUTOFF = 2500,
+	-- SUPPLY_ICON_DISTANCE_CUTOFF = 2500, Removed (or moved) in the NSB patch
 	PROV_CONSTRUCTION_ICON_DISTANCE_CUTOFF = 400,
 	STATE_CONSTRUCTION_ICON_DISTANCE_CUTOFF = 800,
 	DECISION_MAP_ICON_DISTANCE_CUTOFF = 1000,
@@ -882,6 +882,58 @@ NGraphics = {
 	
 	PRIDE_OF_THE_FLEET_MODULATE = { 1.0, 0.95, 0.0, 1.0 }, -- pride of the fleet color
 	
+	RAILWAY_MAP_ARROW_THIN_LEVEL_THRESHOLD = 1, -- Railway level 1 uses thin map arrow in supply map mode
+	RAILWAY_MAP_ARROW_MEDIUM_LEVEL_THRESHOLD = 3, -- Railway level 2-3 uses medium map arrow in supply map mode
+	RAILWAY_MAP_ARROW_THICK_LEVEL_THRESHOLD = 5, -- Railway level 4-5 uses thick map arrow in supply map mode
+
+	RAILWAY_MAP_ARROW_COLOR_DEFAULT = { 1.0, 1.0, 1.0, 1.0 }, -- white, default railway maparrow color
+	RAILWAY_MAP_ARROW_COLOR_CONSTRUCTION = { 1.0, 0.80, 0.0, 1.0 }, -- orange, railways that are currently under construction
+	RAILWAY_MAP_ARROW_COLOR_CONSTRUCTION_VALID = { 0.957, 0.871, 0.51, 1.0 }, -- yellow, in constructionmode, railways that are valid to build
+	RAILWAY_MAP_ARROW_COLOR_CONSTRUCTION_INVALID = { 1.0, 0.0, 0.0, 1.0 }, -- red, in constructionmode, railways that are invalid to build
+	RAILWAY_MAP_ARROW_COLOR_HIGHLIGHTED = { 0.957, 0.871, 0.51, 1.0 }, -- yellow, highlighted railways, e.g when selecting a hub and showing the route back to the capital
+	RAILWAY_MAP_ARROW_COLOR_HIGHLIGHTED_DAMAGED = { 1.0, 1.0, 0.2, 1.0 }, -- color of highlighted railways which were damaged
+	RAILWAY_MAP_ARROW_COLOR_HIGHLIGHTED_ONCOOLDOWN = { 1.0, 0.2, 1.0, 1.0 }, -- color of highlighted railways which are on cooldown (captured recently)
+	RAILWAY_MAP_ARROW_COLOR_HIGHLIGHTED_CONSTRUCTION = { 0.957, 0.871, 0.51, 1.0 }, -- orange, shown for highlighted railways that are under construction
+	RAILWAY_MAP_ARROW_COLOR_HIGHLIGHTED_BOTTLENECK = { 0.902, 0.38, 0.4, 1.0 }, -- red, shown for railways that are the bottleneck when highlighting
+	RAILWAY_MAP_ARROW_COLOR_HIGHLIGHTED_BOTTLENECK_MAXLEVEL = { 0.761, 0.647, 0.812, 1.0 }, -- purple, shown for maxlevel railways that are the bottleneck when highlighting
+	RAILWAY_MAP_ARROW_COLOR_DAMAGED = { 0.8, 0.8, 0.0, 1.0 }, -- color of railways which were damaged and gives penalty to move for railway guns
+	RAILWAY_MAP_ARROW_COLOR_ONCOOLDOWN = { 0.5, 0.5, 0.5, 1.0 }, -- color of railways which are on cooldown (captured recently)
+
+	RIVER_SUPPLY_MAP_ARROW_COLOR = { 0.8, 0.8, 1.0, 0.8 },
+	FLOWING_RIVER_SUPPLY_MAP_ARROW_COLOR = { 0.8, 0.8, 1.0, 0.8 },
+
+	SUPPLY_TO_CONSUMERS_MAP_ARROW_COLOR = { 1.0, 1.0, 1.0, 1.0 }, -- Currently overwritte in code...
+	SUPPLY_TO_CONSUMERS_MAP_ARROW_TRANSPARENCY = 0.8,
+
+	-- When holding shift in supply map mode with a node selected, color provinces which are in range of the node
+	NODE_FLOW_IN_CURRENT_RANGE_COLOR = { 0.68235, 0.0039, 0.4941, 0.55 }, -- At current motorization level
+	NODE_FLOW_IN_HALF_RANGE_COLOR = { 0.9686, 0.4078, 0.6314, 0.6 }, -- At Half Motorization, if currently set to less than that
+	NODE_FLOW_IN_FULL_RANGE_COLOR = { 0.9843, 0.7059, 0.7255, 0.4 }, -- At Full Motorization, if currently set to less than that
+
+	RAILWAY_ICON_SHIFT = { 0.0, 0.0, 0.0 },
+	SUPPLY_ICON_SHIFT = { 0.0, 0.0, 0.0 },
+	SUPPLY_ICON_SWITCH = 200,
+	SUPPLY_ICON_CUTOFF = 900.0,               -- total supply icon cutoff distance for all
+	SUPPLY_ICON_UNUSED_CUTOFF = 400.0,        -- where we stop showing unused nodes
+	SUPPLY_ICON_NUMBERS_CUTOFF = 400.0,       -- where we stop showing numbers on hubs (ignored for selected and problem hubs)
+	SUPPLY_ICON_OK_CUTOFF = 750.0,            -- where we stop showing nodes with no issues, e.g non-red
+	SUPPLY_ICON_DISCONNECTED_CUTOFF = 500.0,  -- where we stop showing disconnected nodes
+	SUPPLY_ICON_END_CUTOFF = 200.0,           -- where we stop showing line end icons
+	RAILWAY_ICON_CUTOFF = 900.0,
+	SUPPLY_SELECTED_NODE_COLOR = { 0.0, 1.0, 1.0, 1.0 },
+	SUPPLY_CAPITAL_COLOR = { 1.0, 0.7, 0.0, 1.0 },
+	SUPPLY_NAVAL_NODE_COLOR = { 0.1, 0.6, 0.8, 1.0},
+	SUPPLY_LAND_NODE_COLOR = { 0.5, 0.8, 0.5, 1.0 },
+
+	SUPPLY_CONSUMER_ARROW_HEIGHT_TO_LEN = 0.1,
+	SUPPLY_CONSUMER_ARROW_HEIGHT_MAX = 4.0,
+
+	SUPPLY_UNIT_COUNTER_SHOW_THRESHOLD = 0.75,  -- At what supply threshold will the normal crate be shown on unit counters
+	SUPPLY_UNIT_COUNTER_LOW_THRESHOLD = 0.50,  -- At what supply threshold will the orange crate be shown on unit counters
+	SUPPLY_UNIT_COUNTER_VERY_LOW_THRESHOLD = 0.25,  -- At what supply threshold will the red crate with ! will be shown on unit counters
+
+	COUP_GREEN = { 0.0, 1.0, 0.0, 1.0 },
+	COUP_RED = { 1.0, 0.0, 0.0, 1.0 },
 	
 	-- unit on-map interface modulate colors
 	FRIEND_COLOR  = {0.7, 0.9, 0.7},
@@ -980,6 +1032,24 @@ NGraphics = {
 		0.0,	0.7, 0.7, 0.2, 0.3,
 		1.0,	0.7, 0.2, 0.2, 0.5,
 	},
+
+	TEMPERATURE_MAP_MODE_COLORS = {
+		-35.0, 	0.0, 0.0, 0.5, 1.0,
+		-25.0, 	0.0, 0.0, 1.0, 1.0,
+		-10.0, 	0.0, 0.7, 1.0, 1.0,
+		0.0, 	0.0, 1.0, 0.45, 0.45,
+		15.0,	1.0, 1.0, 0.0, 1.0,
+		25.0,	1.0, 0.65, 0.0, 1.0,
+		30.0,	1.0, 0.0, 0.0, 1.0,
+		35.0,	0.5, 0.0, 0.0, 1.0,
+	},
+
+	RAILWAY_GUN_ASSIGNMENTS_MAP_MODE_COLORS = {
+		0.0,	1.0, 0.0, 0.0, 1.0,
+		0.25,	1.0, 0.65, 0.0, 1.0,
+		0.75,	1.0, 1.0, 0.0, 1.0,
+		1.0, 	0.0, 1.0, 0.45, 0.45,
+	},
 	
 	INTEL_LEDGER_NAVY_REGION_COLOR_WITH_MISSION = { 0.7, 0.7, 0.7, 0.9 },
 	INTEL_LEDGER_NAVY_REGION_COLOR_WITH_MISSION_AND_TASKFORCES_IN_REGION = { 0.8, 0.8, 0.4, 0.9 },
@@ -988,42 +1058,44 @@ NGraphics = {
 	
 	INTEL_LEDGER_GRAPH_RED = { 1.0, 0.0, 0.0, 1.0 },
 	INTEL_LEDGER_GRAPH_GREEN = { 0.0, 1.0, 0.0, 1.0 },
+
+	DEFAULT_NUDGE_FLOATING_HARBOR_DIST = 7.0,	-- Default distance of floating harbors from the coast in pixels, for nudger
 },
 
 NInterface = {
 	MAX_NO_FACTION_FILTER_BUTTONS = 40,			-- Max number of faction filter buttons that can be generated in diplomacy view.
-	
+
 	LOGISTICS_PAST_WEEK = 7,					-- Number of days from the past (including current day) we want logistics data for (Max 30 days)
 
 	COMBAT_SOME_PIERCING = 0.4,					-- How many % of enemy units the unit have to pierce in order for the some piercing icon to be displayed
 	COMBAT_GOOD_PIERCING = 0.8,					-- How many % of enemy units the unit have to pierce in order for the good piercing icon to be displayed
 	COMBAT_SOME_ARMOR = 0.4,					-- How many % of enemy units have to be unable to pierce the unit in order for the some armor icon to be displayed
 	COMBAT_GOOD_ARMOR = 0.8,					-- How many % of enemy units have to be unable to pierce the unit in order for the good armor icon to be displayed
-	
+
 	MIN_FOCUS_TREE_ZOOM = 0.2,					-- min zoom in scale
 	MAX_FOCUS_TREE_ZOOM = 1.0,					-- max zoom out scale
-	FOCUS_TREE_ZOOM_SPEED = 0.16,				-- zooming speed 
+	FOCUS_TREE_ZOOM_SPEED = 0.16,				-- zooming speed
 	FOCUS_TREE_ZOOM_FACTOR = 0.5,				-- zooming factor that will be factored while player scrolls too fast
-	
+
 	TOOLTIP_SCREEN_LEFT_OFFSET_X = 0,				-- Tooltip offset on x axis from left screen border
 	TOOLTIP_SCREEN_RIGHT_OFFSET_X = 0,				-- Tooltip offset on x axis from right screen border
 	TOOLTIP_SCREEN_TOP_OFFSET_Y = 0,				-- Tooltip offset on y axism from top screen border
 	TOOLTIP_SCREEN_BOTTOM_OFFSET_Y = 0,				-- Tooltip offset on y axis from bottom screen border
-	
+
 	NO_COMBATS_COLOR = { 0.0, 0.0, 0.8 },				-- Color for icons if all combats are successful
 	SUCCESFUL_COMBATS_COLOR = { 120.0/360.0, 0.95, 0.86 },				-- Color for icons if all combats are successful
 	MIN_NON_SUCCESSFUL_COMBAT_COLOR = { 100.0/360.0, 0.95, 0.86 },	-- Color for icons if some of combats are not successful
 	MID_NON_SUCCESSFUL_COMBAT_COLOR = { 50.0/360.0, 0.95, 0.86 },
 	MAX_NON_SUCCESSFUL_COMBAT_COLOR = { 00.0/360.0, 0.95, 0.86 },	-- Color for icons if all of combats are not successful
-	
+
 	UNIT_SELECT_DOUBLE_CLICK_TIME = 0.1,				-- Delay before double click event for unit selection
 	SHIP_SELECT_DOUBLE_CLICK_TIME = 1.0,				-- Delay before double click event for ship selection
-	
+
 	MINIMAP_TOGGLE_DURATION = 0.5,				-- Delay for minimap toggle
 	MINIMAP_TOGGLE_SHIFT = 270,				-- horizontal shift for minimap to close it
-	
+
 	TIMED_MESSAGE_TIMEOUT = 0.35,					-- Timeout for timed message
-	
+
 	MINIMAP_PING_DURATION = 12.0, 				-- timeout for pings
 	MINIMAP_PING_SPEEDUP_ON_SCREEN = 2.0,		-- speed up for timeout if ping is visible on screen
 	MINIMAP_PING_DELAY_BETWEEN_PINGS = 0.3,     -- delay between consecative pings
@@ -1034,11 +1106,11 @@ NInterface = {
 	ARMY_GROUP_PORTRAIT_SPACING = 6,			-- Extra space added between portraits of different army groups
 	ARMY_GROUP_FIRST_MEMBER_SPACING = 5,		-- Extra spacing between the army group portrait and the first member of the army group
 	ARMY_GROUP_COLLAPSE_EXTRA_SPACING = 5,		-- Extra spacing between the army group portrait when army group is collapsed
-	
+
 	ARMY_LIST_BOTTOM_PADDING = 165,				-- Bottom padding for army list on left
 	ARMY_LIST_BOTTOM_PADDING_WITH_EXPEDITIONARIES = 240, -- Bottom padding for army list on left when expeditionaries are open
-	
-	
+
+
 	MILITARY_FACTORIES_SCALE = { 1, 5, 10 },
 
 	FLEET_BOTTOM_BAR_HEIGHT = 110,				-- Height of the list of fleet at the bottom of the screen
@@ -1051,13 +1123,13 @@ NInterface = {
 	TASK_FORCE_COMPOSITION_EDITOR_PADDING_TO_NAVIES_VIEW = 20,	-- Padding on the x axis between the navies view and the task force composition editor window
 
 	FUEL_STOCKPILE_DURATION_MAX = 365*5,		-- our max for stockpile duration display
-	
+
 	SHIP_REFIT_TOOLTIP_MAX_DIFF_LINES = 20,		-- Maximum number of lines to show in the tooltip describing stat differences from all the source equipment variants to the target being considered.
-	
+
 	DEFAULT_TASKFORCE_ICON = 6,						-- newly created taskforces will use this icon
 	DEFAULT_FLEET_ICON = 4,							-- newly created fleets will use this icon
 	DEFAULT_NAVAL_EQUIPMENT_ROLE_ICON = 1,			-- newly created naval equipment variants will use this icon, if the AI equipment designs do not propose a better one.
-	
+
 	FUEL_GRAPH_COLOR = {
 		0.8, 0.8, 0.8, -- stockpile
 		0.8, 0.0, 0.0, -- total consumption
@@ -1067,7 +1139,7 @@ NInterface = {
 		0.8, 0.8, 0.0, -- other consumption
 		0.8, 0.8, 0.8, -- produced
 	},
-	
+
 	PRODUCTION_SHIP_FILTERS_ROLE_SELECTION_WINDOW_OFFSET_X = 4,	-- offset of the role icon selection window shown in the filters of ship design in the production tab
 	PRODUCTION_SHIP_FILTERS_ROLE_SELECTION_WINDOW_OFFSET_Y = -8,
 
@@ -1118,10 +1190,16 @@ NInterface = {
 		{ 1.0, 0.5, 0.0, 1.0 },
 		{ 0.9, 0.1, 0.2, 1.0 },
 	},
-	
+
 	GARRISON_STRENGTH_TO_SHOW_RED = 0.25,	-- If the garrison strength is lower than that, we color the number of divisions in red.
-	
+
 	MAX_DECISIONS_IN_DECISION_ALERT_TOOLTIP = 5,				-- Max number of available decisions we show in the alert tooltip
+	PIXEL_OFFSET = -3, 											-- Country army view tab pixel offset when clicking on division/navy/air tab or the army officer corp tab
+	ARMY_UNIT_LEADER_ICON_SPRITE_ID = 5,
+	NAVY_UNIT_LEADER_ICON_SPRITE_ID = 3,
+	POLITICAL_LEADER_ICON_SPRITE_ID = 13,
+
+	EQUIPMENT_DESIGNER_SHOW_MODULE_FORBIDS_BASE_ROLE_ICON = 0, -- When selecting a module in the tank designer, for each role the module forbids a role icon will be displayed. If this is set to 0 no icon will be displayed if the main tank role is forbidden. If set to 1 the icon will be displayed as normal.
 },
 
 
