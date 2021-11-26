@@ -48,6 +48,7 @@ replace_path="dlc/dlc022_waking_the_tiger/dlc022/gfx/loadingscreens"
 replace_path="dlc/dlc023_man_the_guns/dlc023/gfx/loadingscreens"
 replace_path="dlc/dlc028_la_resistance/dlc028/gfx/loadingscreens"
 replace_path="dlc/dlc031_battle_for_the_bosporus/gfx/leadingscreens"
+replace_path="dlc/dlc034_no_step_back/gfx/leadingscreens"
 tags={
 	"Map"
 	"Gameplay"
