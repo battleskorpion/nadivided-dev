@@ -54,7 +54,7 @@ SNJ_chesapeake_war_imminent = {
             }
         }
         cancel_if_not_visible = yes
-        is_good = yes
+        is_good = no
         fire_only_once = yes
 
         complete_effect  = {
@@ -62,6 +62,7 @@ SNJ_chesapeake_war_imminent = {
                 mission = SNJ_chesa_war_imminent
             days = -50
             }
+            custom_effect_tooltip = SNJ_CHESA_DECREASE_tt
             add_to_variable = {
                 var = var_SNJ_chesa
                 value = -1
@@ -94,108 +95,26 @@ SNJ_chesapeake_war_imminent = {
                 mission = SNJ_chesa_war_imminent
             days = 50
             }
+            custom_effect_tooltip = SNJ_CHESA_INCREASE_tt
             add_to_variable = {
                 var = var_SNJ_chesa
                 value = 1
             }
         }
     }
-    
-#####SNJ_chesa_war_move_marines#=#{
-#########icon#=#GFX_decision_revolt
-#
-#########available#=#{
-#################divisions_in_state#=#{
-#####################type#=#Marines
-#####################size#>#2
-#####################state#=#203
-#################}
-#########}
-#########activation#=#{
-#############has_global_flag#=#chesa_war_imminent
-#############NOT#=#{
-#################divisions_in_state#=#{
-#####################type#=#Marines
-#####################size#>#2
-#####################state#=#203
-#################}
-#############}
-#########}
-#########visible#=#{
-############hidden_trigger#=#{
-################tag#=#SNJ
-################has_global_flag#=#chesa_war_imminent
-################NOT#=#{
-####################has_global_flag#=#chesa_war_finished_buildup
-####################divisions_in_state#=#{
-########################type#=#Marines
-########################size#>#2
-########################state#=#203
-####################}
-################}
-############}
-########}
-########cancel_if_not_visible#=#yes
-########is_good#=#no#######################Very#very#bad
-########days_mission_timeout#=#3#
-########fire_only_once#=#no
-
-########complete_effect#=#{
-########}
-########timeout_effect#=#{
-############SNJ#=#{
-################country_event#=#newjersey.10
-############}
-############add_days_mission_timeout#=#{
-################mission#=#SNJ_chesa_war_imminent
-################days#=#3
-############}
-########}
-#####}
 }
-
+#maryland surrender
 SNJ_chesapeake_war_SMD_surrender = {
     surrender_to_NJ = {
         icon = GFX_decision_revolt
 
         available = {
-            OR = {
-                NOT = {
-                    SNJ = {
-                        controls_state = 413
-                    }
-                }
-                NOT = {
-                    SNJ = {
-                        controls_state = 412
-                    }
-                }
-                NOT = {
-                    SNJ = {
-                        controls_state = 411
-                    }
-                }
-                NOT = {
-                    SNJ = {
-                        controls_state = 205
-                    }
-                }
-                NOT = {
-                    SNJ = {
-                        controls_state = 204
-                    }
-                }
-                NOT = {
-                    SNJ = {
-                        controls_state = 136
-                    }
-                }
-            }
+            always = no
         }
         activation = {
             OR = {
                 SMD = {
-                    surrender_progress > 0.5
+                    surrender_progress > 0.3
                 }
                 SNJ = {
                     controls_delaware_trigger = yes
@@ -203,6 +122,9 @@ SNJ_chesapeake_war_SMD_surrender = {
                     controls_state = 205
                     controls_state = 136
                 }
+            }
+            SMD = {
+                has_war_with = SNJ
             }
             NOT = {
                 has_global_flag = chesa_war_finished
@@ -212,7 +134,7 @@ SNJ_chesapeake_war_SMD_surrender = {
         }
         cancel_if_not_visible = yes
         is_good = no
-        days_mission_timeout = 5
+        days_mission_timeout = 0
         fire_only_once = no
 
         timeout_effect = {
@@ -224,7 +146,7 @@ SNJ_chesapeake_war_SMD_surrender = {
         }
     }
 }
-
+#new jersey surrender
 SNJ_chesapeake_war_failure = {
     SNJ_chesa_war_failure = {
         icon = GFX_decision_revolt
@@ -503,7 +425,7 @@ SNJ_chesapeake_war_support = {
         icon = GFX_decision_generic_operation
 
         available = {
-
+            has_completed_focus = SNJ_hire_mercenaries
         }
         cost = 50
         cancel_if_not_visible = yes
@@ -545,15 +467,266 @@ SNJ_Debt_Category = {
                 has_global_flag = SNJ_debts_paid
             }
         }
-        cancel_if_not_visible = yes
-        is_good = no                    ###Very very bad
-        days_mission_timeout = 200
-        fire_only_once = yes
-#        war_with_on_timeout = SDE
-#        war_with_on_timeout = SMD
+        cancel_if_not_visible = no
+        is_good = yes                    ###Very very bad
+        days_mission_timeout = 168
 
         timeout_effect = {
+            set_temp_variable = { var_temp_SNJ_interest = var_SNJ_debt_interest }
+            set_temp_variable = { var_temp_SNJ_debt = var_SNJ_debt }
+            set_temp_variable = { var_temp_SNJ_debt1 = var_SNJ_debt }
+            multiply_temp_variable = { var_temp_SNJ_interest = 0.005 }
+            multiply_temp_variable = { var_temp_SNJ_debt = var_temp_SNJ_interest }
+            add_to_temp_variable = { var_temp_SNJ_debt1 = var_temp_SNJ_debt }
+            set_variable = { var_SNJ_debt = var_temp_SNJ_debt1 }
+        }
+    }
+    SNJ_debt_interest_fix = {
+        icon = GFX_decision_revolt
+
+        available = {
+            has_global_flag = SNJ_debts_paid
+        }
+        activation = {
+            NOT = {
+                has_global_flag = SNJ_debts_paid
+            }
+        }
+        cancel_if_not_visible = no
+        is_good = yes                    ###Very very bad
+        fire_only_once = yes
+        days_mission_timeout = 0
+
+        timeout_effect = {
+            add_days_mission_timeout = {
+                mission = SNJ_debt_interest
+            days = 14
+            }
+        }
+    }
+}
+
+SNJ_cool_epic_debug_Category = {
+    SNJ_chesapeake_victory = {
+        icon = GFX_decision_revolt
+
+        available = {
             
+        }
+        fire_only_once = no
+
+        complete_effect = {
+            SNJ = {
+                set_state_owner = 413
+                set_state_owner = 412
+                set_state_owner = 411
+                set_state_owner = 205
+                set_state_owner = 204
+                set_state_owner = 136
+                set_state_controller = 413
+                set_state_controller = 412
+                set_state_controller = 411
+                set_state_controller = 205
+                set_state_controller = 204
+                set_state_controller = 136
+                205 = {
+                    set_demilitarized_zone = yes
+                }
+                white_peace = SMD
+            }
+            set_global_flag = chesa_war_finished
+            complete_national_focus = SNJ_operation_thunderdome
+        }
+    }
+}
+
+SNJ_patriotism_category = {
+    SNJ_patriotism_1 = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            has_completed_focus = SNJ_rebuild_patriotism
+            NOT = {
+                has_global_flag = SNJ_patriotism
+            }
+        }
+        cost = 10
+
+        cancel_if_not_visible = yes
+        fire_only_once = no
+
+        complete_effect = {
+            set_global_flag = SNJ_patriotism
+#            custom_effect_tooltip = SNJ_1_DEBT_INCREASE_tt
+        }
+        days_re_enable = 180
+
+        days_remove = 3
+        remove_effect = {
+            clr_global_flag = SNJ_patriotism
+            add_to_variable = {
+                var = var_SNJ_patriotism
+                value = 1
+            }
+            clamp_variable = {
+                var = var_SNJ_patriotism
+                min = 0
+                max = 100
+            }
+        }
+    }
+}
+
+SNJ_propaganda_category = {
+    SNJ_propaganda_1 = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            has_completed_focus = SNJ_government_propaganda
+            NOT = {
+                has_global_flag = SNJ_propaganda
+            }
+        }
+        cost = 10
+
+        cancel_if_not_visible = yes
+        fire_only_once = yes
+
+        complete_effect = {
+            set_global_flag = SNJ_propaganda
+        }
+
+        days_remove = 60
+        complete_effect = {
+            set_global_flag = SNJ_propaganda
+        }
+        remove_effect = {
+            add_to_variable = {
+                var = var_SNJ_patriotism
+                value = 5
+            }
+            clamp_variable = {
+                var = var_SNJ_patriotism
+                min = 0
+                max = 100
+            }
+            clr_global_flag = SNJ_propaganda
+        }
+    }
+    SNJ_propaganda_2 = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            has_completed_focus = SNJ_government_propaganda
+            NOT = {
+                has_global_flag = SNJ_propaganda
+            }
+        }
+        cost = 10
+
+        cancel_if_not_visible = yes
+        fire_only_once = yes
+
+        complete_effect = {
+            set_global_flag = SNJ_propaganda
+        }
+
+        days_remove = 75
+        complete_effect = {
+            set_global_flag = SNJ_propaganda
+        }
+        remove_effect = {
+            add_to_variable = {
+                var = var_SNJ_patriotism
+                value = 8
+            }
+            clamp_variable = {
+                var = var_SNJ_patriotism
+                min = 0
+                max = 100
+            }
+            clr_global_flag = SNJ_propaganda
+        }
+    }
+    SNJ_propaganda_3 = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            has_completed_focus = SNJ_government_propaganda
+            NOT = {
+                has_global_flag = SNJ_propaganda
+            }
+        }
+        cost = 10
+
+        cancel_if_not_visible = yes
+        fire_only_once = yes
+
+        complete_effect = {
+            set_global_flag = SNJ_propaganda
+        }
+
+        days_remove = 60
+        complete_effect = {
+            set_global_flag = SNJ_propaganda
+        }
+        remove_effect = {
+            add_stability = 0.5
+            clr_global_flag = SNJ_propaganda
+        }
+    }
+    SNJ_propaganda_4 = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            has_completed_focus = SNJ_government_propaganda
+            NOT = {
+                has_global_flag = SNJ_propaganda
+            }
+        }
+        cost = 10
+
+        cancel_if_not_visible = yes
+        fire_only_once = yes
+
+        complete_effect = {
+            set_global_flag = SNJ_propaganda
+        }
+
+        days_remove = 90
+        complete_effect = {
+            set_global_flag = SNJ_propaganda
+        }
+        remove_effect = {
+            add_stability = 0.10
+            clr_global_flag = SNJ_propaganda
+        }
+    }
+    SNJ_propaganda_5 = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            has_completed_focus = SNJ_government_propaganda
+            NOT = {
+                has_global_flag = SNJ_propaganda
+            }
+        }
+        cost = 10
+
+        cancel_if_not_visible = yes
+        fire_only_once = yes
+
+        complete_effect = {
+            set_global_flag = SNJ_propaganda
+        }
+
+        days_remove = 90
+        complete_effect = {
+            set_global_flag = SNJ_propaganda
+        }
+        remove_effect = {
+            add_war_support = 0.10
+            clr_global_flag = SNJ_propaganda
         }
     }
 }
