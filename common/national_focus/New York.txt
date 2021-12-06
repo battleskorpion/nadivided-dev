@@ -904,11 +904,11 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_RESEARCH }
 
         completion_reward = {
-            # set_technology = {
-            #     mobile_warfare = 1
-            # }
-            add_tech_bonus = {
-                bonus = 1
+            set_technology = { #I think this still works
+                mobile_warfare = 1
+            }
+            add_doctrine_cost_reduction = {
+                cost_reduction = 0.35
                 uses = 1
                 category = cat_mobile_warfare
             }
@@ -984,11 +984,11 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_RESEARCH }
 
         completion_reward = {
-            # set_technology = {
-            #     superior_firepower = 1
-            # }
-            add_tech_bonus = {
-                bonus = 1
+            set_technology = {
+                superior_firepower = 1
+            }
+            add_doctrine_cost_reduction = {
+                cost_reduction = 0.35
                 uses = 1
                 category = cat_superior_firepower
             }
@@ -1210,8 +1210,8 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_RESEARCH }
 
         completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
+            add_doctrine_cost_reduction = {
+                cost_reduction = 0.5
                 uses = 1
                 category = land_doctrine
             }
@@ -1232,8 +1232,8 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_RESEARCH }
 
         completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
+            add_doctrine_cost_reduction = {
+                cost_reduction = 0.5
                 uses = 1
                 category = land_doctrine
             }
@@ -1254,8 +1254,8 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_RESEARCH }
 
         completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
+            add_doctrine_cost_reduction = {
+                cost_reduction = 0.5
                 uses = 1
                 category = land_doctrine
             }
@@ -1956,6 +1956,34 @@ focus_tree = {
         }
         x = 60
         y = 0
+        offset = {
+            x = -14
+            y = 0
+            trigger = {
+                has_completed_focus = SNY_postpone_the_elections
+            }
+        }
+        offset = {
+            x = -16
+            y = 0
+            trigger = {
+                has_completed_focus = SNY_jay_lovestone_makes_a_speech
+            }
+        }
+        offset = {
+            x = -6
+            y = 0
+            trigger = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
+        }
+        offset = {
+            x = -20
+            y = 0
+            trigger = {
+                has_completed_focus = SNY_the_elections_must_continue
+            }
+        }
         cost = 10
         ai_will_do = {
             factor = 0
@@ -1967,8 +1995,20 @@ focus_tree = {
         icon = GFX_focus_voting_cancelled
         prerequisite = { focus = SNY_the_attack_on_albany}
         mutually_exclusive = { focus = SNY_the_elections_must_continue}
+        allow_branch = {
+            NOT = {
+                has_completed_focus = SNY_the_elections_must_continue
+            }
+        }
         x = -14
         y = 1
+        offset = {
+            x = 14
+            y = 0
+            trigger = {
+                has_completed_focus = SNY_postpone_the_elections
+            }
+        }
         relative_position_id = SNY_the_attack_on_albany
         cost = 5
         ai_will_do = {
@@ -1996,8 +2036,23 @@ focus_tree = {
         prerequisite = { focus = SNY_postpone_the_elections}
         mutually_exclusive = { focus = SNY_charles_poletti_makes_a_speech}
         mutually_exclusive = { focus = SNY_the_army_makes_a_demonstration}
+        allow_branch = {
+            NOT = {
+                OR = {
+                    has_completed_focus = SNY_charles_poletti_makes_a_speech
+                    has_completed_focus = SNY_the_army_makes_a_demonstration
+                }
+            }
+        }
         x = -16
         y = 1
+        offset = {
+            x = 16
+            y = 0
+            trigger = {
+                has_completed_focus = SNY_jay_lovestone_makes_a_speech
+            }
+        }
         relative_position_id = SNY_postpone_the_elections
         cost = 10
         ai_will_do = {
@@ -2754,14 +2809,29 @@ focus_tree = {
         icon = GFX_focus_SNY_charles_poletti
         prerequisite = { focus = SNY_postpone_the_elections}
         available = {
-            NOT = {
-                has_idea = SNY_charles_poletti
-            }
+            # NOT = {
+            #     has_idea = SNY_charles_poletti
+            # }
         }
         mutually_exclusive = { focus = SNY_jay_lovestone_makes_a_speech}
         mutually_exclusive = { focus = SNY_the_army_makes_a_demonstration}
+        allow_branch = {
+            NOT = {
+                OR = {
+                    has_completed_focus = SNY_jay_lovestone_makes_a_speech
+                    has_completed_focus = SNY_the_army_makes_a_demonstration
+                }
+            }
+        }
         x = 2
         y = 1
+        offset = {
+            x = -2
+            y = 0
+            trigger = {
+                has_completed_focus = SNY_charles_poletti_makes_a_speech
+            }
+        }
         relative_position_id = SNY_postpone_the_elections
         cost = 10
         ai_will_do = {
@@ -2938,6 +3008,9 @@ focus_tree = {
             NOT = {
                 has_completed_focus = SNY_persecute_the_mafia
             }
+            NOT = {
+                has_completed_focus = SNY_the_impeachment_trail
+            }
         }
         x = 5
         y = 1
@@ -3101,7 +3174,7 @@ focus_tree = {
                                 }
                             }
                         }
-                    } else {
+                    } else = {
                         random_list = {
                             50 = {
                                 country_event = {
@@ -3115,7 +3188,8 @@ focus_tree = {
                             }
                         }
                     }
-                } else {
+                } 
+                else = {
                     if = {
                         limit = {
                             count_triggers = {
@@ -3160,7 +3234,7 @@ focus_tree = {
                                 }
                             }
                         }
-                    } else {
+                    } else = {
                         country_event = {
                             id = new_york.46
                         }
@@ -4224,7 +4298,7 @@ focus_tree = {
                     }
                 }
             }
-            else {
+            else = {
                 random_country = {
                     limit = {
                         is_a_country_making_up_the_former_united_states = yes
@@ -4600,6 +4674,9 @@ focus_tree = {
 
         completion_reward = {
             add_manpower = -1000000
+            army_experience = 100
+            navy_experience = 100
+            air_experience = 100
         }
     }
     focus = {
@@ -4667,6 +4744,9 @@ focus_tree = {
                 type = heavy_tank_equipment
                 amount = -250
             }
+            army_experience = 100
+            navy_experience = 100
+            air_experience = 100
         }
     }
     focus = {
@@ -4710,7 +4790,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_WAR_SUPPORT }
 
         completion_reward = {
-            add_war_support = 0.05
+            add_war_support = 0.1
             custom_effect_tooltip = SNY_we_will_hear_their_response_soon_tt
             hidden_effect = { #When Hawaii and other japanese stuff happens, influence it with these events
                 random_list = {
@@ -4718,7 +4798,7 @@ focus_tree = {
                         modifier = {
                             add = 20
                             OR = {
-                                owns_state = 55
+                                owns_state = 55 #The major ports on the West Coast
                                 owns_state = 43
                                 owns_state = 25
                             }
@@ -4798,7 +4878,7 @@ focus_tree = {
                             days = 60
                         }
                     }
-                    60 = { #Japan Ignores our Threats
+                    60 = { #Chinese Insurgents Fail
                         modifier = {
                             add = -40
                             has_country_flag = SNY_japan_holds_firm
@@ -4853,7 +4933,7 @@ focus_tree = {
             custom_effect_tooltip = SNY_we_will_hear_the_results_soon_tt
             hidden_effect = {
                 random_list = {
-                    60 = { #Chinese Insugents Break Out
+                    60 = { #Indonesian Insugents Break Out
                         modifier = {
                             add = 40
                             has_country_flag = SNY_japan_backs_down
@@ -4863,7 +4943,7 @@ focus_tree = {
                             days = 60
                         }
                     }
-                    60 = { #Japan Ignores our Threats
+                    60 = { #Indonesian Insurgents Fail
                         modifier = {
                             add = -40
                             has_country_flag = SNY_japan_holds_firm
@@ -5720,6 +5800,14 @@ focus_tree = {
         }
         mutually_exclusive = { focus = SNY_jay_lovestone_makes_a_speech}
         mutually_exclusive = { focus = SNY_charles_poletti_makes_a_speech}
+        allow_branch = {
+            NOT = {
+                OR = {
+                    has_completed_focus = SNY_jay_lovestone_makes_a_speech
+                    has_completed_focus = SNY_charles_poletti_makes_a_speech
+                }
+            }
+        }
         x = 20
         y = 1
         relative_position_id = SNY_postpone_the_elections
@@ -6125,7 +6213,7 @@ focus_tree = {
                 tooltip = SNY_military_coup_civil_war_has_begun_tt
             }
         }
-        x = -2
+        x = -1
         y = 1
         relative_position_id = SNY_put_down_the_radical_leaders
         cost = 5
@@ -6152,7 +6240,7 @@ focus_tree = {
             }
             has_tech = fighter1
         }
-        x = 0
+        x = 1
         y = 1
         relative_position_id = SNY_put_down_the_radical_leaders
         cost = 5
@@ -6176,6 +6264,245 @@ focus_tree = {
         }
     }
     focus = {
+        id = SNY_extinquish_the_flames_of_the_coup
+        icon = GFX_
+        prerequisite = { focus = SNY_francis_mulcahy_assumes_leadership}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SNY_military_coup_civil_war_is_not_in_progress_tt
+            }
+            OR = {
+                custom_trigger_tooltip = {
+                    tooltip = SNY_it_has_been_120_days_since_the_coup_tt
+                }
+                custom_trigger_tooltip = {
+                    tooltip = SNY_the_military_civil_war_is_over_tt
+                }
+            }
+            
+            OR = {
+                has_completed_focus = SNY_cater_to_the_wants_of_the_airforce
+                has_completed_focus = SNY_cater_to_the_wants_of_the_army
+                has_completed_focus = SNY_cater_to_the_wants_of_the_navy
+            }
+        }
+        x = 3
+        y = 1
+        relative_position_id = SNY_francis_mulcahy_assumes_leadership
+        cost = 5
+        ai_will_do = {
+            factor = 4
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            custom_effect_tooltip = SNY_remove_military_tension_tt
+        }
+    }
+    focus = {
+        id = SNY_vermontese_brotherhood
+        icon = GFX_
+        prerequisite = { focus = SNY_extinquish_the_flames_of_the_coup}
+        x = -1
+        y = 1
+        relative_position_id = SNY_extinquish_the_flames_of_the_coup
+        cost = 7
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            core_vermont = yes
+            if = {
+                limit = {
+                    country_exists = SVT
+                }
+                SVT = {
+                    country_event = {
+                        #
+                    }
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_fill_congress_with_soldiers_and_generals
+        icon = GFX_
+        prerequisite = { focus = SNY_extinquish_the_flames_of_the_coup}
+        available = {
+            has_idea = SNY_political_violence
+        }
+        x = 1
+        y = 1
+        relative_position_id = SNY_extinquish_the_flames_of_the_coup
+        cost = 7
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_POLITICAL }
+
+        completion_reward = {
+            remove_ideas = SNY_political_violence
+            add_stability = -0.1
+            add_political_power = 50
+            add_timed_idea = {
+                idea = SNY_centralizing_power
+                days = 160
+            }
+            # country_event = {
+            #     id = new_york.23
+            # }
+        }
+    }
+    focus = {
+        id = SNY_give_congress_mock_powers
+        icon = GFX_
+        prerequisite = { focus = SNY_fill_congress_with_soldiers_and_generals}
+        available = {
+            OR = {
+                has_idea = SNY_failing_democracy
+                has_idea = SNY_self_proclaimed_bastion_of_democracy
+            }
+        }
+        bypass = {
+            NOT = {
+                has_idea = SNY_failing_democracy
+                has_idea = SNY_self_proclaimed_bastion_of_democracy
+            }
+        }
+        x = -2
+        y = 1
+        relative_position_id = SNY_fill_congress_with_soldiers_and_generals
+        cost = 7
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            if = {
+                limit = {
+                    has_idea = SNY_failing_democracy
+                }
+                remove_ideas = SNY_failing_democracy
+            }
+            else_if = {
+                limit = {
+                    has_idea = SNY_self_proclaimed_bastion_of_democracy
+                }
+                remove_ideas = SNY_self_proclaimed_bastion_of_democracy
+            }
+        }
+    }
+    focus = {
+        id = SNY_pass_the_anti_naval_descrimination_bill
+        icon = GFX_
+        prerequisite = { focus = SNY_give_congress_mock_powers}
+        available = {
+            has_idea = SNY_navy_troubles
+        }
+        bypass = {
+            NOT = {
+                has_idea = SNY_navy_troubles
+            }
+        }
+        x = -2
+        y = 1
+        relative_position_id = SNY_give_congress_mock_powers
+        cost = 7
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            remove_ideas = SNY_navy_troubles
+        }
+    }
+    focus = {
+        id = SNY_promote_military_nationalism
+        icon = GFX_
+        prerequisite = { focus = SNY_give_congress_mock_powers}
+        available = {
+            has_idea = SNY_legacy_of_FDRs_impeachment
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_give_congress_mock_powers
+        cost = 7
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        
+        completion_reward = {
+            remove_ideas = SNY_legacy_of_FDRs_impeachment
+        }
+    }
+    focus = {
+        id = SNY_create_a_bloc_for_the_army
+        icon = GFX_
+        prerequisite = { focus = SNY_fill_congress_with_soldiers_and_generals}
+        x = 0
+        y = 1
+        relative_position_id = SNY_fill_congress_with_soldiers_and_generals
+        cost = 7
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_ideas = SNY_army_power
+        }
+    }
+    focus = {
+        id = SNY_create_a_bloc_for_the_airforce
+        icon = GFX_
+        prerequisite = { focus = SNY_create_a_bloc_for_the_army}
+        x = 0
+        y = 1
+        relative_position_id = SNY_create_a_bloc_for_the_army
+        cost = 7
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            swap_ideas = {
+                remove_idea = SNY_army_power
+                add_idea = SNY_land_power
+            }
+        }
+    }
+    focus = {
+        id = SNY_create_a_bloc_for_the_navy
+        icon = GFX_
+        prerequisite = { focus = SNY_create_a_bloc_for_the_airforce}
+        available = {
+            has_completed_focus = SNY_pass_the_naval_descrimination_bill
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_create_a_bloc_for_the_airforce
+        cost = 7
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            swap_ideas = {
+                remove_idea = SNY_land_power
+                add_idea = SNY_military_power
+            }
+        }
+    }
+    focus = {
         id = SNY_bruce_clarke_assumes_leadership
         icon = GFX_focus_SNY_bruce_clark
         prerequisite = { focus = SNY_the_question_of_leadership}
@@ -6183,7 +6510,7 @@ focus_tree = {
         available = {
             always = no
         }
-        x = 10
+        x = 14
         y = 1
         relative_position_id = SNY_the_question_of_leadership
         cost = 10
@@ -6198,103 +6525,42 @@ focus_tree = {
         }
     }
     focus = {
-        id = SNY_prioritize_the_army
-        icon = GFX_focus_PON_new_uniforms
+        id = SNY_gain_the_support_of_george_decker
+        icon = GFX_
         prerequisite = { focus = SNY_bruce_clarke_assumes_leadership}
         available = {
-            NOT = {
-                has_completed_focus = SNY_the_navy_coups_the_coup
+            custom_trigger_tooltip = {
+                tooltip = SNY_military_coup_civil_war_has_not_happened_tt
             }
         }
-        x = 0
+        x = -4
         y = 1
         relative_position_id = SNY_bruce_clarke_assumes_leadership
-        cost = 10
+        cost = 7
         ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_WAR_SUPPORT }
-
-        completion_reward = {
-            army_experience = 75
-            war_support_factor = 0.03
-        }
-    }
-    focus = {
-        id = SNY_expand_military_production
-        icon = GFX_goal_generic_construct_mil_factory
-        prerequisite = { focus = SNY_prioritize_the_army}
-        available = {
-            NOT = {
-                has_idea = SNY_navy_troubles
-            }
-        }
-        x = 0
-        y = 1
-        relative_position_id = SNY_prioritize_the_army
-        cost = 10
-        ai_will_do = {
-            factor = 1
+            factor = 2
         }
         available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_INDUSTRY }
 
         completion_reward = {
-            random_owned_controlled_state = {
-                add_extra_state_shared_building_slots = 2
-                add_building_construction = {
-                    type = arms_factory
-                    level = 2
-                    instant_build = yes
+            if = {
+                limit = {
+                    #Military Civil War has not passed/been dealt with
+                    always = yes
+                }
+                custom_effect_tooltip = SNY_decrease_military_tension_by_10_tt
+                hidden_effect = {
+                    subtract_from_variable = { military_coup_tension = 10 }
+                    if = {
+                        limit = {
+                            check_variable = { military_coup_tension < 0}
+                        }
+                        set_variable = { military_coup_tension = 0 }
+                    }
+                    SNY_update_military_tension_frame = yes
                 }
             }
-        }
-    }
-    focus = {
-        id = SNY_create_an_army_advisory_council
-        icon = GFX_goal_generic_special_forces
-        prerequisite = { focus = SNY_expand_military_production}
-        x = 0
-        y = 1
-        relative_position_id = SNY_expand_military_production
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        
-        completion_reward = {
-            add_ideas = SNY_army_advisory_council
-        }
-    }
-    focus = {
-        id = SNY_the_pennsylvanian_campaign
-        icon = GFX_goal_generic_major_war
-        prerequisite = { focus = SNY_create_an_army_advisory_council focus = SNY_the_new_england_campaign}
-        available = {
-            country_exists = SPA
-            NOT = {
-                has_completed_focus = SNY_the_navy_coups_the_coup
-            }
-        }
-        x = 1
-        y = 1
-        relative_position_id = SNY_create_an_army_advisory_council
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_ANNEXATION }
-        will_lead_to_war_with = SPA
-
-        completion_reward = {
-            create_wargoal = {
-                target = SPA
-                type = annex_everything
-            }
-            claim_pennsylvania = yes
+            custom_effect_tooltip = SNY_gain_option_to_ally_george_decker_in_the_civil_war_tt
         }
     }
     focus = {
@@ -6442,6 +6708,7 @@ focus_tree = {
     focus = {
         id = SNY_the_navy_coups_the_coup
         icon = GFX_focus_SNY_crack_down_on_mafia
+        prerequisite = { focus = SNY_the_question_of_leadership}
         mutually_exclusive = { focus = SNY_francis_mulcahy_assumes_leadership focus = SNY_bruce_clarke_assumes_leadership focus = SNY_george_decker_assumes_leadership}
         available = {
             always = no
@@ -6585,9 +6852,14 @@ focus_tree = {
         icon = GFX_focus_generic_take_land
         prerequisite = { focus = SNY_the_question_of_leadership}
         available = {
-            #Civil War over or Civil War Avoided
+            OR = {
+                custom_trigger_tooltip = {
+                    tooltip = SNY_the_military_civil_war_is_over_tt
+                }
+                has_completed_focus = SNY_extinquish_the_flames_of_the_coup
+            }
         }
-        x = -4
+        x = -3
         y = 1
         relative_position_id = SNY_the_question_of_leadership
         cost = 7
@@ -6608,6 +6880,11 @@ focus_tree = {
         available = {
             has_army_manpower = {
                 size > 15000
+            }
+        }
+        bypass = {
+            NOT = {
+                country_exists = NYC
             }
         }
         x = 0
@@ -6638,6 +6915,10 @@ focus_tree = {
             owns_state = 27
             owns_state = 28
             owns_state = 202
+            OR = {
+                has_completed_focus = SNY_bruce_clarke_assumes_leadership
+                has_completed_focus = SNY_george_decker_assumes_leadership
+            }
         }
         mutually_exclusive = { focus = SNY_slow_integration}
         x = -1
@@ -6667,12 +6948,16 @@ focus_tree = {
             owns_state = 27
             owns_state = 28
             owns_state = 202
+            OR = {
+                has_completed_focus = SNY_francis_mulcahy_assumes_leadership
+                has_completed_focus = SNY_the_navy_coups_the_coup
+            }
         }
         mutually_exclusive = { focus = SNY_crush_resistance}
         x = 1
         y = 1
         relative_position_id = SNY_integration_by_force
-        cost = 10
+        cost = 5
         ai_will_do = {
             factor = 1
         }
@@ -6689,7 +6974,7 @@ focus_tree = {
         id = SNY_relentless_expansionism
         icon = GFX_goal_generic_major_war
         prerequisite = { focus = SNY_crush_resistance focus = SNY_slow_integration}
-        x = -1
+        x = 0
         y = 1
         relative_position_id = SNY_crush_resistance
         cost = 10
@@ -6714,7 +6999,7 @@ focus_tree = {
                 }
             }
         }
-        x = 3
+        x = 2
         y = 1
         relative_position_id = SNY_crush_resistance
         cost = 10
@@ -6728,119 +7013,9 @@ focus_tree = {
         }
     }
     focus = {
-        id = SNY_pennsylvanias_final_hour
-        icon = GFX_
-        prerequisite = { focus = SNY_crush_resistance focus = SNY_slow_integration}
-        available = {
-            country_exists = SPA
-        }
-        x = 0
-        y = 2
-        relative_position_id = SNY_crush_resistance
-        cost = 10
-        ai_chance = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_ANNEXATION }
-        will_lead_to_war_with = SPA
-
-        completion_reward = {
-            create_wargoal = {
-                target = SPA
-                type = annex_everything
-            }
-        }
-    }
-    focus = {
-        id = SNY_new_jerseys_final_hour
-        icon = GFX_
-        prerequisite = { focus = SNY_crush_resistance focus = SNY_slow_integration}
-        available = {
-            country_exists = SNJ
-        }
-        x = 1
-        y = 1
-        relative_position_id = SNY_crush_resistance
-        cost = 10
-        ai_chance = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_ANNEXATION }
-        will_lead_to_war_with = SNJ
-
-        completion_reward = {
-            create_wargoal = {
-                target = SNJ
-                type = annex_everything
-            }
-        }
-    }
-    focus = {
-        id = SNY_new_englands_final_hour
-        icon = GFX_
-        prerequisite = { focus = SNY_crush_resistance focus = SNY_slow_integration}
-        available = {
-            OR = {
-                country_exists = SMA
-                country_exists = SRI
-                country_exists = SCT
-                country_exists = SNH
-                country_exists = SVT
-                country_exists = SME
-            }
-        }
-        x = 2
-        y = 2
-        relative_position_id = SNY_crush_resistance
-        cost = 10
-        ai_chance = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_ANNEXATION }
-        will_lead_to_war_with = SMA
-        will_lead_to_war_with = SRI
-        will_lead_to_war_with = SCT
-        will_lead_to_war_with = SNH
-        will_lead_to_war_with = SVT
-        will_lead_to_war_with = SME
-
-        completion_reward = {
-            every_country = {
-                limit = {
-                    OR = {
-                        tag = SMA
-                        tag = SRI
-                        tag = SCT
-                        tag = SNH
-                        tag = SVT
-                        tag = SME
-                    }
-                    exists = yes
-                }
-                SNY = {
-                    create_wargoal = {
-                        target = PREV
-                        type = annex_everything
-                    }
-                }
-            }
-        }
-    }
-    focus = {
         id = SNY_stabilize_the_state
         icon = GFX_focus_SNY_balance_the_branches
         prerequisite = { focus = SNY_the_question_of_leadership}
-        available = {
-            OR = {
-                has_completed_focus = SNY_balance_the_powers_of_the_branches
-                has_completed_focus = SNY_prioritize_the_army
-                has_completed_focus = SNY_supremacy_of_the_infantry
-                has_completed_focus = SNY_the_navys_new_power
-            }
-        }
         x = -7
         y = 1
         relative_position_id = SNY_the_question_of_leadership
@@ -6860,12 +7035,6 @@ focus_tree = {
         icon = GFX_focus_SNY_crack_down_on_mafia
         prerequisite = { focus = SNY_stabilize_the_state}
         available = {
-            NOT = {
-                OR = {
-                    has_idea = SNY_corruption
-                    has_idea = SNY_opposed_by_congress
-                }
-            }
             has_idea = SNY_political_violence
         }
         x = -1
@@ -6947,8 +7116,20 @@ focus_tree = {
                 has_government = progressivism
             }
         }
+        allow_branch = {
+            NOT = {
+                has_completed_focus = SNY_postpone_the_elections
+            }
+        }
         x = 30
         y = 1
+        offset = {
+            x = -30
+            y = 0
+            trigger = {
+                has_completed_focus = SNY_the_elections_must_continue
+            }
+        }
         relative_position_id = SNY_the_attack_on_albany
         cost = 5
         ai_will_do = {
