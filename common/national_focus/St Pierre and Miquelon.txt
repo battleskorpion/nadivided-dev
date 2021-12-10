@@ -33,7 +33,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_ideas = PSP_Establish_a_coastguard_idea
 		}
 	}
 
@@ -56,8 +56,27 @@ focus_tree = {
 			factor = 7.2
 		}
 
-		completion_reward = {
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
 
+		completion_reward = {
+			add_tech_bonus = {
+				name = dd_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = dd_tech
+			}
 		}
 	}
 
@@ -81,7 +100,13 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 1
+				category = infantry_weapons
+				category = artillery
+			}
 		}
 	}
 
@@ -103,7 +128,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+           add_offsite_building = { type = industrial_complex level = 1 }
 		}
 	}
 
@@ -124,8 +149,59 @@ focus_tree = {
 			factor = 1
 		}
 
-		completion_reward = {
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = infrastructure_effort_tt
+				all_owned_state = {			
+					free_building_slots = {
+						building = infrastructure
+						size < 2
+					}
+				}
+			}
+		}
 
+		complete_tooltip = {
+			add_building_construction = {
+				type = infrastructure
+				level = 2
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = infrastructure
+				level = 2
+				instant_build = yes
+			}
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = infrastructure
+										size > 1
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
 
 		}
 	}
@@ -148,7 +224,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_timed_idea = { idea = PSP_Urbanization_effort_idea  days = 900 }
 
 		}
 	}
@@ -171,7 +247,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+           add_offsite_building = { type = arms_factory level = 2 }
 
 		}
 	}
@@ -195,7 +271,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+           add_offsite_building = { type = arms_factory level = 1 }
 
 		}
 	}
@@ -218,7 +294,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_research_slot = 1
 
 		}
 	}
@@ -231,6 +307,9 @@ focus_tree = {
 		y = 1
 		relative_position_id = PSP_Developing_Research_sector
         prerequisite = { focus = PSP_Developing_Research_sector }
+		available = {
+			num_of_factories > 8
+		}
 		cost = 5
 
 		search_filters = {   }
@@ -241,7 +320,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_research_slot = 1
 
 		}
 	}
@@ -264,7 +343,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_ideas = PSP_Advanced_ship_building_techniques_idea
 
 		}
 	}
@@ -287,8 +366,58 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			air_experience = 25
 
-
+			if = {
+				limit = {
+					capital_scope = {
+						NOT = {
+							free_building_slots = {
+								building = air_base
+								size > 1
+							}
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_AB }
+				}
+			}
+			if = {
+				limit = {
+					capital_scope = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+				}
+				capital_scope = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_AB }
+				}
+			}
+			add_doctrine_cost_reduction = {
+				name = air_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}
 		}
 	}
 
@@ -311,8 +440,19 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
-
+			add_tech_bonus = {
+				name = fighter_bonus
+				bonus = 1.0
+				uses = 2
+				technology = early_fighter
+				technology = fighter1
+				technology = fighter2
+				technology = fighter3
+				technology = heavy_fighter1
+				technology = heavy_fighter2
+				technology = heavy_fighter3
+			}
+			air_experience = 50
 		}
 	}
 
@@ -342,7 +482,7 @@ focus_tree = {
 
     focus = {
 		id = PSP_Invest_in_Synthetic_fuels
-		icon = GFX_
+		icon = GFX_focus_rubber
 
 		x = 4
 		y = 1
@@ -359,14 +499,18 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
-
+			add_tech_bonus = {
+				name = synt
+				bonus = 1.5
+				uses = 1
+				category = synth_resources
+			}
 		}
 	}
 
     focus = {
 		id = PSP_Build_a_steel_refinery
-		icon = GFX_
+		icon = GFX_focus_steel_ladle
 
 		x = 6
 		y = 1
@@ -383,14 +527,19 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			64 = {
+				add_resource = {
+					type = steel
+					amount = 11
+				}
+			}
 
 		}
 	}
 
     focus = {
 		id = PSP_Build_synthetic_fuel_plants
-		icon = GFX_
+		icon = GFX_focus_synth_facility
 
 		x = 0
 		y = 1
@@ -405,10 +554,41 @@ focus_tree = {
 			factor = 1
 		}
 
-		completion_reward = {
+        available = { has_tech = synth_oil_experiments }
 
-
-		}
+          completion_reward = { 
+            custom_effect_tooltip = SLA_research_syth_tt
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = synthetic_refinery 
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = synthetic_refinery
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 1
+					instant_build = yes
+				    }
+			    }
+			}
 	}
 
 	focus = {
@@ -429,7 +609,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_political_power = 150
 		}
 	}
 	
@@ -442,7 +622,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = PSP_Separated_from_the_France
         prerequisite = { focus = PSP_Separated_from_the_France }
-		cost = 10
+		cost = 7.2
 
 		search_filters = {   }
 		
@@ -452,7 +632,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_stability = 0.1
 
 		}
 	}
@@ -475,7 +655,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_stability = 0.1
 
 		}
 	}
@@ -498,7 +678,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_ideas = PSP_A_Doctrine_of_Aggression
 
 		}
 	}
@@ -521,8 +701,10 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
-
+			declare_war_on = {
+    		target = PNL
+    		type = annex_everything
+			}
 		}
 	}
 
@@ -544,8 +726,10 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
-
+			declare_war_on = {
+    		target = PEI
+    		type = annex_everything
+			}
 		}
 	}
 
@@ -568,8 +752,10 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
-
+			declare_war_on = {
+    		target = PNS
+    		type = annex_everything
+			}
 		}
 	}
 
@@ -754,8 +940,71 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
-
+			navy_experience = 25
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 1
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = dockyard
+						level = 1
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 1
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 1
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = dockyard
+						level = 1
+						instant_build = yes
+					}
+				}
+			}			
 		}
 	}
 
@@ -778,8 +1027,71 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
-
+			navy_experience = 25
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+			}			
 		}
 	}
 
@@ -802,7 +1114,8 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			set_rule = { can_send_volunteers = yes }
+			add_ideas = volunteer_corps_focus
 
 		}
 	}
@@ -825,7 +1138,10 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			64 = {
+				add_manpower = 10000
+				add_extra_state_shared_building_slots = 1
+			}
 
 		}
 	}
@@ -851,7 +1167,11 @@ focus_tree = {
 
 		completion_reward = {
 
-
+			add_equipment_to_stockpile = {
+				type = convoy_1
+				amount = 65
+				producer = PSP
+			}            
 		}
 	}
 
@@ -1178,7 +1498,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = PSP_Separated_from_the_France
         prerequisite = { focus = PSP_Separated_from_the_France }
-		cost = 10
+		cost = 7.2
 
 		search_filters = {   }
 		
@@ -1188,7 +1508,14 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			 set_politics = {
+                add_popularity = {
+				ideology = democratic
+				popularity = 0.75
+            }
+	       		add_stability = 0.05
+				ruling_party = democratic
+			}
 
 		}
 	}
@@ -1211,9 +1538,14 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
-
+			 set_politics = {
+                add_popularity = {
+				ideology = democratic
+				popularity = 0.15
+				}
+			}
 		}
 	}
+
 
 }
