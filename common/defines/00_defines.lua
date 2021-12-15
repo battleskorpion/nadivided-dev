@@ -494,11 +494,11 @@ NProduction = {
 	RAILWAY_GUN_REPAIR_SPEED = 8.0,			-- Railway gun strength repair speed per factory
 	EFFICIENCY_LOSS_PER_UNUSED_DAY = 1,		-- Daily loss of efficiency for unused factory slots ( efficiency is tracked per factory slot in the production line )
 	RESOURCE_PENALTY_WARNING_CRITICAL_RATIO =  0.8, -- Switch to red progress bar if penalty is over threshold 
-	BASE_FACTORY_SPEED = 5, 				-- Base factory speed multiplier (how much hoi3 style IC each factory gives).
-	BASE_FACTORY_SPEED_MIL = 4.75, 				-- Base factory speed multiplier (how much hoi3 style IC each factory gives).
-	BASE_FACTORY_SPEED_NAV = 2.5, 				-- Base factory speed multiplier (how much hoi3 style IC each factory gives).
+	BASE_FACTORY_SPEED = 4, 				-- Base factory speed multiplier (how much hoi3 style IC each factory gives). #base5
+	BASE_FACTORY_SPEED_MIL = 3.25, 				-- Base factory speed multiplier (how much hoi3 style IC each factory gives). #base4.75
+	BASE_FACTORY_SPEED_NAV = 4.5, 				-- Base factory speed multiplier (how much hoi3 style IC each factory gives). #base2.5
 	BASE_FACTORY_START_EFFICIENCY_FACTOR = 10,	-- Base start efficiency for factories expressed in %.
-	BASE_FACTORY_MAX_EFFICIENCY_FACTOR = 50,	-- Base max efficiency for factories expressed in %.
+	BASE_FACTORY_MAX_EFFICIENCY_FACTOR = 47,	-- Base max efficiency for factories expressed in %.
 	BASE_FACTORY_EFFICIENCY_GAIN = 1,		-- Base efficiency factor.
 	BASE_FACTORY_EFFICIENCY_BALANCE_FACTOR = 0.1, 			-- Factory efficiency balancing factor
 	BASE_FACTORY_EFFICIENCY_VARIANT_CHANGE_FACTOR = 90,		-- Base factor for changing production variants in %.
@@ -507,11 +507,11 @@ NProduction = {
 	BASE_FACTORY_EFFICIENCY_ARCHETYPE_CHANGE_FACTOR = 20, 	-- Base factor for changing production with same archetype in %.
 	EQUIPMENT_BASE_LEND_LEASE_WEIGHT = 1.0, -- Base equipment lend lease weight
 	EQUIPMENT_LEND_LEASE_WEIGHT_FACTOR = 0.01, -- Base equipment lend lease factor
-	ANNEX_STOCKPILES_RATIO = 1.0,		-- How much stockpiled equipment will be transferred on annexation
+	ANNEX_STOCKPILES_RATIO = 0.30,		-- How much stockpiled equipment will be transferred on annexation
 	ANNEX_FIELD_EQUIPMENT_RATIO = 0.25,	-- How much equipment from deployed divisions will be transferred on annexation
 	ANNEX_FUEL_RATIO = 0.25,	-- How much fuel will be transferred on annexation
-	ANNEX_CONVOYS_RATIO = 0.15,			-- How many convoys will be transferred on annexation
-	MIN_POSSIBLE_TRAINING_MANPOWER = 100000,	-- How many deployment lines minimum can be training
+	ANNEX_CONVOYS_RATIO = 0.45,			-- How many convoys will be transferred on annexation
+	MIN_POSSIBLE_TRAINING_MANPOWER = 50000,	-- How many deployment lines minimum can be training
 	MIN_FIELD_TO_TRAINING_MANPOWER_RATIO = 0.75,	-- Ratio which % of army in field can be trained
 	CAPITULATE_STOCKPILES_RATIO = 0.3, -- How much equipment from deployed divisions will be transferred on capitulation
 	CAPITULATE_FUEL_RATIO = 0.5, -- How much fuel will be transferred on capitulation
@@ -541,7 +541,7 @@ NTechnology = {
 	MAX_SUBTECHS = 5,						-- default 3 (if issues see here) -- Max number of sub technologies a technology can have.
 	BASE_RESEARCH_POINTS_SAVED = 50.0,		-- default 30.0 -- Base amount of research points a country can save per slot.
 	BASE_YEAR_AHEAD_PENALTY_FACTOR = 2,		-- Base year ahead penalty
-	BASE_TECH_COST = 85,					-- Base cost for a tech. multiplied with tech cost and ahead of time penalties (Default 100)
+	BASE_TECH_COST = 95,					-- Base cost for a tech. multiplied with tech cost and ahead of time penalties (Default 100)
 	MAX_TECH_SHARING_BONUS = 0.5, 			-- Max technology sharing bonus that can be applied instantly
 	LICENSE_PRODUCTION_TECH_BONUS = 0.2,	-- License production tech bonus
 	
@@ -549,6 +549,8 @@ NTechnology = {
 	DEFAULT_XP_BOOST_RESEARCH_COST = 0,				-- default xp cost of a research to speed up the process
 	DEFAULT_XP_BOOST_RESEARCH_BONUS = 0,			-- default boost research bonus gained when xp is used to research an item
 	MIN_RESEARCH_SPEED = 0.1,				-- research speed can't go below this value
+
+	USE_BONUS_REGRET_TIMER = 3,						-- Number of days the player has to regret using a limited tech bonus
 },
 
 NPolitics = {
@@ -637,9 +639,9 @@ NMilitary = {
 	BASE_DIVISION_BRIGADE_CHANGE_COST = 5,	--Base cost to change a regiment column.
 	BASE_DIVISION_SUPPORT_SLOT_COST = 10, 	--Base cost to unlock a support slot
 
-	MAX_ARMY_EXPERIENCE = 500,			--Max army experience a country can store
-	MAX_NAVY_EXPERIENCE = 500,			--Max navy experience a country can store
-	MAX_AIR_EXPERIENCE = 500,				--Max air experience a country can store
+	MAX_ARMY_EXPERIENCE = 600,			--Max army experience a country can store #base500
+	MAX_NAVY_EXPERIENCE = 600,			--Max navy experience a country can store #base500
+	MAX_AIR_EXPERIENCE = 600,				--Max air experience a country can store #base500
 
 	COMBAT_MINIMUM_TIME = 4,			-- Shortest time possible for a combat in hours
 	SPOTTING_QUALITY_DROP_HOURS = 4, 	-- Each X hours the intel quality drops after unit was spotted.
@@ -1739,7 +1741,7 @@ NNavy = {
 },
 
 NRailwayGun = {
-	RAILWAY_GUN_RANGE = 30,							-- The range of railway guns in pixels
+	RAILWAY_GUN_RANGE = 100,							-- The range of railway guns in pixels #base 30 make it 100
 	ATTACK_TO_FORTS_MODIFIER_FACTOR = 1.333,		-- Forts modifier is calculated by multiplying railway gun attack value with this and dividing by 100
 	ATTACK_TO_ENTRENCHMENT_MODIFIER_FACTOR = 0.8,		-- Entrenchment modifier is calculated by multiplying railway gun attack value with this and dividing by 100
 	ATTACK_TO_BOMBARDMENT_MODIFIER_FACTOR = 0.4,	-- Bombardment modifier is calculated by multiplying railway gun attack value with this and dividing by 100
@@ -2436,6 +2438,13 @@ NAI = {
 	DOCKYARDS_PER_NAVAL_DESIRE_EFFECT = -20.0,			-- Effects how much AI wants to build dockyards based on how navally focused they are in general. Recommended range -100.0 to 100.0.
 
 	DECISION_PRIORITY_RANDOMIZER = 0.1,					-- random factor that is used while picking decisions. ai is able to pick a lower priority decision earler than a higher one if it is within this threshold
+
+	DESIGN_COMPANY_SCORE_MULTIPLIER = 2.0,              -- score multiplier for hiring a design company
+	ARMY_CHIEF_SCORE_MULTIPLIER = 2.0,                  -- score multiplier for hiring an army chief
+	AIR_CHIEF_SCORE_MULTIPLIER = 1.5,                   -- score multiplier for hiring an air chief
+	NAVY_CHIEF_SCORE_MULTIPLIER = 1.0,                  -- score multiplier for hiring an navy chief
+	POLITICAL_ADVISOR_SCORE_MULTIPLIER = 1.0,           -- score multiplier for hiring political advisors
+	THEORIST_ACCEPTANCE_MULTIPLIER = 0.7,						-- scale the acceptance of hiring a theorist by this number times the amount of non-theorists we have, capped at one.
 	
 	MIN_SCALED_IDEA_WEIGHT_TO_COMPARE_WITH_DECISIONS = 100,      -- idea scores are scaled between these two values while comparing them to decisions
 	MAX_SCALED_IDEA_WEIGHT_TO_COMPARE_WITH_DECISIONS = 200,      -- idea scores are scaled between these two values while comparing them to decisions
@@ -2468,6 +2477,16 @@ NAI = {
 	MIN_CAPITALS_FOR_CARRIER_TASKFORCE = 10,			-- carrier fleets will at least have this amount of capitals
 	CAPITALS_TO_CARRIER_RATIO = 1.5,				-- capital to carrier count in carrier taskfoces
 	SCREENS_TO_CAPITAL_RATIO = 4.0,					-- screens to capital/carrier count in carrier & capital taskforces
+
+	MIN_MAIN_SHIP_RATIO = 0.3,                      -- if main ship ratio is below this, steal other ships.
+	MIN_SUPPORT_SHIP_RATIO = 0.7,                   -- if support ship ratio is below this, steal other ships.
+	MIN_MAIN_SHIP_RATIO_TO_REINFORCE = 0.5,         -- the main ships will be tried to reinforce this level.
+	MIN_SUPPORT_SHIP_RATIO_TO_REINFORCE = 0.9,      -- the support ships will be tried to reinforce this level.
+	MIN_MAIN_SHIP_TO_SPARE = 0.7,                   -- can only steal ships from a task force if their main ship ratio is above this.
+	MIN_SUPPORT_SHIP_TO_SPARE = 1.0,                -- can only steal ships from a task force if their support ship ratio is above this.
+	MIN_MAIN_SHIP_RATIO_TO_MERGE = 0.7,             -- try merge task force if main ship ratio is lower than this.
+	MAX_MAIN_SHIP_RATIO_TO_MERGE = 1.001,           -- if resulting main ship ratio would be at most this, allow merging into this task force.
+	MAIN_SHIP_RATIO_TO_SPLIT = 1.8,                 -- if main ship ratio in a task force is larger than this, split it. (If a carrier TF wants 4 carriers (see defines above), but it has more than [this * 4] carriers, then we try to split the TF.)
 	
 	MISSION_FLEET_ICONS = {
 		4, -- HOLD 
