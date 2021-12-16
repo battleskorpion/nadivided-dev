@@ -307,7 +307,10 @@ country_event = { #Charles Poletti criticizes Lehman
 
     option = { #What now?
         name = new_york.7.a
-        remove_ideas = SNY_charles_poletti
+        remove_advisor_role = {
+            character = "SNY_charles_poletti"
+            slot = political_advisor
+        }
     }
 }
 country_event = { #Jay Lovestone's Speech
@@ -523,41 +526,45 @@ country_event = { #The question of leadership
         ai_chance = {
             factor = 20
         }
-        create_country_leader = {
-            name = "Francis P. Mulcahy"
-            picture = "gfx_leaders_SNY_general_francis_patrick_mulcahy.dds"
-            expire = "1965.1.1"
-            ideology = oligarchism
-            traits = {
-                military_leader
+        set_politics = {
+            ruling_party = longism
+        }
+        add_popularity = {
+            ideology = longism
+            popularity = 0.2
+        }
+        add_ideas = SNY_navy_troubles
+        add_country_leader_role = {
+            Character = SNY_francis_patrick_mulcahy
+            Promote_leader = yes
+            Country_leader = {
+                ideology = national_populism
+                expire = "1965.1.1"
+                traits = {
+                    military_leader
+                }
             }
         }
         army_experience = 10
-        navy_experience = 25
-        air_experience = 25
+        navy_experience = 10
+        air_experience = 10
         complete_national_focus = SNY_francis_mulcahy_assumes_leadership
-        # hidden_effect = {
-        #     set_variable = { SNY_bruce_militancy = 20 }
-        #     set_variable = { SNY_george_militancy = 40 }
-        #     set_variable = { SNY_navy_militancy = 40 }
-        #     set_country_flag = SNY_Francis_high_influence
-        #     set_country_flag = SNY_Bruce_moderate_influence
-        #     set_country_flag = SNY_George_low_influence
-        #     set_country_flag = SNY_Navy_low_influence
-        # }
     }
     option = { #Bruce C. Clarke
         name = new_york.22.b
         ai_chance = {
             factor = 35
         }
-        create_country_leader = {
-            name = "Bruce C. Clarke"
-            picture = "gfx_leaders_SNY_general_bruce_c_clark.dds"
-            expire = "1965.1.1"
-            ideology = oligarchism
-            traits = {
-                military_leader
+        add_ideas = SNY_navy_troubles
+        add_country_leader_role = {
+            Character = SNY_bruce_c_clark
+            Promote_leader = yes
+            Country_leader = {
+                ideology = oligarchism
+                expire = "1965.1.1"
+                traits = {
+                    military_leader
+                }
             }
         }
         army_experience = 10
@@ -567,15 +574,6 @@ country_event = { #The question of leadership
             category = engineers_tech
         }
         complete_national_focus = SNY_bruce_clarke_assumes_leadership
-        # hidden_effect = {
-        #     set_variable = { SNY_francis_militancy = 10 }
-        #     set_variable = { SNY_george_militancy = 30 }
-        #     set_variable = { SNY_navy_militancy = 50 }
-        #     set_country_flag = SNY_Francis_moderate_influence
-        #     set_country_flag = SNY_Bruce_high_influence
-        #     set_country_flag = SNY_George_low_influence
-        #     set_country_flag = SNY_Navy_low_influence
-        # }
     }
     option = { #George Decker (Can lead to Navy Leading Path)
         name = new_york.22.c
@@ -589,13 +587,16 @@ country_event = { #The question of leadership
             ideology = fascism
             popularity = 0.2
         }
-        create_country_leader = {
-            name = "George Decker"
-            picture = "gfx_leaders_SNY_general_decker.dds"
-            expire = "1965.1.1"
-            ideology = falangism
-            traits = {
-                military_leader
+        add_ideas = SNY_navy_troubles
+        add_country_leader_role = {
+            Character = SNY_george_decker
+            Promote_leader = yes
+            Country_leader = {
+                ideology = falangism
+                expire = "1965.1.1"
+                traits = {
+                    military_leader
+                }
             }
         }
         army_experience = 10
@@ -611,16 +612,6 @@ country_event = { #The question of leadership
                 days = 10
             }
         }
-        # hidden_effect = {
-        #     set_variable = { SNY_francis_militancy = 30 }
-        #     set_variable = { SNY_bruce_militancy = 20 }
-        #     set_variable = { SNY_navy_militancy = 80 }
-        #     set_country_flag = SNY_Francis_moderate_influence
-        #     set_country_flag = SNY_Bruce_moderate_influence
-        #     set_country_flag = SNY_George_moderate_influence
-        #     set_country_flag = SNY_Navy_low_influence
-        #     set_country_flag = SNY_the_navy_plans_something
-        # }
     }
 }
 country_event = { #The Albany Massacre
@@ -715,13 +706,18 @@ country_event = { #The Navy coups The Army
             ideology = neutrality
             popularity = 0.25
         }
-        create_country_leader = {
-            name = "Russell Wilson"
-            picture = "russell_wilson.dds"
-            expire = "1965.1.1"
-            ideology = oligarchism
-            traits = {
-                naval_leader
+        recruit_character = SNY_francis_patrick_mulcahy
+        recruit_character = SNY_bruce_c_clark
+        recruit_character = SNY_russell_willson
+        add_country_leader_role = {
+            Character = SNY_russell_willson
+            Promote_leader = yes
+            Country_leader = {
+                ideology = oligarchism
+                expire = "1965.1.1"
+                traits = {
+                    naval_leader
+                }
             }
         }
         navy_experience = 25
@@ -730,15 +726,27 @@ country_event = { #The Navy coups The Army
             uses = 1
             category = naval_equipment
         }
+        remove_ideas = SNY_navy_troubles
+        add_ideas = SNY_army_resistance
+        custom_effect_tooltip = SNY_remove_all_units_tt
+        hidden_effect = {
+            every_owned_state = {
+                SNY = {
+                    delete_unit = {
+                        state = PREV
+                        disband = yes
+                    }
+                }
+            }
+        }
+        
+        if = {
+            limit = {
+                has_completed_focus = SNY_george_decker_assumes_leadership
+            }
+            uncomplete_national_focus = SNY_george_decker_assumes_leadership
+        }
         complete_national_focus = SNY_the_navy_coups_the_coup
-        # hidden_effect = {
-        #     set_variable = { SNY_francis_militancy = 40 }
-        #     set_variable = { SNY_bruce_militancy = 50 }
-        #     set_variable = { SNY_george_militancy = 80 }
-        #     clr_country_flag = SNY_Navy_low_influence
-        #     clr_country_flag = SNY_the_navy_plans_something
-        #     set_country_flag = SNY_Navy_moderate_influence
-        # }
     }
 }
 country_event = { #Asking to dam the Niagara Falls River
@@ -1333,11 +1341,13 @@ country_event = { #Write a Letter to FDR
             limit = {
                 country_exists = WDC
             }
-            country_event = {
-                id = new_york.49
-                days = 2
+            WDC = {
+                country_event = {
+                    id = new_york.49
+                    days = 2
+                }
             }
-        } else {
+        } else = {
             country_event = {
                 id = new_york.50
                 days = 2
@@ -1367,6 +1377,7 @@ country_event = { #New York sends a letter to FDR
         hidden_effect = {
             set_country_flag = WDC_cant_have_fdr
         }
+        #Retire FDR
         SNY = {
             country_event = {
                 id = new_york.50
@@ -1499,7 +1510,7 @@ country_event = { #The Rebellion Starts
             }
             add_country_leader_role = {
                 Character = SNY_charles_poletti
-                promote_leader = yes
+                Promote_leader = yes
                 ideology = liberalism
                 traits = {
                     experienced_lawyer
@@ -1558,40 +1569,41 @@ country_event = { #The Rebellion Starts
                     has_completed_focus = SNY_work_with_the_army
                 }
             }
-            division_template = {
-                name = "Military Division"
-                division_names_group = USA_INF_01
-                regiments = {
-                    infantry = { x = 0 y = 0 }
-                    infantry = { x = 0 y = 1 }
-                    infantry = { x = 0 y = 2 }
-                    infantry = { x = 1 y = 0 }
-                    infantry = { x = 1 y = 1 }
-                    infantry = { x = 1 y = 2 }
-                    infantry = { x = 2 y = 0 }
-                    infantry = { x = 2 y = 1 }
-                    infantry = { x = 2 y = 2 }
-                    infantry = { x = 3 y = 0 }
-                }
-            }
-            280 = {
-                create_unit = {
-                    division = "name = \"Military Division\" division_template = \"Veteran Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
-                    owner = SNY
-                }
-                create_unit = {
-                    division = "name = \"Military Division\" division_template = \"Veteran Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
-                    owner = SNY
-                }
-                create_unit = {
-                    division = "name = \"Military Division\" division_template = \"Veteran Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
-                    owner = SNY
-                }
-                create_unit = {
-                    division = "name = \"Military Division\" division_template = \"Veteran Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
-                    owner = SNY
-                }
-            }
+            load_oob = "SNY_lehman_impeach_civil_war"
+            # division_template = {
+            #     name = "Military Division"
+            #     division_names_group = USA_INF_01
+            #     regiments = {
+            #         infantry = { x = 0 y = 0 }
+            #         infantry = { x = 0 y = 1 }
+            #         infantry = { x = 0 y = 2 }
+            #         infantry = { x = 1 y = 0 }
+            #         infantry = { x = 1 y = 1 }
+            #         infantry = { x = 1 y = 2 }
+            #         infantry = { x = 2 y = 0 }
+            #         infantry = { x = 2 y = 1 }
+            #         infantry = { x = 2 y = 2 }
+            #         infantry = { x = 3 y = 0 }
+            #     }
+            # }
+            # 281 = {
+            #     create_unit = {
+            #         division = "name = \"Military Division\" division_template = \"Veteran Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+            #         owner = SNY
+            #     }
+            #     create_unit = {
+            #         division = "name = \"Military Division\" division_template = \"Veteran Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+            #         owner = SNY
+            #     }
+            #     create_unit = {
+            #         division = "name = \"Military Division\" division_template = \"Veteran Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+            #         owner = SNY
+            #     }
+            #     create_unit = {
+            #         division = "name = \"Military Division\" division_template = \"Veteran Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+            #         owner = SNY
+            #     }
+            # }
         }
     }
 }
@@ -2058,9 +2070,13 @@ country_event = { #Invitation to The Federalist League
             modifier = {
                 add = 40
                 has_opinion = {
-                    opinion > 60
+                    opinion > 50
                     target = SNY
                 }
+            }
+            modifier = {
+                add = 30
+                is_neighbor_of = SNY
             }
             modifier = {
                 add = -40
@@ -2105,9 +2121,13 @@ country_event = { #Invitation to The Federalist League
             modifier = {
                 add = -40
                 has_opinion = {
-                    opinion > 60
+                    opinion > 50
                     target = SNY
                 }
+            }
+            modifier = {
+                add = -30
+                is_neighbor_of = SNY
             }
             modifier = {
                 add = 40
@@ -2135,7 +2155,7 @@ country_event = { #Invitation to The Federalist League
         custom_effect_tooltip = SNY_bastion_of_demoracy_warning_tt
         SNY = {
             country_event = {
-                id = new_york.76.a
+                id = new_york.76
             }
         }
         hidden_effect = {
@@ -2215,7 +2235,7 @@ country_event = { #Invitation to the Democratic League
             modifier = {
                 add = 40
                 has_opinion = {
-                    opinion > 60
+                    opinion > 50
                     target = SNY
                 }
             }
@@ -2241,7 +2261,7 @@ country_event = { #Invitation to the Democratic League
             modifier = {
                 add = -40
                 has_opinion = {
-                    opinion > 60
+                    opinion > 50
                     target = SNY
                 }
             }
@@ -2295,9 +2315,13 @@ country_event = { #Complete Invitation To the Union
             modifier = {
                 add = 40
                 has_opinion = {
-                    opinion > 60
+                    opinion > 50
                     target = SNY
                 }
+            }
+            modifier = {
+                add = 30
+                is_neighbor_of = SNY
             }
             modifier = {
                 add = 10
@@ -2369,7 +2393,7 @@ country_event = { #Complete Invitation To the Union
                     autonomy_state = autonomy_article_state
                 }
             }
-            else {
+            else = {
                 puppet = ROOT
             }
         }
@@ -2387,9 +2411,13 @@ country_event = { #Complete Invitation To the Union
             modifier = {
                 add = -40
                 has_opinion = {
-                    opinion > 60
+                    opinion > 50
                     target = SNY
                 }
+            }
+            modifier = {
+                add = -30
+                is_neighbor_of = SNY
             }
             modifier = {
                 add = -10
@@ -2414,6 +2442,11 @@ country_event = { #Complete Invitation To the Union
                 SNY = {
                     has_idea = SNY_heir_to_the_union
                 }
+            }
+        }
+        SNY = {
+            country_event = {
+                id = new_york.79
             }
         }
     }
@@ -2554,6 +2587,8 @@ country_event = { #Japan Backs Down
 
     option = { #Glad They Know Thier Place
         name = new_york.86.a
+        navy_experience = 100
+        air_experience = 50
     }
 }
 country_event = { #Japan Holds Firm
@@ -2567,6 +2602,8 @@ country_event = { #Japan Holds Firm
 
     option = { #We'll have to Undermind Their Progress
         name = new_york.87.a
+        navy_experience = 50
+        air_experience = 25
     }
 }
 country_event = { #Chinese Insurgents Push Back
@@ -2580,6 +2617,8 @@ country_event = { #Chinese Insurgents Push Back
 
     option = { #That's mah Boy!
         name = new_york.88.a
+        add_war_support = 0.05
+        army_experience = 50
     }
 }
 country_event = { #Chinese Insurgents Are Chrushed
@@ -2593,6 +2632,7 @@ country_event = { #Chinese Insurgents Are Chrushed
 
     option = { #Those Damned Japanese!
         name = new_york.89.a
+        army_experience = 25
     }
 }
 country_event = { #Indonesian Insurgents Push Back
@@ -2606,6 +2646,9 @@ country_event = { #Indonesian Insurgents Push Back
 
     option = { #Japanese Influence is Dwindling
         name = new_york.90.a
+        add_war_support = 0.05
+        army_experience = 25
+        navy_experience = 50
     }
 }
 country_event = { #Indonesian Insurgents Are Chrushed
@@ -2619,6 +2662,8 @@ country_event = { #Indonesian Insurgents Are Chrushed
 
     option = {
         name = new_york.91.a
+        army_experience = 10
+        navy_experience = 25
     }
 }
 country_event = { #Initial Event to Choose a Capital
@@ -2803,7 +2848,9 @@ country_event = { #A Capital in New England
         trigger = {
             owns_state = 5
         }
-        set_capital = 5
+        set_capital = {
+            state = 5
+        }
         add_state_core = 5
     }
     option = { #Hartdord
@@ -2811,7 +2858,9 @@ country_event = { #A Capital in New England
         trigger = {
             owns_state = 245
         }
-        set_capital = 245
+        set_capital = {
+            state = 245
+        }
         add_state_core = 245
     }
     option = { #Augusta
@@ -2819,7 +2868,9 @@ country_event = { #A Capital in New England
         trigger = {
             owns_state = 418
         }
-        set_capital = 418
+        set_capital = {
+            state = 418
+        }
         add_state_core = 418
     }
     option = { #Let's look somewhere else
@@ -2846,7 +2897,9 @@ country_event = { #A Capital in the Mid-Atlantic
             owns_state = 202
             owns_state = 26
         }
-        set_capital = 27
+        set_capital = {
+            state = 27
+        }
         add_state_core = 27
         add_state_core = 28
         add_state_core = 202
@@ -2858,7 +2911,9 @@ country_event = { #A Capital in the Mid-Atlantic
             owns_state = 46
             owns_state = 620
         }
-        set_capital = 46
+        set_capital = {
+            state = 46
+        }
         add_state_core = 46
         add_state_core = 620
     }
@@ -2867,7 +2922,9 @@ country_event = { #A Capital in the Mid-Atlantic
         trigger = {
             owns_state = 385
         }
-        set_capital = 385
+        set_capital = {
+            state = 385
+        }
         add_state_core = 385
     }
     option = { #Let's look somewhere else
@@ -2892,7 +2949,9 @@ country_event = { #A Capital in the Great Lakes
             owns_state = 35
             owns_state = 36
         }
-        set_capital = 36
+        set_capital = {
+            state = 36
+        }
         add_state_core = 35
         add_state_core = 36
     }
@@ -2902,8 +2961,12 @@ country_event = { #A Capital in the Great Lakes
             owns_state = 692
             owns_state = 41
         }
-        set_capital = 692
-        add_state_core = 41
+        set_capital = {
+            state = 692
+        }
+        add_state_core = {
+            state = 41
+        }
         add_state_core = 692
     }
     option = { #Cincinnati
@@ -2911,7 +2974,9 @@ country_event = { #A Capital in the Great Lakes
         trigger = {
             owns_state = 536
         }
-        set_capital = 536
+        set_capital = {
+            state = 536
+        }
         add_state_core = 536
     }
     option = { #Let's look somewhere else
@@ -2993,7 +3058,9 @@ country_event = { #A Capital on the East Coast
         trigger = {
             owns_state = 11
         }
-        set_capital = 11
+        set_capital = {
+            state = 11
+        }
         add_state_core = 11
     }
     option = { #Columbia
@@ -3001,7 +3068,9 @@ country_event = { #A Capital on the East Coast
         trigger = {
             owns_state = 351
         }
-        set_capital = 351
+        set_capital = {
+            state = 351
+        }
         add_state_core = 351
     }
     option = { #Atlanta
@@ -3009,7 +3078,9 @@ country_event = { #A Capital on the East Coast
         trigger = {
             owns_state = 74
         }
-        set_capital = 74
+        set_capital = {
+            state = 74
+        }
         add_state_core = 74
     }
     option = { #Let's look somewhere else
@@ -3033,7 +3104,9 @@ country_event = { #A Capital in the Deep South
         trigger = {
             owns_state = 520
         }
-        set_capital = 520
+        set_capital = {
+            state = 520
+        }
         add_state_core = 520
     }
     option = { #Montgomery
@@ -3041,7 +3114,9 @@ country_event = { #A Capital in the Deep South
         trigger = {
             owns_state = 23
         }
-        set_capital = 23
+        set_capital = {
+            state = 23
+        }
         add_state_core = 23
     }
     option = { #New Orleans
@@ -3050,7 +3125,9 @@ country_event = { #A Capital in the Deep South
             owns_state = 752
             owns_state = 753
         }
-        set_capital = 752
+        set_capital = {
+            state = 752
+        }
         add_state_core = 752
         add_state_core = 753
     }
@@ -3075,7 +3152,9 @@ country_event = { #A Capital West of the Mississippi
         trigger = {
             owns_state = 237
         }
-        set_capital = 237
+        set_capital = {
+            state = 237
+        }
         add_state_core = 237
     }
     option = { #Dallas
@@ -3083,7 +3162,9 @@ country_event = { #A Capital West of the Mississippi
         trigger = {
             owns_state = 621
         }
-        set_capital = 621
+        set_capital = {
+            state = 621
+        }
         add_state_core = 621
     }
     option = { #Houston
@@ -3091,7 +3172,9 @@ country_event = { #A Capital West of the Mississippi
         trigger = {
             owns_state = 42
         }
-        set_capital = 42
+        set_capital = {
+            state = 42
+        }
         add_state_core = 42
     }
     option = { #Let's look somewhere else
@@ -3170,7 +3253,9 @@ country_event = { #A Capital in the Midwest
         trigger = {
             owns_state = 318
         }
-        set_capital = 318
+        set_capital = {
+            state = 318
+        }
         add_state_core = 318
     }
     option = { #Kansas City
@@ -3178,7 +3263,9 @@ country_event = { #A Capital in the Midwest
         trigger = {
             owns_state = 683
         }
-        set_capital = 683
+        set_capital = {
+            state = 683
+        }
         add_state_core = 683
     }
     option = { #Bismark
@@ -3186,7 +3273,9 @@ country_event = { #A Capital in the Midwest
         trigger = {
             owns_state = 269
         }
-        set_capital = 269
+        set_capital = {
+            state = 269
+        }
         add_state_core = 269
     }
     option = { #Let's look somewhere else
@@ -3210,7 +3299,9 @@ country_event = { #A Northwest Capital
         trigger = {
             owns_state = 40
         }
-        set_capital = 40
+        set_capital = {
+            state = 40
+        }
         add_state_core = 40
     }
     option = { #Portland
@@ -3218,14 +3309,18 @@ country_event = { #A Northwest Capital
         trigger = {
             owns_state = 53
         }
-        set_capital = 53
+        set_capital = {
+            state = 53
+        }
         add_state_core = 53
     }
     option = { #Boise
         trigger = {
             owns_state = 510
         }
-        set_capital = 510
+        set_capital = {
+            state = 510
+        }
         add_state_core = 510
     }
     option = { #Let's look somewhere else
@@ -3249,7 +3344,9 @@ country_event = { #A Southwest Capital
         trigger = {
             owns_state = 611
         }
-        set_capital = 611
+        set_capital = {
+            state = 510
+        }
         add_state_core = 611
     }
     option = { #Salt Lake City
@@ -3257,7 +3354,9 @@ country_event = { #A Southwest Capital
         trigger = {
             owns_state = 49
         }
-        set_capital = 49
+        set_capital = {
+            state = 49
+        }
         add_state_core = 49
     }
     option = { #San Fransisco
@@ -3265,7 +3364,9 @@ country_event = { #A Southwest Capital
         trigger = {
             owns_state = 25
         }
-        set_capital = 25
+        set_capital = {
+            state = 25
+        }
         add_state_core = 25
     }
     option = { #Let's look somewhere else
