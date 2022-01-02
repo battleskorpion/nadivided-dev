@@ -130,7 +130,16 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			navy_experience = 25
+			add_tech_bonus = {
+				name = capital_ships_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = bc_tech
+				category = bb_tech
+				category = cv_tech
+			}
 		}
 	}
 
@@ -154,7 +163,13 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_tech_bonus = {
+				name = ss_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = ss_tech
+			}
 		}
 	}
 
@@ -262,7 +277,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = PSP_Develop_Our_Road_Networks
         prerequisite = { focus = PSP_Develop_Our_Road_Networks }
-		cost = 5
+		cost = 7.2
 
 		search_filters = {   }
 		
@@ -333,7 +348,7 @@ focus_tree = {
 		relative_position_id = PSP_Importing_French_Arms
         prerequisite = { focus = PSP_Importing_French_Arms }
 
-		cost = 5
+		cost = 7.2
 
 		search_filters = {   }
 		
@@ -382,7 +397,7 @@ focus_tree = {
 		available = {
 			num_of_factories > 8
 		}
-		cost = 5
+		cost = 10
 
 		search_filters = {   }
 		
@@ -428,7 +443,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = PSP_Advance_ship_building_techniques
         prerequisite = { focus = PSP_Advance_ship_building_techniques }
-		cost = 5
+		cost = 7.2
 
 		search_filters = {   }
 		
@@ -438,8 +453,12 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_ideas = PSP_Advanced_ship_building_techniques_idea
-
+			add_tech_bonus = {
+				name = secret_bonus
+				bonus = 1.0
+				uses = 1
+				category = electronics
+			}
 		}
 	}
 
@@ -559,7 +578,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = PSP_Our_own_monoplane
         prerequisite = { focus = PSP_Our_own_monoplane }
-		cost = 5
+		cost = 7.2
 
 		search_filters = {   }
 		
@@ -569,7 +588,16 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_tech_bonus = {
+				name = bomber_bonus
+				bonus = 1.0
+				uses = 2
+				technology = strategic_bomber1
+				technology = strategic_bomber2
+				technology = strategic_bomber3
+				category = tactical_bomber
+			}
+			air_experience = 50
 		}
 	}
 
@@ -591,7 +619,61 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			air_experience = 25
+			if = {
+				limit = {
+					capital_scope = {
+						OR = {
+							NOT = { is_controlled_by = ROOT }
+							NOT = {
+								free_building_slots = {
+									building = air_base
+									size > 1
+								}
+							}
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_2_AB }
+				}
+			}
+			if = {
+				limit = {
+					capital_scope = {
+						is_controlled_by = ROOT
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+				}
+				capital_scope = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}				
+					ROOT = { set_country_flag = aviation_effort_2_AB }
+				}
+			}
+			add_doctrine_cost_reduction = {
+				name = air_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}
 		}
 	}
 
@@ -614,7 +696,12 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_tech_bonus = {
+				name = r
+				bonus = 1.0
+				uses = 1
+				category = radar_tech
+			}
 		}
 	}
 
@@ -626,7 +713,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = PSP_Importing_European_Arms
         prerequisite = { focus = PSP_Importing_European_Arms }
-		cost = 5
+		cost = 7.2
 
 		search_filters = {   }
 		
@@ -636,20 +723,27 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			64 = {	
+			add_building_construction = {
+  	 			type = coastal_bunker
+    			level = 1
+   				instant_build = yes
+   				province = 2827
+				}	
+			}
 
 		}
 	}
 
     focus = {
 		id = PSP_Underground_production_facilites
-		icon = GFX_
+		icon = GFX_focus_PSP_under_ground
 
 		x = 0
 		y = 1
 		relative_position_id = PSP_Bunkers_for_our_coast
         prerequisite = { focus = PSP_Bunkers_for_our_coast }
-		cost = 5
+		cost = 7.2
 
 		search_filters = {   }
 		
@@ -659,20 +753,20 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+           add_offsite_building = { type = arms_factory level = 1 }
 
 		}
 	}
 
     focus = {
 		id = PSP_Expand_the_Underground
-		icon = GFX_
+		icon = GFX_focus_PSP_expand_under_ground
 
 		x = 0
 		y = 1
 		relative_position_id = PSP_Underground_production_facilites
         prerequisite = { focus = PSP_Underground_production_facilites }
-		cost = 5
+		cost = 10
 
 		search_filters = {   }
 		
@@ -682,7 +776,9 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			64 = {
+				add_extra_state_shared_building_slots = 2
+			}
 
 		}
 	}
@@ -752,7 +848,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = PSP_Invest_in_Synthetic_fuels
         prerequisite = { focus = PSP_Invest_in_Synthetic_fuels }
-		cost = 5
+		cost = 10
 
 		search_filters = {   }
 		
@@ -869,7 +965,7 @@ focus_tree = {
 
     focus = {
 		id = PSP_Ask_for_help_from_the_UK
-		icon = GFX_
+		icon = GFX_focus_PSP_askforhelpbritts
 
 		x = -2
 		y = 1
@@ -885,13 +981,13 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+           add_offsite_building = { type = industrial_complex level = 1 }
 		}
 	}
 
     focus = {
 		id = PSP_Purchase_advanced_small_arms_from_england
-		icon = GFX_
+		icon = GFX_focus_PSP_british_arms
 
 		x = 0
 		y = 1
@@ -907,7 +1003,12 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 1
+				category = infantry_weapons
+			}
 		}
 	}
 
@@ -936,7 +1037,7 @@ focus_tree = {
 
     focus = {
 		id = PSP_Invade_Newfoundland_and_labrador
-		icon = GFX_
+		icon = GFX_focus_PSP_invadenewfoundland
 
 		x = -2
 		y = 1
@@ -961,7 +1062,7 @@ focus_tree = {
 
     focus = {
 		id = PSP_Invading_new_brunswick
-		icon = GFX_
+		icon = GFX_focus_PSP_invadenewnewbruns
 
 		x = -7
 		y = 1
@@ -985,7 +1086,7 @@ focus_tree = {
 	}
     focus = {
 		id = PSP_Invading_maine
-		icon = GFX_
+		icon = GFX_focus_PSP_invademaine
 
 		x = -1
 		y = 1
@@ -1002,22 +1103,22 @@ focus_tree = {
 
 		completion_reward = {
 			create_wargoal = {
-		target = SME
-		type = annex_everything
+			target = SME
+			type = annex_everything
 			}
 		}
 	}
 
     focus = {
 		id = PSP_Friendship_with_quebec
-		icon = GFX_
+		icon = GFX_focus_PSP_friend_quebec
 
 		x = -3
 		y = 1
 		relative_position_id = PSP_Invading_new_brunswick
         prerequisite = { focus = PSP_Invading_new_brunswick }
 		cost = 5
-
+        mutually_exclusive = { focus = PSP_Quebec_is_the_wrong }
 		search_filters = {   }
 		
 		available_if_capitulated = yes
@@ -1032,14 +1133,14 @@ focus_tree = {
 
     focus = {
 		id = PSP_Quebec_is_the_wrong
-		icon = GFX_
+		icon = GFX_focus_PSP_invadequebec
 
 		x = -5
 		y = 1
 		relative_position_id = PSP_Invading_new_brunswick
         prerequisite = { focus = PSP_Invading_new_brunswick }
 		cost = 5
-
+        mutually_exclusive = { focus = PSP_Friendship_with_quebec }
 		search_filters = {   }
 		
 		available_if_capitulated = yes
@@ -1057,7 +1158,7 @@ focus_tree = {
 
     focus = {
 		id = PSP_Integrate_Quebec
-		icon = GFX_
+		icon = GFX_focus_PSP_integratequebec
 
 		x = 0
 		y = 1
@@ -1073,13 +1174,13 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			core_quebec = yes
 		}
 	}
 
     focus = {
 		id = PSP_Propaganda_campagin_for_loyal_frankos
-		icon = GFX_
+		icon = GFX_focus_PSP_propagandanewbruns
 
 		x = 1
 		y = 1
@@ -1095,12 +1196,12 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			core_new_brunswick = yes
 		}
 	}
       focus = {
 		id = PSP_Develop_industries_in_new_brunswick
-		icon = GFX_
+		icon = GFX_focus_PSP_industrynewbruns
 
 		x = 0
 		y = 1
@@ -1116,13 +1217,42 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			392 = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
 		}
 	}
  
     focus = {
 		id = PSP_Invade_PEI
-		icon = GFX_
+		icon = GFX_focus_PSP_invadepei
 
 		x = 0
 		y = 1
@@ -1148,7 +1278,7 @@ focus_tree = {
 
     focus = {
 		id = PSP_Invade_Nova_Scotia
-		icon = GFX_
+		icon = GFX_focus_PSP_invadenovascotia
 
 		x = 2
 		y = 1
@@ -1173,7 +1303,7 @@ focus_tree = {
 
     focus = {
 		id = PSP_French_schools_in_Nova_Scotia
-		icon = GFX_
+		icon = GFX_focus_PSP_schoolnovascotia
 
 		x = 0
 		y = 1
@@ -1189,14 +1319,25 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+            131 = {
+                add_compliance = 50 
+            }
+            132 = {
+                add_compliance = 50 
+            }
+            133 = {
+                add_compliance = 50 
+            }
+            134 = {
+                add_compliance = 50 
+            }
 
 		}
 	}
 
     focus = {
 		id = PSP_Declare_French_regional_language_of_Nova_Scotia
-		icon = GFX_
+		icon = GFX_focus_PSP_integratenovascotia
 
 		x = 0
 		y = 1
@@ -1206,21 +1347,30 @@ focus_tree = {
 
 		search_filters = {   }
 		
+		available = {
+			core_compliance = {
+			occupied_country_tag = PNS
+			value > 80
+			}
+		}
+
 		available_if_capitulated = yes
 		ai_will_do = {
 			factor = 1
 		}
 
 		completion_reward = {
-
-
+			add_state_core = 131
+			add_state_core = 132
+			add_state_core = 133
+			add_state_core = 134
 		}
 	}
 
 
     focus = {
 		id = PSP_French_schools_in_PEI
-		icon = GFX_
+		icon = GFX_focus_PSP_schoolpei
 
 		x = 0
 		y = 1
@@ -1236,20 +1386,29 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+            130 = {
+                add_compliance = 50 
+            }
 
 		}
 	}
 
     focus = {
 		id = PSP_Declare_French_regional_language_of_PEI
-		icon = GFX_
+		icon = GFX_focus_PSP_integratepei
 
 		x = 0
 		y = 1
 		relative_position_id = PSP_French_schools_in_PEI
         prerequisite = { focus = PSP_French_schools_in_PEI }
 		cost = 5
+
+		available = {
+			core_compliance = {
+			occupied_country_tag = PEI
+			value > 80
+			}
+		}
 
 		search_filters = {   }
 		
@@ -1259,6 +1418,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
+			add_state_core = 130
 
 
 		}
@@ -1266,7 +1426,7 @@ focus_tree = {
 
     focus = {
 		id = PSP_French_schools_in_newfoundland
-		icon = GFX_
+		icon = GFX_focus_PSP_schoolnewfoundland
 
 		x = 0
 		y = 1
@@ -1282,14 +1442,34 @@ focus_tree = {
 		}
 
 		completion_reward = {
+            66 = {
+                add_compliance = 50 
+            }
+            65 = {
+                add_compliance = 50 
+            }
 
-
+            126 = {
+                add_compliance = 60 
+            }
+            128 = {
+                add_compliance = 60 
+            }
+            129 = {
+                add_compliance = 60 
+            }
+            125 = {
+                add_compliance = 60 
+            }
+            263 = {
+                add_compliance = 60 
+            }
 		}
 	}
 
     focus = {
 		id = PSP_Declare_French_regional_language_of_Newfoundland
-		icon = GFX_
+		icon = GFX_focus_PSP_integratenewfoundland
 
 		x = 0
 		y = 1
@@ -1297,6 +1477,12 @@ focus_tree = {
         prerequisite = { focus = PSP_French_schools_in_newfoundland }
 		cost = 5
 
+		available = {
+			core_compliance = {
+			occupied_country_tag = PNL
+			value > 85
+			}
+		}
 		search_filters = {   }
 		
 		available_if_capitulated = yes
@@ -1305,14 +1491,14 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
-
+			add_state_core = 66
+			add_state_core = 65
 		}
 	}
 
     focus = {
 		id = PSP_Promote_French_settlers_in_labrador
-		icon = GFX_
+		icon = GFX_focus_PSP_settlernewfoundland
 
 		x = -2
 		y = 2
@@ -1327,9 +1513,19 @@ focus_tree = {
 			factor = 1
 		}
 
+		available = {
+			core_compliance = {
+			occupied_country_tag = PNL
+			value > 50
+			}
+		}
+
 		completion_reward = {
-
-
+			add_state_core = 126
+			add_state_core = 128
+			add_state_core = 129
+			add_state_core = 125
+			add_state_core = 263
 		}
 	}
 
@@ -1353,76 +1549,28 @@ focus_tree = {
 
 		completion_reward = {
 			navy_experience = 25
-			if = {
-				limit = {
-					NOT = {
-						any_owned_state = {
-							dockyard > 0
-							free_building_slots = {
-								building = dockyard
-								size > 2
-								include_locked = yes
-							}
-						}
-					}
-					any_owned_state = {
+				65 = {
+					limit = {
 						is_coastal = yes
-					}
-				}
-				random_owned_controlled_state = {
-					limit = {
-						dockyard > 0
 						free_building_slots = {
 							building = dockyard
-							size > 1
+							size > 2
 							include_locked = yes
 						}
 					}
-					add_extra_state_shared_building_slots = 1
+					add_extra_state_shared_building_slots = 2
 					add_building_construction = {
 						type = dockyard
-						level = 1
+						level = 2
 						instant_build = yes
 					}
-				}
-				set_country_flag = naval_effort_built
-			}
-			if = {
-				limit = {
-					NOT = { has_country_flag = naval_effort_built }
-					NOT = {
-						any_owned_state = {
-							free_building_slots = {
-								building = dockyard
-								size > 1
-								include_locked = yes
-							}
-						}
-					}
-				}
-				random_state = {
-					limit = {
-						controller = { tag = ROOT }
-						free_building_slots = {
-							building = dockyard
-							size > 1
-							include_locked = yes
-						}
-					}
-					add_extra_state_shared_building_slots = 1
-					add_building_construction = {
-						type = dockyard
-						level = 1
-						instant_build = yes
-					}
-				}
-			}			
+				}	
 		}
 	}
 
     focus = {
 		id = PSP_Our_Independent_Navy
-		icon = GFX_
+		icon = GFX_focus_PSP_our_navy
 
 		x = -2
 		y = 1
@@ -1509,7 +1657,7 @@ focus_tree = {
 
     focus = {
 		id = PSP_We_must_intervene_militarily
-		icon = GFX_
+		icon = GFX_focus_PSP_interventionism
 
 		x = 0
 		y = 1
@@ -1533,7 +1681,7 @@ focus_tree = {
 	}
     focus = {
 		id = PSP_Offer_Refuges_citizenship
-		icon = GFX_
+		icon = GFX_focus_PSP_immigrants
 
 		x = -2
 		y = 1
@@ -1558,6 +1706,79 @@ focus_tree = {
 		}
 	}
 
+    focus = {
+		id = PSP_Sell_land_to_the_mafia
+		icon = GFX_focus_PSP_deal_with_mafia
+
+		x = 0
+		y = 1
+		relative_position_id = PSP_Offer_Refuges_citizenship
+        prerequisite = { focus = PSP_Offer_Refuges_citizenship  }
+
+		cost = 5
+
+		search_filters = {   }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			add_ideas = PSP_mafia_control
+		}
+	}
+
+    focus = {
+		id = PSP_Mafia_Casino
+		icon = GFX_focus_PSP_casino
+
+		x = 0
+		y = 1
+		relative_position_id = PSP_Sell_land_to_the_mafia
+        prerequisite = { focus = PSP_Sell_land_to_the_mafia  }
+
+		cost = 5
+
+		search_filters = {   }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			add_ideas = PSP_mafia_casinos_idea
+		}
+	}
+
+    focus = {
+		id = PSP_Purchase_arms_from_the_mafia
+		icon = GFX_focus_PSP_purchasearms
+
+		x = 2
+		y = 1
+		relative_position_id = PSP_Sell_land_to_the_mafia
+        prerequisite = { focus = PSP_Sell_land_to_the_mafia  }
+
+		cost = 10
+
+		search_filters = {   }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+           add_offsite_building = { type = arms_factory level = 1 }
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 1200
+				producer = CHI
+			}        			
+		}
+	}
 
     focus = {
 		id = PSP_Purchase_Convoys_from_france
@@ -1596,7 +1817,7 @@ focus_tree = {
 		relative_position_id = PSP_Purchase_Convoys_from_france
         prerequisite = { focus = PSP_Purchase_Convoys_from_france  }
 
-		cost = 5
+		cost = 7.2
 
 		search_filters = {   }
 		
@@ -1606,8 +1827,8 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_timed_idea = { idea = PSP_horrible_national_debt_idea  days = 900 }
-
+			add_timed_idea = { idea = PSP_horrible_national_debt_idea  days = 300 }
+			add_timed_idea = { idea = PSP_ship_purchase_effort_idea  days = 230 }
 		}
 	}
 
@@ -1631,19 +1852,43 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_political_power = 25
 
 		}
 	}
 
     focus = {
 		id = PSP_Vive_La_Nouvelle_France
-		icon = GFX_focus_PSP_new_france
+		icon = GFX_focus_PSP_mysteryleader
 
 		x = 0
 		y = 1
 		relative_position_id = PSP_Invite_the_French_back
         prerequisite = { focus = PSP_Invite_the_French_back  }
+
+		cost = 7.2
+
+		search_filters = {   }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			set_cosmetic_tag = NFrance
+
+		}
+	}
+
+    focus = {
+		id = PSP_As_the_french_to_create_claims
+		icon = GFX_focus_PSP_new_france
+
+		x = 0
+		y = 3
+		relative_position_id = PSP_Vive_La_Nouvelle_France
+        prerequisite = { focus = PSP_Vive_La_Nouvelle_France  }
 
 		cost = 5
 
@@ -1655,11 +1900,89 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_war_support = 0.1
 
 		}
 	}
 
+    focus = {
+		id = PSP_Press_french_claims_pei
+		icon = GFX_focus_PSP_integratepeio
+
+		x = 0
+		y = 1
+		relative_position_id = PSP_As_the_french_to_create_claims
+        prerequisite = { focus = PSP_As_the_french_to_create_claims  }
+
+		cost = 5
+
+		search_filters = {   }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			create_wargoal = {
+    		target = PEI
+    		type = annex_everything
+			}
+		}
+	}
+
+    focus = {
+		id = PSP_Press_french_claims_nova_scotia
+		icon = GFX_focus_PSP_integratenovascotiao
+
+		x = -2
+		y = 1
+		relative_position_id = PSP_As_the_french_to_create_claims
+        prerequisite = { focus = PSP_As_the_french_to_create_claims  }
+
+		cost = 5
+
+		search_filters = {   }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			create_wargoal = {
+    		target = PNS
+    		type = annex_everything
+			}
+
+		}
+	}
+
+    focus = {
+		id = PSP_Press_french_claims_newfoundland
+		icon = GFX_focus_PSP_integratenewfoundlando
+
+		x = 2
+		y = 1
+		relative_position_id = PSP_As_the_french_to_create_claims
+        prerequisite = { focus = PSP_As_the_french_to_create_claims  }
+
+		cost = 5
+
+		search_filters = {   }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			create_wargoal = {
+    		target = PNL
+    		type = annex_everything
+			}
+		}
+	}
 
     focus = {
 		id = PSP_Ask_for_french_investment
@@ -1680,14 +2003,14 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+           add_offsite_building = { type = industrial_complex level = 1 }
 
 		}
 	}
 
     focus = {
 		id = PSP_French_Shipyards
-		icon = GFX_
+		icon = GFX_focus_PSP_french_shipyards
 
 		x = 0
 		y = 1
@@ -1704,14 +2027,28 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
-
+				65 = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = dockyard
+						level = 2
+						instant_build = yes
+					}
+				}		
 		}
 	}
 
     focus = {
 		id = PSP_Contact_french_shipbuilders
-		icon = GFX_
+		icon = GFX_focus_PSP_frenchshipbuilders
 
 		x = 0
 		y = 1
@@ -1728,14 +2065,14 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_ideas = PSP_Contact_french_shipbuilders_idea
 
 		}
 	}
 
     focus = {
 		id = PSP_Develop_our_ports
-		icon = GFX_
+		icon = GFX_focus_PSP_develop_our_ports
 
 		x = -2
 		y = 1
@@ -1752,14 +2089,21 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			64 = {	
+			add_building_construction = {
+  	 			type = naval_base
+    			level = 8
+   				instant_build = yes
+   				province = 2827
+				}	
+			} 
 
 		}
 	}
 
     focus = {
 		id = PSP_Open_fish_cannery
-		icon = GFX_
+		icon = GFX_focus_PSP_fishcanery
 
 		x = 0
 		y = 1
@@ -1776,17 +2120,45 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
-
+			64 = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 
 
     focus = {
 		id = PSP_Help_from_french_military
-		icon = GFX_
+		icon = GFX_focus_PSP_french_army
 
-		x = 2
+		x = 4
 		y = 1
 		relative_position_id = PSP_Vive_La_Nouvelle_France
         prerequisite = { focus = PSP_Vive_La_Nouvelle_France  }
@@ -1801,14 +2173,19 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
-
+			army_experience = 25
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.25
+				uses = 1
+				category = land_doctrine
+			}
 		}
 	}
 
     focus = {
 		id = PSP_French_small_arms_tech
-		icon = GFX_
+		icon = GFX_focus_PSP_mas1940
 
 		x = 2
 		y = 1
@@ -1825,14 +2202,18 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
-
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 1
+				category = infantry_weapons
+			}
 		}
 	}
 
     focus = {
 		id = PSP_Commando_strategy
-		icon = GFX_
+		icon = GFX_focus_PSP_comando
 
 		x = 0
 		y = 1
@@ -1849,14 +2230,24 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
-
+			add_ideas = special_forces
+			add_tech_bonus = {
+				name = special_forces_bonus
+				bonus = 1.0
+				uses = 1
+				technology = paratroopers
+				technology = paratroopers2
+				technology = marines
+				technology = marines2
+				technology = tech_mountaineers
+				technology = tech_mountaineers2
+			}
 		}
 	}
 
     focus = {
 		id = PSP_Increase_French_Manpower
-		icon = GFX_
+		icon = GFX_focus_PSP_french_troops
 
 		x = -2
 		y = 1
@@ -1873,7 +2264,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_timed_idea = { idea = PSP_Demand_Garrisons_from_France_idea  days = 400 }
 
 		}
 	}
@@ -1897,7 +2288,7 @@ focus_tree = {
 		}
 
 		completion_reward = {
-
+			add_timed_idea = { idea = PSP_Demand_Garrisons_from_France_idea  days = 400 }
 
 		}
 	}
