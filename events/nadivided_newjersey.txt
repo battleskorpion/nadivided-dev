@@ -716,7 +716,6 @@ country_event = { #WDC accepts NJ alliance version
         ai_chance = {
             factor = 1
         }
-        create_faction = "American Coalition"
         add_to_faction = WDC
     }
 }
@@ -791,14 +790,6 @@ country_event = { #SPA yes
         name = newjersey.28.a
         ai_chance = {
             factor = 1
-        }
-        if = {
-            limit = {
-                SNJ = {
-                    is_in_faction = no
-                }
-            }
-            create_faction = "American Coalition"
         }
         add_to_faction = SPA
         add_political_power = 50
@@ -1222,19 +1213,19 @@ country_event = { #hidden event to trigger newjersey.45
     trigger = {
         OR = {
             SNJ = {
-                has_war_with = SNC
+                has_wargoal_against = SSC
             }
             SNJ = {
-                has_war_with = SSC
+                has_wargoal_against = SGA
             }
             SNJ = {
-                has_war_with = SGA
+                has_wargoal_against = SFL
             }
             SNJ = {
-                has_war_with = SFL
-            }
-            SNJ = {
-                has_war_with = SFL
+                focus_progress = {
+                    focus = SNJ_seize_south_carolina
+                    progress > 0.25
+                }
             }
         }
     }
@@ -1295,6 +1286,23 @@ country_event = { #SNJ is threatening the south! Do we form a coalition?
         SLA = {
             country_event = {
                 id = newjersey.49
+            }
+        }
+        set_global_flag = confederate_front_formed
+        hidden_effect = {
+            SGA = {
+                country_event = {
+                    id = newjersey.57
+                    days = 70
+                }
+            }
+            SNJ = {
+                country_event = {
+                    id = newjersey.58
+                }
+            }
+            SNJ = {
+                complete_national_focus = SNJ_dealing_with_the_confederate_front
             }
         }
     }
@@ -1368,7 +1376,7 @@ country_event = { #report back to georgia no
         }
     }
 }
-country_event = { #SLA offer
+country_event = { #SLA offer 
     id = newjersey.49
     title = newjersey.49.t
     desc = newjersey.49.d
@@ -1635,6 +1643,125 @@ country_event = { #STN demands more land
         ai_chance = {
             factor = 2
         }
+    }
+}
+country_event = { #the fate of the leaders
+    id = newjersey.56
+    title = newjersey.56.t
+    desc = newjersey.56.d
+
+    is_triggered_only = yes
+    
+    option = { #strip them of political positions but let them stay - like the civil war
+        name = newjersey.56.a
+        ai_chance = {
+            factor = 2
+        }
+        add_stability = 0.06
+        add_war_support = -0.15
+        every_state = {
+            limit = {
+                is_owned_by = SNJ
+                OR = {
+                    is_core_of = SAR
+                    is_core_of = SMS
+                    is_core_of = SAL
+                    is_core_of = SFL
+                    is_core_of = SGA
+                    is_core_of = SSC
+                    is_core_of = SLA
+                    is_core_of = SOK
+                    is_core_of = STX
+                    is_core_of = STN
+                }
+            }
+            add_resistance_target = -5
+        }
+    }
+    option = { #leave and never return
+        name = newjersey.56.b
+        ai_chance = {
+            factor = 2
+        }
+        add_stability = -0.08
+        add_war_support = -0.05
+        every_state = {
+            limit = {
+                is_owned_by = SNJ
+                OR = {
+                    is_core_of = SAR
+                    is_core_of = SMS
+                    is_core_of = SAL
+                    is_core_of = SFL
+                    is_core_of = SGA
+                    is_core_of = SSC
+                    is_core_of = SLA
+                    is_core_of = SOK
+                    is_core_of = STX
+                    is_core_of = STN
+                }
+            }
+            add_resistance = 5
+        }
+    }
+    option = { #hang them in public fashion
+        name = newjersey.56.c
+        ai_chance = {
+            factor = 2
+        }
+        add_stability = -0.12
+        add_war_support = 0.25
+        every_state = {
+            limit = {
+                is_owned_by = SNJ
+                OR = {
+                    is_core_of = SAR
+                    is_core_of = SMS
+                    is_core_of = SAL
+                    is_core_of = SFL
+                    is_core_of = SGA
+                    is_core_of = SSC
+                    is_core_of = SLA
+                    is_core_of = SOK
+                    is_core_of = STX
+                    is_core_of = STN
+                }
+            }
+            add_resistance = 10
+        }
+    }
+}
+country_event = { #georgia declares on SNJ
+    id = newjersey.57
+    title = newjersey.57.t
+    desc = newjersey.57.d
+
+    is_triggered_only = yes
+    
+    option = { #fine
+        name = newjersey.57.a
+        ai_chance = {
+            factor = 2
+        }
+        declare_war_on = {
+            target = SNJ
+            type = annex_everything
+        }
+    }
+}
+country_event = { #SNJ info about Confederate Front
+    id = newjersey.58
+    title = newjersey.58.t
+    desc = newjersey.58.d
+
+    is_triggered_only = yes
+    
+    option = { #we best prepare
+        name = newjersey.58.a
+        ai_chance = {
+            factor = 2
+        }
+        add_war_support = 0.05
     }
 }
 
