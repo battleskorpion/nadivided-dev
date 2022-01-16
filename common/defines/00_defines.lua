@@ -1741,7 +1741,7 @@ NNavy = {
 },
 
 NRailwayGun = {
-	RAILWAY_GUN_RANGE = 100,							-- The range of railway guns in pixels #base 30 make it 100
+	RAILWAY_GUN_RANGE = 80,							-- The range of railway guns in pixels #base 30 make it 100
 	ATTACK_TO_FORTS_MODIFIER_FACTOR = 1.333,		-- Forts modifier is calculated by multiplying railway gun attack value with this and dividing by 100
 	ATTACK_TO_ENTRENCHMENT_MODIFIER_FACTOR = 0.8,		-- Entrenchment modifier is calculated by multiplying railway gun attack value with this and dividing by 100
 	ATTACK_TO_BOMBARDMENT_MODIFIER_FACTOR = 0.4,	-- Bombardment modifier is calculated by multiplying railway gun attack value with this and dividing by 100
