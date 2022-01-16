@@ -1,0 +1,956 @@
+    focus = {
+        id = SNY_the_navy_coups_the_coup
+        icon = GFX_focus_SNY_crack_down_on_mafia
+        prerequisite = { focus = SNY_the_question_of_leadership}
+        mutually_exclusive = { focus = SNY_francis_mulcahy_assumes_leadership focus = SNY_bruce_clarke_assumes_leadership focus = SNY_george_decker_assumes_leadership}
+        available = {
+            always = no
+        }
+        x = 34
+        y = 1
+        relative_position_id = SNY_the_question_of_leadership
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            retire_character = SNY_george_decker
+        }
+    }
+    focus = {
+        id = SNY_put_the_army_to_rest
+        icon = GFX_
+        prerequisite = { focus = SNY_the_navy_coups_the_coup}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SNY_military_coup_civil_war_has_begun_tt
+            }
+            custom_effect_tooltip = {
+                tooltip = SNY_military_coup_civil_war_is_ongoing_tt
+            }
+        }
+        x = -4
+        y = 1
+        relative_position_id = SNY_the_navy_coups_the_coup
+        cost = 4
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            navy_experience = 50
+            army_experience = 50
+            #The plan for this political path were nuetrality and democratic sections, one of each. The democratic section continuing the path of the providing refuge focus and eventually they gain influence to take, otherwise the navy stays in power.
+        }
+    }
+    focus = {
+        id = SNY_provite_refuge_to_supporters_of_democracy
+        icon = GFX_
+        prerequisite = { focus = SNY_put_the_army_to_rest}
+        x = 2
+        y = 1
+        relative_position_id = SNY_put_the_army_to_rest
+        cost = 4
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_MANPOWER }
+
+        completion_reward = {
+            add_manpower = 100000
+            add_popularity = {
+                ideology = democratic
+                popularity = 0.05
+            }
+            add_popularity = {
+                ideology = progressivism
+                popularity = 0.05
+            }
+        }
+    }
+    focus = {
+        id = SNY_create_a_naval_advisory_council
+        icon = GFX_
+        prerequisite = { focus = SNY_the_navy_coups_the_coup}
+        x = 0
+        y = 1
+        relative_position_id = SNY_the_navy_coups_the_coup
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_ideas = SNY_powerful_navy
+        }
+    }
+    focus = {
+        id = SNY_reconceliate_with_the_army
+        icon = GFX_
+        prerequisite = { focus = SNY_create_a_naval_advisory_council}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SNY_the_military_civil_war_is_over_tt
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_create_a_naval_advisory_council
+        cost = 8
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_MANPOWER }
+
+        completion_reward = {
+            remove_ideas = SNY_army_resistance
+        }
+    }
+    focus = {
+        id = SNY_use_the_navy_to_secure_our_interests
+        icon = GFX_
+        prerequisite = { focus = SNY_the_navy_coups_the_coup}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SNY_the_military_civil_war_is_over_tt
+            }
+        }
+        x = 3
+        y = 1
+        relative_position_id = SNY_the_navy_coups_the_coup
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            navy_experience = 100
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = dockyard
+                    level = 2
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_secure_all_of_greater_new_york_city
+        icon = GFX_
+        prerequisite = { focus = SNY_use_the_navy_to_secure_our_interests}
+        available = {
+            NOT = {
+                has_idea = SNY_independent_new_york_city
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_use_the_navy_to_secure_our_interests
+        cost = 8
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = SNJ
+        will_lead_to_war_with = SCT
+
+        completion_reward = {
+            add_state_core = 201
+            add_state_core = 251
+            add_state_core = 290
+            if = {
+                limit = {
+                    SCT = {
+                        owns_state = 201
+                    }
+                }
+                create_wargoal = {
+                    target = SCT
+                    type = take_state_focus
+                    generator = { 201 }
+                }
+            }
+            else = {
+                201 = {
+                    owner = {
+                        SNY = {
+                            create_wargoal = {
+                                target = PREV
+                                type = take_state_focus
+                                generator = { 201 }
+                            }
+                        }
+                    }
+                }
+            }
+            if = {
+                limit = {
+                    SNJ = {
+                        owns_state = 251
+                        owns_state = 290
+                    }
+                }
+                create_wargoal = {
+                    target = SNJ
+                    type = take_state_focus
+                    generator = { 251 290 }
+                }
+            }
+            else = {
+                251 = {
+                    owner = {
+                        SNY = {
+                            create_wargoal = {
+                                target = PREV
+                                type = take_state_focus
+                                generator = { 251 }
+                            }
+                        }
+                    }
+                }
+                290 = {
+                    owner = {
+                        SNY = {
+                            create_wargoal = {
+                                target = PREV
+                                type = take_state_focus
+                                generator = { 290 }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_secure_norfolk
+        icon = GFX_
+        prerequisite = { focus = SNY_secure_all_of_greater_new_york_city}
+        bypass = {
+            has_full_control_of_state = 209
+        }
+        x = -2
+        y = 1
+        relative_position_id = SNY_secure_all_of_greater_new_york_city
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = SVA
+
+        completion_reward = {
+            add_state_claim = 209
+            if = {
+                limit = {
+                    SVA = {
+                        has_full_control_of_state = 209
+                    }
+                }
+                create_wargoal = {
+                    target = SVA
+                    type = take_state_focus
+                    generator = { 209 }
+                }
+            }
+            else = {
+                209 = {
+                    owner = {
+                        SNY = {
+                            create_wargoal = {
+                                target = PREV
+                                type = take_state_focus
+                                generator = { 209 }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_expand_the_norfolk_naval_base
+        icon = GFX_
+        prerequisite = { focus = SNY_secure_norfolk}
+        available = {
+            has_full_control_of_state = 209
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_secure_norfolk
+        cost = 6
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            209 = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = dockyard
+                    level = 2
+                    instant_build = yes
+                }
+                set_building_level = {
+                    type = naval_base
+                    level = 10
+                    instant_build = yes
+                    province = 1268
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_expand_nyc_dockyards
+        icon = GFX_
+        prerequisite = { focus = SNY_secure_all_of_greater_new_york_city}
+        available = {
+            has_full_control_of_state = 27
+            has_full_control_of_state = 202
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_secure_all_of_greater_new_york_city
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            navy_experience = 50
+            202 = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = dockyard
+                    level = 2
+                    instant_build = yes
+                }
+            }
+            27 = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = dockyard
+                    level = 2
+                    instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_secure_bermuda
+        icon = GFX_
+        prerequisite = { focus = SNY_secure_all_of_greater_new_york_city}
+        bypass = {
+            has_full_control_of_state = 487
+        }
+        x = 2
+        y = 1
+        relative_position_id = SNY_secure_all_of_greater_new_york_city
+        cost = 8
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = BER
+
+        completion_reward = {
+            add_state_claim = 487
+            if = {
+                limit = {
+                    BER = {
+                        has_full_control_of_state = 487
+                    }
+                }
+                create_wargoal = {
+                    target = BER
+                    type = take_state_focus
+                    generator = { 487 }
+                }
+            }
+            else = {
+                156 = {
+                    owner = {
+                        SNY = {
+                            create_wargoal = {
+                                target = PREV
+                                type = take_state_focus
+                                generator = { 487 }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_expand_the_bermudan_naval_base
+        icon = GFX_
+        prerequisite = { focus = SNY_secure_bermuda}
+        available = {
+            has_full_control_of_state = 487
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_secure_bermuda
+        cost = 6
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+
+        completion_reward = {
+            487 = {
+                add_extra_state_shared_building_slots = 2
+                add_building_construction = {
+                    type = dockyard
+                    level = 2
+                    instant_build = yes
+                }
+                set_building_level = {
+                    type = naval_base
+                    level = 10
+                    instant_build = yes
+                    province = 1268
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_secure_the_bahamas
+        icon = GFX_
+        prerequisite = { focus = SNY_secure_norfolk focus = SNY_secure_bermuda}
+        x = 2
+        y = 1
+        relative_position_id = SNY_secure_norfolk
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = BAH
+
+        completion_reward = {
+            add_state_claim = 486
+            add_state_claim = 526
+            add_state_claim = 525
+            if = {
+                limit = {
+                    BAH = {
+                        has_full_control_of_state = 486
+                        has_full_control_of_state = 526
+                        has_full_control_of_state = 525
+                    }
+                }
+                create_wargoal = {
+                    target = BAH
+                    type = take_state_focus
+                    generator = { 486 525 256 }
+                }
+            }
+            else = {
+                486 = {
+                    owner = {
+                        SNY = {
+                            create_wargoal = {
+                                target = PREV
+                                type = take_state_focus
+                                generator = { 486 }
+                            }
+                        }
+                    }
+                }
+                525 = {
+                    owner = {
+                        SNY = {
+                            create_wargoal = {
+                                target = PREV
+                                type = take_state_focus
+                                generator = { 525 }
+                            }
+                        }
+                    }
+                }
+                526 = {
+                    owner = {
+                        SNY = {
+                            create_wargoal = {
+                                target = PREV
+                                type = take_state_focus
+                                generator = { 526 }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_invade_cuba
+        icon = GFX_
+        prerequisite = { focus = SNY_secure_the_bahamas}
+        bypass = {
+            has_full_control_of_state = 454
+            has_full_control_of_state = 477
+            has_full_control_of_state = 478
+            has_full_control_of_state = 603
+            has_full_control_of_state = 606
+            has_full_control_of_state = 607
+        }
+        x = 0 
+        y = 1
+        relative_position_id = SNY_secure_the_bahamas
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        will_lead_to_war_with = CUB
+
+        completion_reward = {
+            add_state_claim = 454
+            add_state_claim = 477
+            add_state_claim = 478
+            add_state_claim = 603
+            add_state_claim = 606
+            add_state_claim = 607
+            if = {
+                limit = {
+                    CUB = {
+                        has_full_control_of_state = 454
+                        has_full_control_of_state = 477
+                        has_full_control_of_state = 478
+                        has_full_control_of_state = 603
+                        has_full_control_of_state = 606
+                        has_full_control_of_state = 607
+                    }
+                }
+                create_wargoal = {
+                    target = CUB
+                    type = take_state_focus
+                    generator = { 454 477 478 603 606 607 }
+                }
+            }
+            else = {
+                454 = {
+                    owner = {
+                        SNY = {
+                            create_wargoal = {
+                                target = PREV
+                                type = take_state_focus
+                                generator = { 454 }
+                            }
+                        }
+                    }
+                }
+                477 = {
+                    owner = {
+                        SNY = {
+                            create_wargoal = {
+                                target = PREV
+                                type = take_state_focus
+                                generator = { 477 }
+                            }
+                        }
+                    }
+                }
+                478 = {
+                    owner = {
+                        SNY = {
+                            create_wargoal = {
+                                target = PREV
+                                type = take_state_focus
+                                generator = { 478 }
+                            }
+                        }
+                    }
+                }
+                603 = {
+                    owner = {
+                        SNY = {
+                            create_wargoal = {
+                                target = PREV
+                                type = take_state_focus
+                                generator = { 603 }
+                            }
+                        }
+                    }
+                }
+                606 = {
+                    owner = {
+                        SNY = {
+                            create_wargoal = {
+                                target = PREV
+                                type = take_state_focus
+                                generator = { 606 }
+                            }
+                        }
+                    }
+                }
+                607 = {
+                    owner = {
+                        SNY = {
+                            create_wargoal = {
+                                target = PREV
+                                type = take_state_focus
+                                generator = { 607 }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    focus = {
+        id = SNY_create_a_caribbean_puppet_state
+        icon = GFX_
+        prerequisite = { focus = SNY_invade_cuba}
+        mutually_exclusive = { focus= SNY_take_direct_control_of_the_caribbean}
+        available = {
+            has_full_control_of_state = 454
+            has_full_control_of_state = 477
+            has_full_control_of_state = 478
+            has_full_control_of_state = 603
+            has_full_control_of_state = 606
+            has_full_control_of_state = 607
+        }
+        x = -3
+        y = 1
+        relative_position_id = SNY_invade_cuba
+        cost = 2
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            ###Event
+            ###New Country
+            ###Planned to give this new country it's own small focus tree, don't feel obligated
+        }
+    }
+    focus = {
+        id = SNY_take_direct_control_of_the_caribbean
+        icon = GFX_
+        prerequisite = { focus = SNY_invade_cuba}
+        mutually_exclusive = { focus = SNY_create_a_caribbean_puppet_state}
+        available = {
+            has_full_control_of_state = 454
+            has_full_control_of_state = 477
+            has_full_control_of_state = 478
+            has_full_control_of_state = 603
+            has_full_control_of_state = 606
+            has_full_control_of_state = 607
+        }
+        x = 3
+        y = 1
+        relative_position_id = SNY_invade_cuba
+        cost = 2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+    }
+    focus = {
+        id = SNY_george_decker_assumes_leadership
+        icon = GFX_focus_SNY_george_dekker
+        prerequisite = { focus = SNY_the_question_of_leadership}
+        mutually_exclusive = { focus = SNY_francis_mulcahy_assumes_leadership focus = SNY_bruce_clarke_assumes_leadership focus = SNY_the_navy_coups_the_coup}
+        available = {
+            always = no
+        }
+        x = 24
+        y = 1
+        relative_position_id = SNY_the_question_of_leadership
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            retire_character = SNY_francis_patrick_mulcahy
+            retire_character = SNY_bruce_c_clark
+            retire_character = SNY_russell_willson
+        }
+    }
+    focus = {
+        id = SNY_supremacy_of_the_infantry
+        icon = GFX_focus_army_moderization
+        prerequisite = { focus = SNY_george_decker_assumes_leadership}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SNY_threat_of_navy_coup_has_been_dealt_with_tt
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_george_decker_assumes_leadership
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_ideas = SNY_infantry_supremacy
+            #Needs his own civil war section, post civil-war stuff is handled
+        }
+    }
+    
+    focus = {
+        id = SNY_the_elections_must_continue
+        icon = GFX_focus_vote_reenstation_act
+        prerequisite = { focus = SNY_the_attack_on_albany}
+        mutually_exclusive = { focus = SNY_postpone_the_elections}
+        available = {
+            OR = {
+                has_government = democratic
+                has_government = progressivism
+            }
+        }
+        allow_branch = {
+            NOT = {
+                has_completed_focus = SNY_postpone_the_elections
+            }
+        }
+        x = 80
+        y = 1
+        offset = {
+            x = -80
+            y = 0
+            trigger = {
+                has_completed_focus = SNY_the_elections_must_continue
+            }
+        }
+        relative_position_id = SNY_the_attack_on_albany
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_timed_idea = {
+                idea = SNY_upheld_democracy
+                days = 270
+            }
+            unlock_decision_category_tooltip = SNY_1936_election
+        }
+    }
+    
+    focus = {
+        id = SNY_herbert_lehman_makes_a_speech
+        icon = GFX_focus_SNY_hubert_h_lehman
+        prerequisite = { focus = SNY_the_elections_must_continue}
+        mutually_exclusive = { focus = SNY_william_f_bleakley_makes_a_speech}
+        mutually_exclusive = { focus = SNY_robert_minor_makes_a_speech}
+        available = {
+            NOT = {
+                has_completed_focus = SNY_the_1936_election
+            }
+        }
+        x = -2
+        y = 1
+        relative_position_id = SNY_the_elections_must_continue
+        cost = 2 #180 (5 months)
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_popularity = {
+                ideology = democratic
+                popularity = 0.1
+            }
+            country_event = {
+                id = new_york.11
+            }
+
+        }
+    }
+    focus = {
+        id = SNY_william_f_bleakley_makes_a_speech
+        icon = GFX_
+        prerequisite = { focus = SNY_the_elections_must_continue}
+        mutually_exclusive = { focus = SNY_herbert_lehman_makes_a_speech}
+        mutually_exclusive = { fcous = SNY_robert_minor_makes_a_speech}
+        available = {
+            NOT = {
+                has_completed_focus = SNY_the_1936_election
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_the_elections_must_continue
+        cost = 2
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_popularity = {
+                ideology = democratic
+                popularity = 0.1
+            }
+            country_event = {
+                id = new_york.105
+            }
+        }
+    }
+    focus = {
+        id = SNY_robert_minor_makes_a_speech
+        icon = GFX_
+        prerequisite = { focus = SNY_the_elections_must_continue}
+        mutually_exclusive = { focus = SNY_herbert_lehman_makes_a_speech}
+        mutually_exclusive = { focus = SNY_william_f_bleakley_makes_a_speech}
+        available = {
+            NOT = {
+                has_completed_focus = SNY_the_1936_election
+            }
+        }
+        x = 2
+        y = 1
+        relative_position_id = SNY_the_elections_must_continue
+        cost = 2
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            add_popularity = {
+                ideology = communism
+                popularity = 0.1
+            }
+            country_event = {
+                id = new_york.106
+            }
+        }
+    }
+    focus = {
+        id = SNY_the_1936_election
+        icon = GFX_
+        prerequisite = { focus = SNY_herbert_lehman_makes_a_speech focus = SNY_william_f_bleakley_makes_a_speech focus = SNY_robert_minor_makes_a_speech}
+        available = {
+            always = no
+        }
+        x = 2
+        y = 1
+        relative_position_id = SNY_herbert_lehman_makes_a_speech
+        cost = 10
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = no
+    }
+    focus = {
+        id = SNY_herbert_lehman_wins_a_second_term
+        icon = GFX_
+        prerequisite = { focus = SNY_the_1936_election}
+        mutually_exclusive = { focus = SNY_rockwell_kent_writes_his_way_into_office}
+        mutually_exclusive = { focus = SNY_harry_laidler_barely_wins_the_election}
+        available = {
+            always = no
+        }
+        x = -7
+        y = 1
+        relative_position_id = SNY_the_1936_election
+        cost = 5
+        ai_will_do = {
+            factor = 3
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            unlock_decision_category_tooltip = SNY_rebuild_lehmans_credibility
+            #Plans to get congress and the people to trust Lehman once again. If he fails, then other radical governments can come into power, one of them being a technocratic government
+        }
+    }
+    focus = {
+        id = SNY_william_f_bleakley_wins_his_first_time
+        icon = GFX_
+        prerequisite = { focus = SNY_the_1936_election}
+        mutually_exclusive = { focus = SNY_herbert_lehman_wins_a_second_term}
+        mutually_exclusive = { focus = SNY_harry_laidler_barely_wins_the_election}
+        available = {
+            always = no
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_the_1936_election
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            create_country_leader = {
+	
+                name = "William F. Bleakley"
+                picture = "gfx//leaders//SNY//leader_william_f_bleakley.dds"
+                expire = "1965.1.1"
+                ideology = conservatism
+                traits = {
+                    experienced_lawyer
+                }
+            }
+            #Boring democratic path, no real plans
+        }
+    }
+    focus = {
+        id = SNY_robert_minor_barely_wins_the_election
+        icon = GFX_
+        prerequisite = { focus = SNY_the_1936_election}
+        mutually_exclusive = { focus = SNY_herbert_lehman_wins_a_second_term}
+        mutually_exclusive = { focus = SNY_william_f_bleakley_wins_his_first_time}
+        available = {
+            always = no
+        }
+        x = 7
+        y = 1
+        relative_position_id = SNY_the_1936_election
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            set_politics = {
+                ruling_party = communism
+            }
+            create_country_leader = {
+	
+                name = "William F. Bleakley"
+                picture = "gfx//leaders//SNY//leader_william_f_bleakley.dds"
+                expire = "1965.1.1"
+                ideology = syndicalism
+                traits = {
+                    communist_journalist
+                }
+            }
+            #Much more traditional communist leader when compared with Jay Lovestone. Followed the views of the Soviet Union much more closely
+        }
+    }
