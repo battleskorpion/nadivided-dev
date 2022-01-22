@@ -291,19 +291,18 @@ focus_tree = {
 					remove_idea = SKS_Dustbowl_Economy_bad
 					add_idea = SKS_Dustbowl_Economy_better
 				}
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes
-					province = 286
-				}
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-					province = 286
-				}
+				
 				286 = {
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
 					add_extra_state_shared_building_slots = 2
 				}
 			}
@@ -315,19 +314,17 @@ focus_tree = {
 					remove_idea = SKS_Dustbowl_Economy_better
 					add_idea = SKS_Dustbowl_Economy_recovered
 				}
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes
-					province = 286
-				}
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-					province = 286
-				}
 				286 = {
+					add_building_construction = {
+						type = infrastructure
+						level = 2
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
 					add_extra_state_shared_building_slots = 3
 				}
 			}
@@ -876,7 +873,7 @@ focus_tree = {
 		x = -5
 		y = 1
 		mutually_exclusive = {
-			focus = SKS_leavenworth_constitution
+			focus = SKS_a_new_constitution
 		}
 		
 		available = {
@@ -911,12 +908,17 @@ focus_tree = {
 		x = 0
 		y = 1
 		mutually_exclusive = {
-			focus = SKS_populists
+			
 		}
 		
 		available = {
 			democratic > 0.2
-			date > 1937.2.9
+			NOT = {
+				has_country_leader = {
+					name = "Alf Landon"
+					ruling_only = yes
+				}
+			}
 		}
 		
 		prerequisite = {
@@ -927,7 +929,7 @@ focus_tree = {
 				country_event = {
 					id = kansas.2
 					days = 180
-					random_days = 270
+					random_days = 30
 				}
 			}
 	}
@@ -1407,9 +1409,10 @@ focus_tree = {
 			
 			}
 	}
+	#Texas Focuses
 	focus = {
-		id = SKS_friendship_n_cooperation
-		icon = GFX_focus_SKS_friendship
+		id = SKS_plight_of_texas
+		icon = GFX_
 		cost = 5
 		relative_position_id = SKS_constitutionalists
 		x = 2
@@ -1419,49 +1422,42 @@ focus_tree = {
 			focus = SKS_constitutionalists
 		}
 		completion_reward = {
-			ROOT = {
-				add_opinion_modifier = {
-					target = STX
-					modifier = SKS_kansas_friendship_and_cooperation
-				}
-			}
-			STX = {
-				add_opinion_modifier = {
-					target = ROOT
-					modifier = SKS_kansas_friendship_and_cooperation
-				}
-			}
+			add_war_support = 0.1
 		}
-	}
-	focus = {
-		id = SKS_plight_of_texas
-		icon = GFX_
-		cost = 5
-		relative_position_id = SKS_friendship_n_cooperation
-		x = 0
-		y = 1
-		
-		prerequisite = {
-			focus = SKS_friendship_n_cooperation
-		}
-		completion_reward = {
-			
-			}
 	}
 	focus = {
 		id = SKS_help_texas
-		icon = GFX_
+		icon = GFX_focus_SKS_friendship
 		cost = 5
 		relative_position_id = SKS_plight_of_texas
 		x = 1
 		y = 1
 		mutually_exclusive = {
-			focus = SKS_is_not_our_fight
+			focus = SKS_its_not_our_fight
 		}
 		prerequisite = {
 			focus = SKS_plight_of_texas
 		}
 		completion_reward = {
+				ROOT = {
+					add_opinion_modifier = {
+						target = STX
+						modifier = SKS_kansas_friendship_and_cooperation
+					}
+					send_equipment = {
+						equipment = infantry_equipment
+						amount = 4000
+						target = STX
+					}
+					
+				}
+				STX = {
+					add_opinion_modifier = {
+						target = ROOT
+						modifier = SKS_kansas_friendship_and_cooperation
+					}
+				}
+				
 			
 			}
 	}
@@ -1473,11 +1469,37 @@ focus_tree = {
 		x = 0
 		y = 1
 		
+		available = {
+			has_equipment = {
+				fighter_equipment > 199
+			}
+			has_equipment = {
+				CAS_equipment > 199
+			}
+		}
+		
 		prerequisite = {
 			focus = SKS_help_texas
 		}
 		completion_reward = {
-			
+				STX = {
+					add_timed_idea = {
+					idea = SKS_kansan_aviation_advisors
+					days = 270
+					}
+				}
+				ROOT = {
+					send_equipment = {
+						equipment = fighter_equipment
+						amount = 200
+						target = STX
+					}
+					send_equipment = {
+						equipment = CAS_equipment
+						amount = 200
+						target = STX
+					}
+				}
 			}
 	}
 	focus = {
@@ -1492,8 +1514,19 @@ focus_tree = {
 			focus = SKS_sponsor_texan_aviation
 		}
 		completion_reward = {
-			
+			STX = {
+				add_timed_idea = {
+					idea = SKS_noisy_jayhawks
+					days = 180
+				}
 			}
+			SOK = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = SKS_kansas_interference
+				}
+			}
+		}
 	}
 	focus = {
 		id = SKS_its_not_our_fight
@@ -1514,53 +1547,7 @@ focus_tree = {
 			
 			}
 	}
-	focus = {
-		id = SKS_fighting_spirit
-		icon = GFX_
-		cost = 5
-		relative_position_id = SKS_a_jayhawk_militia
-		x = -2
-		y = 2
-		
-		prerequisite = {
-			focus = SKS_a_jayhawk_militia
-		}
-		completion_reward = {
-			
-			}
-	}
-	focus = {
-		id = SKS_ghosts_of_the_plains
-		icon = GFX_
-		cost = 5
-		relative_position_id = SKS_a_jayhawk_militia
-		x = -3
-		y = 3
-		
-		prerequisite = {
-			focus = SKS_organized_intelligence
-			focus = SKS_fighting_spirit
-		}
-		completion_reward = {
-			
-			}
-	}
-	focus = {
-		id = SKS_ghosts_of_the_plains
-		icon = GFX_
-		cost = 5
-		relative_position_id = SKS_a_jayhawk_militia
-		x = -3
-		y = 3
-		
-		prerequisite = {
-			focus = SKS_organized_intelligence
-			focus = SKS_fighting_spirit
-		}
-		completion_reward = {
-			
-			}
-	}
+
 	
 	#national police tree
 	focus = {
@@ -1690,7 +1677,7 @@ focus_tree = {
 		y = 2
 		
 		mutually_exclusive = {
-			focus = SKS_the_backroom
+			focus = SKS_the_kansas_troopers
 		}
 		
 		prerequisite = {
@@ -1699,6 +1686,37 @@ focus_tree = {
 			focus = SKS_communists
 		}
 		
+		completion_reward = {
+			
+			}
+	}
+	focus = {
+		id = SKS_fighting_spirit
+		icon = GFX_
+		cost = 5
+		relative_position_id = SKS_a_jayhawk_militia
+		x = -2
+		y = 2
+		
+		prerequisite = {
+			focus = SKS_a_jayhawk_militia
+		}
+		completion_reward = {
+			
+			}
+	}
+	focus = {
+		id = SKS_ghosts_of_the_plains
+		icon = GFX_
+		cost = 5
+		relative_position_id = SKS_a_jayhawk_militia
+		x = -3
+		y = 3
+		
+		prerequisite = {
+			focus = SKS_organized_intelligence
+			focus = SKS_fighting_spirit
+		}
 		completion_reward = {
 			
 			}
