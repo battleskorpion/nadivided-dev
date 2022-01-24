@@ -18,16 +18,500 @@ focus_tree = {
 #FOCUS_FILTER_POLITICAL
 #FOCUS_FILTER_RESEARCH
 #FOCUS_FILTER_WAR_SUPPORT
+##########################################################
+###   NEW ARMY   ###
+##########################################################
+    focus = {
+        id = SNY_Fund_Yonkers_Militas
+        icon = GFX_focus_SNY_yonkers_militas_army
+        x = 20
+        y = 0
+       cost = 7.2 
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+        mutually_exclusive = { focus = SNY_New_Yorks_Standing_army}
+        completion_reward = {
+            add_ideas = SNY_Yonkers_Militas
+        }
+    }
 
+    focus = {
+        id = SNY_Divert_more_funding_to_industry
+        icon = GFX_focus_SNY_fund_the_industries
+        prerequisite = { focus = SNY_Fund_Yonkers_Militas}
+        x = 0
+        y = 1
+        relative_position_id = SNY_Fund_Yonkers_Militas
+        cost = 7.2 
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        
+        completion_reward = {
+			add_timed_idea = { idea = SNY_industry_focus  days = 365 }
+        }
+    }
+
+    focus = {
+        id = SNY_paramilitary_encouragment
+        icon = GFX_focus_SNY_encourage_paramilitaries
+        prerequisite = { focus = SNY_Divert_more_funding_to_industry}
+        x = 0
+        y = 1
+        relative_position_id = SNY_Divert_more_funding_to_industry
+        cost = 7.2 
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        
+        completion_reward = {
+            add_manpower = 5000
+			add_timed_idea = { idea = SNY_paramilitary_encouragment_idea  days = 100 }            
+        }
+    }
+
+    focus = {
+        id = SNY_Promote_use_of_improvised_weapons
+        icon = GFX_focus_SNY_improvised_mortars
+        prerequisite = { focus = SNY_paramilitary_encouragment}
+        x = 0
+        y = 1
+        relative_position_id = SNY_paramilitary_encouragment
+        cost = 7.2 
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        
+        completion_reward = {
+            add_ideas = SNY_improvised_mortars
+        }
+    }
+
+    focus = {
+        id = SNY_Purchase_weapons_from_the_Mafia
+        icon = GFX_focus_SNY_purchase_weapons_From_mafia
+        prerequisite = { focus = SNY_Promote_use_of_improvised_weapons}
+
+
+        x = -3
+        y = 1
+        relative_position_id = SNY_Promote_use_of_improvised_weapons
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+           add_offsite_building = { type = arms_factory level = 1 }
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 6000
+				producer = CHI
+			}            
+        }
+    }
+
+    focus = {
+        id = SNY_Support_fanatical_doctrines
+        icon = GFX_focus_SNY_Support_fanatical_doctrines
+        prerequisite = { focus = SNY_Promote_use_of_improvised_weapons}
+        mutually_exclusive = { focus = SNY_Support_Conventional_doctrines}
+        x = -1
+        y = 1
+        relative_position_id = SNY_Promote_use_of_improvised_weapons
+        cost = 7.2 
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        
+        completion_reward = {
+			army_experience = 5
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = mass_assault
+			}
+        }
+    }
+
+    focus = {
+        id = SNY_Yonkers_Dare_to_die_corps
+        icon = GFX_focus_SNY_dare_to_die_corps
+        prerequisite = { focus = SNY_Support_fanatical_doctrines}
+        x = -1
+        y = 1
+        relative_position_id = SNY_Support_fanatical_doctrines
+        cost = 7.2 
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        
+        completion_reward = {
+            add_ideas = SNY_Yonkers_Dare_to_die_corps
+        }
+    }
+
+
+    focus = {
+        id = SNY_Expanding_the_Militas_Armories
+        icon = GFX_focus_SNY_milita_armouries
+        prerequisite = { focus = SNY_Support_fanatical_doctrines focus = SNY_Support_Conventional_doctrines }
+        x = 1
+        y = 1
+        relative_position_id = SNY_Support_fanatical_doctrines
+        cost = 7.2 
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 2
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 2
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+    }
+
+    focus = {
+        id = SNY_Hot_dog_logistics
+        icon = GFX_focus_SNY_hotdog_logistics
+        prerequisite = { focus = SNY_Expanding_the_Militas_Armories}
+        x = -2
+        y = 1
+        relative_position_id = SNY_Expanding_the_Militas_Armories
+        cost = 7
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_ideas = SNY_Hot_dog_logistics_idea
+        }
+    }
+
+    focus = {
+        id = SNY_Prepare_better_Winterized_Equipment
+        icon = GFX_focus_SNY_winterequipment
+        prerequisite = { focus = SNY_Hot_dog_logistics}
+        x = -2
+        y = 1
+        relative_position_id = SNY_Hot_dog_logistics
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+
+        }
+    }
+
+    focus = {
+        id = SNY_Issue_tactical_manuals
+        icon = GFX_focus_SNY_tactical_manuel
+        prerequisite = { focus = SNY_Hot_dog_logistics}
+        x = 0
+        y = 1
+        relative_position_id = SNY_Hot_dog_logistics
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+
+        }
+    }
+
+    focus = {
+        id = SNY_Improved_orgainzation_of_the_militas
+        icon = GFX_focus_SNY_orgainzation_of_the_militas
+        prerequisite = { focus = SNY_Issue_tactical_manuals}
+        prerequisite = { focus = SNY_Prepare_better_Winterized_Equipment}
+        prerequisite = { focus = SNY_Improved_Highway_Patrols}
+
+        x = 0
+        y = 1
+        relative_position_id = SNY_Issue_tactical_manuals
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            swap_ideas = {
+                remove_idea = SNY_Yonkers_Militas
+                add_idea = SNY_Improved_Yonkers_Militas
+            }
+        }
+    }
+
+    focus = {
+        id = SNY_Using_film_for_Propaganda
+        icon = GFX_focus_SNY_movie_camera
+        prerequisite = { focus = SNY_Expanding_the_Militas_Armories}
+        x = 0
+        y = 1
+        relative_position_id = SNY_Expanding_the_Militas_Armories
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+
+        }
+    }
+
+    focus = {
+        id = SNY_Improved_Highway_Patrols
+        icon = GFX_focus_SNY_professional_garrisons
+        prerequisite = { focus = SNY_Using_film_for_Propaganda}
+        x = 0
+        y = 1
+        relative_position_id = SNY_Using_film_for_Propaganda
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+			add_ideas = GEN_professional_garrisonsidea
+        }
+    }
+
+    focus = {
+        id = SNY_army_of_meritocracy
+        icon = GFX_focus_SNY_army_of_mertiocracy
+        prerequisite = { focus = SNY_Expanding_the_Militas_Armories}
+        x = 2
+        y = 1
+        relative_position_id = SNY_Expanding_the_Militas_Armories
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+
+        }
+    }
+
+    focus = {
+        id = SNY_Promote_Ruthless_commanders
+        icon = GFX_focus_SNY_ruthless_commanders
+        prerequisite = { focus = SNY_army_of_meritocracy}
+        prerequisite = { focus = SNY_improved_funding_for_West_Point}
+        x = 1
+        y = 2
+        relative_position_id = SNY_army_of_meritocracy
+        cost = 7.2 
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_ideas = SNY_Ruthelss_Commanders_idea
+        }
+    }
+
+    focus = {
+        id = SNY_Support_Conventional_doctrines
+        icon = GFX_focus_SNY_conventional_doctrines
+        prerequisite = { focus = SNY_Promote_use_of_improvised_weapons}
+        mutually_exclusive = { focus = SNY_Support_fanatical_doctrines}
+        x = 1
+        y = 1
+        relative_position_id = SNY_Promote_use_of_improvised_weapons
+        cost = 7.2 
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        
+        completion_reward = {
+			army_experience = 10
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 2
+				category = land_doctrine
+			}
+        }
+    }
+
+    focus = {
+        id = SNY_New_Yorks_Standing_army
+        icon = GFX_focus_SNY_nyc_standing_army
+        x = 28
+        y = 0
+        cost = 7.2 
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+        mutually_exclusive = { focus = SNY_Fund_Yonkers_Militas}
+        completion_reward = {
+            add_ideas = SNY_New_Yorks_Standing_army_idea
+        }
+    }
+
+    focus = {
+        id = SNY_divert_more_funding_to_the_military
+        icon = GFX_focus_SNY_fund_the_army
+        prerequisite = { focus = SNY_New_Yorks_Standing_army}
+        x = 0
+        y = 1
+        relative_position_id = SNY_New_Yorks_Standing_army
+        cost = 7.2 
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+    }
+
+    focus = {
+        id = SNY_Mass_motorization_effort
+        icon = GFX_focus_SNY_Mass_moto
+        prerequisite = { focus = SNY_divert_more_funding_to_the_military}
+        x = 2
+        y = 1
+        relative_position_id = SNY_divert_more_funding_to_the_military
+        cost = 7.2 
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        
+        completion_reward = {
+           add_offsite_building = { type = arms_factory level = 1 }
+        }
+    }
+
+    focus = {
+        id = SNY_Police_Car_investment
+        icon = GFX_focus_SNY_persicute_down_on_mafia
+        prerequisite = { focus = SNY_Mass_motorization_effort}
+        x = 0
+        y = 1
+        relative_position_id = SNY_Mass_motorization_effort
+        cost = 7.2 
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        
+        completion_reward = {
+
+        }
+    }
+
+    focus = {
+        id = SNY_Professional_Medical_Corps
+        icon = GFX_focus_SNY_professional_medical_corps
+        prerequisite = { focus = SNY_divert_more_funding_to_the_military}
+        x = 0
+        y = 1
+        relative_position_id = SNY_divert_more_funding_to_the_military
+        cost = 7.2 
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        
+        completion_reward = {
+
+        }
+    }
 ##########################################################
 ###   Holy Shit the Economy has Already Fallen Apart   ###
 ##########################################################
     focus = {
         id = SNY_deal_with_the_biggy_sad
         icon = GFX_focus_pab_goal_progressive
-        x = 7
+        x = 4
         y = 0
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 2
         }
@@ -396,7 +880,7 @@ focus_tree = {
         x = 5
         y = 1
         relative_position_id = SNY_continue_roosevelts_reforms
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -430,7 +914,7 @@ focus_tree = {
         x = -1
         y = 1
         relative_position_id = SNY_clear_hoovervilles
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 2
         }
@@ -464,7 +948,7 @@ focus_tree = {
         x = 1
         y = 1
         relative_position_id = SNY_clear_hoovervilles
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -502,7 +986,7 @@ focus_tree = {
         x = 0
         y = 2
         relative_position_id = SNY_clear_hoovervilles
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 2
         }
@@ -602,7 +1086,7 @@ focus_tree = {
         x = 1
         y = 1
         relative_position_id = SNY_make_sure_universities_stay_stable
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -638,7 +1122,7 @@ focus_tree = {
         x = 0
         y = 1
         relative_position_id = SNY_reopen_the_steel_mills
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -655,50 +1139,14 @@ focus_tree = {
 ##################################################
 ###   Holy Shit the Army isn't Falling Apart   ###
 ##################################################
-    focus = {
-        id = SNY_reform_the_army
-        icon = GFX_focus_SNY_punish_the_army
-        mutually_exclusive = { focus = SNY_strengthen_the_army}
-        available = {
-            custom_trigger_tooltip = {
-                tooltip = SNY_attack_on_albany_has_occured_tt
-                has_country_flag = SNY_attack_on_albany
-            }
-            NOT = {
-                custom_trigger_tooltip = {
-                    tooltip = SNY_amry_has_a_lot_of_influence_tt
-                    OR = {
-                        has_country_flag = SNY_army_influence3
-                        has_country_flag = SNY_army_influence4
-                    }
-                }
-            }
-        }
-        x = 6
-        y = 8
-        cost = 5
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
 
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 0.5
-                uses = 1
-                ahead_reduction = 1
-                category = infantry_tech
-            }
-        }
-    }
     focus = {
         id = SNY_punish_the_army_for_leaving_the_capital
-        icon = GFX_goal_generic_allies_build_infantry
-        prerequisite = { focus = SNY_reform_the_army}
+        icon = GFX_focus_SNY_make_the_army_pay
+        prerequisite = { focus = SNY_Professional_Medical_Corps}
         x = 0
         y = 1
-        relative_position_id = SNY_reform_the_army
+        relative_position_id = SNY_Professional_Medical_Corps
         cost = 5
         ai_will_do = {
             factor = 1
@@ -723,11 +1171,11 @@ focus_tree = {
     focus = {
         id = SNY_reubild_the_navy
         icon = GFX_goal_generic_build_navy
-        prerequisite = { focus = SNY_punish_the_army_for_leaving_the_capital}
-        x = -4
+        prerequisite = { focus = SNY_focus_on_a_high_seas_fleet}
+        x = 0
         y = 1
-        relative_position_id = SNY_punish_the_army_for_leaving_the_capital
-        cost = 10
+        relative_position_id = SNY_focus_on_a_high_seas_fleet
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -735,45 +1183,27 @@ focus_tree = {
 
         completion_reward = {
             navy_experience = 75
+			add_doctrine_cost_reduction = {
+				name = sub_op_bonus
+				cost_reduction = 0.5
+				uses = 2
+				technology = convoy_interdiction_ti
+				technology = unrestricted_submarine_warfare
+				technology = wolfpacks
+				technology = advanced_submarine_warfare
+				technology = combined_operations_raiding
+			}
         }
     }
-    focus = {
-        id = SNY_the_great_lakes_fleet
-        icon = GFX_goal_generic_construct_naval_dockyard
-        prerequisite = { focus = SNY_reubild_the_navy}
-        available = {
-            owns_state = 29
-        }
-        x = -1
-        y = 1
-        relative_position_id = SNY_reubild_the_navy
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_INDUSTRY }
 
-        completion_reward = {
-            navy_experience = 25
-            29 = {
-                add_extra_state_shared_building_slots = 2
-                add_building_construction = {
-                    type = dockyard
-                    level = 2
-                    instant_build = yes
-                }
-            }
-        }
-    }
     focus = {
         id = SNY_invest_in_submarines
         icon = GFX_goal_generic_navy_submarine
-        prerequisite = { focus = SNY_the_great_lakes_fleet}
+        prerequisite = { focus = SNY_reubild_the_navy}
         x = -1
         y = 1
-        relative_position_id = SNY_the_great_lakes_fleet
-        cost = 10
+        relative_position_id = SNY_reubild_the_navy
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -792,11 +1222,11 @@ focus_tree = {
     focus = {
         id = SNY_invest_in_destroyers
         icon = GFX_goal_generic_wolf_pack
-        prerequisite = { focus = SNY_the_great_lakes_fleet focus = SNY_the_atlantic_fleet}
+        prerequisite = { focus = SNY_focus_on_a_lake_going_fleet }
         x = 1
         y = 1
-        relative_position_id = SNY_the_great_lakes_fleet
-        cost = 10
+        relative_position_id = SNY_focus_on_a_lake_going_fleet
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -812,6 +1242,26 @@ focus_tree = {
             }
         }
     }
+
+    focus = {
+        id = SNY_Great_Lakes_Marine_corps
+        icon = GFX_focus_SNY_marines
+        prerequisite = { focus = SNY_invest_in_destroyers }
+        x = 0
+        y = 1
+        relative_position_id = SNY_invest_in_destroyers
+        cost = 7.2 
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+
+        }
+    }
+
     focus = {
         id = SNY_the_atlantic_fleet
         icon = GFX_goal_generic_navy_cruiser
@@ -822,7 +1272,7 @@ focus_tree = {
         x = 1
         y = 1
         relative_position_id = SNY_reubild_the_navy
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -830,6 +1280,12 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_INDUSTRY }
 
         completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = fleet_in_being_bonus
+				cost_reduction = 0.5
+				uses = 2
+				category = fleet_in_being_tree
+			}
             navy_experience = 25
             291 = {
                 add_extra_state_shared_building_slots = 2
@@ -846,9 +1302,9 @@ focus_tree = {
         icon = GFX_goal_generic_navy_battleship
         prerequisite = { focus = SNY_the_atlantic_fleet}
         x = 0
-        y = 2
+        y = 1
         relative_position_id = SNY_the_atlantic_fleet
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -865,25 +1321,134 @@ focus_tree = {
         }
     }
     focus = {
+        id = SNY_Argue_for_more_naval_moblization
+        icon = GFX_focus_SNY_navy_stuff
+        prerequisite = { focus = SNY_invest_in_battleships}
+        x = 0
+        y = 1
+        relative_position_id = SNY_invest_in_battleships
+        cost = 7.2 
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+
+        }
+    }
+    focus = {
         id = SNY_rebuild_the_army
-        icon = GFX_goal_generic_army_doctrines
+        icon = GFX_focus_SNY_rebuild_the_army
         prerequisite = { focus = SNY_punish_the_army_for_leaving_the_capital}
         x = 0
         y = 1
         relative_position_id = SNY_punish_the_army_for_leaving_the_capital
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
         available_if_capitulated = yes
 
         completion_reward = {
+           add_offsite_building = { type = arms_factory level = 1 }
             army_experience = 75
         }
     }
+
+    focus = {
+        id = SNY_Buffalo_Tank_Plants
+        icon = GFX_focus_SNY_tank_plants
+        prerequisite = { focus = SNY_rebuild_the_army}
+        x = 3
+        y = 1
+        relative_position_id = SNY_rebuild_the_army
+        cost = 7.2 
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 3
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 3
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = arms_factory
+					level = 3
+					instant_build = yes
+				}
+			}
+		}
+    }
+
+    focus = {
+        id = SNY_Half_track_development
+        icon = GFX_focus_SNY_half_track
+        prerequisite = { focus = SNY_Buffalo_Tank_Plants}
+        x = 0
+        y = 1
+        relative_position_id = SNY_Buffalo_Tank_Plants
+        cost = 7.2 
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                ahead_reduction = 1
+                category = motorized_equipment
+                category = cat_mechanized_equipment
+            }
+        }
+    }
+
+    focus = {
+        id = SNY_Tank_Destroyer_focus
+        icon = GFX_focus_SNY_tank_destroyers
+        prerequisite = { focus = SNY_Half_track_development}
+        x = 0
+        y = 1
+        relative_position_id = SNY_Half_track_development
+        cost = 7.2 
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        
+        completion_reward = {
+
+        }
+    }
+
     focus = {
         id = SNY_a_mobile_army
-        icon = GFX_goal_generic_army_motorized
+        icon = GFX_focus_SNY_mobile
         prerequisite = { focus = SNY_rebuild_the_army}
         mutually_exclusive = { focus = SNY_an_infantry_army}
         available = {
@@ -896,7 +1461,7 @@ focus_tree = {
         x = -1
         y = 1
         relative_position_id = SNY_rebuild_the_army
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -916,12 +1481,12 @@ focus_tree = {
     }
     focus = {
         id = SNY_an_armored_spearhead
-        icon = GFX_goal_generic_army_tanks
+        icon = GFX_focus_SNY_tanks
         prerequisite = { focus = SNY_a_mobile_army}
         x = 0
         y = 1
         relative_position_id = SNY_a_mobile_army
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -938,13 +1503,13 @@ focus_tree = {
         }
     }
     focus = {
-        id = SNY_mechanized_support
-        icon = GFX_goal_generic_build_tank
+        id = SNY_Promote_doctrines_of_manouver
+        icon = GFX_focus_SNY_doctirine_of_manouver
         prerequisite = { focus = SNY_an_armored_spearhead}
         x = 0
         y = 1
         relative_position_id = SNY_an_armored_spearhead
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -952,18 +1517,12 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_RESEARCH }
 
         completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 1
-                category = motorized_equipment
-                category = cat_mechanized_equipment
-            }
+
         }
     }
     focus = {
         id = SNY_an_infantry_army
-        icon = GFX_goal_generic_small_arms
+        icon = GFX_focus_SNY_infantry_army
         prerequisite = { focus = SNY_rebuild_the_army}
         mutually_exclusive = { focus = SNY_a_mobile_army}
         available = {
@@ -976,7 +1535,7 @@ focus_tree = {
         x = 1
         y = 1
         relative_position_id = SNY_rebuild_the_army
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -995,13 +1554,13 @@ focus_tree = {
         }
     }
     focus = {
-        id = SNY_an_infantry_core
-        icon = GFX_goal_generic_special_forces
+        id = SNY_New_York_Special_Troopers
+        icon = GFX_focus_SNY_special_forces
         prerequisite = { focus = SNY_an_infantry_army}
         x = 0 
         y = 1
         relative_position_id = SNY_an_infantry_army
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1 
         }
@@ -1009,22 +1568,17 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_RESEARCH }
 
         completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 1
-                category = infantry_weapons
-            }
+
         }
     }
     focus = {
-        id = SNY_artillery_support
-        icon = GFX_goal_generic_army_artillery
-        prerequisite = { focus = SNY_an_infantry_core}
+        id = SNY_Rifle_Modernization
+        icon = GFX_focus_SNY_Rifle_Modernization
+        prerequisite = { focus = SNY_New_York_Special_Troopers}
         x = 0
         y = 1
-        relative_position_id = SNY_an_infantry_core
-        cost = 10
+        relative_position_id = SNY_New_York_Special_Troopers
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -1040,290 +1594,129 @@ focus_tree = {
             }
         }
     }
-    focus = {
-        id = SNY_rebuild_the_airforce
-        icon = GFX_goal_generic_build_airforce
-        prerequisite = { focus = SNY_punish_the_army_for_leaving_the_capital }
-        x = 4
-        y = 1
-        relative_position_id = SNY_punish_the_army_for_leaving_the_capital
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
 
-        completion_reward = {
-            air_experience = 75
-        }
-    }
     focus = {
-        id = SNY_fighter_focus
-        icon = GFX_goal_generic_air_fighter
-        prerequisite = { focus = SNY_rebuild_the_airforce}
-        x = -1
-        y = 1
-        relative_position_id = SNY_rebuild_the_airforce
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
-
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 1
-                category = light_fighter
-            }
-        }
-    }
-    focus = {
-        id = SNY_cas_focus
-        icon = GFX_goal_generic_CAS
-        prerequisite = { focus = SNY_fighter_focus}
-        x = 0
-        y = 2
-        relative_position_id = SNY_fighter_focus
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
-
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 1
-                category = cas_bomber
-            }
-        }
-    }
-    focus = {
-        id = SNY_bomber_focus
-        icon = GFX_goal_generic_air_bomber
-        prerequisite = { focus = SNY_rebuild_the_airforce}
-        x = 1
-        y = 1
-        relative_position_id = SNY_rebuild_the_airforce
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
-
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 1
-                category = tactical_bomber
-            }
-        }
-    }
-    focus = {
-        id = SNY_naval_bomber_focus 
-        icon = GFX_goal_generic_air_naval_bomber
-        prerequisite = { focus = SNY_bomber_focus focus = SNY_fighter_focus}
-        x = -1
-        y = 1
-        relative_position_id = SNY_bomber_focus
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
-
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 1
-                category = naval_bomber
-            }
-        }
-    }
-    focus = {
-        id = SNY_strategic_bomber_focus
-        icon = GFX_focus_air_superiority
-        prerequisite = { focus = SNY_bomber_focus}
-        x = 1
-        y = 1
-        relative_position_id = SNY_bomber_focus
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
-
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 1
-                category = cat_strategic_bomber
-            }
-        }
-    }
-    focus = {
-        id = SNY_strengthen_the_army
-        icon = GFX_focus_SNY_cave_to_the_military
-        mutually_exclusive = { focus = SNY_reform_the_army}
-        available = {
-            custom_trigger_tooltip = {
-                tooltip = SNY_attack_on_albany_has_occured_tt
-                has_country_flag = SNY_attack_on_albany
-            }
-            has_completed_focus = SNY_the_army_makes_a_demonstration
-        }
-        x = 20
-        y = 8
-        cost = 5
-        ai_will_do = {
-            factor = 3
-        }
-        available_if_capitulated = yes
-
-        completion_reward = {
-            army_experience = 75
-        }
-    }
-    focus = {
-        id = SNY_basic_tactical_education
-        icon = GFX_goal_generic_allies_build_infantry
-        prerequisite = { focus = SNY_strengthen_the_army}
-        x = -6
-        y = 1
-        relative_position_id = SNY_strengthen_the_army
-        cost = 7
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-
-        completion_reward = {
-            add_doctrine_cost_reduction = {
-                cost_reduction = 0.5
-                uses = 1
-                category = land_doctrine
-            }
-        }
-    }
-    focus = {
-        id = SNY_improved_tactical_education
-        icon = GFX_goal_generic_army_doctrines
-        prerequisite = { focus = SNY_basic_tactical_education}
-        x = 0
-        y = 1
-        relative_position_id = SNY_basic_tactical_education
-        cost = 7
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-
-        completion_reward = {
-            add_doctrine_cost_reduction = {
-                cost_reduction = 0.5
-                uses = 1
-                category = land_doctrine
-            }
-        }
-    }
-    focus = {
-        id = SNY_advanced_tactical_education
-        icon = GFX_goal_generic_army_doctrines
-        prerequisite = { focus = SNY_improved_tactical_education}
-        x = 0
-        y = 1
-        relative_position_id = SNY_improved_tactical_education
-        cost = 7
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-
-        completion_reward = {
-            add_doctrine_cost_reduction = {
-                cost_reduction = 0.5
-                uses = 1
-                category = land_doctrine
-            }
-        }
-    }
-    focus = {
-        id = SNY_masterful_tactical_education
-        icon = GFX_goal_generic_army_doctrines
-        prerequisite = { focus = SNY_advanced_tactical_education}
-        x = 0
-        y = 1
-        relative_position_id = SNY_advanced_tactical_education
-        cost = 7
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
-
-        completion_reward = {
-            add_ideas = SNY_tactical_education
-        }
-    }
-    focus = {
-        id = SNY_paramilitary_encouragment
-        icon = GFX_goal_support_fascism
-        prerequisite = { focus = SNY_strengthen_the_army}
+        id = SNY_Improved_logistical_training_for_officers
+        icon = GFX_focus_SNY_officers_log
+        prerequisite = { focus = SNY_Rifle_Modernization}
+        prerequisite = { focus = SNY_improved_funding_for_West_Point}
         x = -3
         y = 1
-        relative_position_id = SNY_strengthen_the_army
-        cost = 10
+        relative_position_id = SNY_Rifle_Modernization
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
         available_if_capitulated = yes
-        
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
         completion_reward = {
-            add_manpower = 50000
+            add_ideas = SNY_Improved_logistical_training_idea
         }
     }
+
     focus = {
-        id = SNY_divert_more_funding_to_the_military
-        icon = GFX_goal_generic_investments
-        prerequisite = { focus = SNY_strengthen_the_army}
+        id = SNY_Military_Research_initiative
+        icon = GFX_focus_SVA_research
+        prerequisite = { focus = SNY_divert_more_funding_to_the_military
+                        focus = SNY_Divert_more_funding_to_industry
+        }
+        x = -5
+        y = 1
+        relative_position_id = SNY_divert_more_funding_to_the_military
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+			add_timed_idea = { idea = SNY_Military_Research_idea  days = 100 }
+        }
+    }
+
+    focus = {
+        id = SNY_Modernization_of_artillery
+        icon = GFX_focus_SVA_modern_artillery
+        prerequisite = { focus = SNY_Military_Research_initiative
+
+        }
         x = 0
         y = 1
-        relative_position_id = SNY_strengthen_the_army
-        cost = 10
+        relative_position_id = SNY_Military_Research_initiative
+        cost = 7.2
         ai_will_do = {
             factor = 1
         }
         available_if_capitulated = yes
-        
+
         completion_reward = {
-            add_ideas = SNY_well_funded_military
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                ahead_reduction = 1
+                category = artillery
+            }
         }
     }
+
     focus = {
-        id = SNY_bring_the_navy_up_to_standard
-        icon = GFX_
-        prerequisite = { focus = SNY_divert_more_funding_to_the_military}
-        available = {
-            OR = {
-                has_completed_focus = SNY_the_navy_coups_the_coup
-                has_completed_focus = SNY_silence_the_navy
-            }
+        id = SNY_Reopening_West_Point
+        icon = GFX_focus_SNY_west_point
+        prerequisite = { focus = SNY_divert_more_funding_to_the_military
+                        focus = SNY_Divert_more_funding_to_industry
         }
         x = -3
         y = 1
         relative_position_id = SNY_divert_more_funding_to_the_military
-        cost = 10
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_doctrine_cost_reduction = {
+                cost_reduction = 0.5
+                uses = 1
+                category = land_doctrine
+            }
+        }
+    }
+    focus = {
+        id = SNY_improved_funding_for_West_Point
+        icon = GFX_focus_SNY_west_point_funding
+        prerequisite = { focus = SNY_Reopening_West_Point}
+        x = 0
+        y = 1
+        relative_position_id = SNY_Reopening_West_Point
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+
+        completion_reward = {
+            add_ideas = SNY_West_Point_commanders_idea
+            add_doctrine_cost_reduction = {
+                cost_reduction = 0.5
+                uses = 1
+                category = land_doctrine
+            }
+        }
+    }
+
+
+
+    focus = {
+        id = SNY_bring_the_navy_up_to_standard
+        icon = GFX_focus_SNY_navy
+
+
+        x = 34
+        y = 0
+
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -1341,13 +1734,13 @@ focus_tree = {
     }
     focus = {
         id = SNY_focus_on_a_high_seas_fleet
-        icon = GFX_
+        icon = GFX_focus_SNY_largeship
         prerequisite = { focus = SNY_bring_the_navy_up_to_standard}
         mutually_exclusive = { focus = SNY_focus_on_a_lake_going_fleet}
         x = -1
         y = 1
         relative_position_id = SNY_bring_the_navy_up_to_standard
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -1367,13 +1760,13 @@ focus_tree = {
     }
     focus = {
         id = SNY_focus_on_a_lake_going_fleet
-        icon = GFX_
+        icon = GFX_focus_SNY_great_lakes_fleet
         prerequisite = { focus = SNY_bring_the_navy_up_to_standard}
         mutually_exclusive = { focus = SNY_focus_on_a_high_seas_fleet}
         x = 1
         y = 1
         relative_position_id = SNY_bring_the_navy_up_to_standard
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -1381,6 +1774,12 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_INDUSTRY }
 
         completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = fleet_in_being_bonus
+				cost_reduction = 0.5
+				uses = 2
+				category = fleet_in_being_tree
+			}
             29 = {
                 add_extra_state_shared_building_slots = 1
                 add_building_construction = {
@@ -1399,176 +1798,13 @@ focus_tree = {
             }
         }
     }
-    focus = {
-        id = SNY_teach_the_navy_some_tricks
-        icon = GFX_
-        prerequisite = { focus = SNY_bring_the_navy_up_to_standard}
-        x = 0
-        y = 2
-        relative_position_id = SNY_bring_the_navy_up_to_standard
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no 
-        search_filters = { FOCUS_FILTER_RESEARCH }
 
-        completion_reward = {
-            navy_experience = 50
-            add_tech_bonus = {
-                bonus = 0.6
-                uses = 2
-                category = naval_doctrine
-            }
-        }
-    }
-    focus = {
-        id = SNY_constrcut_new_cruisers
-        icon = GFX_
-        prerequisite = { focus = SNY_focus_on_a_high_seas_fleet}
-        prerequisite = { focus = SNY_teach_the_navy_some_tricks}
-        x = 0
-        y = 2
-        relative_position_id = SNY_focus_on_a_high_seas_fleet
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_RESEARCH }
-
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 1
-                category = cl_tech
-            }
-        }
-    }
-    focus = {
-        id = SNY_construct_new_subs
-        icon = GFX_
-        prerequisite = { focus = SNY_focus_on_a_lake_going_fleet}
-        prerequisite = { focus = SNY_teach_the_navy_some_tricks}
-        x = 0
-        y = 2
-        relative_position_id = SNY_focus_on_a_lake_going_fleet
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_RESEARCH }
-
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 1
-                category = ss_tech
-            }
-        }
-    }
-    focus = {
-        id = SNY_land_domination_initiative
-        icon = GFX_
-        prerequisite = { focus = SNY_divert_more_funding_to_the_military}
-        x = 0
-        y = 1
-        relative_position_id = SNY_divert_more_funding_to_the_military
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_RESEARCH }
-
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 0.5
-                uses = 1
-                category = infantry_tech
-            }
-            add_ideas = SNY_land_domination_initiative_idea
-        }
-    }
-    focus = {
-        id = SNY_soft_attack_dominance
-        icon = GFX_
-        prerequisite = { focus = SNY_land_domination_initiative}
-        x = 0
-        y = 1
-        relative_position_id = SNY_land_domination_initiative
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_RESEARCH }
-
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 0.8
-                uses = 2
-                ahead_reduction = 1
-                category = artillery
-                category = rocketry
-            }
-        }
-    }
-    focus = {
-        id = SNY_hard_attack_dominance
-        icon = GFX_
-        prerequisite = { focus = SNY_soft_attack_dominance}
-        x = 0
-        y = 1
-        relative_position_id = SNY_soft_attack_dominance
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_RESEARCH }
-
-        completion_reward = {
-            add_tech_bonus = {
-                bonus = 0.8
-                uses = 2
-                ahead_reduction = 1
-                category = cat_anti_tank
-                category = armor
-            }
-        }
-    }
-    focus = {
-        id = SNY_complete_land_domination
-        icon = GFX_
-        prerequisite = { focus = SNY_hard_attack_dominance}
-        x = 0 
-        y = 1
-        relative_position_id = SNY_hard_attack_dominance
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        
-        completion_reward = {
-            swap_ideas = {
-                add_idea = SNY_complete_land_domination_idea
-                remove_idea = SNY_land_domination_initiative_idea
-            }
-        }
-    }
     focus = {
         id = SNY_bring_the_airforce_up_to_standard
-        icon = GFX_
-        prerequisite = { focus = SNY_divert_more_funding_to_the_military}
-        x = 3
-        y = 1
-        relative_position_id = SNY_divert_more_funding_to_the_military
-        cost = 10
+        icon = GFX_focus_SNY_airoforce1
+        x = 13
+        y = 0
+        cost = 7.2
         ai_will_do = {
             factor = 1
         }
@@ -1576,7 +1812,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_RESEARCH }
 
         completion_reward = {
-            air_experience = 50
+            air_experience = 25
             add_tech_bonus = {
                 bonus = 1
                 uses = 1
@@ -1586,13 +1822,13 @@ focus_tree = {
     }
     focus = {
         id = SNY_focus_on_land_air_domination
-        icon = GFX_
+        icon = GFX_focus_SNY_airoforce2
         prerequisite = { focus = SNY_bring_the_airforce_up_to_standard}
         mutually_exclusive = { focus = SNY_focus_on_complete_destruction}
         x = -1
         y = 1
         relative_position_id = SNY_bring_the_airforce_up_to_standard
-        cost = 10
+        cost = 5
         ai_will_do = {
             factor = 1
         }
@@ -1600,12 +1836,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_RESEARCH }
 
         completion_reward = {
-            add_tech_bonus = {
-                bonus = 1
-                uses = 1
-                ahead_reduction = 1
-                category = light_fighter
-            }
+
             random_owned_controlled_state = {
                 limit = {
                     free_building_slots = {
@@ -1624,13 +1855,13 @@ focus_tree = {
     }
     focus = {
         id = SNY_focus_on_complete_destruction
-        icon = GFX_
+        icon = GFX_focus_SNY_complete_distruction
         prerequisite = { focus = SNY_bring_the_airforce_up_to_standard}
         mutually_exclusive = { focus = SNY_focus_on_land_air_domination}
         x = 1
         y = 1
         relative_position_id = SNY_bring_the_airforce_up_to_standard
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 1
         }
@@ -1645,30 +1876,17 @@ focus_tree = {
                 category = tactical_bomber
                 category = cat_strategic_bomber
             }
-            random_owned_controlled_state = {
-                limit = {
-                    free_building_slots = {
-                        building = air_base 
-                        size > 2
-                        include_locked = yes
-                    }
-                }
-                add_building_construction = {
-                    type = air_base
-                    level = 3
-                    instant_build = yes
-                }
-            }
+
         }
     }
     focus = {
         id = SNY_teach_the_airforce_some_tricks
-        icon = GFX_
+        icon = GFX_focus_SNY_tricks
         prerequisite = { focus = SNY_bring_the_airforce_up_to_standard}
         x = 0
         y = 2
         relative_position_id = SNY_bring_the_airforce_up_to_standard
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -1676,22 +1894,94 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_RESEARCH }
 
         completion_reward = {
-            add_tech_bonus = {
-                bonus = 0.75
-                uses = 2
-                category = air_doctrine
-            }
+			add_doctrine_cost_reduction = {
+				name = air_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}
         }
     }
     focus = {
+        id = SNY_Yonkers_Fighter_Innovation_Council
+        icon = GFX_focus_SNY_fightercouncil
+        prerequisite = { focus = SNY_teach_the_airforce_some_tricks}
+        x = 0
+        y = 2
+        relative_position_id = SNY_teach_the_airforce_some_tricks
+        cost = 7.2 
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            air_experience = 100
+            add_tech_bonus = {
+                bonus = 1
+                uses = 1
+                ahead_reduction = 1
+                category = light_fighter
+            }
+        }
+    }
+
+    focus = {
+        id = SNY_Yonkers_Standard_fighters
+        icon = GFX_focus_SNY_standard_fighter
+        prerequisite = { focus = SNY_Yonkers_Fighter_Innovation_Council}
+        x = -1
+        y = 1
+        mutually_exclusive = { focus = SNY_Arial_training_program}
+        relative_position_id = SNY_Yonkers_Fighter_Innovation_Council
+        cost = 7.2 
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_ideas =  SNY_Standard_fighters
+        }
+    }
+
+    focus = {
+        id = SNY_Arial_training_program
+        icon = GFX_focus_SNY_arial_training_program
+        prerequisite = { focus = SNY_Yonkers_Fighter_Innovation_Council}
+        x = 1
+        y = 1
+        mutually_exclusive = { focus = SNY_Yonkers_Standard_fighters}
+        relative_position_id = SNY_Yonkers_Fighter_Innovation_Council
+        cost = 7.2 
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            air_experience = 75
+			add_doctrine_cost_reduction = {
+				name = air_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+        }
+    }
+
+    focus = {
         id = SNY_rain_hell_from_the_sky
-        icon = GFX_
+        icon = GFX_focus_SNY_cas
         prerequisite = { focus = SNY_focus_on_land_air_domination}
         prerequisite = { focus = SNY_teach_the_airforce_some_tricks}
         x = 0
         y = 2
         relative_position_id = SNY_focus_on_land_air_domination
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -1705,7 +1995,7 @@ focus_tree = {
                 ahead_reduction = 1
                 category = cas_bomber
             }
-            random_owned_controlled_state = {
+            281 = {
                 limit = {
                     free_building_slots = {
                         building = air_base 
@@ -1715,7 +2005,7 @@ focus_tree = {
                 }
                 add_building_construction = {
                     type = air_base
-                    level = 3
+                    level = 1
                     instant_build = yes
                 }
             }
@@ -1723,13 +2013,13 @@ focus_tree = {
     }
     focus = {
         id = SNY_protect_our_shores
-        icon = GFX_
+        icon = GFX_focus_SNY_naval_bomber
         prerequisite = { focus = SNY_focus_on_complete_destruction}
         prerequisite = { focus = SNY_teach_the_airforce_some_tricks}
         x = 0
         y = 2
         relative_position_id = SNY_focus_on_complete_destruction
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -1743,7 +2033,7 @@ focus_tree = {
                 ahead_reduction = 1
                 category = naval_bomber
             }
-            random_owned_controlled_state = {
+            278 = {
                 limit = {
                     free_building_slots = {
                         building = air_base 
@@ -1759,24 +2049,7 @@ focus_tree = {
             }
         }
     }
-    focus = {
-        id = SNY_build_recruitment_centers
-        icon = GFX_focus_generic_manpower
-        prerequisite = { focus = SNY_strengthen_the_army focus = SNY_reform_the_army}
-        x = -8
-        y = 1
-        relative_position_id = SNY_strengthen_the_army
-        cost = 10
-        ai_will_do = {
-            factor = 2
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_MANPOWER }
 
-        completion_reward = {
-            add_ideas = SNY_national_recruitment_campaign
-        }
-    }
 #######################################################
 ###   Holy Shit New York City did Fine Without Us   ###
 #######################################################
@@ -1795,8 +2068,8 @@ focus_tree = {
                 country_exists = NYC
             }
         }
-        x = 16
-        y = 0
+        x = 49
+        y = 3
         cost = 15
         ai_will_do = {
             factor = 3
@@ -1960,7 +2233,7 @@ focus_tree = {
                 has_country_flag = SNY_attack_on_albany
             }
         }
-        x = 46
+        x = 56
         y = 0
         offset = {
             x = -14
@@ -1990,7 +2263,7 @@ focus_tree = {
                 has_completed_focus = SNY_the_elections_must_continue
             }
         }
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 0
         }
@@ -2060,7 +2333,7 @@ focus_tree = {
             }
         }
         relative_position_id = SNY_postpone_the_elections
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -2292,7 +2565,7 @@ focus_tree = {
         x = -2
         y = 1
         relative_position_id = SNY_first_stage_transitional_communism
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -2322,7 +2595,7 @@ focus_tree = {
         x = -1
         y = 1
         relative_position_id = SNY_empower_the_unions
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -2347,7 +2620,7 @@ focus_tree = {
         x = 0
         y = 1
         relative_position_id = SNY_first_stage_transitional_communism
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -2367,7 +2640,7 @@ focus_tree = {
         x = 2
         y = 1
         relative_position_id = SNY_first_stage_transitional_communism
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -2469,7 +2742,7 @@ focus_tree = {
         x = -1
         y = 1
         relative_position_id = SNY_make_congress_obsolete
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -2496,7 +2769,7 @@ focus_tree = {
         x = 2
         y = 1
         relative_position_id = SNY_second_stage_transitional_communism
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -2602,7 +2875,7 @@ focus_tree = {
         x = 1
         y = 1
         relative_position_id = SNY_communism_in_pennsylvania
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -2655,7 +2928,7 @@ focus_tree = {
         x = 0
         y = 2
         relative_position_id = SNY_communism_in_pennsylvania
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -2685,7 +2958,7 @@ focus_tree = {
         x = 0
         y = 1
         relative_position_id = SNY_communism_in_new_jersey
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 3
         }
@@ -2745,7 +3018,7 @@ focus_tree = {
         x = -1
         y = 1
         relative_position_id = SNY_fully_replace_capitalism
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 3
         }
@@ -2770,7 +3043,7 @@ focus_tree = {
         x = 1
         y = 1
         relative_position_id = SNY_fully_replace_capitalism
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -2839,7 +3112,7 @@ focus_tree = {
             }
         }
         relative_position_id = SNY_postpone_the_elections
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 2
         }
@@ -3128,7 +3401,7 @@ focus_tree = {
         x = 2
         y = 1
         relative_position_id = SNY_expose_lehmans_corruption
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 2
         }
@@ -3276,7 +3549,7 @@ focus_tree = {
         x = -1
         y = 1
         relative_position_id = SNY_charles_poletti_holds_an_emergency_election
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 2
         }
@@ -3295,7 +3568,7 @@ focus_tree = {
         x = 1
         y = 1
         relative_position_id = SNY_charles_poletti_holds_an_emergency_election
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 2
         }
@@ -3818,7 +4091,7 @@ focus_tree = {
         x = 0
         y = 1
         relative_position_id = SNY_protector_of_democratic_countries
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 2
         }
@@ -3839,7 +4112,7 @@ focus_tree = {
         x = 4
         y = 1
         relative_position_id = SNY_protector_of_democratic_countries
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 2
         }
@@ -4152,7 +4425,7 @@ focus_tree = {
         x = 0
         y = 1
         relative_position_id = SNY_New_York_The_New_leader_of_the_Union
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -4174,7 +4447,7 @@ focus_tree = {
         x = 0
         y = 1
         relative_position_id = SNY_Centralize_Power
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -5122,7 +5395,7 @@ focus_tree = {
         x = 0
         y = 1
         relative_position_id = SNY_support_quebec
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 2
         }
@@ -5156,7 +5429,7 @@ focus_tree = {
         x = 0
         y = 1
         relative_position_id = SNY_reach_out_to_ontario
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 2
         }
@@ -5222,7 +5495,7 @@ focus_tree = {
         x = 0
         y = 1
         relative_position_id = SNY_reach_out_to_mexico
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 2
         }
@@ -5821,7 +6094,7 @@ focus_tree = {
         x = 20
         y = 1
         relative_position_id = SNY_postpone_the_elections
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 5
         }
@@ -5854,7 +6127,7 @@ focus_tree = {
         x = -2
         y = 1
         relative_position_id = SNY_the_army_makes_a_demonstration
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -5876,7 +6149,7 @@ focus_tree = {
         x = 2
         y = 1
         relative_position_id = SNY_the_army_makes_a_demonstration
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -5903,7 +6176,7 @@ focus_tree = {
         x = -2
         y = 1
         relative_position_id = SNY_gain_the_support_of_the_people
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -5942,7 +6215,7 @@ focus_tree = {
         x = 0
         y = 1
         relative_position_id = SNY_the_armys_coup
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -5981,7 +6254,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_balace_the_powers_of_the_military
-        icon = GFX_
+        icon = GFX_focus_SNY_balance_armys1
         prerequisite = { focus = SNY_francis_mulcahy_assumes_leadership}
         x = -2
         y = 1
@@ -6000,7 +6273,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_cater_to_the_wants_of_the_army
-        icon = GFX_
+        icon = GFX_focus_SNY_cater_to_The_army
         prerequisite = { focus = SNY_balace_the_powers_of_the_military}
         available = {
             custom_trigger_tooltip = {
@@ -6039,7 +6312,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_expand_veteran_bonuses
-        icon = GFX_
+        icon = GFX_focus_SNY_bonus_for_vets
         prerequisite = { focus = SNY_cater_to_the_wants_of_the_army}
         available = {
             custom_trigger_tooltip = {
@@ -6080,7 +6353,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_cater_to_the_wants_of_the_airforce
-        icon = GFX_
+        icon = GFX_focus_SNY_cater_to_The_airforce
         prerequisite = { focus = SNY_balace_the_powers_of_the_military}
         available = {
             custom_trigger_tooltip = {
@@ -6119,7 +6392,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_cater_to_the_wants_of_the_navy
-        icon = GFX_
+        icon = GFX_focus_SNY_cater_to_The_navy
         prerequisite = { focus = SNY_balace_the_powers_of_the_military}
         available = {
             custom_trigger_tooltip = {
@@ -6158,7 +6431,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_ensure_none_of_the_branches_fall_behind
-        icon = GFX_
+        icon = GFX_focus_SNY_all_the_branchers
         prerequisite = { focus = SNY_cater_to_the_wants_of_the_airforce}
         prerequisite = { focus = SNY_cater_to_the_wants_of_the_navy}
         available = {
@@ -6199,7 +6472,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_put_down_the_radical_leaders
-        icon = GFX_
+        icon = GFX_focus_SNY_putdownvets
         prerequisite = { focus = SNY_balace_the_powers_of_the_military}
         available = {
             custom_trigger_tooltip = {
@@ -6217,7 +6490,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_offer_the_navy_peace
-        icon = GFX_
+        icon = GFX_focus_SNY_offernavy_peace
         prerequisite = { focus = SNY_put_down_the_radical_leaders}
         available = {
             custom_trigger_tooltip = {
@@ -6239,7 +6512,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_ask_the_airforce_for_aid
-        icon = GFX_
+        icon = GFX_focus_SNY_ask_air_forhelp
         prerequisite = { focus = SNY_put_down_the_radical_leaders}
         available = {
             custom_trigger_tooltip = {
@@ -6276,7 +6549,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_extinquish_the_flames_of_the_coup
-        icon = GFX_
+        icon = GFX_focus_SNY_extinguish_fire
         prerequisite = { focus = SNY_francis_mulcahy_assumes_leadership}
         available = {
             custom_trigger_tooltip = {
@@ -6312,7 +6585,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_vermontese_brotherhood
-        icon = GFX_
+        icon = GFX_focus_SNY_vermont_bros
         prerequisite = { focus = SNY_extinquish_the_flames_of_the_coup}
         x = -1
         y = 1
@@ -6340,7 +6613,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_fill_congress_with_soldiers_and_generals
-        icon = GFX_
+        icon = GFX_focus_SNY_fill_parliment_with_soldiers
         prerequisite = { focus = SNY_extinquish_the_flames_of_the_coup}
         available = {
             has_idea = SNY_political_violence
@@ -6370,7 +6643,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_give_congress_mock_powers
-        icon = GFX_
+        icon = GFX_focus_SNY_give_congress_powers
         prerequisite = { focus = SNY_fill_congress_with_soldiers_and_generals}
         available = {
             OR = {
@@ -6410,7 +6683,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_pass_the_anti_naval_descrimination_bill
-        icon = GFX_
+        icon = GFX_focus_SNY_antinaval_descrimination
         prerequisite = { focus = SNY_give_congress_mock_powers}
         available = {
             has_idea = SNY_navy_troubles
@@ -6435,7 +6708,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_promote_military_nationalism
-        icon = GFX_
+        icon = GFX_focus_SNY_propaganda
         prerequisite = { focus = SNY_give_congress_mock_powers}
         available = {
             has_idea = SNY_legacy_of_FDRs_impeachment
@@ -6455,7 +6728,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_create_a_bloc_for_the_army
-        icon = GFX_
+        icon = GFX_focus_SNY_army_bloc
         prerequisite = { focus = SNY_fill_congress_with_soldiers_and_generals}
         x = 0
         y = 1
@@ -6472,7 +6745,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_create_a_bloc_for_the_airforce
-        icon = GFX_
+        icon = GFX_focus_SNY_air_bloc
         prerequisite = { focus = SNY_create_a_bloc_for_the_army}
         x = 0
         y = 1
@@ -6492,7 +6765,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_create_a_bloc_for_the_navy
-        icon = GFX_
+        icon = GFX_focus_SNY_navy_bloc
         prerequisite = { focus = SNY_create_a_bloc_for_the_airforce}
         available = {
             has_completed_focus = SNY_pass_the_naval_descrimination_bill
@@ -6576,7 +6849,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_assert_military_rule
-        icon = GFX_
+        icon = GFX_focus_SNY_give_congress_powers
         prerequisite = { focus = SNY_bruce_clarke_assumes_leadership}
         available = {
             custom_trigger_tooltip = {
@@ -6606,7 +6879,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_end_hostilities_with_george_decker
-        icon = GFX_
+        icon = GFX_focus_SNY_peace
         prerequisite = { focus = SNY_assert_military_rule}
         available = {
             custom_effect_tooltip = {
@@ -6629,7 +6902,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_backstab_george_decker
-        icon = GFX_
+        icon = GFX_focus_SNY_backstab
         prerequisite = { focus = SNY_end_hostilities_with_george_decker}
         available = {
             has_completed_focus = SNY_execute_the_assault
@@ -6660,7 +6933,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_seize_civilian_trucks_and_trains
-        icon = GFX_
+        icon = GFX_focus_SNY_seize_trucks
         prerequisite = { focus = SNY_assert_military_rule}
         available = {
             custom_effect_tooltip = {
@@ -6679,17 +6952,17 @@ focus_tree = {
         completion_reward = {
             add_equipment_to_stockpile = {
                 type = motorized_equipment
-                amount = 500
+                amount = 350
             }
             add_equipment_to_stockpile = {
                 type = train_equipment
-                amount = 50
+                amount = 20
             }
         }
     }
     focus = {
         id = SNY_prepare_for_an_all_out_assult
-        icon = GFX_
+        icon = GFX_focus_SNY_prepare_foralloutassault
         prerequisite = { focus = SNY_assert_military_rule}
         available = {
             OR = {
@@ -6841,7 +7114,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_prepare_the_logistics
-        icon = GFX_
+        icon = GFX_focus_SNY_prepare_logistics
         prerequisite = { focus = SNY_prepare_for_an_all_out_assult}
         available = {
             controls_state = 414
@@ -6945,7 +7218,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_execute_the_assault
-        icon = GFX_
+        icon = GFX_focus_SNY_execute_assault
         prerequisite = { focus = SNY_prepare_the_logistics}
         available = {
             custom_effect_tooltip = {
@@ -6970,7 +7243,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_create_an_army_advisory_council
-        icon = GFX_
+        icon = GFX_focus_SNY_fill_parliment_with_soldiers
         prerequisite = { focus = SNY_assert_military_rule}
         x = 2
         y = 1
@@ -6987,7 +7260,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_our_historical_territorial_claims
-        icon = GFX_
+        icon = GFX_focus_SNY_claims
         prerequisite = { 
             focus = SNY_assert_military_rule 
             #focus = SNY_supremacy_of_the_infantry
@@ -7063,7 +7336,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_march_on_vermont
-        icon = GFX_
+        icon = GFX_focus_SNY_attacks
         prerequisite = { focus = SNY_our_historical_territorial_claims}
         available = {
             country_exists = SVT
@@ -7094,7 +7367,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_expand_our_claims
-        icon = GFX_
+        icon = GFX_focus_SNY_attacks
         prerequisite = { focus = SNY_march_on_vermont}
         prerequisite = { focus = SNY_integrate_our_rightful_land}
         bypass = {
@@ -7164,7 +7437,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_rightful_ruler_of_the_conneticut_river
-        icon = GFX_
+        icon = GFX_focus_SNY_attacks
         prerequisite = { focus = SNY_expand_our_claims}
         available = {
             owns_state = 8
@@ -7192,7 +7465,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_march_on_southern_ontario
-        icon = GFX_
+        icon = GFX_focus_SNY_attacks
         prerequisite = { focus = SNY_our_historical_territorial_claims}
         available = {
             OR = {
@@ -7305,7 +7578,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_integrate_our_rightful_land
-        icon = GFX_
+        icon = GFX_focus_SNY_claims
         prerequisite = { focus = SNY_march_on_vermont}
         prerequisite = { focus = SNY_march_on_southern_ontario}
         available = {
@@ -7358,7 +7631,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_cross_into_detriot
-        icon = GFX_
+        icon = GFX_focus_SNY_attacks
         prerequisite = { focus = SNY_march_on_southern_ontario}
         available = {
             country_exists = SMI
@@ -7411,7 +7684,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_push_to_the_ohio_river
-        icon = GFX_
+        icon = GFX_focus_SNY_attacks
         prerequisite = { focus = SNY_cross_into_detriot}
         available = {
             OR = {
@@ -7458,7 +7731,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_push_to_the_misissippi
-        icon = GFX_
+        icon = GFX_focus_SNY_attacks
         prerequisite = { focus = SNY_push_to_the_ohio_river}
         available = {
             country_exists = SIL
@@ -7491,7 +7764,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_push_to_the_tennessee_river
-        icon = GFX_
+        icon = GFX_focus_SNY_attacks
         prerequisite = { focus = SNY_push_to_the_ohio_river}
         available = {
             OR = {
@@ -7561,7 +7834,7 @@ focus_tree = {
     }
     focus = {
         id = SNY_the_rightful_ruler_of_the_ohio_valley
-        icon = GFX_
+        icon = GFX_focus_SNY_claims
         prerequisite = { focus = SNY_rightful_ruler_of_the_conneticut_river}
         prerequisite = { focus = SNY_push_to_the_misissippi}
         prerequisite = { focus = SNY_push_to_the_tennessee_river}
@@ -7692,7 +7965,7 @@ focus_tree = {
         x = 0
         y = 1
         relative_position_id = SNY_expand_the_state
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -7779,7 +8052,7 @@ focus_tree = {
         x = 0
         y = 1
         relative_position_id = SNY_crush_resistance
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 2
         }
@@ -7804,7 +8077,7 @@ focus_tree = {
         x = 2
         y = 1
         relative_position_id = SNY_crush_resistance
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 2
         }
@@ -7829,7 +8102,7 @@ focus_tree = {
         x = -7
         y = 1
         relative_position_id = SNY_the_question_of_leadership
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -7850,7 +8123,7 @@ focus_tree = {
         x = -1
         y = 1
         relative_position_id = SNY_stabilize_the_state
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -7882,7 +8155,7 @@ focus_tree = {
         x = 0
         y = 2
         relative_position_id = SNY_stabilize_the_state
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
@@ -7905,7 +8178,7 @@ focus_tree = {
         x = 1
         y = 1
         relative_position_id = SNY_stabilize_the_state
-        cost = 10
+        cost = 7.2 
         ai_will_do = {
             factor = 1
         }
