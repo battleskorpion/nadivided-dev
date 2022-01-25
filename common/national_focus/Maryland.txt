@@ -36,7 +36,7 @@ focus_tree = {
         x = 0
         y = 0
 
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -128,7 +128,7 @@ focus_tree = {
         available = {
 
         }
-        prerequisite = { focus = SMD_Chapter_about_Tactics focus = SMD_Rally_the_remnants_of_bonus_army}
+        prerequisite = { focus = SMD_Chapter_about_Tactics}
         relative_position_id = SMD_Chapter_about_Tactics
         x = 1
         y = 1
@@ -170,7 +170,7 @@ focus_tree = {
         available = {
 
         }
-        prerequisite = { focus = SMD_Chapter_about_welfare focus = SMD_Rally_the_remnants_of_bonus_army}
+        prerequisite = { focus = SMD_Chapter_about_welfare}
         relative_position_id = SMD_Chapter_about_welfare
         x = -1
         y = 1
@@ -336,7 +336,7 @@ focus_tree = {
         relative_position_id = SMD_Reward_our_long_time_supporters
         x = -7
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -389,7 +389,7 @@ focus_tree = {
         relative_position_id = SMD_Bonus_army_workshops
         x = -3
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -415,7 +415,7 @@ focus_tree = {
         relative_position_id = SMD_more_advanced_Submachineguns
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -441,7 +441,7 @@ focus_tree = {
         relative_position_id = SMD_Bonus_Artillery
         x = 1
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -473,7 +473,7 @@ focus_tree = {
         relative_position_id = SMD_Bonus_Army_special_forces
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -497,7 +497,7 @@ focus_tree = {
 
         x = -1
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -523,7 +523,7 @@ focus_tree = {
         relative_position_id = SMD_Bonus_Tanks
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -545,7 +545,7 @@ focus_tree = {
         relative_position_id = SMD_Bonus_army_workshops
         x = 1
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -571,7 +571,7 @@ focus_tree = {
         relative_position_id = SMD_Industrial_development
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -596,14 +596,19 @@ focus_tree = {
         relative_position_id = SMD_Steel_mines
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-
+            add_ideas = SMD_Diversifications_of_mining_idea
+            add_resource = {
+	        state = 204
+	        type =  tungsten
+	        amount = 7
+			}
         }
     }
 
@@ -617,14 +622,14 @@ focus_tree = {
         relative_position_id = SMD_Diversifications_of_mining
         x = 1
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-            remove_ideas = SMD_Agricultural_Economy
+            add_ideas = developed_economic_capacity
         }
     }
 
@@ -638,7 +643,7 @@ focus_tree = {
         relative_position_id = SMD_Bonus_heavy_industry
         x = -2
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -659,15 +664,20 @@ focus_tree = {
         relative_position_id = SMD_Bonus_heavy_industry
         x = 3
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
-        completion_reward = {
-
-        }
+		completion_reward = {
+			add_tech_bonus = {
+				name = synt
+				bonus = 1.5
+				uses = 1
+				category = synth_resources
+			}
+		}
     }
 
     focus = {
@@ -680,16 +690,49 @@ focus_tree = {
         relative_position_id = SMD_Synthetic_Resources_Development
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
-        completion_reward = {
+        available = { has_tech = synth_oil_experiments }
 
-        }
-    }
+          completion_reward = { 
+            custom_effect_tooltip = SLA_research_syth_tt
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = synthetic_refinery 
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = synthetic_refinery
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 1
+					instant_build = yes
+				    }
+			    }
+			}
+	}
+#
 
     focus = {
         id = SMD_Funnel_money_into_research
@@ -702,14 +745,14 @@ focus_tree = {
         mutually_exclusive = { focus = SMD_Funnel_money_into_industry }
         x = -3
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-
+            add_ideas = SMD_bonus_research_idea
         }
     }
 
@@ -723,14 +766,19 @@ focus_tree = {
         relative_position_id = SMD_Funnel_money_into_research
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-
+			add_tech_bonus = {
+				name = r
+				bonus = 1.0
+				uses = 1
+				category = radar_tech
+			}
         }
     }
 
@@ -744,15 +792,18 @@ focus_tree = {
         relative_position_id = SMD_Funnel_money_into_research
         x = 2
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
-        completion_reward = {
-
-        }
+			add_tech_bonus = {
+				name = secret_bonus
+				bonus = 1.0
+				uses = 2
+				category = rocketry
+			}
     }
 
     focus = {
@@ -765,14 +816,18 @@ focus_tree = {
         relative_position_id = SMD_Funnel_money_into_research
         x = -2
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-
+			add_tech_bonus = {
+				name = nuclear_bonus
+				ahead_reduction = 2
+				category = nuclear
+			}
         }
     }
 
@@ -787,15 +842,44 @@ focus_tree = {
         mutually_exclusive = { focus = SMD_Funnel_money_into_research }
         x = 3
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
-        completion_reward = {
-
-        }
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 3
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 3
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+					instant_build = yes
+				}
+			}
+		}
     }
 
     focus = {
@@ -808,15 +892,44 @@ focus_tree = {
         relative_position_id = SMD_Funnel_money_into_industry
         x = -2
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
-        completion_reward = {
-
-        }
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
     }
 
     focus = {
@@ -829,14 +942,14 @@ focus_tree = {
         relative_position_id = SMD_Funnel_money_into_industry
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-
+            add_ideas = SMD_Bonus_army_mining_commission_idea
         }
     }
 
@@ -850,14 +963,14 @@ focus_tree = {
         relative_position_id = SMD_Funnel_money_into_industry
         x = 2
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-
+            add_ideas = SMD_bonus_army_officer_schools
         }
     }
 
@@ -871,7 +984,7 @@ focus_tree = {
         relative_position_id = SMD_Bonus_army_workshops
         x = 3
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -974,7 +1087,7 @@ focus_tree = {
         relative_position_id = SMD_Infrastructure_dev
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -995,7 +1108,7 @@ focus_tree = {
         relative_position_id = SMD_Bonus_trains
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -1024,7 +1137,7 @@ focus_tree = {
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-
+            add_stability = 0.10
 	        add_popularity = {
 				ideology = longism
 				popularity = 0.05
@@ -1067,14 +1180,17 @@ focus_tree = {
         relative_position_id = SMD_Radio_broadcasts
         x = 3
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-
+	        add_popularity = {
+				ideology = fascism
+				popularity = -0.10
+            }
         }
     }
 
@@ -1088,14 +1204,19 @@ focus_tree = {
         relative_position_id = SMD_Radio_broadcasts
         x = 5
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-
+			add_tech_bonus = {
+				name = police
+				bonus = 1.0
+				uses = 1
+				category = military_police_tech
+			}
         }
     }
 
@@ -1109,7 +1230,7 @@ focus_tree = {
         relative_position_id = SMD_Radio_broadcasts
         x = 7
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -1130,14 +1251,14 @@ focus_tree = {
         relative_position_id = SMD_hand_out_Bonus_army_pamphlets
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-
+          add_timed_idea = { idea = SMD_Door_to_door_recruitment_Campaign days = 150 }            
         }
     }
 
@@ -1152,7 +1273,7 @@ focus_tree = {
         relative_position_id = SMD_Create_bonus_police
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -1175,7 +1296,7 @@ focus_tree = {
         relative_position_id = SMD_Police_CrackDowns
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -1196,14 +1317,14 @@ focus_tree = {
         relative_position_id = SMD_Create_Propaganda_movies
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-
+            add_ideas = SMD_Generous_Contracts_idea
         }
     }
 
@@ -1217,14 +1338,14 @@ focus_tree = {
         relative_position_id = SMD_Generous_Contracts
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-
+            add_ideas = SMD_Promotes_the_boyscouts_idea
         }
     }
 
@@ -1238,14 +1359,15 @@ focus_tree = {
         relative_position_id = SMD_Walter_Promotes_the_boyscouts
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-
+            add_stability = 0.05
+            add_political_power = 150
         }
     }
 
@@ -1259,14 +1381,14 @@ focus_tree = {
         relative_position_id = SMD_Walter_Promotes_the_boyscouts
         x = 2
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-
+            add_ideas = SMD_Loyal_Population        
         }
     }
 
@@ -1281,14 +1403,14 @@ focus_tree = {
         relative_position_id = SMD_Create_Propaganda_movies
         x = 2
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-
+          add_timed_idea = { idea = SMD_Bonus_Bonds_idea days = 150 }
         }
     }
 
@@ -1302,14 +1424,14 @@ focus_tree = {
         relative_position_id = SMD_Smear_campaign_against_Vallee
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-
+            add_war_support = 0.05   
         }
     }
 
@@ -1323,7 +1445,7 @@ focus_tree = {
         relative_position_id = SMD_Ritchie_dies
         x = 11
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -1351,7 +1473,7 @@ focus_tree = {
         relative_position_id = SMD_The_Marines_Coup
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -1619,7 +1741,7 @@ focus = {
         relative_position_id = SMD_military_investment_question
         x = -1
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -1640,7 +1762,7 @@ focus = {
         relative_position_id = SMD_Industrial_technologies
         x = -1
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -1664,7 +1786,7 @@ focus = {
         relative_position_id = SMD_Aviation_development
         x = -1
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -1688,7 +1810,7 @@ focus = {
         relative_position_id = SMD_Marine_intellegence_focus
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -1717,7 +1839,7 @@ focus = {
         relative_position_id = SMD_Invest_into_electronics
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -1741,7 +1863,7 @@ focus = {
         relative_position_id = SMD_Marine_corps_innovation_department
         x = -1
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -1762,7 +1884,7 @@ focus = {
         relative_position_id = SMD_Marine_corps_innovation_department
         x = 1
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -1783,7 +1905,7 @@ focus = {
         relative_position_id = SMD_military_investment_question
         x = 1
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -1804,7 +1926,7 @@ focus = {
         relative_position_id = SMD_military_investment_question
         x = 3
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -1825,7 +1947,7 @@ focus = {
         relative_position_id = SMD_Industrial_technologies
         x = 1
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -1846,7 +1968,7 @@ focus = {
         relative_position_id = SMD_synthetic_oil
         x = 1
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -1867,7 +1989,7 @@ focus = {
         relative_position_id = SMD_synthetic_plants
         x = 1
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -2917,7 +3039,7 @@ focus = {
         }
         x = 1
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 5
         }
@@ -2937,7 +3059,7 @@ focus = {
         }
         x = 1
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 5
         }
@@ -2960,7 +3082,7 @@ focus = {
         }
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 5
         }
@@ -2986,7 +3108,7 @@ focus = {
         }
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 5
         }
@@ -3031,7 +3153,7 @@ focus = {
         }
         x = -1
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 5
         }
@@ -3076,7 +3198,7 @@ focus = {
 
         prerequisite = { focus = SMD_Bonus_army_soup_kitchens}
         relative_position_id = SMD_Bonus_army_soup_kitchens
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -3106,7 +3228,7 @@ focus = {
         relative_position_id = SMD_bonus_army_takeover
         x = 2
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -3129,7 +3251,7 @@ focus = {
         relative_position_id = SMD_Dismantle_baltimore_accords
         x = 2
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -3212,7 +3334,7 @@ focus = {
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_MANPOWER }
         completion_reward = {
-
+            add_timed_idea = { idea = SMD_Forced_Labour_Campaign_idea  days = 360 }
         
         }
     }
@@ -3260,8 +3382,9 @@ focus = {
         relative_position_id = SMD_take_out_the_feds
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_MANPOWER }
+        available = { owns_state = 44 }
         completion_reward = {
-
+			add_stability = 0.25
         }
     }
 
@@ -3298,23 +3421,114 @@ focus = {
 
     focus = {
         id = SMD_Develop_Bonus_Navy
-        icon = GFX_focus_SMD_bonus_navy
-        available = {
 
-        }
         prerequisite = { focus = SMD_d_c_armory}
         relative_position_id = SMD_d_c_armory
         x = 6
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
-        completion_reward = {
-
-        }
+		completion_reward = {
+			navy_experience = 25
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+			}			
+		}
     }
 
     focus = {
@@ -3327,14 +3541,14 @@ focus = {
         relative_position_id = SMD_Develop_Bonus_Navy
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-
+            add_ideas = SMD_Increase_naval_funding_idea
         }
     }
 
@@ -3348,15 +3562,23 @@ focus = {
         relative_position_id = SMD_Increase_naval_funding
         x = -1
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
-        completion_reward = {
-
-        }
+		completion_reward = {
+			navy_experience = 25
+			add_tech_bonus = {
+				name = capital_ships_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = bc_tech
+				category = bb_tech
+			}
+		}
     }
 
     focus = {
@@ -3369,15 +3591,21 @@ focus = {
         relative_position_id = SMD_Increase_naval_funding
         x = 1
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
-        completion_reward = {
-
-        }
+		completion_reward = {
+			add_tech_bonus = {
+				name = ss_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = ss_tech
+			}
+		}
     }
 
 
@@ -3391,15 +3619,69 @@ focus = {
         relative_position_id = SMD_d_c_armory
         x = 3
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
-        completion_reward = {
-
-        }
+		completion_reward = {
+			air_experience = 25
+			if = {
+				limit = {
+					capital_scope = {
+						OR = {
+							NOT = { is_controlled_by = ROOT }
+							NOT = {
+								free_building_slots = {
+									building = air_base
+									size > 1
+								}
+							}
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_2_AB }
+				}
+			}
+			if = {
+				limit = {
+					capital_scope = {
+						is_controlled_by = ROOT
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+				}
+				capital_scope = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}				
+					ROOT = { set_country_flag = aviation_effort_2_AB }
+				}
+			}
+			add_doctrine_cost_reduction = {
+				name = air_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+		}
     }
 
     focus = {
@@ -3412,15 +3694,27 @@ focus = {
         relative_position_id = SMD_Develop_bonus_airforce
         x = -1
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
-        completion_reward = {
-
-        }
+		completion_reward = {
+			add_tech_bonus = {
+				name = fighter_bonus
+				bonus = 1.0
+				uses = 2
+				technology = early_fighter
+				technology = fighter1
+				technology = fighter2
+				technology = fighter3
+				technology = heavy_fighter1
+				technology = heavy_fighter2
+				technology = heavy_fighter3
+			}
+			air_experience = 50
+		}
     }
 
     focus = {
@@ -3434,15 +3728,69 @@ focus = {
         relative_position_id = SMD_better_fighters
         x = 1
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
-        completion_reward = {
-
-        }
+		completion_reward = {
+			air_experience = 25
+			if = {
+				limit = {
+					capital_scope = {
+						OR = {
+							NOT = { is_controlled_by = ROOT }
+							NOT = {
+								free_building_slots = {
+									building = air_base
+									size > 1
+								}
+							}
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_2_AB }
+				}
+			}
+			if = {
+				limit = {
+					capital_scope = {
+						is_controlled_by = ROOT
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+				}
+				capital_scope = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}				
+					ROOT = { set_country_flag = aviation_effort_2_AB }
+				}
+			}
+			add_doctrine_cost_reduction = {
+				name = air_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+		}
     }
 
     focus = {
@@ -3455,15 +3803,24 @@ focus = {
         relative_position_id = SMD_Develop_bonus_airforce
         x = 1
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
-        completion_reward = {
-
-        }
+		completion_reward = {
+			add_tech_bonus = {
+				name = bomber_bonus
+				bonus = 1.0
+				uses = 2
+				technology = strategic_bomber1
+				technology = strategic_bomber2
+				technology = strategic_bomber3
+				category = tactical_bomber
+			}
+			air_experience = 50
+		}
     }
  
      focus = {
@@ -3475,7 +3832,7 @@ focus = {
         }
         x = -6
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -3498,7 +3855,7 @@ focus = {
         }
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -3579,7 +3936,7 @@ focus = {
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_MANPOWER }
         completion_reward = {
-
+            add_stability = 0.15
         }
     } 
     focus = {
@@ -3614,7 +3971,7 @@ focus = {
         }
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -3624,7 +3981,7 @@ focus = {
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_RESEARCH }
         completion_reward = {
-        
+            add_ideas = SMD_Share_the_wealth_idea
         
         }
     }
@@ -3648,7 +4005,7 @@ focus = {
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_MANPOWER }
         completion_reward = {
-
+            add_ideas = SMD_International_Bonus_army_idea
         }
     } 
 
@@ -3661,7 +4018,7 @@ focus = {
         }
         x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -3671,8 +4028,8 @@ focus = {
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_RESEARCH }
         completion_reward = {
-        
-        
+            add_ideas= SMD_Bonus_Army_Expeditionary_forces_idea
+            set_rule = { can_send_volunteers = yes }
         }
     }
 
