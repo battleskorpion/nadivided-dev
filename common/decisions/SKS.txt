@@ -14,7 +14,7 @@ SKS_hux_introduction_of_reforms = {
         }
 
         cost = 100
-        days_re_enable = 100
+        
         ai_will_do = {
             base = 10
         }
@@ -25,6 +25,7 @@ SKS_hux_introduction_of_reforms = {
 			consumer_goods_factor = -0.1
 		}
 		days_remove = 100
+		days_re_enable = 100
 	}
 	SKS_tax_reform = {
 		icon = GFX_
@@ -34,7 +35,6 @@ SKS_hux_introduction_of_reforms = {
         }
 
         cost = 100
-        days_re_enable = 200
         ai_will_do = {
             base = 10
         }
@@ -44,6 +44,7 @@ SKS_hux_introduction_of_reforms = {
 			consumer_goods_factor = -0.1
 		}
 		days_remove = 200
+		days_re_enable = 200
 	}
 	SKS_tax_cuts_for_military_factories = {
 		icon = GFX_
@@ -53,7 +54,6 @@ SKS_hux_introduction_of_reforms = {
         }
 
         cost = 100
-        days_re_enable = 60
         ai_will_do = {
             base = 10
 			modifier = {
@@ -67,6 +67,7 @@ SKS_hux_introduction_of_reforms = {
 			conversion_cost_civ_to_mil_factor = -0.8
 		}
 		days_remove = 180
+		days_re_enable = 180
 	}
 	SKS_labor_standards = {
 		icon = GFX_
@@ -86,13 +87,32 @@ SKS_hux_introduction_of_reforms = {
 			line_change_production_efficiency_factor = 0.4
 			stability_weekly_factor = 0.003
 		}
+		days_remove = 200
+		days_re_enable = 200
 	}
 	SKS_Texan_Trade_Discussions = {
 		icon = GFX_
 
         available = {
-			has_completed_focus = SKS_help_texas
+			AND = {
+				has_completed_focus = SKS_help_texas
+				custom_trigger_tooltip = {
+					tooltip = SKS_texan_trade_negotations_trigger_tt
+					hidden_trigger = {
+						NOT = {
+							STX = {
+								has_idea = SKS_texan_trade_negotiations
+							}
+						}
+					}
+				}
+			}
         }
+		target_trigger = {
+			FROM = {
+				tag = STX
+			}
+		}
 
         cost = 100
         ai_will_do = {
@@ -101,9 +121,13 @@ SKS_hux_introduction_of_reforms = {
         fire_only_once = yes
         cancel_if_not_visible = yes
 		modifier = {
-		custom_modifier_tooltip = SKS_texan_trade_tt
-			ROOT = {
-				trade_cost_for_target_factor = -0.5
+			custom_modifier_tooltip = SKS_texan_trade_tt
+		}
+		complete_effect = {
+			hidden_effect = {
+				STX = {
+					add_ideas = SKS_texan_trade_negotiations
+				}
 			}
 		}
 	}

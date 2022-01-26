@@ -1121,7 +1121,14 @@ focus_tree = {
 			focus = SKS_support_cessna
 		}
 		completion_reward = {
-				#add 2 synthetic refineries to central kansas
+				#add 2 synthetic refineries to eastern kansas
+				373 = {
+					add_building_construction = {
+							type = synthetic_refinery
+							level = 2
+							instant_build = yes
+					}
+				}
 			}
 	}
 	focus = {
@@ -1160,14 +1167,27 @@ focus_tree = {
 		}
 		completion_reward = {
 				#industrial idea for construction speed as well as construction speed of nuclear reactors
+				hidden = {
+					add_ideas = SKS_black_and_veatch
+				}
+				custom_effect_tooltip = SKS_support_black_and_veatch_tt
 				if = {
 					limit = {
 						has_tech = nuclear_reactor
 					}
-					#build 1 nuclear reactor in random state
+						#build 1 nuclear reactor in random state
+					random_controlled_state = {
+						add_building_construction = {
+							type = nuclear_reactor
+							level = 1
+							instant_build = yes
+						}
+					}
 				}
-			}
+					
+		}
 	}
+
 	focus = {
 		#oil refinery firm
 		id = SKS_support_vickers_petroleum
@@ -1205,7 +1225,7 @@ focus_tree = {
 		icon = GFX_
 		cost = 5
 		relative_position_id = SKS_support_vickers_petroleum
-		x = 1
+		x = 0
 		y = 2
 		
 		prerequisite = {
@@ -1213,21 +1233,11 @@ focus_tree = {
 		}
 		completion_reward = {
 				#decent increase to oil in eastern kansas
-			}
-	}
-	focus = {
-		id = SKS_develop_butler_oil_fields
-		icon = GFX_
-		cost = 5
-		relative_position_id = SKS_support_vickers_petroleum
-		x =0
-		y = 3
-		
-		prerequisite = {
-			focus = SKS_support_vickers_petroleum
-		}
-		completion_reward = {
-				
+				add_resource = {
+					type = oil
+					amount = 12
+					state = 373
+				}
 			}
 	}
 	focus = {
@@ -1242,12 +1252,11 @@ focus_tree = {
 			focus = SKS_back_corporations
 		}
 		completion_reward = {
-				
-			}
+			add_ideas = SKS_ottawa_trucks	
+		}
 	}
 	
 	focus = {
-		#prominent construction and engineering firm
 		id = SKS_ferrelgas_company
 		icon = GFX_
 		cost = 5
@@ -1260,7 +1269,11 @@ focus_tree = {
 			focus = SKS_support_vickers_petroleum
 		}
 		completion_reward = {
-				
+				modify_building_resources = {
+					building = synthetic_refinery
+					resource = oil
+					amount = 2
+				}
 			}
 	}
 	
@@ -1582,7 +1595,7 @@ focus_tree = {
 			STX = {
 				add_timed_idea = {
 					idea = SKS_noisy_jayhawks
-					days = 180
+					days = 240
 				}
 			}
 			SOK = {
@@ -1609,8 +1622,8 @@ focus_tree = {
 			focus = SKS_plight_of_texas
 		}
 		completion_reward = {
-			
-			}
+			add_political_power = 120
+		}
 	}
 
 	
@@ -1631,8 +1644,9 @@ focus_tree = {
 			focus = SKS_constitutionalists
 		}
 		completion_reward = {
+			army_experience = 15
 			
-			}
+		}
 	}
 	focus = {
 		id = SKS_garrison_corps
@@ -1646,8 +1660,25 @@ focus_tree = {
 			focus = SKS_the_kansas_troopers
 		}
 		completion_reward = {
-			
+			army_experience = 15
+			if = {
+				limit = {
+					NOT = {
+						has_tech = tech_military_police
+					}
+				}
+				set_technology = {
+					tech_military_police = 1
+				}
+			} 
+			else = {
+				add_tech_bonus = {
+					bonus = 2
+					uses = 1
+					category = military_police_tech
+				}
 			}
+		}
 	}
 	focus = {
 		id = SKS_work_with_the_wartime_logistics_department
@@ -1695,8 +1726,8 @@ focus_tree = {
 			focus = SKS_organized_intelligence
 		}
 		completion_reward = {
-			
-			}
+			create_intelligence_agency = yes
+		}
 	}
 	focus = {
 		id = SKS_regional_surveillance
