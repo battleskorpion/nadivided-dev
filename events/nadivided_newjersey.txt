@@ -1868,6 +1868,11 @@ country_event = { #SNJ info about Confederate Front
         ai_chance = {
             factor = 2
         }
+        custom_effect_tooltip = SNJ_boosts_american_tension_10_tt
+        add_to_variable = {
+            var = var_snj_american_tension
+            value = 10
+        }
         add_war_support = 0.05
     }
 }
@@ -1931,7 +1936,7 @@ country_event = { #end of Confederate Front
         }
     }
 }
-country_event = { #ok
+country_event = { #we defeated them, do we continue?
     id = newjersey.60
     title = newjersey.60.t
     desc = newjersey.60.d
@@ -1939,11 +1944,45 @@ country_event = { #ok
     is_triggered_only = yes
     fire_only_once = yes
     
-    option = { #we 
+    option = { #peace
         name = newjersey.60.a
         ai_chance = {
             factor = 2
         }
+        complete_national_focus = SNJ_dixie_is_ours
+        set_truce = {
+            target = STX
+            days = 365
+        }
+        set_truce = {
+            target = SOK
+            days = 365
+        }
+        set_truce = {
+            target = SLA
+            days = 365
+        }
+        set_truce = {
+            target = SAR
+            days = 365
+        }
+        every_controlled_state = {
+            limit = {
+                has_state_flag = can_be_taken_by_SNJ
+            }
+            set_state_owner = SNJ
+        }
+    }
+    option = { #the war is not finished!
+        name = newjersey.60.b
+        ai_chance = {
+            factor = 2
+        }
+        custom_effect_tooltip = SNJ_boosts_american_tension_20_tt
+            add_to_variable = {
+                var = var_snj_american_tension
+                value = 20
+            }
         complete_national_focus = SNJ_dixie_is_ours
     }
 }
@@ -2713,6 +2752,296 @@ country_event = { #report back to Illinois no
         create_wargoal = {
             target = FROM
             type = puppet_wargoal_focus
+        }
+    }
+}
+country_event = { #do we become a democracy
+    id = newjersey.83
+    title = newjersey.83.t
+    desc = newjersey.83.d
+
+    is_triggered_only = yes
+    
+    option = { #yes
+        name = newjersey.83.a
+        ai_chance = {
+            factor = 1
+        }
+        complete_national_focus = SNJ_a_move_towards_democracy
+    }
+    option = { #no
+        name = newjersey.83.a
+        ai_chance = {
+            factor = 1
+        }
+        complete_national_focus = SNJ_not_in_a_time_of_crisis
+    }
+}
+country_event = { #california coalition event
+    id = newjersey.84
+    title = newjersey.84.t
+    desc = newjersey.84.d
+
+    is_triggered_only = no
+
+    trigger = {
+        check_variable = { var_snj_american_tension > 100 }
+    }
+    hidden = yes
+    fire_only_once = yes
+
+    immediate = {
+        SCA = {
+            country_event = {
+                id = newjersey.85
+            }
+        }
+    }
+
+    option = { #yes
+        name = newjersey.84.a
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
+country_event = { #california coalition event pt2
+    id = newjersey.85
+    title = newjersey.85.t
+    desc = newjersey.85.d
+
+    is_triggered_only = yes
+
+    
+    hidden = no
+
+    option = { #yes
+        name = newjersey.85.a
+        ai_chance = {
+            factor = 1000
+        }
+        create_faction = "North American Sovereignty Accords"
+        SNJ = {
+            country_event = {
+                id = newjersey.87
+            }
+        }
+        every_country = {
+            limit = {
+                has_country_flag = flag_SNJ_american_coalition
+            }
+            country_event = {
+                id = newjersey.86
+            }
+        }
+    }
+
+    option = { #nope
+        name = newjersey.85.b
+        ai_chance = {
+            factor = 0
+        }
+        any_country = {
+            limit = {
+                has_country_flag = flag_SNJ_american_coalition
+            }
+            country_event = {
+                id = newjersey.85
+            }
+        }
+    }
+}
+
+country_event = { #invite nation
+    id = newjersey.86
+    title = newjersey.86.t
+    desc = newjersey.86.d
+
+    is_triggered_only = yes
+
+    option = { #yes
+        name = newjersey.86.a
+        ai_chance = {
+            factor = 100
+        }
+        FROM = {
+            add_to_faction = ROOT
+        }
+        add_ai_strategy = {
+            type = alliance
+            id = FROM
+            value = 200
+        }
+        add_war_support = 0.05
+    }
+    option = { #no
+        name = newjersey.86.b
+        ai_chance = {
+            factor = 0
+        }
+    }
+}
+
+country_event = { #formation of NASA
+    id = newjersey.87
+    title = newjersey.87.t
+    desc = newjersey.87.d
+
+    is_triggered_only = yes
+
+    option = { #shit
+        name = newjersey.87.a
+        ai_chance = {
+            factor = 100
+        }
+        create_wargoal = {
+            type = annex_everything
+            target = SCA
+        }
+        add_war_support = 0.05
+    }
+}
+
+country_event = { #reduce lag?
+    id = newjersey.88
+    title = newjersey.88.t
+    desc = newjersey.88.d
+
+    is_triggered_only = yes
+
+    option = { #yes
+        name = newjersey.88.a
+        ai_chance = {
+            factor = 100
+        }
+        SMT = {
+            annex_country = {
+                target = SND
+                transfer_troops = yes
+            }
+            annex_country = {
+                target = SSD
+                transfer_troops = yes
+            }
+        }
+        every_state = {
+            limit = {
+                OR = {
+                    is_core_of = SND
+                    is_core_of = SSD
+                }
+            }
+            add_core_of = SMT
+        }
+        SMN = {
+            annex_country = {
+                target = SIA
+                transfer_troops = yes
+            }
+        }
+        every_state = {
+            limit = {
+                OR = {
+                    is_core_of = SIA
+                }
+            }
+            add_core_of = SMN
+        }
+        SUT = {
+            annex_country = {
+                target = SWY
+                transfer_troops = yes
+            }
+            annex_country = {
+                target = SCO
+                transfer_troops = yes
+            }
+        }
+        every_state = {
+            limit = {
+                OR = {
+                    is_core_of = SWY
+                    is_core_of = SCO
+                }
+            }
+            add_core_of = SUT
+        }
+        SAZ = {
+            annex_country = {
+                target = SNM
+                transfer_troops = yes
+            }
+            annex_country = {
+                target = NAV
+                transfer_troops = yes
+            }
+        }
+        every_state = {
+            limit = {
+                OR = {
+                    is_core_of = SNM
+                    is_core_of = NAV
+                }
+            }
+            add_core_of = SAZ
+        }
+        SCA = {
+            annex_country = {
+                target = SNV
+                transfer_troops = yes
+            }
+        }
+        every_state = {
+            limit = {
+                OR = {
+                    is_core_of = SNV
+                }
+            }
+            add_core_of = SCA
+        }
+        SWA = {
+            annex_country = {
+                target = SOR
+                transfer_troops = yes
+            }
+            annex_country = {
+                target = SID
+                transfer_troops = yes
+            }
+        }
+        every_state = {
+            limit = {
+                OR = {
+                    is_core_of = SOR
+                    is_core_of = SID
+                }
+            }
+            add_core_of = SWA
+        }
+        SKS = {
+            annex_country = {
+                target = SNE
+                transfer_troops = yes
+            }
+            annex_country = {
+                target = SOK
+                transfer_troops = yes
+            }
+        }
+        every_state = {
+            limit = {
+                OR = {
+                    is_core_of = SNE
+                    is_core_of = SOK
+                }
+            }
+            add_core_of = SKS
+        }
+    }
+    option = { #nope
+        name = newjersey.88.b
+        ai_chance = {
+            factor = 0
         }
     }
 }

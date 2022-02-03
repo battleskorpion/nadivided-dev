@@ -52,6 +52,10 @@ SNJ_chesapeake_war_imminent = {
         is_good = no
         fire_only_once = yes
 
+        ai_will_do = {
+			factor = 100
+		}
+
         complete_effect  = {
             add_days_mission_timeout = {
                 mission = SNJ_chesa_war_imminent
@@ -84,6 +88,10 @@ SNJ_chesapeake_war_imminent = {
         cancel_if_not_visible = yes
         is_good = yes
         fire_only_once = yes
+
+        ai_will_do = {
+			factor = 0
+		}
 
         complete_effect  = {
             add_days_mission_timeout = {
@@ -148,68 +156,52 @@ SNJ_chesapeake_war_failure = {
 
         available = {
             AND = {
-                OR = {
-                    NOT = {
-                        SDE = {
-                            has_full_control_of_state = 413
-                        }
-                    }
-                    NOT = {
-                        SDE = {
-                            has_full_control_of_state = 412
-                        }
-                    }
-                    NOT = {
-                        SDE = {
-                            has_full_control_of_state = 411
-                        }
-                    }
-                    NOT = {
-                        SMD = {
-                            has_full_control_of_state = 205
-                        }
-                    }
-                    NOT = {
-                        SMD = {
-                            has_full_control_of_state = 204
-                        }
-                    }
-                    NOT = {
-                        SMD = {
-                            has_full_control_of_state = 136
-                        }
-                    }
+                NOT = {
+                    controls_state = 413
+                }
+                NOT = {
+                    controls_state = 412
+                }
+                NOT = {
+                    controls_state = 411
+                }
+    #            SMD = {
+    #                controls_state = 205
+    #            }
+                NOT = {
+                    controls_state = 204
+                }
+                NOT = {
+                    controls_state = 136
                 }
             }
-            NOT = {
-                SMD = {
-                    surrender_progress > 0.3
-                }
+            SNJ = {
+                has_war_with = SMD
             }  
         }
         activation = {
             OR = {
                 AND = {
-                    SDE = {
+                    NOT = {
                         controls_state = 413
                     }
-                    SDE = {
+                    NOT = {
                         controls_state = 412
                     }
-                    SDE = {
+                    NOT = {
                         controls_state = 411
                     }
-                    SMD = {
-                        controls_state = 205
-                    }
-                    SMD = {
+        #            SMD = {
+        #                controls_state = 205
+        #            }
+                    NOT = {
                         controls_state = 204
                     }
-                    SMD = {
+                    NOT = {
                         controls_state = 136
                     }
                 }
-                SMD = {
+                SNJ = {
                     surrender_progress > 0.3
                 }
             }
@@ -218,7 +210,6 @@ SNJ_chesapeake_war_failure = {
             } 
         }
         visible = {
-
         }
         cancel_if_not_visible = yes
         is_good = no                    ###Very very bad
@@ -231,6 +222,7 @@ SNJ_chesapeake_war_failure = {
                     id = newjersey.15
                 }
             }
+            set_global_flag = chesa_war_defeat
         }
     }
 }
@@ -861,6 +853,11 @@ SNJ_patriotism_category = {
         }
 
         remove_effect = {
+            custom_effect_tooltip = SNJ_boosts_american_tension_2_tt
+            add_to_variable = {
+                var = var_snj_american_tension
+                value = 2
+            }
             custom_effect_tooltip = SNJ_boosts_patriotism_greatly_tt
             add_to_variable = {
                 var = var_SNJ_patriotism
@@ -932,6 +929,9 @@ SNJ_patriotism_category = {
             add_to_variable = {
                 var = var_SNJ_patriotism
                 value = 12
+            }
+            44 = {
+                add_extra_state_shared_building_slots = 1
             }
         }
     }
@@ -1144,7 +1144,7 @@ SNJ_integration_category = {
                                 is_core_of = SNJ
                             }
                         }
-                        has_political_power > 10
+                        has_political_power > 1 
                     }
                     cancel_trigger = {
                         has_political_power < 1
@@ -1197,13 +1197,13 @@ SNJ_integration_category = {
                                 is_core_of = SNJ
                             }
                         }
-                        has_political_power > 10
+                        has_political_power > 1 
                     }
                     cancel_trigger = {
                         has_political_power < 1
                     }
                     visible = {
-                        has_completed_focus = SNJ_wdc_question
+                        has_completed_focus = SNJ_strike_maryland
                         any_state = {
                             is_core_of = SMD #####
                             NOT = {
@@ -1252,7 +1252,7 @@ SNJ_integration_category = {
                                 is_core_of = SNJ
                             }
                         }
-                        has_political_power > 10
+                        has_political_power > 1 
                     }
                     cancel_trigger = {
                         has_political_power < 1
@@ -1313,7 +1313,7 @@ SNJ_integration_category = {
                             is_core_of = SNJ
                         }
                     }
-                    has_political_power > 10
+                    has_political_power > 1 
                 }
                 cancel_trigger = {
                     has_political_power < 1
@@ -1352,6 +1352,61 @@ SNJ_integration_category = {
                 }
             }
             #
+            SNJ_integrate_NYC = {
+                icon = GFX_decision_generic_operation
+
+                available = {
+                    
+                    core_compliance = {
+                        occupied_country_tag = NYC #####
+                        value > 30
+                    }
+                    any_state = {
+                        is_core_of = NYC #####
+                        is_owned_and_controlled_by = SNJ
+                        NOT = {
+                            is_core_of = SNJ
+                        }
+                    }
+                    has_political_power > 1 
+                }
+                cancel_trigger = {
+                    has_political_power < 1
+                }                    
+                visible = {
+                    has_global_flag = SNJ_new_england_yes
+                    any_state = {
+                        is_core_of = NYC #####
+                        NOT = {
+                            is_core_of = SNJ
+                        }
+                    }
+                }
+                days_remove = 250
+                fire_only_once = no
+
+                    modifier = {
+                        political_power_gain = -0.45
+                    }
+
+                complete_effect = {
+                }
+
+                remove_effect = {
+                    
+                    every_state = {
+                        limit = {
+                            is_core_of = NYC #####
+                            NOT = {
+                                is_core_of = SNJ
+                            }
+                            is_owned_and_controlled_by = SNJ
+                        }
+                        add_core_of = SNJ
+                    }
+                }
+            }
+            #
             SNJ_integrate_SCT = {
                 icon = GFX_decision_generic_operation
 
@@ -1368,7 +1423,7 @@ SNJ_integration_category = {
                             is_core_of = SNJ
                         }
                     }
-                    has_political_power > 10
+                    has_political_power > 1 
                 }
                 cancel_trigger = {
                     has_political_power < 1
@@ -1423,7 +1478,7 @@ SNJ_integration_category = {
                             is_core_of = SNJ
                         }
                     }
-                    has_political_power > 10
+                    has_political_power > 1 
                 }
                 cancel_trigger = {
                     has_political_power < 1
@@ -1478,7 +1533,7 @@ SNJ_integration_category = {
                             is_core_of = SNJ
                         }
                     }
-                    has_political_power > 10
+                    has_political_power > 1 
                 }
                 cancel_trigger = {
                     has_political_power < 1
@@ -1533,7 +1588,7 @@ SNJ_integration_category = {
                             is_core_of = SNJ
                         }
                     }
-                    has_political_power > 10
+                    has_political_power > 1 
                 }
                 cancel_trigger = {
                     has_political_power < 1
@@ -1572,7 +1627,6 @@ SNJ_integration_category = {
                 }
             }
             #
-            
             SNJ_integrate_SNH = {
                 icon = GFX_decision_generic_operation
 
@@ -1589,7 +1643,7 @@ SNJ_integration_category = {
                             is_core_of = SNJ
                         }
                     }
-                    has_political_power > 10
+                    has_political_power > 1 
                 }
                 cancel_trigger = {
                     has_political_power < 1
@@ -1644,7 +1698,7 @@ SNJ_integration_category = {
                             is_core_of = SNJ
                         }
                     }
-                    has_political_power > 10
+                    has_political_power > 1 
                 }
                 cancel_trigger = {
                     has_political_power < 1
@@ -1702,7 +1756,7 @@ SNJ_integration_category = {
                             is_core_of = SNJ
                         }
                     }
-                    has_political_power > 10
+                    has_political_power > 1 
                 }
                 cancel_trigger = {
                     has_political_power < 1
@@ -1755,7 +1809,7 @@ SNJ_integration_category = {
                             is_core_of = SNJ
                         }
                     }
-                    has_political_power > 10
+                    has_political_power > 1 
                 }
                 cancel_trigger = {
                     has_political_power < 1
@@ -1813,7 +1867,7 @@ SNJ_integration_category = {
                     is_core_of = SNJ
                 }
             }
-            has_political_power > 10
+            has_political_power > 1 
         }
         cancel_trigger = {
             has_political_power < 1
@@ -1870,7 +1924,7 @@ SNJ_integration_category = {
                     is_core_of = SNJ
                 }
             }
-            has_political_power > 10
+            has_political_power > 1 
         }
         cancel_trigger = {
             has_political_power < 1
@@ -1926,7 +1980,7 @@ SNJ_integration_category = {
                     is_core_of = SNJ
                 }
             }
-            has_political_power > 10
+            has_political_power > 1 
         }
         cancel_trigger = {
             has_political_power < 1
@@ -1982,7 +2036,7 @@ SNJ_integration_category = {
                     is_core_of = SNJ
                 }
             }
-            has_political_power > 10
+            has_political_power > 1 
         }
         cancel_trigger = {
             has_political_power < 1
@@ -2036,7 +2090,7 @@ SNJ_integration_category = {
                     is_core_of = SNJ
                 }
             }
-            has_political_power > 10
+            has_political_power > 1 
         }
         cancel_trigger = {
             has_political_power < 1
@@ -2090,7 +2144,7 @@ SNJ_integration_category = {
                     is_core_of = SNJ
                 }
             }
-            has_political_power > 10
+            has_political_power > 1 
         }
         cancel_trigger = {
             has_political_power < 1
@@ -2144,7 +2198,7 @@ SNJ_integration_category = {
                     is_core_of = SNJ
                 }
             }
-            has_political_power > 10
+            has_political_power > 1 
         }
         cancel_trigger = {
             has_political_power < 1
@@ -2198,7 +2252,7 @@ SNJ_integration_category = {
                     is_core_of = SNJ
                 }
             }
-            has_political_power > 10
+            has_political_power > 1 
         }
         cancel_trigger = {
             has_political_power < 1
@@ -2237,7 +2291,6 @@ SNJ_integration_category = {
             }
         }
     }
-    
     SNJ_integrate_STN = {
         icon = GFX_decision_generic_operation
 
@@ -2253,7 +2306,7 @@ SNJ_integration_category = {
                     is_core_of = SNJ
                 }
             }
-            has_political_power > 10
+            has_political_power > 1 
         }
         cancel_trigger = {
             has_political_power < 1
@@ -2307,7 +2360,7 @@ SNJ_integration_category = {
                     is_core_of = SNJ
                 }
             }
-            has_political_power > 10
+            has_political_power > 1 
         }
         cancel_trigger = {
             has_political_power < 1
@@ -2364,7 +2417,7 @@ SNJ_integration_category = {
                     is_core_of = SNJ
                 }
             }
-            has_political_power > 10
+            has_political_power > 1 
         }
         cancel_trigger = {
             has_political_power < 1
@@ -2418,7 +2471,7 @@ SNJ_integration_category = {
                     is_core_of = SNJ
                 }
             }
-            has_political_power > 10
+            has_political_power > 1 
         }
         cancel_trigger = {
             has_political_power < 1
@@ -2472,7 +2525,7 @@ SNJ_integration_category = {
                     is_core_of = SNJ
                 }
             }
-            has_political_power > 10
+            has_political_power > 1 
         }
         cancel_trigger = {
             has_political_power < 1
@@ -2526,7 +2579,7 @@ SNJ_integration_category = {
                     is_core_of = SNJ
                 }
             }
-            has_political_power > 10
+            has_political_power > 1 
         }
         cancel_trigger = {
             has_political_power < 1
@@ -2585,7 +2638,7 @@ SNJ_integration_category = {
                     is_core_of = SNJ
                 }
             }
-            has_political_power > 10
+            has_political_power > 1 
         }
         cancel_trigger = {
             has_political_power < 1
@@ -2638,7 +2691,7 @@ SNJ_integration_category = {
                     is_core_of = SNJ
                 }
             }
-            has_political_power > 10
+            has_political_power > 1 
         }
         cancel_trigger = {
             has_political_power < 1
@@ -2691,7 +2744,7 @@ SNJ_integration_category = {
                     is_core_of = SNJ
                 }
             }
-            has_political_power > 10
+            has_political_power > 1 
         }
         cancel_trigger = {
             has_political_power < 1
@@ -2744,7 +2797,7 @@ SNJ_integration_category = {
                     is_core_of = SNJ
                 }
             }
-            has_political_power > 10
+            has_political_power > 1 
         }
         cancel_trigger = {
             has_political_power < 1
@@ -2797,7 +2850,7 @@ SNJ_integration_category = {
                     is_core_of = SNJ
                 }
             }
-            has_political_power > 10
+            has_political_power > 1 
         }
         cancel_trigger = {
             has_political_power < 1
@@ -2850,7 +2903,7 @@ SNJ_integration_category = {
                     is_core_of = SNJ
                 }
             }
-            has_political_power > 10
+            has_political_power > 1 
         }
         cancel_trigger = {
             has_political_power < 1
@@ -2903,7 +2956,7 @@ SNJ_integration_category = {
                     is_core_of = SNJ
                 }
             }
-            has_political_power > 10
+            has_political_power > 1 
         }
         cancel_trigger = {
             has_political_power < 1
@@ -2944,51 +2997,315 @@ SNJ_integration_category = {
 }
 
 SNJ_american_tension_category = {
-    SNJ_debt_interest = {
-        icon = GFX_decision_revolt
+    SNJ_attack_SNY = {
+        icon = GFX_decision_generic_operation
 
         available = {
-            has_global_flag = SNJ_debts_paid
+            has_political_power > 1
+            is_neighbor_of = SNY
         }
-        activation = {
-            NOT = {
-                has_global_flag = SNJ_debts_paid
+        cancel_trigger = {
+            OR = {
+                has_political_power < 1
+                is_ally_with = SNY
+                has_war_with = SNY
+                NOT = {
+                    country_exists = SNY
+                }
             }
+        }                    
+        visible = {
+            NOT = {
+                OR = {
+                    has_war_with = SNY
+                    is_ally_with = SNY
+                }
+            }
+            country_exists = SNY
         }
-        cancel_if_not_visible = no
-        is_good = yes                    ###Very very bad
-        days_mission_timeout = 168
+        days_remove = 100
+        fire_only_once = yes
 
-        timeout_effect = {
-            set_temp_variable = { var_temp_SNJ_interest = var_SNJ_debt_interest }
-            set_temp_variable = { var_temp_SNJ_debt = var_SNJ_debt }
-            set_temp_variable = { var_temp_SNJ_debt1 = var_SNJ_debt }
-            multiply_temp_variable = { var_temp_SNJ_interest = 0.005 }
-            multiply_temp_variable = { var_temp_SNJ_debt = var_temp_SNJ_interest }
-            add_to_temp_variable = { var_temp_SNJ_debt1 = var_temp_SNJ_debt }
-            set_variable = { var_SNJ_debt = var_temp_SNJ_debt1 }
+            modifier = {
+                political_power_gain = -0.35
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            custom_effect_tooltip = SNJ_boosts_american_tension_10_tt
+            add_to_variable = {
+                var = var_snj_american_tension
+                value = 10
+            }
+            declare_war_on = SNY
+            if = {
+                limit = {
+                    NYC = {
+                        is_subject_of = SNY
+                    }
+                }
+                declare_war_on = NYC
+            }
         }
     }
-    SNJ_debt_interest_fix = {
-        icon = GFX_decision_revolt
+    SNJ_attack_SOH = {
+        icon = GFX_decision_generic_operation
 
         available = {
-            has_global_flag = SNJ_debts_paid
+            has_political_power > 1
+            is_neighbor_of = SOH
         }
-        activation = {
+        cancel_trigger = {
+            OR = {
+                has_political_power < 1
+                is_ally_with = SOH
+                has_war_with = SOH
+                NOT = {
+                    country_exists = SOH
+                }
+            }
+        }                    
+        visible = {
             NOT = {
-                has_global_flag = SNJ_debts_paid
+                OE = {
+                    has_war_with = SOH
+                    is_ally_with = SOH
+                }
+            }
+            country_exists = SOH
+        }
+        days_remove = 100
+        fire_only_once = yes
+
+            modifier = {
+                political_power_gain = -0.35
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            custom_effect_tooltip = SNJ_boosts_american_tension_8_tt
+            add_to_variable = {
+                var = var_snj_american_tension
+                value = 8
+            }
+            declare_war_on = SOH
+        }
+    }
+    SNJ_attack_SVA_SWV = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            has_political_power > 1
+            OR = {
+                is_neighbor_of = SVA
+                is_neighbor_of = SWV 
             }
         }
-        cancel_if_not_visible = no
-        is_good = yes                    ###Very very bad
+        cancel_trigger = {
+            OR = {
+                has_political_power < 1
+                AND = {
+                    OR = {                        
+                        is_ally_with = SVA
+                        has_war_with = SVA
+                        NOT = {
+                            country_exists = SVA
+                        }
+                    }
+                    OR = {                        
+                        is_ally_with = SWV
+                        has_war_with = SWV
+                        NOT = {
+                            country_exists = SWV
+                        }
+                    }
+                }
+            }
+        }                    
+        visible = {
+            OR = {
+                AND = {
+                    country_exists = SVA
+                    NOT = {
+                        OR = {
+                            has_war_with = SVA
+                            is_ally_with = SVA
+                        }
+                    }
+                }
+                AND = {
+                    country_exists = SWV
+                    NOT = {
+                        OR = {
+                            has_war_with = SWV
+                            is_ally_with = SWV
+                        }
+                    }
+                }
+            }
+        }
+        days_remove = 120
         fire_only_once = yes
-        days_mission_timeout = 0
 
-        timeout_effect = {
-            add_days_mission_timeout = {
-                mission = SNJ_debt_interest
-            days = 14
+            modifier = {
+                political_power_gain = -0.35
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            custom_effect_tooltip = SNJ_boosts_american_tension_10_tt
+            add_to_variable = {
+                var = var_snj_american_tension
+                value = 10
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        OR = {
+                            has_war_with = SVA
+                            is_ally_with = SVA
+                        }
+                    }
+                }
+                declare_war_on = SVA
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        OR = {
+                            has_war_with = SWV
+                            is_ally_with = SWV
+                        }
+                    }
+                }
+                declare_war_on = SWV
+            }
+        }
+    }
+    SNJ_attack_SCT_SRI_SMA = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            has_political_power > 1
+            OR = {
+                is_neighbor_of = SCT
+                is_neighbor_of = SRI 
+                is_neighbor_of = SMA
+            }
+        }
+        cancel_trigger = {
+            OR = {
+                has_political_power < 1
+                AND = {
+                    OR = {                        
+                        is_ally_with = SCT
+                        has_war_with = SCT
+                        NOT = {
+                            country_exists = SCT
+                        }
+                    }
+                    OR = {                        
+                        is_ally_with = SRI
+                        has_war_with = SRI
+                        NOT = {
+                            country_exists = SRI
+                        }
+                    }
+                    OR = {                        
+                        is_ally_with = SMA
+                        has_war_with = SMA
+                        NOT = {
+                            country_exists = SMA
+                        }
+                    }
+                }
+            }
+        }                    
+        visible = {
+            OR = {
+                AND = {
+                    country_exists = SCT
+                    NOT = {
+                        OR = {
+                            has_war_with = SCT
+                            is_ally_with = SCT
+                        }
+                    }
+                }
+                AND = {
+                    country_exists = SRI
+                    NOT = {
+                        OR = {
+                            has_war_with = SRI
+                            is_ally_with = SRI
+                        }
+                    }
+                }
+                AND = {
+                    country_exists = SMA
+                    NOT = {
+                        OR = {
+                            has_war_with = SMA
+                            is_ally_with = SMA
+                        }
+                    }
+                }
+            }
+        }
+        days_remove = 120
+        fire_only_once = yes
+
+            modifier = {
+                political_power_gain = -0.35
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            custom_effect_tooltip = SNJ_boosts_american_tension_10_tt
+            add_to_variable = {
+                var = var_snj_american_tension
+                value = 10
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        OR = {
+                            has_war_with = SCT
+                            is_ally_with = SCT
+                        }
+                    }
+                }
+                declare_war_on = SCT
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        OR = {
+                            has_war_with = SRI
+                            is_ally_with = SRI
+                        }
+                    }
+                }
+                declare_war_on = SRI
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        OR = {
+                            has_war_with = SMA
+                            is_ally_with = SMA
+                        }
+                    }
+                }
+                declare_war_on = SMA
             }
         }
     }
