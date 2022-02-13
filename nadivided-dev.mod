@@ -1,13 +1,13 @@
-name="North America Divided (DEV VERSION)"
+name="North America Divided [Dev]"
 version="1.1"
 supported_version="1.11.*"
 path="mod/nadivided-dev"
-user_dir="nadivided"
+user_dir="nadivided-dev"
 remote_file_id="2095618478"
 picture="thumbnail.png"
 tags={
 	"Map"
-	"Gameplay" 
+	"Gameplay"
 	"Alternative History"
 	"National Focuses"
 }

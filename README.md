@@ -1,11 +1,11 @@
 # North America Divided
-## Beta
-This Beta is constantly being uploaded with small changes very often. Don't expect a smooth gameplay experience as you will most likely encounter thousands of game breaking bugs. There are several branch's for different versions of the mod. If you are interested in helping our team of developers, please consider joining are 'Discord' and asking if you can help develop a part of the mod. There are still plenty of TODO's for the whole game and would like more.
+## Dev
+This Dev is constantly being uploaded with small changes very often. Don't expect a smooth gameplay experience as you will most likely encounter thousands of game breaking bugs. There are several branch's for different versions of the mod. If you are interested in helping our team of developers, please consider joining are 'Discord' and asking if you can help develop a part of the mod. There are still plenty of TODO's for the whole game and would like more.
 > Discord: https://discord.gg/2n7Ym7m
 
 
 #### GitHub Desktop
-We strongly recommend using 'GitHub Desktop' if you plan on using the __Beta__. This will allow you to easily update the files to the latest changes. This is only optional.
+We strongly recommend using 'GitHub Desktop' if you plan on using the __Dev__. This will allow you to easily update the files to the latest changes. This is only optional.
 > Download: https://desktop.GitHub.com
 
 To use GitHub Desktop follow the steps below.
