@@ -1,6 +1,6 @@
 # North America Divided
 
-![(missing image) /thumnail.png](https://github.com/BattleSkorpion/nadivided-dev/blob/Atlantica-Branch/thumbnail.png?raw=true "North America Divided Icon")
+![(missing image) /thumnail.png](https://github.com/BattleSkorpion/nadivided-dev/blob/master/thumbnail.png?raw=true "North America Divided Icon")
 
 ## Dev
 
