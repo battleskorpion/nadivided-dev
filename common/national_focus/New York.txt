@@ -2327,7 +2327,7 @@ focus_tree = {
             factor = 2
         }
         available_if_capitulated = no
-        
+        mutually_exclusive = { focus = SNY_Declare_Martial_Law_for_Order}        
         completion_reward = {
             swap_ideas = {
                 add_idea = SNY_failing_democracy
@@ -2348,11 +2348,13 @@ focus_tree = {
         prerequisite = { focus = SNY_postpone_the_elections}
         mutually_exclusive = { focus = SNY_charles_poletti_makes_a_speech}
         mutually_exclusive = { focus = SNY_the_army_makes_a_demonstration}
+        mutually_exclusive = { focus = SNY_Republicans_Secret_Meeting}  
         allow_branch = {
             NOT = {
                 OR = {
                     has_completed_focus = SNY_charles_poletti_makes_a_speech
                     has_completed_focus = SNY_the_army_makes_a_demonstration
+                    has_completed_focus = SNY_Republicans_Secret_Meeting
                 }
             }
         }
@@ -3127,11 +3129,13 @@ focus_tree = {
         }
         mutually_exclusive = { focus = SNY_jay_lovestone_makes_a_speech}
         mutually_exclusive = { focus = SNY_the_army_makes_a_demonstration}
+        mutually_exclusive = { focus = SNY_Republicans_Secret_Meeting}
         allow_branch = {
             NOT = {
                 OR = {
                     has_completed_focus = SNY_jay_lovestone_makes_a_speech
                     has_completed_focus = SNY_the_army_makes_a_demonstration
+                    has_completed_focus = SNY_Republicans_Secret_Meeting
                 }
             }
         }
@@ -6116,11 +6120,13 @@ focus_tree = {
         }
         mutually_exclusive = { focus = SNY_jay_lovestone_makes_a_speech}
         mutually_exclusive = { focus = SNY_charles_poletti_makes_a_speech}
+        mutually_exclusive = { focus = SNY_Republicans_Secret_Meeting}
         allow_branch = {
             NOT = {
                 OR = {
                     has_completed_focus = SNY_jay_lovestone_makes_a_speech
                     has_completed_focus = SNY_charles_poletti_makes_a_speech
+                    has_completed_focus = SNY_Republicans_Secret_Meeting
                 }
             }
         }
@@ -6153,6 +6159,208 @@ focus_tree = {
             }
         }
     }
+
+    focus = {
+        id = SNY_Republicans_Secret_Meeting
+        icon = GFX_goal_generic_allies_build_infantry
+        prerequisite = { focus = SNY_postpone_the_elections}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SNY_amry_has_a_lot_of_influence_tt
+                OR = {
+                    has_country_flag = SNY_army_influence3
+                    has_country_flag = SNY_army_influence4
+                }
+            }
+        }
+        mutually_exclusive = { focus = SNY_jay_lovestone_makes_a_speech}
+        mutually_exclusive = { focus = SNY_charles_poletti_makes_a_speech}
+        mutually_exclusive = { focus = SNY_the_army_makes_a_demonstration}
+        allow_branch = {
+            NOT = {
+                OR = {
+                    has_completed_focus = SNY_jay_lovestone_makes_a_speech
+                    has_completed_focus = SNY_charles_poletti_makes_a_speech
+                    has_completed_focus = SNY_the_army_makes_a_demonstration
+                }
+            }
+        }
+        x = 42
+        y = 1
+        relative_position_id = SNY_postpone_the_elections
+        cost = 7.2 
+        ai_will_do = {
+            factor = 5
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            if = {
+                limit = {
+                    has_country_flag = SNY_army_influence4
+                }
+                add_popularity = {
+                    ideology = neutrality
+                    popularity = 0.15
+                }
+            } else = {
+                add_popularity = {
+                    ideology = neutrality
+                    popularity = 0.1
+                }
+            }
+            country_event = {
+                id = new_york.X
+            }
+        }
+    }
+
+    focus = {
+        id = SNY_Lawyers_Coup
+        icon = GFX_focus_SNY_execute_assault
+        prerequisite = { focus = SNY_Republicans_Secret_Meeting}
+        available = {
+            custom_effect_tooltip = {
+                tooltip = SNY_military_coup_civil_war_is_ongoing_tt
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_Republicans_Secret_Meeting
+        cost = 4
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            #charlesassanitated
+        }
+    }
+
+    focus = {
+        id = SNY_Declare_Martial_Law_for_Order
+        icon = GFX_goal_generic_allies_build_infantry
+        prerequisite = { focus = SNY_the_attack_on_albany}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SNY_amry_has_a_lot_of_influence_tt
+                OR = {
+                    has_country_flag = SNY_army_influence3
+                    has_country_flag = SNY_army_influence4
+                }
+            }
+        }
+        mutually_exclusive = { focus = SNY_postpone_the_elections}
+
+        allow_branch = {
+            NOT = {
+                OR = {
+                    has_completed_focus = SNY_jay_lovestone_makes_a_speech
+                    has_completed_focus = SNY_charles_poletti_makes_a_speech
+                    has_completed_focus = SNY_the_army_makes_a_demonstration
+                }
+            }
+        }
+        x = 52
+        y = 1
+        relative_position_id = SNY_the_attack_on_albany
+        cost = 7.2 
+        ai_will_do = {
+            factor = 5
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            if = {
+                limit = {
+                    has_country_flag = SNY_army_influence4
+                }
+                add_popularity = {
+                    ideology = neutrality
+                    popularity = 0.15
+                }
+            } else = {
+                add_popularity = {
+                    ideology = neutrality
+                    popularity = 0.1
+                }
+            }
+            country_event = {
+                id = new_york.X
+            }
+        }
+    }
+
+    focus = {
+        id = SNY_Charles_holds_a_speech
+        icon = GFX_focus_SNY_execute_assault
+        prerequisite = { focus = SNY_Declare_Martial_Law_for_Order}
+        available = {
+            custom_effect_tooltip = {
+                tooltip = SNY_military_coup_civil_war_is_ongoing_tt
+            }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SNY_Declare_Martial_Law_for_Order
+        cost = 4
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+
+        completion_reward = {
+            #charlesassanitated
+        }
+    }
+
+    focus = {
+        id = SNY_George_J_Zimmermann_steps_up
+        icon = GFX_focus_SNY_execute_assault
+        prerequisite = { focus = SNY_Charles_holds_a_speech}
+        available = {
+            custom_effect_tooltip = {
+                tooltip = SNY_military_coup_civil_war_is_ongoing_tt
+            }
+        }
+        x = -4
+        y = 1
+        relative_position_id = SNY_Charles_holds_a_speech
+        cost = 4
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        mutually_exclusive = { focus = SNY_M_William_Bray_takes_control}
+        completion_reward = {
+
+        }
+    }
+
+    focus = {
+        id = SNY_M_William_Bray_takes_control
+        icon = GFX_focus_SNY_execute_assault
+        prerequisite = { focus = SNY_Charles_holds_a_speech}
+        available = {
+            custom_effect_tooltip = {
+                tooltip = SNY_military_coup_civil_war_is_ongoing_tt
+            }
+        }
+        x = 4
+        y = 1
+        relative_position_id = SNY_Charles_holds_a_speech
+        cost = 4
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        mutually_exclusive = { focus = SNY_George_J_Zimmermann_steps_up}
+        completion_reward = {
+
+        }
+    }
+
     focus = {
         id = SNY_gain_the_support_of_congress_members
         icon = GFX_focus_integrate
@@ -7305,8 +7513,8 @@ focus_tree = {
                     tooltip = SNY_the_military_civil_war_is_over_tt
                 }
         }
-        x = 6
-        y = 1
+        x = 1
+        y = 5
         relative_position_id = SNY_assert_military_rule
         cost = 8
         ai_will_do = {
