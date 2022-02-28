@@ -22,6 +22,9 @@ focus_tree = {
 	
 	#------------------------------#
 	
+
+
+
 	#Focus for Industry of Massachusetts
 	focus = { 
 		id = SMA_industryofmassachusetts
@@ -995,7 +998,7 @@ focus_tree = {
 		y = 0
 		cost = 1
 		available_if_capitulated = yes 
-		mutually_exclusive = { focus = SMA_bytheswordweseekpeace focus = SMA_peaceonlythroughliberty }
+		mutually_exclusive = { focus = SMA_Our_Future focus = SMA_peaceonlythroughliberty }
 		bypass = { 
 			NOT = {
 				original_tag = SMA
@@ -1256,7 +1259,7 @@ focus_tree = {
 
 		cost = 2
 		available_if_capitulated = yes 
-		mutually_exclusive = { focus = SMA_continuewithcurley focus = SMA_bytheswordweseekpeace }
+		mutually_exclusive = { focus = SMA_continuewithcurley focus = SMA_Our_Future }
 		
 		completion_reward = { 
 			add_popularity= { 
@@ -1426,41 +1429,67 @@ focus_tree = {
 		}
 	}
 #
+focus = {
+	id = SMA_Our_Future
+	icon = GFX_goal_generic_neutrality_focus
+	#icon = GFX_goal_generic_construction
+	x = 16
+	y = 0
 
-	#########################################################
 
-	#Focus for "By the sword we seek peace"
-	focus = { 
-		id = SMA_Wickliffes_Coup
-		icon = GFX_
-		x = 16
-		y = 0
-		cost = 5
-		available_if_capitulated = yes 
-		mutually_exclusive = { focus = SMA_continuewithcurley focus = SMA_peaceonlythroughliberty }
+	mutually_exclusive = { focus = SMA_continuewithcurley focus = SMA_peaceonlythroughliberty }
+	cost = 0.2
+	ai_will_do = {
+		factor = 1
+	}
+	prerequisite = { focus = X }
+	available_if_capitulated = yes
 
-		ai_will_do = {
-			factor = 3
+	completion_reward = { 
+
+	}
+}
+#
+
+
+focus = {
+	id = SMA_Wickliffes_Coupf
+	icon = GFX_focus_SMA_workufucker
+	#icon = GFX_goal_generic_construction
+	prerequisite = { focus = SMA_Our_Future }
+	x = 0
+	y = 1
+	relative_position_id = SMA_Our_Future
+
+
+
+	cost = 10
+	ai_will_do = {
+		factor = 1
+	}
+	prerequisite = { focus = X }
+	available_if_capitulated = yes
+
+	completion_reward = { 
+		set_politics = {
+			ruling_party = fascism
+			elections_allowed = yes
 		}
-
-		completion_reward = { 
-			set_politics = {
-				ruling_party = fascism
-				elections_allowed = yes
-			}
-			add_popularity= { 
-				ideology = fascism 
-				popularity = 0.05
-			}
+		add_popularity= { 
+			ideology = fascism 
+			popularity = 0.05
 		}
 	}
+}
+#
+
 	focus = {
 		id = SMA_Make_Promises_to_the_Generals
-		icon = GFX_
-		prerequisite = { focus = SMA_Wickliffes_Coup }
+		icon = GFX_focus_SMA_general
+		prerequisite = { focus = SMA_Wickliffes_Coupf }
 		x = 0
 		y = 1
-		relative_position_id = SMA_Wickliffes_Coup
+		relative_position_id = SMA_Wickliffes_Coupf
 		cost = 7.2
 		ai_will_do = {
 			factor = 1
@@ -1484,7 +1513,7 @@ focus_tree = {
 #
 focus = {
 	id = SMA_Funding_Our_military_industries
-	icon = GFX_
+	icon = GFX_focus_SMA_industry
 	prerequisite = { focus = SMA_Make_Promises_to_the_Generals }
 
 	x = -3
@@ -1567,7 +1596,7 @@ focus = {
 #	
 focus = {
 	id = SMA_Introduce_Slave_Labour_for_Prisoners
-	icon = GFX_
+	icon = GFX_focus_SMA_slave_labour
 	prerequisite = { focus = SMA_Funding_Our_military_industries }
 
 	x = 0
@@ -1590,7 +1619,7 @@ focus = {
 #	
 focus = {
 	id = SMA_Modernization_of_our_tactics
-	icon = GFX_
+	icon = GFX_focus_SMA_tactics_modernization
 	prerequisite = { focus = SMA_Make_Promises_to_the_Generals }
 
 	x = 1
@@ -1619,7 +1648,7 @@ focus = {
 #	
 focus = {
 	id = SMA_Modernization_of_our_tanks
-	icon = GFX_
+	icon = GFX_focus_SMA_tankmodernization
 	prerequisite = { focus = SMA_Modernization_of_our_tactics }
 
 	x = 0
@@ -1645,11 +1674,60 @@ focus = {
 	}
 }
 #	
+focus = {
+	id = SMA_Draper_Plan
+	icon = GFX_focus_SMA_draper
+	prerequisite = { focus = SMA_Wickliffes_Coupf }
 
+	x = -5
+	y = 1
+	cost = 7.2
+	ai_will_do = {
+		factor = 1
+	}
+	relative_position_id = SMA_Make_Promises_to_the_Generals
+	available_if_capitulated = yes
 
+	available = {
+
+	}
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = industrial_bonus
+			bonus = 1.0
+			uses = 1
+			category = industry
+		}
+	}
+}
+#	
+focus = {
+	id = SMA_finish_the_Draper_Plan
+	icon = GFX_focus_SMA_plan2
+	prerequisite = { focus = SMA_Draper_Plan }
+
+	x = 0
+	y = 1
+	cost = 15
+	ai_will_do = {
+		factor = 1
+	}
+	relative_position_id = SMA_Draper_Plan
+	available_if_capitulated = yes
+
+	available = {
+		add_ideas = x
+	}
+
+	completion_reward = {
+		add_ideas = advanced_production_centers
+	}
+}
+#	
 focus = {
 	id = SMA_Reach_out_to_the_fascist_in_Europe
-	icon = GFX_
+	icon = GFX_focus_SMA_work_with_european_facists
 	prerequisite = { focus = SMA_Make_Promises_to_the_Generals }
 
 	x = -1
@@ -1673,7 +1751,7 @@ focus = {
 #	
 focus = {
 	id = SMA_Adopt_European_Style_Laws
-	icon = GFX_
+	icon = GFX_focus_SMA_work_with_european_lies
 	prerequisite = { focus = SMA_Reach_out_to_the_fascist_in_Europe }
 
 	x = 0
@@ -1697,7 +1775,7 @@ focus = {
 #	
 focus = {
 	id = SMA_Solidify_The_Partys_Rule
-	icon = GFX_
+	icon = GFX_focus_SMA_solidify_control
 	prerequisite = { focus = SMA_Adopt_European_Style_Laws }
 	prerequisite = { focus = SMA_Introduce_Slave_Labour_for_Prisoners }
 	prerequisite = { focus = SMA_Modernization_of_our_tanks }
@@ -1722,7 +1800,7 @@ focus = {
 #	
 focus = {
 	id = SMA_Argue_for_expantionism
-	icon = GFX_
+	icon = GFX_focus_SMA_expationalism
 	prerequisite = { focus = SMA_Solidify_The_Partys_Rule }
 	x = -2
 	y = 1
@@ -1744,7 +1822,7 @@ focus = {
 #	
 focus = {
 	id = SMA_Unification_with_vermont
-	icon = GFX_
+	icon = GFX_focus_SMA_attacks
 	prerequisite = { focus = SMA_Argue_for_expantionism }
 	x = -2
 	y = 1
@@ -1769,7 +1847,7 @@ focus = {
 #	
 focus = {
 	id = SMA_Unification_with_Rhode_island
-	icon = GFX_
+	icon = GFX_focus_SMA_attacks
 	prerequisite = { focus = SMA_Argue_for_expantionism }
 	x = 0
 	y = 1
@@ -1794,7 +1872,7 @@ focus = {
 #	
 focus = {
 	id = SMA_Secure_Connecticut_River_Valley
-	icon = GFX_
+	icon = GFX_focus_SMA_attacks
 	prerequisite = { focus = SMA_Argue_for_expantionism }
 	x = 4
 	y = 1
@@ -1820,7 +1898,7 @@ focus = {
 
 focus = {
 	id = SMA_Unification_with_New_Hampshire
-	icon = GFX_
+	icon = GFX_focus_SMA_attacks
 	prerequisite = { focus = SMA_Argue_for_expantionism }
 	x = 2
 	y = 1
@@ -1847,7 +1925,7 @@ focus = {
 #	
 focus = {
 	id = SMA_Unification_with_Maine
-	icon = GFX_
+	icon = GFX_focus_SMA_attacks
 	prerequisite = { focus = SMA_Argue_for_expantionism }
 	x = 6
 	y = 1
@@ -1872,7 +1950,7 @@ focus = {
 #	
 focus = {
 	id = SMA_Strict_Resources_consumption_act
-	icon = GFX_
+	icon = GFX_focus_SMA_reduced_consuption
 	prerequisite = { focus = SMA_Solidify_The_Partys_Rule }
 	x = 4
 	y = 1
@@ -1975,15 +2053,15 @@ focus = {
 #	
 focus = {
 	id = SMA_Make_Promises_to_the_People
-	icon = GFX_
-	prerequisite = { focus = SMA_Wickliffes_Coup }
+	icon = GFX_focus_SMA_people
+	prerequisite = { focus = SMA_Wickliffes_Coupf }
 	x = 6
 	y = 1
 	cost = 7.2
 	ai_will_do = {
 		factor = 1
 	}
-	relative_position_id = SMA_Wickliffes_Coup
+	relative_position_id = SMA_Wickliffes_Coupf
 	available_if_capitulated = yes
 
 	available = {
@@ -2002,7 +2080,7 @@ focus = {
 #
 focus = {
 	id = SMA_Restructuring_the_government
-	icon = GFX_
+	icon = GFX_focus_SMA_restructure_goverment
 	prerequisite = { focus = SMA_Make_Promises_to_the_People }
 	x = -1
 	y = 1
@@ -2028,7 +2106,7 @@ focus = {
 #
 focus = {
 	id = SMA_Nationalist_Propaganda_campagin
-	icon = GFX_
+	icon = GFX_focus_SMA_nationalist_prop
 	prerequisite = { focus = SMA_Restructuring_the_government }
 	prerequisite = { focus = SMA_Order_through_Force }
 	x = 1
@@ -2052,7 +2130,7 @@ focus = {
 #
 focus = {
 	id = SMA_National_Road_Works_Program
-	icon = GFX_
+	icon = GFX_focus_SMA_road_works
 	prerequisite = { focus = SMA_Nationalist_Propaganda_campagin }
 	x = 0
 	y = 1
@@ -2074,7 +2152,7 @@ focus = {
 #
 focus = {
 	id = SMA_Government_workers_program
-	icon = GFX_
+	icon = GFX_focus_SMA_government_works_program
 	prerequisite = { focus = SMA_National_Road_Works_Program }
 	x = 0
 	y = 1
@@ -2099,7 +2177,7 @@ focus = {
 
 focus = {
 	id = SMA_Order_through_Force
-	icon = GFX_
+	icon = GFX_focus_SMA_order_through_force
 	prerequisite = { focus = SMA_Make_Promises_to_the_People }
 	x = 1
 	y = 1
@@ -2122,15 +2200,15 @@ focus = {
 
 focus = {
 	id = SMA_Make_Promises_to_the_Doctors
-	icon = GFX_
-	prerequisite = { focus = SMA_Wickliffes_Coup }
-	x = -6
+	icon = GFX_focus_SMA_doctors_promise
+	prerequisite = { focus = SMA_Wickliffes_Coupf }
+	x = -7
 	y = 1
 	cost = 7.2
 	ai_will_do = {
 		factor = 1
 	}
-	relative_position_id = SMA_Wickliffes_Coup
+	relative_position_id = SMA_Wickliffes_Coupf
 	available_if_capitulated = yes
 
 	available = {
@@ -2148,7 +2226,7 @@ focus = {
 #
 focus = {
 	id = SMA_Nationalize_the_Pioneer_Fund
-	icon = GFX_
+	icon = GFX_focus_SMA_pioneer_fund
 	prerequisite = { focus = SMA_Make_Promises_to_the_Doctors }
 	x = 0
 	y = 1
@@ -2171,7 +2249,7 @@ focus = {
 #	
 focus = {
 	id = SMA_Enact_Eugenical_Reforms
-	icon = GFX_
+	icon = GFX_focus_SMA_eugenics
 	prerequisite = { focus = SMA_Nationalize_the_Pioneer_Fund }
 	x = 0
 	y = 1
@@ -2193,7 +2271,7 @@ focus = {
 #	
 focus = {
 	id = SMA_Compulsory_Sterilization_Act
-	icon = GFX_
+	icon = GFX_focus_SMA_steralziation_act
 	prerequisite = { focus = SMA_Enact_Eugenical_Reforms }
 	x = 1
 	y = 1
@@ -2219,7 +2297,7 @@ focus = {
 #	
 focus = {
 	id = SMA_Distribute_Nazi_Films
-	icon = GFX_
+	icon = GFX_focus_SMA_nazi_films
 	prerequisite = { focus = SMA_Enact_Eugenical_Reforms }
 	x = -1
 	y = 1
@@ -2245,7 +2323,7 @@ focus = {
 #	
 focus = {
 	id = SMA_Dedicate_funds_to_Anti_Communist_leauge
-	icon = GFX_
+	icon = GFX_focus_SMA_anti_communist_leauge
 	prerequisite = { focus = SMA_Distribute_Nazi_Films }
 	prerequisite = { focus = SMA_Compulsory_Sterilization_Act }
 	x = 1
@@ -2268,7 +2346,7 @@ focus = {
 #	
 focus = {
 	id = SMA_Reach_out_to_Bilbo_for_Alliance
-	icon = GFX_
+	icon = GFX_focus_SMA_allaince
 	prerequisite = { focus = SMA_Dedicate_funds_to_Anti_Communist_leauge }
 
 	x = 0
