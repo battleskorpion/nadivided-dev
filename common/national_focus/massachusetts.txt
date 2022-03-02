@@ -1072,7 +1072,7 @@ focus_tree = {
 	####### DEMOCRACY ########
 	##########################
 
-	#Focus for Continue with Curley
+	#Focus for Continue with Curley #change to elections will continue
 	focus = { 
 		id = SMA_continuewithcurley
 		icon = GFX_goal_support_democracy ##Unfortunately, the tool could not find your icon in the game's files
@@ -1080,7 +1080,7 @@ focus_tree = {
 		y = 0
 		cost = 1
 		available_if_capitulated = yes 
-		mutually_exclusive = { focus = SMA_Our_Future focus = SMA_peaceonlythroughliberty }
+		mutually_exclusive = { focus = SMA_Our_Future focus = SMA_Stirings_of_a_revolution }
 		bypass = { 
 			NOT = {
 				original_tag = SMA
@@ -1333,7 +1333,7 @@ focus_tree = {
 	
 	#Focus for "Peace only through liberty"
 	focus = { 
-		id = SMA_peaceonlythroughliberty
+		id = SMA_Stirings_of_a_revolution
 		icon = GFX_focus_focus_fra_revolution_utmost 
 		x = 45
 		y = 0
@@ -1352,164 +1352,679 @@ focus_tree = {
 	}
 	
 #
-
-	focus = {
-		id = SMA_sieze_the_means_of_production
-		icon = GFX_goal_support_communism
-		prerequisite = { focus = SMA_peaceonlythroughliberty}
-		x = 0
-		y = 1
-		relative_position_id = SMA_peaceonlythroughliberty
+	focus = { 
+		id = SMA_Stirings_of_a_revolution
+		icon = GFX_focus_focus_fra_revolution_utmost 
+		x = 45
+		y = 0
 
 
-		cost = 10
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				has_country_flag = SLA_huey_is_leader
-			}
-			modifier = {
-				factor = 50
-				has_government = communism
-			}
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_popularity = {
-				ideology = communism
-				popularity = 0.10
-			}
-			add_timed_idea = { idea = communist_influence  days = 2000 }
-		}
-	}
-#
-
-#
-	focus = {
-		id = SMA_work_with_the_workers
-		icon = GFX_goal_generic_improve_relations
-		prerequisite = { focus = SMA_sieze_the_means_of_production}
-		x = 0
-		y = 1
-		relative_position_id = SMA_sieze_the_means_of_production
-
-
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_popularity = {
-				ideology = communism
-				popularity = 0.10
-			}
-			if = {
-				limit = {
-					is_ai = no
-				}
-				set_rule = {
-					can_create_factions = yes
-				}
-			}
-		}
-	}
-#
-	focus = {
-		id = SMA_ban_fascist_publications
-		icon = GFX_focus_renounce_the_treaty_of_trianon
-		prerequisite = { focus = SMA_work_with_the_workers}
-		x = 0
-		y = 1
-		relative_position_id = SMA_work_with_the_workers
-
-
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_popularity = {
-				ideology = fascism
-				popularity = -0.1
-			}
-			add_popularity = {
-				ideology = neutrality
-				popularity = -0.05
-			}
-			add_popularity = {
-				ideology = communism
+		cost = 2
+		available_if_capitulated = yes 
+		mutually_exclusive = { focus = SMA_continuewithcurley focus = SMA_Our_Future }
+		
+		completion_reward = { 
+			add_popularity= { 
+				ideology = communism 
 				popularity = 0.05
 			}
-		}
+		} 
 	}
+	
 #
-	focus = {
-		id = SMA_strengthen_unions
-		icon = GFX_focus_generic_join_comintern
-		prerequisite = { focus = SMA_ban_fascist_publications}
-		x = 0
-		y = 1
-		relative_position_id = SMA_ban_fascist_publications
+focus = {
+	id = SMA_Hood_leads_the_Revolution
+	icon = GFX_
+	prerequisite = { focus = SMA_Stirings_of_a_revolution}
+	mutually_exclusive = { focus = SMA_rewrite_the_constitution}
+	x = 0
+	y = 1
+	relative_position_id = SMA_Stirings_of_a_revolution
 
 
-
-		cost = 10
-		ai_will_do = {
-			factor = 1
+	cost = 10
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			has_country_flag = SLA_huey_is_leader
 		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_ideas = workers_union
+		modifier = {
+			factor = 50
+			has_government = communism
 		}
 	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		add_stability = 0.1
+	}
+}
 #
-	focus = {
-		id = SMA_take_out_fascists
-		icon = GFX_focus_generic_anti_fascist_diplomacy
-		prerequisite = { focus = SMA_strengthen_unions}
-		x = 0
-		y = 1
-		relative_position_id = SMA_strengthen_unions
+focus = {
+	id = SMA_Dreams_Of_a_Red_New_England
+	icon = GFX_
+	prerequisite = { focus = SMA_Hood_leads_the_Revolution}
+
+	x = 0
+	y = 1
+	relative_position_id = SMA_Hood_leads_the_Revolution
 
 
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			custom_effect_tooltip = take_out_countries_tt
-			random_neighbor_country = {
-				limit = {
-					has_government = fascism
-				}
-				every_owned_state = {
-					if = {
-						limit = {
-							is_in_home_area = yes
-						}
-					}
-					ROOT = {
-						add_state_claim = PREV 
-					}
-				}
-			}	
-			add_war_support = 0.05
-		}
+	cost = 10
+	ai_will_do = {
+		factor = 1
 	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+focus = {
+	id = SMA_The_Path_of_Stalin
+	icon = GFX_
+	prerequisite = { focus = SMA_Dreams_Of_a_Red_New_England}
+
+	x = -1
+	y = 1
+	relative_position_id = SMA_Dreams_Of_a_Red_New_England
+
+	mutually_exclusive = { focus = SMA_The_Path_of_the_Internationals }
+	cost = 10
+	ai_will_do = {
+		factor = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+focus = {
+	id = SMA_Soviet_military_advisors
+	icon = GFX_
+	prerequisite = { focus = SMA_The_Path_of_Stalin}
+
+	x = 0
+	y = 1
+	relative_position_id = SMA_The_Path_of_Stalin
+
+
+	cost = 10
+	ai_will_do = {
+		factor = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+
+focus = {
+	id = SMA_The_Path_of_the_Internationals
+	icon = GFX_
+	prerequisite = { focus = SMA_Dreams_Of_a_Red_New_England}
+
+	x = 1
+	y = 1
+	relative_position_id = SMA_Dreams_Of_a_Red_New_England
+
+	mutually_exclusive = { focus = SMA_The_Path_of_Stalin }
+	cost = 10
+	ai_will_do = {
+		factor = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+focus = {
+	id = SMA_Interventionalism_on_behalf_of_workers
+	icon = GFX_
+	prerequisite = { focus = SMA_The_Path_of_the_Internationals}
+
+	x = 0
+	y = 1
+	relative_position_id = SMA_The_Path_of_the_Internationals
+
+
+	cost = 10
+	ai_will_do = {
+		factor = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+focus = {
+	id = SMA_Promote_Anti_fascist_fervor
+	icon = GFX_
+	prerequisite = { focus = SMA_Interventionalism_on_behalf_of_workers focus = SMA_Soviet_military_advisors}
+
+	x = -1
+	y = 2
+	relative_position_id = SMA_Interventionalism_on_behalf_of_workers
+
+
+	cost = 10
+	ai_will_do = {
+		factor = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		remove_ideas = SMA_Low_Motivation_to_Join_Military
+	}
+}
+#
+focus = {
+	id = SMA_Settle_bristol_issue
+	icon = GFX_
+	prerequisite = { focus = SMA_Promote_Anti_fascist_fervor}
+
+	x = -4
+	y = 1
+	relative_position_id = SMA_Promote_Anti_fascist_fervor
+
+
+	cost = 10
+	ai_will_do = {
+
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+focus = {
+	id = SMA_Free_maine
+	icon = GFX_
+	prerequisite = { focus = SMA_Promote_Anti_fascist_fervor}
+
+	x = -2
+	y = 1
+	relative_position_id = SMA_Promote_Anti_fascist_fervor
+
+
+	cost = 10
+	ai_will_do = {
+
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+focus = {
+	id = SMA_Liberate_Connecticut
+	icon = GFX_
+	prerequisite = { focus = SMA_Promote_Anti_fascist_fervor}
+
+	x = 0
+	y = 1
+	relative_position_id = SMA_Promote_Anti_fascist_fervor
+
+
+	cost = 10
+	ai_will_do = {
+
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+focus = {
+	id = SMA_Socialist_Republic_of_New_England
+	icon = GFX_
+	prerequisite = { focus = SMA_Settle_bristol_issue}
+	prerequisite = { focus = SMA_Free_maine}
+	prerequisite = { focus = SMA_Liberate_Connecticut}
+	prerequisite = { focus = SMA_Free_Vermont}
+	prerequisite = { focus = SMA_Free_New_hampshire}
+
+
+	x = 0
+	y = 1
+	relative_position_id = SMA_Liberate_Connecticut
+
+
+	cost = 10
+	ai_will_do = {
+
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+focus = {
+	id = SMA_Nationalize_The_ivy_Leauge
+	icon = GFX_
+	prerequisite = { focus = SMA_Socialist_Republic_of_New_England}
+
+	x = -2
+	y = 1
+	relative_position_id = SMA_Socialist_Republic_of_New_England
+
+
+	cost = 10
+	ai_will_do = {
+
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+focus = {
+	id = SMA_Enforce_Our_canadian_claims
+	icon = GFX_
+	prerequisite = { focus = SMA_Socialist_Republic_of_New_England}
+
+	x = 0
+	y = 1
+	relative_position_id = SMA_Socialist_Republic_of_New_England
+
+
+	cost = 10
+	ai_will_do = {
+
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+focus = {
+	id = SMA_Reach_out_to_our_Brothers_in_Dixie
+	icon = GFX_
+	prerequisite = { focus = SMA_Socialist_Republic_of_New_England}
+
+	x = 2
+	y = 1
+	relative_position_id = SMA_Socialist_Republic_of_New_England
+
+
+	cost = 10
+	ai_will_do = {
+
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+focus = {
+	id = SMA_Free_Vermont
+	icon = GFX_
+	prerequisite = { focus = SMA_Promote_Anti_fascist_fervor}
+
+	x = 2
+	y = 1
+	relative_position_id = SMA_Promote_Anti_fascist_fervor
+
+
+	cost = 10
+	ai_will_do = {
+
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+focus = {
+	id = SMA_Free_New_hampshire
+	icon = GFX_
+	prerequisite = { focus = SMA_Promote_Anti_fascist_fervor}
+
+	x = 4
+	y = 1
+	relative_position_id = SMA_Promote_Anti_fascist_fervor
+
+
+	cost = 10
+	ai_will_do = {
+
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+focus = {
+	id = SMA_Outlaw_Reactionary_Parties
+	icon = GFX_
+	prerequisite = { focus = SMA_Hood_leads_the_Revolution}
+
+	x = -3
+	y = 1
+	relative_position_id = SMA_Hood_leads_the_Revolution
+
+
+	cost = 10
+	ai_will_do = {
+
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+focus = {
+	id = SMA_Establishing_The_Red_Courts
+	icon = GFX_
+	prerequisite = { focus = SMA_Outlaw_Reactionary_Parties}
+
+	x = 0
+	y = 1
+	relative_position_id = SMA_Outlaw_Reactionary_Parties
+
+
+	cost = 10
+	ai_will_do = {
+		factor = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+focus = {
+	id = SMA_Breaking_The_Old_Parties
+	icon = GFX_
+	prerequisite = { focus = SMA_Outlaw_Reactionary_Parties}
+
+	x = -2
+	y = 1
+	relative_position_id = SMA_Outlaw_Reactionary_Parties
+
+
+	cost = 10
+	ai_will_do = {
+		factor = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+focus = {
+	id = SMA_Propose_a_new_Red_constitution
+	icon = GFX_
+	prerequisite = { focus = SMA_Breaking_The_Old_Parties}
+
+	x = 0
+	y = 1
+	relative_position_id = SMA_Breaking_The_Old_Parties
+
+
+	cost = 10
+	ai_will_do = {
+		factor = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+
+focus = {
+	id = SMA_Trial_of_the_Moguls
+	icon = GFX_
+	prerequisite = { focus = SMA_Establishing_The_Red_Courts}
+
+	x = 0
+	y = 1
+	relative_position_id = SMA_Establishing_The_Red_Courts
+
+
+	cost = 10
+	ai_will_do = {
+		factor = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+focus = {
+	id = SMA_Legal_equality_for_all
+	icon = GFX_
+	prerequisite = { focus = SMA_Trial_of_the_Moguls}
+
+	x = 0
+	y = 1
+	relative_position_id = SMA_Trial_of_the_Moguls
+
+
+	cost = 10
+	ai_will_do = {
+		factor = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+focus = {
+	id = SMA_The_red_police
+	icon = GFX_
+	prerequisite = { focus = SMA_Legal_equality_for_all}
+
+	x = 0
+	y = 1
+	relative_position_id = SMA_Legal_equality_for_all
+
+
+	cost = 10
+	ai_will_do = {
+		factor = 1
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+		remove_ideas = SMA_Smuggling_Rampant
+	}
+}
+#
+focus = {
+	id = SMA_The_Newer_Deal
+	icon = GFX_
+	prerequisite = { focus = SMA_Hood_leads_the_Revolution}
+
+	x = 3
+	y = 1
+	relative_position_id = SMA_Hood_leads_the_Revolution
+
+
+	cost = 10
+	ai_will_do = {
+
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+focus = {
+	id = SMA_Secure_International_Communists_Support
+	icon = GFX_
+	prerequisite = { focus = SMA_The_Newer_Deal}
+
+	x = 0
+	y = 1
+	relative_position_id = SMA_The_Newer_Deal
+
+
+	cost = 10
+	ai_will_do = {
+
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+focus = {
+	id = SMA_Ask_for_Soviet_arms_imports
+	icon = GFX_
+	prerequisite = { focus = SMA_Secure_International_Communists_Support}
+
+	x = 0
+	y = 1
+	relative_position_id = SMA_Secure_International_Communists_Support
+
+
+	cost = 10
+	ai_will_do = {
+
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+
+focus = {
+	id = SMA_Our_Own_four_year_plan
+	icon = GFX_
+	prerequisite = { focus = SMA_The_Newer_Deal}
+
+	x = 2
+	y = 1
+	relative_position_id = SMA_The_Newer_Deal
+
+
+	cost = 10
+	ai_will_do = {
+
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+focus = {
+	id = SMA_Encourage_Urban_development
+	icon = GFX_
+	prerequisite = { focus = SMA_Our_Own_four_year_plan}
+
+	x = 0
+	y = 1
+	relative_position_id = SMA_Our_Own_four_year_plan
+
+
+	cost = 10
+	ai_will_do = {
+
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
+#
+focus = {
+	id = SMA_Give_Jobs_to_the_workers_of_Boston
+	icon = GFX_
+	prerequisite = { focus = SMA_Encourage_Urban_development}
+
+	x = 0
+	y = 1
+	relative_position_id = SMA_Encourage_Urban_development
+
+
+	cost = 10
+	ai_will_do = {
+
+	}
+
+	available_if_capitulated = yes
+
+	completion_reward = {
+
+	}
+}
 #
 focus = {
 	id = SMA_Our_Future
@@ -1519,7 +2034,7 @@ focus = {
 	y = 0
 
 
-	mutually_exclusive = { focus = SMA_continuewithcurley focus = SMA_peaceonlythroughliberty }
+	mutually_exclusive = { focus = SMA_continuewithcurley focus = SMA_Stirings_of_a_revolution }
 	cost = 0.2
 	ai_will_do = {
 		factor = 1
@@ -2459,7 +2974,7 @@ focus = {
 	focus = {
 		id = SMA_Armies_of_the_Massachusetts
 		icon = GFX_focus_SMA_Armies_of_the_Massachusetts
-		x = 55
+		x = 59
 		y = 0
 		cost = 10
 
