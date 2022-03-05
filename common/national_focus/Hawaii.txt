@@ -14,11 +14,11 @@
 	
 	defualt = no
 
-	#ECONOMIC PATH###
+	#FIRST ECONOMIC TREE###
 	#1
     
 	focus = {
-		id = SHI_assess
+		id = SHI_assess_the_economy
 		icon = GFX_
 		x = 10
 		y = 5
@@ -38,8 +38,8 @@
      focus = {
 		id = SHI_improving_industry
 		icon = GFX_
-		relative_position_id = SHI_assess
-		prerequisite = { focus = SHI_assess }
+		relative_position_id = SHI_assess_the_economy
+		prerequisite = { focus = SHI_assess_the_economy }
 		x = -5
 		y = 1
 		cost = 5
@@ -195,11 +195,15 @@
     
     #7
     
-     focus = {
-		id = SHI_cali_trade
+    focus = {
+		id = SHI_raise_taxes
 		icon = GFX_
 		relative_position_id = SHI_buildup_plantations
 		prerequisite = { focus = SHI_buildup_plantations }
+		available = {
+			has_completed_focus = SHI_rubber_boom
+        }
+		
 		x = -1
 		y = 1
 		cost = 5
@@ -209,10 +213,11 @@
 			factor = 100
 		}
 		completion_reward = { 
-			add_opinion_modifier = {
-				target = SCA
-				modifier = hawaii_cali_trade
-			}
+			add_stability = -0.1		
+    		swap_ideas = {
+    			remove_idea = SHI_island_economy_ii
+  				add_idea = SHI_island_economy_iii
+			}		
 	    }
     }
     
@@ -244,7 +249,7 @@
    				 state = 397
 			}
 			swap_ideas = {
-    				remove_idea = SHI_island_economy
+    			remove_idea = SHI_island_economy
   				add_idea = SHI_island_economy_ii
 			}
 		}
@@ -256,13 +261,13 @@
 		id = SHI_economic_recovery
 		icon = GFX_
 		relative_position_id = SHI_improving_industry
-		prerequisite = { focus = SHI_mass_arms_production }
 		prerequisite = { focus = SHI_fund_arms_factories }
-		prerequisite = { focus = SHI_cali_trade }
+		prerequisite = { focus = SHI_raise_taxes }
 		prerequisite = { focus = SHI_rubber_boom }
+		prerequisite = { focus = SHI_mass_arms_production }
 		x = 0
 		y = 3
-		cost =  14.4
+		cost =  10
 
 		available_if_capitulated = yes
 		ai_will_do = {
@@ -270,18 +275,19 @@
 		}
 		completion_reward = { 
 			remove_ideas = { 
-				SHI_island_economy_ii
+				SHI_island_economy_iii
 			}	
 		}
     }
     
-    #10
+	#NAVAL TREE###
+    #1
     
     focus = {
 		id = SHI_navy_focus
 		icon = GFX_
-		relative_position_id = SHI_assess
-		prerequisite = { focus = SHI_assess }
+		relative_position_id = SHI_assess_the_economy
+		prerequisite = { focus = SHI_assess_the_economy }
 		x = 5
 		y = 1
 		cost = 5
@@ -296,7 +302,7 @@
 		}
     }
     
-    #11
+    #2
     
     focus = {
 		id = SHI_improve_honolulu_dockyards
@@ -331,7 +337,7 @@
 		}
     }
     
-    #12
+    #3
     
     focus = {
 		id = SHI_buy_cali_destroyer
@@ -351,7 +357,7 @@
 		}
     }
     
-    #13
+    #4
     
     focus = {
 		id = SHI_naval_production
@@ -374,7 +380,7 @@
 		}
     }
     
-    #14
+    #5
     
     focus = {
 		id = SHI_navy_research
@@ -398,7 +404,7 @@
 		}
     }
     
-    #15
+    #6
     
     focus = {
 		id = SHI_hawaii_island_dockyards
@@ -433,7 +439,7 @@
 		}
     }
     
-    #16
+    #7
     
     focus = {
 		id = SHI_island_hoppers
@@ -455,7 +461,7 @@
 		}
     }
     
-    #17
+    #8
     
     focus = {
 		id = SHI_hawaiian_marine_corps
@@ -479,7 +485,7 @@
 		}
     }
     
-    #18
+    #9
     
     focus = {
 		id = SHI_navy_combat
@@ -502,7 +508,7 @@
 		}
     }
     
-    #19
+    #10
     
     focus = {
 		id = SHI_hawaiian_navy_flagship
@@ -512,7 +518,7 @@
 		prerequisite = { focus = SHI_hawaii_island_dockyards }
 		x = 0
 		y = 4
-		cost = 14.4
+		cost = 10
 
 		available_if_capitulated = yes
 		ai_will_do = {
@@ -535,8 +541,14 @@
 	#1
 	
 	focus = {
-		id = SHI_poindexter
+		id = SHI_poindexters_presidency
 		icon = GFX_
+		
+		available = {
+			has_completed_focus = SHI_hawaiian_navy_flagship
+			has_completed_focus = SHI_economic_recovery
+        }
+		
 		x = 30
 		y = 5
 		cost = 3.7
@@ -553,13 +565,13 @@
 	#2
 	
 	focus = {
-		id = SHI_deal_with_yakuza
+		id = SHI_deal_with_mafia
 		icon = GFX_
-		relative_position_id = SHI_poindexter
-		prerequisite = { focus = SHI_poindexter }		
+		relative_position_id = SHI_poindexters_presidency
+		prerequisite = { focus = SHI_poindexters_presidency }		
 		x = -3
 		y = 1
-		cost = 3.7
+		cost = 5
 
 		available_if_capitulated = yes
 		ai_will_do = {
@@ -573,28 +585,23 @@
 	#3
 	
 	focus = {
-		id = SHI_ties_to_cali
+		id = SHI_law_above_all
 		icon = GFX_
-		relative_position_id = SHI_poindexter
-		prerequisite = { focus = SHI_poindexter }
+		relative_position_id = SHI_poindexters_presidency
+		prerequisite = { focus = SHI_poindexters_presidency }
 		x = 0
 		y = 1
-		cost = 3.7
+		cost = 5
 
 		available_if_capitulated = yes
 		ai_will_do = {
 			factor = 100
 		}
 		completion_reward = { 
-			add_opinion_modifier = {
-				target = SCA
-				modifier = SHI_cali_relations
-			}	
-			SCA = {
-				add_opinion_modifier = {
-					target = SHI
-					modifier = SHI_cali_relations_ii
-				}
+		add_stability = 0.1
+		add_popularity = {
+			ideology = fascism
+			popularity = 0.05
 			}
 		}
     }
@@ -602,13 +609,13 @@
 	#4
 	
 	focus = {
-		id = SHI_build_forts
+		id = SHI_build_coastal_forts
 		icon = GFX_
-		relative_position_id = SHI_poindexter
-		prerequisite = { focus = SHI_poindexter }
+		relative_position_id = SHI_poindexters_presidency
+		prerequisite = { focus = SHI_poindexters_presidency }
 		x = 3
 		y = 1
-		cost = 3.7
+		cost = 5
 
 		available_if_capitulated = yes
 		ai_will_do = {
@@ -627,19 +634,22 @@
 	focus = {
 		id = SHI_influence_tourism 
 		icon = GFX_
-		relative_position_id = SHI_poindexter
-		prerequisite = { focus = SHI_deal_with_yakuza }
-		prerequisite = { focus = SHI_ties_to_cali }
+		relative_position_id = SHI_poindexters_presidency
+		prerequisite = { focus = SHI_deal_with_mafia }
+		prerequisite = { focus = SHI_law_above_all }
 		x = -2
 		y = 2
-		cost = 3.7
+		cost = 5
 
 		available_if_capitulated = yes
 		ai_will_do = {
 			factor = 100
 		}
 		completion_reward = { 
-				
+			swap_ideas = {
+    			remove_idea = SHI_shrinking_population
+  				add_idea = SHI_shrinking_population_ii
+			}			
 		}
     }
 	
@@ -648,28 +658,32 @@
 	focus = {
 		id = SHI_cali_nap
 		icon = GFX_
-		relative_position_id = SHI_poindexter
-		prerequisite = { focus = SHI_ties_to_cali }
-		prerequisite = { focus = SHI_build_forts }
+		relative_position_id = SHI_poindexters_presidency
+		prerequisite = { focus = SHI_law_above_all }
+		prerequisite = { focus = SHI_build_coastal_forts }
 		x = 2
 		y = 2
-		cost = 3.7
+		cost = 5
 
 		available_if_capitulated = yes
 		ai_will_do = {
 			factor = 100
 		}
 		completion_reward = { 
-				
+			diplomatic_relation = {
+				country = SCA
+				relation = non_aggression_pact
+				active = yes
+			}	
 		}
     }
 	
 	#7
 	
 	focus = {
-		id = SHI_defend
+		id = SHI_defend_hawaii
 		icon = GFX_
-		relative_position_id = SHI_poindexter
+		relative_position_id = SHI_poindexters_presidency
 		prerequisite = { focus = SHI_influence_tourism }
 		prerequisite = { focus = SHI_cali_nap }
 		x = 0
@@ -681,7 +695,10 @@
 			factor = 100
 		}
 		completion_reward = { 
-			 	
+			add_political_power = 100
+			hidden_effect = {
+				country_event = { days = 1 id = hawaii.4 }
+			}
 		}
     }
 }
