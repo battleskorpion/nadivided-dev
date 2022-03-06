@@ -201,6 +201,15 @@ democratic_peace = {
 			# NOT = { tag = JAP }
 			# NOT = { tag = SOV }
 			NOT = { is_owner_neighbor_of = FROM }
+			FROM = {
+				any_owned_state = { 
+					OR = {
+						is_claimed_by = ROOT
+						is_core_of = ROOT
+						has_claimed_state_in_peace_conference = ROOT
+					}
+				}
+			}
 		}
 		# modifier = {
 		# 	factor = 10
@@ -510,6 +519,7 @@ democratic_peace = {
 		}
 
 		modifier = { #Only take claims - and colonial states (ie unclaimed) as well if major or if already colonial.
+
 			factor = 0
 			NOT = { 
 				FROM = { 
@@ -530,18 +540,19 @@ democratic_peace = {
 					# NOT = { tag = USA }
 					# NOT = { tag = JAP }
 					# NOT = { tag = SOV }
-					NOT = { 
-						OR = {	
+					NOT = { 	
 							AND = {
-								capital_scope = { 
-									OR = {
-										is_on_continent = western_usa
-										is_on_continent = midwestern_usa
-										is_on_continent = southern_usa
-										is_on_continent = northeastern_usa
+								ROOT = {
+									capital_scope = { 
+										OR = {
+											is_on_continent = western_usa
+											is_on_continent = midwestern_usa
+											is_on_continent = southern_usa
+											is_on_continent = northeastern_usa
+										}
 									}
 								}
-								any_owned_state = {
+								FROM = {
 									NOT = { 
 										is_on_continent = western_usa 
 										is_on_continent = midwestern_usa 
@@ -555,31 +566,32 @@ democratic_peace = {
 							# 	FROM = { is_on_continent = africa }
 							# }
 							# tag = JAP
+					
+
+						FROM = {
+							owner = {
+								PREV = { is_core_of = PREV }
+							}
 						}
-					}
-				}
-				FROM = {
-					owner = {
-						PREV = { is_core_of = PREV }
 					}
 				}
 			}
 		}
-		modifier = { #Only European states with african colonies or middle eastern states should take anything in africa
-			factor = 0
-			NOT = {
-				capital_scope = {
-					OR = {
-						AND = {
-							#is_on_continent = europe
-							#owner = { any_owned_state = { is_on_continent = africa } }
-						}
-						#is_on_continent = middle_east
-					}
-				}
-			}
+		#modifier = { #Only European states with african colonies or middle eastern states should take anything in africa
+		#	factor = 0
+		#	NOT = {
+		#		capital_scope = {
+		#			OR = {
+		#				AND = {
+		#					#is_on_continent = europe
+		#					#owner = { any_owned_state = { is_on_continent = africa } }
+		#				}
+		#				#is_on_continent = middle_east
+		#			}
+		#		}
+		#	}
 			#FROM = { is_on_continent = africa }
-		}
+		#}
 		modifier = { #Only take claimed/core land if a puppet.
 			factor = 0
 			is_puppet = yes
