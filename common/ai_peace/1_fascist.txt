@@ -158,6 +158,7 @@ fascist_peace = {
 				}
 				is_puppet = yes
 			}
+
 		}
 		modifier = {
 			factor = 0 #0.5 - only liberate fascists!
@@ -204,6 +205,15 @@ fascist_peace = {
 			# NOT = { tag = JAP }
 			# NOT = { tag = SOV }
 			NOT = { is_owner_neighbor_of = FROM }
+			FROM = {
+				any_owned_state = {
+					OR = {
+						is_claimed_by = ROOT
+						is_core_of = ROOT
+						has_claimed_state_in_peace_conference = ROOT
+					}
+				}
+			}
 		}
 		# modifier = { #Strongly seek to establish a puppet after taking Moscow if Japan and Germany - test. Germany also needs Northern Urals.
 		# 	factor = 50
@@ -307,6 +317,7 @@ fascist_peace = {
 					}
 				}
 			}
+		}
 			# OR = {
 			# 	AND = {
 			# 		FROM = { capital_scope = { is_on_continent = europe } }
@@ -325,7 +336,7 @@ fascist_peace = {
 			# 	}
 			# 	NOT = { any_owned_state = { OR = { is_coastal = yes is_island_state = yes } } }
 			# }
-		}
+		#
 		# modifier = { #Don't release Chinese warlords - Japan has a focus to take care of them and is allowed to annex them directly...
 		# 	factor = 0
 		# 	FROM = {
@@ -389,7 +400,7 @@ fascist_peace = {
 					}
 					NOT = { 
 						FROM = {
-							OR = {
+							any_owned_state = {
 								is_on_continent = western_usa
 								is_on_continent = midwestern_usa
 								is_on_continent = southern_usa
@@ -408,7 +419,7 @@ fascist_peace = {
 					}
 					NOT = { 
 						FROM = {
-							OR = {
+							any_owned_state = {
 								is_on_continent = western_canada
 								is_on_continent = eastern_canada
 								is_on_continent = northern_canada
@@ -418,19 +429,19 @@ fascist_peace = {
 				}
 				AND = {
 					capital_scope = { is_on_continent = mexico }
-					NOT = { FROM = { is_on_continent = mexico } } 
+					NOT = { FROM = { any_owned_state = { is_on_continent = mexico } } } 
 				}
 				AND = {
 					capital_scope = { is_on_continent = central_america }
-					NOT = { FROM = { is_on_continent = central_america } } 
+					NOT = { FROM = { any_owned_state = { is_on_continent = central_america } } } 
 				}
 				AND = {
 					capital_scope = { is_on_continent = caribbean }
-					NOT = { FROM = { is_on_continent = caribbean } } 
+					NOT = { FROM = { any_owned_state = { is_on_continent = caribbean } } } 
 				}
 				AND = {
 					capital_scope = { is_on_continent = south_america }
-					NOT = { FROM = { is_on_continent = south_america } } 
+					NOT = { FROM = { any_owned_state = { is_on_continent = south_america } } } 
 				}
 			}
 		}
@@ -527,21 +538,21 @@ fascist_peace = {
 			}
 		}
 
-		modifier = { #Puppet Bulgarias core isntead of annexing them (THE COMEBACK)
-			factor = 0.5
-			
-			any_neighbor_state = {
-				is_controlled_by = BUL
-				is_core_of = BUL
-			}
-			BUL = {
-				is_ai = no
-				has_capitulated = no
-				is_puppet = no
-				NOT = {has_war_with = FROM}
-			}
-			is_core_of = BUL
-		}
+		#modifier = { #Puppet Bulgarias core isntead of annexing them (THE COMEBACK)
+		#	factor = 0.5
+		#	
+		#	any_neighbor_state = {
+		#		is_controlled_by = BUL
+		#		is_core_of = BUL
+		#	}
+		#	BUL = {
+		#		is_ai = no
+		#		has_capitulated = no
+		#		is_puppet = no
+		#		NOT = {has_war_with = FROM}
+		#	}
+		#	is_core_of = BUL
+		#}
 	}
 	
 	# ROOT = Taker, FROM = State
@@ -1125,12 +1136,14 @@ fascist_peace = {
 			factor = 0.1
 			OR = {
 				AND = {
-					capital_scope = { 
-						OR = {
-							is_on_continent = western_usa 
-							is_on_continent = midwestern_usa
-							is_on_continent = southern_usa
-							is_on_continent = northeastern_usa
+					ROOT = {
+						capital_scope = { 
+							OR = {
+								is_on_continent = western_usa 
+								is_on_continent = midwestern_usa
+								is_on_continent = southern_usa
+								is_on_continent = northeastern_usa
+							}
 						}
 					}
 					NOT = { 
@@ -1145,11 +1158,13 @@ fascist_peace = {
 					} 
 				}
 				AND = {
-					capital_scope = { 
-						OR = {
-							is_on_continent = western_canada 
-							is_on_continent = eastern_canada
-							is_on_continent = northern_canada
+					ROOT = {
+						capital_scope = { 
+							OR = {
+								is_on_continent = western_canada 
+								is_on_continent = eastern_canada
+								is_on_continent = northern_canada
+							}
 						}
 					}
 					NOT = { 
@@ -1163,22 +1178,31 @@ fascist_peace = {
 					} 
 				}
 				AND = {
-					capital_scope = { is_on_continent = mexico }
+					ROOT = {
+						capital_scope = { is_on_continent = mexico }
+					}
 					NOT = { FROM = { is_on_continent = mexico } } 
 				}
 				AND = {
-					capital_scope = { is_on_continent = central_america }
+					ROOT = {
+						capital_scope = { is_on_continent = central_america }
+					}
 					NOT = { FROM = { is_on_continent = central_america } } 
 				}
 				AND = {
-					capital_scope = { is_on_continent = caribbean }
+					ROOT = {
+						capital_scope = { is_on_continent = caribbean }
+					}
 					NOT = { FROM = { is_on_continent = caribbean } } 
 				}
 				AND = {
-					capital_scope = { is_on_continent = south_america }
+					ROOT = {
+						capital_scope = { is_on_continent = south_america }
+					}
 					NOT = { FROM = { is_on_continent = south_america } } 
 				}
 			}
+			
 		}
 
 		modifier = { #Only take claimed/core land if a puppet.
@@ -1333,7 +1357,6 @@ fascist_peace = {
 		# 	}
 		# }
 	}
-
 	# ROOT = Taker, FROM = Giver
 	force_government = {
 		factor = 0
