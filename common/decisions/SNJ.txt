@@ -6,11 +6,6 @@ SNJ_chesapeake_war_imminent = {
             hidden_trigger = {
                 always = no
             }
-#            divisions_in_state = {
-#                type = Marines
-#                size > 2
-#                state = 203
-#            }
         }
         activation = {
             has_global_flag = chesa_war_imminent
@@ -57,6 +52,10 @@ SNJ_chesapeake_war_imminent = {
         is_good = no
         fire_only_once = yes
 
+        ai_will_do = {
+			factor = 100
+		}
+
         complete_effect  = {
             add_days_mission_timeout = {
                 mission = SNJ_chesa_war_imminent
@@ -89,6 +88,10 @@ SNJ_chesapeake_war_imminent = {
         cancel_if_not_visible = yes
         is_good = yes
         fire_only_once = yes
+
+        ai_will_do = {
+			factor = 0
+		}
 
         complete_effect  = {
             add_days_mission_timeout = {
@@ -153,68 +156,52 @@ SNJ_chesapeake_war_failure = {
 
         available = {
             AND = {
-                OR = {
-                    NOT = {
-                        SDE = {
-                            has_full_control_of_state = 413
-                        }
-                    }
-                    NOT = {
-                        SDE = {
-                            has_full_control_of_state = 412
-                        }
-                    }
-                    NOT = {
-                        SDE = {
-                            has_full_control_of_state = 411
-                        }
-                    }
-                    NOT = {
-                        SMD = {
-                            has_full_control_of_state = 205
-                        }
-                    }
-                    NOT = {
-                        SMD = {
-                            has_full_control_of_state = 204
-                        }
-                    }
-                    NOT = {
-                        SMD = {
-                            has_full_control_of_state = 136
-                        }
-                    }
+                NOT = {
+                    controls_state = 413
+                }
+                NOT = {
+                    controls_state = 412
+                }
+                NOT = {
+                    controls_state = 411
+                }
+    #            SMD = {
+    #                controls_state = 205
+    #            }
+                NOT = {
+                    controls_state = 204
+                }
+                NOT = {
+                    controls_state = 136
                 }
             }
-            NOT = {
-                SMD = {
-                    surrender_progress > 0.3
-                }
+            SNJ = {
+                has_war_with = SMD
             }  
         }
         activation = {
             OR = {
                 AND = {
-                    SDE = {
+                    NOT = {
                         controls_state = 413
                     }
-                    SDE = {
+                    NOT = {
                         controls_state = 412
                     }
-                    SDE = {
+                    NOT = {
                         controls_state = 411
                     }
-                    SMD = {
-                        controls_state = 205
-                    }
-                    SMD = {
+        #            SMD = {
+        #                controls_state = 205
+        #            }
+                    NOT = {
                         controls_state = 204
                     }
-                    SMD = {
+                    NOT = {
                         controls_state = 136
                     }
                 }
-                SMD = {
+                SNJ = {
                     surrender_progress > 0.3
                 }
             }
@@ -223,7 +210,6 @@ SNJ_chesapeake_war_failure = {
             } 
         }
         visible = {
-
         }
         cancel_if_not_visible = yes
         is_good = no                    ###Very very bad
@@ -236,6 +222,7 @@ SNJ_chesapeake_war_failure = {
                     id = newjersey.15
                 }
             }
+            set_global_flag = chesa_war_defeat
         }
     }
 }
@@ -535,46 +522,451 @@ SNJ_cool_epic_debug_Category = {
                 white_peace = SMD
             }
             set_global_flag = chesa_war_finished
+            set_global_flag = chesa_war_victory
             complete_national_focus = SNJ_operation_thunderdome
+        }
+    }
+    SNJ_middle_part = {
+        icon = GFX_decision_revolt
+
+        available = {
+            
+        }
+        fire_only_once = no
+
+        complete_effect = {
+            annex_country = {
+                target = SMD
+            }
+            annex_country = {
+                target = WDC
+            }
+            annex_country = {
+                target = SPA
+            }
+            annex_country = {
+                target = SDE
+            }
+            set_global_flag = chesa_war_finished
+            complete_national_focus = SNJ_operation_thunderdome
+            complete_national_focus = SNJ_complete_integration
+            complete_national_focus = SNJ_looking_to_the_future
+        }
+    }
+    SNJ_new_ingerland = {
+        icon = GFX_decision_revolt
+
+        available = {
+            
+        }
+        fire_only_once = no
+
+        complete_effect = {
+            annex_country = {
+                target = SNY
+            }
+            annex_country = {
+                target = NYC
+            }
+            annex_country = {
+                target = SCT
+            }
+            annex_country = {
+                target = SRI
+            }
+            annex_country = {
+                target = SMA
+            }
+            annex_country = {
+                target = SVT
+            }
+            annex_country = {
+                target = SNH
+            }
+            annex_country = {
+                target = SME
+            }
+            complete_national_focus = SNJ_new_england_united
+        }
+    }
+    SNJ_doin_the_south = {
+        icon = GFX_decision_revolt
+
+        available = {
+            
+        }
+        fire_only_once = no
+
+        complete_effect = {
+            annex_country = {
+                target = SWV
+            }
+            annex_country = {
+                target = SVA
+            }
+            annex_country = {
+                target = SNC
+            }
+            complete_national_focus = SNJ_mcarthur_plan
+        }
+    }
+    SNJ_corin_da_south = {
+        icon = GFX_decision_revolt
+
+        available = {
+            
+        }
+        fire_only_once = no
+
+        complete_effect = {
+            every_state = {
+                limit = {
+                    OR = {
+                        is_core_of = SPA
+                        is_core_of = SMD
+                        is_core_of = WDC
+                        is_core_of = SWV
+                        is_core_of = SVA
+                        is_core_of = SNC
+                    }
+                }
+                add_core_of = SNJ
+            }
+        }
+    }
+    SNJ_troll_the_traitors = {
+        icon = GFX_decision_revolt
+
+        available = {
+            
+        }
+        fire_only_once = no
+
+        complete_effect = {
+            annex_country = {
+                target = SWV
+            }
+            annex_country = {
+                target = SVA
+            }
+            annex_country = {
+                target = SNC
+            }
+            annex_country = {
+                target = SSC
+            }
+            annex_country = {
+                target = SGA
+            }
+            annex_country = {
+                target = SAL
+            }
+            annex_country = {
+                target = SMS
+            }
+            annex_country = {
+                target = SFL
+            } 
+            annex_country = {
+                target = SMD
+            }
+            annex_country = {
+                target = WDC
+            }
+            annex_country = {
+                target = SPA
+            }
+            annex_country = {
+                target = SDE
+            }
+            set_global_flag = chesa_war_finished
+            complete_national_focus = SNJ_operation_thunderdome
+            complete_national_focus = SNJ_complete_integration
+            complete_national_focus = SNJ_looking_to_the_future
+            complete_national_focus = SNJ_mcarthur_plan
+        }
+    }
+    SNJ_confederate_front_event = {
+        icon = GFX_decision_revolt
+
+        available = {
+            
+        }
+        fire_only_once = no
+
+        complete_effect = {
+            SGA = {
+                country_event = {
+                    id = newjersey.45
+                }
+            }
+        }
+    }
+    SNJ_when_the_great_lakes_is_united = {
+        icon = GFX_decision_revolt
+
+        available = {
+            
+        }
+        fire_only_once = no
+
+        complete_effect = {
+            annex_country = {
+                target = SWV
+            }
+            annex_country = {
+                target = SOH
+            }
+            complete_national_focus = SNJ_assessing_our_situation
+        }
+    }
+    SNJ_compliance = {
+        icon = GFX_decision_revolt
+
+        available = {
+        }
+        fire_only_once = no
+
+        complete_effect = {
+            add_ideas = SNJ_super_duper_compliance_gain
         }
     }
 }
 
 SNJ_patriotism_category = {
-    SNJ_patriotism_1 = {
-        icon = GFX_decision_generic_operation
+    SNJ_distribute_flags = {
+        icon = GFX_decision_revolt
 
         available = {
-            has_completed_focus = SNJ_rebuild_patriotism
-            NOT = {
-                has_global_flag = SNJ_patriotism
-            }
+            num_of_available_civilian_factories > 3
         }
-        cost = 10
 
-        cancel_if_not_visible = yes
+        cost = 50
+        days_re_enable = 180
         fire_only_once = no
 
-        complete_effect = {
-            set_global_flag = SNJ_patriotism
-#            custom_effect_tooltip = SNJ_1_DEBT_INCREASE_tt
+        modifier = {
+            civilian_factory_use = 3
         }
-        days_re_enable = 180
 
-        days_remove = 3
+        days_remove = 90
+
         remove_effect = {
-            clr_global_flag = SNJ_patriotism
+            custom_effect_tooltip = SNJ_boosts_patriotism_tt
             add_to_variable = {
                 var = var_SNJ_patriotism
-                value = 1
-            }
-            clamp_variable = {
-                var = var_SNJ_patriotism
-                min = 0
-                max = 100
+                value = 8
             }
         }
     }
+    SNJ_pro_union_broadcasts = {
+        icon = GFX_decision_revolt
+
+        available = {
+            has_tech = radio
+        }
+
+        cost = 80
+        fire_only_once = yes
+
+        cancel_trigger = {
+            has_political_power < 1
+        }
+
+        modifier = {
+            political_power_gain = -0.5
+        }
+
+        days_remove = 120
+
+        remove_effect = {
+            custom_effect_tooltip = SNJ_boosts_patriotism_tt
+            add_to_variable = {
+                var = var_SNJ_patriotism
+                value = 8
+            }
+        }
+    }
+    SNJ_military_parades = {
+        icon = GFX_decision_revolt
+
+        available = {
+            command_power > 50
+            has_manpower > 5000
+            has_equipment = {
+                infantry_equipment > 999
+            }
+        }
+
+        cost = 120
+       
+        days_re_enable = 365
+        fire_only_once = no
+
+        modifier = {
+            max_command_power = -50
+        }
+
+        days_remove = 150
+
+        complete_effect = {
+            add_command_power = -50
+            add_manpower = -5000
+            add_equipment_to_stockpile = {
+                type = infantry_equipment
+                amount = -1000
+            }
+        }
+
+        remove_effect = {
+            custom_effect_tooltip = SNJ_boosts_patriotism_greatly_tt
+            add_to_variable = {
+                var = var_SNJ_patriotism
+                value = 12
+            }
+            add_manpower = 5000
+            add_war_support = 0.03
+        }
+    }
+    SNJ_silence_un_patriotic = {
+        icon = GFX_decision_revolt
+
+        available = {
+        }
+
+        cost = 120
+       
+        fire_only_once = yes
+
+        cancel_trigger = {
+            has_political_power < 1
+        }
+
+        modifier = {
+            political_power_gain = -0.5
+        }
+
+        days_remove = 180
+
+        complete_effect = {
+            add_stability = -0.06
+        }
+
+        remove_effect = {
+            custom_effect_tooltip = SNJ_boosts_american_tension_2_tt
+            add_to_variable = {
+                var = var_snj_american_tension
+                value = 2
+            }
+            custom_effect_tooltip = SNJ_boosts_patriotism_greatly_tt
+            add_to_variable = {
+                var = var_SNJ_patriotism
+                value = 12
+            }
+        }
+    }
+    SNJ_aid_small_businesses = {
+        icon = GFX_decision_revolt
+
+        available = {
+        }
+
+        cost = 80
+       
+        fire_only_once = yes
+
+        modifier = {
+            consumer_goods_factor = 0.08
+        }
+
+        days_remove = 180
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            custom_effect_tooltip = SNJ_boosts_patriotism_tt
+            add_to_variable = {
+                var = var_SNJ_patriotism
+                value = 8
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 1
+                }
+            }
+        }
+    }
+    SNJ_restore_historic_monuments = {
+        icon = GFX_decision_revolt
+
+        available = {
+            controls_state = 44
+        }
+
+        cost = 150
+       
+        fire_only_once = yes
+
+        cancel_trigger = {
+            has_political_power < 1
+        }
+
+        modifier = {
+            political_power_gain = -0.35
+            consumer_goods_factor = 0.05
+        }
+
+        days_remove = 180
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            custom_effect_tooltip = SNJ_boosts_patriotism_greatly_tt
+            add_to_variable = {
+                var = var_SNJ_patriotism
+                value = 12
+            }
+            44 = {
+                add_extra_state_shared_building_slots = 1
+            }
+        }
+    }
+    SNJ_promote_american_identity = {
+        icon = GFX_decision_revolt
+
+        available = {
+        }
+
+        cost = 150
+       
+        days_re_enable = 180
+        fire_only_once = no
+
+        cancel_trigger = {
+            has_political_power < 1
+        }
+
+        modifier = {
+            political_power_gain = -1
+        }
+
+        days_remove = 90
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            custom_effect_tooltip = SNJ_boosts_patriotism_tt
+            add_to_variable = {
+                var = var_SNJ_patriotism
+                value = 10
+            }
+        }
+    } 
 }
 
 SNJ_propaganda_category = {
@@ -587,7 +979,11 @@ SNJ_propaganda_category = {
                 has_global_flag = SNJ_propaganda
             }
         }
-        cost = 10
+        cost = 80
+
+        modifier = {
+            political_power_gain = -0.5
+        }
 
         cancel_if_not_visible = yes
         fire_only_once = yes
@@ -597,18 +993,12 @@ SNJ_propaganda_category = {
         }
 
         days_remove = 60
-        complete_effect = {
-            set_global_flag = SNJ_propaganda
-        }
+
         remove_effect = {
+            custom_effect_tooltip = SNJ_boosts_patriotism_tt
             add_to_variable = {
                 var = var_SNJ_patriotism
-                value = 5
-            }
-            clamp_variable = {
-                var = var_SNJ_patriotism
-                min = 0
-                max = 100
+                value = 10
             }
             clr_global_flag = SNJ_propaganda
         }
@@ -622,7 +1012,11 @@ SNJ_propaganda_category = {
                 has_global_flag = SNJ_propaganda
             }
         }
-        cost = 10
+        cost = 120
+
+        modifier = {
+            political_power_gain = -0.5
+        }
 
         cancel_if_not_visible = yes
         fire_only_once = yes
@@ -631,19 +1025,13 @@ SNJ_propaganda_category = {
             set_global_flag = SNJ_propaganda
         }
 
-        days_remove = 75
-        complete_effect = {
-            set_global_flag = SNJ_propaganda
-        }
+        days_remove = 90
+
         remove_effect = {
+            custom_effect_tooltip = SNJ_boosts_patriotism_greatly_tt
             add_to_variable = {
                 var = var_SNJ_patriotism
-                value = 8
-            }
-            clamp_variable = {
-                var = var_SNJ_patriotism
-                min = 0
-                max = 100
+                value = 16
             }
             clr_global_flag = SNJ_propaganda
         }
@@ -657,21 +1045,21 @@ SNJ_propaganda_category = {
                 has_global_flag = SNJ_propaganda
             }
         }
-        cost = 10
+        cost = 80
+
+        modifier = {
+            political_power_gain = -0.5
+        }
 
         cancel_if_not_visible = yes
         fire_only_once = yes
 
-        complete_effect = {
-            set_global_flag = SNJ_propaganda
-        }
-
-        days_remove = 60
+        days_remove = 90
         complete_effect = {
             set_global_flag = SNJ_propaganda
         }
         remove_effect = {
-            add_stability = 0.5
+            add_stability = 0.05
             clr_global_flag = SNJ_propaganda
         }
     }
@@ -684,7 +1072,11 @@ SNJ_propaganda_category = {
                 has_global_flag = SNJ_propaganda
             }
         }
-        cost = 10
+        cost = 120
+
+        modifier = {
+            political_power_gain = -0.5
+        }
 
         cancel_if_not_visible = yes
         fire_only_once = yes
@@ -693,10 +1085,8 @@ SNJ_propaganda_category = {
             set_global_flag = SNJ_propaganda
         }
 
-        days_remove = 90
-        complete_effect = {
-            set_global_flag = SNJ_propaganda
-        }
+        days_remove = 150
+        
         remove_effect = {
             add_stability = 0.10
             clr_global_flag = SNJ_propaganda
@@ -711,7 +1101,11 @@ SNJ_propaganda_category = {
                 has_global_flag = SNJ_propaganda
             }
         }
-        cost = 10
+        cost = 120
+
+        modifier = {
+            political_power_gain = -0.5
+        }
 
         cancel_if_not_visible = yes
         fire_only_once = yes
@@ -720,13 +1114,2199 @@ SNJ_propaganda_category = {
             set_global_flag = SNJ_propaganda
         }
 
-        days_remove = 90
-        complete_effect = {
-            set_global_flag = SNJ_propaganda
-        }
+        days_remove = 150
+
         remove_effect = {
             add_war_support = 0.10
             clr_global_flag = SNJ_propaganda
+        }
+    }
+}
+
+SNJ_integration_category = {
+    ###########################################################
+    #########                                         #########
+    #########         Pennsylvania & Maryland         #########
+    #########                                         #########
+    ###########################################################
+                SNJ_integrate_SPA = {
+                    icon = GFX_decision_generic_operation
+
+                    available = {
+                        core_compliance = {
+                            occupied_country_tag = SPA #####
+                            value > 30
+                        }
+                        any_state = {
+                            is_core_of = SPA #####
+                            is_owned_and_controlled_by = SNJ
+                            NOT = {
+                                is_core_of = SNJ
+                            }
+                        }
+                        has_political_power > 1 
+                    }
+                    cancel_trigger = {
+                        has_political_power < 1
+                    }
+                    visible = {
+                        has_completed_focus = SNJ_cross_the_delaware
+                        any_state = {
+                            is_core_of = SPA #####
+                            NOT = {
+                                is_core_of = SNJ
+                            }
+                        }
+                    }
+                    days_remove = 200
+                    fire_only_once = no
+
+                    modifier = {
+                        political_power_gain = -0.45
+                    }
+
+                    complete_effect = {
+                    }
+
+                    remove_effect = {
+                        every_state = {
+                            limit = {
+                                is_core_of = SPA #####
+                                NOT = {
+                                    is_core_of = SNJ
+                                }
+                                is_owned_and_controlled_by = SNJ
+                            }
+                            add_core_of = SNJ
+                        }
+                    }
+                }
+                #
+                SNJ_integrate_SMD = {
+                    icon = GFX_decision_generic_operation
+
+                    available = {
+                        core_compliance = {
+                            occupied_country_tag = SMD #####
+                            value > 30
+                        }
+                        any_state = {
+                            is_core_of = SMD #####
+                            is_owned_and_controlled_by = SNJ
+                            NOT = {
+                                is_core_of = SNJ
+                            }
+                        }
+                        has_political_power > 1 
+                    }
+                    cancel_trigger = {
+                        has_political_power < 1
+                    }
+                    visible = {
+                        has_completed_focus = SNJ_strike_maryland
+                        any_state = {
+                            is_core_of = SMD #####
+                            NOT = {
+                                is_core_of = SNJ
+                            }
+                        }
+                    }
+                    days_remove = 150
+                    fire_only_once = no
+
+                    modifier = {
+                        political_power_gain = -0.45
+                    }
+
+                    complete_effect = {
+                    }
+
+                    remove_effect = {
+                        every_state = {
+                            limit = {
+                                is_core_of = SMD #####
+                                NOT = {
+                                    is_core_of = SNJ
+                                }
+                                is_owned_and_controlled_by = SNJ
+                            }
+                            add_core_of = SNJ
+                        }
+                        SNJ = {
+                            add_state_core = 44
+                        }
+                    }
+                }
+                SNJ_integrate_WDC = {
+                    icon = GFX_decision_generic_operation
+
+                    available = {
+                        core_compliance = {
+                            occupied_country_tag = WDC #####
+                            value > 30
+                        }
+                        any_state = {
+                            is_core_of = WDC #####
+                            is_owned_and_controlled_by = SNJ
+                            NOT = {
+                                is_core_of = SNJ
+                            }
+                        }
+                        has_political_power > 1 
+                    }
+                    cancel_trigger = {
+                        has_political_power < 1
+                    }
+                    visible = {
+                        has_completed_focus = SNJ_strike_maryland
+                        any_state = {
+                            is_core_of = WDC #####
+                            NOT = {
+                                is_core_of = SNJ
+                            }
+                        }
+                    }
+                    days_remove = 200
+                    fire_only_once = no
+
+                    modifier = {
+                        political_power_gain = -0.45
+                    }
+
+                    complete_effect = {
+                    }
+
+                    remove_effect = {
+                        every_state = {
+                            limit = {
+                                is_core_of = WDC #####
+                                NOT = {
+                                    is_core_of = SNJ
+                                }
+                                is_owned_and_controlled_by = SNJ
+                            }
+                            add_core_of = SNJ
+                        }
+                        SNJ = {
+                            add_state_core = 44
+                        }
+                    }
+                }
+    ###########################################################
+    #########                                         #########
+    #########               New England               #########
+    #########                                         #########
+    ###########################################################
+            SNJ_integrate_SNY = {
+                icon = GFX_decision_generic_operation
+
+                available = {
+                    
+                    core_compliance = {
+                        occupied_country_tag = SNY #####
+                        value > 30
+                    }
+                    any_state = {
+                        is_core_of = SNY #####
+                        is_owned_and_controlled_by = SNJ
+                        NOT = {
+                            is_core_of = SNJ
+                        }
+                    }
+                    has_political_power > 1 
+                }
+                cancel_trigger = {
+                    has_political_power < 1
+                }                    
+                visible = {
+                    has_global_flag = SNJ_new_england_yes
+                    any_state = {
+                        is_core_of = SNY #####
+                        NOT = {
+                            is_core_of = SNJ
+                        }
+                    }
+                }
+                days_remove = 250
+                fire_only_once = no
+
+                    modifier = {
+                        political_power_gain = -0.45
+                    }
+
+                complete_effect = {
+                }
+
+                remove_effect = {
+                    
+                    every_state = {
+                        limit = {
+                            is_core_of = SNY #####
+                            NOT = {
+                                is_core_of = SNJ
+                            }
+                            is_owned_and_controlled_by = SNJ
+                        }
+                        add_core_of = SNJ
+                    }
+                }
+            }
+            #
+            SNJ_integrate_NYC = {
+                icon = GFX_decision_generic_operation
+
+                available = {
+                    
+                    core_compliance = {
+                        occupied_country_tag = NYC #####
+                        value > 30
+                    }
+                    any_state = {
+                        is_core_of = NYC #####
+                        is_owned_and_controlled_by = SNJ
+                        NOT = {
+                            is_core_of = SNJ
+                        }
+                    }
+                    has_political_power > 1 
+                }
+                cancel_trigger = {
+                    has_political_power < 1
+                }                    
+                visible = {
+                    has_global_flag = SNJ_new_england_yes
+                    any_state = {
+                        is_core_of = NYC #####
+                        NOT = {
+                            is_core_of = SNJ
+                        }
+                    }
+                }
+                days_remove = 250
+                fire_only_once = no
+
+                    modifier = {
+                        political_power_gain = -0.45
+                    }
+
+                complete_effect = {
+                }
+
+                remove_effect = {
+                    
+                    every_state = {
+                        limit = {
+                            is_core_of = NYC #####
+                            NOT = {
+                                is_core_of = SNJ
+                            }
+                            is_owned_and_controlled_by = SNJ
+                        }
+                        add_core_of = SNJ
+                    }
+                }
+            }
+            #
+            SNJ_integrate_SCT = {
+                icon = GFX_decision_generic_operation
+
+                available = {
+                    
+                    core_compliance = {
+                        occupied_country_tag = SCT #####
+                        value > 30
+                    }
+                    any_state = {
+                        is_core_of = SCT #####
+                        is_owned_and_controlled_by = SNJ
+                        NOT = {
+                            is_core_of = SNJ
+                        }
+                    }
+                    has_political_power > 1 
+                }
+                cancel_trigger = {
+                    has_political_power < 1
+                }                    
+                visible = {
+                    has_global_flag = SNJ_new_england_yes
+                    any_state = {
+                        is_core_of = SCT #####
+                        NOT = {
+                            is_core_of = SNJ
+                        }
+                    }
+                }
+                days_remove = 120
+                fire_only_once = no
+
+                    modifier = {
+                        political_power_gain = -0.35
+                    }
+
+                complete_effect = {
+                }
+
+                remove_effect = {
+                    
+                    every_state = {
+                        limit = {
+                            is_core_of = SCT #####
+                            NOT = {
+                                is_core_of = SNJ
+                            }
+                            is_owned_and_controlled_by = SNJ
+                        }
+                        add_core_of = SNJ
+                    }
+                }
+            }
+            #
+            SNJ_integrate_SRI = {
+                icon = GFX_decision_generic_operation
+
+                available = {
+                    
+                    core_compliance = {
+                        occupied_country_tag = SRI #####
+                        value > 30
+                    }
+                    any_state = {
+                        is_core_of = SRI #####
+                        is_owned_and_controlled_by = SNJ
+                        NOT = {
+                            is_core_of = SNJ
+                        }
+                    }
+                    has_political_power > 1 
+                }
+                cancel_trigger = {
+                    has_political_power < 1
+                }                    
+                visible = {
+                    has_global_flag = SNJ_new_england_yes
+                    any_state = {
+                        is_core_of = SRI #####
+                        NOT = {
+                            is_core_of = SNJ
+                        }
+                    }
+                }
+                days_remove = 120
+                fire_only_once = no
+
+                    modifier = {
+                        political_power_gain = -0.25
+                    }
+
+                complete_effect = {
+                }
+
+                remove_effect = {
+                    
+                    every_state = {
+                        limit = {
+                            is_core_of = SRI #####
+                            NOT = {
+                                is_core_of = SNJ
+                            }
+                            is_owned_and_controlled_by = SNJ
+                        }
+                        add_core_of = SNJ
+                    }
+                }
+            }
+            #
+            SNJ_integrate_SMA = {
+                icon = GFX_decision_generic_operation
+
+                available = {
+                    
+                    core_compliance = {
+                        occupied_country_tag = SMA #####
+                        value > 30
+                    }
+                    any_state = {
+                        is_core_of = SMA #####
+                        is_owned_and_controlled_by = SNJ
+                        NOT = {
+                            is_core_of = SNJ
+                        }
+                    }
+                    has_political_power > 1 
+                }
+                cancel_trigger = {
+                    has_political_power < 1
+                }                    
+                visible = {
+                    has_global_flag = SNJ_new_england_yes
+                    any_state = {
+                        is_core_of = SMA #####
+                        NOT = {
+                            is_core_of = SNJ
+                        }
+                    }
+                }
+                days_remove = 200
+                fire_only_once = no
+
+                    modifier = {
+                        political_power_gain = -0.45
+                    }
+
+                complete_effect = {
+                }
+
+                remove_effect = {
+                    
+                    every_state = {
+                        limit = {
+                            is_core_of = SMA #####
+                            NOT = {
+                                is_core_of = SNJ
+                            }
+                            is_owned_and_controlled_by = SNJ
+                        }
+                        add_core_of = SNJ
+                    }
+                }
+            }
+            #
+            SNJ_integrate_SVT = {
+                icon = GFX_decision_generic_operation
+
+                available = {
+                    
+                    core_compliance = {
+                        occupied_country_tag = SVT #####
+                        value > 30
+                    }
+                    any_state = {
+                        is_core_of = SVT #####
+                        is_owned_and_controlled_by = SNJ
+                        NOT = {
+                            is_core_of = SNJ
+                        }
+                    }
+                    has_political_power > 1 
+                }
+                cancel_trigger = {
+                    has_political_power < 1
+                }                    
+                visible = {
+                    has_global_flag = SNJ_new_england_yes
+                    any_state = {
+                        is_core_of = SVT #####
+                        NOT = {
+                            is_core_of = SNJ
+                        }
+                    }
+                }
+                days_remove = 120
+                fire_only_once = no
+
+                    modifier = {
+                        political_power_gain = -0.35
+                    }
+
+                complete_effect = {
+                }
+
+                remove_effect = {
+                    
+                    every_state = {
+                        limit = {
+                            is_core_of = SVT #####
+                            NOT = {
+                                is_core_of = SNJ
+                            }
+                            is_owned_and_controlled_by = SNJ
+                        }
+                        add_core_of = SNJ
+                    }
+                }
+            }
+            #
+            SNJ_integrate_SNH = {
+                icon = GFX_decision_generic_operation
+
+                available = {
+                    
+                    core_compliance = {
+                        occupied_country_tag = SNH #####
+                        value > 30
+                    }
+                    any_state = {
+                        is_core_of = SNH #####
+                        is_owned_and_controlled_by = SNJ
+                        NOT = {
+                            is_core_of = SNJ
+                        }
+                    }
+                    has_political_power > 1 
+                }
+                cancel_trigger = {
+                    has_political_power < 1
+                }                    
+                visible = {
+                    has_global_flag = SNJ_new_england_yes
+                    any_state = {
+                        is_core_of = SNH #####
+                        NOT = {
+                            is_core_of = SNJ
+                        }
+                    }
+                }
+                days_remove = 120
+                fire_only_once = no
+
+                    modifier = {
+                        political_power_gain = -0.35
+                    }
+
+                complete_effect = {
+                }
+
+                remove_effect = {
+                    
+                    every_state = {
+                        limit = {
+                            is_core_of = SNH #####
+                            NOT = {
+                                is_core_of = SNJ
+                            }
+                            is_owned_and_controlled_by = SNJ
+                        }
+                        add_core_of = SNJ
+                    }
+                }
+            }
+            #
+            SNJ_integrate_SME = {
+                icon = GFX_decision_generic_operation
+
+                available = {
+                    
+                    core_compliance = {
+                        occupied_country_tag = SME #####
+                        value > 30
+                    }
+                    any_state = {
+                        is_core_of = SME #####
+                        is_owned_and_controlled_by = SNJ
+                        NOT = {
+                            is_core_of = SNJ
+                        }
+                    }
+                    has_political_power > 1 
+                }
+                cancel_trigger = {
+                    has_political_power < 1
+                }                    
+                visible = {
+                    has_global_flag = SNJ_new_england_yes
+                    any_state = {
+                        is_core_of = SME #####
+                        NOT = {
+                            is_core_of = SNJ
+                        }
+                    }
+                }
+                days_remove = 120
+                fire_only_once = no
+
+                    modifier = {
+                        political_power_gain = -0.35
+                    }
+
+                complete_effect = {
+                }
+
+                remove_effect = {
+                    
+                    every_state = {
+                        limit = {
+                            is_core_of = SME #####
+                            NOT = {
+                                is_core_of = SNJ
+                            }
+                            is_owned_and_controlled_by = SNJ
+                        }
+                        add_core_of = SNJ
+                    }
+                }
+            }
+    ###########################################################
+    #########                                         #########
+    #########               Canada                    #########
+    #########                                         #########
+    ###########################################################
+            SNJ_integrate_PNB = {
+                icon = GFX_decision_generic_operation
+
+                available = {
+                    core_compliance = {
+                        occupied_country_tag = PNB #####
+                        value > 50
+                    }
+                    any_state = {
+                        is_core_of = PNB #####
+                        is_owned_and_controlled_by = SNJ
+                        NOT = {
+                            is_core_of = SNJ
+                        }
+                    }
+                    has_political_power > 1 
+                }
+                cancel_trigger = {
+                    has_political_power < 1
+                }                    
+                visible = {
+                    has_completed_focus = SNJ_strike_while_theyre_weak
+                    any_state = {
+                        is_core_of = PNB #####
+                        NOT = {
+                            is_core_of = SNJ
+                        }
+                    }
+                }
+                days_remove = 320
+                fire_only_once = no
+
+                    modifier = {
+                        political_power_gain = -0.75
+                    }
+
+                complete_effect = {
+                }
+
+                remove_effect = {
+                    
+                    every_state = {
+                        limit = {
+                            is_core_of = PNB #####
+                            NOT = {
+                                is_core_of = SNJ
+                            }
+                            is_owned_and_controlled_by = SNJ
+                        }
+                        add_core_of = SNJ
+                    }
+                }
+            }
+            SNJ_integrate_PNS = {
+                icon = GFX_decision_generic_operation
+
+                available = {
+                    core_compliance = {
+                        occupied_country_tag = PNS #####
+                        value > 50
+                    }
+                    any_state = {
+                        is_core_of = PNS #####
+                        is_owned_and_controlled_by = SNJ
+                        NOT = {
+                            is_core_of = SNJ
+                        }
+                    }
+                    has_political_power > 1 
+                }
+                cancel_trigger = {
+                    has_political_power < 1
+                }                    
+                visible = {
+                    has_completed_focus = SNJ_strike_while_theyre_weak
+                    any_state = {
+                        is_core_of = PNS #####
+                        NOT = {
+                            is_core_of = SNJ
+                        }
+                    }
+                }
+                days_remove = 320
+                fire_only_once = no
+
+                    modifier = {
+                        political_power_gain = -0.75
+                    }
+
+                complete_effect = {
+                }
+
+                remove_effect = {
+                    
+                    every_state = {
+                        limit = {
+                            is_core_of = PNS #####
+                            NOT = {
+                                is_core_of = SNJ
+                            }
+                            is_owned_and_controlled_by = SNJ
+                        }
+                        add_core_of = SNJ
+                    }
+                }
+            }
+    ###########################################################
+    #########                                         #########
+    #########               The South                 #########
+    #########                                         #########
+    ###########################################################
+    SNJ_integrate_SWV = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            core_compliance = {
+                occupied_country_tag = SWV #####
+                value > 30
+            }
+            any_state = {
+                is_core_of = SWV #####
+                is_owned_and_controlled_by = SNJ
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+            has_political_power > 1 
+        }
+        cancel_trigger = {
+            has_political_power < 1
+        }                    
+        visible = {
+            OR = {
+                has_completed_focus = SNJ_emergency_readmission
+                has_completed_focus = SNJ_the_fate_of_the_great_lakes
+                has_completed_focus = SNJ_complete_integration
+            }
+            any_state = {
+                is_core_of = SWV #####
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+        }
+        days_remove = 120
+        fire_only_once = no
+
+            modifier = {
+                political_power_gain = -0.35
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            
+            every_state = {
+                limit = {
+                    is_core_of = SWV #####
+                    NOT = {
+                        is_core_of = SNJ
+                    }
+                    is_owned_and_controlled_by = SNJ
+                }
+                add_core_of = SNJ
+            }
+        }
+    }
+    SNJ_integrate_SVA = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            core_compliance = {
+                occupied_country_tag = SVA #####
+                value > 30
+            }
+            any_state = {
+                is_core_of = SVA #####
+                is_owned_and_controlled_by = SNJ
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+            has_political_power > 1 
+        }
+        cancel_trigger = {
+            has_political_power < 1
+        }                    
+        visible = {
+            OR = {
+                has_completed_focus = SNJ_complete_integration
+                has_completed_focus = SNJ_emergency_readmission
+            }
+            any_state = {
+                is_core_of = SVA #####
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+        }
+        days_remove = 200
+        fire_only_once = no
+
+            modifier = {
+                political_power_gain = -0.45
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            
+            every_state = {
+                limit = {
+                    is_core_of = SVA #####
+                    NOT = {
+                        is_core_of = SNJ
+                    }
+                    is_owned_and_controlled_by = SNJ
+                }
+                add_core_of = SNJ
+            }
+        }
+    }
+    SNJ_integrate_SNC = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            core_compliance = {
+                occupied_country_tag = SNC #####
+                value > 30
+            }
+            any_state = {
+                is_core_of = SNC #####
+                is_owned_and_controlled_by = SNJ
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+            has_political_power > 1 
+        }
+        cancel_trigger = {
+            has_political_power < 1
+        }                    
+        visible = {
+            OR = {
+                has_completed_focus = SNJ_complete_integration
+                has_completed_focus = SNJ_emergency_readmission
+            }
+            any_state = {
+                is_core_of = SNC #####
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+        }
+        days_remove = 200
+        fire_only_once = no
+
+            modifier = {
+                political_power_gain = -0.45
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            
+            every_state = {
+                limit = {
+                    is_core_of = SNC #####
+                    NOT = {
+                        is_core_of = SNJ
+                    }
+                    is_owned_and_controlled_by = SNJ
+                }
+                add_core_of = SNJ
+            }
+        }
+    }
+    SNJ_integrate_SSC = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            core_compliance = {
+                occupied_country_tag = SSC #####
+                value > 30
+            }
+            any_state = {
+                is_core_of = SSC #####
+                is_owned_and_controlled_by = SNJ
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+            has_political_power > 1 
+        }
+        cancel_trigger = {
+            has_political_power < 1
+        }                    
+        visible = {
+            has_completed_focus = SNJ_complete_reintegration
+            any_state = {
+                is_core_of = SSC #####
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+        }
+        days_remove = 150
+        fire_only_once = no
+
+            modifier = {
+                political_power_gain = -0.35
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            
+            every_state = {
+                limit = {
+                    is_core_of = SSC #####
+                    NOT = {
+                        is_core_of = SNJ
+                    }
+                    is_owned_and_controlled_by = SNJ
+                }
+                add_core_of = SNJ
+                remove_dynamic_modifier = { modifier = SNJ_limited_reintegration } 
+            }
+        }
+    }
+    SNJ_integrate_SGA = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            core_compliance = {
+                occupied_country_tag = SGA #####
+                value > 30
+            }
+            any_state = {
+                is_core_of = SGA #####
+                is_owned_and_controlled_by = SNJ
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+            has_political_power > 1 
+        }
+        cancel_trigger = {
+            has_political_power < 1
+        }                    
+        visible = {
+            has_completed_focus = SNJ_complete_reintegration
+            any_state = {
+                is_core_of = SGA #####
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+        }
+        days_remove = 200
+        fire_only_once = no
+
+            modifier = {
+                political_power_gain = -0.45
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            
+            every_state = {
+                limit = {
+                    is_core_of = SGA #####
+                    NOT = {
+                        is_core_of = SNJ
+                    }
+                    is_owned_and_controlled_by = SNJ
+                }
+                add_core_of = SNJ
+                remove_dynamic_modifier = { modifier = SNJ_limited_reintegration } 
+            }
+        }
+    }
+    SNJ_integrate_SFL = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            core_compliance = {
+                occupied_country_tag = SFL #####
+                value > 30
+            }
+            any_state = {
+                is_core_of = SFL #####
+                is_owned_and_controlled_by = SNJ
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+            has_political_power > 1 
+        }
+        cancel_trigger = {
+            has_political_power < 1
+        }                    
+        visible = {
+            has_completed_focus = SNJ_complete_reintegration
+            any_state = {
+                is_core_of = SFL #####
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+        }
+        days_remove = 120
+        fire_only_once = no
+
+            modifier = {
+                political_power_gain = -0.35
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            
+            every_state = {
+                limit = {
+                    is_core_of = SFL #####
+                    NOT = {
+                        is_core_of = SNJ
+                    }
+                    is_owned_and_controlled_by = SNJ
+                }
+                add_core_of = SNJ
+                remove_dynamic_modifier = { modifier = SNJ_limited_reintegration } 
+            }
+        }
+    }
+    SNJ_integrate_SAL = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            core_compliance = {
+                occupied_country_tag = SAL #####
+                value > 30
+            }
+            any_state = {
+                is_core_of = SAL #####
+                is_owned_and_controlled_by = SNJ
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+            has_political_power > 1 
+        }
+        cancel_trigger = {
+            has_political_power < 1
+        }                    
+        visible = {
+            has_completed_focus = SNJ_complete_reintegration
+            any_state = {
+                is_core_of = SAL #####
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+        }
+        days_remove = 150
+        fire_only_once = no
+
+            modifier = {
+                political_power_gain = -0.35
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            
+            every_state = {
+                limit = {
+                    is_core_of = SAL #####
+                    NOT = {
+                        is_core_of = SNJ
+                    }
+                    is_owned_and_controlled_by = SNJ
+                }
+                add_core_of = SNJ
+                remove_dynamic_modifier = { modifier = SNJ_limited_reintegration } 
+            }
+        }
+    }
+    SNJ_integrate_SMS = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            core_compliance = {
+                occupied_country_tag = SMS #####
+                value > 30
+            }
+            any_state = {
+                is_core_of = SMS #####
+                is_owned_and_controlled_by = SNJ
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+            has_political_power > 1 
+        }
+        cancel_trigger = {
+            has_political_power < 1
+        }                    
+        visible = {
+            has_completed_focus = SNJ_complete_reintegration
+            any_state = {
+                is_core_of = SMS #####
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+        }
+        days_remove = 150
+        fire_only_once = no
+
+            modifier = {
+                political_power_gain = -0.35
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            
+            every_state = {
+                limit = {
+                    is_core_of = SMS #####
+                    NOT = {
+                        is_core_of = SNJ
+                    }
+                    is_owned_and_controlled_by = SNJ
+                }
+                add_core_of = SNJ
+                remove_dynamic_modifier = { modifier = SNJ_limited_reintegration } 
+            }
+        }
+    }
+    SNJ_integrate_STN = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            core_compliance = {
+                occupied_country_tag = STN #####
+                value > 30
+            }
+            any_state = {
+                is_core_of = STN #####
+                is_owned_and_controlled_by = SNJ
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+            has_political_power > 1 
+        }
+        cancel_trigger = {
+            has_political_power < 1
+        }                    
+        visible = {
+            has_completed_focus = SNJ_complete_reintegration
+            any_state = {
+                is_core_of = STN #####
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+        }
+        days_remove = 150
+        fire_only_once = no
+
+            modifier = {
+                political_power_gain = -0.35
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            
+            every_state = {
+                limit = {
+                    is_core_of = STN #####
+                    NOT = {
+                        is_core_of = SNJ
+                    }
+                    is_owned_and_controlled_by = SNJ
+                }
+                add_core_of = SNJ
+                remove_dynamic_modifier = { modifier = SNJ_limited_reintegration } 
+            }
+        }
+    }
+    SNJ_integrate_SKY = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            core_compliance = {
+                occupied_country_tag = SKY #####
+                value > 30
+            }
+            any_state = {
+                is_core_of = SKY #####
+                is_owned_and_controlled_by = SNJ
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+            has_political_power > 1 
+        }
+        cancel_trigger = {
+            has_political_power < 1
+        }                    
+        visible = {
+            OR = {
+                has_completed_focus = SNJ_complete_reintegration
+                has_completed_focus = SNJ_the_fate_of_the_great_lakes
+            }
+            any_state = {
+                is_core_of = SKY #####
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+        }
+        days_remove = 150
+        fire_only_once = no
+
+            modifier = {
+                political_power_gain = -0.35
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            
+            every_state = {
+                limit = {
+                    is_core_of = SKY #####
+                    NOT = {
+                        is_core_of = SNJ
+                    }
+                    is_owned_and_controlled_by = SNJ
+                }
+                add_core_of = SNJ
+                remove_dynamic_modifier = { modifier = SNJ_limited_reintegration } 
+            }
+        }
+    }
+    SNJ_integrate_SAR = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            core_compliance = {
+                occupied_country_tag = SAR #####
+                value > 30
+            }
+            any_state = {
+                is_core_of = SAR #####
+                is_owned_and_controlled_by = SNJ
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+            has_political_power > 1 
+        }
+        cancel_trigger = {
+            has_political_power < 1
+        }                    
+        visible = {
+            has_completed_focus = SNJ_complete_reintegration
+            any_state = {
+                is_core_of = SAR #####
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+        }
+        days_remove = 150
+        fire_only_once = no
+
+            modifier = {
+                political_power_gain = -0.35
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            
+            every_state = {
+                limit = {
+                    is_core_of = SAR #####
+                    NOT = {
+                        is_core_of = SNJ
+                    }
+                    is_owned_and_controlled_by = SNJ
+                }
+                add_core_of = SNJ
+                remove_dynamic_modifier = { modifier = SNJ_limited_reintegration } 
+            }
+        }
+    }
+    SNJ_integrate_SLA = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            core_compliance = {
+                occupied_country_tag = SLA #####
+                value > 30
+            }
+            any_state = {
+                is_core_of = SLA #####
+                is_owned_and_controlled_by = SNJ
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+            has_political_power > 1 
+        }
+        cancel_trigger = {
+            has_political_power < 1
+        }                    
+        visible = {
+            has_completed_focus = SNJ_complete_reintegration
+            any_state = {
+                is_core_of = SLA #####
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+        }
+        days_remove = 200
+        fire_only_once = no
+
+            modifier = {
+                political_power_gain = -0.45
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            
+            every_state = {
+                limit = {
+                    is_core_of = SLA #####
+                    NOT = {
+                        is_core_of = SNJ
+                    }
+                    is_owned_and_controlled_by = SNJ
+                }
+                add_core_of = SNJ
+                remove_dynamic_modifier = { modifier = SNJ_limited_reintegration } 
+            }
+        }
+    }
+    SNJ_integrate_SOK = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            core_compliance = {
+                occupied_country_tag = SOK #####
+                value > 30
+            }
+            any_state = {
+                is_core_of = SOK #####
+                is_owned_and_controlled_by = SNJ
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+            has_political_power > 1 
+        }
+        cancel_trigger = {
+            has_political_power < 1
+        }                    
+        visible = {
+            has_completed_focus = SNJ_complete_reintegration
+            any_state = {
+                is_core_of = SOK #####
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+        }
+        days_remove = 150
+        fire_only_once = no
+
+            modifier = {
+                political_power_gain = -0.35
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            
+            every_state = {
+                limit = {
+                    is_core_of = SOK #####
+                    NOT = {
+                        is_core_of = SNJ
+                    }
+                    is_owned_and_controlled_by = SNJ
+                }
+                add_core_of = SNJ
+                remove_dynamic_modifier = { modifier = SNJ_limited_reintegration } 
+            }
+        }
+    }
+    SNJ_integrate_STX = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            core_compliance = {
+                occupied_country_tag = STX #####
+                value > 30
+            }
+            any_state = {
+                is_core_of = STX #####
+                is_owned_and_controlled_by = SNJ
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+            has_political_power > 1 
+        }
+        cancel_trigger = {
+            has_political_power < 1
+        }                    
+        visible = {
+            has_completed_focus = SNJ_complete_reintegration
+            any_state = {
+                is_core_of = STX #####
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+        }
+        days_remove = 320
+        fire_only_once = no
+
+            modifier = {
+                political_power_gain = -0.55
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            
+            every_state = {
+                limit = {
+                    is_core_of = STX #####
+                    NOT = {
+                        is_core_of = SNJ
+                    }
+                    is_owned_and_controlled_by = SNJ
+                }
+                add_core_of = SNJ
+                remove_dynamic_modifier = { modifier = SNJ_limited_reintegration } 
+            }
+        }
+    }
+    ###########################################################
+    #########                                         #########
+    #########              Great Lakes                #########
+    #########                                         #########
+    ###########################################################
+    SNJ_integrate_SOH = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            core_compliance = {
+                occupied_country_tag = SOH #####
+                value > 30
+            }
+            any_state = {
+                is_core_of = SOH #####
+                is_owned_and_controlled_by = SNJ
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+            has_political_power > 1 
+        }
+        cancel_trigger = {
+            has_political_power < 1
+        }                    
+        visible = {
+            has_completed_focus = SNJ_the_fate_of_the_great_lakes
+            any_state = {
+                is_core_of = SOH #####
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+        }
+        days_remove = 250
+        fire_only_once = no
+
+            modifier = {
+                political_power_gain = -0.45
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            
+            every_state = {
+                limit = {
+                    is_core_of = SOH #####
+                    NOT = {
+                        is_core_of = SNJ
+                    }
+                    is_owned_and_controlled_by = SNJ
+                }
+                add_core_of = SNJ
+            }
+        }
+    }
+    SNJ_integrate_SIN = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            core_compliance = {
+                occupied_country_tag = SIN #####
+                value > 30
+            }
+            any_state = {
+                is_core_of = SIN #####
+                is_owned_and_controlled_by = SNJ
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+            has_political_power > 1 
+        }
+        cancel_trigger = {
+            has_political_power < 1
+        }                    
+        visible = {
+            has_completed_focus = SNJ_the_fate_of_the_great_lakes
+            any_state = {
+                is_core_of = SIN #####
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+        }
+        days_remove = 200
+        fire_only_once = no
+
+            modifier = {
+                political_power_gain = -0.35
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            
+            every_state = {
+                limit = {
+                    is_core_of = SIN #####
+                    NOT = {
+                        is_core_of = SNJ
+                    }
+                    is_owned_and_controlled_by = SNJ
+                }
+                add_core_of = SNJ
+            }
+        }
+    }
+    SNJ_integrate_SMI = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            core_compliance = {
+                occupied_country_tag = SMI #####
+                value > 30
+            }
+            any_state = {
+                is_core_of = SMI #####
+                is_owned_and_controlled_by = SNJ
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+            has_political_power > 1 
+        }
+        cancel_trigger = {
+            has_political_power < 1
+        }                    
+        visible = {
+            has_completed_focus = SNJ_the_fate_of_the_great_lakes
+            any_state = {
+                is_core_of = SMI #####
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+        }
+        days_remove = 250
+        fire_only_once = no
+
+            modifier = {
+                political_power_gain = -0.45
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            
+            every_state = {
+                limit = {
+                    is_core_of = SMI #####
+                    NOT = {
+                        is_core_of = SNJ
+                    }
+                    is_owned_and_controlled_by = SNJ
+                }
+                add_core_of = SNJ
+            }
+        }
+    }
+    SNJ_integrate_SIL = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            core_compliance = {
+                occupied_country_tag = SIL #####
+                value > 30
+            }
+            any_state = {
+                is_core_of = SIL #####
+                is_owned_and_controlled_by = SNJ
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+            has_political_power > 1 
+        }
+        cancel_trigger = {
+            has_political_power < 1
+        }                    
+        visible = {
+            has_completed_focus = SNJ_the_fate_of_the_great_lakes
+            any_state = {
+                is_core_of = SIL #####
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+        }
+        days_remove = 320
+        fire_only_once = no
+
+            modifier = {
+                political_power_gain = -0.5
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            
+            every_state = {
+                limit = {
+                    is_core_of = SIL #####
+                    NOT = {
+                        is_core_of = SNJ
+                    }
+                    is_owned_and_controlled_by = SNJ
+                }
+                add_core_of = SNJ
+            }
+        }
+    }
+    SNJ_integrate_SWI = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            core_compliance = {
+                occupied_country_tag = SWI #####
+                value > 30
+            }
+            any_state = {
+                is_core_of = SWI #####
+                is_owned_and_controlled_by = SNJ
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+            has_political_power > 1 
+        }
+        cancel_trigger = {
+            has_political_power < 1
+        }                    
+        visible = {
+            has_completed_focus = SNJ_the_fate_of_the_great_lakes
+            any_state = {
+                is_core_of = SWI #####
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+        }
+        days_remove = 200
+        fire_only_once = no
+
+            modifier = {
+                political_power_gain = -0.35
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            
+            every_state = {
+                limit = {
+                    is_core_of = SWI #####
+                    NOT = {
+                        is_core_of = SNJ
+                    }
+                    is_owned_and_controlled_by = SNJ
+                }
+                add_core_of = SNJ
+            }
+        }
+    }
+    SNJ_integrate_SMN = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            core_compliance = {
+                occupied_country_tag = SMN #####
+                value > 30
+            }
+            any_state = {
+                is_core_of = SMN #####
+                is_owned_and_controlled_by = SNJ
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+            has_political_power > 1 
+        }
+        cancel_trigger = {
+            has_political_power < 1
+        }                    
+        visible = {
+            has_completed_focus = SNJ_the_fate_of_the_great_lakes
+            any_state = {
+                is_core_of = SMN #####
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+        }
+        days_remove = 200
+        fire_only_once = no
+
+            modifier = {
+                political_power_gain = -0.35
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            
+            every_state = {
+                limit = {
+                    is_core_of = SMN #####
+                    NOT = {
+                        is_core_of = SNJ
+                    }
+                    is_owned_and_controlled_by = SNJ
+                }
+                add_core_of = SNJ
+            }
+        }
+    }
+    SNJ_integrate_SIA = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            core_compliance = {
+                occupied_country_tag = SIA #####
+                value > 30
+            }
+            any_state = {
+                is_core_of = SIA #####
+                is_owned_and_controlled_by = SNJ
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+            has_political_power > 1 
+        }
+        cancel_trigger = {
+            has_political_power < 1
+        }                    
+        visible = {
+            has_completed_focus = SNJ_the_fate_of_the_great_lakes
+            any_state = {
+                is_core_of = SIA #####
+                NOT = {
+                    is_core_of = SNJ
+                }
+            }
+        }
+        days_remove = 150
+        fire_only_once = no
+
+            modifier = {
+                political_power_gain = -0.35
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            
+            every_state = {
+                limit = {
+                    is_core_of = SIA #####
+                    NOT = {
+                        is_core_of = SNJ
+                    }
+                    is_owned_and_controlled_by = SNJ
+                }
+                add_core_of = SNJ
+            }
+        }
+    }
+}
+
+SNJ_american_tension_category = {
+    SNJ_attack_SNY = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            has_political_power > 1
+            is_neighbor_of = SNY
+        }
+        cancel_trigger = {
+            OR = {
+                has_political_power < 1
+                is_ally_with = SNY
+                has_war_with = SNY
+                NOT = {
+                    country_exists = SNY
+                }
+            }
+        }                    
+        visible = {
+            NOT = {
+                OR = {
+                    has_war_with = SNY
+                    is_ally_with = SNY
+                }
+            }
+            country_exists = SNY
+        }
+        days_remove = 100
+        fire_only_once = yes
+
+            modifier = {
+                political_power_gain = -0.35
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            custom_effect_tooltip = SNJ_boosts_american_tension_10_tt
+            add_to_variable = {
+                var = var_snj_american_tension
+                value = 10
+            }
+            declare_war_on = SNY
+            if = {
+                limit = {
+                    NYC = {
+                        is_subject_of = SNY
+                    }
+                }
+                declare_war_on = NYC
+            }
+        }
+    }
+    SNJ_attack_SOH = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            has_political_power > 1
+            is_neighbor_of = SOH
+        }
+        cancel_trigger = {
+            OR = {
+                has_political_power < 1
+                is_ally_with = SOH
+                has_war_with = SOH
+                NOT = {
+                    country_exists = SOH
+                }
+            }
+        }                    
+        visible = {
+            NOT = {
+                OE = {
+                    has_war_with = SOH
+                    is_ally_with = SOH
+                }
+            }
+            country_exists = SOH
+        }
+        days_remove = 100
+        fire_only_once = yes
+
+            modifier = {
+                political_power_gain = -0.35
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            custom_effect_tooltip = SNJ_boosts_american_tension_8_tt
+            add_to_variable = {
+                var = var_snj_american_tension
+                value = 8
+            }
+            declare_war_on = SOH
+        }
+    }
+    SNJ_attack_SVA_SWV = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            has_political_power > 1
+            OR = {
+                is_neighbor_of = SVA
+                is_neighbor_of = SWV 
+            }
+        }
+        cancel_trigger = {
+            OR = {
+                has_political_power < 1
+                AND = {
+                    OR = {                        
+                        is_ally_with = SVA
+                        has_war_with = SVA
+                        NOT = {
+                            country_exists = SVA
+                        }
+                    }
+                    OR = {                        
+                        is_ally_with = SWV
+                        has_war_with = SWV
+                        NOT = {
+                            country_exists = SWV
+                        }
+                    }
+                }
+            }
+        }                    
+        visible = {
+            OR = {
+                AND = {
+                    country_exists = SVA
+                    NOT = {
+                        OR = {
+                            has_war_with = SVA
+                            is_ally_with = SVA
+                        }
+                    }
+                }
+                AND = {
+                    country_exists = SWV
+                    NOT = {
+                        OR = {
+                            has_war_with = SWV
+                            is_ally_with = SWV
+                        }
+                    }
+                }
+            }
+        }
+        days_remove = 120
+        fire_only_once = yes
+
+            modifier = {
+                political_power_gain = -0.35
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            custom_effect_tooltip = SNJ_boosts_american_tension_10_tt
+            add_to_variable = {
+                var = var_snj_american_tension
+                value = 10
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        OR = {
+                            has_war_with = SVA
+                            is_ally_with = SVA
+                        }
+                    }
+                }
+                declare_war_on = SVA
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        OR = {
+                            has_war_with = SWV
+                            is_ally_with = SWV
+                        }
+                    }
+                }
+                declare_war_on = SWV
+            }
+        }
+    }
+    SNJ_attack_SCT_SRI_SMA = {
+        icon = GFX_decision_generic_operation
+
+        available = {
+            has_political_power > 1
+            OR = {
+                is_neighbor_of = SCT
+                is_neighbor_of = SRI 
+                is_neighbor_of = SMA
+            }
+        }
+        cancel_trigger = {
+            OR = {
+                has_political_power < 1
+                AND = {
+                    OR = {                        
+                        is_ally_with = SCT
+                        has_war_with = SCT
+                        NOT = {
+                            country_exists = SCT
+                        }
+                    }
+                    OR = {                        
+                        is_ally_with = SRI
+                        has_war_with = SRI
+                        NOT = {
+                            country_exists = SRI
+                        }
+                    }
+                    OR = {                        
+                        is_ally_with = SMA
+                        has_war_with = SMA
+                        NOT = {
+                            country_exists = SMA
+                        }
+                    }
+                }
+            }
+        }                    
+        visible = {
+            OR = {
+                AND = {
+                    country_exists = SCT
+                    NOT = {
+                        OR = {
+                            has_war_with = SCT
+                            is_ally_with = SCT
+                        }
+                    }
+                }
+                AND = {
+                    country_exists = SRI
+                    NOT = {
+                        OR = {
+                            has_war_with = SRI
+                            is_ally_with = SRI
+                        }
+                    }
+                }
+                AND = {
+                    country_exists = SMA
+                    NOT = {
+                        OR = {
+                            has_war_with = SMA
+                            is_ally_with = SMA
+                        }
+                    }
+                }
+            }
+        }
+        days_remove = 120
+        fire_only_once = yes
+
+            modifier = {
+                political_power_gain = -0.35
+            }
+
+        complete_effect = {
+        }
+
+        remove_effect = {
+            custom_effect_tooltip = SNJ_boosts_american_tension_10_tt
+            add_to_variable = {
+                var = var_snj_american_tension
+                value = 10
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        OR = {
+                            has_war_with = SCT
+                            is_ally_with = SCT
+                        }
+                    }
+                }
+                declare_war_on = SCT
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        OR = {
+                            has_war_with = SRI
+                            is_ally_with = SRI
+                        }
+                    }
+                }
+                declare_war_on = SRI
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        OR = {
+                            has_war_with = SMA
+                            is_ally_with = SMA
+                        }
+                    }
+                }
+                declare_war_on = SMA
+            }
         }
     }
 }
