@@ -265,7 +265,7 @@ focus_tree = {
 	focus = {
 		id = SWA_local_cooperation
 		icon = GFX_Goal_Unknown
-		x = 32
+		x = 33
 		y = 2
 		cost = 8
 		
@@ -305,12 +305,11 @@ focus_tree = {
 		id = SWA_form_an_alliance_with_BC
 		icon = GFX_Goal_Unknown
 		x = 28
-		y = 5
+		y = 3
 		cost = 8
 	
 		available_if_capitulated = yes
 		prerequisite = { focus = SWA_local_cooperation }
-
 		ai_will_do = {
 			factor = 1
 		}
@@ -320,10 +319,59 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = SWA_influence_politics
+		icon = GFX_Goal_Unknown
+		x = 28
+		y = 4
+		cost = 8
+		
+		available = {
+			PBC = { has_idea = PBC_cascadian_league_idea } 
+		}
+		
+		available_if_capitulated = yes
+		prerequisite = { focus = SWA_form_an_alliance_with_BC }
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			PBC = {
+				add_popularity = {
+					ideology = democratic
+					popularity = 0.1
+				}
+			}
+			add_stability = 0.02
+		}
+	}
+	focus = {
+		id = SWA_peacefully_annex_BC
+		icon = GFX_Goal_Unknown
+		x = 28
+		y = 5
+		cost = 8
+	
+		available_if_capitulated = yes
+		prerequisite = { focus = SWA_influence_politics }
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			annex_country = {
+				target = PBC
+				transfer_troops = yes
+			}
+		}
+	}
+	focus = {
 		id = SWA_restore_democracy_in_BC
 		icon = GFX_Goal_Unknown
 		x = 30
-		y = 4
+		y = 3
 		cost = 8
 
 		available = {
@@ -337,26 +385,91 @@ focus_tree = {
 	
 		available_if_capitulated = yes
 		prerequisite = { focus = SWA_local_cooperation }
+		
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			declare_war_on = {
+				target = PBC
+				type = annex_everything
+			}
+		}
+	}
+	focus = {
+		id = SWA_incorporate_BC
+		icon = GFX_Goal_Unknown
+		x = 30
+		y = 4
+		cost = 8
+
+		available = {
+			
+		}
+	
+		available_if_capitulated = yes
+		prerequisite = { focus = SWA_restore_democracy_in_BC }
 
 		ai_will_do = {
 			factor = 1
 		}
 
 		completion_reward = {
-			
+			add_war_support = 0.02
+			add_stability = 0.02
+		}
+	}
+	focus = {
+		id = SWA_under_cascadia
+		icon = GFX_Goal_Unknown
+		x = 30
+		y = 5
+		cost = 8
+
+		available = {
+			PBC = {
+				all_owned_state = {
+					is_controlled_by = SWA
+				}
+			}
+		}
+	
+		available_if_capitulated = yes
+		prerequisite = { focus = SWA_incorporate_BC }
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			SWA = {
+				add_state_core = 72
+				add_state_core = 62
+				add_state_core = 63
+				add_state_core = 61
+				add_state_core = 385
+				add_state_core = 391
+				add_state_core = 429
+				add_state_core = 428
+				add_state_core = 430
+				add_state_core = 427
+				add_state_core = 685
+			}
 		}
 	}
 	focus = {
 		id = SWA_invite_oregon
 		icon = GFX_Goal_Unknown
 		x = 32
-		y = 4
+		y = 3
 		cost = 8
 	
 		available_if_capitulated = yes
 		prerequisite = { focus = SWA_local_cooperation }
+		
 		bypass = { 
-			controls_state = oregon 
+			
 		}
 
 		ai_will_do = {
@@ -367,12 +480,66 @@ focus_tree = {
 			SOR = { country_event = { id = oregon.1}}
 		}
 	}
+	focus = {
+		id = SWA_handle_their_civil_war
+		icon = GFX_Goal_Unknown
+		x = 0
+		y = 1
+		cost = 8
+		
+		available = {
+			SOR = { has_idea = SOR_cascadian_league_idea } 
+		}
+		
+		available_if_capitulated = yes
+		prerequisite = { focus = SWA_invite_oregon }
+		relative_position_id = SWA_invite_oregon
+		bypass = { 
+			 
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			declare_war_on = {
+				target = SRO
+				type = annex_everything
+			}
+		}
+	}
+	focus = {
+		id = SWA_peacefully_annex_oregon
+		icon = GFX_Goal_Unknown
+		x = 0
+		y = 2
+		cost = 8
+	
+		available_if_capitulated = yes
+		prerequisite = { focus = SWA_handle_their_civil_war }
+		relative_position_id = SWA_invite_oregon
+		bypass = { 
+			 
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			annex_country = {
+				target = SOR
+				transfer_troops = yes
+			}
+		}
+	}
 	#specialmilitaryoperationinoregon
 	focus = {
 		id = SWA_intervene_in_oregon
 		icon = GFX_Goal_Unknown
 		x = 34
-		y = 4
+		y = 3
 		cost = 8
 		
 		available = {
@@ -386,25 +553,34 @@ focus_tree = {
 		
 		available_if_capitulated = yes
 		prerequisite = { focus = SWA_local_cooperation }
+		
 		bypass = { 
-			controls_state = oregon 
+			
 		}
 		ai_will_do = {
 			factor = 1
 		}
 
 		completion_reward = {
-			
+			declare_war_on = {
+				target = SOR
+				type = annex_everything
+			}
+			declare_war_on = {
+				target = SRO
+				type = annex_everything
+			}
 		}
 	}
 	focus = {
 		id = SWA_welcome_idaho
 		icon = GFX_Goal_Unknown
 		x = 36
-		y = 4
+		y = 3
 		cost = 8
 		available_if_capitulated = yes
 		prerequisite = { focus = SWA_local_cooperation }
+		
 		ai_will_do = {
 			factor = 1
 		}
@@ -414,10 +590,60 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = SWA_arrest_radical_leaders
+		icon = GFX_Goal_Unknown
+		x = 36
+		y = 4
+		cost = 8
+		
+		available = {
+			SID = { has_idea = SID_cascadian_league_idea } 
+		}
+		
+		available_if_capitulated = yes
+		prerequisite = { focus = SWA_welcome_idaho }
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			SID = {
+				add_popularity = {
+					ideology = fascism
+					popularity = -0.1
+				}
+				add_popularity = {
+					ideology = communism
+					popularity = -0.1
+				}
+			}
+			add_stability = 0.02
+		}
+	}
+	focus = {
+		id = SWA_peacefully_annex_Idaho
+		icon = GFX_Goal_Unknown
+		x = 36
+		y = 5
+		cost = 8
+		available_if_capitulated = yes
+		prerequisite = { focus = SWA_arrest_radical_leaders }
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			annex_country = {
+				target = SID
+				transfer_troops = yes
+			}
+		}
+	}
+	focus = {
 		id = SWA_operation_idahoan_freedom
 		icon = GFX_Goal_Unknown
 		x = 38
-		y = 5
+		y = 3
 		cost = 8
 		available = {
 			AND = {
@@ -430,43 +656,142 @@ focus_tree = {
 		
 		available_if_capitulated = yes
 		prerequisite = { focus = SWA_local_cooperation }
+		
 		ai_will_do = {
 			factor = 1
 		}
 
 		completion_reward = {
-		create_wargoal = {
-		type = annex_everything
-		target = SID
+			declare_war_on = {
+				target = SID
+				type = annex_everything
 			}
         }	
 	}
-	
+	focus = {
+		id = SWA_incorporate_idaho
+		icon = GFX_Goal_Unknown
+		x = 38
+		y = 4
+		cost = 8
+		available = {
+			
+		}	
+		available_if_capitulated = yes
+		prerequisite = { focus = SWA_operation_idahoan_freedom }
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			add_stability = 0.02
+			add_war_support = 0.02
+        }	
+	}
+	focus = {
+		id = SWA_under_cascadia_III
+		icon = GFX_Goal_Unknown
+		x = 38
+		y = 5
+		cost = 14.3
+		available = {
+			SID = {
+				all_owned_state = {
+					is_controlled_by = SWA
+				}
+			}
+		}	
+		
+		available_if_capitulated = yes
+		prerequisite = { focus = SWA_incorporate_idaho }
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			SWA = {
+				add_state_core = 177
+				add_state_core = 514
+				add_state_core = 384
+				add_state_core = 513
+				add_state_core = 510
+				add_state_core = 509
+				add_state_core = 339
+				add_state_core = 511
+				add_state_core = 512 
+			}
+        }	
+	}
 	focus = {
 		id = SWA_incorporate_oregon
 		icon = GFX_Goal_Unknown
 		x = 34
-		y = 5
-		cost = 8
+		y = 4
+		cost = 10
 		available_if_capitulated = yes
 		prerequisite = { focus = SWA_intervene_in_oregon }
 		available = {
-		controls_state = 181
-		controls_state = 183
-		controls_state = 76	
+			
 		}
 		ai_will_do = {
 			factor = 1
 		}
 
 		completion_reward = {
-			
+			add_war_support = 0.02
+			add_stability = 0.02
+		}
+	}
+	focus = {
+		id = SWA_under_cascadia_II
+		icon = GFX_Goal_Unknown
+		x = 34
+		y = 5
+		cost = 14.3
+		available_if_capitulated = yes
+		prerequisite = { focus = SWA_incorporate_oregon }
+		available = {
+			SOR = {
+				all_owned_state = {
+					is_controlled_by = SWA
+				}
+			}
+			SRO = {
+				all_owned_state = {
+					is_controlled_by = SWA
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			SWA = {
+				add_state_core = 54
+				add_state_core = 53
+				add_state_core = 614
+				add_state_core = 181
+				add_state_core = 127
+				add_state_core = 616
+				add_state_core = 174
+				add_state_core = 617
+				add_state_core = 183
+				add_state_core = 179
+				add_state_core = 451
+				add_state_core = 176
+				add_state_core = 182
+				add_state_core = 180
+				add_state_core = 613
+				add_state_core = 184
+				add_state_core = 615
+			}
 		}
 	}
 	focus = {
 		id = SWA_oregon_civil_war
 		icon = GFX_Goal_Unknown
-		x = 30
+		x = 40
 		y = 8
 		cost = 5
 	
@@ -504,6 +829,92 @@ focus_tree = {
 					target = SCA
 					modifier = SWA_Californian_Cooperation
 				}
+			}
+		}
+	}
+	focus = {
+		id = SWA_A_United_Cascadia
+		icon = GFX_Goal_Unknown
+		x = 0
+		y = 5
+		cost = 10
+		
+		available = {
+			PBC = {
+				all_owned_state = {
+					is_controlled_by = SWA
+				}
+			}
+			SOR = {
+				all_owned_state = {
+					is_controlled_by = SWA
+				}
+			}
+			SID = {
+				all_owned_state = {
+					is_controlled_by = SWA
+				}
+			}
+			SRO = {
+				all_owned_state = {
+					is_controlled_by = SWA
+				}
+			}
+		}
+	
+		available_if_capitulated = yes
+		prerequisite = { focus = SWA_peacefully_annex_BC focus = SWA_under_cascadia }
+		prerequisite = { focus = SWA_peacefully_annex_oregon focus = SWA_under_cascadia_II }
+		prerequisite = { focus = SWA_peacefully_annex_Idaho focus = SWA_under_cascadia_III }
+		relative_position_id = SWA_local_cooperation
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			set_cosmetic_tag = cascadia
+			add_stability = 0.1
+			add_war_support = 0.2
+			
+			SWA = {
+				add_state_core = 54
+				add_state_core = 53
+				add_state_core = 614
+				add_state_core = 181
+				add_state_core = 127
+				add_state_core = 616
+				add_state_core = 174
+				add_state_core = 617
+				add_state_core = 183
+				add_state_core = 179
+				add_state_core = 451
+				add_state_core = 176
+				add_state_core = 182
+				add_state_core = 180
+				add_state_core = 613
+				add_state_core = 184
+				add_state_core = 615
+				add_state_core = 177
+				add_state_core = 514
+				add_state_core = 384
+				add_state_core = 513
+				add_state_core = 510
+				add_state_core = 509
+				add_state_core = 339
+				add_state_core = 511
+				add_state_core = 512 
+				add_state_core = 72
+				add_state_core = 62
+				add_state_core = 63
+				add_state_core = 61
+				add_state_core = 385
+				add_state_core = 391
+				add_state_core = 429
+				add_state_core = 428
+				add_state_core = 430
+				add_state_core = 427
+				add_state_core = 685
 			}
 		}
 	}
@@ -724,7 +1135,7 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = SWA_follow_david_clough
+		id = SWA_follow_the_cloughs
 		icon = GFX_Goal_Unknown
 		x = -4
 		y = 1
@@ -752,7 +1163,7 @@ focus_tree = {
 
 		available_if_capitulated = yes
 		prerequisite = { focus = SWA_focus_on_the_timber_industry }
-		mutually_exclusive = { focus = SWA_follow_david_clough}
+		mutually_exclusive = { focus = SWA_follow_the_cloughs}
 		relative_position_id = SWA_focus_on_the_timber_industry 
 
 		ai_will_do = {
@@ -950,7 +1361,7 @@ focus_tree = {
 
 		available_if_capitulated = yes
 		prerequisite = { focus = SWA_the_great_lumber_boom }
-		relative_position_id = SWA_follow_david_clough 
+		relative_position_id = SWA_follow_the_cloughs 
 
 		ai_will_do = {
 			factor = 1
@@ -972,7 +1383,7 @@ focus_tree = {
 		prerequisite = { focus = SWA_build_up_clough_puget_sound_timber_company }
 		prerequisite = { focus = SWA_bigger_work_force }
 		prerequisite = { focus = SWA_deregulate_the_lumber_industry }
-		relative_position_id = SWA_follow_david_clough 
+		relative_position_id = SWA_follow_the_cloughs 
 
 		ai_will_do = {
 			factor = 1
@@ -992,7 +1403,7 @@ focus_tree = {
 		available_if_capitulated = yes
 		prerequisite = { focus = SWA_privitize_state_agencies }
 		prerequisite = { focus = SWA_expand_the_lumberjack_market }
-		relative_position_id = SWA_follow_david_clough 
+		relative_position_id = SWA_follow_the_cloughs 
 
 		ai_will_do = {
 			factor = 1
@@ -1068,8 +1479,8 @@ focus_tree = {
 		cost = 5
 
 		available_if_capitulated = yes
-		prerequisite = { focus = SWA_follow_david_clough }
-		relative_position_id = SWA_follow_david_clough 
+		prerequisite = { focus = SWA_follow_the_cloughs }
+		relative_position_id = SWA_follow_the_cloughs 
 
 		ai_will_do = {
 			factor = 1
@@ -1087,8 +1498,8 @@ focus_tree = {
 		cost = 5
 
 		available_if_capitulated = yes
-		prerequisite = { focus = SWA_follow_david_clough }
-		relative_position_id = SWA_follow_david_clough 
+		prerequisite = { focus = SWA_follow_the_cloughs }
+		relative_position_id = SWA_follow_the_cloughs 
 
 		ai_will_do = {
 			factor = 1
@@ -1106,8 +1517,8 @@ focus_tree = {
 		cost = 5
 
 		available_if_capitulated = yes
-		prerequisite = { focus = SWA_follow_david_clough }
-		relative_position_id = SWA_follow_david_clough 
+		prerequisite = { focus = SWA_follow_the_cloughs }
+		relative_position_id = SWA_follow_the_cloughs 
 
 		ai_will_do = {
 			factor = 1
