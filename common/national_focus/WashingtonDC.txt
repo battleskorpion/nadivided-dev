@@ -90,7 +90,7 @@ focus = {
 	mutually_exclusive = { focus = WDC_Fortify_The_Capitol}
 
 	completion_reward = {
-		add_equipment_to_stockpile = { type = light_tank_chassis_1 amount = 400 producer = WDC variant_name = "Stuart Mk1" }
+		add_equipment_to_stockpile = { type = light_tank_chassis_1 amount = 400 producer = WDC variant_name = "M2A2" }
 	}
 }
 #
@@ -340,7 +340,7 @@ focus = {
 		prerequisite = { focus = WDC_deal_with_maryland}
 		x = 13
 		y = 3
-		cost = 10
+		cost = 7.2
 		ai_will_do = {
 			factor = 2
 		}
@@ -378,7 +378,7 @@ focus = {
 		}
 		x = 12
 		y = 4
-		cost = 10
+		cost = 7.2
 		ai_will_do = {
 			factor = 2
 		}
@@ -426,6 +426,29 @@ focus = {
 	}
 }
 #
+
+focus = {
+	id = WDC_Capitol_Industry_Act
+	icon = GFX_goal_generic_production
+	x = -1
+	y = 1
+	relative_position_id = WDC_company_free_war
+	prerequisite = { focus = WDC_company_free_war focus = WDC_create_the_military_industrial_complex }
+	cost = 5
+
+	search_filters = {  FOCUS_FILTER_RESEARCH }
+	
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 10
+	}
+
+	completion_reward = {
+		add_ideas = modest_commerial_industries
+	}
+}
+#
+
 focus = {
 	id = WDC_Washington_rubber
 	icon = GFX_focus_rubber
@@ -521,7 +544,7 @@ focus = {
 		}
 		x = 14
 		y = 4
-		cost = 10
+		cost = 7.2
 		ai_will_do = {
 			factor = 2
 		}
@@ -2549,7 +2572,11 @@ focus = {
 		ai_will_do = {
 			factor = 1
 		}
-
+		allow_branch = {
+			NOT ={
+				has_completed_focus = leave_congress_to_rot
+			}
+		}
 		available_if_capitulated = no
 
 		completion_reward = {
@@ -2575,7 +2602,6 @@ focus = {
 				add_stability = -0.05
 				add_political_power = -50
 			}
-			#custom_effect_tooltip = rebuild_congress_tt
 			custom_effect_tooltip = companies_oppose_tt
 			set_rule = {
                 can_create_factions = yes
@@ -2596,7 +2622,11 @@ focus = {
 		ai_will_do = {
 			factor = 1
 		}
-
+		allow_branch = {
+			NOT ={
+				has_completed_focus = rebuild_congress
+			}
+		}
 		available_if_capitulated = no
 
 		completion_reward = {
@@ -2640,7 +2670,6 @@ focus = {
 		mutually_exclusive = { focus = WDC_let_alf_take_power}
 		mutually_exclusive = { focus = WDC_disunited_forever}
 		mutually_exclusive = { focus = WDC_let_nor_take_power}
-		mutually_exclusive = { focus = WDC_keep_hoover_in_charge}
 		available = {
 			has_completed_focus = WDC_sway_them_with_fdr
 			NOT = {
@@ -2653,9 +2682,15 @@ focus = {
 		ai_will_do = {
 			factor = 1
 		}
-
 		available_if_capitulated = no
-
+		allow_branch = {
+			NOT ={
+				has_completed_focus = disunited_forever
+			}
+			NOT = {
+				has_completed_focus = let_nor_take_power
+			}
+		}
 		completion_reward = {
 			add_popularity = {
 				ideology = progressivism 
@@ -2736,6 +2771,7 @@ focus = {
 		available_if_capitulated = no
 
 		completion_reward = {
+			add_timed_idea = { idea = WDC_agricultural_adjustment_act_idea  days = 90 }	
 			if = {
 				limit = {
 					has_idea = WDC_great_depression3
@@ -3546,7 +3582,7 @@ focus = {
 				tooltip = owns_great_lakes_tt
 				controls_ohio_trigger = yes
 				controls_indiana_trigger = yes
-				controls_illinios_trigger = yes
+				controls_illinois_trigger = yes
 				controls_michigan_trigger = yes
 				controls_wisconsin_trigger = yes
 			}
@@ -3565,7 +3601,7 @@ focus = {
 			hidden_effect = {
 				core_ohio = yes
 				core_indiana = yes
-				core_illinios = yes
+				core_illinois = yes
 				core_michigan = yes
 				core_wisconsin = yes
 			}
@@ -3734,6 +3770,10 @@ focus = {
 			}
 			create_wargoal = {
 				target = SND
+				type = annex_everything
+			}
+			create_wargoal = {
+				target = LMO
 				type = annex_everything
 			}
 		}
@@ -4086,7 +4126,6 @@ focus = {
 		mutually_exclusive = { focus = WDC_let_fdr_take_power}
 		mutually_exclusive = { focus = WDC_disunited_forever}
 		mutually_exclusive = { focus = WDC_let_nor_take_power}
-		mutually_exclusive = { focus = WDC_keep_hoover_in_charge}
 		available = {
 			has_completed_focus = WDC_sway_them_with_alf
 		}
@@ -4096,7 +4135,14 @@ focus = {
 		ai_will_do = {
 			factor = 1
 		}
-
+		allow_branch = {
+			NOT ={
+				has_completed_focus = disunited_forever
+			}
+			NOT = {
+				has_completed_focus = let_nor_take_power
+			}
+		}
 		available_if_capitulated = no
 
 		completion_reward = {
@@ -4328,22 +4374,26 @@ focus = {
 		mutually_exclusive = { focus = WDC_let_alf_take_power}
 		mutually_exclusive = { focus = WDC_let_fdr_take_power}
 		mutually_exclusive = { focus = WDC_let_nor_take_power}
-		mutually_exclusive = { focus = WDC_keep_hoover_in_charge}
 		x = 70
 		y = 1
 		cost = 10
 		ai_will_do = {
 			factor = 1
 		}
-
 		available_if_capitulated = no
-
+		allow_branch = {
+			NOT ={
+				has_completed_focus = let_nor_take_power
+			}
+			NOT = {
+				has_completed_focus = let_alf_take_power
+			}
+			NOT = {
+				has_completed_focus = let_fdr_take_power
+			}
+		}
 		completion_reward = {
 			remove_ideas = WDC_great_depression1
-			# add_popularity = {
-			# 	ideology = neutrality 
-			# 	popularity = 0.25
-			# }
 			create_country_leader = {
 				name = "Sad Hoover"
 				picture = "Sad_Herbert_Hoover.dds"
@@ -4366,7 +4416,6 @@ focus = {
 		ai_will_do = {
 			factor = 1
 		}
-
 		available_if_capitulated = no
 
 		completion_reward = {
@@ -5368,7 +5417,6 @@ focus = {
 		mutually_exclusive = { focus = WDC_let_fdr_take_power}
 		mutually_exclusive = { focus = WDC_disunited_forever}
 		mutually_exclusive = { focus = WDC_let_alf_take_power}
-		mutually_exclusive = { focus = WDC_keep_hoover_in_charge}
 		available = {
 			has_completed_focus = WDC_sway_them_with_nor
 		}
@@ -5378,7 +5426,17 @@ focus = {
 		ai_will_do = {
 			factor = 1
 		}
-
+		allow_branch = {
+			NOT ={
+				has_completed_focus = disunited_forever
+			}
+			NOT = {
+				has_completed_focus = let_alf_take_power
+			}
+			NOT = {
+				has_completed_focus = let_fdr_take_power
+			}
+		}
 		available_if_capitulated = no
 
 		completion_reward = {
@@ -5428,7 +5486,13 @@ focus = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			###
+			SMA = {
+				remove_state_core = 2
+				add_state_claim = 2
+			}
+			WDC = {
+				add_state_claim = 2
+			}
 		}
 	}
 #
@@ -5447,7 +5511,7 @@ focus = {
 
 		completion_reward = {
 			WDC = {
-				set_state_controller = 2 ###plymouth bay###
+				transfer_state = 2 ###plymouth bay###
 				create_wargoal = {
 					target = SMA
 					type = annex_everything
@@ -5568,7 +5632,7 @@ focus = {
 			}
 			WDC = {
 				declare_war_on = {
-					target = SVI
+					target = SVT
 					type = annex_everything
 				}
 			}
@@ -5709,7 +5773,7 @@ focus = {
 			}
 			WDC = {
 				declare_war_on = {
-					target = SVI
+					target = SVT
 					type = annex_everything
 				}
 			}
@@ -6065,7 +6129,7 @@ focus = {
 					}
 					core_ohio = yes
 					core_indiana = yes
-					core_illinios = yes
+					core_illinois = yes
 					core_michigan = yes
 					core_wisconsin = yes
 					28 = { add_core_of = ROOT }
@@ -6679,12 +6743,8 @@ focus = {
 	focus = {
 		id = WDC_keep_hoover_in_charge
 		icon = GFX_focus_hoover
-		prerequisite = { focus = WDC_rebuild_congress focus = WDC_leave_congress_to_rot}
-		mutually_exclusive = { focus = WDC_prepare_a_coup}
-		mutually_exclusive = { focus = WDC_let_fdr_take_power}
-		mutually_exclusive = { focus = WDC_let_alf_take_power}
-		mutually_exclusive = { focus = WDC_disunited_forever}
-		mutually_exclusive = { focus = WDC_let_nor_take_power}
+		prerequisite = { focus = WDC_leave_congress_to_rot }
+		mutually_exclusive = { focus = WDC_prepare_a_coup }
 		available = {
 			has_completed_focus = WDC_sway_them_with_hoover
 		}
@@ -6700,7 +6760,11 @@ focus = {
 				}
 			}
 		}
-
+		allow_branch = {
+			NOT ={
+				has_completed_focus = prepare_a_coup
+			}
+		}
 		available_if_capitulated = no
 
 		completion_reward = {
@@ -7357,8 +7421,8 @@ focus = {
 	focus = {
 		id = WDC_prepare_a_coup
 		icon = GFX_focus_eng_concessions_to_the_trade_unions
-		prerequisite = { focus = WDC_leave_congress_to_rot}
-		mutually_exclusive = { focus = WDC_keep_hoover_in_charge}
+		prerequisite = { focus = WDC_leave_congress_to_rot }
+		mutually_exclusive = { focus = WDC_keep_hoover_in_charge }
 		available = {
 			has_completed_focus = WDC_sway_them_with_industry
 		}
@@ -7368,7 +7432,11 @@ focus = {
 		ai_will_do = {
 			factor = 1
 		}
-
+		allow_branch = {
+			NOT ={
+				has_completed_focus = keep_hoover_in_charge
+			}
+		}
 		available_if_capitulated = no
 
 		completion_reward = {
