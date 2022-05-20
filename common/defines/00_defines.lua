@@ -304,8 +304,8 @@ NCountry = {
 	AIR_SUPPLY_CONVERSION_SCALE = 0.05,				-- Conversion scale for planes to air supply
 	AIR_SUPPLY_DROP_EXPIRATION_HOURS = 168,			-- Air drop length after being dropped
 	STARTING_COMMAND_POWER = 0.0,					-- starting command power for every country
-	BASE_MAX_COMMAND_POWER = 200.0,					-- base value for maximum command power
-	BASE_COMMAND_POWER_GAIN = 0.4,					-- base value for daily command power gain
+	BASE_MAX_COMMAND_POWER = 100.0,					-- base value for maximum command power
+	BASE_COMMAND_POWER_GAIN = 0.006,					-- base value for daily command power gain
 	AIR_VOLUNTEER_PLANES_LIMIT = 0.2,				-- Ratio for volunteer planes available for sending in relation to sender air force
 	AIR_VOLUNTEER_BASES_CAPACITY_LIMIT = 0.1,		-- Ratio for volunteer planes available for sending in relation to receiver air base capacity
 	ATTACHE_XP_SHARE = 0.2,							-- Country received xp from attaches
@@ -1161,15 +1161,16 @@ NAir = {
 	
 	MISSION_COMMAND_POWER_COSTS = {  -- command power cost per plane to create a mission
 		0.0, -- AIR_SUPERIORITY
-		0.0, -- CAS		
-		0.0, -- INTERCEPTION	
+		0.0, -- CAS
+		0.0, -- INTERCEPTION
 		0.0, -- STRATEGIC_BOMBER
-		0.0, -- NAVAL_BOMBER	
-		0.0, -- DROP_NUKE		
-		0.0, -- PARADROP		
-		0.0, -- NAVAL_KAMIKAZE	
-        0.0, -- PORT_STRIKE		
-		0.3, -- AIR_SUPPLY		
+		0.0, -- NAVAL_BOMBER
+		0.0, -- DROP_NUKE
+		0.0, -- PARADROP
+		0.0, -- NAVAL_KAMIKAZE
+        0.0, -- PORT_STRIKE
+		0.0, -- ATTACK_LOGISTICS
+		0.2, -- AIR_SUPPLY
 		0.0, -- TRAINING
 		0.0, -- NAVAL_MINES_PLANTING
 		0.0, -- NAVAL_MINES_SWEEPING
