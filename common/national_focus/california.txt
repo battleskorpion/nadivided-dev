@@ -1232,20 +1232,20 @@ focus_tree = {
 	focus = {
 		id = SCA_anti_establishment
 		icon = GFX_focus_SCA_uptonsinclair
-		x = 6
-		y = 2
+		x = -3
+		y = 1
 		cost = 2
 		available_if_capitulated = yes 
 		available = {
 			always = no
 		}
 		prerequisite = {
-			focus= SCA_maintain_the_western_democracies
+			focus= SCA_divided_we_fall
 		}
 		mutually_exclusive = {
 			focus = SCA_the_establishment
 		}
-		relative_position_id = SCA_maintain_the_western_democracies
+		relative_position_id = SCA_divided_we_fall
 		ai_will_do = { 
 			factor = 1
 		} 
@@ -1325,14 +1325,15 @@ focus_tree = {
 	focus = { 
 		id = SCA_divided_we_fall
 		icon = GFX_focus_SCA_calibear
-		x = 13
-		y = 2
+		x = 10
+		y = 1
 		cost = 8
 		available_if_capitulated = yes 
 		available = {
 		}
 		prerequisite = {
 			focus = SCA_maintain_the_western_democracies
+			focus = SCA_halt_the_elections
 		}
 		relative_position_id = SCA_maintain_the_western_democracies
 		ai_will_do = { 
@@ -1370,30 +1371,442 @@ focus_tree = {
 			} 
 		}
 	}
+#########military paths
 	focus = { 
 		id = SCA_the_military_steps_in
 		icon = GFX_focus_SCA_patton
-		x = -3
-		y = 2
+		x = 3
+		y = 1
 		cost = 3
 		available_if_capitulated = yes 
 		available = {
 			always = no
 		}
 		prerequisite = {
-		 	focus= SCA_halt_the_elections
+		 	focus= SCA_divided_we_fall
 		 }
 		mutually_exclusive = { 
-			focus = SCA_disneys_plan 
+			focus = SCA_the_man_with_the_plan
 		}
-		 relative_position_id = SCA_halt_the_elections
+		 relative_position_id = SCA_divided_we_fall
 		ai_will_do = { 
 			factor = 15
 		} 
 		completion_reward = {
 		}
 	}
+	focus = {
+		id = SCA_reach_out_to_japan
+		icon = GFX_focus_chi_reach_out_to_japan
+		mutually_exclusive = { focus = SCA_british_cooperation }
+		prerequisite = { focus = SCA_the_military_steps_in }
+		x = 5
+		y = 1
+		relative_position_id = SCA_the_military_steps_in
+	
+		cost = 10
+	
+		ai_will_do = {
+			factor = 1
+		}
+	
+		available = {
+		}
+	
+		bypass = {
+			
+		}
+		available_if_capitulated = no
 
+		completion_reward = {
+
+		}
+	}
+	
+	focus = {
+		id = SCA_small_arms_expertise
+		icon = GFX_focus_secret_rearmament
+		prerequisite = { focus = SCA_reach_out_to_japan }
+		x = 2
+		y = 1
+		relative_position_id = SCA_reach_out_to_japan
+	
+		cost = 10
+	
+		ai_will_do = {
+			factor = 1
+		}
+	
+		available = {
+			FRA_will_support = yes
+		}
+	
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			add_tech_bonus = {
+				name = SCA_small_arms_expertise
+				bonus = 1.0
+				uses = 1
+				category = infantry_weapons
+			}
+		}
+	}
+	
+	focus = {
+		id = SCA_elite_mountaineers
+		icon = GFX_goal_generic_allies_build_infantry
+		prerequisite = { focus = SCA_invite_soviet_advisers focus = SCA_small_arms_expertise }
+		x = 0
+		y = 1
+		relative_position_id = SCA_small_arms_expertise
+	
+		cost = 10
+	
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				factor = 0.1
+				NOT = {
+					has_tech = tech_mountaineers # Wait for the full benefit
+				}
+			}
+			modifier = {
+				factor = 4
+				tag = PRC
+			}
+		}
+	
+		available = {
+			OR = {
+				FRA_will_support = yes
+				SOV_will_support = yes
+			}
+		}
+	
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+	
+		completion_reward = {		
+			add_ideas = SCA_elite_mountaineers
+			add_tech_bonus = {
+				name = SCA_elite_mountaineers
+				bonus = 1.0
+				uses = 1
+				category = mountaineers_tech
+			}
+			if = {
+				limit = {
+					has_tech = tech_mountaineers
+				}
+				custom_effect_tooltip = SCA_free_mountain_template_tt
+				division_template = {
+					name = "Chinese Mountain Division"
+					division_names_group = SCA_MNT_01
+					regiments = {
+						mountaineers = { x = 0 y = 0 }
+						mountaineers = { x = 0 y = 1 }
+						mountaineers = { x = 0 y = 2 }
+			
+						mountaineers = { x = 1 y = 0 }
+						mountaineers = { x = 1 y = 1 }
+						mountaineers = { x = 1 y = 2 }
+			
+						mountaineers = { x = 2 y = 0 }
+						artillery_brigade = { x = 2 y = 1 }
+						artillery_brigade = { x = 2 y = 2 }
+					}
+					support = {
+						artillery = { x = 0 y = 0 }
+					}
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = SCA_heavy_weapons
+		icon = GFX_goal_generic_army_artillery2
+		prerequisite = { focus = SCA_elite_mountaineers }
+		x = 0
+		y = 2
+		relative_position_id = SCA_small_arms_expertise
+		
+		cost = 10
+	
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 4
+				tag = PRC
+			}
+		}
+	
+		available = {
+			OR = {
+				FRA_will_support = yes
+				SOV_will_support = yes
+			}
+		}
+	
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			add_tech_bonus = {
+				name = SCA_heavy_weapons
+				bonus = 1.0
+				uses = 1
+				category = artillery
+			}
+		}
+	}
+	
+	
+	focus = {
+		id = SCA_guarantee_the_hanoi_route
+		icon = GFX_goal_generic_intelligence_exchange
+		prerequisite = { focus = SCA_reach_out_to_japan }
+		x = -1
+		y = 1
+		relative_position_id = SCA_reach_out_to_japan
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+	
+		available = {
+			all_other_country = { NOT = { has_completed_focus = SCA_guarantee_the_hanoi_route } }
+			FRA_will_support = yes
+			325 = { #Yunnan
+				CONTROLLER = {
+					OR = {
+						tag = ROOT
+						is_subject_of = ROOT
+						is_in_faction_with = ROOT
+					}
+				}
+			}
+			671 = { #Tonkin
+				CONTROLLER = {
+					NOT = { has_war_with = ROOT }
+					OR = {
+						original_tag = FRA
+						is_subject_of = FRA
+					}
+				}
+			}
+		}
+	
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		completion_reward = {
+			671 = { #Tonkin
+				set_state_flag = SCA_needed_for_hanoi_route
+			}
+			325 = { #Yunnan
+				set_state_flag = SCA_needed_for_hanoi_route
+			}	
+			set_variable = { SCA_hanoi_route_current_level = 3 }
+			add_offsite_building = { type = arms_factory level = 3 }
+		}
+	}
+	
+	focus = {
+		id = SCA_construction_battalions
+		icon = GFX_goal_generic_construction2
+		prerequisite = { focus = SCA_guarantee_the_hanoi_route focus = SCA_burma_road }
+		x = 1
+		y = 1
+		relative_position_id = SCA_guarantee_the_hanoi_route
+	
+		cost = 10
+	
+		ai_will_do = {
+			factor = 1
+		}
+	
+		available = {
+			OR = {
+				FRA_will_support = yes
+				ENG_will_support = yes
+			}
+		}
+	
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+	
+		completion_reward = {
+			add_ideas = SCA_construction_battalions
+			add_tech_bonus = {
+				name = SCA_construction_battalions
+				bonus = 1.0
+				uses = 1
+				category = engineers_tech
+			}
+		}
+	}
+	
+	focus = {
+		id = SCA_japanese_military_mission
+		icon = GFX_goal_generic_defence
+		prerequisite = { focus = SCA_guarantee_the_hanoi_route }
+		x = -1
+		y = 3
+		relative_position_id = SCA_reach_out_to_japan
+	
+		cost = 10
+	
+		ai_will_do = {
+			factor = 1
+		}
+	
+		available = {
+			FRA_will_support = yes
+		}
+	
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		completion_reward = {
+			air_experience = 25
+			if = {
+				limit = {
+					NOT = {
+						any_other_country = {
+							any_army_leader = {
+								has_id = 606
+							}
+						}
+					}
+				}
+				create_corps_commander = {
+					name = "Akira Mutō"
+					gfx = GFX_europe_generic_land_3
+					attack_skill = 2
+					defense_skill = 3
+					planning_skill = 2
+					logistics_skill = 3
+					id = 606
+					skill = 3
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = SCA_japanese_drill
+		icon = GFX_goal_generic_build_tank
+		prerequisite = { focus = SCA_heavy_weapons }
+		prerequisite = { focus = SCA_japanese_military_mission }
+		x = 0
+		y = 4
+		relative_position_id = SCA_reach_out_to_japan
+	
+		cost = 10
+	
+		ai_will_do = {
+			factor = 1
+		}
+	
+		available = {
+			FRA_will_support = yes
+		}
+	
+		bypass = {
+	
+		}
+	
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+	
+		completion_reward = {
+			every_army_leader = {
+				add_defense = 1
+			}
+			add_ideas = SCA_japan_drill		
+		}
+	}
+	
+	focus = {
+		id = SCA_modern_logistics
+		icon = GFX_goal_generic_army_motorized
+		prerequisite = { focus = SCA_japan_drill }
+		x = -1
+		y = 1
+		relative_position_id = SCA_japan_drill
+	
+		cost = 10
+	
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 4
+				tag = SCA
+			}
+		}
+	
+		available = {
+		}
+	
+		bypass = {
+	
+		}
+		available_if_capitulated = no
+	
+		completion_reward = {
+			every_army_leader = {
+				add_logistics = 1
+			}
+			add_ideas = SCA_modern_logistics
+			add_tech_bonus = {
+				name = SCA_modern_logistics
+				bonus = 1.0
+				uses = 1
+				technology = tech_field_hospital
+				technology = tech_field_hospital2
+				technology = tech_field_hospital3
+				technology = tech_field_hospital4
+				technology = tech_logistics_company
+				technology = tech_logistics_company2
+				technology = tech_logistics_company3
+				technology = tech_logistics_company4
+			}
+		}
+	}
 	focus = { 
 		id = SCA_maintain_the_western_democracies
 		icon = GFX_goal_generic_alliance
@@ -3002,31 +3415,7 @@ focus = {
 		popularity = 0.35
 			}
 		}
-	}
-	focus = { 
-		id = SCA_hollywood_dreamers
-		icon = GFX_focus_SCA_hollywood
-		x = -4
-		y = 1
-		cost = 10
-		available_if_capitulated = yes 
-		prerequisite = {
-			focus= SCA_disneys_plan
-			focus = SCA_the_military_steps_in
-		}
-		mutually_exclusive = {
-		}
-		relative_position_id = SCA_disneys_plan
-		ai_will_do = { 
-			factor = 1
-		} 
-		completion_reward = { 
-			add_popularity = {
-				ideology = democratic
-				popularity = -0.20
-			}
-		}
-	}		
+	}	
 	focus = { 
 		id = SCA_southern_spirit
 		icon = GFX_focus_southern_unity
@@ -3049,28 +3438,6 @@ focus = {
 		}
 	}
 	focus = { 
-		id = SCA_disney_propoganda
-		icon = GFX_focus_SCA_disney_propaganda
-		x = 0
-		y = 1
-		cost = 10
-		available_if_capitulated = yes 
-		prerequisite = {
-			focus= SCA_l_the_coalition
-		}
-		mutually_exclusive = {
-		}
-		relative_position_id = SCA_l_the_coalition
-		ai_will_do = { 
-			factor = 1
-		} 
-		completion_reward = { 
-			add_political_power = 150
-			add_research_slot = 1
-		}
-	}		
-	
-	focus = { 
 		id = SCA_army_clique
 		icon = GFX_focus_SCA_army_clique
 		x = 0
@@ -3088,66 +3455,6 @@ focus = {
 		} 
 		completion_reward = { 
 			army_experience = 100
-		}
-	}	
-	focus = { 
-		id = SCA_l_the_coalition
-		icon = GFX_focus_SCA_buisnessconnection
-		x = 0
-		y = 1
-		cost = 10
-		available_if_capitulated = yes 
-		prerequisite = {
-			focus= SCA_hollywood_dreamers
-		}
-		mutually_exclusive = {
-		}
-		relative_position_id = SCA_hollywood_dreamers
-		ai_will_do = { 
-			factor = 1
-		} 
-		completion_reward = { 
-			43 = {
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type =  arms_factory
-					level = 2
-					instant_build = yes
-				}
-			}
-					171 = {
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type =  arms_factory
-					level = 2
-					instant_build = yes
-				}
-			}
-		}
-
-	}
-	focus = { 
-		id = SCA_disneys_plan
-		icon = GFX_focus_SCA_waltdisney
-		x = 3
-		y = 2
-		cost = 10
-		available_if_capitulated = yes 
-		available = {
-			always = no
-		}
-		prerequisite = {
-			focus= SCA_halt_the_elections
-		}
-		mutually_exclusive = { 
-			focus = SCA_the_military_steps_in 
-		}
-		relative_position_id = SCA_halt_the_elections
-		ai_will_do = { 
-			factor = 1
-		} 
-		completion_reward = { 
-			
 		}
 	}	
 	focus = { 
@@ -3169,7 +3476,7 @@ focus = {
 		completion_reward = { 
 			add_ideas = SCA_cult_of_patton
 		}
-	}	
+	}
 	focus = { 
 		id = SCA_grow_the_army
 		icon = GFX_focus_SCA_grow_the_army
@@ -3195,7 +3502,6 @@ focus = {
 			add_manpower = 50000
 		}
 	}
-	
 	focus = { 
 		id = SCA_californians_love_war
 		icon = GFX_focus_SCA_californians_love_war
@@ -3220,6 +3526,7 @@ focus = {
 			add_research_slot = 1
 		}
 	}	
+		
 	focus = { 
 		id = SCA_cowardly_arizona
 		icon = GFX_focus_SCA_cali_newmexico
@@ -3642,11 +3949,11 @@ focus = {
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { 
-			focus = SCA_disneys_plan
+			focus = SCA_divided_we_fall
 		}
 		mutually_exclusive = {
 		}
-		relative_position_id = SCA_disneys_plan
+		relative_position_id = SCA_divided_we_fall
 		ai_will_do = { 
 			factor = 1
 		} 
@@ -3813,13 +4120,16 @@ focus = {
 		id = SCA_the_man_with_the_plan
 		icon = GFX_focus_SCA_manwithplan
 		x = 17
-		y = 1
+		y = 2
 		cost = 10
 		available_if_capitulated = yes 
 		prerequisite = { 
-			focus = SCA_disneys_plan
+			focus = SCA_halt_the_elections
 		}
-		relative_position_id = SCA_disneys_plan
+		mutually_exclusive = {
+			 focus = SCA_the_military_steps_in
+		}
+		relative_position_id = SCA_halt_the_elections
 		ai_will_do = { 
 			factor = 1
 		} 
@@ -3835,7 +4145,7 @@ focus = {
 	focus = { 
 		id = SCA_crush_the_red_press
 		icon = GFX_goal_generic_war_with_comintern
-		x = -1
+		x = 0
 		y = 1
 		cost = 10
 		available_if_capitulated = yes 
@@ -3864,7 +4174,7 @@ focus = {
 	focus = { 
 		id = SCA_enforce_segregation
 		icon = GFX_goal_generic_dangerous_deal
-		x = 1
+		x = 2
 		y = 1
 		cost = 10
 		available_if_capitulated = yes 
@@ -3998,7 +4308,7 @@ focus = {
 	focus = { 
 		id = SCA_disney_radio
 		icon = GFX_focus_SCA_disney_radio
-		x = -1
+		x = 0
 		y = 2
 		cost = 5
 		available_if_capitulated = yes 
