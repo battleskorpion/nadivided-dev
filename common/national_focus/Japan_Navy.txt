@@ -38,8 +38,77 @@ focus = {
 	ai_will_do = {
 		factor = 100
 	}
-	completion_reward = { 
 
+	complete_tooltip = {
+		air_experience = 25
+		if = { limit = { has_country_flag = aviation_effort_AB }
+			add_building_construction = {
+				type = air_base
+				level = 2
+				instant_build = yes
+			}
+		}			
+		add_doctrine_cost_reduction = {
+			name =  air_doc_bonus
+			cost_reduction = 0.5
+			uses = 1
+			category = air_doctrine
+		}		
+	}
+
+	completion_reward = {
+		air_experience = 25
+
+		if = {
+			limit = {
+				capital_scope = {
+					NOT = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = air_base
+						size > 1
+					}
+				}
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+				ROOT = { set_country_flag = aviation_effort_AB }
+			}
+		}
+		if = {
+			limit = {
+				capital_scope = {
+					free_building_slots = {
+						building = air_base
+						size > 1
+					}
+				}
+			}
+			capital_scope = {
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+				ROOT = { set_country_flag = aviation_effort_AB }
+			}
+		}
+		add_doctrine_cost_reduction = {
+			name = air_doc_bonus
+			cost_reduction = 0.5
+			uses = 1
+			category = air_doctrine
+		}
 	}
 }
 focus = {
@@ -54,10 +123,23 @@ focus = {
 	ai_will_do = {
 		factor = 100
 	}
-	completion_reward = { 
+
+	completion_reward = {
+		add_equipment_to_stockpile = {
+			type = nav_bomber_equipment_1
+			amount = 210
+			producer = IJA
+			}
+		add_tech_bonus = {
+			name = nav_bomber_bonus
+			bonus = 1.0
+			ahead_reduction = 2
+			uses = 1
+			category = naval_bomber
+		}
+	}
 
 	}
-}
 focus = {
 	id = IJA_Jap_Cas
 	icon = GFX_
@@ -70,8 +152,14 @@ focus = {
 	ai_will_do = {
 		factor = 100
 	}
-	completion_reward = { 
-
+	completion_reward = {
+		add_tech_bonus = {
+			name = CAS_bonus
+			bonus = 1.0
+			ahead_reduction = 2
+			uses = 1
+			category = cas_bomber
+		}
 	}
 }	
 focus = {
@@ -86,8 +174,20 @@ focus = {
 	ai_will_do = {
 		factor = 100
 	}
-	completion_reward = { 
-
+	completion_reward = {
+		add_tech_bonus = {
+			name = fighter_bonus
+			bonus = 1.0
+			uses = 2
+			technology = early_fighter
+			technology = fighter1
+			technology = fighter2
+			technology = fighter3
+			technology = heavy_fighter1
+			technology = heavy_fighter2
+			technology = heavy_fighter3
+		}
+		air_experience = 25
 	}
 }
 focus = {
@@ -103,8 +203,14 @@ focus = {
 		factor = 100
 	}
 	completion_reward = { 
-
-	}
+		add_tech_bonus = {
+			name = cr_bonus
+			bonus = 1.0
+			ahead_reduction = 2
+			uses = 1
+			category = cv_tech
+		}			
+	} 
 }
 focus = {
 	id = IJA_Bomber_Upgrade
@@ -118,9 +224,34 @@ focus = {
 	ai_will_do = {
 		factor = 100
 	}
-	completion_reward = { 
-
+	completion_reward = {
+		hidden_effect = {
+			if = {
+				limit = { is_ai = yes }
+				add_manpower = 100
+				add_equipment_to_stockpile = {
+					type = tac_bomber_equipment_0
+					amount = 50
+					producer = WDC
+				}
+			}
+		}
 	}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = bomber_bonus
+				bonus = 1.0
+				uses = 2
+				technology = strategic_bomber1
+				technology = strategic_bomber2
+				technology = strategic_bomber3
+				category = tactical_bomber
+			}
+			air_experience = 50
+		}
 }
 focus = {
 	id = IJA_Fighting_With_The_Army_Faction
@@ -152,7 +283,7 @@ focus = {
 		factor = 100
 	}
 	completion_reward = { 
-
+		add_manpower = 10000
 	}
 }
 focus = {
@@ -186,7 +317,10 @@ focus = {
 		factor = 100
 	}
 	completion_reward = { 
-
+		create_wargoal = {
+			target = SHI
+			type = annex_everything
+		}	
 	}
 }	
 
@@ -204,7 +338,7 @@ focus = {
 		factor = 100
 	}
 	completion_reward = { 
-
+		add_offsite_building = { type = industrial_complex level = 2 }
 	}
 }	
 
@@ -221,7 +355,37 @@ focus = {
 		factor = 100
 	}
 	completion_reward = { 
-		add_timed_idea = { idea = IJA_Japanese_Army_Phase_1_idea  days = 365 }
+		random_owned_controlled_state = {
+
+			limit = {
+				free_building_slots = {
+					building = industrial_complex
+					size > 1
+					include_locked = yes
+				}
+				OR = {
+					is_in_home_area = yes
+					NOT = {
+						owner = {
+							any_owned_state = {
+								free_building_slots = {
+									building = industrial_complex
+									size > 1
+									include_locked = yes
+								}
+								is_in_home_area = yes
+							}
+						}
+					}
+				}
+			}
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
 	}
 }	
 
@@ -238,7 +402,12 @@ focus = {
 		factor = 100
 	}
 	completion_reward = { 
-
+		add_tech_bonus = {
+			name = synt
+			bonus = 1.5
+			uses = 1
+			category = synth_resources
+		}
 	}
 }	
 
@@ -255,7 +424,8 @@ focus = {
 		factor = 100
 	}
 	completion_reward = { 
-
+		add_manpower = 5000
+		add_timed_idea = { idea = IJA_Ask_For_filipino_laborers_idea  days = 150 }
 	}
 }	
 
@@ -312,7 +482,130 @@ focus = {
 		factor = 100
 	}
 	completion_reward = { 
+		random_owned_controlled_state = {
 
+			limit = {
+				free_building_slots = {
+					building = industrial_complex
+					size > 2
+					include_locked = yes
+				}
+				OR = {
+					is_in_home_area = yes
+					NOT = {
+						owner = {
+							any_owned_state = {
+								free_building_slots = {
+									building = industrial_complex
+									size > 2
+									include_locked = yes
+								}
+								is_in_home_area = yes
+							}
+						}
+					}
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}
+		}
+		random_owned_controlled_state = {
+
+			limit = {
+				free_building_slots = {
+					building = industrial_complex
+					size > 2
+					include_locked = yes
+				}
+				OR = {
+					is_in_home_area = yes
+					NOT = {
+						owner = {
+							any_owned_state = {
+								free_building_slots = {
+									building = industrial_complex
+									size > 2
+									include_locked = yes
+								}
+								is_in_home_area = yes
+							}
+						}
+					}
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}
+		}
+		random_owned_controlled_state = {
+
+			limit = {
+				free_building_slots = {
+					building = industrial_complex
+					size > 2
+					include_locked = yes
+				}
+				OR = {
+					is_in_home_area = yes
+					NOT = {
+						owner = {
+							any_owned_state = {
+								free_building_slots = {
+									building = industrial_complex
+									size > 2
+									include_locked = yes
+								}
+								is_in_home_area = yes
+							}
+						}
+					}
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}
+		}
+		random_owned_controlled_state = {
+
+			limit = {
+				free_building_slots = {
+					building = industrial_complex
+					size > 2
+					include_locked = yes
+				}
+				OR = {
+					is_in_home_area = yes
+					NOT = {
+						owner = {
+							any_owned_state = {
+								free_building_slots = {
+									building = industrial_complex
+									size > 2
+									include_locked = yes
+								}
+								is_in_home_area = yes
+							}
+						}
+					}
+				}
+			}
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}
+		}
 	}
 }	
 
@@ -329,7 +622,10 @@ focus = {
 		factor = 100
 	}
 	completion_reward = { 
-
+		create_wargoal = {
+			target = PBC
+			type = annex_everything
+		}	
 	}
 }	
 
@@ -349,7 +645,7 @@ focus = {
 		factor = 100
 	}
 	completion_reward = { 
-		add_timed_idea = { idea = IJA_Japanese_Army_Phase_4_idea  days = 365 }
+		add_timed_idea = { idea = IJA_Japanese_Army_Phase_4_idea  days = 465 }
 	}
 }	
 
@@ -365,9 +661,42 @@ focus = {
 	ai_will_do = {
 		factor = 100
 	}
-	completion_reward = { 
 
-	}
+	available = { has_tech = synth_oil_experiments }
+
+	completion_reward = { 
+	  custom_effect_tooltip = SLA_research_syth_tt
+	  random_owned_controlled_state = {
+		  limit = {
+			  free_building_slots = {
+				  building = synthetic_refinery 
+				  size > 1
+				  include_locked = yes
+			  }
+			  OR = {
+				  is_in_home_area = yes
+				  NOT = {
+					  owner = {
+						  any_owned_state = {
+							  free_building_slots = {
+								  building = synthetic_refinery
+								  size > 1
+								  include_locked = yes
+							  }
+							  is_in_home_area = yes
+						  }
+					  }
+				  }
+			  }
+		  }
+		  add_extra_state_shared_building_slots = 1
+		  add_building_construction = {
+			  type = synthetic_refinery
+			  level = 1
+			  instant_build = yes
+			  }
+		  }
+	  }
 }	
 focus = {
 	id = IJA_Alaska_Question
@@ -382,7 +711,10 @@ focus = {
 		factor = 100
 	}
 	completion_reward = { 
-
+		create_wargoal = {
+			target = SAK
+			type = annex_everything
+		}	
 	}
 }	
 
@@ -399,8 +731,14 @@ focus = {
 	ai_will_do = {
 		factor = 100
 	}
-	completion_reward = { 
-
+	completion_reward = {
+		add_tech_bonus = {
+			name = ss_bonus
+			bonus = 1.0
+			ahead_reduction = 2
+			uses = 1
+			category = ss_tech
+		}
 	}
 }	
 
@@ -417,7 +755,7 @@ focus = {
 		factor = 100
 	}
 	completion_reward = { 
-
+		add_ideas = IJA_Motorziation_Project_idea
 	}
 }	
 focus = {
@@ -433,7 +771,7 @@ focus = {
 		factor = 100
 	}
 	completion_reward = { 
-
+		add_timed_idea = { idea = IJA_Naval_Production_Priority_idea  days = 500 }
 	}
 }	
 
@@ -450,7 +788,7 @@ focus = {
 		factor = 100
 	}
 	completion_reward = { 
-
+#decisions to get Cores on hawaii
 	}
 }	
 
@@ -468,7 +806,11 @@ focus = {
 		factor = 100
 	}
 	completion_reward = { 
-
+		add_equipment_to_stockpile = {
+			type = infantry_equipment
+			amount = 2500
+			producer = IJA
+		}     
 	}
 }
 focus = {
@@ -484,7 +826,16 @@ focus = {
 		factor = 100
 	}
 	completion_reward = { 
+		add_ideas = IJA_Imperial_Japanese_Marines_idea
+		add_tech_bonus = {
+			name = special_forces_bonus
+			bonus = 1.0
+			uses = 1
 
+			technology = tech_mountaineers
+			technology = tech_mountaineers2
+			technology = tech_mountaineers3
+		}
 	}
 }
 focus = {
@@ -500,7 +851,14 @@ focus = {
 		factor = 100
 	}
 	completion_reward = { 
-
+		add_tech_bonus = {
+			name = special_forces_bonus
+			bonus = 1.0
+			uses = 1
+			technology = paratroopers
+			technology = paratroopers2
+			technology = paratroopers3
+		}
 	}
 }
 focus = {
@@ -516,7 +874,7 @@ focus = {
 		factor = 100
 	}
 	completion_reward = { 
-
+		add_research_slot = 1
 	}
 }
 focus = {
@@ -532,7 +890,12 @@ focus = {
 		factor = 100
 	}
 	completion_reward = { 
-
+		add_tech_bonus = {
+			name = infantry_artillery_bonus
+			bonus = 1.0
+			uses = 1
+			category = infantry_weapons
+		}
 	}
 }
 
@@ -550,7 +913,12 @@ focus = {
 		factor = 100
 	}
 	completion_reward = { 
-
+		add_tech_bonus = {
+			name = infantry_artillery_bonus
+			bonus = 1.0
+			uses = 1
+			category = artillery
+		}
 	}
 }
 
@@ -567,7 +935,12 @@ focus = {
 		factor = 100
 	}
 	completion_reward = { 
-
+		add_tech_bonus = {
+			name = armor_bonus
+			bonus = 1.0
+			uses = 2
+			category = armor
+		}
 	}
 }
 
@@ -585,7 +958,12 @@ focus = {
 		factor = 100
 	}
 	completion_reward = { 
-
+		add_tech_bonus = {
+			name = motorized_bonus
+			ahead_reduction = 2
+			uses = 1
+			category = motorized_equipment
+		}
 	}
 }
 
