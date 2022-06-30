@@ -1,0 +1,1144 @@
+focus_tree = {
+	id = Soviet_navy
+	country = {
+		factor = 0
+		modifier = {
+			add = 10
+			tag = SOJ
+		}
+	}
+	continuous_focus_position = { x = 500 y = 500 }
+	default = no
+	focus = {
+	id = SOJ_Prepare_Our_Navy
+	icon = GFX_
+	x = 25
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = { 
+		add_offsite_building = { type = dockyard level = 3 }
+		
+	}
+}
+focus = {
+	id = SOJ_Demand_Help_From_Airforce
+	icon = GFX_
+	relative_position_id = SOJ_Prepare_Our_Navy
+	prerequisite = { focus = SOJ_Prepare_Our_Navy }
+	x = -10
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+	complete_tooltip = {
+		air_experience = 25
+		if = { limit = { has_country_flag = aviation_effort_AB }
+			add_building_construction = {
+				type = air_base
+				level = 2
+				instant_build = yes
+			}
+		}			
+		add_doctrine_cost_reduction = {
+			name =  air_doc_bonus
+			cost_reduction = 0.5
+			uses = 1
+			category = air_doctrine
+		}		
+	}
+	completion_reward = {
+
+		air_experience = 25
+		if = {
+			limit = {
+				capital_scope = {
+					NOT = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = air_base
+						size > 1
+					}
+				}
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+				ROOT = { set_country_flag = aviation_effort_AB }
+			}
+		}
+		if = {
+			limit = {
+				capital_scope = {
+					free_building_slots = {
+						building = air_base
+						size > 1
+					}
+				}
+			}
+			capital_scope = {
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+				ROOT = { set_country_flag = aviation_effort_AB }
+			}
+		}
+		add_doctrine_cost_reduction = {
+			name = air_doc_bonus
+			cost_reduction = 0.5
+			uses = 1
+			category = air_doctrine
+		}
+	}
+}
+
+focus = {
+	id = SOJ_Soviet_Fighters
+	icon = GFX_
+	relative_position_id = SOJ_Demand_Help_From_Airforce
+	prerequisite = { focus = SOJ_Demand_Help_From_Airforce }
+	x = -1
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_tech_bonus = {
+			name = fighter_bonus
+			bonus = 1.0
+			uses = 2
+			technology = early_fighter
+			technology = fighter1
+			technology = fighter2
+			technology = fighter3
+			technology = heavy_fighter1
+			technology = heavy_fighter2
+			technology = heavy_fighter3
+		}
+		air_experience = 25
+	}
+}
+
+focus = {
+	id = SOJ_Soviet_cas
+	icon = GFX_
+	relative_position_id = SOJ_Demand_Help_From_Airforce
+	prerequisite = { focus = SOJ_Demand_Help_From_Airforce }
+	x = 1
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_tech_bonus = {
+			name = CAS_bonus
+			bonus = 1.0
+			ahead_reduction = 2
+			uses = 1
+			category = cas_bomber
+		}
+	}
+}
+
+focus = {
+	id = SOJ_Soviet_Bombers
+	icon = GFX_
+	relative_position_id = SOJ_Soviet_cas
+	prerequisite = { focus = SOJ_Soviet_cas }
+	prerequisite = { focus = SOJ_Soviet_Fighters }
+	x = -1
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = {
+		add_tech_bonus = {
+			name = bomber_bonus
+			bonus = 1.0
+			uses = 2
+			technology = strategic_bomber1
+			technology = strategic_bomber2
+			technology = strategic_bomber3
+			category = tactical_bomber
+		}
+		air_experience = 50
+	}
+}
+
+focus = {
+	id = SOJ_Soviet_Arial_Procurement
+	icon = GFX_
+	relative_position_id = SOJ_Soviet_Bombers
+	prerequisite = { focus = SOJ_Soviet_Bombers }
+	x = 0
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = { 
+		add_offsite_building = { type = arms_factory level = 2 }
+	}
+}
+focus = {
+	id = SOJ_Aleutian_Steel_Projects
+	icon = GFX_
+	relative_position_id = SOJ_Prepare_Our_Navy
+	prerequisite = { focus = SOJ_Prepare_Our_Navy }
+	x = -4
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = { 
+		71 = {
+			add_resource = {
+				type = steel
+				amount = 7
+			}
+		}
+	}
+}
+
+focus = {
+	id = SOJ_Aleutian_Steel_Projects_2
+	icon = GFX_
+	relative_position_id = SOJ_Aleutian_Steel_Projects
+	prerequisite = { focus = SOJ_Aleutian_Steel_Projects }
+	x = 0
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = { 
+		71 = {
+			add_resource = {
+				type = steel
+				amount = 9
+			}
+		}
+	}
+}
+
+focus = {
+	id = SOJ_Gulag_Labour
+	icon = GFX_
+	relative_position_id = SOJ_Aleutian_Steel_Projects_2
+	prerequisite = { focus = SOJ_Aleutian_Steel_Projects_2 }
+	x = 0
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = { 
+		add_ideas = SOJ_Gulag_Labour_idea
+	}
+}
+
+focus = {
+	id = SOJ_Ask_For_More_Prisoners
+	icon = GFX_
+	relative_position_id = SOJ_Gulag_Labour
+	prerequisite = { focus = SOJ_Gulag_Labour }
+	x = 0
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = { 
+		71 = {
+			add_manpower = 15000
+
+		}
+	}
+}
+
+
+focus = {
+	id = SOJ_naval_effort
+	icon = GFX_
+	relative_position_id = SOJ_Prepare_Our_Navy
+	prerequisite = { focus = SOJ_Prepare_Our_Navy }
+	x = 10
+	y = 1
+	cost = 10
+
+	available_if_capitulated = yes
+
+			modifier = {
+			factor = 25
+		}
+
+	available = {
+		any_owned_state = {
+			is_coastal = yes
+		}
+	}
+
+	complete_tooltip = {
+		navy_experience = 25
+		add_extra_state_shared_building_slots = 3
+		add_building_construction = {
+			type = dockyard
+			level = 3
+			instant_build = yes
+		}
+	}
+	
+	completion_reward = {
+		navy_experience = 25
+		if = {
+			limit = {
+				NOT = {
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+				any_owned_state = {
+					is_coastal = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					is_coastal = yes
+					free_building_slots = {
+						building = dockyard
+						size > 2
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = dockyard
+					level = 3
+					instant_build = yes
+				}
+			}
+			set_country_flag = naval_effort_built
+		}
+		if = {
+			limit = {
+				NOT = { has_country_flag = naval_effort_built }
+				any_owned_state = {
+					dockyard > 0
+					free_building_slots = {
+						building = dockyard
+						size > 2
+						include_locked = yes
+					}
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					dockyard > 0
+					free_building_slots = {
+						building = dockyard
+						size > 2
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = dockyard
+					level = 3
+					instant_build = yes
+				}
+			}
+			set_country_flag = naval_effort_built
+		}
+		if = {
+			limit = {
+				NOT = { has_country_flag = naval_effort_built }
+				NOT = {
+					any_owned_state = {
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+			}
+			random_state = {
+				limit = {
+					controller = { tag = ROOT }
+					free_building_slots = {
+						building = dockyard
+						size > 2
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = dockyard
+					level = 3
+					instant_build = yes
+				}
+			}
+		}			
+	}
+}
+
+focus = {
+	id = SOJ_flexible_navy11
+	icon = GFX_
+	prerequisite = { focus = SOJ_naval_effort }
+	mutually_exclusive = { focus = SOJ_large_navy11 }
+	x = -1
+	y = 1
+	relative_position_id = SOJ_naval_effort
+	cost = 10
+
+	available_if_capitulated = yes
+
+
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			all_owned_state = {
+				OR = {
+					is_coastal = no
+					dockyard < 1
+				}
+			}
+		}
+	}
+
+	completion_reward = {
+		add_doctrine_cost_reduction = {
+			name = sub_op_bonus
+			cost_reduction = 0.5
+			uses = 2
+			technology = convoy_interdiction_ti
+			technology = unrestricted_submarine_warfare
+			technology = wolfpacks
+			technology = advanced_submarine_warfare
+			technology = combined_operations_raiding
+		}
+	}
+}
+
+focus = {
+	id = SOJ_large_navy1
+	icon = GFX_
+	prerequisite = { focus = SOJ_naval_effort }
+	mutually_exclusive = { focus = SOJ_flexible_navy11 }
+	x = 1
+	y = 1
+	relative_position_id = SOJ_naval_effort
+	cost = 10
+
+	available_if_capitulated = yes
+
+
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			all_owned_state = {
+				OR = {
+					is_coastal = no
+					dockyard < 1
+				}
+			}
+		}
+	}
+
+	completion_reward = {
+		add_doctrine_cost_reduction = {
+			name = fleet_in_being_bonus
+			cost_reduction = 0.5
+			uses = 2
+			category = fleet_in_being_tree
+		}
+	}
+}
+
+focus = {
+	id = SOJ_submarine_effort
+	icon = GFX_
+	prerequisite = { focus = SOJ_flexible_navy11 focus = SOJ_large_navy1 }
+	x = 0
+	y = 1
+	relative_position_id = SOJ_flexible_navy11
+	cost = 10
+
+	available_if_capitulated = yes
+
+
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			all_owned_state = {
+				OR = {
+					is_coastal = no
+					dockyard < 1
+				}
+			}
+		}
+	}
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = ss_bonus
+			bonus = 1.0
+			ahead_reduction = 2
+			uses = 1
+			category = ss_tech
+		}
+	}
+}
+
+focus = {
+	id = SOJ_cruiser_effort
+	icon = GFX_
+	prerequisite = { focus = SOJ_large_navy1 focus = SOJ_flexible_navy11 }
+	x = 0
+	y = 1
+	relative_position_id = SOJ_large_navy1
+	cost = 10
+
+	available_if_capitulated = yes
+
+
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			all_owned_state = {
+				OR = {
+					is_coastal = no
+					dockyard < 1
+				}
+			}
+		}
+	}
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = cr_bonus
+			bonus = 1.0
+			ahead_reduction = 2
+			uses = 1
+			category = cl_tech
+			category = ca_tech
+		}
+	}
+}
+
+focus = {
+	id = SOJ_destroyer_effort
+	icon = GFX_
+	prerequisite = { focus = SOJ_submarine_effort }
+	x = 0
+	y = 1
+	relative_position_id = SOJ_submarine_effort
+	cost = 10
+
+	available_if_capitulated = yes
+
+
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			all_owned_state = {
+				OR = {
+					is_coastal = no
+					dockyard < 1
+				}
+			}
+		}
+	}
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = dd_bonus
+			bonus = 1.0
+			ahead_reduction = 2
+			uses = 1
+			category = dd_tech
+		}
+	}
+}
+
+focus = {
+	id = SOJ_capital_ships_effort
+	icon = GFX_
+	prerequisite = { focus = SOJ_cruiser_effort }
+	x = 0
+	y = 1
+	relative_position_id = SOJ_cruiser_effort
+	cost = 10
+
+	available_if_capitulated = yes
+
+
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			all_owned_state = {
+				OR = {
+					is_coastal = no
+					dockyard < 1
+				}
+			}
+		}
+	}
+
+	completion_reward = {
+		navy_experience = 25
+		add_tech_bonus = {
+			name = capital_ships_bonus
+			bonus = 1.0
+			ahead_reduction = 2
+			uses = 1
+			category = bc_tech
+			category = bb_tech
+			category = cv_tech
+		}
+	}
+}
+
+
+focus = {
+	id = SOJ_Artillery_Investment
+	icon = GFX_
+	relative_position_id = SOJ_Prepare_Our_Navy
+	prerequisite = { focus = SOJ_Prepare_Our_Navy }
+	x = 5
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = { 
+		add_equipment_to_stockpile = {
+			type = artillery_equipment_1
+			amount = 128
+			producer = SOJ
+		}
+	}
+}
+
+focus = {
+	id = SOJ_Artillery_Upgrades
+	icon = GFX_
+	relative_position_id = SOJ_Artillery_Investment
+	prerequisite = { focus = SOJ_Artillery_Investment }
+	x = 0
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = { 
+		add_tech_bonus = {
+			name = infantry_artillery_bonus
+			bonus = 1.0
+			uses = 1
+			category = artillery
+		}
+	}
+}
+
+focus = {
+	id = SOJ_Deploy_Our_Marines
+	icon = GFX_
+	relative_position_id = SOJ_Prepare_Our_Navy
+	prerequisite = { focus = SOJ_Prepare_Our_Navy }
+	x = 0
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = { 
+		add_offsite_building = { type = arms_factory level = 1 }
+	}
+}
+
+focus = {
+	id = SOJ_Demanding_More_Comrades
+	icon = GFX_
+	relative_position_id = SOJ_Deploy_Our_Marines
+	prerequisite = { focus = SOJ_Deploy_Our_Marines }
+	x = -1
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = { 
+		swap_ideas = {
+			remove_idea = SOJ_Poor_Soviet_Naval_Support
+			add_idea = SOJ_Moderate_Soviet_Naval_Support
+		}
+	}
+}
+
+focus = {
+	id = SOJ_Alaska_Is_Ours
+	icon = GFX_
+	relative_position_id = SOJ_Demanding_More_Comrades
+	prerequisite = { focus = SOJ_Demanding_More_Comrades focus = SOJ_Asking_For_More_Weapons }
+	x = 0
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 1
+	}
+	mutually_exclusive = { focus = SOJ_The_Alaska_Problems }
+	available = {
+		SAK	= {
+			has_government = communism
+		}
+	}
+	completion_reward = { 
+
+	}
+}
+
+focus = {
+	id = SOJ_Integration_Plan_with_Alaska
+	icon = GFX_
+	relative_position_id = SOJ_Alaska_Is_Ours
+	prerequisite = { focus = SOJ_Alaska_Is_Ours }
+	x = 0
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 5
+	}
+
+
+	completion_reward = { 
+		SAK = { 
+			annex_country = {
+				target = SOJ
+				transfer_troops = yes
+			}
+			add_offsite_building = { type = dockyard level = 3 }
+			add_offsite_building = { type = arms_factory level = 4 }
+		}
+
+	}
+}
+
+focus = {
+	id = SOJ_The_Alaska_Problems
+	icon = GFX_
+	relative_position_id = SOJ_Asking_For_More_Weapons
+	prerequisite = { focus = SOJ_Demanding_More_Comrades focus = SOJ_Asking_For_More_Weapons }
+	x = 0
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+	mutually_exclusive = { focus = SOJ_Alaska_Is_Ours }
+	available = {
+		NOT = {
+			SAK	= {
+				has_government = communism
+			}
+		}
+	}
+	completion_reward = { 
+
+	}
+}
+
+
+focus = {
+	id = SOJ_Taking_Over_From_Alaska_Failures
+	icon = GFX_
+	relative_position_id = SOJ_Pacific_Fleets_Must_Grow
+	prerequisite = { focus = SOJ_Demand_To_Be_Included_withd_research }
+	prerequisite = { focus = SOJ_Get_Stalins_Attention }
+	prerequisite = { focus = SOJ_Force_The_Armies_Hands }
+	prerequisite = { focus = SOJ_Crack_down_on_NKVD }
+
+	x = 0
+	y = 2
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+	available = { 
+		owns_state = 69
+		owns_state = 489
+		owns_state = 440
+		owns_state = 431
+		owns_state = 432
+		owns_state = 433
+	}
+	completion_reward = { 
+		add_state_core = 69
+		add_state_core = 489
+		add_state_core = 440
+		add_state_core = 431
+		add_state_core = 432
+		add_state_core = 433
+
+	}
+}
+
+focus = {
+	id = SOJ_Stalins_Orders
+	icon = GFX_
+	relative_position_id = SOJ_Taking_Over_From_Alaska_Failures
+	prerequisite = { focus = SOJ_Taking_Over_From_Alaska_Failures }
+
+
+	x = 0
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+
+
+	completion_reward = { 
+		create_wargoal = {
+			target = IJA
+			type = annex_everything
+		}
+	}
+}
+
+focus = {
+	id = SOJ_New_Pacific_Overlords
+	icon = GFX_
+	relative_position_id = SOJ_Stalins_Orders
+	prerequisite = { focus = SOJ_Stalins_Orders }
+
+
+	x = 0
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+
+
+	completion_reward = { 
+		add_ideas = SOJ_Pacific_Ambitions
+	}
+}
+
+focus = {
+	id = SOJ_Soviet_Hawaii
+	icon = GFX_
+	relative_position_id = SOJ_New_Pacific_Overlords
+	prerequisite = { focus = SOJ_New_Pacific_Overlords }
+
+
+	x = -1
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+	available = { 
+		owns_state = 396
+		owns_state = 397
+		owns_state = 395
+		owns_state = 398
+	}
+	completion_reward = { 
+		add_state_core = 396
+		add_state_core = 397
+		add_state_core = 395
+		add_state_core = 398
+	}
+}
+
+focus = {
+	id = SOJ_Inviting_The_Full_wrath_of_Red_Army
+	icon = GFX_
+	relative_position_id = SOJ_Soviet_Hawaii
+	prerequisite = { focus = SOJ_Soviet_Hawaii }
+	prerequisite = { focus = SOJ_Soviet_Midway }
+
+	x = 1
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+
+
+	completion_reward = { 
+		swap_ideas = {
+			remove_idea = SOJ_Moderate_Soviet_Naval_Support
+			add_idea = SOJ_Red_Army_Support
+		}
+	}
+}
+
+focus = {
+	id = SOJ_Soviet_Tank_Corps
+	icon = GFX_
+	relative_position_id = SOJ_Inviting_The_Full_wrath_of_Red_Army
+	prerequisite = { focus = SOJ_Inviting_The_Full_wrath_of_Red_Army }
+
+
+	x = -1
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = armor_bonus
+			bonus = 1.0
+			uses = 2
+			category = armor
+		}
+	}
+}
+
+focus = {
+	id = SOJ_Soviet_Rocketry
+	icon = GFX_
+	relative_position_id = SOJ_Inviting_The_Full_wrath_of_Red_Army
+	prerequisite = { focus = SOJ_Inviting_The_Full_wrath_of_Red_Army }
+
+
+	x = 1
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+
+
+	completion_reward = {
+		add_tech_bonus = {
+			name = secret_bonus
+			bonus = 1.5
+			uses = 2
+			category = rocketry
+		}
+	}
+}
+
+
+focus = {
+	id = SOJ_Soviet_Midway
+	icon = GFX_
+	relative_position_id = SOJ_New_Pacific_Overlords
+	prerequisite = { focus = SOJ_New_Pacific_Overlords }
+
+
+	x = 1
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+	available = { 
+		owns_state = 488
+
+	}
+
+	completion_reward = { 
+		add_state_core = 488
+
+	}
+}
+
+
+
+focus = {
+	id = SOJ_Pacific_Fleets_Must_Grow
+	icon = GFX_
+	relative_position_id = SOJ_The_Alaska_Problems
+	prerequisite = { focus = SOJ_The_Alaska_Problems }
+	x = 0
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+
+
+	completion_reward = { 
+		add_timed_idea = { idea = SOJ_Pacific_Fleets_Must_Grow_idea  days = 600 }
+	}
+}
+
+focus = {
+	id = SOJ_Get_Stalins_Attention
+	icon = GFX_
+	relative_position_id = SOJ_Pacific_Fleets_Must_Grow
+	prerequisite = { focus = SOJ_Pacific_Fleets_Must_Grow }
+	x = -1
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+
+
+	completion_reward = { 
+		remove_ideas = SOJ_Stalin_Distrust
+	}
+}
+
+focus = {
+	id = SOJ_Demand_To_Be_Included_withd_research
+	icon = GFX_
+	relative_position_id = SOJ_Pacific_Fleets_Must_Grow
+	prerequisite = { focus = SOJ_Pacific_Fleets_Must_Grow }
+	x = -3
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+
+
+	completion_reward = { 
+		remove_ideas = SOJ_No_Access_To_Soviet_Research
+	}
+}
+focus = {
+	id = SOJ_Force_The_Armies_Hands
+	icon = GFX_
+	relative_position_id = SOJ_Pacific_Fleets_Must_Grow
+	prerequisite = { focus = SOJ_Pacific_Fleets_Must_Grow }
+	x = 1
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+
+
+	completion_reward = { 
+		remove_ideas = SOJ_The_Forgotten_Theater
+	}
+}
+
+
+focus = {
+	id = SOJ_Crack_down_on_NKVD
+	icon = GFX_
+	relative_position_id = SOJ_Pacific_Fleets_Must_Grow
+	prerequisite = { focus = SOJ_Pacific_Fleets_Must_Grow }
+	x = 3
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+
+
+	completion_reward = { 
+		remove_ideas = SOJ_NKVD_Problems
+	}
+}
+
+focus = {
+	id = SOJ_Asking_For_More_Weapons
+	icon = GFX_
+	relative_position_id = SOJ_Deploy_Our_Marines
+	prerequisite = { focus = SOJ_Deploy_Our_Marines }
+	x = 1
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = { 
+		add_equipment_to_stockpile = {
+			type = infantry_equipment
+			amount = 4000
+			producer = SOJ
+		}          
+	}
+}
+
+focus = {
+	id = SOJ_accessing_the_armouries
+	icon = GFX_
+	relative_position_id = SOJ_Asking_For_More_Weapons
+	prerequisite = { focus = SOJ_Asking_For_More_Weapons }
+	x = 2
+	y = 1
+	cost = 5
+	available_if_capitulated = yes
+	ai_will_do = {
+		factor = 100
+	}
+	completion_reward = { 
+		add_offsite_building = { type = arms_factory level = 2 }
+	}
+}
+
+}#end
