@@ -958,13 +958,14 @@ focus_tree = {
         mutually_exclusive = { focus = SLA_total_victory_over_texas}
 
         available = {
-            custom_trigger_tooltip = {
+          
+            OR = {
+				custom_trigger_tooltip = {
                 tooltip = SLA_red_river_war_has_eneded_tt
                 NOT = {
                     has_global_flag = red_river_war_has_begun
                 }
             }
-            OR = {
                 owns_state = 222
                 owns_state = 223
                 owns_state = 163
@@ -1567,6 +1568,12 @@ focus_tree = {
         icon = GFX_focus_SLA_attack_arkanasas
         prerequisite = { focus = SLA_demand_biloxi}
         mutually_exclusive = { focus = SLA_ally_arkansas}
+		bypass = {
+		has_war_with = SAR
+		NOT = { 
+		country_exists = SAR
+		}
+		}
         available = {
             has_army_manpower = {
                 size > 120000
@@ -1669,6 +1676,12 @@ focus_tree = {
         id = SLA_realign_mississippi
         icon = GFX_focus_SLA_realignmissisppis
         prerequisite = { focus = SLA_influence_in_the_deep_south}
+		bypass = {
+		has_war_with = SMS
+		NOT = { 
+		country_exists = SMS
+		}
+		}
         available = {
             SMS = {
                 has_government = democratic
@@ -1706,6 +1719,7 @@ focus_tree = {
             }
         }
         bypass = {
+			has_war_with = STN
             NOT = {
                 country_exists = STN
             }
@@ -2196,6 +2210,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_POLITICAL }
 
         completion_reward = {
+		add_threat = 3
 
             remove_ideas = SLA_war_exhaustion
 
@@ -2209,13 +2224,15 @@ focus_tree = {
             ##EVENT 12 speech where huey decides not to go after New Orleans. they should get this too
 
             country_event = {
+				
 				id  = louisiana.12
 			}
-            ########KillOURBOYHUEY EVENT## SHOULD BE HIDDEN
+            hidden_effect = {
             country_event = { 
                 id = louisiana.16
                 days = 20
-            } 
+            }
+			}
         }
     }
 	
@@ -2780,7 +2797,11 @@ focus_tree = {
         }
 		available_if_capitulated = yes 
 		prerequisite = { focus = SLA_flemming_war_plan}
-        
+        bypass = { 
+		NOT = { 
+		country_exists = SAR
+		}
+		}
         completion_reward = {
             claim_arkansas = yes
             create_wargoal = {
@@ -2871,11 +2892,14 @@ focus_tree = {
 		available_if_capitulated = no
 
         bypass = {
-            is_at_war_with = STX
+            has_war_with = STX
+			NOT = { 
+		country_exists = STX
+		}
         }
         
 		prerequisite = { focus = SLA_economy_of_revenge }
- 
+		
 		completion_reward = { 
             create_wargoal = {
                 target = STX
