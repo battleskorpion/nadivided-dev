@@ -1440,7 +1440,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = SUT_rally_the_mormons
 		completion_reward = {
-			# plus 125 pp
+		add_political_power = 125
 		}
 	}
 	focus = {
@@ -1456,13 +1456,13 @@ focus_tree = {
 		y = 1
 		relative_position_id = SUT_desert_industry
 		completion_reward = {
-			#add idea that gives increase local resource factor plus 10%
+		add_ideas = SUT_desert_mining_idea
 		}
 	}
 	focus = {
 		id = SUT_civilian_based_industry
 		icon = GFX_
-		cost = 5 
+		cost = 10
 		available = {
 		}
 		prerequisite = {
@@ -1475,7 +1475,35 @@ focus_tree = {
 		y = 1
 		relative_position_id = SUT_deseret_mining
 		completion_reward = {
-				#adds 2 civilian factories and minus 50 pp 
+		add_political_power = -30
+		random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 2
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 0
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
 		}
 	}
 	focus = {
@@ -1494,7 +1522,36 @@ focus_tree = {
 		y = 1
 		relative_position_id = SUT_deseret_mining
 		completion_reward = {
-			#add 1 mil factory and a bonus to mil construction speed and minus 50 PP
+		add_political_power = -50
+		add_ideas = SUT_secret_armament
+		random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 0
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 	focus = {
@@ -1511,13 +1568,17 @@ focus_tree = {
 		y = 1
 		relative_position_id = SUT_secretive_military_expansion
 		completion_reward = {
-			# this is a army tree tie in focus. provides a  50% bonus to tank tech
+		  	add_tech_bonus = {
+    			bonus = 1.25
+    			uses = 2
+    			category = cat_medium_armor
+			}
 		}
 	}
 	focus = {
 		id = SUT_expand_university_of_utah
 		icon = GFX_
-		cost = 5 
+		cost = 10
 		available = {
 		}
 		prerequisite = {
@@ -1529,7 +1590,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = SUT_civilian_based_industry
 		completion_reward = {
-
+		add_research_slot = 1
 		}
 	}
 	focus = {
@@ -1548,6 +1609,19 @@ focus_tree = {
 		y = 1
 		relative_position_id = SUT_expand_university_of_utah
 		completion_reward = {
+		add_opinion_modifier = {
+    	target = SMI
+    	modifier = ENG_imperial_trade
+		}
+		add_opinion_modifier = {
+    	target = SOH
+    	modifier = ENG_imperial_trade
+		}
+		add_opinion_modifier = {
+    	target = SIL
+    	modifier = ENG_imperial_trade
+		}
+		add_ideas = free_trade	
 				#add idea that gives better trade opinion with a great lakes state, and give a 2% to consumer goods this is to say that you are utlizing foreign factories rather than focusing on domestic ones
 		}
 	}
@@ -1564,7 +1638,18 @@ focus_tree = {
 		y = 2
 		relative_position_id = SUT_foreign_imports
 		completion_reward = {
-
+		build_railway = {
+		level = 3
+		build_only_on_allied = yes
+		start_province = 7678
+		target_province = 2258
+		}
+		build_railway = {
+		level = 3
+		build_only_on_allied = yes
+		start_province = 2047
+		target_province = 2245
+		}
 		}
 	}
 	focus = {
@@ -1577,29 +1662,47 @@ focus_tree = {
 			focus = SUT_expand_university_of_utah
 		}
 		mutually_exclusive = {
-			focus = SUT_autarky
+			focus = SUT_foreign_imports
 		}
 		x = -1
 		y = 1
 		relative_position_id = SUT_expand_university_of_utah
 		completion_reward = {
-				#gives a civ and a 1 300% boost to sythetic refineries
-		}
-	}
-	focus = {
-		id = SUT_rare_mineral_mining
-		icon = GFX_
-		cost = 5 
-		available = {
-		}
-		prerequisite = {
-			focus = SUT_autarky
-		}
-		x = -2
-		y = 1
-		relative_position_id = SUT_autarky
-		completion_reward = {
-			#adds croumium to a northern utah state (16)
+		add_ideas = limited_exports
+		add_tech_bonus = {
+				name = synt
+				bonus = 3
+				uses = 1
+				category = synth_resources
+			}	
+		random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 0
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}	
 		}
 	}
 	focus = {
@@ -1615,6 +1718,18 @@ focus_tree = {
 		y = 1
 		relative_position_id = SUT_autarky
 		completion_reward = {
+		add_tech_bonus = {
+				name = synt
+				bonus = 1
+				uses = 2
+				category = synth_resources
+			}	
+		87 = {
+		add_resource = {
+ 			   	type = oil
+    			amount = 10
+			}
+		}
 			#adds small petrol (like 8) and a 25% boost to oil refining techs
 		}
 	}
@@ -1631,7 +1746,12 @@ focus_tree = {
 		y = 1
 		relative_position_id = SUT_deseret_mining
 		completion_reward = {
-			#adds croumium to a northern utah state (16)
+		144 = {
+		add_resource = {
+ 			   	type = chromium
+    			amount = 17
+			}	
+		}
 		}
 	}
 	focus = {
@@ -1648,7 +1768,7 @@ focus_tree = {
 		y = 1
 		relative_position_id = SUT_autarky
 		completion_reward = {
-			# add idea, this idea will provide -2% consumer goods
+		add_ideas = SUT_high_yield_farmers
 		}
 	}
 	focus = {
@@ -1670,7 +1790,7 @@ focus_tree = {
 	focus = {
 		id = SUT_develop_st_george_heavy_industries
 		icon = GFX_
-		cost = 5 
+		cost = 10
 		available = {
 		}
 		prerequisite = {
@@ -1680,7 +1800,19 @@ focus_tree = {
 		y = 3
 		relative_position_id = SUT_autarky
 		completion_reward = {
-			#adds small petrol (like 8)
+
+		300 = {
+		add_extra_state_shared_building_slots = 2
+		add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}	
+		add_resource = {
+ 			   	type = aluminium
+    			amount = 10
+			}
+		}
 		}
 	}
 	focus = {
