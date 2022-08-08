@@ -1680,14 +1680,18 @@ focus_tree = {
         icon = GFX_focus_SLA_realignmissisppis
         prerequisite = { focus = SLA_influence_in_the_deep_south}
 		bypass = {
-		has_war_with = SMS
-		NOT = { 
-		country_exists = SMS
-		}
-		}
+            	
+    OR = {
+        has_war_with = SMS
+        NOT = {
+        country_exists = SMS
+            }
+        }
+    }
         available = {
             SMS = {
                 has_government = democratic
+
             }
             has_army_manpower = {
                 size > 150000
@@ -1711,6 +1715,41 @@ focus_tree = {
             claim_mississippi = yes
         }
     }
+
+    focus = {
+        id = SLA_deal_with_douglas
+        icon = GFX_focus_SLA_realignmissisppis
+        prerequisite = { focus = SLA_influence_in_the_deep_south}
+		bypass = {
+		has_war_with = DOU
+		}
+        available = {
+            country_exists = DOU
+            DOU = {
+                NOT = {
+                has_war_with = SMS
+                }
+            }
+        }
+        x = 3
+        y = 1
+        relative_position_id = SLA_influence_in_the_deep_south
+        cost = 10
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+
+        completion_reward = {
+            create_wargoal = {
+                target = DOU
+                type = annex_everything
+            }
+            claim_mississippi = yes
+        }
+    }
+
     focus = {
         id = SLA_dominate_tennessee
         icon = GFX_focus_SLA_dominate_tennisee
@@ -2008,7 +2047,7 @@ focus_tree = {
     focus = {
         id = SLA_national_infrasture_project
         icon = GFX_goal_generic_construct_infrastructure
-        prerequisite = { focus = SLA_dominate_tennessee focus = SLA_realign_mississippi}
+        prerequisite = { focus = SLA_dominate_tennessee focus = SLA_realign_mississippi focus = SLA_deal_with_douglas} 
         x = 2
         y = 1
         relative_position_id = SLA_dominate_tennessee
@@ -2153,7 +2192,7 @@ focus_tree = {
                 has_completed_focus = SLA_victory_in_the_red_river_war
             }
         }
-        x = 4
+        x = 5
         y = 1
         cost = 3
         ai_will_do = {
@@ -2253,7 +2292,7 @@ focus_tree = {
 	focus = { 
 		id = SLA_shreveport_speech
 		icon = GFX_focus_radiospeech
-		x = -3
+		x = -2
 		y = 2
 		relative_position_id = SLA_new_orleans_crisis
          mutually_exclusive = { focus = SLA_long_fall_out }
