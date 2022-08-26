@@ -51,7 +51,7 @@ focus_tree = {
 #    } 
     
 	focus = {
-		id = SRO_first_focus
+		id = SRO_fortify_astoria
 		icon = GFX_Goal_Unknown
 		x = 20
 		y = 0
@@ -66,26 +66,15 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-		add_named_threat = { 
-		threat = 3
-		name = SRO_oregon_civil_war_tt
-		}
-		set_rule = {
-    can_create_factions = no
-	can_join_factions = no
-}
-		declare_war_on = {
-    target = SOR
-    type = annex_everything
-}
+		#level 1 forts around astoria, 1 level 2 fort on the city itself
 		}
 	} 
     
 	##### Army Focuses #####
 	focus = {
-		id = SRO_better_red_army1
+		id = SRO_raise_the_red_militia
 		icon = GFX_Goal_Unknown
-		prerequisite = { focus = SRO_first_focus }
+		prerequisite = { focus = SRO_fortify_astoria }
 		x = 15
 		y = 1
 		cost = 3
@@ -96,20 +85,20 @@ focus_tree = {
 		
 		
 		ai_will_do = {
-			factor = 1
+			factor = 320
 		}
 		completion_reward = {
 			army_experience = 25
-
-			#reassign red army debuff effects to make it less worse
+			load_oob = SRO_militia
 		}
 	}
+	#foreign help focuses
 	focus = {
-		id = SRO_red_militia
+		id = SRO_internationalist_solidarity
 		icon = GFX_Goal_Unknown
-		prerequisite = { focus = SRO_better_red_army1 }
-		x = 15
-		y = 2
+		prerequisite = { focus = SRO_fortify_astoria }
+		x = 30
+		y = 1
 		cost = 3
 		available_if_capitulated = yes
 		available = {
@@ -118,17 +107,206 @@ focus_tree = {
 		
 		
 		ai_will_do = {
-			factor = 1
+			factor = 10
 		}
 		completion_reward = {
-			load_oob = SRO_militia
-			#spawn [unit name/id] [province id] [amount]
+		MTB = {
+				add_opinion_modifier = {
+					target = SRO
+					modifier = large_increase
+				}
+			}
+		SOJ = {
+				add_opinion_modifier = {
+					target = SRO
+					modifier = large_increase
+				}
+			}
+		SAK = {
+				add_opinion_modifier = {
+					target = SRO
+					modifier = large_increase
+				}
+			}
+		hidden_effect = {
+		ssw = {
+				add_opinion_modifier = {
+					target = SRO
+					modifier = large_increase
+				}
+			}
+		RCA = {
+				add_opinion_modifier = {
+					target = SRO
+					modifier = large_increase
+				}
+			}	
+		}				
 		}
 	}
 	
-
-	
-	
+	focus = {
+		id = SRO_ask_SSW
+		icon = GFX_Goal_Unknown
+		prerequisite = { focus = SRO_internationalist_solidarity }
+		x = 28
+		y = 2
+		cost = 3
+		available_if_capitulated = yes
+		bypass = {
+		NOT = {
+		country_exists = SSW	
+		}	
+		}
+		available = {
+		country_exists = SSW
+        }
+		
+		
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+		#event for ssw to ask for 500 guns,1500 manpower			
+		}
+	}
+	focus = {
+		id = SRO_ask_SSW
+		icon = GFX_Goal_Unknown
+		prerequisite = { focus = SRO_internationalist_solidarity }
+		x = 28
+		y = 2
+		cost = 3
+		available_if_capitulated = yes
+		bypass = {
+		NOT = {
+		country_exists = SSW	
+		}	
+		}
+		available = {
+		date > 1936.05.20	
+		country_exists = SSW
+        }
+		
+		
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+		#event for ssw to ask for 500 guns,1500 manpower			
+		}
+	}
+	focus = {
+		id = SRO_the_mexican_connection
+		icon = GFX_Goal_Unknown
+		prerequisite = { focus = SRO_internationalist_solidarity }
+		x = 26
+		y = 2
+		cost = 3
+		available_if_capitulated = yes
+		available = {
+		
+        }
+		completion_reward = {
+		#an event to explain reeds connection to mexico (i do loc)	
+		add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 1500
+				producer = MEX
+			}			
+		}
+	}
+	focus = {
+		id = SRO_soviet_support
+		icon = GFX_Goal_Unknown
+		prerequisite = { focus = SRO_internationalist_solidarity }
+		x = 30
+		y = 2
+		cost = 3
+		available_if_capitulated = yes
+		bypass = {
+		
+		}
+		available = {
+		
+        }
+		
+		
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+		add_manpower = 3000			
+		}
+	}
+	focus = {
+		id = SRO_soviet_mountaineers
+		icon = GFX_Goal_Unknown
+		prerequisite = { focus = SRO_soviet_support }
+		x = 29
+		y = 3
+		cost = 3
+		available_if_capitulated = yes
+		mutually_exclusive = { focus = SRO_soviet_artillery_n_mortars}
+		available = {
+		
+        }
+		
+		
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+		#oob for soviet mountaineers  ( tooltip)		
+		}
+	}
+	focus = {
+		id = SRO_soviet_artillery_n_mortars
+		icon = GFX_Goal_Unknown
+		prerequisite = { focus = SRO_soviet_support }
+		x = 31
+		y = 3
+		cost = 3
+		available_if_capitulated = yes
+		mutually_exclusive = { focus = SRO_soviet_mountaineers}
+		available = {
+		
+        }
+		
+		
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+		#oob for inf with arty support  ( tooltip)					
+		}
+	}
+	focus = {
+		id = SRO_ask_RCA
+		icon = GFX_Goal_Unknown
+		prerequisite = { focus = SRO_internationalist_solidarity }
+		x = 32
+		y = 2
+		cost = 3
+		available_if_capitulated = yes
+		bypass = {
+		NOT = {
+		country_exists = RCA	
+		}	
+		}
+		available = {
+		date > 1936.05.15	
+		country_exists = RCA
+        }
+		
+		
+		ai_will_do = {
+			factor = 10
+		}
+		completion_reward = {
+		#event for ssw to ask for 500 guns,1500 manpower			
+		}
+	}
 	focus = {
 		id = SRO_socialist_oregon
 		icon = GFX_Goal_Unknown
