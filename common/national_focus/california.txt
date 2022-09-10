@@ -41,13 +41,15 @@ focus_tree = {
 	focus = {
 		id = SCA_warplan_tan		
 		icon = GFX_focus_attack_mexico
-		x = -10
+		x = -24
 		y = 1
 		cost = 7.2
 		available_if_capitulated = no 
 		available = {
 		NOT = {
-		has_idea = great_depression_3	
+		has_idea = great_depression_3
+		has_idea = great_depression_2
+		has_idea = great_depression
 		}	
 		}
 		prerequisite = {
@@ -64,11 +66,54 @@ focus_tree = {
 			}
 		}
 	}
-#######Start of Warplan BLue#########################################################
+	focus = {
+		id = SCA_northern_cali_puppet_gov		
+		icon = GFX_goal_unknown
+		x = -25
+		y = 2
+		cost = 7.2
+		available_if_capitulated = no 
+		mutually_exclusive = { focus = SCA_support_feds}
+		available = {
+		
+		}
+		prerequisite = {
+			focus = SCA_warplan_tan
+		} 
+		relative_position_id = SCA_merriam
+		ai_will_do = { 
+			factor = 0
+		}
+		completion_reward= {
+		
+		}
+	}
+	focus = {
+		id = SCA_support_feds		
+		icon = GFX_goal_unknown
+		x = -23
+		y = 2
+		cost = 7.2
+		available_if_capitulated = no 
+		mutually_exclusive = { focus = SCA_northern_cali_puppet_gov}
+		available = {
+		
+		}
+		prerequisite = {
+			focus = SCA_warplan_tan
+		} 
+		relative_position_id = SCA_merriam
+		ai_will_do = { 
+			factor = 0
+		}
+		completion_reward= {
+		
+		}
+	}
 	focus = {
 		id = SCA_warplan_blue		
 		icon = GFX_goal_generic_major_war
-		x = -5
+		x = -12
 		y = 1
 		cost = 10
 		available_if_capitulated = yes 
@@ -85,116 +130,29 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward= {
-			SCA = {				
-			 add_ideas = USA_war_department
-			}
+		unlock_decision_category_tooltip = SWA_local_cooperation_category		
+		add_ideas = USA_war_department
+			
 		}
 	}
 	focus = {
-		id = SCA_deep_defense_plan	
-		icon = GFX_focus_SCA_bolster_north
-		x = -1
-		y = 1
-		cost = 10
-		available_if_capitulated = yes 
-		prerequisite = {
-			focus = SCA_warplan_blue
-		} 
-		relative_position_id = SCA_warplan_blue
-		ai_will_do = { 
-			factor = 1
-		}
-		completion_reward= {
-			SCA = {				
-				add_manpower = 10000
-			}
-			SNV = {
-				add_manpower = 15000
-			}
-			SAZ = {
-				add_manpower = 15000
-			}
-		}
-	}
-	focus = {
-		id = SCA_native_question
-		icon = GFX_native_question
-		x = -1
-		y = 2
-		cost = 10
-		available_if_capitulated = yes 
-		prerequisite = {
-			focus = SCA_deep_defense_plan
-		} 
-		relative_position_id = SCA_warplan_blue
-		ai_will_do = { 
-			factor = 1
-		}
-		completion_reward= {
-			custom_effect_tooltip = 6_SCA_tt
-			hidden_effect = {
-				NAV = { 
-					country_event = { 
-						id = generic.6  
-						days = 4 
-					} 
-				}
-			} 
-		}
-	}
-	focus = {
-		id = SCA_prepare_operation_zeta		
-		icon = GFX_operation_zeta
-		x = 1
-		y = 1
-		cost = 10
-		available_if_capitulated = yes 
-		prerequisite = {
-			focus = SCA_warplan_blue
-		} 
-		relative_position_id = SCA_warplan_blue
-		ai_will_do = { 
-			factor = 10
-		}
-		completion_reward= {
-			SCA = {				
-			 add_war_support = .05
-			}
-
-		}
-	}
-	focus = {
-		id = SCA_militarise_the_wea_accords
+		id = SCA_militarize_the_Pacific_treaty_org
 		icon = GFX_focus_defend_pacific_states
-		x = 1
-		y = 2
-		cost = 10
-		available_if_capitulated = yes 
-		prerequisite = {
-			focus = SCA_prepare_operation_zeta
-		} 
-
-		relative_position_id = SCA_warplan_blue
-		ai_will_do = { 
-			factor = 10
-		}
-		completion_reward= {
-			create_faction = western_defense_initative
-			SCA = {				
-			 add_to_faction = SAZ
-			 add_to_faction = SNV
-			}
-		}
-	}
-	focus = {
-		id = SCA_wargames
-		icon = GFX_focus_generic_light_tank
 		x = 0
-		y = 3
-		cost = 10
+		y = 2
+		cost = 5
 		available_if_capitulated = yes 
+		available = {
+		threat > 0.25	
+		}
 		prerequisite = {
-			focus = SCA_militarise_the_wea_accords
+			focus = SCA_aid_SNV
+		} 
+		prerequisite = {
+			focus = SCA_aid_colorado
+		} 
+		prerequisite = {
+			focus = SCA_SAZ_support
 		} 
 
 		relative_position_id = SCA_warplan_blue
@@ -202,26 +160,34 @@ focus_tree = {
 			factor = 10
 		}
 		completion_reward= {
-			SCA = {				
-				army_experience = 25
-			}
-			SNV = {
-				army_experience = 25
-			}
-			SAZ = {
-				army_experience = 25
-			}
+			create_faction = "Pacific Treaty Organization"
+
+
 		}
 	}
 	focus = {
-		id = SCA_assure_allied_claims
-		icon = GFX_focus_generic_little_entente
+		id = SCA_aid_colorado
+		icon = GFX_goal_unknown
 		x = 2
-		y = 3
-		cost = 10
+		y = 1
+		cost = 4
 		available_if_capitulated = yes 
+		bypass = {
+		has_war_with = SCO	
+		NOT = {
+		country_exists = SCO	
+		}
+		}
+		available = {
+		SCO = {
+		has_war_with =  SUT	
+		NOT = {
+		has_government = communism	
+		}	
+		}	
+		}
 		prerequisite = {
-			focus = SCA_militarise_the_wea_accords
+			focus = SCA_warplan_blue
 		} 
 
 		relative_position_id = SCA_warplan_blue
@@ -229,108 +195,100 @@ focus_tree = {
 			factor = 10
 		}
 		completion_reward= {
-			80 = {
-				add_core_of = SAZ
-			}
-			144 = {
-				add_core_of = SNV
-			}
-			441 = {
-				add_core_of = SNV
-			}
+		
 		}
 	}
 	focus = {
-		id = SCA_invite_oregon
-		icon = GFX_focus_diplomacy_oregon
-		x = 1
-		y = 4
-		cost = 10
+		id = SCA_aid_SNV
+		icon = GFX_goal_unknown
+		x = 0
+		y = 1
+		cost = 4
 		available_if_capitulated = yes 
+		bypass = {
+		has_war_with = SNV	
+		NOT = {
+		country_exists = SNV	
+		}
+		}
+		available = {
+		}
 		prerequisite = {
-			focus = SCA_assure_allied_claims
+			focus = SCA_warplan_blue
 		} 
-		prerequisite = {
-			focus = SCA_wargames
-		} 
+
 		relative_position_id = SCA_warplan_blue
 		ai_will_do = { 
 			factor = 10
 		}
 		completion_reward= {
-			custom_effect_tooltip = 5_SCA_tt
-			hidden_effect = { 
-				SOR = {
-					country_event = { 
-						id = generic.5  
-						days = 4 
-					} 
-				}
-			} 
+		#send event to nevada abt guns/fort construction
+
 		}
 	}
 	focus = {
-		id = SCA_first_move
-		icon = GFX_focus_generic_provoke_border_clashes
-		x = 1
-		y = 5
-		cost = 10
+		id = SCA_SAZ_support
+		icon = GFX_goal_unknown
+		x = -2
+		y = 1
+		cost = 4
 		available_if_capitulated = yes 
+		bypass = {
+		has_war_with = SWA	
+		NOT = {
+		country_exists = SAZ	
+		}
+		}
+		available = {
+		SWA = {
+		has_completed_focus = SWA_a_republican_alternative
+		}	
+		}
 		prerequisite = {
-			focus = SCA_invite_oregon
+			focus = SCA_warplan_blue
 		} 
+
 		relative_position_id = SCA_warplan_blue
 		ai_will_do = { 
-			factor = 100
+			factor = 10
 		}
-		will_lead_to_war_with = SUT
-		will_lead_to_war_with = SID
-		will_lead_to_war_with = SWA
 		completion_reward= {
-			SCA = {
-				create_wargoal = {
-    				type = annex_everything
-    				target = SUT
-				}
-				create_wargoal = {
-    				type = annex_everything
-    				target = SID
-				}
-				create_wargoal = {
-    				type = annex_everything
-    				target = SWA
-				}
-			}
-			custom_effect_tooltip = 7_SCA_tt
-			hidden_effect = {
-				SUT ={
-					create_faction = SUT_northern_alliance
-					add_to_faction = SID
-					add_to_faction = SWA
-					give_guarantee = SID
-					give_guarantee = SWA
-					add_offsite_building = {type = arms_factory level = 10}
-					
-				}
-				SID = {
-					give_guarantee = SUT
-					give_guarantee = SWA
-					add_offsite_building = {type = arms_factory level = 10}
-				}
-				SWA = {
-					give_guarantee = SUT
-					give_guarantee = SID
-					add_offsite_building = {type = arms_factory level = 10}
-				}
-			} 
+		#send event to SWA abt economic cooperation
+
 		}
 	}
-########################################Hollywoodpath#######################################
+	focus = {
+		id = SCA_washingtonian_cooperation
+		icon = GFX_goal_unknown
+		x = -4
+		y = 1
+		cost = 4
+		available_if_capitulated = yes 
+		bypass = {
+		has_war_with = SWA	
+		}
+		available = {
+		SWA = {
+		has_completed_focus = SWA_a_republican_alternative
+		}	
+		}
+		prerequisite = {
+			focus = SCA_warplan_blue
+		} 
 
+		relative_position_id = SCA_warplan_blue
+		ai_will_do = { 
+			factor = 10
+		}
+		completion_reward= {
+		#send event to SWA abt economic cooperation
+
+		}
+	}
 	focus = {
 		id = SCA_Louis_B_Mayer_hijack_GOP
 		icon = GFX_focus_SCA_meyer
-		x = -16
+		x = -30
 		y = 1
 		cost = 4
 		available_if_capitulated = yes 
@@ -356,7 +314,7 @@ focus_tree = {
 	}
 
 
-##########################################################################################
+
 	focus = {
 		id = SCA_the_establishment
 		icon = GFX_focus_SCA_frank_merrian
@@ -429,7 +387,7 @@ focus_tree = {
 		id = SCA_reestablish_gold_standard
 		icon = GFX_focus_usa_reestablish_the_gold_standard
 		x = -1
-		y = 1
+		y = 2
 		cost = 8
 		available_if_capitulated = yes 
 		available = {
@@ -445,201 +403,111 @@ focus_tree = {
 			add_ideas = USA_gold_standard
 		}
 	}
+	#UNEPIC
 	focus = {
-		id = SCA_integrate_railroads
-		icon = GFX_focus_share_industry
-		x = 0
-		y = 1
-		cost = 12
+		id = SCA_end_socialism_in_california
+		icon = GFX_goal_unknown
+		x = -5
+		y = 0
+		cost = 7.2
 		available_if_capitulated = yes 
 		available = {
 		}
 		prerequisite = {
-			focus = SCA_reestablish_gold_standard
+			focus = SCA_merriam
 		}
-		relative_position_id = SCA_reestablish_gold_standard
+		relative_position_id = SCA_begin_depression_fix
 		ai_will_do = { 
-			factor = 50
+			factor = 40
 		} 
-
 		completion_reward = {
-			custom_effect_tooltip = 2_SCA_tt
-				swap_ideas = {
-    				remove_idea = great_depression
-    				add_idea = great_depression_2
-				} 
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = infrastructure
-						size > 0
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = infrastructure
-										size > 0
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = infrastructure
-						size > 1
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = infrastructure
-										size > 1
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes
-				}
-			}
-			SAZ = {
-				random_owned_controlled_state = {
-					limit = {
-						free_building_slots = {
-						building = infrastructure
-						size > 0
-						}
-						OR = {
-							is_in_home_area = yes
-							NOT = {
-								owner = {
-									any_owned_state = {
-										free_building_slots = {
-											building = infrastructure
-											size > 0
-										}
-										is_in_home_area = yes
-									}
-								}
-							}
-						}
-					}
-					add_building_construction = {
-						type = infrastructure
-						level = 1
-						instant_build = yes
-					}
-				}
-				random_owned_controlled_state = {
-					limit = {
-						free_building_slots = {
-							building = infrastructure
-							size > 1
-						}
-						OR = {
-							is_in_home_area = yes
-							NOT = {
-								owner = {
-									any_owned_state = {
-										free_building_slots = {
-											building = infrastructure
-											size > 1
-										}
-										is_in_home_area = yes
-									}
-								}
-							}
-						}
-					}
-					add_building_construction = {
-						type = infrastructure
-						level = 2
-						instant_build = yes
-					}
-				}
-			}
-		SNV = {
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = infrastructure
-						size > 0
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = infrastructure
-										size > 0
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = infrastructure
-						size > 1
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = infrastructure
-										size > 1
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 2
-					instant_build = yes
-				}
-			}
-		}
+		
 		}
 	}
 	focus = {
-		id = SCA_completion_of_hoover_dam
-		icon = GFX_hoover_dam
+		id = SCA_merriams_movies
+		icon = GFX_goal_unknown
+		x = -4
+		y = 1
+		cost = 7.2
+		available_if_capitulated = yes 
+		available = {
+		}
+		prerequisite = {
+			focus = SCA_end_socialism_in_california
+		}
+		relative_position_id = SCA_begin_depression_fix
+		ai_will_do = { 
+			factor = 40
+		} 
+		completion_reward = {
+		
+		}
+	}
+	focus = {
+		id = SCA_crackdown_on_unions
+		icon = GFX_goal_unknown
+		x = -6
+		y = 1
+		cost = 7.2
+		available_if_capitulated = yes 
+		available = {
+		}
+		prerequisite = {
+			focus = SCA_end_socialism_in_california
+		}
+		relative_position_id = SCA_begin_depression_fix
+		ai_will_do = { 
+			factor = 40
+		} 
+		completion_reward = {
+		
+		}
+	}
+	focus = {
+		id = SCA_cut_state_salaries
+		icon = GFX_goal_unknown
 		x = 1
+		y = 1
+		cost = 10
+		available_if_capitulated = yes 
+		available = {
+		}
+		prerequisite = {
+			focus = SCA_begin_depression_fix
+		}
+		relative_position_id = SCA_begin_depression_fix
+		ai_will_do = { 
+			factor = 40
+		} 
+		completion_reward = {
+		
+		}
+	}
+	focus = {
+		id = SCA_partner_with_big_business
+		icon = GFX_goal_unknown
+		x = 1
+		y = 2
+		cost = 10
+		available_if_capitulated = yes 
+		available = {
+		}
+		prerequisite = {
+			focus = SCA_cut_state_salaries
+		}
+		relative_position_id = SCA_begin_depression_fix
+		ai_will_do = { 
+			factor = 40
+		} 
+		completion_reward = {
+		
+		}
+	}
+	focus = {
+		id = SCA_rural_infrastructure
+		icon = GFX_goal_unknown
+		x = -1
 		y = 1
 		cost = 8
 		available_if_capitulated = yes 
@@ -650,62 +518,30 @@ focus_tree = {
 		}
 		relative_position_id = SCA_begin_depression_fix
 		ai_will_do = { 
-			factor = 23
+			factor = 40
 		} 
 		completion_reward = {
-			641 = {
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type =  industrial_complex
-					level = 1
-					instant_build = yes
-				}
-			}
-			611 = {
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type =  industrial_complex
-					level = 1
-					instant_build = yes
-				}
-			}
-			171 = {
-			add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type =  industrial_complex
-					level = 1
-					instant_build = yes
-				}
-			}
+		#3  ruralstates 2  infra
 		}
 	}
 	focus = {
-		id = SCA_divert_water_to_la
-		icon = GFX_Aqueduct
-		x = 1
+		id = SCA_reestablish_gold_standard
+		icon = GFX_focus_usa_reestablish_the_gold_standard
+		x = -1
 		y = 2
 		cost = 10
 		available_if_capitulated = yes 
 		available = {
 		}
 		prerequisite = {
-			focus = SCA_completion_of_hoover_dam
+			focus = SCA_begin_depression_fix
 		}
 		relative_position_id = SCA_begin_depression_fix
 		ai_will_do = { 
-			factor = 1
+			factor = 40
 		} 
 		completion_reward = {
-			43 = {
-				add_extra_state_shared_building_slots = 2
-			}
-			SCA = {
-				add_resource = {
- 			   	type = aluminium
-    			amount = 50
-    			state = 43
-				}
-			}
+			add_ideas = USA_gold_standard
 		}
 	}
 	focus = {
@@ -732,85 +568,6 @@ focus_tree = {
 			add_research_slot = 1
 		}
 	}
-	focus = {
-		id = SCA_jumpstart_econ
-		icon = GFX_focus_generic_industry_3
-		x = 0
-		y = 1
-		cost = 12
-		available_if_capitulated = yes 
-		available = {
-		}
-		prerequisite = {
-			focus = SCA_integrate_railroads
-		}
-		relative_position_id = SCA_integrate_railroads
-		ai_will_do = { 
-			factor = 50
-		} 
-		completion_reward = {
-			custom_effect_tooltip = 2_SCA_tt
-				swap_ideas = {
-    				remove_idea = great_depression_2
-    				add_idea = great_depression_3
-				} 
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = industrial_complex
-										size > 0
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 1
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = industrial_complex
-										size > 1
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-				}
-			}
-		}
-	}
-
 	focus = {
 		id = SCA_western_bear
 		icon = GFX_focus_SCA_recover_from_great_depression
@@ -4571,8 +4328,8 @@ focus_tree = {
 		id = SCA_secret_weapons
 		icon = GFX_goal_generic_secret_weapon
 		prerequisite = { focus = SCA_extra_tech_slot_2 }
-		x = 0
-		y = 1
+		x = 4
+		y = -1
 		relative_position_id = SCA_extra_tech_slot_2
 		cost = 10
 
