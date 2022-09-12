@@ -350,7 +350,7 @@ focus_tree = {
 		relative_position_id = SIL_public_works
 		x = 0
 		y = 1
-		cost = 7.2
+		cost = 10
 		prerequisite = { focus = SIL_public_works  }
 		completion_reward = {
 		random_owned_controlled_state = {
@@ -408,6 +408,34 @@ focus_tree = {
 					level = 1
 					instant_build = yes
 				}
+			}	
+		random_owned_controlled_state = {
+			add_extra_state_shared_building_slots = 1
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size < 1
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
 			}		
 		}
 	}
@@ -420,6 +448,10 @@ focus_tree = {
 		cost = 7.2
 		prerequisite = { focus = SIL_public_works  }
 		completion_reward = {
+		Swap_ideas = {
+    	remove_idea = SIL_segregation
+    	add_idea = SIL_segregation2
+		}	
 		#replace segregation wit segregation 2, 10% more  pop	
 		}
 	}
@@ -432,6 +464,7 @@ focus_tree = {
 		cost = 7.2
 		prerequisite = { focus = SIL_public_works  }
 		completion_reward = {
+		
 		#replace idea alderman corruption with loyal aldermans		
 		}
 	}
@@ -1134,6 +1167,9 @@ focus_tree = {
 			
 			
 		}
+	completion_reward = {
+	custom_effect_tooltip = SIL_unfinished_tt	
+	}	
 	}
 
 	#Co-opt "Share the Wealth"
@@ -1147,9 +1183,12 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 		}
 		prerequisite = { focus = SIL_elect_the_spi  }
+		completion_reward = {
+
+		}
 	}
 
-	#Relocate the Capitol to Chicago
+	#Relocate the Capitol to Chicago (make decision for it) rename to nationalize the big 3
 	focus = {
 		id = SIL_relocate_the_capitol_to_chicago
 		icon = GFX_SIL_relocate_the_capitol_to_chicago-215224
@@ -1160,6 +1199,9 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 		}
 		prerequisite = { focus = SIL_elect_the_spi  }
+		completion_reward = {
+
+		}
 	}
 
 	#Fund Rural Party Chapters
@@ -1173,6 +1215,9 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 		}
 		prerequisite = { focus = SIL_relocate_the_capitol_to_chicago  }
+		completion_reward = {
+			#should lead to marion revolting but give south IL 2 civs
+		}
 	}
 
 	#Payoff the Chicago Outfit
@@ -1186,6 +1231,9 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 		}
 		prerequisite = { focus = SIL_elect_the_union_party  }
+		completion_reward = {
+	
+		}
 	}
 
 	#Break the Chicago Mob
@@ -1251,6 +1299,255 @@ focus_tree = {
 			FOCUS_FILTER_POLITICAL
 		}
 		prerequisite = { focus = SIL_hold_a_referendum  } prerequisite = { focus = SIL_turn_our_sights_on_the_bourgeois_parties  }
+		completion_reward = {
+
+		}
+	}
+	focus = {
+		id = SIL_illinoisan_red_guard
+		icon = GFX_Goal_Unknown
+		x = 20
+		y = 8
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SIL_proclaim_the_proletarian_republic_of_illinois  } 
+		completion_reward = {
+		army_experience = 35
+		add_ideas = SIL_red_guard
+
+		}
+	}
+	focus = {
+		id = SIL_flame_tanks
+		icon = GFX_Goal_Unknown
+		x = 22
+		y = 9
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SIL_illinoisan_red_guard  } 
+		completion_reward = {
+		add_tech_bonus = {
+				bonus = 1.0
+				uses = 2
+				category = engineers_tech
+			}
+		}
+	}
+	focus = {
+		id = SIL_mechanized_effort
+		icon = GFX_Goal_Unknown
+		x = 22
+		y = 10
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SIL_flame_tanks  } 
+		completion_reward = {
+		add_tech_bonus = {
+				bonus = 1.25
+				uses = 2
+				category = cat_mechanized_equipment
+			}
+		}
+	}
+	focus = {
+		id = SIL_destroy_segregations_legacy
+		icon = GFX_Goal_Unknown
+		x = 20
+		y = 9
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SIL_illinoisan_red_guard  } 
+		completion_reward = {
+		remove_ideas = SIL_segregation
+		}
+	}
+	focus = {
+		id = SIL_socialist_shocktroopers
+		icon = GFX_Goal_Unknown
+		x = 20
+		y = 10
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SIL_destroy_segregations_legacy  } 
+		completion_reward = {
+		add_ideas = SIL_shocktroopers
+		}
+	}
+	focus = {
+		id = SIL_new_doctrines
+		icon = GFX_Goal_Unknown
+		x = 18
+		y = 9
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SIL_illinoisan_red_guard  } 
+		completion_reward = {
+		add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 2
+				category = cat_mobile_warfare
+			}	
+		}
+	}
+	focus = {
+		id = SIL_armor_research
+		icon = GFX_Goal_Unknown
+		x = 18
+		y = 10
+		cost = 7.2
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SIL_new_doctrines  } 
+		completion_reward = {
+		add_tech_bonus = {
+				bonus = 1.25
+				uses = 1
+				category = cat_medium_armor
+			}
+		add_tech_bonus = {
+				bonus = 1.25
+				uses = 1
+				category = cat_heavy_armor
+			}	
+		add_tech_bonus = {
+				bonus = 1.25
+				uses = 1
+				category = cat_light_armor
+			}		
+		}
+	}
+	focus = {
+		id = SIL_spread_revolution_to_the_great_lakes
+		icon = GFX_Goal_Unknown
+		x = 27
+		y = 8
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		prerequisite = { focus = SIL_proclaim_the_proletarian_republic_of_illinois  } 
+		completion_reward = {
+		#decisions core neighbors and then usa cosmetic tag once u 
+		#conquer great lakes
+		}
+	}
+	focus = {
+		id = SIL_indiana
+		icon = GFX_Goal_Unknown
+		x = 27
+		y = 9
+		cost = 5
+		available = {
+		SIN = {
+		NOT = { has_government = communism }	
+		}
+		country_exists = SIN
+		is_neighbor_of = SIN	
+		}
+		bypass = {
+		NOT = {
+		country_exists = SIN	
+		}	
+		}
+		prerequisite = { focus = SIL_spread_revolution_to_the_great_lakes  } 
+		completion_reward = {
+		create_wargoal = {
+				type = annex_everything
+				target = SIN
+			}
+		}
+	}
+	focus = {
+		id = SIL_SOH
+		icon = GFX_Goal_Unknown
+		x = 27
+		y = 10
+		cost = 5
+		available = {
+		SOH = {
+		NOT = { has_government = communism }	
+		}
+		country_exists = SOH
+		is_neighbor_of = SOH	
+		}
+		bypass = {
+		NOT = {
+		country_exists = SOH	
+		}	
+		}
+		prerequisite = { focus = SIL_indiana  } 
+		completion_reward = {
+		create_wargoal = {
+				type = annex_everything
+				target = SOH
+			}
+		}
+	}
+	focus = {
+		id = SIL_SMI
+		icon = GFX_Goal_Unknown
+		x = 29
+		y = 9
+		cost = 5
+		bypass = {
+		NOT = {
+		country_exists = SMI	
+		}	
+		}
+		available = {
+		SMI = {
+		NOT = { has_government = communism }	
+		}
+		country_exists = SMI
+		is_neighbor_of = SMI	
+		}
+		prerequisite = { focus = SIL_spread_revolution_to_the_great_lakes  } 
+		completion_reward = {
+		create_wargoal = {
+				type = annex_everything
+				target = SMI
+			}
+		}
+	}
+	focus = {
+		id = SIL_SWI
+		icon = GFX_Goal_Unknown
+		x = 29
+		y = 10
+		cost = 5
+		bypass = {
+		NOT = {
+		country_exists = SWI	
+		}	
+		}
+		available = {
+		SWI = {
+		NOT = { has_government = communism }	
+		}
+		country_exists = SWI
+		is_neighbor_of = SWI	
+		}
+		prerequisite = { focus = SIL_SMI  } 
+		completion_reward = {
+		create_wargoal = {
+				type = annex_everything
+				target = SWI
+			}
+		}
 	}
 
 	#Reduce Unemployment in Cook County
