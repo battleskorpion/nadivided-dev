@@ -3294,10 +3294,24 @@ focus_tree = {
 		
 		available = {
 			NOT = { has_war_with = SNV }
-			SNV = { has_government = nuetrality } 
+			NOT = {
+			SNV = {
+			is_in_faction = yes	
+			}	
+			}
 		}
 		
-		bypass = {}
+		bypass = {
+		OR = {
+		NOT = {
+		country_exists = SNV
+		}
+		SNV = {
+		is_in_faction = yes	
+		}
+		}	
+
+		}
 		
 		completion_reward = {
 			SNV = {
@@ -3328,11 +3342,26 @@ focus_tree = {
 		
 		
 		available = {
+			NOT = {
+			SAZ = {
+			is_in_faction = yes	
+			}	
+			}
 			NOT = { has_war_with = SAZ }
-			SAR = { has_government = nuetrality } 
 		}
 		
-		bypass = {}
+		bypass = {
+		OR = {
+		NOT = {
+		country_exists = SAZ
+		}
+		SAZ = {
+		is_in_faction = yes	
+		}
+		}	
+		
+
+		}
 		
 		completion_reward = {
 		SAZ = {
@@ -3361,20 +3390,32 @@ focus_tree = {
 		cost = 3
 
 		available = {
+			NOT = {
+			SNM = {
+			is_in_faction = yes	
+			}	
+			}
 			NOT = { has_war_with = SNM }
-		    SNM = { has_government = nuetrality } 
 		}
 		
-		bypass = {}
+		bypass = {
+		OR = {
+		NOT = {
+		country_exists = SNM
+		}
+		SNM = {
+		is_in_faction = yes	
+		}
+		}	
+
+		}
 		
 		completion_reward = {
-			SNM = {
-				news_event = { id = SUT.1 hours = 4 }
-				add_opinion_modifier = {
-					target = SNM
-					modifier = SUT_desert_shield
+		SNM = {
+				country_event = {
+					id = generic.5
 				}
-			}
+			}	
 		}
 		
 		ai_will_do = {
@@ -3399,11 +3440,25 @@ focus_tree = {
 		
 		
 		available = {
+			NOT = {
+			SWY = {
+			is_in_faction = yes	
+			}	
+			}
 			NOT = { has_war_with = SWY }
-		    SWY = { has_government = nuetrality } 
+		    
 		}
 		
-		bypass = {}
+		bypass = {
+		OR = {
+		NOT = {
+		country_exists = SWY
+		}
+		SWY = {
+		is_in_faction = yes	
+		}
+		}		
+		}
 		
 		completion_reward = {
 			SWY = {
@@ -3461,7 +3516,7 @@ focus_tree = {
 		y = 3
 		relative_position_id = SUT_desert_shield
 		
-		cost = 7.2
+		cost = 5
 		
 		prerequisite = {
 			focus = SUT_reclaimation
@@ -3469,9 +3524,14 @@ focus_tree = {
 		
 		mutually_exclusive = {}
 		
-		available = {}
+		available = {
+		is_neighbor_of = SCA	
+		}
 		
-		bypass = {}
+		bypass = {
+		has_war_with = SCA
+
+		}
 		
 		completion_reward = {
 			create_wargoal = {
@@ -3500,7 +3560,6 @@ focus_tree = {
 		controls_state = 611
 		controls_state = 143
 		}
-			
 		}
 		prerequisite = {
 			focus = SUT_nevada
@@ -3529,13 +3588,24 @@ focus_tree = {
 		relative_position_id = SUT_desert_shield
 		
 		cost = 3
-		
+		available = {
+		OR = {
+		is_in_faction_with = SAZ
+		controls_state = 77
+		controls_state = 145
+		}
+		}
 		prerequisite = {
 			focus = SUT_arizona
 		}
 		
 		completion_reward = {
-		
+		145 = {
+		add_resource = {
+ 			   	type = steel
+    			amount = 45
+			}		
+		}
 		}
 		
 		ai_will_do = {
@@ -3551,7 +3621,7 @@ focus_tree = {
 		y = 6
 		relative_position_id = SUT_desert_shield
 		
-		cost = 55
+		cost = 10
 		
 		prerequisite = {
 			focus = SUT_arizona_steel
@@ -3567,28 +3637,17 @@ focus_tree = {
 		}
 		available = {
 			is_puppet = no
-			has_government = nuetrality
-			SNV = { is_puppet = no }
-			SNM = { is_puppet = no }
-			SAR = { is_puppet = no }
-			SWY = { is_puppet = no }
-			SAR = { has_government = Non-Aligned }
-			SNM = { has_government = Non-Aligned }
-			SNV = { has_government = Non-Aligned }
-			SWY = { has_government = Non-Aligned }
-			is_in_faction_with = SWY
-			is_in_faction_with = SNM
-			is_in_faction_with = SAR
-			is_in_faction_with = SNV
+			is_faction_leader = yes
 		}
 		
 		bypass = {}
 		
 		completion_reward = {
-			annex_country = { target = SNV transfer_troops = yes }
-			annex_country = { target = SWY transfer_troops = yes }
-			annex_country = { target = SNM transfer_troops = yes }
-			annex_country = { target = SAR transfer_troops = yes }
+		every_country = {
+	  limit = { is_in_faction_with = SUT }
+	  country_event = { id = utah.3 }
+		}	
+	
 		}
 		
 		ai_will_do = {
@@ -3610,8 +3669,19 @@ focus_tree = {
 			focus = SUT_wyoming
 		}
 		completion_reward = {
+		340 = {
+		add_resource = {
+ 			   	type = chromium
+    			amount = 60
+			}		
 		}
-		
+		}
+		available = {
+		OR = {
+		is_in_faction_with = SWY
+		controls_state = 271
+		}
+		}
 		ai_will_do = {
 			factor = 10
 		}
@@ -3630,7 +3700,20 @@ focus_tree = {
 		prerequisite = {
 			focus = SUT_new_mexico
 		}
+		available = {
+		OR = {
+		is_in_faction_with = SNM
+		controls_state = 150
+		controls_state = 149
+		}
+		}
 		completion_reward = {
+		150 = {
+		add_resource = {
+ 			   	type = oil
+    			amount = 50
+			}		
+		}
 		}
 		
 		ai_will_do = {
