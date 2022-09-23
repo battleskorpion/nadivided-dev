@@ -2637,7 +2637,7 @@ focus_tree = {
 			factor = 15
 		} 
 		completion_reward = {
-
+        	add_offsite_building = { type = industrial_complex level = 1 }
 		}
 	}
 	focus = { 
@@ -2658,7 +2658,7 @@ focus_tree = {
 			factor = 15
 		} 
 		completion_reward = {
-
+			add_war_support = 0.05
 		}
 	}
 	focus = { 
@@ -2809,8 +2809,16 @@ focus_tree = {
 		ai_will_do = { 
 			factor = 15
 		} 
+
 		completion_reward = {
-				
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 1
+				category = infantry_weapons
+
+			}
+
 		}
 	}
 	focus = { 
@@ -2894,6 +2902,7 @@ focus_tree = {
 		} 
 		completion_reward = {
 			#spawns in 6, 6w infantry divisions
+			add_timed_idea = { idea = SCA_worker_brigades_idea  days = 255 }
 		}
 	}	
 	focus = {
@@ -2921,7 +2930,24 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			#add event that gives the palyer a choice for random reward htat gives weapons, tanks, or planes
+			army_experience = 5
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine
+			}
+			add_tech_bonus = {
+				name = motorized_bonus
+				bonus = 3.0
+				technology = motorised_infantry
+			}
+			add_equipment_to_stockpile = {
+				type = motorized_equipment_1
+				amount = 100
+				producer = WDC
+			}
+
 		}
 	}
 	focus = {
@@ -3003,7 +3029,7 @@ focus_tree = {
 			factor = 1
 		}
       		completion_reward = {
-				#expansion
+				add_ideas = SCA_California_Superiority_ideas
 		}
 	}
 
@@ -3022,7 +3048,8 @@ focus_tree = {
 			factor = 1
 		}
      		completion_reward = {
-		}
+				add_ideas = SCA_California_Superiority_ideas
+			}
 	}
 
 	focus = {
@@ -3039,8 +3066,104 @@ focus_tree = {
 		ai_will_do = { 
 			factor = 1
 		}
-     		completion_reward = {
+		completion_reward = {
+			navy_experience = 25
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+			}			
 		}
+		
 	}
 
 	focus = {
@@ -3058,7 +3181,8 @@ focus_tree = {
 			factor = 1
 		}
      		completion_reward = {
-		}
+				add_research_slot = 1
+			}
 	}
 
 	focus = {
@@ -3075,7 +3199,13 @@ focus_tree = {
 		ai_will_do = { 
 			factor = 1
 		}
-     		completion_reward = {
+		completion_reward = {
+			add_tech_bonus = {
+				name = secret_bonus
+				bonus = 1.0
+				uses = 4
+				category = electronics
+			}
 		}
 	}
 
@@ -3095,7 +3225,8 @@ focus_tree = {
 			factor = 1
 		}
      		completion_reward = {
-		}
+				add_ideas = SCA_Selling_Our_Research_idea
+			}
 	}
 	focus = {
 		id = SCA_Nuclear_Program
@@ -3111,7 +3242,14 @@ focus_tree = {
 		ai_will_do = { 
 			factor = 1
 		}
-     		completion_reward = {
+		completion_reward = {
+			add_tech_bonus = {
+				name = secret_bonus
+				bonus = 1.0
+				uses = 4
+				category = nuclear
+
+			}
 		}
 	}
 
@@ -3130,7 +3268,8 @@ focus_tree = {
 			factor = 1
 		}
       		completion_reward = {
-		}
+				add_ideas = SCA_California_Superiority_ideas
+			}
 	}
 
 	focus = {
@@ -3148,7 +3287,39 @@ focus_tree = {
 			factor = 1
 		}
       		completion_reward = {
-		}
+				add_ideas = SCA_San_Diego_Automotive_Plants_idea
+				55 = {
+
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 1
+							include_locked = yes
+						}
+						OR = {
+							is_in_home_area = yes
+							NOT = {
+								owner = {
+									any_owned_state = {
+										free_building_slots = {
+											building = industrial_complex
+											size > 1
+											include_locked = yes
+										}
+										is_in_home_area = yes
+									}
+								}
+							}
+						}
+					}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
 	}
 
 	focus = {
@@ -3166,7 +3337,13 @@ focus_tree = {
 			factor = 1
 		}
       		completion_reward = {
-		}
+				95 = {
+					add_resource = {
+						type = steel
+						amount = 39
+					}
+				}
+			}
 	}
 	focus = {
 		id = SCA_Rubber_Proj
@@ -3182,7 +3359,13 @@ focus_tree = {
 		ai_will_do = { 
 			factor = 1
 		}
-      		completion_reward = {
+		completion_reward = {
+			add_tech_bonus = {
+				name = synt
+				bonus = 1.5
+				uses = 1
+				category = synth_resources
+			}
 		}
 	}
 
@@ -3200,8 +3383,47 @@ focus_tree = {
 		ai_will_do = { 
 			factor = 1
 		}
-      		completion_reward = {
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 150
 		}
+
+        available = { has_tech = synth_oil_experiments }
+
+        completion_reward = { 
+            custom_effect_tooltip = SLA_research_syth_tt
+			93 = {
+				limit = {
+					free_building_slots = {
+						building = synthetic_refinery 
+						size > 2
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = synthetic_refinery
+										size > 2
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 2
+					instant_build = yes
+				    }
+			    }
+			}
 	}
 	focus = {
 		id = SCA_officer_School
@@ -3218,6 +3440,7 @@ focus_tree = {
 			factor = 1
 		}
       completion_reward = {
+		add_ideas = SCA_officer_School_idea
 		}
 	}
 	focus = {
@@ -3234,9 +3457,67 @@ focus_tree = {
 		ai_will_do = { 
 			factor = 1
 		}
-      completion_reward = {
+
+		ai_will_do = {
+			factor = 2
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = production_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = arms_factory
+						size < 2
+						include_locked = yes
+					}					
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = arms_factory
+				level = 2
+				instant_build = yes
+			}
+		}		
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
 		}
 	}
+	
 
 	focus = {
 		id = SCA_improve_engineer_corp
@@ -3253,7 +3534,13 @@ focus_tree = {
 			factor = 1
 		}
       completion_reward = {
+		add_tech_bonus = {
+			name = infantry_artillery_bonus
+			bonus = 1.0
+			uses = 1
+			category = engineers_tech
 		}
+	}
 	}
 	focus = {
 		id = SCA_The_California_Rifle
@@ -3273,7 +3560,13 @@ focus_tree = {
 			factor = 1
 		}
       completion_reward = {
+		add_tech_bonus = {
+			name = infantry_artillery_bonus
+			bonus = 1.0
+			uses = 1
+			category = infantry_weapons
 		}
+	}
 	}
 	focus = {
 		id = SCA_Military_Drill_Perfectionism
@@ -3292,11 +3585,13 @@ focus_tree = {
 		ai_will_do = { 
 			factor = 1
 		}
-      	completion_reward = {
-			add_tech_bonus = {
-				bonus = 0.5
-				uses = 2
-				category = infantry_weapons
+		completion_reward = {
+			army_experience = 5
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine
 			}
 		}
 	}
@@ -3320,7 +3615,13 @@ focus_tree = {
 			factor = 1
 		}
       completion_reward = {
-				#spawns event that spawns the civil war
+		add_tech_bonus = {
+			name = armor_bonus
+			bonus = 1.0
+			uses = 2
+			category = armor
+		}
+		#spawns event that spawns the civil war
 		}
 	}
 	focus = { 
@@ -5132,7 +5433,7 @@ focus_tree = {
 		} 
 		completion_reward = { 
 			add_political_power = -75
-			add_stability = .5
+			add_stability = .21
 		}
 	}
 	focus = { 
@@ -5152,7 +5453,7 @@ focus_tree = {
 			factor = 1
 		} 
 		completion_reward = { 
-			add_political_power = -75
+			add_political_power = -25
 			43 = {
 				add_extra_state_shared_building_slots = 3 
 			}
@@ -5178,7 +5479,6 @@ focus_tree = {
 			factor = 1
 		} 
 		completion_reward = { 
-			add_political_power = -75
 			43 = {
 				add_extra_state_shared_building_slots = 3 
 			}
