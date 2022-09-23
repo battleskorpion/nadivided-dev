@@ -13,6 +13,7 @@ SNJ_chesapeake_war_imminent = {
                 has_global_flag = chesa_war_finished_buildup
             }
         }
+        always = no
     }
 }
 
@@ -25,26 +26,27 @@ SNJ_chesapeake_war_SMD_surrender = {
         tag = SMD
     }
     visible = {
-            OR = {
-                SMD = {
-                    surrender_progress > 0.5
-                }
-                SNJ = {
-                    controls_delaware_trigger = yes
-                    controls_state = 204
-                    controls_state = 205
-                }
-    
-            }
+        OR = {
             SMD = {
-                has_war_with = SNJ
+                surrender_progress > 0.3
             }
-            NOT = {
-                has_global_flag = chesa_war_finished
+            SNJ = {
+                controls_delaware_trigger = yes
+                controls_state = 204
+                controls_state = 205
+                controls_state = 136
             }
+        }
+        SMD = {
+            has_war_with = SNJ
+        }
+        NOT = {
+            has_global_flag = chesa_war_finished
+        }
+        always = no
     }
 }
-
+#new jersey surrender
 SNJ_chesapeake_war_failure = {
     priority = 18
 
@@ -54,32 +56,149 @@ SNJ_chesapeake_war_failure = {
         tag = SNJ
     }
     visible = {
-        hidden_trigger = {
-            SDE = {
-                has_full_control_of_state = 413
+        OR = {
+            AND = {
+                NOT = {
+                    controls_state = 413
+                }
+                NOT = {
+                    controls_state = 412
+                }
+                NOT = {
+                    controls_state = 411
+                }
+    #            SMD = {
+    #                controls_state = 205
+    #            }
+                NOT = {
+                    controls_state = 204
+                }
+                NOT = {
+                    controls_state = 136
+                }
             }
-            SDE = {
-                has_full_control_of_state = 412
-            }
-            SDE = {
-                has_full_control_of_state = 411
-            }
-            SMD = {
-                has_full_control_of_state = 205
-            }
-            SMD = {
-                has_full_control_of_state = 204
-            }
-            SMD = {
-                has_full_control_of_state = 136
-            }
-            tag = SNJ
             SNJ = {
-                has_war_with = SMD
+                surrender_progress > 0.3
             }
+        }
+        SNJ = {
+            has_war_with = SMD
+        }
+        NOT = {
+            has_global_flag = chesa_war_finished
+        }
+    }
+    always = no
+}
+
+SNJ_chesapeake_war_support = {
+    priority = 17
+
+    icon = GFX_decision_category_usa_intervention_mandate
+
+    allowed = {
+        tag = SNJ
+    }
+    visible = {
             NOT = {
                 has_global_flag = chesa_war_finished
             }
-        }
+            has_completed_focus = SNJ_seek_foreign_support
+            always = no
     }
 }
+
+SNJ_Debt_Category = {
+    priority = 17
+
+    icon = GFX_decision_category_usa_intervention_mandate
+
+    allowed = {
+        tag = SNJ
+    }
+    visible = {
+            NOT = {
+                has_global_flag = SNJ_debts_paid
+            }
+            always = no
+    }
+    visible_when_empty = yes
+}
+
+SNJ_cool_epic_debug_category = {
+    priority = 9999
+
+    icon = GFX_decision_category_usa_intervention_mandate
+    picture = GFX_debug
+
+    allowed = {
+        tag = SNJ
+    }
+    visible = {
+        is_debug = yes
+        always = no
+    }
+    visible_when_empty = yes
+}
+
+SNJ_patriotism_category = {
+    priority = 16
+
+    icon = GFX_decision_category_usa_intervention_mandate
+
+    allowed = {
+        tag = SNJ
+    }
+    visible = {
+#        has_completed_focus = SNJ_rebuild_patriotism
+        always = no
+    }
+    visible_when_empty = yes
+}
+
+SNJ_propaganda_category = {
+    priority = 15
+
+    icon = GFX_decision_category_usa_intervention_mandate
+    picture = GFX_propaganda_decision
+
+    allowed = {
+        tag = SNJ
+    }
+    visible = {
+#        has_completed_focus = SNJ_government_propaganda
+        always = no
+    }
+    visible_when_empty = no
+}
+
+SNJ_integration_category = {
+    priority = 10000
+
+    icon = GFX_decision_category_usa_intervention_mandate
+
+    allowed = {
+        tag = SNJ
+#        has_completed_focus = SNJ_looking_to_the_future
+    }
+    visible = {
+#        has_completed_focus = SNJ_government_propaganda
+        always = no
+    }
+    visible_when_empty = no
+}
+SNJ_american_tension_category = {
+    priority = 10001
+
+    icon = GFX_decision_category_usa_intervention_mandate
+
+    allowed = {
+        tag = SNJ
+    }
+    visible = {
+        has_completed_focus = SNJ_american_dream_purpose
+        always = no
+    }
+    visible_when_empty = yes
+}
+

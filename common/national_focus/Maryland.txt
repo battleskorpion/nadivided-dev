@@ -1,6 +1,5 @@
 focus_tree = {
     id = maryland_focus
-
     country = {
         factor = 0
         modifier = {
@@ -8,9 +7,7 @@ focus_tree = {
             tag = SMD
         }
     }
-
     default = no
-
     #FOCUS_FILTER_STABILITY
     #FOCUS_FILTER_INDUSTRY
     #FOCUS_FILTER_ANNEXATION
@@ -18,23 +15,1522 @@ focus_tree = {
     #FOCUS_FILTER_POLITICAL
     #FOCUS_FILTER_RESEARCH
     #FOCUS_FILTER_WAR_SUPPORT
-
-    continuous_focus_position = { x = 50 y = 1350 }
-
+    continuous_focus_position = { x = 50 y = 50 }
 #######################################
 ###########Ritchie dies ###########
 #######################################
-    
- 
+    focus = {
+        id = SMD_Ritchie_dies
+        icon = GFX_goal_generic_neutrality_focus
+        available = {
+
+        }
+        x = 0
+        y = 0
+        cost = 7.2
+	##event to kick this off was never broken. Ritchie dying should kick off focus tree. I don't care that players won't have focuses for 3 months. Not big deal.
+	#######Unlike other treess they get to go fascist super early in 1936 which means economy law changes and other good stuff
+	    available = {
+	    always = no
+		}
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+           
+           
+            add_popularity = {
+                        ideology = fascism
+                        popularity = 0.05
+            }
+        }
+    }
+    focus = {
+        id = SMD_Publishing_the_bonus_Manifesto
+        icon = GFX_focus_SMD_publishing_the_manifesto
+        available = {
+
+        }
+        mutually_exclusive = { focus = SMD_The_Marines_Coup}
+        prerequisite = { focus = SMD_Ritchie_dies}
+        relative_position_id = SMD_Ritchie_dies
+        x = -10
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+                country_event = {
+                        id  = maryland.15
+                    }
+            add_ideas = SMD_Bonus_Army_Dissatisfied_idea
+            add_political_power = 25            
+        }
+    }
+    focus = {
+        id = SMD_Bonus_of_Blood
+        icon = GFX_focus_SMD_doctrine_of_blood
+        available = {
+            has_completed_focus = SMD_Publishing_the_bonus_Manifesto
+        }
+        mutually_exclusive = { focus = SMD_Bonus_of_Compensations}
+        prerequisite = { focus = SMD_Publishing_the_bonus_Manifesto}
+        relative_position_id = SMD_Publishing_the_bonus_Manifesto
+        x = 1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_war_support = 0.1     
+            country_event = {
+                id  = maryland.16
+            }
+        }
+    }
+    focus = {
+        id = SMD_Chapter_about_Tactics
+        icon = GFX_focus_SMD_chapter_tactics
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Bonus_of_Blood}
+        relative_position_id = SMD_Bonus_of_Blood
+        x = 1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+			army_experience = 5
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine
+			}            
+        }
+    }
+    focus = {
+        id = SMD_Chapter_about_Defence
+        icon = GFX_focus_SMD_chapter_defence
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Chapter_about_Tactics}
+        relative_position_id = SMD_Chapter_about_Tactics
+        x = 1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = SMD_Army_Of_Defence_idea
+        }
+    }
+    focus = {
+        id = SMD_Fortify_Balitmore
+        icon = GFX_focus_SMD_fortify_baltimore
+        available = {
+			controls_state = 45
+        }
+        prerequisite = { focus = SMD_Chapter_about_Defence}
+        relative_position_id = SMD_Chapter_about_Defence
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+			45 = {	
+                add_building_construction = {
+                    type = bunker
+                    level = 4
+                    instant_build = yes
+                    province = 1948
+                }
+                add_building_construction = {
+                    type = bunker
+                    level = 1
+                    instant_build = yes
+                    province = 3900
+                }
+                add_building_construction = {
+                    type = bunker
+                    level = 1
+                    instant_build = yes
+                    province = 8287
+                }
+            }
+        }
+    }
+    focus = {
+        id = SMD_Costal_Bunkers
+        icon = GFX_focus_SMD_fortify_coast
+        available = {
+			controls_state = 45
+			controls_state = 206
+			controls_state = 136
+			controls_state = 204
+        }
+        prerequisite = { focus = SMD_Fortify_Balitmore}
+        relative_position_id = SMD_Fortify_Balitmore
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+			45 = {	
+                add_building_construction = {
+                    type = coastal_bunker
+                    level = 2
+                    instant_build = yes
+                    province = 1948
+				}	
+			}
+			206 = {	
+                add_building_construction = {
+                    type = coastal_bunker
+                    level = 2
+                    instant_build = yes
+                    province = 3895
+				}	
+			}
+			136 = {	
+                add_building_construction = {
+                    type = coastal_bunker
+                    level = 2
+                    instant_build = yes
+                    province = 1884
+				}	
+			}
+			204 = {	
+                add_building_construction = {
+                    type = coastal_bunker
+                    level = 2
+                    instant_build = yes
+                    province = 5106
+				}	
+			}
+        }
+    }
+    focus = {
+        id = SMD_Chapter_about_welfare
+        icon = GFX_focus_SMD_chapter_wealfare
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Bonus_of_Compensations}
+        relative_position_id = SMD_Bonus_of_Compensations
+        x = -1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_timed_idea = { idea = SMD_Bonus_Social_Program_idea  days = 360 }
+        }
+    }
+    focus = {
+        id = SMD_Chapter_about_Industry
+        icon = GFX_focus_SMD_chapter_industry
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Chapter_about_welfare}
+        relative_position_id = SMD_Chapter_about_welfare
+        x = -1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+			add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 1.0
+				uses = 1
+				category = industry
+			}
+        }
+    }
+    focus = {
+        id = SMD_Bonus_of_Compensations
+        icon = GFX_focus_SMD_bonus_of_compesation
+        available = {
+            has_completed_focus = SMD_Publishing_the_bonus_Manifesto
+        }
+        mutually_exclusive = { focus = SMD_Bonus_of_Blood}
+        prerequisite = { focus = SMD_Publishing_the_bonus_Manifesto}
+        relative_position_id = SMD_Publishing_the_bonus_Manifesto
+        x = -1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            country_event = {
+                id  = maryland.17
+            }
+            add_timed_idea = { idea = SMD_Bonus_of_compensations_idea  days = 360 }
+            add_popularity = {
+				ideology = longism
+				popularity = 0.05
+            }
+        }
+    }
+    focus = {
+        id = SMD_Rally_the_remnants_of_bonus_army
+        icon = GFX_focus_SMD_rally_reminants_of_bonus_army
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Bonus_of_Compensations focus = SMD_Bonus_of_Blood}
+        relative_position_id = SMD_Bonus_of_Compensations
+        x = 1
+        y = 1
+        cost = 2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_timed_idea = { idea = SMD_Rally_bonus_Army  days = 360 }
+        }
+    }
+    focus = {
+        id = SMD_Reward_our_long_time_supporters
+        icon = GFX_focus_SMD_reward_long_time_supporters
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Rally_the_remnants_of_bonus_army}
+        relative_position_id = SMD_Rally_the_remnants_of_bonus_army
+        x = -1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            remove_ideas = SMD_Bonus_Army_Dissatisfied_idea
+        }
+    }
+    focus = {
+        id = SMD_Develop_Workers_Unions
+        icon = GFX_focus_SMD_workers_union
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Reward_our_long_time_supporters}
+        relative_position_id = SMD_Reward_our_long_time_supporters
+        x = -2
+        y = 2
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_popularity = {
+				ideology = longism
+				popularity = 0.05
+            }
+        }
+    }
+    focus = {
+        id = SMD_Promise_Bonus_for_workers
+        icon = GFX_focus_SMD_bonus_for_workers
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Develop_Workers_Unions}
+        relative_position_id = SMD_Develop_Workers_Unions
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            remove_ideas = SMD_Stagnating_Economy
+        }
+    }
+    focus = {
+        id = SMD_Fight_for_workers_rights
+        icon = GFX_focus_SMD_fight_for_workers
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Promise_Bonus_for_workers}
+        relative_position_id = SMD_Promise_Bonus_for_workers
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            remove_ideas = SMD_Robber_Baron_Economies
+        }
+    }
+    focus = {
+        id = SMD_Bonus_army_workshops
+        icon = GFX_focus_SMD_bonus_workshops
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Reward_our_long_time_supporters}
+        relative_position_id = SMD_Reward_our_long_time_supporters
+        x = -7
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+            add_offsite_building = { type = arms_factory level = 1 }
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+    }
+    focus = {
+        id = SMD_more_advanced_Submachineguns
+        icon = GFX_focus_SMD_sub_machine_gun
+        available = {
+
+        }
+        mutually_exclusive = { focus = SMD_Bonus_Tanks }
+        prerequisite = { focus = SMD_Bonus_army_workshops}
+        relative_position_id = SMD_Bonus_army_workshops
+        x = -3
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 1
+				category = infantry_weapons
+			}
+		}
+    }
+    focus = {
+        id = SMD_Bonus_Artillery
+        icon = GFX_focus_SMD_bonus_artillery
+        available = {
+
+        }
+        prerequisite = { focus = SMD_more_advanced_Submachineguns}
+        relative_position_id = SMD_more_advanced_Submachineguns
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 1
+				category = artillery
+			}
+		}
+    }
+    focus = {
+        id = SMD_Bonus_Army_special_forces
+        icon = GFX_focus_SMD_bonus_army_special_forces
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Bonus_Artillery focus = SMD_Bonus_trucking}
+        relative_position_id = SMD_Bonus_Artillery
+        x = 1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			add_ideas = special_forces
+			add_tech_bonus = {
+				name = special_forces_bonus
+				bonus = 1.0
+				uses = 1
+				technology = paratroopers
+				technology = paratroopers2
+				technology = marines
+				technology = marines2
+				technology = tech_mountaineers
+				technology = tech_mountaineers2
+			}
+		}
+    }
+    focus = {
+        id = SMD_Bonus_Army_fanatics
+        icon = GFX_focus_SMD_bonus_Army_fanatics
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Bonus_Army_special_forces }
+        relative_position_id = SMD_Bonus_Army_special_forces
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_war_support = 0.05  
+            add_ideas = SMD_Bonus_Army_fanatics_i
+        }
+    }
+    focus = {
+        id = SMD_Bonus_Tanks
+        icon = GFX_focus_SMD_bonus_tanks
+        available = {
+
+        }
+        mutually_exclusive = { focus = SMD_more_advanced_Submachineguns }
+        prerequisite = { focus = SMD_Bonus_army_workshops}
+        relative_position_id = SMD_Bonus_army_workshops
+        x = -1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+			add_tech_bonus = {
+				name = armor_bonus
+				bonus = 1.0
+				uses = 2
+				category = armor
+			}
+        }
+    }
+    focus = {
+        id = SMD_Bonus_trucking
+        icon = GFX_focus_SMD_bonus_trucking
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Bonus_Tanks}
+        relative_position_id = SMD_Bonus_Tanks
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = SMD_Bonus_trucking_idea
+        }
+    }
+    focus = {
+        id = SMD_Industrial_development
+        icon = GFX_focus_SMD_factories
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Bonus_army_workshops}
+        relative_position_id = SMD_Bonus_army_workshops
+        x = 1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+			add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 1.0
+				uses = 1
+				category = industry
+			}
+        }
+    }
+    focus = {
+        id = SMD_Steel_mines
+        icon = GFX_focus_SMD_steel
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Industrial_development}
+        relative_position_id = SMD_Industrial_development
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_resource = {
+                state = 204
+                type =  steel
+                amount = 15
+			}
+        }
+    }
+    focus = {
+        id = SMD_Diversifications_of_mining
+        icon = GFX_focus_SMD_resources_diversifications
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Steel_mines}
+        relative_position_id = SMD_Steel_mines
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = SMD_Diversifications_of_mining_idea
+            add_resource = {
+                state = 204
+                type =  tungsten
+                amount = 7
+			}
+        }
+    }
+    focus = {
+        id = SMD_Bonus_heavy_industry
+        icon = GFX_focus_SMD_heavy_industry
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Diversifications_of_mining focus = SMD_Bonus_Infrastructure_Plan}
+        relative_position_id = SMD_Diversifications_of_mining
+        x = 1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = developed_economic_capacity
+        }
+    }
+    focus = {
+        id = SMD_Bonus_Army_Research_Dept
+        icon = GFX_focus_SMD_research_dept
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Bonus_heavy_industry }
+        relative_position_id = SMD_Bonus_heavy_industry
+        x = -2
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_research_slot = 1
+        }
+    }
+    focus = {
+        id = SMD_Synthetic_Resources_Development
+        icon = GFX_focus_rubber
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Bonus_heavy_industry }
+        relative_position_id = SMD_Bonus_heavy_industry
+        x = 3
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			add_tech_bonus = {
+				name = synt
+				bonus = 1.5
+				uses = 1
+				category = synth_resources
+			}
+		}
+    }
+    focus = {
+        id = SMD_Synthetic_Resources_Plants
+        icon = GFX_focus_synth_facility
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Synthetic_Resources_Development }
+        relative_position_id = SMD_Synthetic_Resources_Development
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        available = { has_tech = synth_oil_experiments }
+        completion_reward = { 
+            custom_effect_tooltip = SLA_research_syth_tt
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = synthetic_refinery 
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = synthetic_refinery
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 1
+					instant_build = yes
+                }
+            }
+        }
+	}
+#
+    focus = {
+        id = SMD_Funnel_money_into_research
+        icon = GFX_focus_SMD_researchmoney
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Bonus_Army_Research_Dept }
+        relative_position_id = SMD_Bonus_Army_Research_Dept
+        mutually_exclusive = { focus = SMD_Funnel_money_into_industry }
+        x = -3
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = SMD_bonus_research_idea
+        }
+    }
+    focus = {
+        id = SMD_Develop_radar
+        icon = GFX_focus_SMD_radar
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Funnel_money_into_research }
+        relative_position_id = SMD_Funnel_money_into_research
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+			add_tech_bonus = {
+				name = r
+				bonus = 1.0
+				uses = 1
+				category = radar_tech
+			}
+        }
+    }
+    focus = {
+        id = SMD_Jet_development
+        icon = GFX_focus_SMD_jet_development
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Funnel_money_into_research }
+        relative_position_id = SMD_Funnel_money_into_research
+        x = 2
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_tech_bonus = {
+				bonus = 0.75
+				uses = 2
+				category = jet_technology
+			}
+        }
+    }
+    focus = {
+        id = SMD_Walter_waters_Heavy_water
+        icon = GFX_focus_SMD_nuclear
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Funnel_money_into_research }
+        relative_position_id = SMD_Funnel_money_into_research
+        x = -2
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+			add_tech_bonus = {
+				name = nuclear_bonus
+				ahead_reduction = 2
+				category = nuclear
+			}
+        }
+    }
+    focus = {
+        id = SMD_Funnel_money_into_industry
+        icon = GFX_focus_SMD_industrymoney
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Bonus_Army_Research_Dept }
+        relative_position_id = SMD_Bonus_Army_Research_Dept
+        mutually_exclusive = { focus = SMD_Funnel_money_into_research }
+        x = 3
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 3
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 3
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+					instant_build = yes
+				}
+			}
+		}
+    }
+    focus = {
+        id = SMD_Develop_Garments_industries
+        icon = GFX_focus_SMD_garmets_ind
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Funnel_money_into_industry }
+        relative_position_id = SMD_Funnel_money_into_industry
+        x = -2
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+    }
+    focus = {
+        id = SMD_Bonus_army_mining_commission
+        icon = GFX_focus_SMD_army_mining
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Funnel_money_into_industry }
+        relative_position_id = SMD_Funnel_money_into_industry
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = SMD_Bonus_army_mining_commission_idea
+        }
+    }
+    focus = {
+        id = SMD_Invest_in_bonus_army_officer_schools
+        icon = GFX_focus_SMD_army_officer_school
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Funnel_money_into_industry }
+        relative_position_id = SMD_Funnel_money_into_industry
+        x = 2
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = SMD_bonus_army_officer_schools
+        }
+    }
+    focus = {
+        id = SMD_Infrastructure_dev
+        icon = GFX_focus_SMD_Infrastructure_dev
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Bonus_army_workshops}
+        relative_position_id = SMD_Bonus_army_workshops
+        x = 3
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		ai_will_do = {
+			factor = 10
+		}
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = infrastructure_effort_tt
+				all_owned_state = {			
+					free_building_slots = {
+						building = infrastructure
+						size < 2
+					}
+				}
+			}
+		}
+		complete_tooltip = {
+			add_building_construction = {
+				type = infrastructure
+				level = 1
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = infrastructure
+				level = 1
+				instant_build = yes
+			}
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = infrastructure
+										size > 1
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = infrastructure
+										size > 1
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+    focus = {
+        id = SMD_Bonus_trains
+        icon = GFX_focus_SMD_trains
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Infrastructure_dev}
+        relative_position_id = SMD_Infrastructure_dev
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            build_railway = {
+                level = 1
+                build_only_on_allied = yes
+                start_province = 5106
+                target_province = 5104
+            }
+            build_railway = {
+                level = 2
+                build_only_on_allied = yes
+                start_province = 5104
+                target_province = 3426
+            }
+                135 = {
+                    add_building_construction = {
+                        type = supply_node
+                        level = 1
+                        instant_build = yes
+                        province = 3906
+                    }
+                }
+        }
+    }
+    focus = {
+        id = SMD_Bonus_Infrastructure_Plan
+        icon = GFX_focus_SMD_Infrastructure_plan
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Bonus_trains}
+        relative_position_id = SMD_Bonus_trains
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = SMD_Bonus_Infrastructure_Plan_idea
+        }
+    }
+    focus = {
+        id = SMD_Bonus_army_soup_kitchens
+        icon = GFX_focus_SMD_soup_kitchens
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Radio_broadcasts}
+        prerequisite = { focus = SMD_Reward_our_long_time_supporters}
+        relative_position_id = SMD_Reward_our_long_time_supporters
+        x = 1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_stability = 0.10
+            add_popularity = {
+				ideology = longism
+				popularity = 0.05
+            }
+        }
+    }
+    focus = {
+        id = SMD_Radio_broadcasts
+        icon = GFX_focus_SMD_radio_broadcasts
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Rally_the_remnants_of_bonus_army}
+        relative_position_id = SMD_Rally_the_remnants_of_bonus_army
+        x = 1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_war_support = 0.05            
+            add_popularity = {
+				ideology = longism
+				popularity = 0.1
+            }
+        }
+    }
+    focus = {
+        id = SMD_Smear_campaign_against_Vallee
+        icon = GFX_focus_SMD_smearvallee2
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Radio_broadcasts}
+        relative_position_id = SMD_Radio_broadcasts
+        x = 4
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_popularity = {
+				ideology = fascism
+				popularity = -0.10
+            }
+        }
+    }
+    focus = {
+        id = SMD_Create_bonus_police
+        icon = GFX_focus_SMD_bonus_police
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Radio_broadcasts}
+        relative_position_id = SMD_Radio_broadcasts
+        x = 6
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+			add_tech_bonus = {
+				name = police
+				bonus = 1.0
+				uses = 1
+				category = military_police_tech
+			}
+        }
+    }
+    focus = {
+        id = SMD_hand_out_Bonus_army_pamphlets
+        icon = GFX_focus_SMD_hand_out_panphlets
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Radio_broadcasts}
+        relative_position_id = SMD_Radio_broadcasts
+        x = 8
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_popularity = {
+				ideology = longism
+				popularity = 0.1
+            }
+        }
+    }
+    focus = {
+        id = SMD_Door_to_door_recruitment
+        icon = GFX_focus_SMD_door_to_door
+        available = {
+
+        }
+        prerequisite = { focus = SMD_hand_out_Bonus_army_pamphlets}
+        relative_position_id = SMD_hand_out_Bonus_army_pamphlets
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_timed_idea = { idea = SMD_Door_to_door_recruitment_Campaign days = 150 }            
+        }
+    }
+    focus = {
+        id = SMD_Police_CrackDowns
+        icon = GFX_focus_SMD_police_crackdown
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Create_bonus_police}
+        relative_position_id = SMD_Create_bonus_police
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            remove_ideas = SMD_lynch_mobs
+        }
+    }
+    focus = {
+        id = SMD_Create_Propaganda_movies
+        icon = GFX_focus_SMD_propaganda_movies
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Police_CrackDowns}
+        prerequisite = { focus = SMD_Villainization_of_Vallee}
+        prerequisite = { focus = SMD_Door_to_door_recruitment}
+        relative_position_id = SMD_Police_CrackDowns
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            remove_ideas = SMD_Bitter_Veterans
+        }
+    }
+    focus = {
+        id = SMD_Generous_Contracts
+        icon = GFX_focus_SMD_generous_contracts
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Create_Propaganda_movies}
+        relative_position_id = SMD_Create_Propaganda_movies
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = SMD_Generous_Contracts_idea
+        }
+    }
+    focus = {
+        id = SMD_Walter_Promotes_the_boyscouts
+        icon = GFX_focus_SMD_boy_scouts
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Generous_Contracts}
+        relative_position_id = SMD_Generous_Contracts
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = SMD_Promotes_the_boyscouts_idea
+        }
+    }
+    focus = {
+        id = SMD_Walter_Tours_New_communities
+        icon = GFX_focus_SMD_tour
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Walter_Promotes_the_boyscouts}
+        relative_position_id = SMD_Walter_Promotes_the_boyscouts
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_stability = 0.05
+            add_political_power = 150
+        }
+    }
+    focus = {
+        id = SMD_Distribute_Welfare_to_poor_communities
+        icon = GFX_focus_SMD_destribute
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Walter_Promotes_the_boyscouts}
+        relative_position_id = SMD_Walter_Promotes_the_boyscouts
+        x = 2
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = SMD_Loyal_Population        
+        }
+    }
+    focus = {
+        id = SMD_Create_Bonus_Bonds
+        icon = GFX_focus_SMD_bbonds
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Create_Propaganda_movies}
+        relative_position_id = SMD_Create_Propaganda_movies
+        x = 2
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_timed_idea = { idea = SMD_Bonus_Bonds_idea days = 300 }
+        }
+    }
+    focus = {
+        id = SMD_Villainization_of_Vallee
+        icon = GFX_focus_SMD_smearvallee
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Smear_campaign_against_Vallee}
+        relative_position_id = SMD_Smear_campaign_against_Vallee
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_war_support = 0.05   
+        }
+    }
+    #locccing now
+    focus = {
+        id = SMD_The_Marines_Coup
+        icon = GFX_focus_SMD_marine_coup
+        available = {
+
+        }
+        mutually_exclusive = { focus = SMD_Publishing_the_bonus_Manifesto}
+        prerequisite = { focus = SMD_Ritchie_dies}
+        relative_position_id = SMD_Ritchie_dies
+        x = 11
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+           # set_politics = {
+		#		ruling_party = fascism
+		#	}
+            add_popularity = {
+				ideology = fascism
+				popularity = 0.45
+            }
+        }
+    }
     focus = {
         id = SMD_Valle_dictorship
         icon = GFX_focus_SMD_valle
         available = {
-           always = no  
+
         }
-        x = 4
-        y = 0
-        cost = 10
+        prerequisite = { focus = SMD_The_Marines_Coup}
+        relative_position_id = SMD_The_Marines_Coup
+        x = 0
+        y = 1
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -42,47 +1538,41 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
             add_political_power = 150
+            dismantle_faction = yes
         }
     }
-
-focus = {
+    focus = {
         id = SMD_emergency_iron_mint
-        icon = GFX_focus_destroy_military_factories
+        icon = GFX_focus_steel_ladle
         available = {
             has_war = yes
         }
-        x = -1
-        y = 0
-        cost = 3
+        x = 1
+        y = 5
+        cost = 7.2
+        prerequisite = { focus = SMD_military_investment_question}
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_INDUSTRY }
         completion_reward = {
-           add_resource = {
-	      state = 204
-	      type =  steel
-	     amount = 15
+            add_resource = {
+                state = 204
+                type =  steel
+                amount = 15
 			}
         }
     }
-
-
-    ####add_resource = {
-	     # state = 159
-	     # type =  steel
-	     #  amount = 20
-		#	}
-     focus = {
+    focus = {
         id = SMD_denouce_hoover
         icon = GFX_focus_SMD_denouncehoover
         available = {
-            
+            has_completed_focus = SMD_Valle_dictorship
         }
         x = 0
         y = 1
-        cost = 3
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -93,22 +1583,731 @@ focus = {
         completion_reward = {
             add_war_support = 0.05
             ##let D.C know you hate them 
-             WDC = {
-          country_event = {
-				id  = maryland.100
-			}
-			}
+            WDC = {
+                country_event = {
+                    id  = maryland.100
+                }
+            }
         }
     }
-     focus = {
+    focus = {
+        id = SMD_Valle_propaganda_campaign
+        icon = GFX_focus_SMD_vallee_propaganda
+        available = {
+
+        }
+        x = 9
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_denouce_hoover}
+        relative_position_id = SMD_denouce_hoover
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            add_war_support = 0.05 
+            add_political_power = 50       
+        }
+    }
+	focus = {
+        id = SMD_reclaim_valle_homeland
+        icon = GFX_focus_SMD_claimpuertorico
+        available = {
+            
+        }
+        x = 4
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+		prerequisite = { focus = SMD_Valle_propaganda_campaign }
+		relative_position_id = SMD_Valle_propaganda_campaign
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            create_wargoal = {
+                target = PRR
+                type = annex_everything
+            }
+        }
+    }
+	focus = {
+        id = SMD_puerto_rican_statehood
+        icon = GFX_focus_SMD_puertoricocore
+        available = {
+            controls_state = 399            
+        }
+        x = 0
+        y = 1
+        cost = 10
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_reclaim_valle_homeland}
+        available_if_capitulated = yes
+		relative_position_id = SMD_reclaim_valle_homeland
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_state_core = 399
+        }
+    }
+	focus = {
+        id = SMD_exploit_the_island
+        icon = GFX_focus_SMD_puertoricocolonial_explotiation
+        available = {
+            owns_state = 399
+        }
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_puerto_rican_statehood}
+        available_if_capitulated = yes
+		relative_position_id = SMD_puerto_rican_statehood
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            399 = {
+                add_dynamic_modifier = { modifier = SMD_colonial_exploitation }
+            }
+        }
+    }
+    focus = {
+        id = SMD_Valle_argues_for_naval_investment
+        icon = GFX_focus_SMD_vallee_naval_investment
+        available = {
+
+        }
+        x = 0
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_Valle_propaganda_campaign}
+        relative_position_id = SMD_Valle_propaganda_campaign
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = SMD_Valle_ambition
+            navy_experience = 100
+        }
+    }
+    focus = {
+        id = SMD_Valles_raiders
+        icon = GFX_focus_SMD_vallee_raiders
+        available = {
+
+        }
+        x = 0
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        mutually_exclusive = { focus = SMD_North_carolina_surface_fleet }
+        prerequisite = { focus = SMD_Valle_argues_for_naval_investment}
+        relative_position_id = SMD_Valle_argues_for_naval_investment
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			add_tech_bonus = {
+				name = ss_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = ss_tech
+			}
+		}
+    }
+    focus = {
+        id = SMD_Funnel_money_into_the_navy
+        icon = GFX_focus_SMD_funnel_money_into_navy
+        available = {
+
+        }
+        x = 1
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_Valles_raiders focus = SMD_North_carolina_surface_fleet }
+        relative_position_id = SMD_Valles_raiders
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			navy_experience = 25
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				204 = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+				204 = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+			}			
+		}
+	}
+    focus = {
+        id = SMD_North_carolina_surface_fleet
+        icon = GFX_focus_SMD_surface_fleet
+        available = {
+
+        }
+        x = 2
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        mutually_exclusive = { focus = SMD_Valles_raiders }
+        prerequisite = { focus = SMD_Valle_argues_for_naval_investment}
+        relative_position_id = SMD_Valle_argues_for_naval_investment
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			add_tech_bonus = {
+				name = cr_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = cl_tech
+				category = ca_tech
+			}
+		}
+    }
+    focus = {
+        id = SMD_Depression_relief
+        icon = GFX_focus_SMD_depression_relief
+        available = {
+
+        }
+        x = -5
+        y = 1
+        cost = 10
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_denouce_hoover}
+        relative_position_id = SMD_denouce_hoover
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            remove_ideas = SMD_Stagnating_Economy
+        }
+    }
+    focus = {
+        id = SMD_Introduce_rationing
+        icon = GFX_focus_SMD_rationing
+        available = {
+
+        }
+        x = 5
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_denouce_hoover}
+        relative_position_id = SMD_denouce_hoover
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            add_ideas = SMD_rationing
+        }
+    }
+    focus = {
         id = SMD_military_investment_question
         icon = GFX_focus_SMD_military_investement
         available = {
             
         }
+        x = -7
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_denouce_hoover}
+        relative_position_id = SMD_denouce_hoover
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        completion_reward = {
+            #choose between putting 3 military factories in 
+            #Baltimore, or 1 military and 2 slots in in Ocean City region
+            #NOTE Baltimore is likley to quickly face invasion####
+            country_event = {
+				id  = maryland.3
+			}
+        }
+    }
+    focus = {
+        id = SMD_factory
+        icon = GFX_focus_SMD_factories1
+        available = {
+
+        }
+        prerequisite = { focus = SMD_military_investment_question}
+        relative_position_id = SMD_military_investment_question
+        x = -1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+            add_offsite_building = { type = arms_factory level = 1 }
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+    }
+    focus = {
+        id = SMD_Marine_corps_innovation_department
+        icon = GFX_focus_SMD_marinertech
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Industrial_technologies}
+        relative_position_id = SMD_Industrial_technologies
+        x = -1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_research_slot = 1
+        }
+    }
+    focus = {
+        id = SMD_Marine_intellegence_focus
+        icon = GFX_focus_SMD_intellegence
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Aviation_development}
+        prerequisite = { focus = SMD_heavy_tank_project}
+        prerequisite = { focus = SMD_synthetic_plants}
+        relative_position_id = SMD_Aviation_development
+        x = -1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = SMD_Marine_intellegence_ideas
+        }
+    }
+    focus = {
+        id = SMD_Invest_into_electronics
+        icon = GFX_focus_pab_computers
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Marine_intellegence_focus}
+        relative_position_id = SMD_Marine_intellegence_focus
         x = 0
         y = 1
-        cost = 9
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+			add_tech_bonus = {
+				name = secret_bonus
+				bonus = 1.0
+				uses = 2
+				category = electronics
+			}
+        }
+    }
+    focus = {
+        id = SMD_Marine_code_breakers
+        icon = GFX_focus_SMD_code_breakers
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Invest_into_electronics}
+        relative_position_id = SMD_Invest_into_electronics
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            swap_ideas = {
+                remove_idea = SMD_Marine_intellegence_ideas
+                add_idea = SMD_Adv_Marine_intellegence_ideas
+            }            
+        }
+    }
+    focus = {
+        id = SMD_Aviation_development
+        icon = GFX_focus_SMD_aviation_development
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Marine_corps_innovation_department}
+        relative_position_id = SMD_Marine_corps_innovation_department
+        x = -1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			add_tech_bonus = {
+				name = fighter_bonus
+				bonus = 1.0
+				uses = 2
+				technology = early_fighter
+				technology = fighter1
+				technology = fighter2
+				technology = fighter3
+				technology = heavy_fighter1
+				technology = heavy_fighter2
+				technology = heavy_fighter3
+			}
+			air_experience = 50
+		}
+    }
+    focus = {
+        id = SMD_heavy_tank_project
+        icon = GFX_focus_SMD_heavy_tanks
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Marine_corps_innovation_department}
+        relative_position_id = SMD_Marine_corps_innovation_department
+        x = 1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+			add_tech_bonus = {
+				name = armor_bonus
+				bonus = 1.0
+				uses = 2
+				category = armor
+			}
+        }
+    }
+    focus = {
+        id = SMD_invest_in_heavy_water
+        icon = GFX_focus_wonderweapons
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Aviation_development}
+        prerequisite = { focus = SMD_synthetic_plants}
+        relative_position_id = SMD_heavy_tank_project
+        x = 1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			add_tech_bonus = {
+				name = nuclear_bonus
+				ahead_reduction = 2
+				category = nuclear
+			}
+		}
+    }
+    focus = {
+        id = SMD_Industrial_technologies
+        icon = GFX_focus_SMD_industrytech
+        available = {
+
+        }
+        prerequisite = { focus = SMD_military_investment_question}
+        relative_position_id = SMD_military_investment_question
+        x = 1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 1.0
+				uses = 1
+				category = industry
+			}
+		}
+    }
+    focus = {
+        id = SMD_Developing_more_advanced_firepower
+        icon = GFX_focus_SMD_increased_fire_power
+        available = {
+
+        }
+        prerequisite = { focus = SMD_military_investment_question}
+        relative_position_id = SMD_military_investment_question
+        x = 3
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 1
+				category = artillery
+			}
+		}
+    }
+    focus = {
+        id = SMD_synthetic_oil
+        icon = GFX_focus_rubber
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Industrial_technologies}
+        relative_position_id = SMD_Industrial_technologies
+        x = 1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			add_tech_bonus = {
+				name = synt
+				bonus = 1.5
+				uses = 1
+				category = synth_resources
+			}
+		}
+    }
+    focus = {
+        id = SMD_synthetic_plants
+        icon = GFX_focus_synth_facility
+        available = {
+
+        }
+        prerequisite = { focus = SMD_synthetic_oil}
+        relative_position_id = SMD_synthetic_oil
+        x = 1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        available = { has_tech = synth_oil_experiments }
+        completion_reward = { 
+            custom_effect_tooltip = SLA_research_syth_tt
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = synthetic_refinery 
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = synthetic_refinery
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 1
+					instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SMD_Developing_advanced_materials
+        icon = GFX_goal_generic_construct_mil_factory
+        available = {
+
+        }
+        prerequisite = { focus = SMD_synthetic_plants}
+        relative_position_id = SMD_synthetic_plants
+        x = 1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH}
+        completion_reward = {
+            add_ideas = SMD_advanced_materials
+        }
+    }
+    focus = {
+        id = SMD_arrest_political_opponents
+        icon = GFX_focus_SMD_arrest_political_crooks
+        available = {
+            
+        }
+        x = 0
+        y = 1
+        cost = 5
         ai_will_do = {
             factor = 10
         }
@@ -117,16 +2316,355 @@ focus = {
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-            #choose between putting 3 military factories in 
-            #Baltimore, or 1 military and 2 slots in in Ocean City region
-            #NOTE Baltimore is likley to quickly face invasion####
-              country_event = {
-				id  = maryland.3
-			}
-        
+            add_political_power = 25     
+			add_tech_bonus = {
+				name = police
+				bonus = 0.75
+				uses = 1
+				category = military_police_tech
+			}        
         }
     }
-focus = {
+    focus = {
+        id = SMD_Arrest_Lynchers
+        icon = GFX_focus_SMD_arrest_lynchers
+        available = {
+            
+        }
+        x = -2
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_denouce_hoover}
+        relative_position_id = SMD_denouce_hoover
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            remove_ideas = SMD_lynch_mobs            
+        }
+    }
+    focus = {
+        id = SMD_crack_down_on_bonus_army
+        icon = GFX_focus_SMD_crack_down_on_bonus_army
+        available = {
+            
+        }
+        x = 5
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        mutually_exclusive = { focus = SMD_Pardon_the_bonus_army }
+        prerequisite = { focus = SMD_arrest_political_opponents}
+        relative_position_id = SMD_arrest_political_opponents
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            remove_ideas = SMD_Bitter_Veterans        
+        }
+    }
+    focus = {
+        id = SMD_Seize_assets
+        icon = GFX_focus_SMD_seize_key_industries
+        available = {
+
+        }
+        x = 7
+        y = 1
+        cost = 10
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_arrest_political_opponents}
+        relative_position_id = SMD_arrest_political_opponents
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+    }
+    focus = {
+        id = SMD_Invite_business_leaders_to_government
+        icon = GFX_focus_SMD_promote_buiness_leaders
+        available = {
+
+        }
+        x = 0
+        y = 1
+        cost = 10
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_Seize_assets}
+        relative_position_id = SMD_Seize_assets
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            remove_ideas = SMD_Robber_Baron_Economies
+            add_ideas = SMD_Working_with_Robber_Barons
+        }
+    }
+    focus = {
+        id = SMD_Arrest_walter_waters
+        icon = GFX_focus_SMD_arrest_walter_waters
+        ###get this idea when you pass bonus bill via event army
+        available = {
+
+        }
+        x = 0
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_crack_down_on_bonus_army}
+        relative_position_id = SMD_crack_down_on_bonus_army
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_popularity = {
+				ideology = longism
+				popularity = -0.1
+            }
+        }
+    }
+    focus = {
+        id = SMD_Root_out_all_Defeatists
+        icon = GFX_focus_SMD_root_out_defeatism
+        available = {
+
+        }
+        x = 0
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_Arrest_walter_waters}
+        relative_position_id = SMD_Arrest_walter_waters
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_war_support = 0.1
+            add_popularity = {
+				ideology = fascism
+				popularity = 0.15
+            }
+        }
+    }
+    focus = {
+        id = SMD_A_Firm_Grip_on_the_economy
+        icon = GFX_focus_SMD_firm_grip_on_wrench
+        available = {
+
+        }
+        x = 0
+        y = 2
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_ending_isolationism}
+        prerequisite = { focus = SMD_Root_out_all_Defeatists}
+        relative_position_id = SMD_Root_out_all_Defeatists
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            remove_ideas= SMD_Agricultural_Economy
+        }
+    }
+    focus = {
+        id = SMD_Federal_industry_program
+        icon = GFX_focus_SMD_industrytech
+        available = {
+
+        }
+        x = 0
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_A_Firm_Grip_on_the_economy}
+        relative_position_id = SMD_A_Firm_Grip_on_the_economy
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        completion_reward = {
+			add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 1.0
+				uses = 1
+				category = industry
+			}
+        }
+    }
+    focus = {
+        id = SMD_Seize_key_industries
+        icon = GFX_focus_SMD_seize_key_industries
+        available = {
+
+        }
+        x = 0
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_Federal_industry_program}
+        relative_position_id = SMD_Federal_industry_program
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_offsite_building = { type = industrial_complex level = 3 }
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}        
+        }
+    }
+    focus = {
+        id = SMD_Modernization_of_Dockyards
+        icon = GFX_focus_SMD_modern_navy
+        available = {
+
+        }
+        x = 4
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_Seize_key_industries}
+        prerequisite = { focus = SMD_Funnel_money_into_the_navy}
+        relative_position_id = SMD_Seize_key_industries
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = SMD_Modernization_of_Dockyards_idea
+        }
+    }
+    focus = {
+        id = SMD_Pardon_the_bonus_army
+        icon = GFX_focus_SMD_pardon_bonus_army
+        available = {
+            
+        }
+        x = 3
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        mutually_exclusive = { focus = SMD_crack_down_on_bonus_army }
+        prerequisite = { focus = SMD_arrest_political_opponents}
+        relative_position_id = SMD_arrest_political_opponents
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_stability = 0.03
+        }
+    }
+    focus = {
+        id = SMD_Paying_out_The_bonus_army
+        icon = GFX_focus_SMD_pay_out_bonus_army
+        ###get this idea when you pass bonus bill via event army
+        available = {
+
+        }
+        x = 0
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_Pardon_the_bonus_army}
+        relative_position_id = SMD_Pardon_the_bonus_army
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            remove_ideas = SMD_Bitter_Veterans
+        }
+    }
+    focus = {
+        id = SMD_Issue_National_Bonds
+        icon = GFX_focus_SMD_issue_bonds
+        ###get this idea when you pass bonus bill via event army
+        available = {
+
+        }
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_Paying_out_The_bonus_army}
+        relative_position_id = SMD_Paying_out_The_bonus_army
+        available_if_capitulated = yes
+        search_filters = {  }
+        completion_reward = {
+            add_timed_idea = { idea = SMD_satisified_bonus_army  days = 120 }      
+        }   
+    }
+    focus = {
         id = SMD_maryland_marine_corps
         icon = GFX_focus_SMD_marines
         available = {
@@ -134,29 +2672,27 @@ focus = {
         }
         x = 0
         y = 1
-        cost = 9
+        cost = 5
         ai_will_do = {
             factor = 10
         }
-        prerequisite = { focus = SMD_military_investment_question}
-        relative_position_id = SMD_military_investment_question
+        prerequisite = { focus = SMD_arrest_political_opponents}
+        relative_position_id = SMD_arrest_political_opponents
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
             add_ideas = SMD_maryland_marine_corps
-            
-        
         }
     }
     focus = {
         id = SMD_legacy_of_fort_henry
         icon = GFX_focus_SMD_memory_of_fort_henery
-        mutually_exclusive = { focus = SMD_heavy_tank_project }
+        mutually_exclusive = { focus = SMD_Armies_of_manoeuver }
         available = {
             
         }
         x = -1
-         y = 1
+        y = 1
         cost = 2
         ai_will_do = {
             factor = 10
@@ -167,20 +2703,17 @@ focus = {
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
             add_ideas = SMD_legacy_of_fort_henry
-            
-        
         }
     }
-
     focus = {
-        id = SMD_heavy_tank_project
-        icon = GFX_focus_SMD_heavy_tanks
+        id = SMD_Armies_of_manoeuver
+        icon = GFX_focus_SMD_army_of_manouver
         mutually_exclusive = { focus = SMD_legacy_of_fort_henry}
         available = {
             
         }
         x = 1
-         y = 1
+        y = 1
         cost = 2
         ai_will_do = {
             factor = 10
@@ -190,52 +2723,52 @@ focus = {
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-       add_timed_idea = {
-       idea = SMD_heavy_tanks_project
-        days = 600
-        }
-            add_tech_bonus = {
+			army_experience = 5
+			add_tech_bonus = {
+				name = motorized_equipment
 				bonus = 1.0
-				uses = 3
-				category = cat_heavy_armor
+				uses = 1
+				category = motorized_equipment
 			}
-        
+            add_doctrine_cost_reduction = {
+                cost_reduction = 0.5
+                uses = 1
+                category = cat_mobile_warfare
+            }        
         }
     }
-
     focus = {
         id = SMD_ending_isolationism
         icon = GFX_focus_SMD_ending_isolations
         available = {
-             NOT = {
-            country_exists = WDC
+            NOT = {
+                country_exists = WDC
             }
         }
-        x = -1
-        y = 1
-        cost = 9
+        x = 1
+        y = 2
+        cost = 5
         ai_will_do = {
             factor = 10
         }
-        prerequisite = { focus = SMD_legacy_of_fort_henry focus = SMD_heavy_tank_project}
-        relative_position_id = SMD_heavy_tank_project
+        prerequisite = { focus = SMD_legacy_of_fort_henry focus = SMD_Armies_of_manoeuver}
+        relative_position_id = SMD_legacy_of_fort_henry
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-        add_war_support = 0.05
-        
+            add_war_support = 0.05
         }
     }
     focus = {
-        id = SMD_integrating_bonus_army
-        icon = GFX_focus_SMD_integrate_bonus_army
+        id = SMD_Crusade_against_communism
+        icon = GFX_focus_SNY_declare_communism_threat
         ###get this idea when you pass bonus bill via event army
         available = {
-           has_idea = SMD_satisified_bonus_army 
+
         }
-        x = 3
+        x = -6
         y = 1
-        cost = 9
+        cost = 5
         ai_will_do = {
             factor = 10
         }
@@ -243,25 +2776,88 @@ focus = {
         relative_position_id = SMD_ending_isolationism
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = SMD_Crusaders_against_communism
+        }
+    }
+    focus = {
+        id = SMD_harsh_treatment
+        icon = GFX_focus_SMD_crack_down_on_bonus_army
+        available = {
+
+        }
+        x = -1
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_Crusade_against_communism}
+        relative_position_id = SMD_Crusade_against_communism
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {  
+            add_timed_idea = { idea = SMD_harsh_treatment_for_communists  days = 360 }            
+        }
+    }
+    focus = {
+        id = SMD_No_Quarter_for_reds
+        icon = GFX_focus_SMD_no_quarter_for_reds
+        available = {
+
+        }
+        x = 1
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_Crusade_against_communism}
+        relative_position_id = SMD_Crusade_against_communism
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {  
+            swap_ideas = {
+                remove_idea = SMD_Crusaders_against_communism
+                add_idea = SMD_No_Quarter_for_reds_idea
+            }            
+        }
+    }
+    focus = {
+        id = SMD_integrating_bonus_army
+        icon = GFX_focus_SMD_integrate_bonus_army
+        ###get this idea when you pass bonus bill via event army
+        available = {
+
+        }
+        x = 3
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_ending_isolationism}
+        prerequisite = { focus = SMD_Issue_National_Bonds}
+        relative_position_id = SMD_ending_isolationism
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
         ##consription boost and weekly 30 manpower#####
         completion_reward = {
             add_ideas = SMD_integrating_bonus_army
-            
-        
         }
     }
     focus = {
         id = SMD_join_southern_committee
         icon =  GFX_focus_usa_honor_the_confederacy
         ###get this idea when you pass bonus bill via event army
-          mutually_exclusive = { focus = SMD_revenge_for_chesapeake_bay_war }
+        mutually_exclusive = { focus = SMD_revenge_for_chesapeake_bay_war }
         available = {
             SGA  = { has_government = fascism } 
-          SGA = {  is_faction_leader = yes}
+            SGA = {  is_faction_leader = yes}
         }
         x = -3
         y = 1
-        cost = 9
+        cost = 5
         ai_will_do = {
             factor = 10
         }
@@ -272,11 +2868,10 @@ focus = {
         ##consription boost and weekly 30 manpower#####
         completion_reward = {
             SGA = {
-          country_event = {
-				id  = maryland.5
-			}
+                country_event = {
+                        id  = maryland.5
+                    }
             }
-        
         }
     }
     focus = {
@@ -284,12 +2879,12 @@ focus = {
         icon = GFX_focus_SMD_revenge_on_cheapskate
         ###get this idea when you pass bonus bill via event army
         available = {
-          
+
         }
-          mutually_exclusive = { focus = SMD_join_southern_committee }
+        mutually_exclusive = { focus = SMD_join_southern_committee }
         x = 0
         y = 1
-        cost = 9
+        cost = 5
         ai_will_do = {
             factor = 10
         }
@@ -299,27 +2894,31 @@ focus = {
         search_filters = { FOCUS_FILTER_POLITICAL }
         ##consription boost and weekly 30 manpower#####
         completion_reward = {
-           add_popularity = {
+            add_popularity = {
 				ideology = fascism
 				popularity = 0.10
 			}
-            	set_rule = {
+            set_rule = {
 				can_create_factions = yes
 			}
 			create_faction = SMD_ANTI_NEW_JERSEY_PACT
-        
         }
     }
     focus = {
         id = SMD_deal_with_delaware
         icon = GFX_focus_SMD_strikedelaware
         ###get this idea when you pass bonus bill via event army
+		bypass = {
+			NOT = {
+                country_exists = SDE
+			}
+		}
         available = {
-           
+
         }
         x = 0
         y = 1
-        cost = 9
+        cost = 5
         ai_will_do = {
             factor = 10
         }
@@ -329,27 +2928,21 @@ focus = {
         search_filters = { FOCUS_FILTER_POLITICAL }
         ##consription boost and weekly 30 manpower#####
         completion_reward = {
-           ##Delware goes 50, 50 if they accept they gain 20% fascism increase.
-           #if they deny they get attacked##########
-        SDE = {
-          country_event = {
+            country_event = {
 				id  = maryland.11
 			}
-            }
         }
     }
     focus = {
         id = SMD_settle_veterans_in_delaware
         icon = GFX_focus_SMD_settle_veterans
         ###get this idea when you pass bonus bill via event army
-          
         available = {
-         
-           has_completed_focus = SMD_integrating_bonus_army
+            has_completed_focus = SMD_integrating_bonus_army
         }
         x = 1
         y = 1
-        cost = 11
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -357,10 +2950,8 @@ focus = {
         relative_position_id = SMD_deal_with_delaware
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_ANNEXATION }
-       
         completion_reward = {
-           core_delaware = yes
-        
+            core_delaware = yes
         }
     }
     ###Virginia helped them in former war
@@ -368,13 +2959,12 @@ focus = {
         id = SMD_ask_virginia_for_guarentee
         icon = GFX_focus_SMD_ask
         ###get this idea when you pass bonus bill via event army
-          
         available = {
-           
+
         }
         x = -1
         y = 1
-        cost = 11
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -382,28 +2972,27 @@ focus = {
         relative_position_id = SMD_deal_with_delaware
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_ANNEXATION }
-       
         completion_reward = {
-           SVA = {
-          country_event = {
-				id  = maryland.7
-			}
+            SVA = {
+            country_event = {
+                    id  = maryland.7
+                }
             }
         
         }
     }
-     ###DEM 0, fascist 90%, nuetral 50%
+    ###DEM 0, fascist 90%, nuetral 50%
     focus = {
         id = SMD_invite_virginia_to_faction
         icon = GFX_focus_SMD_ask
         ###get this idea when you pass bonus bill via event army
-          
+        mutually_exclusive = { focus = SMD_deal_with_virginia}          
         available = {
-           
+
         }
-        x = 1
+        x = -1
         y = 1
-        cost = 11
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
@@ -411,75 +3000,271 @@ focus = {
         relative_position_id = SMD_ask_virginia_for_guarentee
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_ANNEXATION }
-       
         completion_reward = {
-           SVA = {
-          country_event = {
-				id  = maryland.15
-			}
+            SVA = {
+                country_event = {
+                    id  = maryland.15
+                }
             }
-        
+        }
+    }
+    focus = {
+        id = SMD_deal_with_virginia
+        icon = GFX_focus_SMD_attacks
+        ###get this idea when you pass bonus bill via event army
+        mutually_exclusive = { focus = SMD_invite_virginia_to_faction}          
+        available = {
+
+        }
+        x = 1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_ask_virginia_for_guarentee}
+        relative_position_id = SMD_ask_virginia_for_guarentee
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            create_wargoal = {
+                type = annex_everything
+                target = SVA
+            }
         }
     }
     focus = {
         id = SMD_make_claims_on_new_jersey
         icon = GFX_focus_SMD_new_jersey
         ###get this idea when you pass bonus bill via event army
-          
         available = {
-           
+
         }
-        x = 0
+        x = -3
         y = 1
-        cost = 11
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
-        prerequisite = { focus = SMD_invite_virginia_to_faction}
+        prerequisite = { focus = SMD_invite_virginia_to_faction focus = SMD_deal_with_virginia}
         relative_position_id = SMD_invite_virginia_to_faction
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_ANNEXATION }
-       
         completion_reward = {
-          claim_new_jersey = yes
-        
+            claim_new_jersey = yes
+            create_wargoal = {
+                type = annex_everything
+                target = SNJ
+            }
         }
     }
-     focus = {
-        id = SMD_embrace_corporatism
-        icon = GFX_focus_SMD_corporatism
-        ###get this idea when you pass bonus bill via event army
-          
+    focus = {
+        id = SMD_Marine_Republic_of_Maryland
+        icon = GFX_focus_SMD_attacks
         available = {
-           
+                controls_virginia_trigger = yes         
+                controls_new_jersey_trigger = yes
+                controls_pennsylvania_trigger = yes
+                SSC = {
+                    is_subject_of = SMD
+                    controls_state = 350
+                    controls_state = 351
+                    controls_state = 352
+                    controls_state = 770
+                    controls_state = 771
+                }
         }
         x = 0
         y = 1
-        cost = 11
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_invite_virginia_to_faction focus = SMD_deal_with_virginia}
+        relative_position_id = SMD_invite_virginia_to_faction
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            custom_effect_tooltip = controls_maryland_seaboard_trigger_tt      
+            set_cosmetic_tag = MARINE_REPUBLIC    
+            add_war_support = 0.20           
+            add_ideas = SMD_Marine_Republic_Fervor
+        }
+    }
+    focus = {
+        id = SMD_integrate_virginia
+        icon = GFX_focus_SMD_integrates
+        available = {
+            controls_virginia_trigger = yes           
+        }
+        x = 3
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_invite_virginia_to_faction focus = SMD_deal_with_virginia}
+        relative_position_id = SMD_invite_virginia_to_faction
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            core_virginia = yes        
+        }
+    }
+    focus = {
+        id = SMD_Integrate_new_jersey
+        icon = GFX_focus_SMD_integrates
+        available = {
+            controls_new_jersey_trigger = yes           
+        }
+        x = 5
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_invite_virginia_to_faction focus = SMD_deal_with_virginia}
+        relative_position_id = SMD_invite_virginia_to_faction
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            core_new_jersey = yes
+        }
+    }
+    focus = {
+        id = SMD_Seize_PA
+        icon = GFX_focus_SMD_attacks
+        x = 7
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_invite_virginia_to_faction focus = SMD_deal_with_virginia}
+        relative_position_id = SMD_invite_virginia_to_faction
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            create_wargoal = {
+                type = annex_everything
+                target = SPA
+            }
+        }
+    }
+    focus = {
+        id = SMD_Integrate_PA
+        icon = GFX_focus_SMD_integrates
+        available = {
+            controls_pennsylvania_trigger = yes
+        }
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_Seize_PA }
+        relative_position_id = SMD_Seize_PA
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            core_pennsylvania = yes
+        }
+    }
+    focus = {
+        id = SMD_The_marines_need_paris_island
+        icon = GFX_focus_SMD_attacks
+        available = {
+
+        }
+        x = 9
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_invite_virginia_to_faction focus = SMD_deal_with_virginia}
+        relative_position_id = SMD_invite_virginia_to_faction
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            73 = {
+                add_claim_by = ROOT
+            }
+            create_wargoal = {
+                target = SSC
+                type = annex_everything
+            }
+        }
+    }
+    focus = {
+        id = SMD_Integrate_south_carolina
+        icon = GFX_focus_SMD_integrates
+        available = {
+            controls_south_carolina_trigger = yes
+        }
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_The_marines_need_paris_island }
+        relative_position_id = SMD_The_marines_need_paris_island
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_ANNEXATION }
+        completion_reward = {
+            SMD = {
+                remove_state_claim = 73
+                add_state_core = 73
+            }
+            SSC = {
+                remove_state_core = 73
+                transfer_state = 350
+                transfer_state = 351
+                transfer_state = 352
+                transfer_state = 770
+                transfer_state = 771
+                set_cosmetic_tag = SSC_marineclient
+            }
+            73 = {
+                set_state_name = "Paris Island"
+            }
+            set_autonomy = { target = SSC autonomy_state = autonomy_colony }
+        }
+    }
+    focus = {
+        id = SMD_embrace_corporatism
+        icon = GFX_focus_SMD_corporatism
+        ###get this idea when you pass bonus bill via event army
+        available = {
+
+        }
+        x = 0
+        y = 1
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         prerequisite = { focus = SMD_integrating_bonus_army}
         relative_position_id = SMD_integrating_bonus_army
         available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_ANNEXATION }
-       
+        search_filters = { FOCUS_FILTER_INDUSTRY }
         completion_reward = {
-           add_ideas = SMD_embrace_corporatism
-        
+            add_ideas = SMD_embrace_corporatism
+            remove_ideas= SMD_Agricultural_Economy        
         }
     }
-      focus = { ###Obb in and add Walter Waters as an general###### 
+    focus = { ###Obb in and add Walter Waters as an general###### 
         id = SMD_general_walters
         icon = GFX_focus_SMD_walter_waters
         ###get this idea when you pass bonus bill via event army
-          
         available = {
-           
+
         }
         x = 0
         y = 1
-        cost = 8
+        cost = 5
         ai_will_do = {
             factor = 10
         }
@@ -487,30 +3272,25 @@ focus = {
         relative_position_id = SMD_embrace_corporatism
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_ANNEXATION }
-       
         completion_reward = {
-         load_oob = Bonus_Army1
-	 
-	 ####Walter Waters is WW 1 soilder 
-	 create_corps_commander = {
-	name = "Walter W Waters"
-	picture = "Walter_Waters_Ptr.dds"
-	traits = {
-		war_hero
-		trait_reckless
-		media_personality
-		infantry_officer
-		inspirational_leader 
-	}
-	skill = 1
-
-	attack_skill = 2
-	defense_skill = 2
-	planning_skill = 1
-	logistics_skill = 1
-}
-	 
-        
+            load_oob = Bonus_Army1
+            ####Walter Waters is WW 1 soilder 
+            create_corps_commander = {
+                name = "Walter W Waters"
+                picture = "Walter_Waters_Ptr.dds"
+                traits = {
+                    war_hero
+                    trait_reckless
+                    media_personality
+                    infantry_officer
+                    inspirational_leader 
+                }
+                skill = 1
+                attack_skill = 2
+                defense_skill = 2
+                planning_skill = 1
+                logistics_skill = 1
+            }
         }
     }
     focus = {
@@ -518,11 +3298,11 @@ focus = {
         icon = GFX_focus_confederates
         ###get this idea when you pass bonus bill via event army
         available = {
-          
+
         }
         x = 0
         y = 1
-        cost = 4
+        cost = 5
         ai_will_do = {
             factor = 10
         }
@@ -532,8 +3312,7 @@ focus = {
         search_filters = { FOCUS_FILTER_POLITICAL }
         ##consription boost and weekly 30 manpower#####
         completion_reward = {
-           add_ideas = SMD_integrate_dixie_identity
-        
+            add_ideas = SMD_integrate_dixie_identity
         }
     }
     focus = {
@@ -541,11 +3320,11 @@ focus = {
         icon = GFX_focus_SMD_wargames
         ###get this idea when you pass bonus bill via event army
         available = {
-          
+
         }
         x = 0
         y = 1
-        cost = 4
+        cost = 5
         ai_will_do = {
             factor = 10
         }
@@ -555,248 +3334,50 @@ focus = {
         search_filters = { FOCUS_FILTER_POLITICAL }
         ##consription boost and weekly 30 manpower#####
         completion_reward = {
-            
-                 add_tech_bonus = {
+            add_tech_bonus = {
                 name = land_doc_bonus
                 bonus = 1.0
                 uses = 3
                 category = land_doctrine
             }
-			
-        
         }
     }
-###DEMOCRATIC PATH ##REP
+###DEMOCRATIC PATH ##REP (REMOVED BECAUSE SIBS IS LAZY PLZ REVIVE IF YOU WANT)
 ###event will only be allowed if D.C is gone 
 ##Valle Promises an election in 38' 
-    focus = {
-        id = SMD_1938_referendum_question
-        icon = GFX_focus_vote_reenstation_act
+#1938 doesnt even make sense
+#        id = SMD_1938_referendum_question
 
-        ###D.C must be dead because thats main reason for Valles justification for 
-        ##MUST BE IN THE YEAR OF 1938###
-        ##
-       available = {
-         
-              NOT = {
-            country_exists = WDC
-            }
-            fascism < 0.60
-            date < 1939.01.01
-             date > 1937.12.31
-        }
-        x = 10
-        y = 0
-        cost = 2
-        ai_will_do = {
-            factor = 200
-        }
-        
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_POLITICAL }
+#        id = SMD_embrace_peace
 
-        ##player can pick between rigging election or allowing fair election
-        completion_reward = {
-          country_event = {
-				id  = maryland.4
-			}
-        }
-    }
-    focus = {
-        id = SMD_embrace_peace
-        icon = GFX_focus_destroy_military_factories
-        available = {
-            
-        }
-        x = -1
-        y = 1
-        cost = 3
-        ai_will_do = {
-            factor = 5
-        }
-        prerequisite = { focus = SMD_1938_referendum_question}
-        relative_position_id = SMD_1938_referendum_question
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_STABILITY}
-        completion_reward = {
-            add_stability = 0.10
-        }
-    }
-    focus = {
-        id = SMD_pass_anti_lynching_legislation
-        icon = GFX_focus_destroy_military_factories
-        available = {
-            
-        }
-        x = 1
-        y = 1
-        cost = 10
-        ai_will_do = {
-            factor = 5
-        }
-        prerequisite = { focus = SMD_1938_referendum_question}
-        relative_position_id = SMD_1938_referendum_question
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_STABILITY }
-        completion_reward = {
-            remove_ideas = SMD_lynch_mobs
-        }
-    }
-     focus = {
-        id = SMD_protect_delaware_soverignity 
-        icon = GFX_focus_destroy_military_factories
-        available = {
-            
-        }
-        x = 1
-        y = 1
-        cost = 10
-        ai_will_do = {
-            factor = 5
-        }
-        prerequisite = { focus = SMD_embrace_peace}
-        prerequisite = { focus = SMD_pass_anti_lynching_legislation}
-        relative_position_id = SMD_embrace_peace
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_STABILITY }
-        completion_reward = {
-            give_guarantee = SDE
-            add_war_support = 0.02
-        }
-    }
+#        id = SMD_pass_anti_lynching_legislation
+
+#        id = SMD_protect_delaware_soverignity 
     ##join Dmeocratic legaue
-    focus = {
-        id = SMD_request_to_join_democratic_league
-        icon = GFX_focus_destroy_military_factories
-        available = {
-            
-        }
-        x = 0
-        y = 1
-        cost = 10
-        ai_will_do = {
-            factor = 5
-        }
-        prerequisite = { focus = SMD_protect_delaware_soverignity}
-       # prerequisite = { focus = SMD_pass_anti_lynching_legislation}
-        relative_position_id = SMD_protect_delaware_soverignity
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_POLITICAL}
-        completion_reward = {
-                SNY = {
-          country_event = {
-				id  = maryland.9
-			}
-        }
-    }
-    }
+#        id = SMD_request_to_join_democratic_league
 
-    focus = {
-        id = SMD_new_york_investment
-        icon = GFX_focus_destroy_military_factories
-        available = {
-            
-        }
-        x = 0
-        y = 1
-        cost = 10
-        ai_will_do = {
-            factor = 5
-        }
-        prerequisite = { focus = SMD_request_to_join_democratic_league}
-       # prerequisite = { focus = SMD_pass_anti_lynching_legislation}
-        relative_position_id = SMD_request_to_join_democratic_league
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_INDUSTRY}
-        completion_reward = {
-           random_owned_controlled_state = {
-                add_extra_state_shared_building_slots = 1
-                add_building_construction = {
-                    type = industrial_complex
-                    level = 1
-                    instant_build = yes
-                }
-            }
-                 random_owned_controlled_state = {
-              add_extra_state_shared_building_slots = 1
-                add_building_construction = {
-                    type = industrial_complex
-                    level = 1
-                    instant_build = yes
-                }
-            }
- random_owned_controlled_state = {
-              add_extra_state_shared_building_slots = 1
-                add_building_construction = {
-                    type = industrial_complex
-                    level = 1
-                    instant_build = yes
-                }
-            }
-    }
-    }
-    ###fix 
-    focus = {
-        id = SMD_invite_refugees_from_europe
-        icon = GFX_focus_destroy_military_factories
-        available = {
-            
-        }
-        x = -1
-        y = 1
-        cost = 10
-        ai_will_do = {
-            factor = 5
-        }
-        prerequisite = { focus = SMD_new_york_investment}
-       # prerequisite = { focus = SMD_pass_anti_lynching_legislation}
-        relative_position_id = SMD_new_york_investment
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_MANPOWER}
-        completion_reward = {
-          add_timed_idea = { idea = SMD_european_refugees  days = 360 }
-    }
-    }
-      focus = {
-        id = SMD_expand_colleges
-        icon = GFX_focus_destroy_military_factories
-        available = {
-            
-        }
-        x = 1
-        y = 1
-        cost = 7
-        ai_will_do = {
-            factor = 5
-        }
-        prerequisite = { focus = SMD_new_york_investment}
-       # prerequisite = { focus = SMD_pass_anti_lynching_legislation}
-        relative_position_id = SMD_new_york_investment
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH}
-        completion_reward = {
-          add_research_slot = 1
-    }
-    }
+ #       id = SMD_new_york_investment
+
+ #       id = SMD_invite_refugees_from_europe
+
     ###Via event 
 
     ###if you use bonus army on protesters, then don't pass bonus bill youll get them to march on Baltimore
     focus = {
         id = SMD_bonus_army_takeover
-        icon = GFX_focus_destroy_military_factories
-        available = {
-           always = no  
-        }
-        x = -5
-        y = 2
-        cost = 10
+        icon = GFX_focus_SMD_bonus_army_takeover
+        x = 0
+        y = 1
+        prerequisite = { focus = SMD_Bonus_army_soup_kitchens}
+        relative_position_id = SMD_Bonus_army_soup_kitchens
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-           add_stability = -0.05
+            add_stability = -0.05
             add_popularity = {
 				ideology = longism
 				popularity = 0.10
@@ -806,16 +3387,72 @@ focus = {
 			}
         }
     }
-  #keep in mind they have personal vendetta on these guys##
+    focus = {
+        id = SMD_Dismantle_baltimore_accords
+        icon = GFX_focus_SMD_dismantleb_accords
+        available = {
+
+        }
+        bypass = {
+            NOT = {
+            is_in_faction_with = SDE
+            }
+        }
+        prerequisite = { focus = SMD_bonus_army_takeover}
+        relative_position_id = SMD_bonus_army_takeover
+        x = 2
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_war_support = 0.05   
+            dismantle_faction = yes
+        }
+    }
+    focus = {
+        id = SMD_Deal_with_new_jersey_threat
+        icon = GFX_focus_SMD_new_jerseythreat
+        available = {
+
+        }
+        bypass = {
+            has_war_with = SNJ
+        }
+        #mutually_exclusive = { focus = SMD_seize_delaware }
+        prerequisite = { focus = SMD_Dismantle_baltimore_accords}
+        relative_position_id = SMD_Dismantle_baltimore_accords
+        x = 2
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            create_wargoal = {
+                target = SNJ
+                type = annex_everything
+            }             
+        }
+    }
+    #keep in mind they have personal vendetta on these guys##
     focus = {
         id = SMD_take_out_the_feds
-        icon = GFX_focus_destroy_military_factories
+        icon = GFX_focus_SMD_attack_the_feds
         available = {
             
         }
+        bypass = {
+            has_war_with = WDC
+        }
         x = 0
-        y = 1
-        cost = 9
+        y = 2
+        cost = 5
         ai_will_do = {
             factor = 10
         }
@@ -824,24 +3461,24 @@ focus = {
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
-           add_war_support = 0.20
-           declare_war_on = {
-            target = WDC
-            type = annex_everything
+            add_war_support = 0.20
+            declare_war_on = {
+                target = WDC
+                type = annex_everything
             }
-        
+            remove_ideas = 	SMD_Cheapskate_war_Exhaustion        
         }
     }
-      focus = {
+    focus = {
         id = SMD_execute_political_crooks
-        icon = GFX_focus_destroy_military_factories
+        icon = GFX_focus_SMD_death_to_the_crooks
         available = {
-        owns_state = 44
-
+            owns_state = 44
         }
-        x = 0
+        mutually_exclusive = { focus = SMD_Force_Political_crooks_to_work }
+        x = 1
         y = 1
-        cost = 4
+        cost = 5
         ai_will_do = {
             factor = 10
         }
@@ -850,127 +3487,574 @@ focus = {
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_MANPOWER }
         completion_reward = {
-           44 = {
+            44 = {
 				add_manpower = -100000
 			}
             add_state_core = 44
-        
+        }
+    }
+    focus = {
+        id = SMD_Force_Political_crooks_to_work
+        icon = GFX_focus_SMD_force_them_to_work
+        available = {
+            owns_state = 44
+        }
+        mutually_exclusive = { focus = SMD_execute_political_crooks }
+        x = -1
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_take_out_the_feds}
+        relative_position_id = SMD_take_out_the_feds
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MANPOWER }
+        completion_reward = {
+            add_timed_idea = { idea = SMD_Forced_Labour_Campaign_idea  days = 360 }
+        }
+    }
+    focus = {
+        id = SMD_bury_our_fallen_comrades_at_camp_springs
+        icon = GFX_focus_SMD_burry_ourdead
+        available = {
+            owns_state = 803
+        }
+        x = 3
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_take_out_the_feds}
+        relative_position_id = SMD_take_out_the_feds
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MANPOWER }
+        completion_reward = {
+            add_war_support = 0.1             
+        }
+    }
+    focus = {
+        id = SMD_Walter_waters_Statues_in_washington
+        icon = GFX_focus_SMD_statues
+        available = {
+            owns_state = 44
+        }
+        x = -3
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_take_out_the_feds}
+        relative_position_id = SMD_take_out_the_feds
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MANPOWER }
+        completion_reward = {
+			add_stability = 0.25
         }
     }
     focus = {
         id = SMD_d_c_armory
-        icon = GFX_focus_destroy_military_factories
+        icon = GFX_focus_SMD_bonus_workshops
         available = {
-        owns_state = 44
-
+            owns_state = 44
         }
-        x = 0
+        x = 1
         y = 1
-        cost = 4
+        cost = 5
         ai_will_do = {
             factor = 10
         }
-        prerequisite = { focus = SMD_execute_political_crooks}
+        prerequisite = { focus = SMD_execute_political_crooks focus = SMD_Force_Political_crooks_to_work}
         relative_position_id = SMD_execute_political_crooks
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_MANPOWER }
         completion_reward = {
-           44 = {
-               add_extra_state_shared_building_slots = 2
+            44 = {
+                add_extra_state_shared_building_slots = 2
 				add_building_construction = {
                     type = arms_factory
                     level = 2
                     instant_build = yes
                 }
 			}
-           
-        
         }
     }
-     focus = {
-        id = SMD_night_schools_for_vets
-        icon = GFX_focus_destroy_military_factories
-        available = {
-        
-
-        }
-        x = -2
+    focus = {
+        id = SMD_Develop_Bonus_Navy
+        icon = GFX_focus_SMD_bonus_navy
+        prerequisite = { focus = SMD_d_c_armory}
+        relative_position_id = SMD_d_c_armory
+        x = 6
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
-        prerequisite = { focus = SMD_execute_political_crooks}
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			navy_experience = 25
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+			}			
+		}
+    }
+    focus = {
+        id = SMD_Increase_naval_funding
+        icon = GFX_focus_SMD_naval_funding
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Develop_Bonus_Navy}
+        relative_position_id = SMD_Develop_Bonus_Navy
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = SMD_Increase_naval_funding_idea
+        }
+    }
+    focus = {
+        id = SMD_develop_battleships
+        icon = GFX_focus_SMD_battleship
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Increase_naval_funding}
+        relative_position_id = SMD_Increase_naval_funding
+        x = -1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			navy_experience = 25
+			add_tech_bonus = {
+				name = capital_ships_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = bc_tech
+				category = bb_tech
+			}
+		}
+    }
+    focus = {
+        id = SMD_develop_submarines
+        icon = GFX_focus_SMD_submarine
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Increase_naval_funding}
+        relative_position_id = SMD_Increase_naval_funding
+        x = 1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			add_tech_bonus = {
+				name = ss_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = ss_tech
+			}
+		}
+    }
+    focus = {
+        id = SMD_Develop_bonus_airforce
+        icon = GFX_focus_SMD_air_force
+        available = {
+
+        }
+        prerequisite = { focus = SMD_d_c_armory}
+        relative_position_id = SMD_d_c_armory
+        x = 3
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			air_experience = 25
+			if = {
+				limit = {
+					capital_scope = {
+						OR = {
+							NOT = { is_controlled_by = ROOT }
+							NOT = {
+								free_building_slots = {
+									building = air_base
+									size > 1
+								}
+							}
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_2_AB }
+				}
+			}
+			if = {
+				limit = {
+					capital_scope = {
+						is_controlled_by = ROOT
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+				}
+				capital_scope = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}				
+					ROOT = { set_country_flag = aviation_effort_2_AB }
+				}
+			}
+			add_doctrine_cost_reduction = {
+				name = air_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+		}
+    }
+    focus = {
+        id = SMD_better_fighters
+        icon = GFX_focus_SMD_fighter
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Develop_bonus_airforce}
+        relative_position_id = SMD_Develop_bonus_airforce
+        x = -1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			add_tech_bonus = {
+				name = fighter_bonus
+				bonus = 1.0
+				uses = 2
+				technology = early_fighter
+				technology = fighter1
+				technology = fighter2
+				technology = fighter3
+				technology = heavy_fighter1
+				technology = heavy_fighter2
+				technology = heavy_fighter3
+			}
+			air_experience = 50
+		}
+    }
+    focus = {
+        id = SMD_Bonus_squadrons
+        icon = GFX_focus_SMD_squadron
+        available = {
+
+        }
+        prerequisite = { focus = SMD_better_fighters}
+        prerequisite = { focus = SMD_better_bombers}
+        relative_position_id = SMD_better_fighters
+        x = 1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			air_experience = 25
+			if = {
+				limit = {
+					capital_scope = {
+						OR = {
+							NOT = { is_controlled_by = ROOT }
+							NOT = {
+								free_building_slots = {
+									building = air_base
+									size > 1
+								}
+							}
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_2_AB }
+				}
+			}
+			if = {
+				limit = {
+					capital_scope = {
+						is_controlled_by = ROOT
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+				}
+				capital_scope = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}				
+					ROOT = { set_country_flag = aviation_effort_2_AB }
+				}
+			}
+			add_doctrine_cost_reduction = {
+				name = air_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+		}
+    }
+    focus = {
+        id = SMD_better_bombers
+        icon = GFX_focus_SMD_bomber
+        available = {
+
+        }
+        prerequisite = { focus = SMD_Develop_bonus_airforce}
+        relative_position_id = SMD_Develop_bonus_airforce
+        x = 1
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+		completion_reward = {
+			add_tech_bonus = {
+				name = bomber_bonus
+				bonus = 1.0
+				uses = 2
+				technology = strategic_bomber1
+				technology = strategic_bomber2
+				technology = strategic_bomber3
+				category = tactical_bomber
+			}
+			air_experience = 50
+		}
+    }
+    focus = {
+        id = SMD_night_schools_for_vets
+        icon = GFX_focus_SMD_night_schools
+        available = {
+
+        }
+        x = -6
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_execute_political_crooks focus = SMD_Force_Political_crooks_to_work}
         relative_position_id = SMD_execute_political_crooks
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_RESEARCH }
         completion_reward = {
-          add_ideas = SMD_night_schools_for_vets
-           
-        
+            add_ideas = SMD_night_schools_for_vets_idea
         }
     }
-     focus = {
+    focus = {
         id = SMD_seize_delaware
-        icon = GFX_focus_destroy_military_factories
+        icon = GFX_focus_SMD_deleware
         available = {
-        
 
         }
-        x = -1
+        bypass = {
+            has_war_with = SDE
+        }
+
+        x = 0
         y = 1
-        cost = 10
+        cost = 7.2
         ai_will_do = {
             factor = 10
         }
-        prerequisite = { focus = SMD_d_c_armory }
-        prerequisite = { focus = SMD_night_schools_for_vets }
-        relative_position_id = SMD_d_c_armory
+        #mutually_exclusive = { focus = SMD_Deal_with_maryland }
+        prerequisite = { focus = SMD_Dismantle_baltimore_accords }
+        relative_position_id = SMD_Dismantle_baltimore_accords
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_RESEARCH }
         completion_reward = {
-        
             claim_delaware = yes
             create_wargoal = {
                 target = SDE
                 type = annex_everything
             }
-        
         }
     }
-   
     focus = {
         id = SMD_invite_more_veterans
-        icon = GFX_focus_destroy_military_factories
+        icon = GFX_focus_SMD_invite_moreveterans
         available = {
-        
 
         }
-        x = 2
+        x = -1
         y = 1
-        cost = 4
+        cost = 5
         ai_will_do = {
             factor = 10
         }
-        prerequisite = { focus = SMD_execute_political_crooks}
+        prerequisite = { focus = SMD_execute_political_crooks focus = SMD_Force_Political_crooks_to_work}
         relative_position_id = SMD_execute_political_crooks
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_MANPOWER }
         completion_reward = {
-          add_manpower = 25000
-        army_experience = 100
+            add_manpower = 25000
+            army_experience = 100
         }
     }
     focus = {
         id = SMD_veteran_housing_program
-        icon = GFX_focus_destroy_military_factories
+        icon = GFX_focus_SMD_homes_of_veterans
         available = {
-        
 
         }
         x = 0
         y = 1
-        cost = 4
+        cost = 5
         ai_will_do = {
             factor = 10
         }
@@ -979,7 +4063,142 @@ focus = {
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_MANPOWER }
         completion_reward = {
-         add_ideas = SMD_veteran_housing_program
+            add_ideas = SMD_veteran_housing_program_idea
         }
     } 
+    focus = {
+        id = SMD_Ultimate_Bonus_Social_security_payouts
+        icon = GFX_focus_SMD_bonus_army_payout
+        available = {
+
+        }
+        x = 0
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_veteran_housing_program}
+        relative_position_id = SMD_veteran_housing_program
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MANPOWER }
+        completion_reward = {
+            add_stability = 0.15
+        }
+    } 
+    focus = {
+        id = SMD_Send_envoy_to_huey_long
+        icon = GFX_focus_SMD_reach_out_to_huey
+        available = {
+            SLA  = { has_government = longism } 
+            SLA = {  is_faction_leader = yes}
+        }
+        mutually_exclusive = { focus = SMD_International_Bonus_army }
+        x = -1
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_Ultimate_Bonus_Social_security_payouts}
+        relative_position_id = SMD_Ultimate_Bonus_Social_security_payouts
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MANPOWER }
+        completion_reward = {
+            SLA = {
+                country_event = {
+                        id = maryland.18
+                    }
+            }
+        }
+    }
+    focus = {
+        id = SMD_Share_the_wealth
+        icon = GFX_focus_SLA_share_the_wealth
+        available = {
+
+        }
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_Send_envoy_to_huey_long }
+        relative_position_id = SMD_Send_envoy_to_huey_long
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+        completion_reward = {
+            add_ideas = SMD_Share_the_wealth_idea
+        }
+    }
+    focus = {
+        id = SMD_Force_Virgina_To_Share_Wealth
+        icon = GFX_focus_SMD_new_jerseythreat
+        available = {
+            NOT = {
+                SVA  = { has_government = longism }                 
+            }
+        }
+        x = 0
+        y = 1
+        cost = 2
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_Share_the_wealth }
+        relative_position_id = SMD_Share_the_wealth
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+        completion_reward = {
+            create_wargoal = {
+                target = SVA
+                type = annex_everything
+            }
+        }
+    }
+    focus = {
+        id = SMD_International_Bonus_army
+        icon = GFX_focus_SMD_international_bonus_army
+        available = {
+
+        }
+        mutually_exclusive = { focus = SMD_Send_envoy_to_huey_long }
+        x = 1
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_Ultimate_Bonus_Social_security_payouts}
+        relative_position_id = SMD_Ultimate_Bonus_Social_security_payouts
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MANPOWER }
+        completion_reward = {
+            add_ideas = SMD_International_Bonus_army_idea
+            set_rule = {
+                can_create_factions = yes
+            }
+        }
+    }
+    focus = {
+        id = SMD_Bonus_Army_Expeditionary_forces
+        icon = GFX_focus_SMD_Expeditionary_force
+        available = {
+        }
+        x = 0
+        y = 1
+        cost = 7.2
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = { focus = SMD_International_Bonus_army }
+        relative_position_id = SMD_International_Bonus_army
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+        completion_reward = {
+            add_ideas= SMD_Bonus_Army_Expeditionary_forces_idea
+            set_rule = { can_send_volunteers = yes }
+        }
+    }
 }

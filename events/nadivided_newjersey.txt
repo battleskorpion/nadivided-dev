@@ -309,19 +309,19 @@ country_event = { #Maryland Cease-Fire
     title = newjersey.11.t
     desc = newjersey.11.d
 
-    fire_only_once = yes
     is_triggered_only = yes
+    fire_only_once = yes
+
     option = {
         name = newjersey.11.a
         add_stability = 0.05
         add_war_support = -0.1
-        ai_will_do = {
+        ai_chance = {
             factor = 1
         }
         SNJ = {
 			country_event = {
 				id = newjersey.12
-				days = 5
 			}
 		}
     }
@@ -329,8 +329,8 @@ country_event = { #Maryland Cease-Fire
         name = newjersey.11.b
         add_stability = -0.30
         add_war_support = -0.15
-        ai_will_do = {
-            factor = 0.000001
+        ai_chance = {
+            factor = 0.001
         }
     }
 }
@@ -345,7 +345,7 @@ country_event = { #Maryland Cease-Fire NJ offer
     
     option = {
         name = newjersey.12.a
-            ai_will_do = {
+            ai_chance = {
                 factor = 1
             }
             SNJ = {
@@ -355,17 +355,24 @@ country_event = { #Maryland Cease-Fire NJ offer
                 set_state_owner = 205
                 set_state_owner = 204
                 set_state_owner = 136
+                set_state_controller = 413
+                set_state_controller = 412
+                set_state_controller = 411
+                set_state_controller = 205
+                set_state_controller = 204
+                set_state_controller = 136
                 205 = {
                     set_demilitarized_zone = yes
                 }
                 white_peace = SMD
             }
             set_global_flag = chesa_war_finished
+            set_global_flag = chesa_war_victory
     }
     option = {
         name = newjersey.12.b
-        ai_will_do = {
-            factor = 0
+        ai_chance = {
+            factor = 0.0001
         }
         SNJ = {
             add_stability = -0.30
@@ -375,7 +382,7 @@ country_event = { #Maryland Cease-Fire NJ offer
 			country_event = {
 				id = newjersey.13
 			}
-        }1``
+        }
         SMD = {
             add_war_support = 0.15
         }
@@ -392,7 +399,7 @@ country_event = { #Virginia Gets Involved
     
     option = {
         name = newjersey.13.a
-        ai_will_do = {
+        ai_chance = {
             factor = 1
         }
         declare_war_on = {
@@ -405,7 +412,7 @@ country_event = { #Virginia Gets Involved
     }
     option = {
         name = newjersey.13.b
-        ai_will_do = {
+        ai_chance = {
             factor = 0
         }
         SVA = {
@@ -420,33 +427,61 @@ country_event = { #Foreign Support
     title = newjersey.14.t
     desc = newjersey.14.d
 
-    fire_only_once = yes
+#    fire_only_once = no
     is_triggered_only = yes
     
-    option = {
+    option = { #weapons
         name = newjersey.14.a
-        ai_will_do = {
-            factor = 0
+        ai_chance = {
+            factor = 100
         }
-        
+        add_equipment_to_stockpile = {
+            type = infantry_equipment
+            amount = -1500
+            producer = ROOT
+        }
+        SNJ = {
+            country_event = newjersey.16
+        }
+        trigger = {
+            has_equipment = {
+                infantry_equipment > 1500
+            }
+        }
     }
-    option = {
+    option = { #industry
         name = newjersey.14.b
-        ai_will_do = {
-            factor = 0
+        ai_chance = {
+            factor = 5
+        }
+        add_timed_idea = {
+            idea = SNJ_economic_aid
+            days = 180
+        }
+        SNJ = {
+            country_event = newjersey.17
         }
     }
-
-    option = {
+    option = { #manpower
         name = newjersey.14.c
-        ai_will_do = {
-            factor = 0
+        ai_chance = {
+            factor = 50
+        }
+        add_manpower = -5000
+        SNJ = {
+            country_event = newjersey.18
+        }
+        trigger = {
+            has_manpower > 5000
         }
     }
-    option = {
+    option = { #nope
         name = newjersey.14.d
-        ai_will_do = {
-            factor = 0
+        ai_chance = {
+            factor = 200
+        }
+        SNJ = {
+            country_event = newjersey.19
         }
     }
 }
@@ -461,13 +496,2572 @@ country_event = { #NJ falls
     
     option = {
         name = newjersey.15.a
-        ai_will_do = {
+        ai_chance = {
+            factor = 1
+        }
+        kill_country_leader = yes
+    }
+}
+
+country_event = { #Guns
+    id = newjersey.16
+    title = newjersey.16.t
+    desc = newjersey.16.d
+
+    is_triggered_only = yes
+    
+    option = {
+        name = newjersey.16.a
+        ai_chance = {
+            factor = 1
+        }
+        add_equipment_to_stockpile = {
+            type = infantry_equipment
+            amount = 1500
+            producer = FROM
+        }
+        add_opinion_modifier = { target = FROM modifier = medium_increase }
+    }
+}
+
+country_event = { #Factories
+    id = newjersey.17
+    title = newjersey.17.t
+    desc = newjersey.17.d
+
+    is_triggered_only = yes
+    
+    option = {
+        name = newjersey.17.a
+        ai_chance = {
+            factor = 1
+        }
+        add_offsite_building = {
+            type = arms_factory
+            level = 1
+        }
+        add_opinion_modifier = { target = FROM modifier = large_increase }
+    }
+}
+
+country_event = { #Manpower
+    id = newjersey.18
+    title = newjersey.18.t
+    desc = newjersey.18.d
+
+    is_triggered_only = yes
+    
+    option = {
+        name = newjersey.18.a
+        ai_chance = {
+            factor = 1
+        }
+        add_manpower = 5000
+        add_opinion_modifier = { target = FROM modifier = medium_increase }
+    }
+}
+
+country_event = { #No Support
+    id = newjersey.19
+    title = newjersey.19.t
+    desc = newjersey.19.d
+
+    is_triggered_only = yes
+    
+    option = {
+        name = newjersey.19.a
+        ai_chance = {
             factor = 1
         
+        }
+        add_opinion_modifier = { target = FROM modifier = small_decrease }
+    }
+}
+
+country_event = { #do we work with DC
+    id = newjersey.20
+    title = newjersey.20.t
+    desc = newjersey.20.d
+
+    is_triggered_only = yes
+    
+    option = { #yes, but only under our rule
+        name = newjersey.20.a
+        ai_chance = {
+            factor = 35
+        }
+        WDC = {
+            country_event = {
+                id = newjersey.21
+            }
+        }
+    }
+    option = { #yes, as equals
+        name = newjersey.20.b
+        ai_chance = {
+            factor = 65
+        }
+        WDC = {
+            country_event = {
+                id = newjersey.22
+            }
         }
     }
 }
 
+country_event = { #WDC - do we work with SNJ annex version
+    id = newjersey.21
+    title = newjersey.21.t
+    desc = newjersey.21.d
+
+    is_triggered_only = yes
+    
+    option = { #yes
+        name = newjersey.21.a
+        ai_chance = {
+            factor = 45
+        }
+        SNJ = {
+            country_event = {
+                id = newjersey.24
+            }
+        }
+    }
+    option = { #no
+        name = newjersey.21.b
+        ai_chance = {
+            factor = 55
+        }
+        SNJ = {
+            country_event = {
+                id = newjersey.23
+            }
+        }
+    }
+}
+
+country_event = { #WDC - do we work with SNJ equal version
+    id = newjersey.22
+    title = newjersey.22.t
+    desc = newjersey.22.d
+
+    is_triggered_only = yes
+    
+    option = { #yes
+        name = newjersey.22.a
+        ai_chance = {
+            factor = 90
+        }
+        SNJ = {
+            country_event = {
+                id = newjersey.25
+            }
+        }
+        
+    }
+    option = { #no
+        name = newjersey.22.b
+        ai_chance = {
+            factor = 80
+        }
+        SNJ = {
+            country_event = {
+                id = newjersey.23
+            }
+        }
+    }
+}
+
+country_event = { #WDC rejects NJ
+    id = newjersey.23
+    title = newjersey.23.t
+    desc = newjersey.23.d
+
+    is_triggered_only = yes
+    
+    option = { #yes
+        name = newjersey.23.a
+        ai_chance = {
+            factor = 1
+        }
+        create_wargoal = { type = annex_everything target = WDC }
+    }
+}
+
+country_event = { #WDC accepts NJ annexation version
+    id = newjersey.24
+    title = newjersey.24.t
+    desc = newjersey.24.d
+
+    is_triggered_only = yes
+    
+    option = { #yes
+        name = newjersey.24.a
+        ai_chance = {
+            factor = 1
+        }
+        annex_country = { target = WDC transfer_troops = yes }
+    }
+}
+
+country_event = { #WDC accepts NJ alliance version
+    id = newjersey.25
+    title = newjersey.25.t
+    desc = newjersey.25.d
+
+    is_triggered_only = yes
+    
+    option = { #yes
+        name = newjersey.25.a
+        ai_chance = {
+            factor = 1
+        }
+        add_to_faction = WDC
+    }
+}
+
+country_event = { #Send SPA offer
+    id = newjersey.26
+    title = newjersey.26.t
+    desc = newjersey.26.d
+
+    is_triggered_only = yes
+    
+    option = { #yes
+        name = newjersey.26.a
+        ai_chance = {
+            factor = 1
+        }
+        SPA = {
+            country_event = newjersey.27
+            days = 1
+        }
+    }
+    option = { #no 
+        name = newjersey.26.b
+        ai_chance = {
+            factor = 0
+        }
+        add_stability = -0.05
+        create_wargoal = { type = annex_everything target = SPA }
+    }
+}
 
 
+country_event = { #SPA offer
+    id = newjersey.27
+    title = newjersey.27.t
+    desc = newjersey.27.d
 
+    is_triggered_only = yes
+    
+    option = { #yes
+        name = newjersey.27.a
+        ai_chance = {
+            factor = 5
+        }
+        SNJ = {
+            country_event = newjersey.28
+            days = 1
+        }
+        add_political_power = 50
+        add_war_support = 0.05
+    }
+    option = { #no 
+        name = newjersey.27.b
+        ai_chance = {
+            factor = 10
+        }
+        SNJ = {
+            country_event = newjersey.29
+            days = 1
+        }
+    }
+}
+
+country_event = { #SPA yes
+    id = newjersey.28
+    title = newjersey.28.t
+    desc = newjersey.28.d
+
+    is_triggered_only = yes
+    
+    option = { #epic
+        name = newjersey.28.a
+        ai_chance = {
+            factor = 1
+        }
+        add_to_faction = SPA
+        add_political_power = 50
+        add_war_support = 0.05
+    }
+}
+
+country_event = { #SPA no
+    id = newjersey.29
+    title = newjersey.29.t
+    desc = newjersey.29.d
+
+    is_triggered_only = yes
+    
+    option = { #unepic
+        name = newjersey.29.a
+        ai_chance = {
+            factor = 1
+        }
+        add_war_support = 0.05
+        create_wargoal = { type = annex_everything target = SPA }
+    }
+}
+
+country_event = { #choose capital
+    id = newjersey.30
+    title = newjersey.30.t
+    desc = newjersey.30.d
+
+    is_triggered_only = yes
+    
+    option = { #DC
+        name = newjersey.30.a
+        ai_chance = {
+            factor = 1
+        }
+        set_capital = {
+            state = 44
+            remember_old_capital = yes
+        }
+        custom_effect_tooltip = SNJ_boosts_patriotism_tt
+    }
+    option = { #trenton
+        name = newjersey.30.b
+        ai_chance = {
+            factor = 0
+        }
+        set_capital = {
+            state = 257 
+            remember_old_capital = yes
+        }
+    }
+    option = { #Philadelphia
+        name = newjersey.30.c
+        ai_chance = {
+            factor = 0
+        }
+        set_capital = {
+            state = 46 
+            remember_old_capital = yes
+        }
+    }
+    option = { #Baltimore
+        name = newjersey.30.e
+        ai_chance = {
+            factor = 0
+        }
+        set_capital = {
+            state = 45 
+            remember_old_capital = yes
+        }
+    }
+}
+country_event = { #choose leader patton info
+    id = newjersey.31
+    title = newjersey.31.t
+    desc = newjersey.31.d
+
+    is_triggered_only = yes
+    fire_only_once = no
+    
+    option = {
+        name = newjersey.31.a
+        ai_chance = {
+            factor = 1
+        }
+        country_event = {
+            id = newjersey.32
+        }
+    }
+}
+country_event = { #choose leader mcarthur info
+    id = newjersey.32
+    title = newjersey.32.t
+    desc = newjersey.32.d
+
+    is_triggered_only = yes
+    fire_only_once = no
+    
+    option = {
+        name = newjersey.32.a
+        ai_chance = {
+            factor = 1
+        }
+        country_event = {
+            id = newjersey.33
+        }
+    }
+}
+country_event = { #choose leader eisenhower info
+    id = newjersey.33
+    title = newjersey.33.t
+    desc = newjersey.33.d
+
+    is_triggered_only = yes
+    fire_only_once = no
+    
+    option = {
+        name = newjersey.33.a
+        ai_chance = {
+            factor = 1
+        }
+        country_event = {
+            id = newjersey.34
+        }
+    }
+}
+country_event = { #choose leader decision
+    id = newjersey.34
+    title = newjersey.34.t
+    desc = newjersey.34.d
+
+    is_triggered_only = yes
+    fire_only_once = no
+    
+    option = { #patton
+        name = newjersey.34.a
+        ai_chance = {
+            factor = 1
+        }
+        complete_national_focus = SNJ_patton_plan
+    }
+    option = { #macarthur
+        name = newjersey.34.b
+        ai_chance = {
+            factor = 1
+        }
+        complete_national_focus = SNJ_mcarthur_plan
+    }
+    option = { #eisenhower
+        name = newjersey.34.c
+        ai_chance = {
+            factor = 1
+        }
+        complete_national_focus = SNJ_eisenhower_plan
+    }
+    option = { #read again
+        name = newjersey.34.d
+        ai_chance = {
+            factor = 1
+        }
+        country_event = {
+            id = newjersey.31
+        }
+    }
+}
+country_event = { #info aboot canada situation
+    id = newjersey.35
+    title = newjersey.35.t
+    desc = newjersey.35.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = {
+        name = newjersey.35.a
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
+country_event = { #quebec_invite
+    id = newjersey.36
+    title = newjersey.36.t
+    desc = newjersey.36.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = {#yae
+        name = newjersey.36.a
+        ai_chance = {
+            factor = 35
+        }
+        SNJ = {
+            country_event = {
+                id = newjersey.37
+            }
+        }
+    }
+    option = { #nae we want maine
+        name = newjersey.36.b
+        ai_chance = {
+            factor = 65
+        }
+        SNJ = {
+            country_event = {
+                id = newjersey.38
+            }
+        }
+    }
+    option = { #nae not at all
+        name = newjersey.36.c
+        ai_chance = {
+            factor = 0
+        }
+        SNJ = {
+            country_event = {
+                id = newjersey.39
+            }
+        }
+    }
+}
+country_event = { #quebec says yes
+    id = newjersey.37
+    title = newjersey.37.t
+    desc = newjersey.37.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = {
+        name = newjersey.37.a
+        ai_chance = {
+            factor = 1
+        }
+        SNJ = {
+            add_to_faction = PQC
+        }
+        add_ai_strategy = {
+            type = alliance
+            id = PQC
+            value = 200
+        }
+    }
+}
+country_event = { #quebec demands more
+    id = newjersey.38
+    title = newjersey.38.t
+    desc = newjersey.38.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = { #give them north maine
+        name = newjersey.38.a
+        ai_chance = {
+            factor = 15
+        }
+        PQC = {
+            transfer_state = 328
+            transfer_state = 415
+            transfer_state = 416
+            transfer_state = 419
+            transfer_state = 420
+        }
+        SNJ = {
+            add_to_faction = PQC
+        }
+        add_stability = -0.08
+        add_war_support = -0.12
+        add_ai_strategy = {
+            type = alliance
+            id = PQC
+            value = 200
+        }
+    }
+    option = { #nope
+        name = newjersey.38.b
+        ai_chance = {
+            factor = 85
+        }
+        set_global_flag = SNJ_quebec_reject
+        uncomplete_national_focus = SNJ_befriend_quebec
+    }
+}
+country_event = { #quebec says no
+    id = newjersey.39
+    title = newjersey.39.t
+    desc = newjersey.39.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = { #sadge
+        name = newjersey.39.a
+        ai_chance = {
+            factor = 1
+        }
+        set_global_flag = SNJ_quebec_reject
+        uncomplete_national_focus = SNJ_befriend_quebec
+    }
+}
+
+country_event = { #ontario_invite
+    id = newjersey.40
+    title = newjersey.40.t
+    desc = newjersey.40.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = {#yae
+        name = newjersey.40.a
+        ai_chance = {
+            factor = 100
+        }
+        SNJ = {
+            country_event = {
+                id = newjersey.41
+            }
+        }
+    }
+    option = { #nae
+        name = newjersey.40.b
+        ai_chance = {
+            factor = 0
+        }
+        SNJ = {
+            country_event = {
+                id = newjersey.42
+            }
+        }
+    }
+}
+
+country_event = { #ontario yes
+    id = newjersey.41
+    title = newjersey.41.t
+    desc = newjersey.41.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = {#yae
+        name = newjersey.41.a
+        ai_chance = {
+            factor = 1
+        }
+        SNJ = {
+            add_to_faction = PON
+        }
+    }
+}
+
+country_event = { #ontario no
+    id = newjersey.42
+    title = newjersey.42.t
+    desc = newjersey.42.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = {
+        name = newjersey.42.a
+        ai_chance = {
+            factor = 1
+        }
+        set_global_flag = SNJ_ontario_reject
+        uncomplete_national_focus = SNJ_befriend_ontario
+    }
+}
+
+country_event = { #demand WV
+    id = newjersey.43
+    title = newjersey.43.t
+    desc = newjersey.43.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = { #yes
+        name = newjersey.43.a
+        ai_chance = {
+            factor = 15
+            modifier = {
+                add = 100
+                SWV = {
+                    has_opinion = {
+                        target = SNJ
+                        value > 65
+                    }
+                }
+            }
+        }
+        SNJ = {
+            annex_country = {
+                target = SWV
+                transfer_troops = yes
+            }
+        }
+    }
+    option = { #no
+        name = newjersey.43.b
+        ai_chance = {
+            factor = 85
+            modifier = {
+                add = -85
+                SWV = {
+                    has_opinion = {
+                        target = SNJ
+                        value > 65
+                    }
+                }
+            }
+        }
+        SNJ = {
+            create_wargoal = { 
+                type = annex_everything 
+                target = SWV
+            }
+        }
+    }
+}
+country_event = { #hidden event to trigger newjersey.45
+    id = newjersey.44
+    title = newjersey.44.t
+    desc = newjersey.44.d
+
+    fire_only_once = yes
+
+    trigger = {
+        OR = {
+            SNJ = {
+                has_wargoal_against = SSC
+            }
+            SNJ = {
+                controls_south_carolina_trigger = yes
+            }
+            SNJ = {
+                has_wargoal_against = SGA
+            }
+            SNJ = {
+                has_wargoal_against = SFL
+            }
+            SNJ = {
+                focus_progress = {
+                    focus = SNJ_seize_south_carolina
+                    progress > 0.25
+                }
+            }
+        }
+    }
+    hidden = yes
+
+    immediate = {
+        SGA = {
+            country_event = {
+                id = newjersey.45
+            }
+        }
+    }
+
+    option = { #yes
+        name = newjersey.44.a
+        ai_chance = {
+            factor = 100
+        }
+    }
+}
+country_event = { #SNJ is threatening the south! Do we form a coalition?
+    id = newjersey.45
+    title = newjersey.45.t
+    desc = newjersey.45.d
+
+    fire_only_once = yes
+    is_triggered_only = yes
+    
+    option = { #yes
+        name = newjersey.45.a
+        ai_chance = {
+            factor = 100
+        }
+        set_global_flag = confederate_front_formed
+        if ={
+            limit = {
+                is_in_faction = no
+            }
+            create_faction = "Confederate Front"
+        }
+        every_country = {
+            limit = {
+                OR = {
+                    tag = SSC
+                    tag = SFL
+                    tag = SAL
+                    tag = SMS
+                    tag = SAR
+                }
+                NOT = {
+                    has_war_with = SGA
+                }
+                is_subject = no
+            }
+            country_event = {
+                id = newjersey.46
+            }
+        }
+        SLA = {
+            country_event = {
+                id = newjersey.49
+            }
+        }
+        hidden_effect = {
+            SGA = {
+                country_event = {
+                    id = newjersey.57
+                    days = 70
+                }
+            }
+            SNJ = {
+                country_event = {
+                    days = 0
+                    id = newjersey.58
+                }
+            }
+            SNJ = {
+                complete_national_focus = SNJ_dealing_with_the_confederate_front
+            }
+        }
+    }
+    option = { #nope
+        name = newjersey.45.b
+        ai_chance = {
+            factor = 0
+        }
+    }  
+}
+country_event = { #georgia invites us to faction
+    id = newjersey.46
+    title = newjersey.46.t
+    desc = newjersey.46.d
+
+    is_triggered_only = yes
+    
+    option = { #yes
+        name = newjersey.46.a
+        ai_chance = {
+            factor = 1
+        }
+        add_ai_strategy = {
+            type = alliance
+            id = SGA
+            value = 200
+        }
+        SGA = { add_to_faction = ROOT }
+        SGA = {
+            country_event = {
+                id = newjersey.47
+            }
+        }
+    }
+    option = { #no
+        name = newjersey.46.b
+        ai_chance = {
+            factor = 0
+        }
+        SGA = {
+            country_event = {
+                id = newjersey.48
+            }
+        }
+    }
+}
+country_event = { #report back to georgia yes
+    id = newjersey.47
+    title = newjersey.47.t
+    desc = newjersey.47.d
+
+    is_triggered_only = yes
+    
+    option = { #yes
+        name = newjersey.47.a
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
+country_event = { #report back to georgia no
+    id = newjersey.48
+    title = newjersey.48.t
+    desc = newjersey.48.d
+
+    is_triggered_only = yes
+    
+    option = { #yes
+        name = newjersey.48.a
+        ai_chance = {
+            factor = 1
+        }
+        create_wargoal = {
+            target = FROM
+            type = puppet_wargoal_focus
+        }
+    }
+}
+country_event = { #SLA offer 
+    id = newjersey.49
+    title = newjersey.49.t
+    desc = newjersey.49.d
+
+    is_triggered_only = yes
+    
+    option = { #yes
+        name = newjersey.49.a
+        ai_chance = {
+            factor = 1
+        }
+        every_country = {
+            limit = {
+                is_in_faction_with = SLA
+            }
+            add_ai_strategy = {
+                type = alliance
+                id = SGA
+                value = 200
+            }
+            SGA = {
+                add_to_faction = PREV
+            }
+        }
+    }
+    option = { #no
+        name = newjersey.49.b
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
+country_event = { #STN offer
+    id = newjersey.50
+    title = newjersey.50.t
+    desc = newjersey.50.d
+
+    is_triggered_only = yes
+    
+    option = { #yes but we want land
+        name = newjersey.50.a
+        ai_chance = {
+            factor = 5
+        }
+        SNJ = {
+            country_event = {
+                id = newjersey.52
+            }
+        }
+    }
+    option = { #no
+        name = newjersey.50.b
+        ai_chance = {
+            factor = 3
+            modifier = {
+                add = -3
+                SNJ = {
+                    controls_state = 771
+                    controls_state = 351
+                    controls_state = 73
+                }
+            }
+        }
+        SNJ = {
+            country_event = {
+                id = newjersey.51
+            }
+        }
+    }
+}
+country_event = { #STN denies 
+    id = newjersey.51
+    title = newjersey.51.t
+    desc = newjersey.51.d
+
+    is_triggered_only = yes
+    
+    option = { #damn
+        name = newjersey.51.a
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
+country_event = { #STN accepts but wants land
+    id = newjersey.52
+    title = newjersey.52.t
+    desc = newjersey.52.d
+
+    is_triggered_only = yes
+    
+    option = { #from nashville to mobile!
+        name = newjersey.52.a
+        ai_chance = {
+            factor = 1
+        }
+        STN = {
+            country_event = {
+                id = newjersey.53
+            }
+        }
+    }
+    option = { #not all, but from nashville to birmingham
+        name = newjersey.52.b
+        ai_chance = {
+            factor = 3
+        }
+        STN = {
+            country_event = {
+                id = newjersey.54
+            }
+        }
+    }
+    option = { #no
+        name = newjersey.52.c
+        ai_chance = {
+            factor = 2
+        }
+    }
+}
+
+country_event = { #SNJ agrees on all land
+    id = newjersey.53
+    title = newjersey.53.t
+    desc = newjersey.53.d
+
+    is_triggered_only = yes
+    
+    option = { #from nashville to mobile!
+        name = newjersey.53.a
+        ai_chance = {
+            factor = 1
+        }
+        if = {
+            limit = {
+                STN = {
+                    is_faction_leader = yes
+                }
+            }
+            every_country = {
+                limit = {
+                    is_in_faction_with = STN
+                }
+                SNJ = {
+                    add_to_faction = PREV
+                }
+            }
+        }
+        SNJ = {
+            add_to_faction = STN
+        }
+        add_ai_strategy = {
+            type = alliance
+            id = SNJ
+            value = 200
+        }
+        add_to_war = { 
+            targeted_alliance = SNJ 
+            enemy = SGA 
+            hostility_reason = asked_to_join
+        }
+        STN = {
+            add_state_claim = 157
+            add_state_claim = 758
+            add_state_claim = 241
+            add_state_claim = 158
+            add_state_claim = 640
+            add_state_claim = 639
+            add_state_claim = 755
+            add_state_claim = 757
+            add_state_claim = 156
+            add_state_claim = 159
+            add_state_claim = 756
+            add_state_claim = 336
+            add_state_claim = 155
+            add_state_claim = 22
+        }
+    }
+}
+
+country_event = { #SNJ agrees on soome land
+    id = newjersey.54
+    title = newjersey.54.t
+    desc = newjersey.54.d
+
+    is_triggered_only = yes
+    
+    option = { #from nashville to birmingham!
+        name = newjersey.54.a
+        ai_chance = {
+            factor = 10
+        }
+        if = {
+            limit = {
+                STN = {
+                    is_faction_leader = yes
+                }
+            }
+            every_country = {
+                limit = {
+                    is_in_faction_with = STN
+                }
+                SNJ = {
+                    add_to_faction = PREV
+                }
+            }
+        }
+        SNJ = {
+            add_to_faction = STN
+        }
+        add_ai_strategy = {
+            type = alliance
+            id = SNJ
+            value = 200
+        }
+        add_to_war = { 
+            targeted_alliance = SNJ 
+            enemy = SGA 
+            hostility_reason = asked_to_join
+        }
+        STN = {
+            add_state_claim = 157
+            add_state_claim = 758
+            add_state_claim = 241
+            add_state_claim = 158
+            add_state_claim = 640
+            add_state_claim = 639
+            add_state_claim = 755
+        }
+    }
+    option = { #no we demand more
+        name = newjersey.54.b
+        ai_chance = {
+            factor = 15
+            modifier = {
+                add = -15
+                SNJ = {
+                    controls_state = 771
+                    controls_state = 351
+                    controls_state = 73
+                }
+            }
+        }
+        SNJ = {
+            country_event = {
+                id = newjersey.55
+            }
+        }
+    }
+}
+country_event = { #STN demands more land
+    id = newjersey.55
+    title = newjersey.55.t
+    desc = newjersey.55.d
+
+    is_triggered_only = yes
+    
+    option = { #fine
+        name = newjersey.55.a
+        ai_chance = {
+            factor = 2
+            modifier = {
+                add = -2
+                SNJ = {
+                    controls_state = 771
+                    controls_state = 351
+                    controls_state = 73
+                }
+            }
+        }
+        STN = {
+            country_event = {
+                id = newjersey.53
+            }
+        }
+    }
+    option = { #we arent giving you west Florida!
+        name = newjersey.55.b
+        ai_chance = {
+            factor = 2
+        }
+    }
+}
+country_event = { #the fate of the leaders
+    id = newjersey.56
+    title = newjersey.56.t
+    desc = newjersey.56.d
+
+    is_triggered_only = yes
+    
+    option = { #strip them of political positions but let them stay - like the civil war
+        name = newjersey.56.a
+        ai_chance = {
+            factor = 2
+        }
+        add_stability = 0.06
+        add_war_support = -0.15
+        every_state = {
+            limit = {
+                is_owned_by = SNJ
+                OR = {
+                    is_core_of = SAR
+                    is_core_of = SMS
+                    is_core_of = SAL
+                    is_core_of = SFL
+                    is_core_of = SGA
+                    is_core_of = SSC
+                    is_core_of = SLA
+                    is_core_of = SOK
+                    is_core_of = STX
+                    is_core_of = STN
+                }
+            }
+            add_resistance_target = -5
+        }
+    }
+    option = { #leave and never return
+        name = newjersey.56.b
+        ai_chance = {
+            factor = 2
+        }
+        add_stability = -0.08
+        add_war_support = -0.05
+        every_state = {
+            limit = {
+                is_owned_by = SNJ
+                OR = {
+                    is_core_of = SAR
+                    is_core_of = SMS
+                    is_core_of = SAL
+                    is_core_of = SFL
+                    is_core_of = SGA
+                    is_core_of = SSC
+                    is_core_of = SLA
+                    is_core_of = SOK
+                    is_core_of = STX
+                    is_core_of = STN
+                }
+            }
+            add_resistance = 5
+        }
+    }
+    option = { #hang them in public fashion
+        name = newjersey.56.c
+        ai_chance = {
+            factor = 2
+        }
+        add_stability = -0.12
+        add_war_support = 0.25
+        add_to_variable = {
+            var = southern_anger
+            value = 4
+        }
+        every_state = {
+            limit = {
+                is_owned_by = SNJ
+                OR = {
+                    is_core_of = SAR
+                    is_core_of = SMS
+                    is_core_of = SAL
+                    is_core_of = SFL
+                    is_core_of = SGA
+                    is_core_of = SSC
+                    is_core_of = SLA
+                    is_core_of = SOK
+                    is_core_of = STX
+                    is_core_of = STN
+                }
+            }
+            add_resistance = 10
+        }
+    }
+}
+country_event = { #georgia declares on SNJ
+    id = newjersey.57
+    title = newjersey.57.t
+    desc = newjersey.57.d
+
+    is_triggered_only = yes
+    
+    immediate = {
+        hidden_effect = {
+            SNJ = {
+                if = {
+                    limit = {
+                        NOT = {
+                            SSC = {
+                                is_in_faction_with = SGA
+                            }
+                        }
+                    }
+                    create_wargoal = {
+                        target = SSC
+                        type = annex_everything
+                    }
+                }
+                if = {
+                    limit = {
+                        NOT = {
+                            SFL = {
+                                is_in_faction_with = SGA
+                            }
+                        }
+                    }
+                    create_wargoal = {
+                        target = SFL
+                        type = annex_everything
+                    }
+                }
+                if = {
+                    limit = {
+                        NOT = {
+                            SAL = {
+                                is_in_faction_with = SGA
+                            }
+                        }
+                    }
+                    create_wargoal = {
+                        target = SAL
+                        type = annex_everything
+                    }
+                }
+                if = {
+                    limit = {
+                        NOT = {
+                            SMS = {
+                                is_in_faction_with = SGA
+                            }
+                        }
+                    }
+                    create_wargoal = {
+                        target = SMS
+                        type = annex_everything
+                    }
+                }
+            }
+        }
+    }
+
+    option = { #fine
+        name = newjersey.57.a
+        ai_chance = {
+            factor = 2
+        }
+        every_country = {
+            limit = {
+                is_in_faction_with = SGA
+            }
+            declare_war_on = {
+                target = SNJ
+                type = annex_everything
+            }
+        }
+        declare_war_on = {
+            target = SNJ
+            type = annex_everything
+        }
+    }
+}
+country_event = { #SNJ info about Confederate Front
+    id = newjersey.58
+    title = newjersey.58.t
+    desc = newjersey.58.d
+
+    is_triggered_only = yes
+    
+    option = { #we best prepare
+        name = newjersey.58.a
+        ai_chance = {
+            factor = 2
+        }
+        custom_effect_tooltip = SNJ_boosts_american_tension_10_tt
+        add_to_variable = {
+            var = var_snj_american_tension
+            value = 10
+        }
+        add_war_support = 0.05
+    }
+}
+country_event = { #end of Confederate Front
+    id = newjersey.59
+    title = newjersey.59.t
+    desc = newjersey.59.d
+
+    fire_only_once = yes
+
+    trigger = {
+        has_global_flag = confederate_front_formed
+        SSC = {
+            OR = {
+                has_capitulated = yes
+                exists = no
+                is_ally_with = SNJ
+            }
+        }
+        SGA = {
+            OR = {
+                has_capitulated = yes
+                exists = no
+                is_ally_with = SNJ
+            }
+        }
+        SFL = {
+            OR = {
+                has_capitulated = yes
+                exists = no
+                is_ally_with = SNJ
+            }
+        }
+        SAL = {
+            OR = {
+                has_capitulated = yes
+                exists = no
+                is_ally_with = SNJ
+            }
+        }
+        SMS = {
+            OR = {
+                has_capitulated = yes
+                exists = no
+                is_ally_with = SNJ
+            }
+        }
+    }
+
+    hidden = yes
+
+    immediate = {
+        SNJ = {
+            country_event = newjersey.60
+        }
+    }
+    option = { #yes
+        name = newjersey.59.a
+        ai_chance = {
+            factor = 100
+        }
+    }
+}
+country_event = { #we defeated them, do we continue?
+    id = newjersey.60
+    title = newjersey.60.t
+    desc = newjersey.60.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    immediate = {
+        add_ideas = SNJ_southern_partisans_idea
+        add_ideas = SNJ_jim_crow_idea
+    }
+    
+    option = { #peace
+        name = newjersey.60.a
+        ai_chance = {
+            factor = 2
+        }
+        complete_national_focus = SNJ_dixie_is_ours
+        set_truce = {
+            target = STX
+            days = 365
+        }
+        set_truce = {
+            target = SOK
+            days = 365
+        }
+        set_truce = {
+            target = SLA
+            days = 365
+        }
+        set_truce = {
+            target = SAR
+            days = 365
+        }
+        every_controlled_state = {
+            limit = {
+                has_state_flag = can_be_taken_by_SNJ
+            }
+            set_state_owner = SNJ
+        }
+    }
+    option = { #the war is not finished!
+        name = newjersey.60.b
+        ai_chance = {
+            factor = 2
+        }
+        custom_effect_tooltip = SNJ_boosts_american_tension_20_tt
+            add_to_variable = {
+                var = var_snj_american_tension
+                value = 20
+            }
+        complete_national_focus = SNJ_dixie_is_ours
+    }
+}
+country_event = { #southern political troubles beginning
+    id = newjersey.61
+    title = newjersey.61.t
+    desc = newjersey.61.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    immediate = {
+        hidden_effect = {
+            country_event = {
+                days = 14
+                random_days = 7
+                id = newjersey.62
+            }
+        }
+    }
+
+    option = { #oh dear
+        name = newjersey.61.a
+        ai_chance = {
+            factor = 2
+        }
+        add_stability = -0.05
+        add_political_power = -50
+    }
+}
+country_event = { #legislature and house pass flag bill
+    id = newjersey.62
+    title = newjersey.62.t
+    desc = newjersey.62.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    immediate = {
+        hidden_effect = {
+            country_event = {
+                days = 70
+                random_days = 35
+                id = newjersey.63
+            }
+        }
+    }
+    
+    option = { #isnt too bad right?
+        name = newjersey.62.a
+        ai_chance = {
+            factor = 2
+        }
+        add_stability = -0.06
+    }
+    option = { #we will not allow this!
+        name = newjersey.62.b
+        ai_chance = {
+            factor = 2
+        }
+        add_political_power = -75
+        add_to_variable = {
+            var = southern_anger
+            value = 2
+        }
+    }
+}
+country_event = { #kkk member becomes senator in SAL
+    id = newjersey.63
+    title = newjersey.63.t
+    desc = newjersey.63.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    immediate = {
+        hidden_effect = {
+            if = {
+                limit = {
+                    NOT = {
+                        has_idea = SNJ_jim_crow_idea
+                    }
+                }                
+                country_event = {
+                    days = 70
+                    random_days = 35
+                    id = newjersey.67
+                }
+            }
+        }
+    }
+    
+    option = { #its democracy...
+        name = newjersey.63.a
+        ai_chance = {
+            factor = 2
+        }
+        add_stability = -0.08
+    }
+    option = { #suspend their elections
+        name = newjersey.63.b
+        ai_chance = {
+            factor = 3
+        }
+        add_political_power = -150
+        add_to_variable = {
+            var = southern_anger
+            value = 3
+        }
+    }
+    option = { #silince them...
+        name = newjersey.63.c
+        ai_chance = {
+            factor = 2
+        }
+        random_list = {
+            30 = {
+                country_event = {
+                    days = 3
+                    random_days = 4
+                    id = newjersey.64
+                }
+            }
+            50 = {
+                country_event = {
+                    days = 3
+                    random_days = 4
+                    id = newjersey.65
+                }
+            }
+            20 = {
+                country_event = {
+                    days = 3
+                    random_days = 4
+                    id = newjersey.66
+                }
+            }
+        }
+    }
+}
+country_event = { #assisination is successful 
+    id = newjersey.64
+    title = newjersey.64.t
+    desc = newjersey.64.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = { #killing in the name of du-du...
+        name = newjersey.64.a
+        ai_chance = {
+            factor = 2
+        }
+        add_stability = -0.02
+    }
+}
+country_event = { #assisination is failure
+    id = newjersey.65
+    title = newjersey.65.t
+    desc = newjersey.65.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    immediate = {
+    }
+    
+    option = { #damn
+        name = newjersey.65.a
+        ai_chance = {
+            factor = 2
+        }
+        add_political_power = -25
+        add_stability = -0.05
+    }
+}
+country_event = { #assisination is failure and they found out
+    id = newjersey.66
+    title = newjersey.66.t
+    desc = newjersey.66.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = { #OH SHID OH FUG
+        name = newjersey.66.a
+        ai_chance = {
+            factor = 2
+        }
+        add_political_power = -200
+        add_stability = -0.15
+        add_to_variable = {
+            var = southern_anger
+            value = 5
+        }
+    }
+}
+country_event = { #house and senate pass segregation bill
+    id = newjersey.67
+    title = newjersey.67.t
+    desc = newjersey.67.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = { #democracy, we gotta love it... (holy shit sike dont cancel me)
+        name = newjersey.67.a
+        ai_chance = {
+            factor = 2
+        }
+        add_ideas = SNJ_jim_crow_idea
+        add_stability = -0.20
+    }
+    option = { #this is too far! block it
+        name = newjersey.67.b
+        ai_chance = {
+            factor = 2
+        }
+        country_event = {
+            days = 2
+            id = newjersey.68
+        }
+    }
+}
+country_event = { #house and senate override president (2/3 majority)
+    id = newjersey.68
+    title = newjersey.68.t
+    desc = newjersey.68.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = { #we are powerless...
+        name = newjersey.68.a
+        ai_chance = {
+            factor = 2
+        }
+        add_ideas = SNJ_jim_crow_idea
+        add_political_power = -100
+        add_stability = -0.24
+    }
+    option = { #the courts will not let this happen!
+        name = newjersey.68.b
+        ai_chance = {
+            factor = 2
+        }
+        random_list = {
+            60 = {
+                country_event = {
+                    days = 2
+                    id = newjersey.69
+                }
+            }
+            40 = {
+                country_event = {
+                    days = 2
+                    id = newjersey.70
+                }
+            }
+        }
+    }
+}
+country_event = { #courts strike down bill
+    id = newjersey.69
+    title = newjersey.69.t
+    desc = newjersey.69.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = { #hurrah
+        name = newjersey.69.a
+        ai_chance = {
+            factor = 2
+        }
+        add_political_power = 25
+        add_to_variable = {
+            var = southern_anger
+            value = 4
+        }
+    }
+}
+country_event = { #courts rule bill as legal
+    id = newjersey.70
+    title = newjersey.70.t
+    desc = newjersey.70.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = { #we just need to let go of this
+        name = newjersey.70.a
+        ai_chance = {
+            factor = 2
+        }
+        add_ideas = SNJ_jim_crow_idea
+        add_political_power = -150
+        add_stability = -0.28
+    }
+    option = { #by whatever means necessary, it shall not pass! deploy troops across the south to protect blacks!
+        name = newjersey.70.b
+        ai_chance = {
+            factor = 2
+        }
+        add_stability = -0.45
+        add_manpower = -250000
+        add_to_variable = {
+            var = southern_anger
+            value = 8
+        }
+        add_equipment_to_stockpile = {
+            type = infantry_equipment
+            amount = -15000
+            producer = SNJ
+        }
+    }
+}
+country_event = { #southern revolt
+    id = newjersey.71
+    title = newjersey.71.t
+    desc = newjersey.71.d
+
+    fire_only_once = yes
+
+    trigger = {
+        check_variable = {
+            var = southern_anger
+            value = 10
+            compare = greater_than
+        }
+    }
+    
+    immediate = {
+        every_controlled_state = {
+            limit = {
+                OR = {
+                    is_core_of = SSC
+                    is_core_of = SGA
+                    is_core_of = SAL
+                    is_core_of = SMS
+                    state = 13
+                }
+            }
+            set_state_owner_to = SSC
+            set_state_controller_to = SSC
+            add_core_of = SSC   
+        }
+        SSC = {
+            set_cosmetic_tag = confederate_states
+        }
+        set_global_flag = southern_revolt
+    }
+
+    option = { #the union forever!
+        name = newjersey.71.a
+        ai_chance = {
+            factor = 2
+        }
+        declare_war_on = {
+            target = SSC
+        }
+        if = {
+            limit = {
+                has_idea = SNJ_jim_crow_idea
+            }
+            remove_ideas = SNJ_jim_crow_idea
+        }
+        add_war_support = 0.15
+    }
+    option = { #dixie is our home
+        name = newjersey.71.b
+        ai_chance = {
+            factor = 2
+        }
+        declare_war_on = {
+            target = SSC
+        }
+        SSC = { change_tag_from = SNJ }
+    }
+}
+country_event = { #annex swv
+    id = newjersey.72
+    title = newjersey.72.t
+    desc = newjersey.72.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = { #we will join you
+        name = newjersey.72.a
+        ai_chance = {
+            factor = 15
+            modifier = {
+                add = 100
+                SWV = {
+                    has_opinion = {
+                        target = SNJ
+                        value > 65
+                    }
+                }
+            }
+        }
+        SNJ = {
+            annex_country = {
+                target = SWV
+                transfer_troops = yes
+            }
+        }
+    }
+    option = { #nope
+        name = newjersey.72.b
+        ai_chance = {
+            factor = 85
+            modifier = {
+                add = -85
+                SWV = {
+                    has_opinion = {
+                        target = SNJ
+                        value > 65
+                    }
+                }
+            }
+        }
+        SNJ = {
+            create_wargoal = { 
+                type = annex_everything 
+                target = SWV
+            }
+        }
+    }
+}
+country_event = { #event about how a coalition in great lakes will likely form, and we have to choose between going after Indiana or Michigan 
+    id = newjersey.73
+    title = newjersey.73.t
+    desc = newjersey.73.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = { #ok
+        name = newjersey.73.a
+        ai_chance = {
+            factor = 15
+        }
+        add_war_support = 0.05
+    }
+}
+country_event = { #offer Wisconsin superior for an alliance
+    id = newjersey.74
+    title = newjersey.74.t
+    desc = newjersey.74.d
+
+    is_triggered_only = yes
+    fire_only_once = yes 
+    
+    option = { #ok
+        name = newjersey.74.a
+        ai_chance = {
+            factor = 5
+            modifier = {
+                add = 10
+                SWI = {
+                    has_opinion = {
+                        target = SNJ
+                        value > 50
+                    }
+                }
+            }
+        }
+        SNJ = {
+            country_event = {
+                id = newjersey.75
+            }
+        }
+    }
+    option = { #give us northern illinois too
+        name = newjersey.74.b
+        ai_chance = {
+            factor = 10
+        }
+    }
+    option = { #nope
+        name = newjersey.74.c
+        ai_chance = {
+            factor = 10
+            modifier = {
+                add = -10
+                SWI = {
+                    has_opinion = {
+                        target = SNJ
+                        value > 35
+                    }
+                }
+            }
+        }
+        SNJ = {
+            country_event = {
+                id = newjersey.76
+            }
+        }
+    }
+}
+country_event = { #Wisconsin accepts!
+    id = newjersey.75
+    title = newjersey.75.t
+    desc = newjersey.75.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = { #hurrah!
+        name = newjersey.75.a
+        ai_chance = {
+            factor = 15
+        }
+        add_timed_idea = {
+            idea = SNJ_wisconsin_integration
+            days = 200
+        }
+        set_autonomy = {
+            target = SWI
+            autonomy_state = autonomy_puppet
+            end_wars = no
+            end_civil_wars = no
+        }
+        SWI = {
+            add_state_claim = 505
+            add_state_claim = 231
+            add_state_claim = 746
+            add_state_claim = 89
+            add_state_claim = 90
+        }
+        SNJ = {
+            country_event = {
+                id = newjersey.77
+            }
+        } 
+    }
+}
+country_event = { #Wisconsin wants more!
+    id = newjersey.76
+    title = newjersey.76.t
+    desc = newjersey.76.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = { #yes!
+        name = newjersey.76.a
+        ai_chance = {
+            factor = 15
+        }
+        add_timed_idea = {
+            idea = SNJ_wisconsin_integration
+            days = 300
+        }
+        set_autonomy = {
+            target = SWI
+            autonomy_state = autonomy_puppet
+            end_wars = no
+            end_civil_wars = no
+        }
+        SWI = {
+            add_state_claim = 505
+            add_state_claim = 231
+            add_state_claim = 746
+            add_state_claim = 89
+            add_state_claim = 90
+            add_state_claim = 731
+            add_state_claim = 732
+            add_state_claim = 608
+        } 
+    }
+    option = { #no
+        name = newjersey.76.b
+        ai_chance = {
+            factor = 15
+        } 
+    }
+}
+country_event = { #Wisconsin refuses
+    id = newjersey.77
+    title = newjersey.77.t
+    desc = newjersey.77.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = { #ok
+        name = newjersey.77.a
+        ai_chance = {
+            factor = 15
+        }
+        add_political_power = -50
+    }
+}
+country_event = { #great lakes are united event
+    id = newjersey.78
+    title = newjersey.78.t
+    desc = newjersey.78.d
+
+    is_triggered_only = yes
+    fire_only_once = yes
+    
+    option = { #ok
+        name = newjersey.78.a
+        ai_chance = {
+            factor = 15
+        }
+        add_political_power = 150
+        add_stability = 0.05
+        add_war_support = 0.15
+    }
+}
+country_event = { #great lakes are united event
+    id = newjersey.78
+    title = newjersey.78.t
+    desc = newjersey.78.d
+
+    is_triggered_only = no
+    fire_only_once = yes
+    trigger = {
+        any_country = {
+            is_in_faction_with = SNJ
+            controls_state = 692
+        }
+        any_country = {
+            is_in_faction_with = SNJ
+            controls_state = 88
+        }
+        any_country = {
+            is_in_faction_with = SNJ
+            controls_state = 36
+        }
+        any_country = {
+            is_in_faction_with = SNJ
+            controls_state = 772
+        }
+        any_country = {
+            is_in_faction_with = SNJ
+            controls_state = 605
+        }
+    }
+    option = { #ok
+        name = newjersey.78.a
+        ai_chance = {
+            factor = 15
+        }
+        complete_national_focus = SNJ_great_lakes_united
+        add_political_power = 150
+        add_stability = 0.05
+        add_war_support = 0.15
+    }
+}
+country_event = { #Illinois form coalition event
+    id = newjersey.79
+    title = newjersey.79.t
+    desc = newjersey.79.d
+
+    is_triggered_only = no
+    fire_only_once = yes
+    trigger = {
+        SNJ = {
+            has_completed_focus = SNJ_assessing_our_situation
+            OR = {
+                has_war_with = SIN
+                has_war_with = SMI
+            }
+        }
+    }
+    option = { #ok
+        name = newjersey.79.a
+        ai_chance = {
+            factor = 15
+        }
+        if ={
+            limit = {
+                is_in_faction = no
+            }
+            create_faction = "Midwest United Front"
+        }
+        every_country = {
+            limit = {
+                has_country_flag = usa_coalition
+                is_subject = no
+                NOT = {
+                    has_war_with = SNJ
+                }
+            }
+            country_event = {
+                id = newjersey.80
+            }
+        }
+    }
+    option = { #no
+        name = newjersey.79.b
+        ai_chance = {
+            factor = 15
+        }
+        add_stability = -0.05
+    }
+}
+
+country_event = { #Illinois invites us to faction
+    id = newjersey.80
+    title = newjersey.80.t
+    desc = newjersey.80.d
+
+    is_triggered_only = yes
+    
+    option = { #yes
+        name = newjersey.80.a
+        ai_chance = {
+            factor = 1
+        }
+        add_ai_strategy = {
+            type = alliance
+            id = SIL
+            value = 200
+        }
+        SIL = { add_to_faction = ROOT }
+        SIL = {
+            country_event = {
+                id = newjersey.81
+            }
+        }
+    }
+    option = { #no
+        name = newjersey.80.b
+        ai_chance = {
+            factor = 0
+        }
+        SIL = {
+            country_event = {
+                id = newjersey.82
+            }
+        }
+    }
+}
+
+country_event = { #report back to Illinois yes
+    id = newjersey.81
+    title = newjersey.81.t
+    desc = newjersey.81.d
+
+    is_triggered_only = yes
+    
+    option = { #yes
+        name = newjersey.81.a
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
+country_event = { #report back to Illinois no
+    id = newjersey.82
+    title = newjersey.82.t
+    desc = newjersey.82.d
+
+    is_triggered_only = yes
+    
+    option = { #yes
+        name = newjersey.82.a
+        ai_chance = {
+            factor = 1
+        }
+        create_wargoal = {
+            target = FROM
+            type = puppet_wargoal_focus
+        }
+    }
+}
+country_event = { #do we become a democracy
+    id = newjersey.83
+    title = newjersey.83.t
+    desc = newjersey.83.d
+
+    is_triggered_only = yes
+    
+    option = { #yes
+        name = newjersey.83.a
+        ai_chance = {
+            factor = 1
+        }
+        complete_national_focus = SNJ_a_move_towards_democracy
+    }
+    option = { #no
+        name = newjersey.83.a
+        ai_chance = {
+            factor = 1
+        }
+        complete_national_focus = SNJ_not_in_a_time_of_crisis
+    }
+}
+country_event = { #california coalition event
+    id = newjersey.84
+    title = newjersey.84.t
+    desc = newjersey.84.d
+
+    is_triggered_only = no
+
+    trigger = {
+        check_variable = { var_snj_american_tension > 100 }
+    }
+    hidden = yes
+    fire_only_once = yes
+
+    immediate = {
+        SCA = {
+            country_event = {
+                id = newjersey.85
+            }
+        }
+    }
+
+    option = { #yes
+        name = newjersey.84.a
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
+country_event = { #california coalition event pt2
+    id = newjersey.85
+    title = newjersey.85.t
+    desc = newjersey.85.d
+
+    is_triggered_only = yes
+
+    
+    hidden = no
+
+    option = { #yes
+        name = newjersey.85.a
+        ai_chance = {
+            factor = 1000
+        }
+        create_faction = "North American Sovereignty Accords"
+        SNJ = {
+            country_event = {
+                id = newjersey.87
+            }
+        }
+        every_country = {
+            limit = {
+                has_country_flag = flag_SNJ_american_coalition
+            }
+            country_event = {
+                id = newjersey.86
+            }
+        }
+    }
+
+    option = { #nope
+        name = newjersey.85.b
+        ai_chance = {
+            factor = 0
+        }
+        any_country = {
+            limit = {
+                has_country_flag = flag_SNJ_american_coalition
+            }
+            country_event = {
+                id = newjersey.85
+            }
+        }
+    }
+}
+
+country_event = { #invite nation
+    id = newjersey.86
+    title = newjersey.86.t
+    desc = newjersey.86.d
+
+    is_triggered_only = yes
+
+    option = { #yes
+        name = newjersey.86.a
+        ai_chance = {
+            factor = 100
+        }
+        FROM = {
+            add_to_faction = ROOT
+        }
+        add_ai_strategy = {
+            type = alliance
+            id = FROM
+            value = 200
+        }
+        add_war_support = 0.05
+    }
+    option = { #no
+        name = newjersey.86.b
+        ai_chance = {
+            factor = 0
+        }
+    }
+}
+
+country_event = { #formation of NASA
+    id = newjersey.87
+    title = newjersey.87.t
+    desc = newjersey.87.d
+
+    is_triggered_only = yes
+
+    option = { #shit
+        name = newjersey.87.a
+        ai_chance = {
+            factor = 100
+        }
+        create_wargoal = {
+            type = annex_everything
+            target = SCA
+        }
+        add_war_support = 0.05
+    }
+}
+
+country_event = { #reduce lag?
+    id = newjersey.88
+    title = newjersey.88.t
+    desc = newjersey.88.d
+
+    is_triggered_only = yes
+
+    option = { #yes
+        name = newjersey.88.a
+        ai_chance = {
+            factor = 100
+        }
+        SMT = {
+            annex_country = {
+                target = SND
+                transfer_troops = yes
+            }
+            annex_country = {
+                target = SSD
+                transfer_troops = yes
+            }
+        }
+        every_state = {
+            limit = {
+                OR = {
+                    is_core_of = SND
+                    is_core_of = SSD
+                }
+            }
+            add_core_of = SMT
+        }
+        SMN = {
+            annex_country = {
+                target = SIA
+                transfer_troops = yes
+            }
+        }
+        every_state = {
+            limit = {
+                OR = {
+                    is_core_of = SIA
+                }
+            }
+            add_core_of = SMN
+        }
+        SUT = {
+            annex_country = {
+                target = SWY
+                transfer_troops = yes
+            }
+            annex_country = {
+                target = SCO
+                transfer_troops = yes
+            }
+        }
+        every_state = {
+            limit = {
+                OR = {
+                    is_core_of = SWY
+                    is_core_of = SCO
+                }
+            }
+            add_core_of = SUT
+        }
+        SAZ = {
+            annex_country = {
+                target = SNM
+                transfer_troops = yes
+            }
+            annex_country = {
+                target = NAV
+                transfer_troops = yes
+            }
+        }
+        every_state = {
+            limit = {
+                OR = {
+                    is_core_of = SNM
+                    is_core_of = NAV
+                }
+            }
+            add_core_of = SAZ
+        }
+        SCA = {
+            annex_country = {
+                target = SNV
+                transfer_troops = yes
+            }
+        }
+        every_state = {
+            limit = {
+                OR = {
+                    is_core_of = SNV
+                }
+            }
+            add_core_of = SCA
+        }
+        SWA = {
+            annex_country = {
+                target = SOR
+                transfer_troops = yes
+            }
+            annex_country = {
+                target = SID
+                transfer_troops = yes
+            }
+        }
+        every_state = {
+            limit = {
+                OR = {
+                    is_core_of = SOR
+                    is_core_of = SID
+                }
+            }
+            add_core_of = SWA
+        }
+        SKS = {
+            annex_country = {
+                target = SNE
+                transfer_troops = yes
+            }
+            annex_country = {
+                target = SOK
+                transfer_troops = yes
+            }
+        }
+        every_state = {
+            limit = {
+                OR = {
+                    is_core_of = SNE
+                    is_core_of = SOK
+                }
+            }
+            add_core_of = SKS
+        }
+    }
+    option = { #nope
+        name = newjersey.88.b
+        ai_chance = {
+            factor = 0
+        }
+    }
+}
+
+country_event = { #negotiations begin event
+    id = newjersey.89
+    title = newjersey.89.t
+    desc = newjersey.89.d
+
+    is_triggered_only = yes
+
+    option = { #ok
+        name = newjersey.89.a
+        ai_chance = {
+            factor = 100
+        }
+    }
+}

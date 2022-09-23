@@ -1,0 +1,3258 @@
+focus_tree = {
+	id = colorado
+	country = {
+		factor = 0
+		modifier = {
+			add = 10
+			tag = SCO
+		}
+	}
+	default = no
+	continuous_focus_position = { x = 50 y = 2500 }
+	#	focus = {
+	#	id = SCO_Stirring_Miners
+	#	icon = GFX_goal_generic_neutrality_focus
+	#	x = -3
+	#	y = 1
+	#	cost = 5
+	#	search_filters = {  FOCUS_FILTER_RESEARCH }
+	#	available_if_capitulated = no
+	#	available = {
+
+	#	}
+	#	ai_will_do = {
+#			factor = 5
+#		}
+#		completion_reward = {
+            
+#		}
+#	}
+    
+
+focus = {
+    id = SCO_aviation_effort
+    icon = GFX_goal_generic_build_airforce
+    x = 2
+    y = 1
+    cost = 10
+
+    available_if_capitulated = yes
+
+    available = {
+        OR = {
+        has_completed_focus = SCO_Colorado_Com_hidden_start
+        has_completed_focus = SCO_Colorado_Empire_hidden_start
+    }
+    }
+        modifier = {
+            factor = 25
+        }
+
+    ai_will_do = {
+        factor = 1
+    }
+
+    completion_reward = {
+        air_experience = 100
+    }
+
+
+    complete_tooltip = {
+        air_experience = 25
+        if = { limit = { has_country_flag = aviation_effort_AB }
+            add_building_construction = {
+                type = air_base
+                level = 2
+                instant_build = yes
+            }
+        }			
+        add_doctrine_cost_reduction = {
+            name =  air_doc_bonus
+            cost_reduction = 0.5
+            uses = 1
+            category = air_doctrine
+        }		
+    }
+
+    completion_reward = {
+        air_experience = 25
+
+        if = {
+            limit = {
+                capital_scope = {
+                    NOT = {
+                        free_building_slots = {
+                            building = air_base
+                            size > 1
+                        }
+                    }
+                }
+            }
+            random_owned_controlled_state = {
+                limit = {
+                    free_building_slots = {
+                        building = air_base
+                        size > 1
+                    }
+                }
+                add_building_construction = {
+                    type = air_base
+                    level = 2
+                    instant_build = yes
+                }
+                ROOT = { set_country_flag = aviation_effort_AB }
+            }
+        }
+        if = {
+            limit = {
+                capital_scope = {
+                    free_building_slots = {
+                        building = air_base
+                        size > 1
+                    }
+                }
+            }
+            capital_scope = {
+                add_building_construction = {
+                    type = air_base
+                    level = 2
+                    instant_build = yes
+                }
+                ROOT = { set_country_flag = aviation_effort_AB }
+            }
+        }
+        add_doctrine_cost_reduction = {
+            name = air_doc_bonus
+            cost_reduction = 0.5
+            uses = 1
+            category = air_doctrine
+        }
+    }
+}
+
+focus = {
+    id = SCO_fighter_focus
+    icon = GFX_goal_generic_air_fighter
+    prerequisite = { focus = SCO_aviation_effort }
+    mutually_exclusive = { focus = SCO_bomber_focus }
+    x = -1
+    y = 1
+    relative_position_id = SCO_aviation_effort
+    cost = 10
+
+    ai_will_do = {
+        factor = 1
+    }
+
+    available_if_capitulated = yes
+
+    completion_reward = {
+        add_tech_bonus = {
+            name = fighter_bonus
+            bonus = 1.0
+            uses = 2
+            technology = early_fighter
+            technology = fighter1
+            technology = fighter2
+            technology = fighter3
+            technology = heavy_fighter1
+            technology = heavy_fighter2
+            technology = heavy_fighter3
+        }
+        air_experience = 25
+    }
+}
+
+focus = {
+    id = SCO_bomber_focus
+    icon = GFX_goal_generic_air_bomber
+    prerequisite = { focus = SCO_aviation_effort }
+    mutually_exclusive = { focus = SCO_fighter_focus }
+    x = 1
+    y = 1
+    relative_position_id = SCO_aviation_effort
+    cost = 10
+
+    ai_will_do = {
+        factor = 1
+    }
+
+    completion_reward = {
+    hidden_effect = {
+        if = {
+            limit = { is_ai = yes }
+            add_manpower = 100
+            add_equipment_to_stockpile = {
+                type = tac_bomber_equipment_0
+                amount = 50
+                producer = WDC
+            }
+        }
+    }
+}
+
+    available_if_capitulated = yes
+
+    completion_reward = {
+        add_tech_bonus = {
+            name = bomber_bonus
+            bonus = 1.0
+            uses = 2
+            technology = strategic_bomber1
+            technology = strategic_bomber2
+            technology = strategic_bomber3
+            category = tactical_bomber
+        }
+        air_experience = 50
+    }
+}
+
+
+
+focus = {
+    id = SCO_aviation_effort_2
+    icon = GFX_goal_generic_air_doctrine
+    prerequisite = { focus = SCO_bomber_focus focus = SCO_fighter_focus }
+    x = -1
+    y = 1
+    relative_position_id = SCO_bomber_focus
+    cost = 10
+
+    available_if_capitulated = yes
+
+    ai_will_do = {
+        factor = 1
+    }
+#if ai is getting steamrolled give them back these planes
+#		completion_reward = {
+        air_experience = 150
+        #hidden_effect = {
+        #	if = {
+        #		limit = { is_ai = yes }
+        #		add_manpower = 1200
+        #		add_equipment_to_stockpile = {
+        #			type = fighter_equipment_0
+        #			amount = 210
+        #			producer = WDC
+        #		}
+
+#			}
+#		}
+#}
+
+    completion_reward = {
+    hidden_effect = {
+        if = {
+            limit = { is_ai = yes }
+        air_experience = 75
+        }
+    }
+}
+
+    complete_tooltip = {
+        air_experience = 25
+        if = { limit = { has_country_flag = aviation_effort_2_AB }
+            add_building_construction = {
+                type = air_base
+                level = 2
+                instant_build = yes
+            }
+        }
+        add_doctrine_cost_reduction = {
+            name =  air_doc_bonus
+            cost_reduction = 0.5
+            uses = 1
+            category = air_doctrine
+        }
+    }
+    completion_reward = {
+        air_experience = 25
+        if = {
+            limit = {
+                capital_scope = {
+                    OR = {
+                        NOT = { is_controlled_by = ROOT }
+                        NOT = {
+                            free_building_slots = {
+                                building = air_base
+                                size > 1
+                            }
+                        }
+                    }
+                }
+            }
+            random_owned_controlled_state = {
+                limit = {
+                    free_building_slots = {
+                        building = air_base
+                        size > 1
+                    }
+                }
+                add_building_construction = {
+                    type = air_base
+                    level = 2
+                    instant_build = yes
+                }
+                ROOT = { set_country_flag = aviation_effort_2_AB }
+            }
+        }
+        if = {
+            limit = {
+                capital_scope = {
+                    is_controlled_by = ROOT
+                    free_building_slots = {
+                        building = air_base
+                        size > 1
+                    }
+                }
+            }
+            capital_scope = {
+                add_building_construction = {
+                    type = air_base
+                    level = 2
+                    instant_build = yes
+                }				
+                ROOT = { set_country_flag = aviation_effort_2_AB }
+            }
+        }
+        add_doctrine_cost_reduction = {
+            name = air_doc_bonus
+            cost_reduction = 0.5
+            uses = 1
+            category = air_doctrine
+        }
+    }
+}
+
+focus = {
+    id = SCO_CAS_effort
+    icon = GFX_goal_generic_CAS
+    prerequisite = { focus = SCO_aviation_effort_2 }
+    prerequisite = { focus = SCO_motorization_effort1 }
+    x = -1
+    y = 1
+    relative_position_id = SCO_aviation_effort_2
+    cost = 10
+
+    ai_will_do = {
+        factor = 1
+    }
+
+
+    available_if_capitulated = yes
+
+    completion_reward = {
+        add_tech_bonus = {
+            name = CAS_bonus
+            bonus = 1.0
+            ahead_reduction = 2
+            uses = 1
+            category = cas_bomber
+        }
+    }
+}
+
+focus = {
+    id = SCO_rocket_effort
+    icon = GFX_focus_rocketry
+    prerequisite = { focus = SCO_aviation_effort_2 }
+    prerequisite = { focus = SCO_infrastructure_effort }
+    x = 0
+    y = 2
+    relative_position_id = SCO_aviation_effort_2
+    cost = 7.2
+
+    available_if_capitulated = yes
+
+    completion_reward = {
+        add_tech_bonus = {
+            name = jet_rocket_bonus
+            ahead_reduction = 2
+            uses = 2
+            category = rocketry
+            category = jet_technology
+        }
+    }
+
+    ai_will_do = {
+        factor = 1
+        modifier = {
+            factor = 0.25
+            always = yes
+        }
+    }
+}
+
+focus = {
+    id = SCO_NAV_effort
+    icon = GFX_goal_generic_air_naval_bomber
+    prerequisite = { focus = SCO_aviation_effort_2 }
+    x = 1
+    y = 1
+    relative_position_id = SCO_aviation_effort_2
+    cost = 10
+
+    available_if_capitulated = yes
+
+    ai_will_do = {
+        factor = 4
+    }
+
+    completion_reward = {
+    hidden_effect = {
+        if = {
+            limit = { is_ai = yes }
+            add_equipment_to_stockpile = {
+                type = nav_bomber_equipment_1
+                amount = 210
+                producer = WDC
+                }
+            }
+        }
+    }
+
+    completion_reward = {
+        add_tech_bonus = {
+            name = nav_bomber_bonus
+            bonus = 1.0
+            ahead_reduction = 2
+            uses = 1
+            category = naval_bomber
+        }
+    }
+}
+
+
+focus = {
+    id = SCO_naval_effort
+    icon = GFX_goal_generic_construct_naval_dockyard
+    x = 6
+    y = 1
+    cost = 10
+
+    available_if_capitulated = yes
+
+            modifier = {
+            factor = 25
+        }
+
+    available = {
+        any_owned_state = {
+            is_coastal = yes
+        }
+    }
+
+    complete_tooltip = {
+        navy_experience = 25
+        add_extra_state_shared_building_slots = 3
+        add_building_construction = {
+            type = dockyard
+            level = 3
+            instant_build = yes
+        }
+    }
+    
+    completion_reward = {
+        navy_experience = 25
+        if = {
+            limit = {
+                NOT = {
+                    any_owned_state = {
+                        dockyard > 0
+                        free_building_slots = {
+                            building = dockyard
+                            size > 2
+                            include_locked = yes
+                        }
+                    }
+                }
+                any_owned_state = {
+                    is_coastal = yes
+                }
+            }
+            random_owned_controlled_state = {
+                limit = {
+                    is_coastal = yes
+                    free_building_slots = {
+                        building = dockyard
+                        size > 2
+                        include_locked = yes
+                    }
+                }
+                add_extra_state_shared_building_slots = 3
+                add_building_construction = {
+                    type = dockyard
+                    level = 3
+                    instant_build = yes
+                }
+            }
+            set_country_flag = naval_effort_built
+        }
+        if = {
+            limit = {
+                NOT = { has_country_flag = naval_effort_built }
+                any_owned_state = {
+                    dockyard > 0
+                    free_building_slots = {
+                        building = dockyard
+                        size > 2
+                        include_locked = yes
+                    }
+                }
+            }
+            random_owned_controlled_state = {
+                limit = {
+                    dockyard > 0
+                    free_building_slots = {
+                        building = dockyard
+                        size > 2
+                        include_locked = yes
+                    }
+                }
+                add_extra_state_shared_building_slots = 3
+                add_building_construction = {
+                    type = dockyard
+                    level = 3
+                    instant_build = yes
+                }
+            }
+            set_country_flag = naval_effort_built
+        }
+        if = {
+            limit = {
+                NOT = { has_country_flag = naval_effort_built }
+                NOT = {
+                    any_owned_state = {
+                        free_building_slots = {
+                            building = dockyard
+                            size > 2
+                            include_locked = yes
+                        }
+                    }
+                }
+            }
+            random_state = {
+                limit = {
+                    controller = { tag = ROOT }
+                    free_building_slots = {
+                        building = dockyard
+                        size > 2
+                        include_locked = yes
+                    }
+                }
+                add_extra_state_shared_building_slots = 3
+                add_building_construction = {
+                    type = dockyard
+                    level = 3
+                    instant_build = yes
+                }
+            }
+        }			
+    }
+    
+    completion_reward = {
+        navy_experience = 25
+        if = {
+            limit = {
+                NOT = {
+                    any_owned_state = {
+                        dockyard > 0
+                        free_building_slots = {
+                            building = dockyard
+                            size > 2
+                            include_locked = yes
+                        }
+                    }
+                }
+                any_owned_state = {
+                    is_coastal = yes
+                }
+            }
+            random_owned_controlled_state = {
+                limit = {
+                    is_coastal = yes
+                    free_building_slots = {
+                        building = dockyard
+                        size > 2
+                        include_locked = yes
+                    }
+                }
+                add_extra_state_shared_building_slots = 3
+                add_building_construction = {
+                    type = dockyard
+                    level = 3
+                    instant_build = yes
+                }
+            }
+            set_country_flag = naval_effort_built
+        }
+        if = {
+            limit = {
+                NOT = { has_country_flag = naval_effort_built }
+                any_owned_state = {
+                    dockyard > 0
+                    free_building_slots = {
+                        building = dockyard
+                        size > 2
+                        include_locked = yes
+                    }
+                }
+            }
+            random_owned_controlled_state = {
+                limit = {
+                    dockyard > 0
+                    free_building_slots = {
+                        building = dockyard
+                        size > 2
+                        include_locked = yes
+                    }
+                }
+                add_extra_state_shared_building_slots = 3
+                add_building_construction = {
+                    type = dockyard
+                    level = 3
+                    instant_build = yes
+                }
+            }
+            set_country_flag = naval_effort_built
+        }
+        if = {
+            limit = {
+                NOT = { has_country_flag = naval_effort_built }
+                NOT = {
+                    any_owned_state = {
+                        free_building_slots = {
+                            building = dockyard
+                            size > 2
+                            include_locked = yes
+                        }
+                    }
+                }
+            }
+            random_state = {
+                limit = {
+                    controller = { tag = ROOT }
+                    free_building_slots = {
+                        building = dockyard
+                        size > 2
+                        include_locked = yes
+                    }
+                }
+                add_extra_state_shared_building_slots = 3
+                add_building_construction = {
+                    type = dockyard
+                    level = 3
+                    instant_build = yes
+                }
+            }
+        }			
+    }
+}
+
+focus = {
+    id = SCO_flexible_navy11
+    icon = GFX_goal_generic_build_navy
+    prerequisite = { focus = SCO_naval_effort }
+    mutually_exclusive = { focus = SCO_large_navy11 }
+    x = -1
+    y = 1
+    relative_position_id = SCO_naval_effort
+    cost = 10
+
+    available_if_capitulated = yes
+
+
+    ai_will_do = {
+        factor = 1
+        modifier = {
+            factor = 0
+            all_owned_state = {
+                OR = {
+                    is_coastal = no
+                    dockyard < 1
+                }
+            }
+        }
+    }
+
+    completion_reward = {
+        add_doctrine_cost_reduction = {
+            name = sub_op_bonus
+            cost_reduction = 0.5
+            uses = 2
+            technology = convoy_interdiction_ti
+            technology = unrestricted_submarine_warfare
+            technology = wolfpacks
+            technology = advanced_submarine_warfare
+            technology = combined_operations_raiding
+        }
+    }
+}
+
+focus = {
+    id = SCO_large_navy1
+    icon = GFX_goal_generic_navy_doctrines_tactics
+    prerequisite = { focus = SCO_naval_effort }
+    mutually_exclusive = { focus = SCO_flexible_navy11 }
+    x = 1
+    y = 1
+    relative_position_id = SCO_naval_effort
+    cost = 10
+
+    available_if_capitulated = yes
+
+
+    ai_will_do = {
+        factor = 1
+        modifier = {
+            factor = 0
+            all_owned_state = {
+                OR = {
+                    is_coastal = no
+                    dockyard < 1
+                }
+            }
+        }
+    }
+
+    completion_reward = {
+        add_doctrine_cost_reduction = {
+            name = fleet_in_being_bonus
+            cost_reduction = 0.5
+            uses = 2
+            category = fleet_in_being_tree
+        }
+    }
+}
+
+focus = {
+    id = SCO_submarine_effort
+    icon = GFX_goal_generic_navy_submarine
+    prerequisite = { focus = SCO_flexible_navy11 focus = SCO_large_navy1 }
+    x = 0
+    y = 1
+    relative_position_id = SCO_flexible_navy11
+    cost = 10
+
+    available_if_capitulated = yes
+
+
+    ai_will_do = {
+        factor = 1
+        modifier = {
+            factor = 0
+            all_owned_state = {
+                OR = {
+                    is_coastal = no
+                    dockyard < 1
+                }
+            }
+        }
+    }
+
+    completion_reward = {
+        add_tech_bonus = {
+            name = ss_bonus
+            bonus = 1.0
+            ahead_reduction = 2
+            uses = 1
+            category = ss_tech
+        }
+    }
+}
+
+focus = {
+    id = SCO_cruiser_effort
+    icon = GFX_goal_generic_navy_cruiser
+    prerequisite = { focus = SCO_large_navy1 focus = SCO_flexible_navy11 }
+    x = 0
+    y = 1
+    relative_position_id = SCO_large_navy1
+    cost = 10
+
+    available_if_capitulated = yes
+
+
+    ai_will_do = {
+        factor = 1
+        modifier = {
+            factor = 0
+            all_owned_state = {
+                OR = {
+                    is_coastal = no
+                    dockyard < 1
+                }
+            }
+        }
+    }
+
+    completion_reward = {
+        add_tech_bonus = {
+            name = cr_bonus
+            bonus = 1.0
+            ahead_reduction = 2
+            uses = 1
+            category = cl_tech
+            category = ca_tech
+        }
+    }
+}
+
+focus = {
+    id = SCO_destroyer_effort
+    icon = GFX_goal_generic_wolf_pack
+    prerequisite = { focus = SCO_submarine_effort }
+    x = 0
+    y = 1
+    relative_position_id = SCO_submarine_effort
+    cost = 10
+
+    available_if_capitulated = yes
+
+
+    ai_will_do = {
+        factor = 1
+        modifier = {
+            factor = 0
+            all_owned_state = {
+                OR = {
+                    is_coastal = no
+                    dockyard < 1
+                }
+            }
+        }
+    }
+
+    completion_reward = {
+        add_tech_bonus = {
+            name = dd_bonus
+            bonus = 1.0
+            ahead_reduction = 2
+            uses = 1
+            category = dd_tech
+        }
+    }
+}
+
+focus = {
+    id = SCO_capital_ships_effort
+    icon = GFX_goal_generic_navy_battleship
+    prerequisite = { focus = SCO_cruiser_effort }
+    x = 0
+    y = 1
+    relative_position_id = SCO_cruiser_effort
+    cost = 10
+
+    available_if_capitulated = yes
+
+
+    ai_will_do = {
+        factor = 1
+        modifier = {
+            factor = 0
+            all_owned_state = {
+                OR = {
+                    is_coastal = no
+                    dockyard < 1
+                }
+            }
+        }
+    }
+
+    completion_reward = {
+        navy_experience = 25
+        add_tech_bonus = {
+            name = capital_ships_bonus
+            bonus = 1.0
+            ahead_reduction = 2
+            uses = 1
+            category = bc_tech
+            category = bb_tech
+            category = cv_tech
+        }
+    }
+}
+
+
+
+focus = {
+    id = SCO_Raise_Colorado_Militias
+    icon = GFX_focus_SCO_Raise_Colorado_Militias
+    prerequisite = {}
+    available = {
+
+    }
+    x = -2
+    y = 1
+    relative_position_id = SCO_Stirring_Miners
+    cost = 10
+    ai_will_do = {
+        factor = 50
+    }
+    available_if_capitulated = no
+    search_filters = {   }
+    completion_reward = {
+        add_ideas = SCO_colorodo_militias
+    }
+}
+
+focus = {
+    id = SCO_Upgrade_CM
+    icon = GFX_focus_SCO_upgrade_cm
+    prerequisite = { focus = SCO_Raise_Colorado_Militias}
+    available = {
+
+    }
+    x = 0
+    y = 1
+    relative_position_id = SCO_Raise_Colorado_Militias
+    cost = 5
+    ai_will_do = {
+        factor = 40
+    }
+    available_if_capitulated = no
+    search_filters = {     }
+    completion_reward = {
+        add_tech_bonus = {
+            name = infantry_artillery_bonus
+            bonus = 0.5
+            uses = 1
+            category = infantry_weapons
+        }
+    }
+}
+
+focus = {
+    id = SCO_Fund_Colorado_Armouries
+    icon = GFX_focus_SCO_Fund_Colorado_Armouries
+    prerequisite = { focus = SCO_Upgrade_CM}
+    available = {
+
+    }
+    x = 0
+    y = 1
+    relative_position_id = SCO_Upgrade_CM
+    cost = 7.2
+    ai_will_do = {
+        factor = 50
+    }
+    available_if_capitulated = no
+    search_filters = {     }
+    completion_reward = {
+        add_offsite_building = { type = arms_factory level = 2 }
+    }
+}
+    focus = {
+        id = SCO_The_State_Must_Have_Order
+        icon = GFX_focus_SCO_StateM_Order
+        prerequisite = {}
+        available = {
+
+        }
+        x = -5
+        y = 1
+        relative_position_id = SCO_Stirring_Miners
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {  FOCUS_FILTER_POLITICAL   }
+        completion_reward = {
+        country_event = colorado.1
+        }
+    }
+
+    focus = {
+        id = SCO_Bounties_On_Miners_Heads
+        icon = GFX_focus_SCO_Bounties_On_Miners_Heads
+        prerequisite = { focus = SCO_The_State_Must_Have_Order}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_The_State_Must_Have_Order
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {  FOCUS_FILTER_POLITICAL   }
+        completion_reward = {
+        country_event = colorado.2
+        }
+    }
+	#spawn in ranger oob
+    focus = {
+        id = SCO_Send_in_Rangers
+        icon = GFX_focus_SCO_Send_in_The_raiders
+        prerequisite = { focus = SCO_Bounties_On_Miners_Heads}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_Bounties_On_Miners_Heads
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {  FOCUS_FILTER_POLITICAL   }
+        completion_reward = {
+        country_event = colorado.3
+        }
+    }
+    focus = {
+        id = SCO_Dealing_with_Explosive_Uprising
+        icon = GFX_focus_SCO_explosive_uprising
+        prerequisite = { focus = SCO_Send_in_Rangers}
+        available = {
+
+        }
+		mutually_exclusive = { focus = SCO_Avenging_the_1927_Massacre }
+        x = 3
+        y = 1
+        relative_position_id = SCO_Send_in_Rangers
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {  FOCUS_FILTER_POLITICAL   }
+        completion_reward = {
+		hidden_effect = {
+		country_event = usastates_news.38
+		}
+        add_political_power = -65 
+        add_popularity = {
+        ideology = communism
+        popularity = 0.30
+    }    
+		add_named_threat = { 
+		threat = 4
+		name = SCO_colorado_civil_war_tt
+		}
+        SCO = {
+        start_civil_war = {
+    ruling_party = neutrality
+    ideology = communism
+    size = 0.4
+    only_own_territory = no
+    capital = 318
+    states = { 
+       315 748 314 306 305 
+    }
+    keep_unit_leaders = {
+        33 44
+    }
+    keep_political_leader = yes
+    keep_political_party_members = yes
+}
+            }
+        }
+    }
+    focus = {
+        id = SCO_Militarize_Colorado_Federal_Police
+        icon = GFX_focus_SCO_militarization_of_Polices
+        prerequisite = { focus = SCO_Dealing_with_Explosive_Uprising}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_Dealing_with_Explosive_Uprising
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+			add_manpower = 1600
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 1500
+				producer = SCO
+			}            
+			add_equipment_to_stockpile = {
+				type = support_equipment_1
+				amount = 300
+				producer = SCO
+			}
+			add_equipment_to_stockpile = {
+				type = artillery_equipment_1
+				amount = 12
+				producer = SCO
+			}
+        }
+    }
+    focus = {
+        id = SCO_Declare_Emergency_Act
+        icon = GFX_focus_SCO_emergency_act
+        prerequisite = { focus = SCO_Militarize_Colorado_Federal_Police}
+        available = {
+
+        }
+        x = -2
+        y = 1
+        relative_position_id = SCO_Militarize_Colorado_Federal_Police
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        add_ideas = SCO_domestic_emergency_act
+        }
+    }
+    focus = {
+        id = SCO_Denver_Is_Bastion
+        icon = GFX_focus_SCO_denver_bastion
+        prerequisite = { focus = SCO_Declare_Emergency_Act}
+		mutually_exclusive = { focus = SCO_Decentralize_Our_Industries }
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_Declare_Emergency_Act
+        cost = 7.2
+        ai_will_do = {
+            factor = 0
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {   
+        318 = {	
+            add_extra_state_shared_building_slots = 1
+            add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				} 		
+			add_building_construction = {
+  	 			type = bunker
+    			level = 4
+   				instant_build = yes
+   				province = 2012
+					}	
+
+				}
+        }
+    }
+    focus = {
+        id = SCO_Decentralize_Our_Industries
+        icon = GFX_focus_SCO_decentralized_industries
+        prerequisite = { focus = SCO_Declare_Emergency_Act}
+		mutually_exclusive = { focus = SCO_Denver_Is_Bastion }
+        available = {
+
+        }
+        x = 2
+        y = 1
+        relative_position_id = SCO_Declare_Emergency_Act
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        add_offsite_building = { type = arms_factory level = 1 }
+        }
+    }
+    focus = {
+        id = SCO_We_Will_Fufill_Colorado_Empire
+        icon = GFX_focus_SCO_colorado_Empire
+        prerequisite = { focus = SCO_Decentralize_Our_Industries focus = SCO_Denver_Is_Bastion}
+        prerequisite = { focus = SCO_Integrate_Police_and_army}
+        available = {
+
+        }
+        x = -1
+        y = 1
+        relative_position_id = SCO_Decentralize_Our_Industries
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        hidden_effect = {
+        unlock_national_focus = SCO_Colorado_Empire_hidden_start    
+        }    
+        add_political_power = 100 
+        add_popularity = {
+        ideology = communism
+        popularity = -0.15
+    }    
+        custom_effect_tooltip = SCO_this_will_load_focus_tt
+        }
+    }
+#######################################################
+    focus = {
+		id = SCO_Colorado_Empire_hidden_start
+		icon = GFX_focus_SCO_colorado_empire_start
+		x = -6
+		y = 11
+		cost = 5
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+        prerequisite = { focus = SCO_We_Will_Fufill_Colorado_Empire}
+		available_if_capitulated = no
+		available = {
+
+		}
+		ai_will_do = {
+			factor = 5
+		}
+		completion_reward = {
+
+		}
+	}
+    focus = {
+        id = SCO_Consolidation_is_Our_Best_Defense
+		icon = GFX_focus_SCO_consolidation
+        prerequisite = { focus = SCO_Colorado_Empire_hidden_start}
+        available = {
+
+        }
+        x = 11
+        y = 1
+        relative_position_id = SCO_Colorado_Empire_hidden_start
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        set_rule = {
+        can_declare_war_on_same_ideology = yes    
+        }
+        add_war_support = 0.10
+        add_ideas = SCO_best_defense_is_offense
+        }
+    }
+    focus = {
+        id = SCO_Price_Commission_Board2
+		icon = GFX_focus_SCO_Price_Commission_Board2
+        prerequisite = { focus = SCO_Consolidation_is_Our_Best_Defense}
+        available = {
+
+        }
+        x = 8
+        y = 1
+        relative_position_id = SCO_Consolidation_is_Our_Best_Defense
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        remove_ideas = SCO_agricultural_commodities_plummeted_Idea
+        
+    }
+}
+    focus = {
+        id = SCO_Invade_New_Mexico
+		icon = GFX_focus_SCO_wnew_mexico
+        prerequisite = { focus = SCO_Consolidation_is_Our_Best_Defense}
+        bypass = {
+        SCO = {
+        is_in_faction_with = SNM 
+        } 
+        }
+        available = {
+
+        }
+        x =-4
+        y = 1
+        relative_position_id = SCO_Consolidation_is_Our_Best_Defense
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        create_wargoal = {
+                type = annex_everything
+                target = SNM
+            }
+        }
+    }
+    focus = {
+        id = SCO_Invade_Arizona
+		icon = GFX_focus_SCO_warizona
+        prerequisite = { focus = SCO_Invade_New_Mexico}
+        available = {
+
+        }
+        x =0
+        y = 1
+        relative_position_id = SCO_Invade_New_Mexico
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        create_wargoal = {
+                type = annex_everything
+                target = SAZ
+            }
+        }
+    }
+    focus = {
+        id = SCO_Invade_Utah
+		icon = GFX_focus_SCO_uutah
+        prerequisite = { focus = SCO_Consolidation_is_Our_Best_Defense}
+        bypass = {
+        SCO = {
+        is_in_faction_with = SUT 
+        } 
+        }
+        available = {
+
+        }
+        x =-2
+        y = 1
+        relative_position_id = SCO_Consolidation_is_Our_Best_Defense
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        create_wargoal = {
+                type = annex_everything
+                target = SUT
+            }
+        }
+    }
+    focus = {
+        id = SCO_Invade_Nevada
+		icon = GFX_focus_SCO_wnevada
+        prerequisite = { focus = SCO_Invade_Utah}
+        available = {
+
+        }
+        x =0
+        y = 1
+        relative_position_id = SCO_Invade_Utah
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        create_wargoal = {
+                type = annex_everything
+                target = SNV
+            }
+        }
+    }
+    focus = {
+        id = SCO_Rockey_Mountain_Empire
+		icon = GFX_focus_SCO_empire
+        prerequisite = { focus = SCO_Invade_Nevada}
+        prerequisite = { focus = SCO_Invade_Arizona}
+        prerequisite = { focus = SCO_Invade_Montana}
+        prerequisite = { focus = SCO_Invade_Idaho}
+        available = {
+
+        }
+        x =1
+        y = 1
+        relative_position_id = SCO_Invade_Nevada
+        cost = 2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            add_political_power = 160
+            set_cosmetic_tag = SCO_rocky_mount
+        }
+    }
+    focus = {
+        id = SCO_Coloradification_of_the_Nation
+		icon = GFX_focus_SCO_coloradofication
+        prerequisite = { focus = SCO_Rockey_Mountain_Empire}
+        available = {
+
+        }
+        x =1
+        y = 1
+        relative_position_id = SCO_Rockey_Mountain_Empire
+        cost = 5
+        ai_will_do = {
+            factor = 400
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            core_new_mexico = yes
+            core_navajo = yes
+            core_nevada = yes
+            core_arizona = yes
+            core_wyoming = yes
+            core_utah = yes
+            core_idaho = yes
+            core_montana = yes
+        }
+    }
+    focus = {
+        id = SCO_The_Demons_of_The_Rockies
+		icon = GFX_focus_SCO_rockies_Demons
+        prerequisite = { focus = SCO_Rockey_Mountain_Empire}
+        available = {
+
+        }
+        x =-1
+        y = 1
+        relative_position_id = SCO_Rockey_Mountain_Empire
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            add_ideas = SCO_Rockies_Demons
+        }
+    }
+    focus = {
+        id = SCO_Great_Colorado_Tank_Project
+		icon = GFX_focus_SCO_tank_project
+        prerequisite = { focus = SCO_Rockey_Mountain_Empire}
+        available = {
+
+        }
+        x =-3
+        y = 1
+        relative_position_id = SCO_Rockey_Mountain_Empire
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        add_tech_bonus = {
+				bonus = 1.5
+				uses = 1
+				category = cat_heavy_armor
+			}
+        }
+    }
+    focus = {
+        id = SCO_Rockey_Mountain_Munitions
+		icon = GFX_focus_SCO_munitions
+        prerequisite = { focus = SCO_Great_Colorado_Tank_Project}
+        prerequisite = { focus = SCO_The_Demons_of_The_Rockies}
+        available = {
+
+        }
+        x =1
+        y = 1
+        relative_position_id = SCO_Great_Colorado_Tank_Project
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            add_offsite_building = { type = arms_factory level = 2 }
+            add_equipment_to_stockpile = {
+                type = infantry_equipment
+                amount = 5000
+                producer = SCO
+            }
+        }
+    }
+    focus = {
+        id = SCO_Revolver_Obsession
+		icon = GFX_focus_SCO_revolover_obs
+        prerequisite = { focus = SCO_Rockey_Mountain_Munitions}
+        available = {
+
+        }
+        x =1
+        y = 1
+        relative_position_id = SCO_Rockey_Mountain_Munitions
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            add_ideas = SCO_Revolver_Obsession_Idea
+        }
+    }
+    focus = {
+        id = SCO_Advanded_Weapons_Development
+		icon = GFX_focus_SCO_adv_wep
+        prerequisite = { focus = SCO_Rockey_Mountain_Munitions}
+        available = {
+
+        }
+        x =-1
+        y = 1
+        relative_position_id = SCO_Rockey_Mountain_Munitions
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 3
+                uses = 2
+                category = infantry_tech
+            }
+        }
+    }
+    focus = {
+        id = SCO_Syth_Project
+		icon = GFX_focus_SCO_rubber1
+        prerequisite = { focus = SCO_Rockey_Mountain_Empire}
+        available = {
+
+        }
+        x =3
+        y = 1
+        relative_position_id = SCO_Rockey_Mountain_Empire
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        add_tech_bonus = {
+				name = synt
+				bonus = 1.5
+				uses = 1
+				category = synth_resources
+			}
+        }
+    }
+    focus = {
+        id = SCO_Rockey_Mountain_Rubber_Project
+		icon = GFX_focus_SCO_rubber2
+        prerequisite = { focus = SCO_Syth_Project}
+        available = {
+
+        }
+        x =0
+        y = 1
+        relative_position_id = SCO_Syth_Project
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        custom_effect_tooltip = SLA_research_syth_tt
+        random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = synthetic_refinery 
+						size > 2
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = synthetic_refinery
+										size > 2
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+                add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 2
+					instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SCO_Invade_Wymoming
+		icon = GFX_focus_SCO_wwyoming
+        prerequisite = { focus = SCO_Consolidation_is_Our_Best_Defense}
+        available = {
+
+        }
+        x =1
+        y = 1
+        relative_position_id = SCO_Consolidation_is_Our_Best_Defense
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        create_wargoal = {
+                type = annex_everything
+                target = SWY
+            }
+        }
+    }
+    focus = {
+        id = SCO_The_Rangers_Are_Our_Pride
+		icon = GFX_focus_SCO_colorado_rangers
+        prerequisite = { focus = SCO_Consolidation_is_Our_Best_Defense}
+        available = {
+
+        }
+        x =5
+        y = 1
+        relative_position_id = SCO_Consolidation_is_Our_Best_Defense
+        cost = 10
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            add_ideas = SCO_Rangers_Are_Pride
+        }
+    }
+    focus = {
+        id = SCO_Rockey_Mountain_Elite_Mountaineers
+		icon = GFX_focus_SCO_mountaineers
+        prerequisite = { focus = SCO_The_Rangers_Are_Our_Pride}
+        available = {
+
+        }
+        x =-1
+        y = 1
+        relative_position_id = SCO_The_Rangers_Are_Our_Pride
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+		add_tech_bonus = {
+				bonus = 1.25
+				uses = 3
+				category = mountaineers_tech
+			}
+		hidden_effect = {
+        set_technology = {
+                mountain_bonus_tech= 1
+            }
+			}
+			custom_effect_tooltip = mountain_bonus_tech_effect_tt
+        }
+    }
+    focus = {
+        id = SCO_Grand_Paramilitary_Program
+		icon = GFX_focus_SCO_paramilitary
+        prerequisite = { focus = SCO_Rockey_Mountain_Elite_Mountaineers}
+        available = {
+
+        }
+        x =0
+        y = 1
+        relative_position_id = SCO_Rockey_Mountain_Elite_Mountaineers
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            add_timed_idea = { idea = SCO_Paramilitary_Bonus days = 250 }
+        }
+    }
+    focus = {
+        id = SCO_Rockey_Mountain_Paras
+		icon = GFX_focus_SCO_Rockey_Mountain_Paras
+        prerequisite = { focus = SCO_The_Rangers_Are_Our_Pride}
+        available = {
+
+        }
+        x =1
+        y = 1
+        relative_position_id = SCO_The_Rangers_Are_Our_Pride
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        add_tech_bonus = {
+				name = special_forces_bonus
+				bonus = 1.0
+				uses = 1
+				technology = paratroopers
+				technology = paratroopers2
+				technology = paratroopers3
+			}    
+        add_equipment_to_stockpile = {
+				type = transport_plane_equipment
+				amount = 15
+				producer = SCO
+			}
+        }
+    }
+    focus = {
+        id = SCO_Rockey_Mountain_Cavalry
+		icon = GFX_focus_SCO_Rockey_Mountain_Cavalry
+        prerequisite = { focus = SCO_The_Rangers_Are_Our_Pride}
+        available = {
+
+        }
+        x =3
+        y = 1
+        relative_position_id = SCO_The_Rangers_Are_Our_Pride
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            ### Cavalry atk def and attrition bonus
+            add_ideas = SCO_Mountain_Cavalry
+        }
+    }
+    focus = {
+        id = SCO_Arial_Dominance_Of_The_Content
+		icon = GFX_focus_SCO_arial
+        prerequisite = { focus = SCO_Rockey_Mountain_Paras}
+        available = {
+
+        }
+        x =0
+        y = 1
+        relative_position_id = SCO_Rockey_Mountain_Paras
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        air_experience = 15
+        add_doctrine_cost_reduction = {
+	    cost_reduction = 0.5
+	    uses = 2
+	    category = battlefield_support_tree
+    }
+        }
+    }
+    focus = {
+        id = SCO_Cowboy_Of_The_Skies
+		icon = GFX_focus_SCO_arialcowboy
+        prerequisite = { focus = SCO_Arial_Dominance_Of_The_Content}
+        available = {
+
+        }
+        x =0
+        y = 1
+        relative_position_id = SCO_Arial_Dominance_Of_The_Content
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        add_tech_bonus = {
+				name = fighter_bonus
+				bonus = 1.25
+				uses = 2
+				technology = early_fighter
+				technology = fighter1
+				technology = fighter2
+				technology = fighter3
+				technology = heavy_fighter1
+				technology = heavy_fighter2
+				technology = heavy_fighter3
+			}
+        }
+    }
+    focus = {
+        id = SCO_Rocket_Cowboys
+		icon = GFX_focus_SCO_Rockey_cowboy
+        prerequisite = { focus = SCO_Cowboy_Of_The_Skies}
+        prerequisite = { focus = SCO_Innovation_Act}
+        available = {
+
+        }
+        x =-1
+        y = 1
+        relative_position_id = SCO_Cowboy_Of_The_Skies
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        add_tech_bonus = {
+				name = rocket_bonus
+				bonus = 1.0
+				uses = 2
+				category = mot_rockets
+			}
+        add_equipment_to_stockpile = {
+				type = motorized_rocket_equipment
+				amount = 150
+				producer = SCO
+			}    
+        }
+    }
+    focus = {
+        id = SCO_Innovation_Act
+		icon = GFX_focus_SCO_research
+        prerequisite = { focus = SCO_Grand_Paramilitary_Program}
+        available = {
+
+        }
+        x =0
+        y = 1
+        relative_position_id = SCO_Grand_Paramilitary_Program
+        cost = 10
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        add_research_slot = 1
+        }
+    }
+    focus = {
+        id = SCO_Invade_Montana
+		icon = GFX_focus_SCO_wmontana
+        prerequisite = { focus = SCO_Invade_Wymoming}
+        bypass = {
+        SCO = {
+        is_in_faction_with = SMT
+        } 
+        }
+        available = {
+
+        }
+        x =-1
+        y = 1
+        relative_position_id = SCO_Invade_Wymoming
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        create_wargoal = {
+                type = annex_everything
+                target = SMT
+            }
+        }
+    }
+    focus = {
+        id = SCO_Invade_Idaho
+		icon = GFX_focus_SCO_widaho
+        prerequisite = { focus = SCO_Invade_Wymoming}
+        bypass = {
+        SCO = {
+        is_in_faction_with = SID 
+        } 
+        }
+        available = {
+
+        }
+        x =1
+        y = 1
+        relative_position_id = SCO_Invade_Wymoming
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        create_wargoal = {
+                type = annex_everything
+                target = SID
+            }
+        }
+    }
+    ######################################################
+    focus = {
+		id = SCO_Colorado_Com_hidden_start
+		icon = GFX_focus_SCO_Colorado_Com_hidden_start
+		x = -11
+		y = 11
+		cost = 5
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+        prerequisite = { focus = SCO_Justice_For_Colorado}
+		available_if_capitulated = no
+        
+		available = {
+
+		}
+		ai_will_do = {
+			factor = 5
+		}
+		completion_reward = {
+
+		}
+	}
+    focus = {
+        id = SCO_The_Colorado_Gorillas
+		icon = GFX_focus_SCO_The_Colorado_Gorillas
+        prerequisite = { focus = SCO_Colorado_Com_hidden_start}
+        available = {
+            has_idea = SCO_The_Peoples_Rifles_idea
+        }
+        x = -3
+        y = 1
+        relative_position_id = SCO_Colorado_Com_hidden_start
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            swap_ideas = {
+                remove_idea = SCO_The_Peoples_Rifles_idea
+                add_idea = SCO_The_Colorado_Gorillas_idea
+            }
+        }
+    }
+    focus = {
+        id = SCO_The_Coal_Is_Ours
+		icon = GFX_focus_SCO_coal_is_ours
+        prerequisite = { focus = SCO_Colorado_Com_hidden_start}
+        available = {
+
+        }
+        x = 1
+        y = 1
+        relative_position_id = SCO_Colorado_Com_hidden_start
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            add_offsite_building = { type = industrial_complex level = 1 }
+            random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+        }
+    }
+    focus = {
+        id = SCO_Use_Coal_for_Synthetics
+		icon = GFX_focus_SCO_sythindustries
+        prerequisite = { focus = SCO_The_Coal_Is_Ours}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_The_Coal_Is_Ours
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+			add_tech_bonus = {
+				name = synt
+				bonus = 1.5
+				uses = 1
+				category = synth_resources
+			}
+        }
+    }
+    focus = {
+        id = SCO_Colorado_Rubber_Project
+		icon = GFX_focus_SCO_rubprojects
+        prerequisite = { focus = SCO_Use_Coal_for_Synthetics}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_Use_Coal_for_Synthetics
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = { 
+            custom_effect_tooltip = SLA_research_syth_tt
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = synthetic_refinery 
+						size > 2
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = synthetic_refinery
+										size > 2
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+                add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 2
+					instant_build = yes
+                }
+            }
+        }
+    }
+    focus = {
+        id = SCO_Tunneling_Experts
+		icon = GFX_focus_SCO_tunneling_focus
+        prerequisite = { focus = SCO_The_Colorado_Gorillas}
+        available = {
+
+        }
+        x = -3
+        y = 1
+        relative_position_id = SCO_The_Colorado_Gorillas
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+			hidden_effect = {
+            set_technology = {
+                mountain_bonus_tech= 1
+            }
+			}
+			custom_effect_tooltip = mountain_bonus_tech_effect_tt
+            add_ideas = SCO_Tunneling_Experts_idea
+        }
+    }
+    focus = {
+        id = SCO_Foxhole_en_mass
+		icon = GFX_focus_SCO_foxholes
+        prerequisite = { focus = SCO_Tunneling_Experts}
+        available = {
+
+        }
+		mutually_exclusive = { focus = SCO_Moving_Production_Underground }
+        x = -1
+        y = 1
+        relative_position_id = SCO_Tunneling_Experts
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            swap_ideas = {
+                remove_idea = SCO_Tunneling_Experts_idea
+                add_idea = SCO_Tunneling_Experts_idea3
+            }
+        }
+    }
+    focus = {
+        id = SCO_Moving_Production_Underground
+		icon = GFX_focus_SCO_underground_production
+        prerequisite = { focus = SCO_Tunneling_Experts}
+        available = {
+
+        }
+		mutually_exclusive = { focus = SCO_Foxhole_en_mass }
+        x = 1
+        y = 1
+        relative_position_id = SCO_Tunneling_Experts
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            swap_ideas = {
+                remove_idea = SCO_Tunneling_Experts_idea
+                add_idea = SCO_Tunneling_Experts_idea2
+            }
+        }
+    }
+
+    focus = {
+        id = SCO_Sub_Machinegun_Project
+		icon = GFX_focus_SCO_smg_dev
+        prerequisite = { focus = SCO_The_Colorado_Gorillas}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_The_Colorado_Gorillas
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 1
+				category = infantry_weapons
+			}
+        }
+    }
+    focus = {
+        id = SCO_Shock_Troopers
+		icon = GFX_focus_SCO_shock_troopers
+        prerequisite = { focus = SCO_Sub_Machinegun_Project}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_Sub_Machinegun_Project
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            add_ideas = SCO_Shock_Troopers_idea
+        }
+    }
+    focus = {
+        id = SCO_Advance_Munitions_Organizations
+		icon = GFX_focus_SCO_Advance_Munitions_Organizations
+        prerequisite = { focus = SCO_Shock_Troopers}
+        prerequisite = { focus = SCO_Foxhole_en_mass focus = SCO_Moving_Production_Underground}
+        prerequisite = { focus = SCO_The_Buckets_of_Bolts}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_Shock_Troopers
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+			add_timed_idea = { idea = SCO_Advance_Munitions_Organizations_idea days = 365 }
+            add_offsite_building = { type = arms_factory level = 2 }
+        }
+    }
+    focus = {
+        id = SCO_Miner_Dare_To_Die_Corps
+		icon = GFX_focus_SCO_Miner_Dare_To_Die_Corps
+        prerequisite = { focus = SCO_Advance_Munitions_Organizations}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_Advance_Munitions_Organizations
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            add_ideas = SCO_Miner_Dare_To_Die_Corps_idea
+        }
+    }
+    focus = {
+        id = SCO_Expand_Miners_Sniper_Corps
+		icon = GFX_focus_SCO_elite_snipers
+        prerequisite = { focus = SCO_Miner_Dare_To_Die_Corps}
+        available = {
+
+        }
+        x = -1
+        y = 1
+        relative_position_id = SCO_Miner_Dare_To_Die_Corps
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            swap_ideas = {
+                remove_idea = SCO_The_Colorado_Gorillas_idea
+                add_idea = SCO_Elite_Miners_Marksmen_idea
+            }
+        }
+    }
+    focus = {
+        id = SCO_Evolving_Command_Structure
+		icon = GFX_focus_SCO_evolving_command_structure
+        prerequisite = { focus = SCO_Expand_Miners_Sniper_Corps focus = SCO_Mass_Mechanization_C }
+        prerequisite = { focus = SCO_Commissar_Program}
+        prerequisite = { focus = SCO_Rockets_Progarm}
+        available = {
+
+        }
+        x = 1
+        y = 1
+        relative_position_id = SCO_Expand_Miners_Sniper_Corps
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            add_ideas = SCO_Evolving_Command_Structure_idea
+        }
+    }
+    focus = {
+        id = SCO_Mass_Mechanization_C
+		icon = GFX_focus_SCO_mass_moto
+        prerequisite = { focus = SCO_Miner_Dare_To_Die_Corps}
+        available = {
+
+        }
+        x = 1
+        y = 1
+        relative_position_id = SCO_Miner_Dare_To_Die_Corps
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            add_ideas = SCO_Mass_Mechanization_C_idea
+        }
+    }
+    focus = {
+        id = SCO_Commissar_Program
+		icon = GFX_focus_SCO_commisars
+        prerequisite = { focus = SCO_Advance_Munitions_Organizations}
+        available = {
+
+        }
+        x = -3
+        y = 2
+        relative_position_id = SCO_Advance_Munitions_Organizations
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            add_ideas = SCO_Commissar_Program_idea
+        }
+    }
+    focus = {
+        id = SCO_Secret_Weapons_Program
+		icon = GFX_focus_SCO_secret_weapons
+        prerequisite = { focus = SCO_Advance_Munitions_Organizations}
+        available = {
+
+        }
+        x = 3
+        y = 1
+        relative_position_id = SCO_Advance_Munitions_Organizations
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+			add_tech_bonus = {
+				name = secret_bonus
+				bonus = 1.0
+				uses = 3
+				category = electronics
+				category = nuclear
+			}
+        }
+    }
+    focus = {
+        id = SCO_Rockets_Progarm
+		icon = GFX_focus_SCO_rockets
+        prerequisite = { focus = SCO_Secret_Weapons_Program}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_Secret_Weapons_Program
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+			add_tech_bonus = {
+				name = secret_bonus
+				bonus = 1.0
+				uses = 2
+				category = rocketry
+			}
+        }
+    }
+
+    focus = {
+        id = SCO_Miners_Tank_Corps
+		icon = GFX_focus_SCO_ctanks
+        prerequisite = { focus = SCO_The_Colorado_Gorillas}
+        available = {
+
+        }
+        x = 2
+        y = 1
+        relative_position_id = SCO_The_Colorado_Gorillas
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+			add_tech_bonus = {
+				name = armor_bonus
+				bonus = 1.0
+				uses = 2
+				category = armor
+			}
+        }
+    }
+    focus = {
+        id = SCO_The_Buckets_of_Bolts
+		icon = GFX_focus_SCO_ctanks2
+        prerequisite = { focus = SCO_Miners_Tank_Corps}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_Miners_Tank_Corps
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            add_ideas = SCO_The_Buckets_of_Bolts_idea
+        }
+    }
+    focus = {
+        id = SCO_The_Miners_Form_A_Government
+		icon = GFX_focus_SCO_The_Miners_Form_A_Government
+        prerequisite = { focus = SCO_Colorado_Com_hidden_start}
+        available = {
+
+        }
+        x = 5
+        y = 1
+        relative_position_id = SCO_Colorado_Com_hidden_start
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+			add_political_power = 120
+        }
+    }
+    focus = {
+        id = SCO_We_Must_Seek_Friends
+		icon = GFX_focus_SCO_friends
+        prerequisite = { focus = SCO_The_Miners_Form_A_Government}
+        available = {
+
+        }
+        x = -1
+        y = 1
+        relative_position_id = SCO_The_Miners_Form_A_Government
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            add_ideas = SCO_Communist_Diplomacy
+        }
+    }
+    focus = {
+        id = SCO_Begin_struggle_of_liberation
+		icon = GFX_focus_SCO_begin_struggle_of_Liberation
+        prerequisite = { focus = SCO_We_Must_Seek_Friends}
+        available = {
+
+        }
+        x = -1
+        y = 1
+        relative_position_id = SCO_We_Must_Seek_Friends
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+		add_war_support = 0.10
+        }
+    }
+
+    focus = {
+        id = SCO_Utah
+		icon = GFX_focus_SCO_utahcom
+        prerequisite = { focus = SCO_Begin_struggle_of_liberation}
+        available = {
+        strength_ratio = {
+        tag = SUT
+        ratio > 0.5
+    }
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_Begin_struggle_of_liberation
+        cost = 10
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            create_wargoal = {
+                type = annex_everything
+                target = SID
+            }
+        }
+    }
+    focus = {
+        id = SCO_wargoal1
+		icon = GFX_focus_SCO_nevada
+        prerequisite = { focus = SCO_Utah}
+        available = {
+
+        }
+        x = -2
+        y = 1
+        relative_position_id = SCO_wargoal
+		available = { 
+		is_neighbor_of = SNV
+		}
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            create_wargoal = {
+                type = annex_everything
+                target = SNV
+            }
+        }
+    }
+    focus = {
+        id = SCO_wargoal4
+		icon = GFX_focus_SCO_northand_southdakota
+        prerequisite = { focus = SCO_wargoal1}
+        available = {
+		is_neighbor_of = SSD
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_wargoal1
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            create_wargoal = {
+                type = annex_everything
+                target = SND
+            }
+            create_wargoal = {
+                type = annex_everything
+                target = SSD
+            }
+        }
+    }
+    focus = {
+        id = SCO_wargoal2
+		icon = GFX_focus_SCO_montana
+        prerequisite = { focus = SCO_wargoal}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_wargoal
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            create_wargoal = {
+                type = annex_everything
+                target = SMT
+            }
+        }
+    }
+    focus = {
+        id = SCO_wargoal3
+		icon = GFX_focus_SCO_idaho
+        prerequisite = { focus = SCO_wargoal2}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_wargoal2
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            create_wargoal = {
+                type = annex_everything
+                target = SID
+            }
+        }
+    }
+    focus = {
+        id = SCO_wargoal
+		icon = GFX_focus_SCO_wyoming
+        prerequisite = { focus = SCO_Begin_struggle_of_liberation}
+        available = {
+
+        }
+        x = 2
+        y = 1
+        relative_position_id = SCO_Begin_struggle_of_liberation
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            create_wargoal = {
+                type = annex_everything
+                target = SWY
+            }
+        }
+    }
+    focus = {
+        id = SCO_Increase_Centrialized_Planning
+		icon = GFX_focus_SCO_plannedeco
+        prerequisite = { focus = SCO_The_Miners_Form_A_Government}
+        available = {
+
+        }
+        x = 2
+        y = 1
+        relative_position_id = SCO_The_Miners_Form_A_Government
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        add_ideas = SCO_central_planning
+        
+    }
+    }
+
+    focus = {
+        id = SCO_Price_Commission_Board1
+		icon = GFX_focus_SCO_Price_Commission_Board1
+        prerequisite = { focus = SCO_Increase_Centrialized_Planning}
+        available = {
+
+        }
+        x = -2
+        y = 1
+        relative_position_id = SCO_Increase_Centrialized_Planning
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        remove_ideas = SCO_agricultural_commodities_plummeted_Idea
+        
+    }
+    }
+
+    focus = {
+        id = SCO_Persicute_Polictial_Opponets
+		icon = GFX_focus_SCO_eliminate_poltical_opponets
+        prerequisite = { focus = SCO_Increase_Centrialized_Planning}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_Increase_Centrialized_Planning
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        add_stability = 0.05
+        add_popularity = {
+        ideology = neutrality
+        popularity = -0.20
+    }
+        }
+    }
+    focus = {
+        id = SCO_Convert_Ranches_To_Communal_Farms
+		icon = GFX_focus_SCO_communal_farms
+        prerequisite = { focus = SCO_Persicute_Polictial_Opponets}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_Persicute_Polictial_Opponets
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        add_ideas = SCO_communal_agriculture
+        }
+    }
+
+
+    focus = {
+        id = SCO_Form_the_Rockey_Mountain_Union
+		icon = GFX_
+        prerequisite = { focus = SCO_wargoal3}
+        available = {
+
+        }
+        x = -3
+        y = 4
+        relative_position_id = SCO_Persicute_Polictial_Opponets
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            core_new_mexico = yes
+            core_navajo = yes
+            core_nevada = yes
+            core_arizona = yes
+            core_wyoming = yes
+            core_utah = yes
+            core_idaho = yes
+            core_montana = yes
+        }
+    }
+    focus = {
+        id = SCO_Commune_Colleges
+		icon = GFX_focus_SCO_Commune_Colleges
+        prerequisite = { focus = SCO_Colorado_Com_hidden_start}
+        available = {
+
+        }
+        x = 9
+        y = 1
+        relative_position_id = SCO_Colorado_Com_hidden_start
+        cost = 10
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+			add_research_slot = 1
+        }
+    }
+    focus = {
+        id = SCO_massive_education_investments
+		icon = GFX_focus_SCO_education_investment
+        prerequisite = { focus = SCO_Commune_Colleges}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_Commune_Colleges
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            add_ideas = SCO_massive_education_investments_idea
+        }
+    }
+    focus = {
+        id = SCO_Paramilitary_Education
+		icon = GFX_focus_SCO_paramilitary_education
+        prerequisite = { focus = SCO_massive_education_investments}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_massive_education_investments
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        add_ideas = SCO_paramilitary_education_drive
+        }
+    }
+    focus = {
+        id = SCO_Industrial_Research_Grants
+		icon = GFX_focus_SCO_Industrial_Research_Grants
+        prerequisite = { focus = SCO_Paramilitary_Education}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_Paramilitary_Education
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+			add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 1.0
+				uses = 2
+				category = industry
+			}
+        }
+    }
+    focus = {
+        id = SCO_Young_Pilots_Program
+		icon = GFX_focus_SCO_Young_Pilot_Program
+        prerequisite = { focus = SCO_Paramilitary_Education}
+        available = {
+
+        }
+        x = 2
+        y = 1
+        relative_position_id = SCO_Paramilitary_Education
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+         add_tech_bonus = {
+				name = fighter_bonus
+				bonus = 1.25
+				uses = 2
+				technology = early_fighter
+				technology = fighter1
+				technology = fighter2
+				technology = fighter3
+				technology = heavy_fighter1
+				technology = heavy_fighter2
+				technology = heavy_fighter3
+			}   
+        set_rule = {
+        can_generate_female_aces = yes
+        }
+        }
+    }
+
+
+    focus = {
+        id = SCO_Overtime_for_Wareffort
+		icon = GFX_focus_SCO_Overtime_For_War_Effor
+        prerequisite = { focus = SCO_Industrial_Research_Grants}
+        available = {
+        has_war = yes
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_Industrial_Research_Grants
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        add_ideas = SCO_wartime_overtime
+        }
+    }
+    #######################################################
+    focus = {
+        id = SCO_Mass_Deputization_Program
+        icon = GFX_focus_SCO_mass_deputization
+        prerequisite = { focus = SCO_Militarize_Colorado_Federal_Police}
+        available = {
+
+        }
+        x = 3
+        y = 1
+        relative_position_id = SCO_Militarize_Colorado_Federal_Police
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            add_ideas = extensive_conscription
+        }
+    }
+    focus = {
+        id = SCO_Rifle_Drive
+        icon = GFX_focus_SCO_rifledrive
+        prerequisite = { focus = SCO_Mass_Deputization_Program }
+        available = {
+
+        }
+        x = 1
+        y = 1
+        relative_position_id = SCO_Mass_Deputization_Program
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+		add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 2500
+				producer = SCO
+			}
+        }
+    }
+    focus = {
+        id = SCO_Air_Deputizaties
+        icon = GFX_focus_SCO_Air_Deputizaties
+        prerequisite = { focus = SCO_Mass_Deputization_Program}
+        available = {
+
+        }
+        x = 3
+        y = 1
+        relative_position_id = SCO_Mass_Deputization_Program
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+			add_equipment_to_stockpile = {
+				type = fighter_equipment_0
+				amount = 240
+				producer = SCO
+			}
+        }
+    }
+    focus = {
+        id = SCO_Call_Upon_the_Ranchers
+        icon = GFX_focus_SCO_ranchers
+        prerequisite = { focus = SCO_Mass_Deputization_Program}
+        available = {
+
+        }
+        x = -1
+        y = 1
+        relative_position_id = SCO_Mass_Deputization_Program
+        cost = 5
+        ai_will_do = {
+            factor = 25
+			
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        add_timed_idea = { idea = SCO_rally_the_ranchers days = 100 }
+        }
+    }
+    focus = {
+        id = SCO_Integrate_Police_and_army
+        icon = GFX_focus_SCO_Integrate_Police_and_army
+        prerequisite = { focus = SCO_Call_Upon_the_Ranchers}
+        prerequisite = { focus = SCO_Rifle_Drive}
+        available = {
+
+        }
+        x = 1
+        y = 1
+        relative_position_id = SCO_Call_Upon_the_Ranchers
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+		remove_ideas = SCO_miner_unrest
+        add_ideas = SCO_integrated_police_army
+        }
+    }
+    focus = {
+        id = SCO_Avenging_the_1927_Massacre
+        icon = GFX_focus_SCO_avenge_miners
+        prerequisite = { focus = SCO_Send_in_Rangers}
+        available = {
+
+        }
+		mutually_exclusive = { focus = SCO_Dealing_with_Explosive_Uprising }
+        x = -3
+        y = 1
+        relative_position_id = SCO_Send_in_Rangers
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+		remove_ideas = SCO_miner_unrest
+		hidden_effect = {
+		country_event = usastates_news.38
+		}
+		add_named_threat = { 
+		threat = 4
+		name = SCO_colorado_civil_war_tt
+		}
+            SCO = {
+
+            
+        start_civil_war = {
+        
+
+
+    ruling_party = communism
+    ideology = neutrality
+    size = 0.2
+    only_own_territory = no
+    capital = 318
+    states = { 
+       318 317 316 
+    }
+    keep_unit_leaders = {
+        33 44 11
+    }
+    keep_political_leader = yes
+    keep_political_party_members = yes
+}
+            }
+        }
+    }
+    focus = {
+        id = SCO_Rally_Miner_Army
+        icon = GFX_focus_SCO_rally_miners
+        prerequisite = { focus = SCO_Avenging_the_1927_Massacre}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_Avenging_the_1927_Massacre
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        
+			add_manpower = 1600
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 2500
+				producer = SCO
+			}            
+			add_equipment_to_stockpile = {
+				type = support_equipment_1
+				amount = 350
+				producer = SCO
+			}
+			add_equipment_to_stockpile = {
+				type = artillery_equipment_1
+				amount = 48
+				producer = SCO
+			}
+            add_timed_idea = { idea = SCO_Rally_Miner_Army_idea days = 365 }
+        }
+    }
+    focus = {
+        id = SCO_Out_of_the_dirt_into_The_skies
+        icon = GFX_focus_SCO_into_skies
+        prerequisite = { focus = SCO_Rally_Miner_Army}
+        available = {
+
+        }
+        x = -2
+        y = 1
+        relative_position_id = SCO_Rally_Miner_Army
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+			add_equipment_to_stockpile = {
+				type = fighter_equipment_0
+				amount = 200
+				producer = SCO
+			}
+			add_equipment_to_stockpile = {
+				type = tac_bomber_equipment_0
+				amount = 40
+				producer = SCO
+			}
+                
+        }
+    }
+    focus = {
+        id = SCO_Experiments_with_Syth
+        icon = GFX_focus_SCO_sythexp
+        prerequisite = { focus = SCO_Out_of_the_dirt_into_The_skies}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_Out_of_the_dirt_into_The_skies
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+			add_tech_bonus = {
+				name = synt
+				bonus = 0.5
+				uses = 1
+				category = synth_resources
+			}
+        }
+    }
+    focus = {
+        id = SCO_Organizing_Our_Munition_Production
+        icon = GFX_focus_SCO_orgmunti
+        prerequisite = { focus = SCO_Rally_Miner_Army}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_Rally_Miner_Army
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+			add_timed_idea = { idea = SCO_Organizing_Our_Munition_idea days = 100 }
+        }
+    }
+    focus = {
+        id = SCO_The_Peoples_Rifles
+        icon = GFX_focus_SCO_The_Peoples_Rifles
+        prerequisite = { focus = SCO_Organizing_Our_Munition_Production}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_Organizing_Our_Munition_Production
+        cost = 5
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            add_ideas = SCO_The_Peoples_Rifles_idea
+        }
+    }
+# i'll make a victory event abt memorials and stuff to the massacres for this
+    focus = {
+        id = SCO_Justice_For_Colorado
+        icon = GFX_focus_SCO_Justice_For_Colorado
+        prerequisite = { focus = SCO_The_Peoples_Rifles}
+        prerequisite = { focus = SCO_Experiments_with_Syth}
+        prerequisite = { focus = SCO_Purchase_Rifles}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_The_Peoples_Rifles
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+        hidden_effect = {
+            unlock_national_focus = SCO_Colorado_Com_hidden_start    
+        }   
+        custom_effect_tooltip = SCO_this_will_load_focus_tt    
+        add_political_power = 100 
+        add_popularity = {
+        ideology = communism
+        popularity = 0.15
+    }
+        }
+    }
+    focus = {
+        id = SCO_The_Red_Armouries
+        icon = GFX_focus_SCO_red_armouries
+        prerequisite = { focus = SCO_Rally_Miner_Army}
+        available = {
+
+        }
+        x = 2
+        y = 1
+        relative_position_id = SCO_Rally_Miner_Army
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            add_offsite_building = { type = arms_factory level = 1 }
+        }
+    }
+    focus = {
+        id = SCO_Purchase_Rifles
+        icon = GFX_focus_SCO_purchase_rifles
+        prerequisite = { focus = SCO_The_Red_Armouries}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = SCO_The_Red_Armouries
+        cost = 7.2
+        ai_will_do = {
+            factor = 25
+        }
+        available_if_capitulated = no
+        search_filters = {    }
+        completion_reward = {
+            add_offsite_building = { type = arms_factory level = 2 }
+        }
+    }
+}

@@ -48,7 +48,7 @@ focus = {
         icon = GFX_focus_usa_guarantee_the_american_dream
         x = 9
         y = 12
-        cost = 10
+        cost = 7.2
         available_if_capitulated = yes
         prerequisite = { focus = SGA_externalfundraising }
         ai_will_do = {
@@ -65,7 +65,7 @@ focus = {
 		icon = GFX_goal_generic_intelligence_exchange
 		x = 11
 		y = 12
-		cost = 10
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_externalfundraising }
 		ai_will_do = {
@@ -82,7 +82,7 @@ focus = {
 		icon = GFX_goal_generic_major_alliance
 		x = 8
 		y = 5
-		cost = 9
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_establishingthepublicbondscomittee }
 		ai_will_do = {
@@ -121,7 +121,7 @@ focus = {
 		icon = GFX_focus_hol_the_foundations_of_defense
 		x = 10
 		y = 4
-		cost = 5
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_allocatingfundingtotheerb }
 		ai_will_do = {
@@ -142,7 +142,7 @@ focus = {
 		icon = GFX_focus_generic_military_mission
 		x = 13
 		y = 5
-		cost = 9
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_kindnessisavirtue }
 		ai_will_do = {
@@ -162,7 +162,7 @@ focus = {
 		icon = GFX_focus_generic_military_academy
 		x = 15
 		y = 5
-		cost = 9
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_segregationnowsegregationtomorrow }
 		ai_will_do = {
@@ -199,6 +199,9 @@ focus = {
 		cost = 5
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_addressingsegregation }
+		available = { 
+		NOT = { has_government = fascism }
+		}
 		mutually_exclusive = { focus = SGA_segregationnowsegregationtomorrow }
 		ai_will_do = {
 			factor = 1
@@ -343,7 +346,7 @@ focus = {
 
 		x = 32
 		y = 2
-		cost = 8
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_thegeorgianeconomy }
 		#mutually_exclusive = { focus = SGA_theagrariansector }
@@ -351,7 +354,12 @@ focus = {
 			factor = 50
 		}
 		completion_reward = {
-			add_political_power= 50
+			add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 0.25
+				uses = 1
+				category = industry
+			}
 		}
 	}
 
@@ -363,7 +371,7 @@ focus = {
 
 		x = 25
 		y = 2
-		cost = 8
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_thegeorgianeconomy }
 		#mutually_exclusive = { focus = SGA_theindustrialsector }
@@ -371,7 +379,7 @@ focus = {
 			factor = 50
 		}
 		completion_reward = {
-			add_political_power= 50
+			add_political_power= 25
 		}
 	}
 
@@ -381,7 +389,7 @@ focus = {
 		icon = GFX_focus_generic_industry_3
 		x = 10
 		y = 6
-		cost = 9
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_promotingurbanization }
 		ai_will_do = {
@@ -440,7 +448,7 @@ focus = {
 		icon = GFX_focus_generic_concessions
 		x = 18
 		y = 8
-		cost = 9
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_theagriculturalpriceboard }
 		ai_will_do = {
@@ -488,18 +496,11 @@ focus = {
 			factor = 6
 		}
 		completion_reward = {
-			create_country_leader = {
-				name = "Charles Redwine"
-				picture = "SGA_real_redwine.dds"
-				expire = "1965.1.1"
-				ideology = conservatism
-				traits = {
-					#
-				}
+			set_politics = {
+				ruling_party = neutrality
 			}
 		}
 	}
-
 	#Focus for Segregation Now, Segregation Tomorrow
 	focus = {
 		id = SGA_segregationnowsegregationtomorrow
@@ -556,7 +557,7 @@ focus = {
 	#Focus for Promoting Urbanization
 	focus = {
 		id = SGA_promotingurbanization
-		icon = GFX_focus_SGA_department_of_education
+		icon = GFX_focus_SGA_urbanization
 		prerequisite = { focus = SGA_establishingthepublicbondscomittee }
 		x = 10
 		y = 5
@@ -566,6 +567,7 @@ focus = {
 			factor = 1
 		}
 		completion_reward = {
+            add_timed_idea = {	idea = SGA_Urbanization_Push days = 160 }
 			74 = {
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
@@ -576,19 +578,10 @@ focus = {
 			}
 			406 = {
 				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
 			}
 			408 = {
 				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
+
 			}
 		}
 	}
@@ -615,13 +608,34 @@ focus = {
 		}
 	}
 
+    focus = {
+		id = SGA_Reforming_highway_department
+		icon = GFX_focus_SGA_department_of_education
+		x = 0
+		y = 1
+		relative_position_id = SGA_modernizingpubliceducation
+        prerequisite = { focus = SGA_modernizingpubliceducation }
+		cost = 10
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			remove_ideas = SGA_corrupt_highway_department
+		}
+	}
+
 	#Focus for An Unfortunate Series of Events...
 	focus = {
 		id = SGA_anunfortunateseriesofevents
 		icon = GFX_focus_SGA_a_series_of_unfortunate_events
 		x = 18
 		y = 3
-		cost = 5
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_presidentredwine }
 		ai_will_do = {
@@ -639,23 +653,19 @@ focus = {
     focus = {
 		id = SGA_Farmers_insurrections
 		icon = GFX_focus_SGA_farmer_insurection
-		x = -10
+		x = -8
 		y = 1
-		relative_position_id = SGA_changetheflag
-        prerequisite = { focus = SGA_changetheflag }
+		relative_position_id = SGA_troubleinparadise
+        prerequisite = { focus = SGA_troubleinparadise }
 		cost = 10
-
 		mutually_exclusive = { focus = SGA_externalfundraising}
 		mutually_exclusive = { focus = SGA_KKK_rallies}
 		mutually_exclusive = { focus = SGA_inchingthepresidentspowersforward}
-
 		search_filters = {  FOCUS_FILTER_RESEARCH }
-		
 		available_if_capitulated = yes
 		ai_will_do = {
 			factor = 0
 		}
-
 		completion_reward = {
 			add_popularity = {
 				ideology = communism
@@ -663,10 +673,9 @@ focus = {
 			}
             add_timed_idea = {	idea = SGA_loosened_union_regulations days = 160 }
 			#####
-                     country_event = {
+            country_event = {
 				id  = georgia.10
 			}
-
 		}
 	}
 
@@ -677,7 +686,7 @@ focus = {
 		y = 1
 		relative_position_id = SGA_Farmers_insurrections
         prerequisite = { focus = SGA_Farmers_insurrections }
-		cost = 6
+		cost = 5
 
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		
@@ -701,7 +710,7 @@ focus = {
 		y = 1
 		relative_position_id = SGA_Don_West_Marches_on_Atlanta
         prerequisite = { focus = SGA_Don_West_Marches_on_Atlanta }
-		cost = 12
+		cost = 7.2
 
 		search_filters = {  FOCUS_FILTER_POLITICAL }
 		
@@ -778,7 +787,7 @@ focus = {
 		y = 1
 		relative_position_id = SGA_Don_West_Marches_on_Atlanta
         prerequisite = { focus = SGA_Don_West_Marches_on_Atlanta }
-		cost = 10
+		cost = 7.2
 
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		
@@ -790,27 +799,6 @@ focus = {
 		completion_reward = {
 			add_stability = 0.1
 			add_manpower = 10000
-		}
-	}
-
-    focus = {
-		id = SGA_Purge_Stubborn_catholics
-		icon = GFX_focus_mex_restore_the_army_of_christ
-		x = 0
-		y = 1
-		relative_position_id = SGA_GospelReforms
-        prerequisite = { focus = SGA_GospelReforms }
-		cost = 10
-
-		search_filters = {  FOCUS_FILTER_RESEARCH }
-		
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-
-		completion_reward = {
-			add_stability = 0.1
 		}
 	}
 
@@ -914,7 +902,7 @@ focus = {
 		icon = GFX_goal_generic_radar
 		x = 20
 		y = 7
-		cost = 6
+		cost = 5
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_thetalmadgepresidency }
 		ai_will_do = {
@@ -990,6 +978,7 @@ focus = {
 			factor = 50
 		}
 		completion_reward = {
+			remove_ideas = SGA_corrupt_highway_department
 			 country_event = {
 		 ######march on little rock #####
 				id  = georgia.14
@@ -1009,6 +998,7 @@ focus = {
 			factor = 50
 		}
 		completion_reward = {
+			remove_ideas = SGA_corrupt_highway_department
 			 country_event = {
 		 ######march on little rock #####
 				id  = georgia.15
@@ -1021,7 +1011,7 @@ focus = {
 		icon = GFX_goal_generic_construction2
 		x = 18
 		y = 7
-		cost = 9
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_thetalmadgepresidency }
 		ai_will_do = {
@@ -1075,7 +1065,7 @@ focus = {
 		y = 1
 		relative_position_id = SGA_weakdollar
 
-		cost = 10
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { 
 			focus = SGA_revitalizingnorthgeorgiaoremines 
@@ -1109,27 +1099,13 @@ focus = {
 			factor = 3
 		}
 		completion_reward = {
-		
-		create_country_leader = {
-	
-	        name = "Ed Rivers"
-	     	picture = "Portrait_Georgia_democratic_leader.dds"
-		expire = "1965.1.1"
-		ideology = conservatism
-		traits = {
-		dealbroker
-		experienced_lawyer
-	}
-}
-	
-	    	set_politics = {
-		ruling_party = democratic
-	}
-	add_popularity = {
+			set_politics = {
+				ruling_party = democratic
+			}
+			add_popularity = {
 				ideology = democratic
 				popularity = 0.05
 			}
-	
 			custom_effect_tooltip = SGA_1938_election_warning_tt
 			if = {
 				limit = {
@@ -1142,7 +1118,6 @@ focus = {
 			}
 		}
 	}
-
 	focus = {
 		id = SGA_sue_Talmadge
 		icon = GFX_focus_SGA_sue_tam
@@ -1150,7 +1125,7 @@ focus = {
 		y = 1
 		relative_position_id = SGA_rivers
         prerequisite = { focus = SGA_rivers }
-		cost = 3
+		cost = 2.9
 		available_if_capitulated = yes
 
 		ai_will_do = {
@@ -1183,7 +1158,7 @@ focus = {
 		icon = GFX_focus_generic_treaty
 		x = 8
 		y = 6
-		cost = 9
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_createthestatebureauofunemploymentcompensation }
 		ai_will_do = {
@@ -1199,7 +1174,6 @@ focus = {
 			}
 		}
 	}
-
 	#Focus for Talmadge
 	focus = {
 		id = SGA_talmadge
@@ -1214,11 +1188,10 @@ focus = {
 			factor = 7
 		}
 		completion_reward = {
-		         
-			 set_politics = {
-			ruling_party = fascism
+			set_politics = {
+				ruling_party = fascism
 			}
-			 add_popularity = {
+			add_popularity = {
 				ideology = fascism
 				popularity = 0.1
 			}
@@ -1234,7 +1207,6 @@ focus = {
 			}
 		}
 	}
-
 	#Focus for The Southern Committee
 	focus = {
 		id = SGA_thesoutherncommittee
@@ -1260,10 +1232,16 @@ focus = {
 			}
 			create_faction = SGA_SOUTHERN_COMMITTEE
 			SAL = {
-				add_ideas = SGA_georgian_influence
+				add_timed_idea = { 
+				idea = SGA_georgian_influence
+				days = 100
+				}
 			}
 			SSC = {
-				add_ideas = SGA_georgian_influence
+				add_timed_idea = { 
+				idea = SGA_georgian_influence
+				days = 100
+				}
 			}
 		}
 	}
@@ -1349,14 +1327,14 @@ focus = {
 		icon = GFX_focus_eng_decolonization
 		x = 15
 		y = 10
-		cost = 1
+		cost = 5
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_talmadge }
 		ai_will_do = {
 			factor = 1
 		}
 		completion_reward = {
-			add_political_power = 250
+			add_political_power = 100
 		}
 	}
 
@@ -1401,7 +1379,7 @@ focus = {
 			74 = {
 				add_building_construction = {
 					type = infrastructure
-					level = 2
+					level = 1
 					instant_build =yes
 				}
 			}
@@ -1464,7 +1442,7 @@ focus = {
 		icon = GFX_goal_generic_army_artillery2
 		x = 41
 		y = 3
-		cost = 10
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_thefederaldepotcommission }
 		mutually_exclusive = { focus = SGA_ifitaintbrokedontfixit }
@@ -1486,7 +1464,7 @@ focus = {
 		icon = GFX_focus_generic_steel
 		x = 32
 		y = 6
-		cost = 10
+		cost = 5
 		available_if_capitulated = yes
 		prerequisite = { 
 			focus = SGA_qualityoverquantity 
@@ -1518,7 +1496,7 @@ focus = {
 		icon = GFX_goal_generic_cavalry
 		x = 25
 		y = 6
-		cost = 10
+		cost = 5
 		available_if_capitulated = yes
 		prerequisite = { 
 			focus = SGA_qualityoverquantity 
@@ -1614,7 +1592,7 @@ focus = {
 		y = 1
 		relative_position_id = SGA_northgeorgiagoldmines
 
-		cost = 1
+		cost = 5
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_northgeorgiagoldmines }
 		ai_will_do = {
@@ -1665,7 +1643,7 @@ focus = {
 		icon = GFX_goal_generic_consumer_goods
 		x = 29
 		y = 1
-		cost = 9
+		cost = 7.2
 		available_if_capitulated = no
 		ai_will_do = {
 			factor = 1
@@ -1698,7 +1676,7 @@ focus = {
 		relative_position_id = SGA_thedahlonegamint
 
 
-		cost = 1
+		cost = 5
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_thedahlonegamint }
 		ai_will_do = {
@@ -1755,7 +1733,7 @@ focus = {
 		relative_position_id = SGA_introducingthegeorgiadollar
 
 
-		cost = 8
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_introducingthegeorgiadollar }
 		mutually_exclusive = { focus = SGA_weakdollar }
@@ -1779,7 +1757,7 @@ focus = {
 		relative_position_id = SGA_introducingthegeorgiadollar
 
 
-		cost = 8
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_introducingthegeorgiadollar }
 		mutually_exclusive = { focus = SGA_strongdollar }
@@ -1951,7 +1929,7 @@ focus = {
 		icon = GFX_goal_generic_defence
 		x = 43
 		y = 6
-		cost = 10
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_modernizingoldtactics }
 		ai_will_do = {
@@ -1968,7 +1946,7 @@ focus = {
 		icon = GFX_goal_generic_army_tanks
 		x = 39
 		y = 3
-		cost = 10
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_thefederaldepotcommission }
 		ai_will_do = {
@@ -1989,7 +1967,7 @@ focus = {
 		icon = GFX_focus_generic_military_mission
 		x = 42
 		y = 7
-		cost = 10
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { 
 			focus = SGA_armyofdefense 
@@ -2016,8 +1994,8 @@ focus = {
 			factor = 1
 		}
 		completion_reward = {
-			add_tech_bonus = {
-				bonus = 1
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
 				uses = 1
 				category = land_doctrine
 			}
@@ -2031,7 +2009,7 @@ focus = {
 		icon = GFX_goal_generic_construct_mil_factory
 		x = 45
 		y = 3
-		cost = 10
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_thefederaldepotcommission }
 		ai_will_do = {
@@ -2057,7 +2035,7 @@ focus = {
 		icon = GFX_goal_generic_small_arms
 		x = 42
 		y = 2
-		cost = 10
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_thegeorgianarmy }
 		ai_will_do = {
@@ -2074,15 +2052,15 @@ focus = {
 		icon = GFX_focus_generic_provoke_border_clashes
 		x = 41
 		y = 5
-		cost = 10
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_thebiggestgunsthebestguns }
 		ai_will_do = {
 			factor = 1
 		}
 		completion_reward = {
-			add_tech_bonus = {
-				bonus = 1
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
 				uses = 1
 				category = land_doctrine
 			}
@@ -2095,7 +2073,7 @@ focus = {
 		icon = GFX_goal_generic_construction2
 		x = 43
 		y = 4
-		cost = 10
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_ifitaintbrokedontfixit }
 		ai_will_do = {
@@ -2112,7 +2090,7 @@ focus = {
 		icon = GFX_goal_generic_army_artillery2
 		x = 41
 		y = 4
-		cost = 10
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_manningtheguns }
 		ai_will_do = {
@@ -2129,7 +2107,7 @@ focus = {
 		icon = GFX_goal_rhineland
 		x = 42
 		y = 1
-		cost = 10
+		cost = 7.2
 		available_if_capitulated = yes
 		ai_will_do = {
 			factor = 1
@@ -2148,7 +2126,7 @@ focus = {
 		y = 1
 		relative_position_id = SGA_thegeorgianarmy
         prerequisite = { focus = SGA_thegeorgianarmy}
-		cost = 5
+		cost = 7.2
 
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		
@@ -2194,7 +2172,7 @@ focus = {
 		icon = GFX_focus_hol_war_on_pacifism
 		x = 41
 		y = 6
-		cost = 10
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_refineddoctrine }
 		ai_will_do = {
@@ -2262,7 +2240,7 @@ focus = {
 		icon = GFX_focus_generic_treaty
 		x = 17
 		y = 12
-		cost = 10
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_inchingthepresidentspowersforward }
 		ai_will_do = {
@@ -2304,7 +2282,7 @@ focus = {
 		icon = GFX_goal_generic_demand_territory
 		x = 15
 		y = 12
-		cost = 10
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_inchingthepresidentspowersforward }
 		ai_will_do = {
@@ -2330,7 +2308,7 @@ focus = {
 		icon = GFX_focus_generic_industry_1
 		x = 13
 		y = 12
-		cost = 10
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_externalfundraising }
 		ai_will_do = {
@@ -2444,7 +2422,7 @@ focus = {
 		y = 1
 		relative_position_id = SGA_KKK_rallies
         prerequisite = { focus = SGA_KKK_rallies }
-		cost = 10
+		cost = 7.2
 
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		
@@ -2465,7 +2443,7 @@ focus = {
 		y = 1
 		relative_position_id = SGA_KKK_rallies
         prerequisite = { focus = SGA_KKK_rallies }
-		cost = 10
+		cost = 7.2
 
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		
@@ -2495,7 +2473,7 @@ focus = {
 		relative_position_id = SGA_Georgian_expantionalism
         prerequisite = { focus = SGA_Georgian_expantionalism }
         prerequisite = { focus = SGA_End_forigen_aid }
-		cost = 4
+		cost = 5
 
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		
@@ -2518,7 +2496,7 @@ focus = {
 		y = 1
 		relative_position_id = SGA_Strike_the_insurections
         prerequisite = { focus = SGA_Strike_the_insurections }
-		cost = 10
+		cost = 7.2
 
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		
@@ -2596,7 +2574,7 @@ focus = {
 		y = 1
 		relative_position_id = SGA_1000_Crosses_will_burn
         prerequisite = { focus = SGA_1000_Crosses_will_burn }
-		cost = 10
+		cost = 7.2
 		available_if_capitulated = yes
 
 		ai_will_do = {
@@ -2615,7 +2593,7 @@ focus = {
 		y = 1
 		relative_position_id = SGA_1000_Crosses_will_burn
         prerequisite = { focus = SGA_1000_Crosses_will_burn }
-		cost = 10
+		cost = 7.2
 		available_if_capitulated = yes
 
 		ai_will_do = {
@@ -2634,7 +2612,7 @@ focus = {
 		relative_position_id = SGA_white_collectivisation
         prerequisite = { focus = SGA_white_collectivisation }
         prerequisite = { focus = SGA_folk_unity } 
-		cost = 10
+		cost = 7.2
 		available_if_capitulated = yes
 
 		ai_will_do = {
@@ -2699,7 +2677,7 @@ focus = {
 			factor = 80
 		}
 		completion_reward = {
-			add_political_power = 50
+			#add_political_power = 50
 			add_popularity = {
 				ideology = longism
 				popularity = 0.2
@@ -2748,7 +2726,7 @@ focus = {
 		icon = GFX_goal_generic_construct_civ_factory
 		x = 19
 		y = 12
-		cost = 10
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_inchingthepresidentspowersforward }
 		ai_will_do = {
@@ -2809,6 +2787,7 @@ focus = {
 		country_event = { 
                 id = georgia.17
             } 
+			set_cosmetic_tag = TAMALAGE
 #add cores 
 #add cosmetic tag
 		}
@@ -3108,7 +3087,7 @@ focus = {
 		icon = GFX_focus_SGA_develop_metro_atlanta
 		x = 0
 		y = 1
-		cost = 9
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_touring_yankeedom}
         relative_position_id = SGA_touring_yankeedom
@@ -3240,8 +3219,7 @@ focus = {
 			}
 		}
 	}
-  
-    	focus = {
+	focus = {
 		id = SGA_return_of_dick
 		icon = GFX_focus_SGA_dick
 		x = 6
@@ -3261,18 +3239,13 @@ focus = {
 				ideology = democratic
 				popularity = 0.1
 			}
-              set_politics = {
+			set_politics = {
 				ruling_party = democratic
 			}
-            create_country_leader = {
-				name = "Richard B Russell Jr."
-				picture = "portrait_richard_russell.dds"
-				expire = "1965.1.1"
+            recruit_character = SGA_richard_b_russell_jr
+			remove_country_leader_role = {
+				character = SGA_ed_rivers
 				ideology = conservatism
-				traits = {
-					
-		
-				}
 			}
 		}
 	}
@@ -3281,7 +3254,7 @@ focus = {
 		icon = GFX_focus_SGA_state_lines
 		x = 0
 		y = 1
-		cost = 8
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_return_of_dick}
         relative_position_id = SGA_return_of_dick
@@ -3300,7 +3273,7 @@ focus = {
 		icon = GFX_focus_SGA_ffa
 		x = 0
 		y = 1
-		cost = 8
+		cost = 7.2
 		available_if_capitulated = yes
 		prerequisite = { focus = SGA_georgia_state_line}
         relative_position_id = SGA_georgia_state_line

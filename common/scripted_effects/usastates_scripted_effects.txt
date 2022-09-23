@@ -83,17 +83,6 @@ SFL_fascist_leader_target_country_effect = {
 		clear_variable = SFL_invite_fascist_leader_speech_leader_loc
 		clr_country_flag = invite_fascist_leader_speech_leader_country_selected_flag
 	}
-	#if = {
-	#	limit = {
-	#		SFL = {
-	#			has_country_flag = invite_fascist_leader_speech_leader_country_selected_flag
-	#		}
-	#	}
-	#	clr_country_flag = invite_fascist_leader_speech_leader_country_selected_flag
-	#}
-	# this isnt really necessary just left cause it cost me 2 hours of my time, all good though clear above. 
-	# i realized what i did wrong reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-	
 	every_other_country = {
 		if = {
 			limit = {
@@ -121,49 +110,6 @@ SFL_fascist_leader_target_country_effect = {
 florida_wargoal_west_florida_countries = {
 	custom_effect_tooltip = florida_wargoal_west_florida_countries_tt
 	hidden_effect = {
-		#every_state = {
-		#	#if = {
-		#		limit = {
-		#			is_west_florida_state = yes
-		#		}
-		#		if = {
-		#			limit = {
-		#				ROOT = {
-		#					NOT = {
-		#						owns_state = PREV.OWNER
-		#					}
-		#				}
-		#			}
-		#			
-		#			ROOT = {
-		#				create_wargoal = {
-		#					type = take_state_focus
-		#					target = PREV.OWNER 
-		#					generator = { PREV }
-		#				}
-		#			}
-		#			if = {
-		#				limit = { 
-		#					OWNER = {
-		#						NOT = {	
-		#							has_relation_modifier = {
-		#								target = ROOT 
-		#								modifier = SFL_claims_west_florida_modifier
-		#							}
-		#						}
-		#					}
-		#				}
-		#				OWNER = {
-		#					add_opinion_modifier = {
-		#						target = ROOT
-		#						modifier = SFL_claims_west_florida_modifier
-		#					}
-		#				}
-		#			}
-		#		}
-		#		
-		#	#}
-		#}
 		every_country = {
 			limit = {
 				any_owned_state = {
@@ -241,186 +187,63 @@ increase_dwavern_level = {
 	}
 }
 
-SNY_increase_francis_influence = {
+SNY_update_military_tension_frame = {
 	if = {
 		limit = {
-			has_country_flag = SNY_Francis_high_influence
+			check_variable = { military_coup_tension = 0 }
 		}
-	} else_if = {
+		military_coup_militancy_frame = 1
+	}
+	else_if = {
 		limit = {
-			has_country_flag = SNY_Francis_moderate_influence
+			check_variable = { military_coup_tension = 100 }
 		}
-		clr_country_flag = SNY_Francis_moderate_influence
-		set_country_flag = SNY_Francis_high_influence
-	} else_if = {
+		military_coup_militancy_frame = 9
+	}
+	else_if = {
 		limit = {
-			has_country_flag = SNY_Francis_low_influence
+			check_variable = { military_coup_tension > 14 }
 		}
-		clr_country_flag = SNY_Francis_low_influence
-		set_country_flag = SNY_Francis_moderate_influence
-	} else {
-		clr_country_flag = SNY_Francis_neglible_influence
-		set_country_flag = SNY_Francis_low_influence
+		military_coup_militancy_frame = 2
+	}
+	else_if = {
+		limit = {
+			check_variable = { military_coup_tension > 28 }
+		}
+		military_coup_militancy_frame = 3
+	}
+	else_if = {
+		limit = {
+			check_variable = { military_coup_tension > 42 }
+		}
+		military_coup_militancy_frame = 4
+	}
+	else_if = {
+		limit = {
+			check_variable = { military_coup_tension > 56 }
+		}
+		military_coup_militancy_frame = 5
+	}
+	else_if = {
+		limit = {
+			check_variable = { military_coup_tension > 70 }
+		}
+		military_coup_militancy_frame = 6
+	}
+	else_if = {
+		limit = {
+			check_variable = { military_coup_tension > 84 }
+		}
+		military_coup_militancy_frame = 7
+	}
+	else_if = {
+		limit = {
+			check_variable = { military_coup_tension > 100 } #Should be 98, but close enough
+		}
+		military_coup_militancy_frame = 8
+	}
+	else = {
+		military_coup_militancy_frame = 1
 	}
 }
-SNY_decrease_francis_influence = {
-	if = {
-		limit = {
-			has_country_flag = SNY_Francis_neglible_influence
-		}
-	} else_if = {
-		limit = {
-			has_country_flag = SNY_Francis_low_influence
-		}
-		clr_country_flag = SNY_Francis_low_influence
-		set_country_flag = SNY_Francis_neglible_influence
-	} else_if = {
-		limit = {
-			has_country_flag = SNY_Francis_moderate_influence
-		}
-		clr_country_flag = SNY_Francis_moderate_influence
-		set_country_flag = SNY_Francis_low_influence
-	} else {
-		clr_country_flag = SNY_Francis_high_influence
-		set_country_flag = SNY_Francis_moderate_influence
-	}
-}
-SNY_increase_bruce_influence = {
-	if = {
-		limit = {
-			has_country_flag = SNY_Bruce_high_influence
-		}
-	} else_if = {
-		limit = {
-			has_country_flag = SNY_Bruce_moderate_influence
-		}
-		clr_country_flag = SNY_Bruce_moderate_influence
-		set_country_flag = SNY_Bruce_high_influence
-	} else_if = {
-		limit = {
-			has_country_flag = SNY_Bruce_low_influence
-		}
-		clr_country_flag = SNY_Bruce_low_influence
-		set_country_flag = SNY_Bruce_moderate_influence
-	} else {
-		clr_country_flag = SNY_Bruce_neglible_influence
-		set_country_flag = SNY_Bruce_low_influence
-	}
-}
-SNY_decrease_bruce_influence = {
-	if = {
-		limit = {
-			has_country_flag = SNY_Bruce_neglible_influence
-		}
-	} else_if = {
-		limit = {
-			has_country_flag = SNY_Bruce_low_influence
-		}
-		clr_country_flag = SNY_Bruce_low_influence
-		set_country_flag = SNY_Bruce_neglible_influence
-	} else_if = {
-		limit = {
-			has_country_flag = SNY_Bruce_moderate_influence
-		}
-		clr_country_flag = SNY_Bruce_moderate_influence
-		set_country_flag = SNY_Bruce_low_influence
-	} else {
-		clr_country_flag = SNY_Bruce_high_influence
-		set_country_flag = SNY_Bruce_moderate_influence
-	}
-}
-SNY_increase_george_influence = {
-	if = {
-		limit = {
-			has_country_flag = SNY_George_high_influence
-		}
-	} else_if = {
-		limit = {
-			has_country_flag = SNY_George_moderate_influence
-		}
-		clr_country_flag = SNY_George_moderate_influence
-		set_country_flag = SNY_George_high_influence
-	} else_if = {
-		limit = {
-			has_country_flag = SNY_George_low_influence
-		}
-		clr_country_flag = SNY_George_low_influence
-		set_country_flag = SNY_George_moderate_influence
-	} else {
-		clr_country_flag = SNY_George_neglible_influence
-		set_country_flag = SNY_George_low_influence
-	}
-}
-SNY_decrease_george_influence = {
-	if = {
-		limit = {
-			has_country_flag = SNY_George_neglible_influence
-		}
-	} else_if = {
-		limit = {
-			has_country_flag = SNY_George_low_influence
-		}
-		clr_country_flag = SNY_George_low_influence
-		set_country_flag = SNY_George_neglible_influence
-	} else_if = {
-		limit = {
-			has_country_flag = SNY_George_moderate_influence
-		}
-		clr_country_flag = SNY_George_moderate_influence
-		set_country_flag = SNY_George_low_influence
-	} else {
-		clr_country_flag = SNY_George_high_influence
-		set_country_flag = SNY_George_moderate_influence
-	}
-}
-SNY_increase_navy_influence = {
-	if = {
-		limit = {
-			has_country_flag = SNY_Navy_high_influence
-		}
-	} else_if = {
-		limit = {
-			has_country_flag = SNY_Navy_moderate_influence
-		}
-		clr_country_flag = SNY_Navy_moderate_influence
-		set_country_flag = SNY_Navy_high_influence
-	} else_if = {
-		limit = {
-			has_country_flag = SNY_Navy_low_influence
-		}
-		clr_country_flag = SNY_Navy_low_influence
-		set_country_flag = SNY_Navy_moderate_influence
-	} else {
-		clr_country_flag = SNY_Navy_neglible_influence
-		set_country_flag = SNY_Navy_low_influence
-	}
-}
-SNY_decrease_navy_influence = {
-	if = {
-		limit = {
-			has_country_flag = SNY_Navy_neglible_influence
-		}
-	} else_if = {
-		limit = {
-			has_country_flag = SNY_Navy_low_influence
-		}
-		clr_country_flag = SNY_Navy_low_influence
-		set_country_flag = SNY_Navy_neglible_influence
-	} else_if = {
-		limit = {
-			has_country_flag = SNY_Navy_moderate_influence
-		}
-		clr_country_flag = SNY_Navy_moderate_influence
-		set_country_flag = SNY_Navy_low_influence
-	} else {
-		clr_country_flag = SNY_Navy_high_influence
-		set_country_flag = SNY_Navy_moderate_influence
-	}
-}
-
-
-
-
-
 ######################################
-

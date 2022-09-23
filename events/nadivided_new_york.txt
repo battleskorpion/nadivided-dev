@@ -102,7 +102,7 @@ country_event = { #The military abandons the capital
         name = new_york.3.a
         add_stability = -0.03
         custom_effect_tooltip = SNY_the_army_will_gain_influence_tt
-        281 = {
+        280 = {
             set_demilitarized_zone = yes
         }
         hidden_effect = {
@@ -204,7 +204,7 @@ country_event = { #The attack on Albany
             add_idea = SNY_political_violence
         }
         custom_effect_tooltip = SNY_the_army_will_lose_influence_tt
-        281 = {
+        280 = {
             set_demilitarized_zone = no
         }
         hidden_effect = {
@@ -259,7 +259,7 @@ country_event = { #The attack on Albany
             remove_idea = SNY_political_deadlock
             add_idea = SNY_political_violence
         }
-        281 = {
+        280 = {
             set_demilitarized_zone = no
         }
         hidden_effect = {
@@ -307,7 +307,10 @@ country_event = { #Charles Poletti criticizes Lehman
 
     option = { #What now?
         name = new_york.7.a
-        remove_ideas = SNY_charles_poletti
+        remove_advisor_role = {
+            character = "SNY_charles_poletti"
+            slot = political_advisor
+        }
     }
 }
 country_event = { #Jay Lovestone's Speech
@@ -523,41 +526,45 @@ country_event = { #The question of leadership
         ai_chance = {
             factor = 20
         }
-        create_country_leader = {
-            name = "Francis P. Mulcahy"
-            picture = "gfx_leaders_SNY_general_francis_patrick_mulcahy.dds"
-            expire = "1965.1.1"
-            ideology = oligarchism
-            traits = {
-                military_leader
+        set_politics = {
+            ruling_party = longism
+        }
+        add_popularity = {
+            ideology = longism
+            popularity = 0.2
+        }
+        add_ideas = SNY_navy_troubles
+        add_country_leader_role = {
+            Character = SNY_francis_patrick_mulcahy
+            Promote_leader = yes
+            Country_leader = {
+                ideology = national_populism
+                expire = "1965.1.1"
+                traits = {
+                    military_leader
+                }
             }
         }
         army_experience = 10
-        navy_experience = 25
-        air_experience = 25
+        navy_experience = 10
+        air_experience = 10
         complete_national_focus = SNY_francis_mulcahy_assumes_leadership
-        hidden_effect = {
-            set_variable = { SNY_bruce_militancy = 20 }
-            set_variable = { SNY_george_militancy = 40 }
-            set_variable = { SNY_navy_militancy = 40 }
-            set_country_flag = SNY_Francis_high_influence
-            set_country_flag = SNY_Bruce_moderate_influence
-            set_country_flag = SNY_George_low_influence
-            set_country_flag = SNY_Navy_low_influence
-        }
     }
     option = { #Bruce C. Clarke
         name = new_york.22.b
         ai_chance = {
             factor = 35
         }
-        create_country_leader = {
-            name = "Bruce C. Clarke"
-            picture = "gfx_leaders_SNY_general_bruce_c_clark.dds"
-            expire = "1965.1.1"
-            ideology = oligarchism
-            traits = {
-                military_leader
+        add_ideas = SNY_navy_troubles
+        add_country_leader_role = {
+            Character = SNY_bruce_c_clark
+            Promote_leader = yes
+            Country_leader = {
+                ideology = oligarchism
+                expire = "1965.1.1"
+                traits = {
+                    military_leader
+                }
             }
         }
         army_experience = 10
@@ -567,15 +574,6 @@ country_event = { #The question of leadership
             category = engineers_tech
         }
         complete_national_focus = SNY_bruce_clarke_assumes_leadership
-        hidden_effect = {
-            set_variable = { SNY_francis_militancy = 10 }
-            set_variable = { SNY_george_militancy = 30 }
-            set_variable = { SNY_navy_militancy = 50 }
-            set_country_flag = SNY_Francis_moderate_influence
-            set_country_flag = SNY_Bruce_high_influence
-            set_country_flag = SNY_George_low_influence
-            set_country_flag = SNY_Navy_low_influence
-        }
     }
     option = { #George Decker (Can lead to Navy Leading Path)
         name = new_york.22.c
@@ -589,13 +587,16 @@ country_event = { #The question of leadership
             ideology = fascism
             popularity = 0.2
         }
-        create_country_leader = {
-            name = "George Decker"
-            picture = "gfx_leaders_SNY_general_decker.dds"
-            expire = "1965.1.1"
-            ideology = falangism
-            traits = {
-                military_leader
+        add_ideas = SNY_navy_troubles
+        add_country_leader_role = {
+            Character = SNY_george_decker
+            Promote_leader = yes
+            Country_leader = {
+                ideology = falangism
+                expire = "1965.1.1"
+                traits = {
+                    military_leader
+                }
             }
         }
         army_experience = 10
@@ -610,16 +611,6 @@ country_event = { #The question of leadership
                 id = new_york.24
                 days = 10
             }
-        }
-        hidden_effect = {
-            set_variable = { SNY_francis_militancy = 30 }
-            set_variable = { SNY_bruce_militancy = 20 }
-            set_variable = { SNY_navy_militancy = 80 }
-            set_country_flag = SNY_Francis_moderate_influence
-            set_country_flag = SNY_Bruce_moderate_influence
-            set_country_flag = SNY_George_moderate_influence
-            set_country_flag = SNY_Navy_low_influence
-            set_country_flag = SNY_the_navy_plans_something
         }
     }
 }
@@ -715,13 +706,18 @@ country_event = { #The Navy coups The Army
             ideology = neutrality
             popularity = 0.25
         }
-        create_country_leader = {
-            name = "Russell Wilson"
-            picture = "russell_wilson.dds"
-            expire = "1965.1.1"
-            ideology = oligarchism
-            traits = {
-                naval_leader
+        recruit_character = SNY_francis_patrick_mulcahy
+        recruit_character = SNY_bruce_c_clark
+        recruit_character = SNY_russell_willson
+        add_country_leader_role = {
+            Character = SNY_russell_willson
+            Promote_leader = yes
+            Country_leader = {
+                ideology = oligarchism
+                expire = "1965.1.1"
+                traits = {
+                    naval_leader
+                }
             }
         }
         navy_experience = 25
@@ -730,15 +726,27 @@ country_event = { #The Navy coups The Army
             uses = 1
             category = naval_equipment
         }
-        complete_national_focus = SNY_the_navy_coups_the_coup
+        remove_ideas = SNY_navy_troubles
+        add_ideas = SNY_army_resistance
+        custom_effect_tooltip = SNY_remove_all_units_tt
         hidden_effect = {
-            set_variable = { SNY_francis_militancy = 40 }
-            set_variable = { SNY_bruce_militancy = 50 }
-            set_variable = { SNY_george_militancy = 80 }
-            clr_country_flag = SNY_Navy_low_influence
-            clr_country_flag = SNY_the_navy_plans_something
-            set_country_flag = SNY_Navy_moderate_influence
+            every_owned_state = {
+                SNY = {
+                    delete_unit = {
+                        state = PREV
+                        disband = yes
+                    }
+                }
+            }
         }
+        
+        if = {
+            limit = {
+                has_completed_focus = SNY_george_decker_assumes_leadership
+            }
+            uncomplete_national_focus = SNY_george_decker_assumes_leadership
+        }
+        complete_national_focus = SNY_the_navy_coups_the_coup
     }
 }
 country_event = { #Asking to dam the Niagara Falls River
@@ -1058,35 +1066,7 @@ country_event = { #SNY demands annexation of NYC
                 target = NYC
             }
         }
-        
-        
-country_event = { #invite Vermont to faction
-    id = new_york.37
-    title = new_york.37.t
-    desc = new_york.37.d
-    picture = #GFX_report_event_french_resistance_02
-    fire_only_once = yes
-    is_triggered_only = yes
-
-    option = {
-        name = new_york.37.a #Accept
-        SNY = {
-            add_to_faction = SVT
-        }
-        ai_chance = {
-            base = 10
-        }
     }
-
-    option = {
-        name = new_york.37.b #reject
-        SNY = {
-            add_opinion_modifier = { target = SVT modifier = faction_traitor }
-        }
-        ai_chance = {
-            base = 0
-		}
-	}
 }
 
 country_event = { #Hire a Lawyer
@@ -1205,152 +1185,2333 @@ country_event = { #Joseph Stalin Responds!
         name = new_york.42.a
     }
 }
-# country_event = {
-#     id = new_york.1
-#     title = new_york.1.t
-#     desc = new_york.1.d
-#     #picture = GFX_
+country_event = { #DNY declars war on SNY
+    id = new_york.43
+    title = new_york.43.t
+    desc = new_york.43.d
+    #picture = GFX_
 
-#     is_triggered_only = yes
-#     fire_only_once = yes
+    is_triggered_only = yes
+    fire_only_once = yes
 
-#     option = {
-#         name = new_york.1.a
-#         ai_chance = { factor = 25 }
-#         if = {
-#             limit = {
-#                 OR = {
-#                     has_completed_focus = SNY_herbet_h_lehman
-#                     has_completed_focus = SNY_endorse_herbet_h_lehman
-#                 }
-#             }
-#             add_political_power = 100
-#         }
-#         else = {
-#             custom_effect_tooltip = SNY_start_their_path
-#         }
-#     }
-#     option = {
-#         name = new_york.1.b
-#         ai_chance = { factor = 75 }
-#         trigger = {
-#             NOT = {
-#                 AND = {
-#                     has_completed_focus = SNY_endorse_herbet_h_lehman
-#                     has_completed_focus = SNY_herbet_h_lehman
-#                 }
-#             }
-#         }
-#     }
-# }
-# country_event = {
-#     id = new_york.2
-#     title = new_york.2.t
-#     desc = new_york.2.d
-#     #picture = GFX_
+    option = { #Bring the fight to thsoe damn Yankees!
+        name = new_york.43.a
+        declare_war_on = {
+            target = SNY
+            type = civil_war
+        }
+    }
+}
+country_event = { #Volunteers Come to help with the Civil War
+    id = new_york.44
+    title = new_york.44.t
+    desc = new_york.44.d
+    # picture = GFX_ 
 
-#     is_triggered_only = yes
-#     fire_only_once = yes
+    is_triggered_only = yes
+    fire_only_once = yes
 
-#     option = {
-#         name = new_york.2.a
-#         if = {
-#             limit = {
-#                 has_completed_focus = SNY_william_f_bleakey
-#             }
-#             add_political_power = 100
-#         }
-#         create_country_leader = {
-#             name "William F. Bleakley"
-#             picture = ""
-#             expire = "1965.1.1"
-#             ideology = conservatism
-#             traits = {
-#                 conservative_grandee
-#             }
-#         }
-#     }
-# }
-# country_event = {
-#     id = new_york.3
-#     title = new_york.3.t
-#     desc = new_york.3.d
+    option = { #Great!
+        name = new_york.44.a
+        division_template = {
+            name = "Volunteer Division"
+            division_names_group = USA_INF_01
+            regiments = {
+                infantry = { x = 0 y = 0 }
+                infantry = { x = 0 y = 1 }
+                infantry = { x = 0 y = 2 }
+                infantry = { x = 1 y = 0 }
+                infantry = { x = 1 y = 1 }
+                infantry = { x = 1 y = 2 }
+                infantry = { x = 2 y = 0 }
+                infantry = { x = 2 y = 1 }
+                infantry = { x = 2 y = 2 }
+                infantry = { x = 3 y = 0 }
+            }
+        }
+        every_owned_state = {
+            limit = {
+                has_state_flag = SNY_low_democracy_support
+            }
+            create_unit = {
+                division = "name = \"Volunteer Division\" division_template = \"Volunteer Division\" start_experience_factor = 0.15 start_equipment_factor = 0.8"
+                owner = SNY
+            }
+            create_unit = {
+                division = "name = \"Volunteer Division\" division_template = \"Volunteer Division\" start_experience_factor = 0.15 start_equipment_factor = 0.8"
+                owner = SNY
+            }
+            create_unit = {
+                division = "name = \"Volunteer Division\" division_template = \"Volunteer Division\" start_experience_factor = 0.15 start_equipment_factor = 0.8"
+                owner = SNY
+            }
+            clr_state_flag = SNY_low_democracy_support
+        }
+    }
+}
+country_event = { #Impeachment Trial was a Success!
+    id = new_york.45
+    title = new_york.45.t
+    desc = new_york.45.d
+    #picture = GFX_
 
-#     is_triggered_only = yes
-#     fire_only_once = yes
+    is_triggered_only = yes
+    fire_only_once = yes
 
-#     option = {
-#         name = new_york.3.a
-#         if = {
-#             limit = {
-#                 has_completed_focus = SNY_rockwell_kent
-#             }
-#             add_political_power = 100
-#         }
-#         create_country_leader = {
-#             name = "Rockwell Kent"
-#             picture = "gfx//leaders//SNY//rockwell_kent.dds"
-#             expire = "1965.1.1"
-#             ideology = progressivism_ideology
-#             traits = {
-#                 missile_head
-#                 progressive_journalist
-#             }
-#         }
-#     }
-# }
-# country_event = {
-#     id = new_york.4
-#     title = new_york.4.t
-#     desc = new_york.4.d
+    option = { #Time to secure the country!
+        name = new_york.45.a
+        add_popularity = {
+            ideology = progressivism
+            popularity = 0.1
+        }
+        create_country_leader = {
+	
+                name = "M. William Bray"
+                picture = "gfx//leaders//SNY//leader_M_William_Bray.dds"
+                expire = "1965.1.1"
+                ideology = conservatism
+                traits = {
+                    #
+                }
+            }
+        complete_national_focus = SNY_charles_poletti_holds_an_emergency_election
+    }
+}
+country_event = { #Impeachment Trail was a Failure!
+    id = new_york.46
+    title = new_york.46.t
+    desc = new_york.46.d
+    #picture = GFX_
 
-#     is_triggered_only = yes
-#     fire_only_once = yes
+    is_triggered_only = yes
+    fire_only_once = yes
 
-#     option = {
-#         name = new_york.4.a
-#         if = {
-#             limit = {
-#                 has_completed_focus = SNY_harry_w_laidler
-#             }
-#             add_political_power = 100
-#         }
-#         create_country_leader = {
-#             name = "Harry W. Laidler"
-#             picture = ""
-#             expire = "1965.1.1"
-#             ideology = progressive_socialism
-#             traits = {
-#                 social_reformer
-#                 economic_reformer
-#             }
-#         }
-#     }
-# }
-# country_event = {
-#     id = new_york.5
-#     title = new_york.5.t
-#     desc = new_york.5.d
+    option = { #We have to find another option!
+        name = new_york.46.a
+        country_event = {
+            id = new_york.47
+            days = 2
+        }
+    }
+}
+country_event = { #The Unthinkable Option
+    id = new_york.47
+    title = new_york.47.t
+    desc = new_york.47.d
+    #picture = GFX_
 
-#     is_triggered_only = yes
-#     fire_only_once = yes
+    is_triggered_only = yes
+    fire_only_once = yes
 
-#     option = {
-#         name = new_york.5.a
-#         if = {
-#             limit = {
-#                 has_completed_focus = SNY_robert_minor
-#             }
-#             add_political_power = 100
-#         }
-#         create_country_leader = {
-#             name = "Robert Minor"
-#             picture = ""
-#             expire = "1965.1.1"
-#             ideology = leninism
-#             traits = {
-#                 communist_journalist
-#             }
-#         }
-#     }
-# }
+    option = { #Charles Poletti Will Lead this Country into Greatness!
+        name = new_york.47.a
+        ai_chance = {
+            factor = 60
+        }
+        complete_national_focus = SNY_charles_poletti_prepares_a_rebellion
+    }
+    option = { #Let's see if we can get FDR to Return
+        name = new_york.47.b
+        ai_chance = {
+            factor = 40
+        }
+        trigger = {
+            NOT = {
+                has_completed_focus = SNY_work_with_the_new_york_mafia
+            }
+        }
+        country_event = {
+            id = new_york.48
+            days = 2
+        }
+    }
+}
+country_event = { #Write a Letter to FDR
+    id = new_york.48
+    title = new_york.48.t
+    desc = new_york.48.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Hopefully he can Come Back
+        name = new_york.48.a
+        if = {
+            limit = {
+                country_exists = WDC
+            }
+            WDC = {
+                country_event = {
+                    id = new_york.49
+                    days = 2
+                }
+            }
+        } else = {
+            country_event = {
+                id = new_york.50
+                days = 2
+            }
+        }
+    }
+}
+country_event = { #New York sends a letter to FDR
+    id = new_york.49
+    title = new_york.49.t
+    desc = new_york.49.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #FDR can leave to New York
+        name = new_york.49.a
+        trigger = {
+            NOT = {
+                has_completed_focus = WDC_sway_them_with_fdr
+            }
+        }
+        ai_chance = {
+            factor = 100
+        }
+        hidden_effect = {
+            set_country_flag = WDC_cant_have_fdr
+        }
+        #Retire FDR
+        SNY = {
+            country_event = {
+                id = new_york.50
+            }
+        }
+    }
+    option = { #FDR stays, I have plans with him (for the player)
+        name = new_york.49.b
+        ai_chance = {
+            factor = 0
+            modifier = {
+                add = 100
+                has_completed_focus = WDC_sway_them_with_fdr
+            }
+        }
+        country_event = {
+            id = new_york.51
+        }
+    }
+}
+country_event = { #FDR responds!
+    id = new_york.50
+    title = new_york.50.t
+    desc = new_york.50.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #I wish him a safe Journey
+        name = new_york.50.a
+        complete_national_focus = SNY_fdr_prepares_a_rebellion
+    }
+}
+country_event = { #FDR Declines
+    id = new_york.51
+    title = new_york.51.t
+    desc = new_york.51.d
+    #picture = GFX_
+    
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Charles will have to lead the Rebellion
+        name = new_york.51.a
+        complete_national_focus = SNY_charles_poletti_prepares_a_rebellion
+    }
+}
+country_event = { #Blame Lehman of Rigging the Trail
+    id = new_york.52
+    title = new_york.52.t
+    desc = new_york.52.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Damn that Lehman!
+        name = new_york.52.a
+    }
+}
+country_event = { #Roosevelt Meets with his Supporters in Congress
+    id = new_york.53
+    title = new_york.53.t
+    desc = new_york.53.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #They never Forgot Him
+        name = new_york.53.a
+    }
+}
+country_event = { #Herbert H. Lehman Responds to Threats of Rebellion
+    id = new_york.54
+    title = new_york.54.t
+    desc = new_york.54.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #If only he Knew
+        name = new_york.54.a
+        country_event = {
+            id = new_york.55
+            days = 2
+        }
+    }
+}
+country_event = { #The Rebellion Starts
+    id = new_york.55
+    title = new_york.55.t
+    desc = new_york.55.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #This is Lehman's Final Hour!
+        name = new_york.55.a
+        if = {
+            limit = {
+                has_completed_focus = SNY_fdr_prepares_a_rebellion
+            }
+            set_politics = {
+                ruling_party = progressivism
+                elections_allowed = no
+            }
+            create_country_leader = {
+	
+                name = "Franklin D. Roosevelt"
+                picture = "gfx//leaders//WDC//Portrait_USA_Franklin_Roosevelt.dds"
+                expire = "1965.1.1"
+                ideology = progressivism_ideology
+                traits = {
+                    nationalist_symbol
+                    economic_reformer
+                }
+            }
+            add_popularity = {
+                ideology = progressivism
+                popularity = 0.1
+            }
+        } else = {
+            set_politics = {
+                ruling_party = democratic
+                elections_allowed = no
+            }
+            add_country_leader_role = {
+                Character = SNY_charles_poletti
+                Promote_leader = yes
+                ideology = liberalism
+                traits = {
+                    experienced_lawyer
+                }
+            }
+            add_popularity = {
+                ideology = democratic
+                popularity = 0.1
+            }
+        }
+        hidden_effect = {
+            create_dynamic_country = {
+                original_tag = SNY
+                set_cosmetic_tag = LEHMANS_NEW_YORK
+                transfer_state = 414
+                transfer_state = 283
+                transfer_state = 282
+                transfer_state = 276
+                transfer_state = 100
+                set_capital = 414
+                load_oob = "LNY_civil_war"
+
+                create_country_leader = {
+	
+                    name = "Herbert H. Lehman"
+                    picture = "gfx//leaders//SNY//herbet_h_lehman.dds"
+                    expire = "1965.1.1"
+                    ideology = liberalism
+                    traits = {
+                        economic_reformer
+                        democratic_reformer
+                    }
+                }
+                set_popularities = {
+                    democratic = 70
+                    progressivism = 10
+                    neutrality = 20
+                }
+                set_politics = {
+                    ruling_party = democratic
+                    elections_allowed = no
+                    last_election = "1936.1.1"
+                    election_frequency = 48
+                }
+                hidden_effect = {
+                    country_event = {
+                        id = new_york.56
+                        days = 10
+                    }
+                }
+            }
+        }
+        if = {
+            limit = {
+                SNY = {
+                    has_completed_focus = SNY_work_with_the_army
+                }
+            }
+            load_oob = "SNY_lehman_impeach_civil_war"
+            # division_template = {
+            #     name = "Military Division"
+            #     division_names_group = USA_INF_01
+            #     regiments = {
+            #         infantry = { x = 0 y = 0 }
+            #         infantry = { x = 0 y = 1 }
+            #         infantry = { x = 0 y = 2 }
+            #         infantry = { x = 1 y = 0 }
+            #         infantry = { x = 1 y = 1 }
+            #         infantry = { x = 1 y = 2 }
+            #         infantry = { x = 2 y = 0 }
+            #         infantry = { x = 2 y = 1 }
+            #         infantry = { x = 2 y = 2 }
+            #         infantry = { x = 3 y = 0 }
+            #     }
+            # }
+            # 281 = {
+            #     create_unit = {
+            #         division = "name = \"Military Division\" division_template = \"Veteran Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+            #         owner = SNY
+            #     }
+            #     create_unit = {
+            #         division = "name = \"Military Division\" division_template = \"Veteran Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+            #         owner = SNY
+            #     }
+            #     create_unit = {
+            #         division = "name = \"Military Division\" division_template = \"Veteran Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+            #         owner = SNY
+            #     }
+            #     create_unit = {
+            #         division = "name = \"Military Division\" division_template = \"Veteran Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+            #         owner = SNY
+            #     }
+            # }
+        }
+    }
+}
+country_event = { #War Delcaration
+    id = new_york.56
+    title = new_york.43.t
+    desc = new_york.43.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Fuck Lehman, all my Homies hate Lehman
+        name = new_york.56.a
+        declare_war_on = {
+            target = SNY
+            type = civil_war
+        }
+    }
+}
+country_event = { #The delayed Election
+    id = new_york.57
+    title = new_york.57.t
+    desc = new_york.57.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #The only Real Outcome
+        name = new_york.57.a
+        set_politics = {
+            ruling_party = democratic
+            elections_allowed = no
+        }
+        create_country_leader = {
+	
+            name = "Charles Poletti"
+            picture = "gfx//leaders//SNY//leader_Charles_Poletti.dds"
+            expire = "1965.1.1"
+            ideology = liberalism
+            traits = {
+                experienced_lawyer
+            }
+        }
+    }
+}
+country_event = { #Pardoning the New York Italian Mafia
+    id = new_york.58
+    title = new_york.58.t
+    desc = new_york.58.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #No one can Prove they Comitted the Crimes
+        name = new_york.58.a
+        add_stability = -0.01
+    }
+}
+country_event = { #FDR confronts New York City
+    id = new_york.59
+    title = new_york.59.t
+    desc = new_york.59.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #An Apology is Warrented, Let's work Towards Peace
+        name = new_york.59.a
+        ai_chance = {
+            factor = 60
+            modifier = {
+                add = 40
+                has_opinion = {
+                    target = SNY
+                    value > 60
+                }
+            }
+            modifier = {
+                add = -60
+                OR = {
+                    has_completed_focus = NYC_Blame_New_York_State
+                    has_completed_focus = NYC_The_Government_Must_Intervine
+                }
+            }
+        }
+        SNY = {
+            country_event = {
+                id = new_york.60
+            }
+        }
+    }
+    option = { #His Impeachment was Justified
+        name = new_york.59.b
+        ai_chance = {
+            factor = 40
+            modifier = {
+                add = -40
+                has_opinion = {
+                    target = SNY
+                    value > 60
+                }
+            }
+            modifier = {
+                add = 60
+                OR = {
+                    has_completed_focus = NYC_Blame_New_York_State
+                    has_completed_focus = NYC_The_Government_Must_Intervine
+                }
+            }
+        }
+        SNY = {
+            country_event = {
+                id = new_york.61
+            }
+        }
+    }
+}
+country_event = { #New York City Offers and Apology
+    id = new_york.60
+    title = new_york.60.t
+    desc = new_york.60.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Good
+        name = new_york.60.a
+        complete_national_focus = SNY_nyc_apologieses
+    }
+}
+country_event = { #New York City Doubles Down on Their Decision
+    id = new_york.61
+    title = new_york.61.t
+    desc = new_york.61.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #They Won't Go Down Easy
+        name = new_york.61.a
+        complete_national_focus = SNY_prepare_to_take_nyc_back_through_force
+    }
+}
+country_event = { #A Lovely Visit to New York City
+    id = new_york.62
+    title = new_york.62.t
+    desc = new_york.62.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #What a Splended Time
+        name = new_york.62.a
+    }
+}
+country_event = { #How Should we Challenge nyc?
+    id = new_york.63
+    title = new_york.63.t
+    desc = new_york.63.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #A Good Ol Fasion Baseball Game
+        name = new_york.63.a
+        trigger = {
+            NYC = {
+                is_ai = yes
+            }
+        }
+        ai_chance = {
+            factor = 0
+        }
+        country_event = {
+            id = new_york.64
+        }
+    }
+    option = { #Let's meet nyc in the ring!
+        name = new_york.63.b
+        trigger = {
+            NYC = {
+                is_ai = yes
+            }
+        }
+        ai_chance = {
+            factor = 0
+        }
+        country_event = {
+            id = new_york.65
+        }
+    }
+    option = { #Why play These Games? Let's just Take Them.
+        name = new_york.63.c
+        ai_chance = {
+            factor = 100
+        }
+        create_wargoal = {
+            target = NYC
+            type = annex_everything
+        }
+    }
+}
+country_event = { #A Baseball Game
+    id = new_york.64
+    title = new_york.64.t
+    desc = new_york.64.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #After a Close Match, FDR wins!
+        name = new_york.64.a
+        annex_country = {
+            target = NYC
+            transfer_troops = yes
+        }
+    }
+}
+country_event = { #A Boxing Match
+    id = new_york.65
+    title = new_york.65.t
+    desc = new_york.65.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #The Fight Was Surely Something to See
+        name = new_york.65.a
+        annex_country = {
+            target = NYC
+            transfer_troops = yes
+        }
+    }
+}
+country_event = { #NYS requests Unification
+    id = new_york.66
+    title = new_york.66.t
+    desc = new_york.66.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Of course!
+        name = new_york.66.a
+        ai_chance = {
+            factor = 100
+        }
+        SNY = {
+            annex_country = {
+                target = NYC
+                transfer_troops = yes
+            }
+        }
+    }
+    option = { #We've Changed our Mind
+        name = new_york.66.b
+        ai_chance = {
+            factor = 0
+        }
+        SNY = {
+            country_event = {
+                id = new_york.67
+            }
+        }
+    }
+}
+country_event = { #NYC refuses!
+    id = new_york.67
+    title = new_york.67.t
+    desc = new_york.67.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Kowabunga it is
+        name = new_york.67.a
+    }
+}
+country_event = { #Background for Honor the Fedearlist Dream
+    id = new_york.68
+    title = new_york.68.t
+    desc = new_york.68.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #A More Perfect Union Could Be Created
+        name = new_york.68.a
+    }
+}
+country_event = { #Bastion of Democracy
+    id = new_york.69
+    title = new_york.69.t
+    desc = new_york.69.d
+    picture = GFX_statueofliberty
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #We msut bring Democracy back to America!
+        name = new_york.69.a
+        set_rule = {
+            can_lower_tension = yes
+            can_only_justify_war_on_threat_country = yes
+            can_send_volunteers = yes
+            can_force_government = yes
+            can_puppet = no
+        }
+    }
+}
+country_event = { #Join New York in reforming the Union? (For WDC)
+    id = new_york.70
+    title = new_york.70.t
+    desc = new_york.70.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Of course!
+        name = new_york.70.a
+        ai_chance = {
+            factor = 60
+            modifier = {
+                add = 40
+                SNY = {
+                    has_completed_focus = SNY_fdr_returns_to_new_york
+                }
+            }
+        }
+        custom_effect_tooltip = WDC_we_will_be_forced_into_the_alliance_path_tt
+        effect_tooltip = {
+            SNY = {
+                add_to_faction = WDC
+            }
+        }
+        SNY = {
+            country_event = {
+                id = new_york.72
+            }
+        }
+    }
+    option = {
+        name = new_york.70.b
+        ai_chance = {
+            factor = 0
+        }
+        custom_effect_tooltip = WDC_no_nyc_war_tt
+        effect_tooltip = {
+            SNY = {
+                add_to_faction = WDC
+            }
+        }
+        SNY = {
+            country_event = {
+                id = new_york.73
+            }
+        }
+    }
+    option = { #We have our Own Plans for Reunification!
+        name = new_york.70.c
+        ai_chance = {
+            factor = 40
+            modifier = {
+                add = -40
+                SNY = {
+                    has_completed_focus = SNY_fdr_returns_to_new_york
+                }
+            }
+        }
+        SNY = {
+            country_event = {
+                id = new_york.74
+            }
+        }
+    }
+}
+country_event = { #The Mafia Busts into Lehman's Corrupt Offices
+    id = new_york.71
+    title = new_york.71.t
+    desc = new_york.71.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #We Must Expose Lehman, at any Cost!
+        name = new_york.71.a
+    }
+}
+country_event = { #WDC Accepts
+    id = new_york.72
+    title = new_york.72.t
+    desc = new_york.72.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Great News!
+        name = new_york.72.a
+        add_to_faction = WDC
+    }
+}
+country_event = { #WDC Accepts, with Conditions
+    id = new_york.73
+    title = new_york.73.t
+    desc = new_york.73.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #This is Acceptable
+        name = new_york.73.a
+        add_to_faction = WDC
+    }
+}
+country_event = { #WDC Refuses
+    id = new_york.74
+    title = new_york.74.t
+    desc = new_york.74.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Sad, but We Will Find Another Way
+        name = new_york.74.a
+    }
+}
+country_event = { #Invitation to The Federalist League
+    id = new_york.75
+    title = new_york.75.t
+    desc = new_york.75.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #We Accept!
+        name = new_york.75.a
+        ai_chance = {
+            factor = 20
+            modifier = {
+                add = 20
+                SNY = {
+                    has_completed_focus = SNY_fdr_returns_to_new_york
+                }
+            }
+            modifier = {
+                add = 40
+                has_opinion = {
+                    opinion > 50
+                    target = SNY
+                }
+            }
+            modifier = {
+                add = 30
+                is_neighbor_of = SNY
+            }
+            modifier = {
+                add = -40
+                has_opinion = {
+                    opinion < -20
+                    target = SNY
+                }
+            }
+            modifier = {
+                add = 20
+                OR = {
+                    AND = {
+                        tag = SPA
+                        has_completed_focus = SPA_memories_of_the_union
+                    }
+                    AND = {
+                        tag = SNJ
+                        has_completed_focus = SNJ_american_dream_purpose
+                        always = no
+                    }
+                    #Add other countries as they become loyal to the Union
+                }
+            }
+        }
+        SNY = {
+            add_to_faction = ROOT
+        }
+        hidden_effect = {
+            set_country_flag = in_SNY_faction_for_union
+        }
+    }
+    option = { #Independence is way Better!
+        name = new_york.75.b
+        ai_chance = {
+            factor = 80
+            modifier = {
+                add = -20
+                SNY = {
+                    has_completed_focus = SNY_fdr_returns_to_new_york
+                }
+            }
+            modifier = {
+                add = -40
+                has_opinion = {
+                    opinion > 50
+                    target = SNY
+                }
+            }
+            modifier = {
+                add = -30
+                is_neighbor_of = SNY
+            }
+            modifier = {
+                add = 40
+                has_opinion = {
+                    opinion < -20
+                    target = SNY
+                }
+            }
+            modifier = {
+                add = -20
+                OR = {
+                    AND = {
+                        tag = SPA
+                        has_completed_focus = SPA_memories_of_the_union
+                    }
+                    AND = {
+                        tag = SNJ
+                        has_completed_focus = SNJ_american_dream_purpose
+                        always = no
+                    }
+                    #Add other countries as they become loyal to the Union
+                }
+            }
+        }
+        custom_effect_tooltip = SNY_bastion_of_demoracy_warning_tt
+        SNY = {
+            country_event = {
+                id = new_york.76
+            }
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    SNY = {
+                        has_completed_focus = SNY_bastion_of_democracy
+                    }
+                }
+                ROOT = {
+                    save_global_event_target_as = SNY_federal_target
+                }
+            }
+        }
+    }
+}
+country_event = { #Our Invitation is Refused!
+    id = new_york.76
+    title = new_york.76.t
+    desc = new_york.76.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Let them go
+        name = new_york.76.a
+        ai_chance = {
+            factor = 80
+        }
+        hidden_effect = {
+            clear_global_event_target = SNY_federal_target
+        }
+    }
+    option = { #We must stop their Agressive Actions!
+        name = new_york.76.b
+        ai_chance = {
+            factor = 20
+        }
+        trigger = {
+            has_completed_focus = SNY_bastion_of_democracy
+            any_other_country = {
+                is_a_country_making_up_the_former_united_states = yes
+                has_event_target = SNY_federal_target
+                OR = {
+                    has_added_tension_amount > 15
+                    has_government = communism
+                    has_government = fascism
+                }
+            }
+            
+        }
+        SNY = {
+            create_wargoal = {
+                type = liberate_wargoal
+                target = SNY_federal_target
+            }
+        }
+        hidden_effect = {
+            clear_global_event_target = SNY_federal_target
+        }
+    }
+}
+country_event = { #Invitation to the Democratic League
+    id = new_york.77
+    title = new_york.75.t
+    desc = new_york.77.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #We Accept!
+        name = new_york.77.a
+        ai_chance = {
+            factor = 60
+            modifier = {
+                add = 40
+                has_opinion = {
+                    opinion > 50
+                    target = SNY
+                }
+            }
+            modifier = {
+                add = -40
+                has_opinion = {
+                    opinion < -20
+                    target = SNY
+                }
+            }
+        }
+        SNY = {
+            add_to_faction = ROOT
+        }
+        hidden_effect = {
+            set_country_flag = in_SNY_faction_for_protection #They can't be annexed easily
+        }
+    }
+    option = { #We Don't Need their Damned Projection
+        name = new_york.77.b
+        ai_chance = {
+            factor = 40
+            modifier = {
+                add = -40
+                has_opinion = {
+                    opinion > 50
+                    target = SNY
+                }
+            }
+            modifier = {
+                add = 40
+                has_opinion = {
+                    opinion < -20
+                    target = SNY
+                }
+            }
+        }
+        custom_effect_tooltip = SNY_bastion_of_demoracy_warning_tt
+        SNY = {
+            country_event = {
+                id = new_york.76.a
+            }
+        }
+        hidden_effect = {
+            if = {
+                limit = {
+                    SNY = {
+                        has_completed_focus = SNY_bastion_of_democracy
+                    }
+                }
+                ROOT = {
+                    save_global_event_target_as = SNY_federal_target
+                }
+            }
+        }
+    }
+}
+country_event = { #Complete Invitation To the Union
+    id = new_york.78
+    title = new_york.78.t
+    desc = new_york.78.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Brotherhood was Won, We Will Join the Union
+        name = new_york.78.a
+        ai_chance = {
+            factor = 40
+            modifier = {
+                add = -60
+                NOT = {
+                    has_country_flag = in_SNY_faction_for_union
+                }
+            }
+            modifier = {
+                add = 40
+                has_opinion = {
+                    opinion > 50
+                    target = SNY
+                }
+            }
+            modifier = {
+                add = 30
+                is_neighbor_of = SNY
+            }
+            modifier = {
+                add = 10
+                SNY = {
+                    has_idea = SNY_low_legitimacy
+                }
+            }
+            modifier = {
+                add = 20
+                SNY = {
+                    has_idea = SNY_moderate_legitimacy
+                }
+            }
+            modifier = {
+                add = 30
+                SNY = {
+                    has_idea = SNY_high_legitimacy
+                }
+            }
+            modifier = {
+                add = 50
+                SNY = {
+                    has_idea = SNY_heir_to_the_union
+                }
+            }
+        }
+        SNY = {
+            annex_country = {
+                target = ROOT
+                transfer_troops = yes
+            }
+        }
+    }
+    option = { #Let's Compromise
+        name = new_york.78.b
+        ai_chance = {
+            factor = 40
+            modifier = {
+                add = -40
+                NOT = {
+                    has_country_flag = in_SNY_faction_for_union
+                }
+            }
+            modifier = {
+                add = 10
+                SNY = {
+                    has_idea = SNY_no_legitimacy
+                }
+            }
+            modifier = {
+                add = 20
+                SNY = {
+                    OR = {
+                        has_idea = SNY_low_legitimacy
+                        has_idea = SNY_moderate_legitimacy
+                        has_idea = SNY_high_legitimacy
+                        has_idea = SNY_heir_to_the_union
+                    }
+                }
+            }
+        }
+        SNY = {
+            if = {
+                limit = {
+                    has_dlc = "Together for Victory"
+                }
+                set_autonomy = {
+                    target = ROOT
+                    autonomy_state = autonomy_article_state
+                }
+            }
+            else = {
+                puppet = ROOT
+            }
+        }
+    }
+    option = { #The Current Situation Suits Us
+        name = new_york.78.c
+        ai_chance = {
+            factor = 20
+            modifier = {
+                add = 80
+                NOT = {
+                    has_country_flag = in_SNY_faction_for_union
+                }
+            }
+            modifier = {
+                add = -40
+                has_opinion = {
+                    opinion > 50
+                    target = SNY
+                }
+            }
+            modifier = {
+                add = -30
+                is_neighbor_of = SNY
+            }
+            modifier = {
+                add = -10
+                SNY = {
+                    has_idea = SNY_low_legitimacy
+                }
+            }
+            modifier = {
+                add = -20
+                SNY = {
+                    has_idea = SNY_moderate_legitimacy
+                }
+            }
+            modifier = {
+                add = -30
+                SNY = {
+                    has_idea = SNY_high_legitimacy
+                }
+            }
+            modifier = {
+                add = -50
+                SNY = {
+                    has_idea = SNY_heir_to_the_union
+                }
+            }
+        }
+        SNY = {
+            country_event = {
+                id = new_york.79
+            }
+        }
+    }
+}
+country_event = { #Our Invitation to the Union has been Refused
+    id = new_york.79
+    title = new_york.79.t
+    desc = new_york.79.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Oh Well
+        name = new_york.79.a
+    }
+} 
+country_event = { #(For PON) The USA Pledges to help us reform Canada
+    id = new_york.80
+    title = new_york.80.t
+    desc = new_york.80.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Of Course!
+        name = new_york.80.a
+        ai_chance = {
+            factor = 100
+        }
+        SNY = {
+            add_to_faction = PON
+        }
+    }
+    option = { #We can do Things on our own
+        name = new_york.80.b
+        ai_chance = {
+            factor = 0
+        }
+        SNY = {
+            country_event = {
+                id = new_york.82
+            }
+        }
+    }
+}
+country_event = { #(For MEX) The USA Pledged to help us reform Mexico
+    id = new_york.81
+    title = new_york.81.t
+    desc = new_york.81.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = {
+        name = new_york.80.a
+        ai_chance = {
+            factor = 100
+        }
+        SNY = {
+            add_to_faction = MEX
+        }
+    }
+    option = {
+        name = new_york.80.b
+        ai_chance = {
+            factor = 0
+        }
+        SNY = {
+            country_event = {
+                id = new_york.83
+            }
+        }
+    }
+}
+country_event = { #Ontario refuses our support
+    id = new_york.82
+    title = new_york.82.t
+    desc = new_york.82.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Oh well
+        name = new_york.82.a
+    }
+}
+country_event = { #Mexico refuses our support
+    id = new_york.83
+    title = new_york.83.t
+    desc = new_york.83.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Oh well
+        name = new_york.82.a
+    }
+}
+country_event = { #Information about the Anglo/German Side of the War
+    id = new_york.84
+    title = new_york.84.t
+    desc = new_york.84.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Interesting
+        name = new_york.84.a
+    }
+}
+country_event = { #Information about the French/Italo/Soviet Side of the War
+    id = new_york.85
+    title = new_york.85.t
+    desc = new_york.85.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Interesting
+        name = new_york.84.a
+    }
+}
+country_event = { #Japan Backs Down
+    id = new_york.86
+    title = new_york.86.t
+    desc = new_york.86.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Glad They Know Thier Place
+        name = new_york.86.a
+        navy_experience = 100
+        air_experience = 50
+    }
+}
+country_event = { #Japan Holds Firm
+    id = new_york.87
+    title = new_york.87.t
+    desc = new_york.87.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #We'll have to Undermind Their Progress
+        name = new_york.87.a
+        navy_experience = 50
+        air_experience = 25
+    }
+}
+country_event = { #Chinese Insurgents Push Back
+    id = new_york.88
+    title = new_york.88.t
+    desc = new_york.88.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #That's mah Boy!
+        name = new_york.88.a
+        add_war_support = 0.05
+        army_experience = 50
+    }
+}
+country_event = { #Chinese Insurgents Are Chrushed
+    id = new_york.89
+    title = new_york.89.t
+    desc = new_york.89.d
+    #picture = GFX_'
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Those Damned Japanese!
+        name = new_york.89.a
+        army_experience = 25
+    }
+}
+country_event = { #Indonesian Insurgents Push Back
+    id = new_york.90
+    title = new_york.90.t
+    desc = new_york.90.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Japanese Influence is Dwindling
+        name = new_york.90.a
+        add_war_support = 0.05
+        army_experience = 25
+        navy_experience = 50
+    }
+}
+country_event = { #Indonesian Insurgents Are Chrushed
+    id = new_york.91
+    title = new_york.91.t
+    desc = new_york.91.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = {
+        name = new_york.91.a
+        army_experience = 10
+        navy_experience = 25
+    }
+}
+country_event = { #Initial Event to Choose a Capital
+    id = new_york.92
+    title = new_york.92.t
+    desc = new_york.92.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = { #A Northern Capital
+        name = new_york.92.a
+        trigger = {
+            OR = {
+                owns_state = 5
+                owns_state = 245
+                owns_state = 418
+                AND = {
+                    owns_state = 27
+                    owns_state = 28
+                    owns_state = 202
+                    owns_state = 26
+                }
+                AND = {
+                    owns_state = 46
+                    owns_state = 620
+                }
+                owns_state = 385
+                AND = {
+                    owns_state = 35
+                    owns_state = 36
+                }
+                AND = {
+                    owns_state = 692
+                    owns_state = 41
+                }
+                owns_state = 536
+            }
+        }
+        ai_chance = {
+            factor = 0
+        }
+        country_event = {
+            id = new_york.93
+        }
+    }
+    option = { #A Southern Capital
+        name = new_york.92.b
+        trigger = {
+            OR = {
+                owns_state = 11
+                owns_state = 351
+                owns_state = 74
+                owns_state = 520
+                owns_state = 23
+                AND = {
+                    owns_state = 752
+                    owns_state = 753
+                }
+                owns_state = 237
+                owns_state = 621
+                owns_state = 42
+            }
+        }
+        ai_chance = {
+            factor = 0
+        }
+        country_event = {
+            id = new_york.97
+        }
+    }
+    option = { #A Western Capital
+        name = new_york.92.c
+        trigger = {
+            OR = {
+                owns_state = 318
+                owns_state = 683
+                owns_state = 269
+                owns_state = 40
+                owns_state = 53
+                owns_state = 510
+                owns_state = 49
+                owns_state = 611
+                owns_state = 25
+            }
+        }
+        ai_chance = {
+            factor = 0
+        }
+        country_event = {
+            id = new_york.101
+        }
+    }
+    option = { #Enough with This, WDC Will Do
+        name = new_york.92.e
+        ai_chance = {
+            factor = 100
+        }
+    }
+}
+country_event = { #A Northern Capital
+    id = new_york.93
+    title = new_york.93.t
+    desc = new_york.93.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = { #Look in New England
+        name = new_york.93.a 
+        trigger = {
+            OR = {
+                owns_state = 5
+                owns_state = 245
+                owns_state = 418
+            }
+        }
+        country_event = {
+            id = new_york.94
+        }
+    }
+    option = { #Look in the Mid-Atlantic
+        name = new_york.93.b
+        trigger = {
+            OR = {
+                AND = {
+                    owns_state = 27
+                    owns_state = 28
+                    owns_state = 202
+                    owns_state = 26
+                }
+                AND = {
+                    owns_state = 46
+                    owns_state = 620
+                }
+                owns_state = 385
+            }
+        }
+        country_event = {
+            id = new_york.95
+        }
+    }
+    option = { #Look in the Great Lakes
+        name = new_york.93.c
+        trigger = {
+            OR = {
+                AND = {
+                    owns_state = 35
+                    owns_state = 36
+                }
+                AND = {
+                    owns_state = 692
+                    owns_state = 41
+                }
+                owns_state = 536
+            }
+        }
+        country_event = {
+            id = new_york.96
+        }
+    }
+    option = { #Let's look somewhere else
+        name = new_york.93.e
+        country_event = {
+            id = new_york.92
+        }
+    }
+}
+country_event = { #A Capital in New England
+    id = new_york.94
+    title = new_york.94.t
+    desc = new_york.94.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = { #Boston
+        name = new_york.94.a
+        trigger = {
+            owns_state = 5
+        }
+        set_capital = {
+            state = 5
+        }
+        add_state_core = 5
+    }
+    option = { #Hartdord
+        name = new_york.94.b
+        trigger = {
+            owns_state = 245
+        }
+        set_capital = {
+            state = 245
+        }
+        add_state_core = 245
+    }
+    option = { #Augusta
+        name = new_york.94.c
+        trigger = {
+            owns_state = 418
+        }
+        set_capital = {
+            state = 418
+        }
+        add_state_core = 418
+    }
+    option = { #Let's look somewhere else
+        name = new_york.93.e
+        country_event = {
+            id = new_york.93
+        }
+    }
+}
+country_event = { #A Capital in the Mid-Atlantic
+    id = new_york.95
+    title = new_york.95.t
+    desc = new_york.95.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = { #New York City
+        name = new_york.95.a
+        trigger = {
+            owns_state = 27
+            owns_state = 28
+            owns_state = 202
+            owns_state = 26
+        }
+        set_capital = {
+            state = 27
+        }
+        add_state_core = 27
+        add_state_core = 28
+        add_state_core = 202
+        add_state_core = 26
+    }
+    option = { #Philadelphia
+        name = new_york.95.b
+        trigger = {
+            owns_state = 46
+            owns_state = 620
+        }
+        set_capital = {
+            state = 46
+        }
+        add_state_core = 46
+        add_state_core = 620
+    }
+    option = { #Richmond
+        name = new_york.95.c
+        trigger = {
+            owns_state = 385
+        }
+        set_capital = {
+            state = 385
+        }
+        add_state_core = 385
+    }
+    option = { #Let's look somewhere else
+        name = new_york.93.e
+        country_event = {
+            id = new_york.93
+        }
+    }
+}
+country_event = { #A Capital in the Great Lakes
+    id = new_york.96
+    title = new_york.96.t
+    desc = new_york.96.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+    
+    option = { #Detriot
+        name = new_york.96.a
+        trigger = {
+            owns_state = 35
+            owns_state = 36
+        }
+        set_capital = {
+            state = 36
+        }
+        add_state_core = 35
+        add_state_core = 36
+    }
+    option = { #Chicago
+        name = new_york.96.b
+        trigger = {
+            owns_state = 692
+            owns_state = 41
+        }
+        set_capital = {
+            state = 692
+        }
+        add_state_core = {
+            state = 41
+        }
+        add_state_core = 692
+    }
+    option = { #Cincinnati
+        name = new_york.96.c
+        trigger = {
+            owns_state = 536
+        }
+        set_capital = {
+            state = 536
+        }
+        add_state_core = 536
+    }
+    option = { #Let's look somewhere else
+        name = new_york.93.e
+        country_event = {
+            id = new_york.93
+        }
+    }
+}
+country_event = { #A Southern Capital
+    id = new_york.97
+    title = new_york.97.t
+    desc = new_york.97.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = { #A Capital on the East Coast
+        name = new_york.97.a
+        trigger = {
+            OR = {
+                owns_state = 11
+                owns_state = 351
+                owns_state = 74
+            }
+        }
+        country_event = {
+            id = new_york.98
+        }
+    }
+    option = { #A Capital in the Deep South
+        name = new_york.97.b
+        trigger = {
+            OR = {
+                owns_state = 520
+                owns_state = 23
+                AND = {
+                    owns_state = 752
+                    owns_state = 753
+                }
+            }
+        }
+        country_event = {
+            id = new_york.99
+        }
+    }
+    option = { #A Capital west of the Mississippi
+        name = new_york.97.c
+        trigger = {
+            OR = {
+                owns_state = 237
+                owns_state = 621
+                owns_state = 42
+            }
+        }
+        country_event = {
+            id = new_york.100
+        }
+    }
+    option = { #Let's look somewhere else
+        name = new_york.93.e
+        country_event = {
+            id = new_york.92
+        }
+    }
+}
+country_event = { #A Capital on the East Coast
+    id = new_york.98
+    title = new_york.98.t
+    desc = new_york.98.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = { #Miami
+        name = new_york.98.a
+        trigger = {
+            owns_state = 11
+        }
+        set_capital = {
+            state = 11
+        }
+        add_state_core = 11
+    }
+    option = { #Columbia
+        name = new_york.98.b
+        trigger = {
+            owns_state = 351
+        }
+        set_capital = {
+            state = 351
+        }
+        add_state_core = 351
+    }
+    option = { #Atlanta
+        name = new_york.98.c
+        trigger = {
+            owns_state = 74
+        }
+        set_capital = {
+            state = 74
+        }
+        add_state_core = 74
+    }
+    option = { #Let's look somewhere else
+        name = new_york.93.e
+        country_event = {
+            id = new_york.97
+        }
+    }
+}
+country_event = { #A Capital in the Deep South
+    id = new_york.99
+    title = new_york.99.t
+    desc = new_york.99.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = { #Nashville
+        name = new_york.99.a
+        trigger = {
+            owns_state = 520
+        }
+        set_capital = {
+            state = 520
+        }
+        add_state_core = 520
+    }
+    option = { #Montgomery
+        name = new_york.99.b
+        trigger = {
+            owns_state = 23
+        }
+        set_capital = {
+            state = 23
+        }
+        add_state_core = 23
+    }
+    option = { #New Orleans
+        name = new_york.99.c
+        trigger = {
+            owns_state = 752
+            owns_state = 753
+        }
+        set_capital = {
+            state = 752
+        }
+        add_state_core = 752
+        add_state_core = 753
+    }
+    option = { #Let's look somewhere else
+        name = new_york.93.e
+        country_event = {
+            id = new_york.97
+        }
+    }
+}
+country_event = { #A Capital West of the Mississippi
+    id = new_york.100
+    title = new_york.100.t
+    desc = new_york.100.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = { #Tulsa
+        name = new_york.100.a
+        trigger = {
+            owns_state = 237
+        }
+        set_capital = {
+            state = 237
+        }
+        add_state_core = 237
+    }
+    option = { #Dallas
+        name = new_york.100.b
+        trigger = {
+            owns_state = 621
+        }
+        set_capital = {
+            state = 621
+        }
+        add_state_core = 621
+    }
+    option = { #Houston
+        name = new_york.100.c
+        trigger = {
+            owns_state = 42
+        }
+        set_capital = {
+            state = 42
+        }
+        add_state_core = 42
+    }
+    option = { #Let's look somewhere else
+        name = new_york.93.e
+        country_event = {
+            id = new_york.97
+        }
+    }
+}
+country_event = { #A Western Capital
+    id = new_york.101
+    title = new_york.101.t
+    desc = new_york.101.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = { #A Capital in the Midwest
+        name = new_york.101.a
+        trigger = {
+            OR = {
+                owns_state = 318
+                owns_state = 683
+                owns_state = 269
+            }
+        }
+        country_event = {
+            id = new_york.102
+        }
+    }
+    option = { #A Capital in the Northwest
+        name = new_york.101.b
+        trigger = {
+            OR = {
+                owns_state = 40
+                owns_state = 53
+                owns_state = 510
+            }
+        }
+        country_event = {
+            id = new_york.103
+        }
+    }
+    option = { #A Capital in the Southwest
+        name = new_york.101.c
+        trigger = {
+            OR = {
+                owns_state = 49
+                owns_state = 611
+                owns_state = 25
+            }
+        }
+        country_event = {
+            id = new_york.104
+        }
+    }
+    option = { #Let's look somewhere else
+        name = new_york.93.e
+        country_event = {
+            id = new_york.92
+        }
+    }
+}
+country_event = { #A Capital in the Midwest
+    id = new_york.102
+    title = new_york.102.t
+    desc = new_york.102.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = { #Denver
+        name = new_york.102.a
+        trigger = {
+            owns_state = 318
+        }
+        set_capital = {
+            state = 318
+        }
+        add_state_core = 318
+    }
+    option = { #Kansas City
+        name = new_york.102.b
+        trigger = {
+            owns_state = 683
+        }
+        set_capital = {
+            state = 683
+        }
+        add_state_core = 683
+    }
+    option = { #Bismark
+        name = new_york.102.c
+        trigger = {
+            owns_state = 269
+        }
+        set_capital = {
+            state = 269
+        }
+        add_state_core = 269
+    }
+    option = { #Let's look somewhere else
+        name = new_york.93.e
+        country_event = {
+            id = new_york.101
+        }
+    }
+}
+country_event = { #A Northwest Capital
+    id = new_york.103
+    title = new_york.103.t
+    desc = new_york.103.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = { #Seattle
+        name = new_york.103.a
+        trigger = {
+            owns_state = 40
+        }
+        set_capital = {
+            state = 40
+        }
+        add_state_core = 40
+    }
+    option = { #Portland
+        name = new_york.103.b
+        trigger = {
+            owns_state = 53
+        }
+        set_capital = {
+            state = 53
+        }
+        add_state_core = 53
+    }
+    option = { #Boise
+        trigger = {
+            owns_state = 510
+        }
+        set_capital = {
+            state = 510
+        }
+        add_state_core = 510
+    }
+    option = { #Let's look somewhere else
+        name = new_york.93.e
+        country_event = {
+            id = new_york.101
+        }
+    }
+}
+country_event = { #A Southwest Capital
+    id = new_york.104
+    title = new_york.104.t
+    desc = new_york.104.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = no
+
+    option = { #Las Vegas
+        name = new_york.104.a
+        trigger = {
+            owns_state = 611
+        }
+        set_capital = {
+            state = 510
+        }
+        add_state_core = 611
+    }
+    option = { #Salt Lake City
+        name = new_york.104.b
+        trigger = {
+            owns_state = 49
+        }
+        set_capital = {
+            state = 49
+        }
+        add_state_core = 49
+    }
+    option = { #San Fransisco
+        name = new_york.104.c
+        trigger = {
+            owns_state = 25
+        }
+        set_capital = {
+            state = 25
+        }
+        add_state_core = 25
+    }
+    option = { #Let's look somewhere else
+        name = new_york.93.e
+        country_event = {
+            id = new_york.101
+        }
+    }
+}
+country_event = { #William F Bleakley Makes a Speech
+    id = new_york.105
+    title = new_york.105.t
+    desc = new_york.105.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Surely a Better Alternative to Herbert Lehman
+        name = new_york.105.a
+    }
+}
+country_event = { #Robert Minor Makes a Speech
+    id = new_york.106
+    title = new_york.106.t
+    desc = new_york.106.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Could he Sway Enough People to Win the Election?
+        name = new_york.106.a
+    }
+}
+country_event = { #1936 Presidential Election
+    id = new_york.107
+    title = new_york.107.t
+    if = {
+        limit = {
+            has_completed_focus = SNY_herbert_lehman_makes_a_speech
+        }
+        desc = new_york.107.da
+    }
+    else_if = {
+        limit = {
+            has_completed_focus = SNY_william_f_bleakley_makes_a_speech
+        }
+        desc = new_york.107.db
+    }
+    else_if = {
+        limit = {
+            has_completed_focus = SNY_robert_minor_makes_a_speech
+        }
+        desc = new_york.107.dc
+    }
+    else = {
+        desc = new_york.107.dd
+    }
+    #picture = GFX_
+
+    is_triggered_only = no
+    fire_only_once = yes
+
+    trigger = {
+        has_completed_focus = SNY_the_elections_must_continue
+        date > 1936.11.0
+    }
+
+    mean_time_to_happen = {
+        days = 1
+    }
+
+    option = { #Herbert Lehman Wins a Second Term
+        name = new_york.107.a
+        trigger = {
+            has_completed_focus = SNY_herbert_lehman_makes_a_speech
+        }
+        complete_national_focus = SNY_herbert_lehman_wins_a_second_term
+    }
+    option = { #William F Bleakley Wins his First Term
+        name = new_york.107.b
+        complete_national_focus = SNY_william_f_bleakley_wins_his_first_time
+    }
+    option = { #Robert Minor Squeaks Through with a Victory
+        name = new_york.107.c
+        trigger = {
+            has_completed_focus = SNY_robert_minor_makes_a_speech
+        }
+        complete_effect = SNY_robert_minor_barely_wins_the_election
+    }
+}
+country_event = { #charles_polettiunion
+    id = new_york.108
+    title = new_york.108.t
+    desc = new_york.108.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #newyorknationalism
+        name = new_york.108.a
+    }
+}
+country_event = { #(For PQC) The USA Pledges to help us reform Canada
+    id = new_york.109
+    title = new_york.109.t
+    desc = new_york.109.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Of Course!
+        name = new_york.80.a
+        ai_chance = {
+            factor = 100
+        }
+        SNY = {
+            add_to_faction = PQC
+        }
+    }
+    option = { #We can do Things on our own
+        name = new_york.80.b
+        ai_chance = {
+            factor = 0
+        }
+        SNY = {
+            country_event = {
+                id = new_york.110
+            }
+        }
+    }
+}
+country_event = { #Ontario refuses our support
+    id = new_york.110
+    title = new_york.110.t
+    desc = new_york.110.d
+    #picture = GFX_
+
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { #Oh well
+        name = new_york.82.a
+    }
+}
