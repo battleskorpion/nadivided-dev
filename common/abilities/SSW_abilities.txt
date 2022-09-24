@@ -1,0 +1,52 @@
+ability = {	
+	CHI_force_attack = {
+		name = ABILITY_CHEMICAL_WEAPONS
+		desc = ABILITY_CHEMICAL_WEAPONS_DESC
+		icon = GFX_ability_chi_force_attack
+		
+		sound_effect = command_power_ability_offensive
+		
+		type = army_leader
+		
+		allowed = {
+			is_leading_army_group = no
+			is_border_war = no
+			OWNER = {	
+			tag = SSW
+			has_completed_focus = SSW_Reintroduce_Gas_Warfare
+			}
+		}
+		
+		cost = 0.20
+		duration = 200
+		
+		one_time_effect = {
+			add_temporary_buff_to_units = {
+				combat_offense = 0.20
+				combat_breakthrough = 0.10
+				
+				
+				days = 8
+				tooltip = ABILITY_CHEMICAL_WEAPONS_TT
+			}
+		}
+		
+		
+		ai_will_do = {
+			factor = -1
+			modifier = {
+				FROM = {
+					has_war_support > 0.1
+					command_power > 1.0
+				}
+				check_variable = { num_units_offensive_combats > 6 }
+				
+				set_temp_variable = { temp = avg_offensive_combat_status }
+				check_variable = { temp > 0.45 }
+				check_variable = { ai_random > temp }
+				
+				add = 2
+			}
+		}
+	}
+}
