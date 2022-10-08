@@ -1,6 +1,6 @@
 name="North America Divided [Dev]"
-version="1.1.1"
-supported_version="1.11.*"
+version="1.12.3"
+supported_version="1.12.*"
 path="mod/nadivided-dev"
 user_dir="nadivided"
 remote_file_id="2095618478"
