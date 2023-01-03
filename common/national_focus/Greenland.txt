@@ -396,10 +396,1131 @@ focus_tree = {
         }
     }
 
+
+	focus = {
+		id = GRE_reopen_the_political_sphere
+		icon = GFX_goal_generic_neutrality_focus
+		x = 21
+		y = 0
+		cost = 5
+        available = {
+            has_completed_focus = GRE_Political_Mobilization
+        }
+		available_if_capitulated = yes
+
+		ai_will_do = {
+			factor = 1
+		}
+		allow_branch = {
+			NOT = {
+				tag = TXR
+			}
+		}
+
+			modifier = {
+				factor = 150
+			}
+
+		completion_reward = {
+			add_political_power = 20
+		}
+	}
+#
+	focus = {
+		id = GRE_ideals_of_the_union
+		icon = GFX_goal_support_democracy
+		prerequisite = { focus = GRE_reopen_the_political_sphere}
+		mutually_exclusive = { focus = GRE_sieze_the_means_of_production }
+		mutually_exclusive = { focus = GRE_take_advantage_of_the_chaos }
+		x = 20
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 100
+				has_country_flag = SLA_huey_is_leader
+			}
+			modifier = {
+				factor = 50
+				OR = {
+					has_government = democratic
+					has_government = progressivism
+					has_government = longism
+				}
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_popularity = {
+				ideology = democratic
+				popularity = .10
+			}
+			add_timed_idea = { idea = democratic_influence  days = 2000 }
+		}
+	}
+#
+	focus = {
+		id = GRE_adopt_the_constitution
+		icon = GFX_focus_generic_treaty
+		prerequisite = { focus = GRE_ideals_of_the_union}
+		mutually_exclusive = { focus = GRE_rewrite_the_constitution}
+		x = 17
+		y = 2
+		cost = 5
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				has_country_flag = SLA_huey_is_leader
+			}
+			modifier = {
+				factor = 50
+				has_government = democratic
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_stability = 0.1
+		}
+	}
+#
+	focus = {
+		id = GRE_reienstate_free_speech
+		icon = GFX_focus_vote_reenstation_act
+		prerequisite = { focus = GRE_adopt_the_constitution}
+		x = 17
+		y = 3
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_stability = 0.05
+			add_political_power = 50
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.2
+			}
+			add_popularity = {
+				ideology = longism
+				popularity = 0.03
+			}
+			add_popularity = {
+				ideology = progressivism
+				popularity = 0.03
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = 0.01
+			}
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.01
+			}
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.03
+			}
+		}
+	}
+#
+	focus = {
+		id = GRE_encourage_free_enterprise
+		icon = GFX_goal_generic_investments
+		prerequisite = { focus = GRE_reienstate_free_speech}
+		x = 17
+		y = 4
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			has_government = democratic
+			}
+
+		available_if_capitulated = yes
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+
+		completion_reward = {
+			add_ideas = deterrence
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+#
+	focus = {
+		id = GRE_forign_intervention
+		icon = GFX_goal_generic_political_pressure
+		prerequisite = { focus = GRE_encourage_free_enterprise}
+		x = 17
+		y = 5
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			set_rule = { can_send_volunteers = yes }
+			add_ideas = volunteer_corps_focus
+			if = {
+				limit = {
+					is_ai = no
+				}
+				set_rule = {
+					can_create_factions = yes
+				}
+			}
+		}
+	}
+#
+	focus = {
+		id = GRE_intellectual_property_integrity
+		icon = GFX_goal_generic_political_pressure
+		prerequisite = { focus = GRE_an_iron_fortress focus = GRE_forign_intervention focus = GRE_protect_others}
+		x = 0
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		relative_position_id = GRE_forign_intervention
+		available_if_capitulated = yes
+
+		available = {
+					date > 1940.1.1
+		}
+
+		completion_reward = {
+			add_ideas = GRE_intellectual_property_integrityidea
+		}
+	}
+#
+	focus = {
+		id = GRE_rewrite_the_constitution
+		icon = GFX_goal_generic_forceful_treaty
+		prerequisite = { focus = GRE_ideals_of_the_union}
+		mutually_exclusive = { focus = GRE_adopt_the_constitution}
+		x = 20
+		y = 2
+		cost = 5
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 100
+				has_country_flag = SLA_huey_is_leader
+			}
+			modifier = {
+				factor = 50
+				OR = {
+					has_government = progressivism
+					has_government = longism
+				}
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_political_power = 100
+			add_popularity = {
+				ideology = longism
+				popularity = 0.1
+			}
+			add_popularity = {
+				ideology = progressivism
+				popularity = 0.1
+			}
+			remove_ideas = democratic_influence
+		}
+	}
+#
+	focus = {
+		id = GRE_ban_public_opposition
+		icon = GFX_focus_usa_voter_registration_act
+		prerequisite = { focus = GRE_rewrite_the_constitution}
+		mutually_exclusive = { focus = GRE_create_a_better_union}
+		x = 19
+		y = 3
+		cost = 10
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 100
+				has_country_flag = SLA_huey_is_leader
+			}
+			modifier = {
+				factor = 50
+				has_government = longism
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_stability = -0.07
+			add_popularity = {
+				ideology = longism
+				popularity = 0.25
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = -0.02
+			}
+			add_popularity = {
+				ideology = democratic
+				popularity = -0.05
+			}
+			add_popularity = {
+				ideology = progressivism
+				popularity = -0.05
+			}
+			add_popularity = {
+				ideology = fascism
+				popularity = -0.02
+			}
+			add_popularity = {
+				ideology = neutrality
+				popularity = -0.01
+			}
+		}
+	}
+#
+	focus = {
+		id = GRE_ignore_corruption
+		icon = GFX_focus_eng_concessions_to_the_trade_unions
+		prerequisite = { focus = GRE_ban_public_opposition}
+		x = 19
+		y = 4
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_political_power = 75
+			add_timed_idea = { idea = idea_political_correctness  days = 2000 }
+			if = {
+				limit = {
+					is_ai = no
+				}
+				set_rule = {
+					can_create_factions = yes
+				}
+			}
+			set_rule = { can_send_volunteers = yes }
+		}
+	}
+#
+	focus = {
+		id = GRE_an_iron_fortress
+		icon = GFX_goal_generic_construct_military
+		prerequisite = { focus = GRE_ignore_corruption}
+		x = 19
+		y = 5
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = deterrence
+			add_war_support = 0.05
+		}
+	}
+#
+	focus = {
+		id = GRE_create_a_better_union
+		icon = GFX_focus_ideology_progressivism
+		prerequisite = { focus = GRE_rewrite_the_constitution}
+		mutually_exclusive = { focus = GRE_ban_public_opposition}
+		x = 1
+		y = 1
+		relative_position_id = GRE_rewrite_the_constitution
+		cost = 10
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				has_country_flag = SLA_huey_is_leader
+			}
+			modifier = {
+				factor = 50
+				has_government = progressivism
+			}
+		}
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_popularity = {
+				ideology = progressivism
+				popularity = 0.2
+			}
+		}
+	}
+	focus = {
+		id = GRE_push_social_reform
+		icon = GFX_focus_generic_treaty
+		prerequisite = { focus = GRE_create_a_better_union}
+		x = 0
+		y = 1
+		relative_position_id = GRE_create_a_better_union
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_stability = 0.05
+			add_war_support = 0.05
+			add_political_power = 50
+		}
+	}
+	focus = {
+		id = GRE_protect_others
+		icon = GFX_goal_generic_improve_relations
+		prerequisite = { focus = GRE_push_social_reform}
+		x = 0
+		y = 1
+		relative_position_id = GRE_push_social_reform
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = liberty_ethos_focus
+			add_ideas = ideological_fanaticism_focus
+			set_rule = { can_send_volunteers = yes }
+			# add_ideas = volunteer_corps_focus
+			if = {
+				limit = {
+					is_ai = no
+				}
+				set_rule = {
+					can_create_factions = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = GRE_call_an_emergency_draft
+		icon = GFX_focus_generic_manpower
+		prerequisite = { focus = GRE_an_iron_fortress focus = GRE_forign_intervention focus = GRE_protect_others}
+		x = 19
+		y = 7
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = militarism_focus
+			add_manpower = 10000
+		}
+	}
+#
+	focus = {
+		id = GRE_Socialism_must_be_contained
+		icon = GFX_focus_contain_communism
+		mutually_exclusive = { focus = GRE_take_out_fascists2}
+		prerequisite = {
+			 focus = GRE_call_an_emergency_draft
+			 focus = GRE_intellectual_property_integrity			 
+			  }
+		x = 19
+		y = 8
+		cost = 10
+		ai_will_do = {
+			factor = 3
+		}
+
+		available = {
+				date > 1948.01.1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			custom_effect_tooltip = take_out_countries_tt
+			random_neighbor_country = {
+				limit = {
+					has_government = communism
+				}
+				every_owned_state = {
+					if = {
+						limit = {
+							is_in_home_area = yes
+						}
+					}
+					ROOT = {
+						add_state_claim = PREV 
+					}
+				}
+			}	
+			add_war_support = 0.05
+		}
+	}
+#
+
+#
+
+	focus = {
+		id = GRE_sieze_the_means_of_production
+		icon = GFX_goal_support_communism
+		prerequisite = { focus = GRE_reopen_the_political_sphere}
+		mutually_exclusive = { focus = GRE_ideals_of_the_union}
+		mutually_exclusive = { focus = GRE_take_advantage_of_the_chaos}
+		x = 23
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				has_country_flag = SLA_huey_is_leader
+			}
+			modifier = {
+				factor = 50
+				has_government = communism
+			}
+		}
+
+		available = {
+			communism > 0.10			
+		}
+		
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_popularity = {
+				ideology = communism
+				popularity = 0.25
+			}
+			add_timed_idea = { idea = communist_influence  days = 2000 }
+		}
+	}
+#
+	focus = {
+		id = GRE_work_with_the_workers
+		icon = GFX_goal_generic_improve_relations
+		prerequisite = { focus = GRE_sieze_the_means_of_production}
+		x = 23
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 120
+		}
+
+		available_if_capitulated = yes
+
+		available = {
+			has_government = communism
+			}
+
+		completion_reward = {
+			add_popularity = {
+				ideology = communism
+				popularity = 0.10
+			}
+			if = {
+				limit = {
+					is_ai = no
+				}
+				set_rule = {
+					can_create_factions = yes
+				}
+			}
+		}
+	}
+#
+	focus = {
+		id = GRE_ban_fascist_publications
+		icon = GFX_focus_renounce_the_treaty_of_trianon
+		prerequisite = { focus = GRE_work_with_the_workers}
+		x = 23
+		y = 3
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_popularity = {
+				ideology = fascism
+				popularity = -0.1
+			}
+			add_popularity = {
+				ideology = neutrality
+				popularity = -0.05
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = 0.05
+			}
+		}
+	}
+#
+	focus = {
+		id = GRE_strengthen_unions
+		icon = GFX_focus_generic_join_comintern
+		prerequisite = { focus = GRE_ban_fascist_publications}
+		x = 23
+		y = 4
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = workers_union
+		}
+	}
+#
+	focus = {
+		id = GRE_take_out_fascists
+		icon = GFX_focus_generic_anti_fascist_diplomacy
+		prerequisite = { focus = GRE_strengthen_unions}
+		x = 23
+		y = 5
+		cost = 7.2
+		ai_will_do = {
+			factor = 120
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			custom_effect_tooltip = take_out_countries_tt
+			random_neighbor_country = {
+				limit = {
+					has_government = fascism
+				}
+				every_owned_state = {
+					if = {
+						limit = {
+							is_in_home_area = yes
+						}
+					}
+					ROOT = {
+						add_state_claim = PREV 
+					}
+				}
+			}	
+			add_war_support = 0.05
+		}
+	}
+#
+	focus = {
+		id = GRE_take_out_fascists2
+		icon = GFX_focus_generic_anti_fascist_diplomacy
+		prerequisite = { focus = GRE_call_workers_to_arms focus = GRE_call_an_emergency_draft focus = GRE_intellectual_property_integrity}
+		mutually_exclusive = { focus = GRE_Socialism_must_be_contained}
+		x = 23
+		y = 8
+		cost = 10
+		ai_will_do = {
+			factor = 120
+		}
+
+		available = {
+				date > 1943.06.1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			custom_effect_tooltip = take_out_countries_tt
+			random_neighbor_country = {
+				limit = {
+					has_government = fascism
+				}
+				every_owned_state = {
+					if = {
+						limit = {
+							is_in_home_area = yes
+						}
+					}
+					ROOT = {
+						add_state_claim = PREV 
+					}
+				}
+			}	
+			add_war_support = 0.05
+		}
+	}
+#
+	focus = {
+		id = GRE_democracy_is_foolish
+		icon = GFX_focus_generic_strike_at_democracy3
+		prerequisite = { focus = GRE_take_out_fascists2 focus = GRE_purge_the_communists2 }
+		prerequisite = { focus = GRE_Fanatical_Ideologicalism }
+		x = 24
+		y = 9
+		cost = 10
+		ai_will_do = {
+			factor = 120
+		}
+
+		available = {
+				date > 1944.06.1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			custom_effect_tooltip = take_out_countries_tt
+			random_neighbor_country = {
+				limit = {
+					has_government = democratic
+				}
+				every_owned_state = {
+					if = {
+						limit = {
+							is_in_home_area = yes
+						}
+					}
+					ROOT = {
+						add_state_claim = PREV 
+					}
+				}
+			}	
+			add_war_support = 0.05
+		}
+	}
+#
+	focus = {
+		id = GRE_progressivism_will_fail
+		icon = GFX_focus_generic_anti_fascist_diplomacy
+		prerequisite = { focus = GRE_take_out_fascists2 focus = GRE_purge_the_communists2 }
+		prerequisite = { focus = GRE_Fanatical_Ideologicalism }
+		x = 22
+		y = 9
+		cost = 10
+		ai_will_do = {
+			factor = 120
+		}
+
+		available = {
+				date > 1945.01.1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			custom_effect_tooltip = take_out_countries_tt
+			random_neighbor_country = {
+				limit = {
+					has_government = democratic
+				}
+				every_owned_state = {
+					if = {
+						limit = {
+							is_in_home_area = yes
+						}
+					}
+					ROOT = {
+						add_state_claim = PREV 
+					}
+				}
+			}	
+			add_war_support = 0.05
+		}
+	}
+#
+
+	focus = {
+		id = GRE_Huey_long_was_a_fool
+		icon = GFX_focus_generic_anti_fascist_diplomacy
+		prerequisite = { focus = GRE_take_out_fascists2 focus = GRE_purge_the_communists2 }
+		prerequisite = { focus = GRE_Fanatical_Ideologicalism }
+		x = 26
+		y = 9
+		cost = 10
+		ai_will_do = {
+			factor = 120
+		}
+
+		available = {
+				date > 1945.01.1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			custom_effect_tooltip = take_out_countries_tt
+			random_neighbor_country = {
+				limit = {
+					has_government = longism
+				}
+				every_owned_state = {
+					if = {
+						limit = {
+							is_in_home_area = yes
+						}
+					}
+					ROOT = {
+						add_state_claim = PREV 
+					}
+				}
+			}	
+			add_war_support = 0.05
+		}
+	}
+#
+
+	focus = {
+		id = GRE_call_workers_to_arms
+		icon = GFX_focus_YUG_pan_slavic_congress
+		prerequisite = { focus = GRE_take_out_fascists}
+		x = 23
+		y = 6
+		cost = 10
+		ai_will_do = {
+			factor = 120
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = militarism_focus
+		}
+	}
+#
+	focus = {
+		id = GRE_take_advantage_of_the_chaos
+		icon = GFX_goal_support_fascism
+		prerequisite = { focus = GRE_reopen_the_political_sphere}
+		mutually_exclusive = { focus = GRE_ideals_of_the_union}
+		mutually_exclusive = { focus = GRE_sieze_the_means_of_production}
+		x = 25
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 1   
+			modifier = {
+				factor = 0
+				has_country_flag = SLA_huey_is_leader
+			}
+			modifier = {
+				factor = 50
+				has_government = fascism
+			}
+		}
+
+		available = {
+			fascism > 0.10			
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_popularity = {            
+				ideology = fascism
+				popularity = 0.2
+			}
+			add_timed_idea = { idea = fascist_influence  days = 2000 }
+		}
+	}
+#
+	focus = {
+		id = GRE_purity_through_unity
+		icon = GFX_focus_usa_honor_the_confederacy
+		prerequisite = { focus = GRE_take_advantage_of_the_chaos}
+		x = 25
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			has_government = fascism
+			}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.10
+			}
+			if = {
+				limit = {
+					is_ai = no
+				}
+				set_rule = {
+					can_create_factions = yes
+				}
+			}
+		}
+	}
+#
+	focus = {
+		id = GRE_purge_non_purists
+		icon = GFX_goal_generic_more_territorial_claims
+		prerequisite = { focus = GRE_purity_through_unity}
+		x = 25
+		y = 3
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_stability = 0.05
+			add_political_power = 25
+			add_popularity = {
+				ideology = democratic
+				popularity = -0.05
+			}
+			add_popularity = {
+				ideology = neutrality
+				popularity = -0.1
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = -0.05
+			}
+		}
+	}
+#
+	focus = {
+		id = GRE_militarize_the_state
+		icon = GFX_focus_generic_manpower
+		prerequisite = { focus = GRE_purge_non_purists}
+		x = 25
+		y = 4
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = militarism_focus
+		}
+	}
+#
+	focus = {
+		id = GRE_nondiscriminate_recruitment
+		icon = GFX_focus_generic_little_entente
+		prerequisite = { focus = GRE_militarize_the_state}
+		x = 25
+		y = 5
+		cost = 7.2
+		ai_will_do = {
+			factor = 120
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = military_youth_focus
+		}
+	}
+#
+	focus = {
+		id = GRE_purge_the_communists
+		icon = GFX_focus_contain_communism
+		prerequisite = { focus = GRE_nondiscriminate_recruitment}
+		x = 25
+		y = 6
+		cost = 10
+		ai_will_do = {
+			factor = 120
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			custom_effect_tooltip = take_out_countries_tt
+			random_neighbor_country = {
+				limit = {
+					has_government = communism
+				}
+				every_owned_state = {
+					if = {
+						limit = {
+							is_in_home_area = yes
+						}
+					}
+					ROOT = {
+						add_state_claim = PREV 
+					}
+				}
+			}	
+			add_war_support = 0.05
+		}
+	}
+#
+	focus = {
+		id = GRE_purge_the_communists2
+		icon = GFX_focus_contain_communism
+		prerequisite = { focus = GRE_purge_the_communists}
+		x = 25
+		y = 8
+		cost = 10
+		ai_will_do = {
+			factor = 3
+		}
+
+		available = {
+				date > 1943.06.1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			custom_effect_tooltip = take_out_countries_tt
+			random_neighbor_country = {
+				limit = {
+					has_government = communism
+				}
+				every_owned_state = {
+					if = {
+						limit = {
+							is_in_home_area = yes
+						}
+					}
+					ROOT = {
+						add_state_claim = PREV 
+					}
+				}
+			}	
+			add_war_support = 0.05
+		}
+	}
+#
+
+	focus = {
+		id = GRE_Fanatical_Ideologicalism
+		icon = GFX_focus_YUG_pan_slavic_congress
+		prerequisite = { focus = GRE_call_workers_to_arms focus = GRE_purge_the_communists }
+		x = 24
+		y = 7
+		cost = 10
+
+		available = {
+					date > 1939.1.1
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = GRE_Fanatical_Ideologicalismidea
+		}
+	}
+#end of generic_political
+
+
+
+
     focus = {
         id = GRE_forced_colonization
         icon = GFX_focus_colonize_greenland
-        x = 10
+        x = 8
         y = 0
         cost = 10
         ai_will_do = {
