@@ -2,52 +2,62 @@
 DIPLOMACY_CREATE_FACTION_ENABLE_TRIGGER = {
 	if = {
 		limit = {
-			
-			#Requires all three to reurn true, otherwise false. TRUE = block
+			#Requires all three to return true, otherwise false. TRUE = block
 			AND = {
-			#Faction Distance Limiter.
-			OR = {
-			has_game_rule = { rule = RULE_NEIGHBOR_FACTION_DISTANCE option = FD_1 }
-			AND = {
-			has_game_rule = { rule = RULE_NEIGHBOR_FACTION_DISTANCE option = FD_250 }
+				#Faction Distance Limiter.
+				OR = {
+					has_game_rule = { rule = RULE_NEIGHBOR_FACTION_DISTANCE option = FD_1 }
+					AND = {
+						has_game_rule = { rule = RULE_NEIGHBOR_FACTION_DISTANCE option = FD_250 }
+						OR = {
+							AND = {
+								FROM = {has_war = yes}
+								capital_scope = {
+									OR = {
+										AND = {
+											ROOT = {has_war = yes}
+											var:ROOT.OriginalCapitalState = { distance_to = { value > 400 target = PREV
+											} 
+										} 
+									}
+									AND = {
+										ROOT = {has_war = no}
+										var:ROOT.capital = { distance_to = { value > 400 target = PREV
+										} 
+									} 
+								}
+							} 
+						}
+					}
+					AND = {
+						FROM = {has_war = no}
+						FROM = {
+							capital_scope = {
+								OR = {
+									AND = {
+										ROOT = {has_war = yes}
+										var:ROOT.OriginalCapitalState = { distance_to = { value > 400 target = PREV
+										} 
+									}	 
+								}
+								AND = {
+									ROOT = {has_war = no}
+									var:ROOT.capital = { distance_to = { value > 400 target = PREV
+									} 
+								} 
+							}
+						} 
+					} 
+				}
+			}
+		}
+	}
+	AND = {
+		has_game_rule = { rule = RULE_NEIGHBOR_FACTION_DISTANCE option = FD_500 }
 			OR = {
 			AND = {
 			FROM = {has_war = yes}
-			var:FROM.OriginalCapitalState = {
-			OR = {
-			AND = {
-			ROOT = {has_war = yes}
-			var:ROOT.OriginalCapitalState = { distance_to = { value > 400 target = PREV
-			} } }
-			AND = {
-			ROOT = {has_war = no}
-			var:ROOT.capital = { distance_to = { value > 400 target = PREV
-			} } }
-			} }
-			}
-			AND = {
-			FROM = {has_war = no}
-			FROM = {
 			capital_scope = {
-			OR = {
-			AND = {
-			ROOT = {has_war = yes}
-			var:ROOT.OriginalCapitalState = { distance_to = { value > 400 target = PREV
-			} } }
-			AND = {
-			ROOT = {has_war = no}
-			var:ROOT.capital = { distance_to = { value > 400 target = PREV
-			} } }
-			} } }
-			}
-			}
-			}
-			AND = {
-			has_game_rule = { rule = RULE_NEIGHBOR_FACTION_DISTANCE option = FD_500 }
-			OR = {
-			AND = {
-			FROM = {has_war = yes}
-			var:FROM.OriginalCapitalState = {
 			OR = {
 			AND = {
 			ROOT = {has_war = yes}
@@ -81,7 +91,7 @@ DIPLOMACY_CREATE_FACTION_ENABLE_TRIGGER = {
 			OR = {
 			AND = {
 			FROM = {has_war = yes}
-			var:FROM.OriginalCapitalState = {
+			capital_scope = {
 			OR = {
 			AND = {
 			ROOT = {has_war = yes}
@@ -115,7 +125,7 @@ DIPLOMACY_CREATE_FACTION_ENABLE_TRIGGER = {
 			OR = {
 			AND = {
 			FROM = {has_war = yes}
-			var:FROM.OriginalCapitalState = {
+			capital_scope = {
 			OR = {
 			AND = {
 			ROOT = {has_war = yes}
@@ -149,7 +159,7 @@ DIPLOMACY_CREATE_FACTION_ENABLE_TRIGGER = {
 			OR = {
 			AND = {
 			FROM = {has_war = yes}
-			var:FROM.OriginalCapitalState = {
+			capital_scope = {
 			OR = {
 			AND = {
 			ROOT = {has_war = yes}
@@ -221,7 +231,7 @@ DIPLOMACY_JOIN_FACTION_ENABLE_TRIGGER = {
 			OR = {
 			AND = {
 			FROM = {has_war = yes}
-			var:FROM.OriginalCapitalState = {
+			capital_scope = {
 			OR = {
 			AND = {
 			ROOT = {has_war = yes}
@@ -255,7 +265,7 @@ DIPLOMACY_JOIN_FACTION_ENABLE_TRIGGER = {
 			OR = {
 			AND = {
 			FROM = {has_war = yes}
-			var:FROM.OriginalCapitalState = {
+			capital_scope = {
 			OR = {
 			AND = {
 			ROOT = {has_war = yes}
@@ -289,7 +299,7 @@ DIPLOMACY_JOIN_FACTION_ENABLE_TRIGGER = {
 			OR = {
 			AND = {
 			FROM = {has_war = yes}
-			var:FROM.OriginalCapitalState = {
+			capital_scope = {
 			OR = {
 			AND = {
 			ROOT = {has_war = yes}
@@ -323,7 +333,7 @@ DIPLOMACY_JOIN_FACTION_ENABLE_TRIGGER = {
 			OR = {
 			AND = {
 			FROM = {has_war = yes}
-			var:FROM.OriginalCapitalState = {
+			capital_scope = {
 			OR = {
 			AND = {
 			ROOT = {has_war = yes}
@@ -357,7 +367,7 @@ DIPLOMACY_JOIN_FACTION_ENABLE_TRIGGER = {
 			OR = {
 			AND = {
 			FROM = {has_war = yes}
-			var:FROM.OriginalCapitalState = {
+			capital_scope = {
 			OR = {
 			AND = {
 			ROOT = {has_war = yes}
@@ -488,7 +498,7 @@ DIPLOMACY_OFFER_JOIN_FACTION_ENABLE_TRIGGER = {
 			OR = {
 			AND = {
 			FROM = {has_war = yes}
-			var:FROM.OriginalCapitalState = {
+			capital_scope = {
 			OR = {
 			AND = {
 			ROOT = {has_war = yes}
@@ -522,7 +532,7 @@ DIPLOMACY_OFFER_JOIN_FACTION_ENABLE_TRIGGER = {
 			OR = {
 			AND = {
 			FROM = {has_war = yes}
-			var:FROM.OriginalCapitalState = {
+			capital_scope = {
 			OR = {
 			AND = {
 			ROOT = {has_war = yes}
@@ -556,7 +566,7 @@ DIPLOMACY_OFFER_JOIN_FACTION_ENABLE_TRIGGER = {
 			OR = {
 			AND = {
 			FROM = {has_war = yes}
-			var:FROM.OriginalCapitalState = {
+			capital_scope = {
 			OR = {
 			AND = {
 			ROOT = {has_war = yes}
@@ -590,7 +600,7 @@ DIPLOMACY_OFFER_JOIN_FACTION_ENABLE_TRIGGER = {
 			OR = {
 			AND = {
 			FROM = {has_war = yes}
-			var:FROM.OriginalCapitalState = {
+			capital_scope = {
 			OR = {
 			AND = {
 			ROOT = {has_war = yes}
@@ -624,7 +634,7 @@ DIPLOMACY_OFFER_JOIN_FACTION_ENABLE_TRIGGER = {
 			OR = {
 			AND = {
 			FROM = {has_war = yes}
-			var:FROM.OriginalCapitalState = {
+			capital_scope = {
 			OR = {
 			AND = {
 			ROOT = {has_war = yes}
