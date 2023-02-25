@@ -3,8 +3,8 @@ NDefines = {
 NGame = {
 	START_DATE = "1936.1.1.12",
 	END_DATE = "1949.1.1.1",
-	MAP_SCALE_PIXEL_TO_KM = 3.15,					-- Yes, we did the math -- FOR NORTH AMERICA DIVIDED, DO NOT CHANGE!!!!!!!!!!!!!!!
-	SAVE_VERSION = 15,								-- 1.11.0 (Barbarossa)
+	MAP_SCALE_PIXEL_TO_KM = 3.15,					-- Yes, we did the math
+	SAVE_VERSION = 7,								-- 1.8.0
 	CHECKSUM_SALT = "zwOdv5d9wm9uDSOT",				-- Data to modify generated checksum when game binaries have changed but not any content files.
 	LAG_DAYS_FOR_LOWER_SPEED = 10,					-- Days of client lag for decrease of gamespeed
 	LAG_DAYS_FOR_PAUSE = 25,						-- Days of client lag for pause of gamespeed.
@@ -19,7 +19,7 @@ NGame = {
 	FUEL_RESOURCE = "oil",							-- resource that will give country fuel
 	MAX_EFFECT_ITERATION = 1000,					-- maximum allowed iteration for loop effects
 	MAX_SCRIPTED_LOC_RECURSION = 30,				-- max recursion for scripted localizations
-	HANDS_OFF_START_TAG = "PAB",					-- tag for player country for -hands_off runs. use an existing tag that is less likely to affect the game #Default URG
+	HANDS_OFF_START_TAG = "BER",					-- tag for player country for -hands_off runs. use an existing tag that is less likely to affect the game #Default URG
 	ALERT_SFX_COOLDOWN_DAYS = 14,					-- After playing an alert sound, don't play the same sound for XXX days, even if it fires again.
 },
 
@@ -30,11 +30,11 @@ NDiplomacy = {
 	MIN_TRUST_VALUE = -100,							-- Min trust value cap.
 	MAX_OPINION_VALUE = 100,						-- Max opinion value cap.
 	MIN_OPINION_VALUE = -100,						-- Min opinion value cap.
-	BASE_TRUCE_PERIOD = 45,							-- Base truce period in days.
+	BASE_TRUCE_PERIOD = 30,							-- Base truce period in days.
 	TRUCE_PERIOD_AFTER_KICKING_FROM_FACTION = 30,				-- Truce period after kicking someone from faction in days.
 	NUM_DAYS_TO_ENABLE_KICKING_NEW_MEMBERS_OF_FACTION = 90,		-- Number of days before being able to kick a new member of faction 
 	NUM_DAYS_TO_ENABLE_REINVITE_KICKED_NATIONS = 60,			-- Number of days before being able to re invite a kicked nation to your faction
-	BASE_NEGATIVE_OPINION_AFTER_BEING_KICKED = 30,				-- Negative opinion that will be received after kicking a nation
+	BASE_NEGATIVE_OPINION_AFTER_BEING_KICKED = 40,				-- Negative opinion that will be received after kicking a nation
 	DECAY_RATE_OF_NEGATIVE_OPINION_AFTER_BEING_KICKED = 2,		-- Weekly decay rate of the negative opinion
 	TRUCE_BREAK_COST_PP = 200,						-- Base cost in PP of breaking a truce by joining a war or accepting a call to war ( you cannot declare war yourself until the truce if up ), this is then multiplied by the time left on the truce ( so once half the truce is up it only cost 50% of this )
 	BASE_PEACE_PUPPET_FACTOR = 100,					-- Base factor for puppet in %.
@@ -42,59 +42,6 @@ NDiplomacy = {
 	BASE_PEACE_TAKE_UNCONTROLLED_STATE_FACTOR = 5.0, 			-- Base factor for taking state you do not control 
 	BASE_PEACE_TAKE_FACTION_CONTROLLED_STATE_FACTOR = 0.5, 		-- Base factor for taking state you do not control, but someone in faction does
 	BASE_PEACE_FORCE_GOVERNMENT_COST = 100, 		-- Base cost for forcing a country to change government.
-	-- In peace conference, cost is factored based on how many times the state has been contested and for how long it has been uncontested (for everyone else)
-	PEACE_COST_FACTOR_CONTESTED_MAX = 15,           -- To prevent overflows due to the exponential increase, cap the contested factor to this
-	PEACE_COST_FACTOR_UNCONTESTED_MAX = 15,         -- To prevent overflows due to the exponential increase, cap the uncontested factor to this
-	PEACE_COST_FACTOR_CONTESTED_BID = 1.20,         -- Cost factor for each contested bid on the state.
-	PEACE_COST_FACTOR_UNCONTESTED_BID_MIN = 1.15,   -- Minimum cost factor for each turn a bid has been uncontested on the state.
-	PEACE_COST_FACTOR_UNCONTESTED_BID_MAX = 1.60,   -- Maximum cost factor for each turn a bid has been uncontested on the state.
-	PEACE_COST_FACTOR_UNCONTESTED_BID_STEP = 0.15,  -- Uncontested cost factor will increase by this much each turn.
-	PEACE_COST_FACTOR_CAPITAL_SHIP_IC = 0.005,				-- In peace conference, cost for taking one capital ship per IC
-	PEACE_COST_FACTOR_SCREENING_SHIP_IC = 0.005,			-- In peace conference, cost for taking a part of the screening ships per IC
-	PEACE_INCREASE_COST_FACTOR_PER_MISSING_PERCENT_FOR_CAPITULATION = 0.0012, 	-- increase factor if loser has not capitulated, for every percent between surrender level and BASE_SURRENDER_LEVEL
-	-- peace action taker has a discount if they occupy the state depending on compliance
-	-- it's a table where first value is the compliance level, and the second the factor
-	PEACE_COST_FACTOR_COMPLIANCE_STEPS = {
-		0,   1.0, -- between 0%  and 30% compliance, factor is 1.0
-		30,  0.9, -- between 30% and 70%
-		70,  0.8, -- above 70%
-	},
-	-- In peace conference, adding a stackable to a peace action, increment the cost by a percentage
-	PEACE_COST_FACTOR_STACK_DEMILITARIZED_ZONE = 0.25,
-	PEACE_COST_FACTOR_STACK_WAR_REPARATION = 0.25,
-	PEACE_COST_FACTOR_STACK_RESOURCE_RIGHTS = 0.25,
-	PEACE_COST_FACTOR_STACK_DISMANTLE_INDUSTRY = 0.25,
-	-- peace conference can set timed effect, set length in days
-	PEACE_TIMED_EFFECT_LENGTH_DEMILITARIZED_ZONE = 1825, -- 5 years
-	PEACE_TIMED_EFFECT_LENGTH_WAR_REPARATION = 1825,
-	PEACE_TIMED_EFFECT_LENGTH_RESOURCE_RIGHTS = 1825,
-	PEACE_TIMED_EFFECT_RATIO_CIVILIAN_FACTORY_WAR_REPARATION = 0.5, 	-- ratio of civilian factories taken via stackable war reparation
-
-	-- The Influence cost modifier is basically the inverse of distance. Nearby states are cheaper, and far-away states are more expensive.
-	-- We basically do a two-segment lerp:
-	--   if distance is between [0, NEUTRAL_DIST], we lerp the cost modifier between [MIN_DIST_COST_MODIFIER, 1.0]
-	--   if distance is between [NEUTRAL_DIST, MAX_DIST], we lerp the cost modifier between [1.0, MAX_DIST_COST_MODIFIER]
-	-- The below values represent (pixel distance / INFLUENCE_DISTANCE_DIVISOR)
-	INFLUENCE_NEUTRAL_DIST_CAPITAL = 30.0,           -- distance to capital that results in a cost modifier of 1.0
-	INFLUENCE_MAX_DIST_CAPITAL = 45.0,              -- distance to capital that results in a cost modifier of INFLUENCE_MAX_DIST_COST_MODIFIER
-	INFLUENCE_NEUTRAL_DIST_CORE = 6.0,              -- distance to nearest core state that results in a cost modifier of 1.0
-	INFLUENCE_MAX_DIST_CORE = 13.0,                 -- distance to nearest core state that results in a cost modifier of INFLUENCE_MAX_DIST_COST_MODIFIER
-	INFLUENCE_NEUTRAL_DIST_CONTROLLED = 14.0,       -- distance to nearest controlled state that results in a cost modifier of 1.0
-	INFLUENCE_MAX_DIST_CONTROLLED = 20.0,           -- distance to nearest controlled state that results in a cost modifier of INFLUENCE_MAX_DIST_COST_MODIFIER
-	INFLUENCE_MIN_DIST_COST_MODIFIER = 0.70,        -- Cost modifier at min (zero) distance
-	INFLUENCE_MAX_DIST_COST_MODIFIER = 1.00,         -- Cost modifier at max distance
-	INFLUENCE_RATIO_CAPITAL = 0.05,                  -- Ratio of influence based on distance to capital
-	INFLUENCE_RATIO_CORE = 0.45,                     -- Ratio of influence based on distance to nearest core territory
-	INFLUENCE_RATIO_CONTROLLED = 0.5,               -- Ratio of influence based on distance to neared controlled territory (including uncontested peace conference bids)
-	INFLUENCE_DISTANCE_DIVISOR = 22.0,              -- Divide pixel distance with this when determining distance to capital / core / controlled states. Just an arbitrary way of scaling the distance numbers.
-
-	INFLUENCE_PER_ADJACENCY = 0.05,					-- How much influence to add per uncontested adjacent state in the PC (blob, don't snake)
-
-	INFLUENCE_MAJOR_FACTOR = 1.0,					--How much influence discount an AI major will get (inverse)
-	INFLUENCE_MINOR_FACTOR = 1.0,					--How much influence discount an AI minor will get (inverse)
-
-	PEACE_TRIGGER_AI_MAX_INFLUENCE_VALUE = 0.99,	-- Max influence value for pc_is_state_outside_influence_for_winner trigger
-
 	BASE_IMPROVE_RELATION_COST = 10,                -- Political power cost to initiate relation improvement
 	BASE_IMPROVE_RELATION_SAME_IDEOLOGY_GROUP_MAINTAIN_COST = 0.2, 			-- Political power cost each update when boosting relations with nation of same ideology
 	BASE_IMPROVE_RELATION_DIFFERENT_IDEOLOGY_GROUP_MAINTAIN_COST = 0.4,    	-- Political power cost each update when boosting relations with nation of different ideology
@@ -128,19 +75,19 @@ NDiplomacy = {
 	VOLUNTEERS_TRANSFER_SPEED = 12,					-- days to transfer a unit to another nation		-- default 14
 	VOLUNTEERS_DIVISIONS_REQUIRED = 12,				-- This many divisons are required for the country to be able to send volunteers.	-- default 30
 	TENSION_STATE_VALUE = 0.75,						-- Tension value gained by annexing one state		-- default 2
-	TENSION_CIVIL_WAR_IMPACT = 0.2,					-- civil war multiplier on tension.					-- default 0.2
+	TENSION_CIVIL_WAR_IMPACT = 0.15,				-- civil war multiplier on tension.					-- default 0.2
 	TENSION_NO_CB_WAR = 8,							-- Amount of tension generated by a no-CB wargoal	-- default 15
 	TENSION_CB_WAR = 5,								-- Amount of tension generated by a war with a CB	-- default 5
-	TENSION_ANNEX_NO_CLAIM = 1.8,					-- Amount of tension generated by annexing a state you don't have claims on			-- default 2.0
-	TENSION_ANNEX_CLAIM = 0.7,						-- Amount of tension generated by annexing a state you DO have claims on			-- default 1.0
-	TENSION_ANNEX_CORE = -0.2,						-- Amount of tension generated by annexing a state that is your core
+	TENSION_ANNEX_NO_CLAIM = 1.5,					-- Amount of tension generated by annexing a state you don't have claims on			-- default 2.0
+	TENSION_ANNEX_CLAIM = 0.8,						-- Amount of tension generated by annexing a state you DO have claims on			-- default 1.0
+	TENSION_ANNEX_CORE = 0.5,						-- Amount of tension generated by annexing a state that is your core
 	TENSION_PUPPET = 1.25,							-- Amount of tension generated by puppeting (per state)								-- default 1.5
 	TENSION_VOLUNTEER_FORCE_DIVISION = 0.1,			-- Amount of tension generated for each sent division								-- default 0.2
-	TENSION_DECAY_DAILY = 0.006,					-- Each day tension decays this much for Threat sources which are no longer relevant. Replaces TENSION_DECAY as of 1.12.0
+	TENSION_DECAY = 0.1,							-- Each months tension decays this much
 	TENSION_SIZE_FACTOR = 1.0,						-- All action tension values are multiplied by this value
 	TENSION_TIME_SCALE_START_DATE = "1936.1.1.12",	-- Starting at this date, the tension values will be scaled down (will be equal to 1 before that)
 	TENSION_TIME_SCALE_MONTHLY_FACTOR = -0.007,		-- Timed tension scale will be modified by this amount starting with TENSION_TIME_SCALE_START_DATE	-- default -0.005
-	TENSION_TIME_SCALE_MIN = 0.3,					-- Timed tension scale won't decrease under this value
+	TENSION_TIME_SCALE_MIN = 0.20,					-- Timed tension scale won't decrease under this value
 	TENSION_GUARANTEE = -6,							-- default -5
 	TENSION_FACTION_JOIN = 2,						-- default 4
 	TENSION_JOIN_ATTACKER = 2,						-- scale of the amount of tension added when country joins attacker side
