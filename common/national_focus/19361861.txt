@@ -213,8 +213,8 @@ focus_tree = {
 		completion_reward = {
 		add_political_power = 100
 		add_popularity = {
-				ideology = neutrality
-				popularity = -0.1
+				ideology = progressivism
+				popularity = 0.1
 			}
 		}
 	}
@@ -630,14 +630,13 @@ focus_tree = {
 			
 		}
 		completion_reward = {
-		add_political_power = 100
+		add_stability = 0.03
+		add_political_power = 40
 		add_popularity = {
 				ideology = democratic
-				popularity = -0.1
+				popularity = -0.2
 			}
-		hidden_effect = {
-		add_ideas = SIL_everybody_hates_maynard	
-		}
+		
 		}
 	}
 	focus = {
@@ -763,7 +762,7 @@ focus_tree = {
 		}
 		prerequisite = { focus = SIL_reelect_the_democrats  }
 		completion_reward = {
-			
+		add_ideas = SIL_sales_tax_idea
 		}
 	}
 	focus = {
@@ -775,8 +774,12 @@ focus_tree = {
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
 		}
+		available ={
+		has_completed_focus = SIL_ban_bookies	
+		}
 		prerequisite = { focus = SIL_reelect_the_democrats  }
 		completion_reward = {
+
 		remove_ideas = SIL_strict_prohibition	
 		}
 	}
@@ -838,7 +841,22 @@ focus_tree = {
 		}
 		prerequisite = { focus = SIL_state_wide_highway_project  }
 		completion_reward = {
-			
+		724 = {
+		add_extra_state_shared_building_slots = 1	
+		add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+		}
+		727 = {
+		add_extra_state_shared_building_slots = 1
+		add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+		}
 		}
 	}
 	focus = {
@@ -853,7 +871,17 @@ focus_tree = {
 		prerequisite = { focus = SIL_down_state_industries  }
 		prerequisite = { focus = SIL_increase_sales_tax_rate  }
 		completion_reward = {
-			
+		remove_ideas = SIL_marion_problem
+		380 = {
+		set_state_category = large_city
+		}
+		720 = {
+		set_state_category = large_city
+		}
+		381 = {
+		set_state_category = large_town
+		}
+
 		}
 	}
 	focus = {
@@ -867,7 +895,11 @@ focus_tree = {
 		}
 		prerequisite = { focus = SIL_reelect_the_democrats  }
 		completion_reward = {
-			
+		add_political_power = 50
+		swap_ideas = {
+    	remove_idea = SIL_mafia_control_1
+    	add_idea = SIL_mafia_control_2
+		}	
 		}
 	}
 	focus = {
@@ -881,7 +913,16 @@ focus_tree = {
 		}
 		prerequisite = { focus = SIL_reelect_the_democrats  }
 		completion_reward = {
-
+			
+			add_tech_bonus = {
+				category = military_police_tech
+				uses = 3
+				bonus = 1
+			}
+		create_intelligence_agency = {
+    name = "Anti-Graft Bureau"
+    icon = GFX_intelligence_agency_logo_agency
+}
 		}
 	}
 	focus = {
@@ -889,13 +930,16 @@ focus_tree = {
 		icon = GFX_Goal_Unknown
 		x = 13
 		y = 5
-		cost = 7.2
+		cost = 10
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
 		}
 		prerequisite = { focus = SIL_ban_bookies  }
 		prerequisite = { focus = SIL_expand_police_funding  }
 		
+		completion_reward = {
+		remove_ideas = SIL_mafia_control_2	
+		}
 	}
 	focus = {
 		id = SIL_break_up_the_kelly_nash_machine
@@ -1125,13 +1169,28 @@ focus_tree = {
 		y = 1
 		cost = 7.2
 		bypass = {
-		has_war_with = SOH	
+		OR = {
+		SIN = {
+		is_in_faction_with = SIL	
+		}	
+		NOT = {
+		country_exists = SIN	
+		}
+		has_war_with = SIN	
+		}
+		}
+		available = {
+		is_faction_leader = yes	
 		}
 		relative_position_id = SIL_interventionism
 		mutually_exclusive = { focus = SIL_secure_indiana}
 		prerequisite = { focus = SIL_interventionism  }
 		completion_reward = {
-				#event to send indiana aid
+		SIN = {
+		country_event = {
+				id = generic.5
+			}
+		}
 
 
 		}
@@ -1148,7 +1207,13 @@ focus_tree = {
 		has_war_with = SOH	
 		}
 		available = {
-		is_neighbor_of = SOH	
+		OR = {
+		is_neighbor_of = SOH
+		SIN = {
+		is_in_faction_with = SIL	
+		}
+		}
+			
 		}
 		completion_reward = {
 		create_wargoal = {
@@ -1185,7 +1250,7 @@ focus_tree = {
 		prerequisite = { focus = SIL_masquerading_reds  }
 		relative_position_id = SIL_interventionism
 		available = {
-			
+		controls_wisconsin_trigger = yes
 		}
 		completion_reward = {
 		custom_effect_tooltip = SWA_USA_TT
@@ -1203,7 +1268,13 @@ focus_tree = {
 		prerequisite = { focus = SIL_aid_indiana focus = SIL_secure_indiana  }
 		relative_position_id = SIL_interventionism
 		available = {
-		is_neighbor_of = SMI	
+		OR = {
+		is_neighbor_of = SMI
+		SIN = {
+		is_in_faction_with = SIL	
+		}
+		}
+			
 		}
 		completion_reward = {
 		create_wargoal = {
@@ -1233,10 +1304,7 @@ focus_tree = {
 				remove_idea = SIL_kelly_nash_political_machine
 			}
 		add_ideas = SIL_opposition_to_corruption
-			swap_ideas = {
-				add_idea = SIL_mafia_infighting 
-				remove_idea = SIL_mafia_control_1
-			}	
+			
 		}
 	}
 
@@ -1683,7 +1751,10 @@ focus_tree = {
 		relative_position_id = SIL_kelly_nash_political_machine
 		prerequisite = { focus = SIL_corrupt_police  }
 		completion_reward = {
-		#
+		add_popularity = {
+				ideology = democratic
+				popularity = -0.15
+			}
 		}
 		
 	}
@@ -1696,7 +1767,7 @@ focus_tree = {
 		relative_position_id = SIL_kelly_nash_political_machine
 		prerequisite = { focus = SIL_government_sponsored_bookies  }
 		completion_reward = {
-		add_timed_idea = { idea = SIL_speakeasies_construction  days = 365 }
+		add_timed_idea = { idea = SIL_speakeasies_construction  days = 400 }
 		}
 		
 	}
