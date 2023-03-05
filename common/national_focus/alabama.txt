@@ -705,10 +705,14 @@ focus = {
 		icon = GFX_focus_SAL_provoke_tenneessee
 		x = -1
 		y = 1
-		cost = 10
-		#THIS SHOULD BE UNLOCKED VIA EVENT 
+		cost = 4
 		relative_position_id = SAL_work_with_arkansas
 		available_if_capitulated = yes
+		bypass = { 
+		NOT = {
+    	country_exists = STN
+		}
+		}
 		prerequisite = { focus = SAL_work_with_arkansas focus = SAL_invade_arkansas}
 		ai_will_do = {
 			factor = 80
@@ -880,6 +884,11 @@ focus = {
 			factor = 80
 		}
 		completion_reward = {
+		set_party_name = { 
+    ideology = neutrality 
+    long_name = SAL_bigman_party_long 
+    name = SAL_bigman_party 
+	}
 			SAL = {
         start_civil_war = {
     ruling_party = neutrality
@@ -899,26 +908,14 @@ focus = {
             }
 			add_stability = -0.10
 			hidden_effect = {
-		recruit_character = SAL_Walt_Cagle
-		remove_country_leader_role = {
-			character = SAL_bibb_graves
-			ideology = centrism
-		}
-		add_country_leader_role = {
-			character = "SAL_Walt_Cagle"
-			country_leader = {
-				ideology = despotism
-				traits = {  }
-				expire = "1965.3.1.1"
+		promote_character = SAL_Walt_Cagle
 			}
-			promote_leader = yes
-			}
-			}
+			
 			country_event = {
 				id  = alabama.27
 			}
-     		
-		}
+     		}
+		
 	}
 	focus = {
 		id = SAL_Economic_Philosophy
@@ -1329,21 +1326,17 @@ focus = {
 			factor = 2
 		}
 		completion_reward = {
+		add_field_marshal_role = {
+    Character = SAL_bibb_general
+    skill = 2
+	traits = { war_hero  }
+    attack_skill = 2
+    defense_skill = 2
+    planning_skill = 3
+    logistics_skill = 3
+}
 		hidden_effect = {
-		recruit_character = SAL_bibb_general
-		remove_country_leader_role = {
-			character = SAL_bibb_graves
-			ideology = centrism
-		}
-		add_country_leader_role = {
-			character = "SAL_bibb_general"
-			country_leader = {
-				ideology = centrism
-				traits = { great_war_hero }
-				expire = "1965.3.1.1"
-			}
-			promote_leader = yes
-			}
+		promote_character = SAL_bibb_general
 			}
 		add_war_support = 0.10
 		add_manpower = 1500
@@ -3281,7 +3274,7 @@ focus = {
 		cost = 7.2
 
 		mutually_exclusive = { focus = SAL_Alabama_Marines focus = SAL_Nickajack_Mountaineer_Corps }
-
+		
 		search_filters = {  FOCUS_FILTER_POLITICAL }
 		
 		available_if_capitulated = yes
@@ -3388,7 +3381,11 @@ focus = {
 		cost = 10
 		mutually_exclusive = { focus = SAL_Mechanization focus = SAL_Nickajack_Mountaineer_Corps }
 		search_filters = {  FOCUS_FILTER_POLITICAL }
-		
+		available = { 
+		NOT = { 
+		has_completed_focus = SAL_alabama_civil_war
+		}
+		}
 		available_if_capitulated = yes
 		ai_will_do = {
 			factor = 2
