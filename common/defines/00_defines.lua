@@ -247,7 +247,12 @@ NDiplomacy = {
 	EMBARGO_DIFFERENT_IDEOLOGY_AI_WEIGHT = 10,			-- AI weight for different ideology
 	EMBARGO_DIFFERENT_IDEOLOGY_AT_OFFENSIVE_WAR_AI_WEIGHT = 10,	--AI weight for different ideology and in offensive war (additive with above)
 	EMBARGO_RECIPIENT_IS_MAJOR_AI_WEIGHT = 10,			-- Ai weight for recipient being major
-	EMBARGO_NEIGHBOUR_AI_WEIGHT = -10,					--AI weight for embargoing neighbors (neighbors are big and scary, we should consider not doing it)
+	EMBARGO_NEIGHBOUR_AI_WEIGHT = -10,		--AI weight for embargoing neighbors (neighbors are big and scary, we should consider not doing it)
+
+	PEACE_SCORE_TRANSFERRED_TO_FACTION_LEADER = 0.1,
+	PEACE_SCORE_RESET_LOW_SCORE_THRESHOLD = 0.05,
+	PEACE_SCORE_RESET_LOW_SCORE_MINIMUM_FOR_RECEIVER = 0.1,
+
 },
 
 NCountry = {
@@ -3111,6 +3116,8 @@ NAI = {
 	PEACE_AI_EVALUATE_OTHER_IF_CORE = true,                     -- Whether AI should evaluate giving states to other winners if state is their core (may affect performance on new conference turn)
 	PEACE_AI_EVALUATE_OTHER_IF_CLAIM = true,                    -- Whether AI should evaluate giving states to other winners if they have a claim on the state (may affect performance on new conference turn)
 	PEACE_AI_EVALUATE_OTHER_ALWAYS = false,                     -- Whether AI should always evaluate giving states to other winners (!!! may heavily affect performance on new conference turn for large peace conferences !!!)
+	
+	MIN_POLITICAL_POWER_MONTHLY_GAIN_FOR_IMPROVE_RELATIONS = 0.50,
 },
 
 NFocus = {
