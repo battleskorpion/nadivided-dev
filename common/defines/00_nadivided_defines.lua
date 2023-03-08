@@ -24,7 +24,7 @@ NCountry = {
 	BASE_TENSION_MAJOR_COUNTRY_INDEX = 1,			-- Which major country should be considered the base country when scaling generated world tension. 0 is the country with the most factories, 1 is the second most-factories country etc. This number has to be lower than MIN_MAJOR_COUNTRIES
 
 	MIN_FOCUSES_FOR_CONTINUOUS = 8,				-- def 10 -- Focuses needed to unlock continuous focuses
-
+	POPULATION_YEARLY_GROWTH_BASE = 0.015,		-- def 0.015 -- basic population growth per year, used for monthly manpower gain
 },
 
 NAI = {
@@ -33,11 +33,14 @@ NAI = {
 
 NTechnology = {
 	MAX_SUBTECHS = 5,							-- def. 3 -- Max number of sub technologies a technology can have.
+	BASE_RESEARCH_POINTS_SAVED = 45.0,			-- def 30 Base amount of research points a country can save per slot.
+	BASE_TECH_COST = 95						-- base 100
 
 },
 
 NFocus = {
 	MAX_SAVED_FOCUS_PROGRESS = 21,				-- def 10 -- This much progress can be saved while not having a focus selected
+
 },
 
 }
