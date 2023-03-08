@@ -14,16 +14,30 @@ NGame = {
 },
 
 NDiplomacy = {
+	EMBARGO_COST = 70,								-- def 100 -- One-time cost
+
 },
 
 NCountry = {
 	MIN_MAJOR_COUNTRIES	= 40,						-- MIN_MAJOR_COUNTRIES countries with most factories will be considered as major countries
 	ADDITIONAL_MAJOR_COUNTRIES_IC_RATIO = 0.7,		-- Countries will also be considered major when having more factories that the average of top MIN_MAJOR_COUNTRIES countries' factories times ADDITIONAL_MAJOR_COUNTRIES_IC_RATIO
 	BASE_TENSION_MAJOR_COUNTRY_INDEX = 1,			-- Which major country should be considered the base country when scaling generated world tension. 0 is the country with the most factories, 1 is the second most-factories country etc. This number has to be lower than MIN_MAJOR_COUNTRIES
+
+	MIN_FOCUSES_FOR_CONTINUOUS = 8,				-- def 10 -- Focuses needed to unlock continuous focuses
+
 },
 
 NAI = {
 	VP_LEVEL_IMPORTANCE_MEDIUM = 10,			-- default -- Victory points with values higher than or equal to this are considered to be of medium importance.
+},
+
+NTechnology = {
+	MAX_SUBTECHS = 5,							-- def. 3 -- Max number of sub technologies a technology can have.
+
+},
+
+NFocus = {
+	MAX_SAVED_FOCUS_PROGRESS = 21,				-- def 10 -- This much progress can be saved while not having a focus selected
 },
 
 }
