@@ -32,7 +32,7 @@ focus_tree = {
 focus = {
     id = SCO_aviation_effort
     icon = GFX_goal_generic_build_airforce
-    x = 2
+    x = 5
     y = 1
     cost = 10
 
@@ -343,8 +343,8 @@ focus = {
 focus = {
     id = SCO_rocket_effort
     icon = GFX_focus_rocketry
-    #prerequisite = { focus = SCO_aviation_effort_2 }
-    #prerequisite = { focus = SCO_infrastructure_effort }
+    prerequisite = { focus = SCO_aviation_effort_2 }
+    prerequisite = { focus = SCO_infrastructure_effort }
     x = 0
     y = 2
     relative_position_id = SCO_aviation_effort_2
@@ -403,7 +403,7 @@ focus = {
 focus = {
     id = SCO_naval_effort
     icon = GFX_goal_generic_construct_naval_dockyard
-    x = 6
+    x = 9
     y = 1
     cost = 10
 
@@ -851,6 +851,296 @@ focus = {
 }
 
 
+focus = {
+    id = SCO_Depression_Relief_Effort
+    icon = GFX_focus_SMD_depression_relief
+    prerequisite = {}
+    available = {
+        date > 1938.0.1
+    }
+    x = 1
+    y = 1
+    cost = 5
+    ai_will_do = {
+        factor = 50
+    }
+    available_if_capitulated = no
+    search_filters = {   }
+    completion_reward = {
+        remove_ideas = SCO_eastern_Dustbowl_idea
+    }
+}
+
+focus = {
+    id = SCO_Soup_Kitchen_Expansions
+    icon = GFX_focus_SCO_SoupKitchen
+    prerequisite = { focus = SCO_Depression_Relief_Effort}
+    available = {
+
+    }
+    x = 1
+    y = 1
+    relative_position_id = SCO_Depression_Relief_Effort
+    cost = 3.5
+    ai_will_do = {
+        factor = 40
+    }
+    available_if_capitulated = no
+    search_filters = {     }
+    completion_reward = {
+        add_stability = 0.05
+
+    }
+}
+
+focus = {
+    id = SCO_Rationing_Program
+    icon = GFX_focus_SCO_Rationing_Program
+    prerequisite = { focus = SCO_Depression_Relief_Effort}
+    available = {
+
+    }
+    x = -1
+    y = 1
+    relative_position_id = SCO_Depression_Relief_Effort
+    cost = 3.5
+    ai_will_do = {
+        factor = 40
+    }
+    available_if_capitulated = no
+    search_filters = {     }
+    completion_reward = {
+        add_timed_idea = { idea = SCO_Rationing_Program_idea days = 75 }
+    }
+}
+
+focus = {
+    id = SCO_Revive_Gold_silver_mining_and_coal
+    icon = GFX_focus_usa_reestablish_the_gold_standard
+    prerequisite = { focus = SCO_Rationing_Program}
+    prerequisite = { focus = SCO_Soup_Kitchen_Expansions}
+    available = {
+
+    }
+    x = 1
+    y = 1
+    relative_position_id = SCO_Rationing_Program
+    cost = 5
+    ai_will_do = {
+        factor = 40
+    }
+    available_if_capitulated = no
+    search_filters = {     }
+    completion_reward = {
+        add_offsite_building = { type = industrial_complex level = 1 }
+    }
+}
+
+focus = {
+    id = SCO_Colorado_Works
+    icon = GFX_goal_generic_construct_civ_factory
+    prerequisite = { focus = SCO_Rationing_Program}
+    prerequisite = { focus = SCO_Soup_Kitchen_Expansions}
+    available = {
+
+    }
+    x = 3
+    y = 1
+    relative_position_id = SCO_Rationing_Program
+    cost = 7.2
+    ai_will_do = {
+        factor = 40
+    }
+    available_if_capitulated = no
+    search_filters = {     }
+    completion_reward = {
+        318 = {
+
+            limit = {
+                free_building_slots = {
+                    building = industrial_complex
+                    size > 2
+                    include_locked = yes
+                }
+                OR = {
+                    is_in_home_area = yes
+                    NOT = {
+                        owner = {
+                            any_owned_state = {
+                                free_building_slots = {
+                                    building = industrial_complex
+                                    size > 2
+                                    include_locked = yes
+                                }
+                                is_in_home_area = yes
+                            }
+                        }
+                    }
+                }
+            }
+            add_extra_state_shared_building_slots = 2
+            add_building_construction = {
+                type = industrial_complex
+                level = 2
+                instant_build = yes
+            }
+        }
+    }
+}
+focus = {
+    id = SCO_Colorado_Autarky
+    icon = GFX_focus_SWA_push_for_autarky
+    prerequisite = { focus = SCO_Revive_Gold_silver_mining_and_coal}
+    mutually_exclusive = { focus = SCO_Global_Trade_Program }
+    available = {
+
+    }
+    x = 1
+    y = 1
+    relative_position_id = SCO_Revive_Gold_silver_mining_and_coal
+    cost = 5
+    ai_will_do = {
+        factor = 40
+    }
+    available_if_capitulated = no
+    search_filters = {     }
+    completion_reward = {
+        add_offsite_building = { type = arms_factory level = 2 }
+        completion_reward = {
+            add_timed_idea = { idea = SCO_Colorado_Autarky_idea days = 75 
+            }
+        }
+    }
+}
+focus = {
+    id = SCO_Develop_synth_rubber
+    icon = GFX_focus_rubber
+    x = 1
+    y = 1
+    relative_position_id = SCO_Colorado_Autarky
+    prerequisite = { focus = SCO_Colorado_Autarky }
+    cost = 7.2
+
+    search_filters = {  FOCUS_FILTER_RESEARCH }
+    
+    available_if_capitulated = yes
+    ai_will_do = {
+        factor = 150
+    }
+
+    completion_reward = {
+        add_tech_bonus = {
+            name = synt
+            bonus = 1.5
+            uses = 1
+            category = synth_resources
+        }
+    }
+}
+#
+focus = {
+    id = SCO_Construct_rubber_plants
+    icon = GFX_focus_synth_facility
+    x = 0
+    y = 1
+    relative_position_id = SCO_Develop_synth_rubber
+    prerequisite = { focus = SCO_Develop_synth_rubber }
+    cost = 7.2
+
+    search_filters = {  FOCUS_FILTER_RESEARCH }
+    
+    available_if_capitulated = yes
+    ai_will_do = {
+        factor = 150
+    }
+
+    available = { has_tech = synth_oil_experiments }
+
+      completion_reward = { 
+        custom_effect_tooltip = SLA_research_syth_tt
+        random_owned_controlled_state = {
+            limit = {
+                free_building_slots = {
+                    building = synthetic_refinery 
+                    size > 1
+                    include_locked = yes
+                }
+                OR = {
+                    is_in_home_area = yes
+                    NOT = {
+                        owner = {
+                            any_owned_state = {
+                                free_building_slots = {
+                                    building = synthetic_refinery
+                                    size > 3
+                                    include_locked = yes
+                                }
+                                is_in_home_area = yes
+                            }
+                        }
+                    }
+                }
+            }
+            add_extra_state_shared_building_slots = 3
+            add_building_construction = {
+                type = synthetic_refinery
+                level = 3
+                instant_build = yes
+                }
+            }
+        }
+}
+#
+
+
+focus = {
+    id = SCO_Global_Trade_Program
+    icon = GFX_focus_cascadian_dollar
+    prerequisite = { focus = SCO_Revive_Gold_silver_mining_and_coal}
+    mutually_exclusive = { focus = SCO_Colorado_Autarky }
+    available = {
+
+    }
+    x = -1
+    y = 1
+    relative_position_id = SCO_Revive_Gold_silver_mining_and_coal
+    cost = 5
+    ai_will_do = {
+        factor = 40
+    }
+    available_if_capitulated = no
+    search_filters = {     }
+    completion_reward = {
+        add_ideas = SCO_Global_Trade_Program_idea
+    }
+}
+
+
+focus = {
+    id = SCO_Colorado_to_LA_Corridor
+    icon = GFX_focus_SOR_east_asian_trade
+    prerequisite = { focus = SCO_Global_Trade_Program}
+    
+    available = {
+		controls_state = 43	
+    }
+    x = 0
+    y = 1
+    relative_position_id = SCO_Global_Trade_Program
+    cost = 5
+    ai_will_do = {
+        factor = 40
+    }
+    available_if_capitulated = no
+    search_filters = {     }
+    completion_reward = {
+        add_offsite_building = { type = industrial_complex level = 2 }
+        swap_ideas = {
+            remove_idea = SCO_Global_Trade_Program_idea
+            add_idea = SCO_Global_Trade_Program_Boom_idea
+        }
+    }
+}
 
 focus = {
     id = SCO_Raise_Colorado_Militias
