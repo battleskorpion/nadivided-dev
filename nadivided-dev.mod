@@ -1,5 +1,5 @@
 name="North America Divided [Dev]"
-version="1.12.3"
+version="1.12.4"
 supported_version="1.12.*"
 path="mod/nadivided-dev"
 user_dir="nadivided"
