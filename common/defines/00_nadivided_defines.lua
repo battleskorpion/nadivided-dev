@@ -16,6 +16,7 @@
 --NDiplomacy = {
 	NDefines.NDiplomacy.EMBARGO_COST = 70							-- def 100 -- One-time cost
 	NDefines.NDiplomacy.VOLUNTEERS_DIVISIONS_REQUIRED = 12			-- def 30
+	NDefines.NDiplomacy.TENSION_DECAY_DAILY = 0.027 				-- def 0.005
 
 --},
 
