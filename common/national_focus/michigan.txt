@@ -73,6 +73,38 @@
 	}
 
 	focus = {
+		id = SMI_secure_naval_shipyards
+		icon = GFX_
+		cost = 5
+		relative_position_id = SMI_guarantee_union_seats_in_government
+		prerequisite = {
+			focus = SMI_guarantee_union_seats_in_government
+		}
+		x = -2
+		y = 1
+		completion_reward = { 
+			custom_effect_tooltip = SMI_civil_war_navy_tt
+			set_country_flag = SMI_secured_navy_bases_flag
+		}
+	}
+
+	focus = {
+		id = SMI_secure_army_bases
+		icon = GFX_
+		cost = 14.3
+		relative_position_id = SMI_guarantee_union_seats_in_government
+		prerequisite = {
+			focus = SMI_guarantee_union_seats_in_government
+		}
+		x = 0
+		y = 1
+		completion_reward = { 
+			custom_effect_tooltip = SMI_civil_war_army_tt
+			set_country_flag = SMI_secured_army_bases_flag
+		}
+	}
+
+	focus = {
 		id = SMI_expand_the_workers_rights_act
 		icon = GFX_
 		cost = 10
@@ -146,9 +178,13 @@
 		y = 1
 		completion_reward = { 
 			custom_effect_tooltip = SMI_upsetting_the_corpretists_may_result_in_them_revolting_tt
-			if = {
+			if = { #base civil war
 				limit = {
 					has_country_flag = SMI_union_seats_confirmed_flag
+					NOT = {
+						has_country_flag = SMI_secured_army_bases_flag
+						has_country_flag = SMI_secured_navy_bases_flag
+					}
 				}
 				SMI_shift_power_unionist_50_effect = yes
 				start_civil_war = {
@@ -159,12 +195,137 @@
 						138 140 734 735 736 740 739 738 737 744 38 745 139 228 220
 					}
 					keep_political_leader = yes
-					army_ratio = 0.35
+					army_ratio = 0.5
+					navy_ratio = 0
+				}
+				set_country_flag = SMI_had_civil_war_commie_flag
+			}
+			if = { #100% navy civil war 
+				limit = {
+					has_country_flag = SMI_union_seats_confirmed_flag
+					has_country_flag = SMI_secured_navy_bases_flag
+					NOT = {
+						has_country_flag = SMI_secured_army_bases_flag
+					}
+				}
+				SMI_shift_power_unionist_50_effect = yes
+				start_civil_war = {
+					ruling_party = communism 
+					ideology = ROOT
+					capital = 738
+					states = {
+						138 140 734 735 736 740 739 738 737 744 38 745 139 228 220
+					}
+					keep_political_leader = yes
+					army_ratio = 0.5
+					navy_ratio = 0
+				}
+				set_country_flag = SMI_had_civil_war_commie_flag
+			}
+			if = { # 85% army civil war
+				limit = {
+					has_country_flag = SMI_union_seats_confirmed_flag
+					has_country_flag = SMI_secured_army_bases_flag
+					NOT = {
+						has_country_flag = SMI_secured_navy_bases_flag
+					}
+				}
+				SMI_shift_power_unionist_50_effect = yes
+				start_civil_war = {
+					ruling_party = communism 
+					ideology = ROOT
+					capital = 738
+					states = {
+						138 140 734 735 736 740 739 738 737 744 38 745 139 228 220
+					}
+					keep_political_leader = yes
+					army_ratio = 0.15
+				}
+				set_country_flag = SMI_had_civil_war_commie_flag
+			}
+			if = { # 85% army and 100% navy civil war
+				limit = {
+					has_country_flag = SMI_union_seats_confirmed_flag
+					has_country_flag = SMI_secured_army_bases_flag
+					has_country_flag = SMI_secured_navy_bases_flag
+				}
+				SMI_shift_power_unionist_50_effect = yes
+				start_civil_war = {
+					ruling_party = communism 
+					ideology = ROOT
+					capital = 738
+					states = {
+						138 140 734 735 736 740 739 738 737 744 38 745 139 228 220
+					}
+					keep_political_leader = yes
+					army_ratio = 0.15
+					navy_ratio = 0
+				}
+				set_country_flag = SMI_had_civil_war_commie_flag
+			}
+			if = {
+				limit = {
+					not = {
+						has_country_flag = SMI_union_seats_confirmed_flag
+					}
+				}
+				add_stability = -0.35
+				set_country_flag = SMI_working_with_corporates_flag
+				add_political_power = 100
+				unlock_decision_category_tooltip = SMI_corporate_cooperation_category
+			}
+		}
+	}
+	
+	focus = {
+		id = SMI_a_michigan_union_state
+		icon = GFX_
+		cost = 5
+		relative_position_id = SMI_nationalize_the_automotive_industrys
+		prerequisite = {
+			focus = SMI_nationalize_the_automotive_industrys
+		}
+		mutually_exclusive = {
+			focus = SMI_social_democratic_republic_of_michigan
+		}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SMI_fought_civil_war_commie_tt
+				has_country_flag = SMI_had_civil_war_commie_flag
+			}
+			has_civil_war = no
+		}
+		x = -2
+		y = 1
+		completion_reward = { 
+			set_cosmetic_tag = SMI_union_state 
+		}
+	}
+	
+	focus = {
+		id = SMI_social_democratic_republic_of_michigan
+		icon = GFX_
+		cost = 5
+		relative_position_id = SMI_nationalize_the_automotive_industrys
+		prerequisite = {
+			focus = SMI_nationalize_the_automotive_industrys
+		}
+		mutually_exclusive = {
+			focus = SMI_a_michigan_union_state
+		}
+		available = {
+			has_government = communism
+			custom_trigger_tooltip = {
+				tooltip = SMI_not_fought_civil_war_commie_tt
+				not = {
+					has_country_flag = SMI_had_civil_war_commie_flag
 				}
 			}
-			else = {
-				## add country decicions for corporate cooperation
-			}
+		}
+		x = 2
+		y = 1
+		completion_reward = { 
+
 		}
 	}
     # focus = {
