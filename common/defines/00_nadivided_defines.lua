@@ -45,4 +45,12 @@
 
 --},
 
+--NMilitary = {
+	FIELD_EXPERIENCE_ON_DIVISION_MULT = 0.005					-- default -- Victory points with values higher than or equal to this are considered to be of medium importance.
+--},
+
+--NRailwayGun = {
+	RAILWAY_GUN_RANGE = 50					-- default -- Victory points with values higher than or equal to this are considered to be of medium importance.
+--},
+
 --}
