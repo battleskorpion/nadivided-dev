@@ -609,6 +609,276 @@
 	}
 
 	focus = {
+		id = SMI_intervention_in_the_ohio_valley
+		icon = GFX_
+		cost = 10
+		x = -2
+		y = 1
+		relative_position_id = SMI_michigan_united_and_strong
+
+		available = {
+			or = {
+				NOT = {
+					has_idea = SMI_treaty_of_detroit
+				}
+				SOH = {
+					has_offensive_war_with = SIN
+				}
+				SOH = {
+					has_offensive_war_with = SKY
+				}
+			}	
+		}
+
+		bypass = {
+			or = {
+				SOH = {
+					exists = no
+				}
+				AND = {
+					controls_state = 39
+					controls_state = 98
+				}
+			}
+		}
+
+		prerequisite = {
+			focus = SMI_michigan_united_and_strong
+		}
+		mutually_exclusive = {
+			focus = SMI_disguard_treaty_of_detroit
+		}
+		completion_reward = { 
+			set_rule = {
+				can_create_factions = yes
+			}
+			create_faction = "Anti-Ohio League"
+			custom_effect_tooltip = SMI_anti_ohio_league_tt
+			if = {
+				limit = {
+					SIN = {
+						has_war_with = SOH
+					}
+				}
+				SIN = {
+					country_event = {
+						id = generic.5 
+						days = 14
+					}
+				}
+			}
+			if = {
+				limit = {
+					SKY = {
+						has_war_with = SOH
+					}
+				}
+				SKY = {
+					country_event = {
+						id = generic.5 
+						days = 14
+					}
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SMI_disguard_treaty_of_detroit
+		icon = GFX_ 
+		cost = 14.3
+		x = 2
+		y = 1
+		relative_position_id = SMI_michigan_united_and_strong
+		prerequisite = {
+			focus = SMI_michigan_united_and_strong
+		}
+		mutually_exclusive = {
+			focus = SMI_intervention_in_the_ohio_valley
+		}
+		will_lead_to_war_with = SOH
+		completion_reward = { 
+			add_stability = -0.25 
+			add_war_support = -0.25
+			remove_ideas = SMI_treaty_of_detroit
+			if = {
+				limit = {
+					SOH = {
+						has_idea = SOH_treaty_of_detroit
+					}
+				}
+				SOH = {
+					remove_ideas = SOH_treaty_of_detroit
+				}
+			}
+			add_ideas = SMI_widespread_public_outcry
+			declare_war_on = {
+				target = SOH
+				type = puppet_wargoal_focus
+			}
+			add_state_claim = 98
+		}
+	}
+
+	focus = {
+		id = SMI_the_capture_of_toledo
+		icon = GFX_ 
+		cost = 4
+		x = -1
+		y = 1
+		available = {
+			controls_state = 39
+			has_war_with = SOH
+		}
+		bypass = {
+			NOT = {
+				has_war_with = SOH
+			}
+		}
+		relative_position_id = SMI_disguard_treaty_of_detroit
+		prerequisite = {
+			focus = SMI_disguard_treaty_of_detroit
+		}
+		completion_reward = { 
+			add_state_core = 39
+			add_state_core = 98
+			add_ideas = SMI_conquest_of_toledo_idea
+		}
+	}
+
+	focus = {
+		id = SMI_the_battle_for_cleveland
+		icon = GFX_
+		cost = 4
+		x = 1
+		y = 1
+		available = {
+			controls_state = 540
+			has_war_with = SOH
+		}
+		relative_position_id = SMI_disguard_treaty_of_detroit
+		bypass = {
+			NOT = {
+				has_war_with = SOH
+			}
+		}
+		prerequisite = {
+			focus = SMI_disguard_treaty_of_detroit
+		}
+		completion_reward = { 
+			add_timed_idea = {
+				idea = SMI_battle_for_cleveland_idea
+				days = 120
+			}
+		}
+	}
+
+	focus = {
+		id = SMI_final_march_to_columbus
+		icon = GFX_
+		cost = 5
+		x = -1
+		y = 1
+		available = {
+			controls_state = 703 
+			controls_state = 48
+			has_war_with = SOH
+		}
+
+		bypass = {
+			NOT = {
+				has_war_with = SOH
+			}
+		}
+
+		relative_position_id = SMI_the_battle_for_cleveland
+		prerequisite = {
+			focus = SMI_the_battle_for_cleveland
+		}
+		prerequisite = {
+			focus = SMI_the_capture_of_toledo
+		}
+		completion_reward = { 
+			add_timed_idea = {
+				idea = SMI_final_march_to_columbus_idea
+				days = 120
+			}
+		}
+	}
+
+	focus = {
+		id = SMI_the_treaty_of_columbus
+		icon = GFX_ 
+		cost = 5
+		x = 0
+		y = 1
+		relative_position_id = SMI_final_march_to_columbus
+		available = {
+			controls_state = 39
+			controls_state = 703 
+			controls_state = 48
+			has_war_with = SOH
+			SOH = {
+				surrender_progress > 0.70
+			}
+		}
+		prerequisite = {
+			focus = SMI_final_march_to_columbus
+		}
+		completion_reward = { 
+			SMI = {
+				white_peace = {
+					tag = SOH
+					message = "Treaty of Columbus Signed"
+				}
+				transfer_state = 39
+				transfer_state = 98
+				puppet = SOH
+				set_autonomy = {
+					target = SOH
+					autonomy_state = autonomy_integrated_puppet
+				}
+			}
+			39 = {
+				remove_core_of = SOH
+			}
+			98 = {
+				remove_core_of = SOH
+			}
+			SOH = {
+				add_ideas = SOH_treaty_of_columbus
+			}
+		}
+	}
+
+	focus = {
+		id = SMI_strike_the_enemy
+		icon = GFX_
+		cost = 10
+		x = 0
+		y = 1
+		relative_position_id = SMI_intervention_in_the_ohio_valley
+		prerequisite = {
+			focus = SMI_intervention_in_the_ohio_valley
+		}
+		bypass = {
+			SMI = {
+				has_war_with = SOH
+			}
+		}
+		completion_reward = { 
+			add_state_core = 39
+			add_state_claim = 98
+			create_wargoal = {
+				target = SOH
+				type = take_claimed_state
+				generator = { 39 98 }
+			}
+			add_ideas = SMI_strike_the_enemy_idea
+		}
+	}
+
+	focus = {
 		id = SMI_destroy_the_black_legion
 		icon = GFX_ 
 		cost = 10 
