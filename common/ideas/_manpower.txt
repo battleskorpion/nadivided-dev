@@ -2,6 +2,7 @@ ideas = {
 
 	mobilization_laws = { 
 		law = yes
+		use_list_view = yes
 
 		cult_conscription = {
 
@@ -38,8 +39,10 @@ ideas = {
 			}
 
 			modifier = {
-				conscription = 0.015
-				mobilization_speed = 0.05			
+				#conscription = 0.01 		#conscription = 0.015
+				#conscription = 0.015
+				conscription = 0.012
+				#mobilization_speed = 0.03	#mobilization_speed = 0.05			
 			}
 			
 			cancel_if_invalid = no
@@ -67,18 +70,19 @@ ideas = {
 			}
 
 			modifier = {
-				conscription = 0.025
-				mobilization_speed = 0.05
+				#conscription = 0.025
+				conscription = 0.02
+				mobilization_speed = 0.07
 			}
 			
-			default = yes
+			#default = yes
 			
 			cancel_if_invalid = no
 		}
 
 		minutemen_militia_conscription = {
 						
-			cost = 50
+			cost = 75
 			removal_cost = -1
 			level = 6
 			
@@ -90,20 +94,41 @@ ideas = {
 
 			modifier = {
 				conscription = 0.035
-				mobilization_speed = 0.05
+				mobilization_speed = 0.12
 				#something small maybe
 			}
 
 			ai_will_do = {
-				factor = 10
+				factor = 1
+				
 				modifier = {
-					factor = 40
+					factor = 2
 					has_idea = volunteer_only 
+				}
+				modifier = {
+					# Ignore if high on manpower
+					factor = 0.5
+					manpower_per_military_factory > 3500
+				}
+				modifier = {
+					#Prio if low on manpower
+					factor = 20
+					manpower_per_military_factory < 1000
+				}
+				#modifier = {
+				#	tag = ENG
+				#	has_idea_with_trait = military_theorist
+				#	factor = 20
+				#}
+				modifier = {
+					factor = 0
+					NOT = { has_idea = volunteer_only }
 				}
 				
 			}
 
 			cancel_if_invalid = no
+			default = yes			#maybe?
 		}
 		
 		limited_conscription = {
@@ -121,19 +146,32 @@ ideas = {
 			}
 
 			modifier = {
-				conscription = 0.05
-				mobilization_speed = 0.05
+				#conscription = 0.05
+				conscription = 0.045
+				mobilization_speed = 0.03
 			}
 
 			ai_will_do = {
-				factor = 20
+   				factor = 1
+				modifier = {
+					# Ignore if high on manpower
+					factor = 0.5
+					manpower_per_military_factory > 4000
+				}
 				modifier = {
 					#Prio if low on manpower
-					factor = 30
-					manpower_per_military_factory <  1000
-					has_idea = minutemen_militia_conscription 
+					factor = 20
+					manpower_per_military_factory < 1000
 				}
-				
+				#modifier = {
+				#	tag = ENG
+				#	has_idea_with_trait = military_theorist
+				#	factor = 20
+				#}
+				modifier = {
+					factor = 0
+					NOT = { has_idea = volunteer_only }
+				}
 			}
 			
 			cancel_if_invalid = no
@@ -161,17 +199,28 @@ ideas = {
 					}					
 				}
 				has_war_support > 0.2
-				#Special rules AST in TFV
 			}
 
 			ai_will_do = {
-				factor = 10
+   				factor = 1
+
+				modifier = {
+					# Ignore if high on manpower
+					factor = 0.5
+					manpower_per_military_factory > 2700
+				}
+
 				modifier = {
 					#Prio if low on manpower
-					factor = 40
-					manpower_per_military_factory < 800
+					factor = 20
+					manpower_per_military_factory <  800
 				}
-				
+
+				modifier = {
+					factor = 0
+					NOT = { has_idea = limited_conscription }
+				}
+
 			}
 			
 			cost = 150
@@ -179,11 +228,12 @@ ideas = {
 			level = 4
 			
 			modifier = {
-				conscription = 0.075
+				#conscription = 0.075
+				conscription = 0.065
 				#industrial_capacity_factory = -0.1
 				#production_speed_buildings_factor = -0.1
 				training_time_factor = 0.1
-				mobilization_speed = 0.05
+				mobilization_speed = 0.03
 			}
 			
 			cancel_if_invalid = no
@@ -212,13 +262,13 @@ ideas = {
 				OR = {
 					has_war_support > 0.6
 					surrender_progress > 0
-					has_stability > 0.75
+					has_stability > 0.80
 				}
 
 			}
 
 			ai_will_do = {
-				factor = 2
+				factor = 1
 				modifier = {
 					#Prio if low on manpower
 					factor = 20
@@ -229,6 +279,13 @@ ideas = {
 					factor = 0.5
 					manpower_per_military_factory > 1000
 				}
+				modifier = {
+					#Block has plenty manpower
+					factor = 0
+					#NOT = { tag = CHI }
+					#NOT = { tag = SOV }
+					manpower_per_military_factory >  2700
+				}
 
 			}
 			
@@ -237,12 +294,13 @@ ideas = {
 			level = 3
 
 			modifier = {
-				conscription = 0.125
+				#conscription = 0.125
+				conscription = 0.11
 				industrial_capacity_factory = -0.08
 				industrial_capacity_dockyard = -0.08
 				production_speed_buildings_factor = -0.1
 				training_time_factor = 0.15
-				mobilization_speed = 0.10
+				mobilization_speed = 0.05
 			}
 			
 			cancel_if_invalid = no
@@ -278,6 +336,12 @@ ideas = {
 					factor = 0.5
 					manpower_per_military_factory >  1000
 				}
+				modifier = {
+					#Block has plenty manpower
+					factor = 0
+					#manpower_per_military_factory >  2800
+					manpower_per_military_factory > 2500
+				}
 			}
 		
 			cost = 200
@@ -285,20 +349,20 @@ ideas = {
 			level = 2
 			
 			modifier = {
-				conscription = 0.20
+				#conscription = 0.20
+				conscription = 0.185
 				industrial_capacity_factory = -0.25
 				industrial_capacity_dockyard = -0.25
-				production_speed_buildings_factor = -0.3
+				production_speed_buildings_factor = -0.25
 				#XP from reinforcement penalty (small)
 				training_time_factor = 0.25
-				mobilization_speed = 0.10
+				mobilization_speed = 0.05
 			}
 			
 			cancel_if_invalid = no
 		}
 		
 		scraping_the_barrel = {
-			
 			
 			available = {
 				#has_manpower_for_recruit_change_to =  { value = 0.25 group = mobilization_laws }
@@ -321,18 +385,24 @@ ideas = {
 				modifier = {
 					#Prio if low on manpower
 					factor = 20
-					manpower_per_military_factory <  500
+					manpower_per_military_factory < 500
 				}				
 				modifier = {
 					#Lower chance if has decent amount
 					factor = 0.5
-					manpower_per_military_factory >  1000
+					manpower_per_military_factory > 1000
 				}
 				modifier = {
 					#Block has plenty manpower
 					factor = 0
-					manpower_per_military_factory >  4000
+					manpower_per_military_factory > 4000
 				}
+				
+				modifier = {
+					factor = 0
+					NOT = { has_idea = all_adults_serve }
+				}
+				
 			}
 
 			cost = 200
@@ -340,12 +410,18 @@ ideas = {
 			level = 1
 
 			modifier = {
-				conscription = 0.32
+				conscription = 0.25
 				industrial_capacity_factory = -0.3
 				industrial_capacity_dockyard = -0.3
 				production_speed_buildings_factor = -0.4
 				training_time_factor = 0.4
-				mobilization_speed = 0.10
+				mobilization_speed = 0.05
+				#conscription = 0.32
+				#industrial_capacity_factory = -0.3
+				#industrial_capacity_dockyard = -0.3
+				#production_speed_buildings_factor = -0.4
+				#training_time_factor = 0.4
+				#mobilization_speed = 0.10
 			}
 			
 			cancel_if_invalid = no
