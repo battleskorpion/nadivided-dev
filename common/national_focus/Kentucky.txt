@@ -3179,77 +3179,35 @@ focus_tree = {
 	}
 
 		focus = {
-		id = SKY_Special_Kentucky_Sherif_Program
-		icon = GFX_focus_SKY_sheriff
-		x = 0
-		y = 1
+			id = SKY_Special_Kentucky_Sherif_Program
+			icon = GFX_focus_SKY_sheriff
+			x = 0
+			y = 1
 
-		relative_position_id = SKY_Civilian_air_raid_shelters
-        prerequisite = { focus = SKY_Civilian_air_raid_shelters }
-		cost = 5
+			relative_position_id = SKY_Civilian_air_raid_shelters
+			prerequisite = { focus = SKY_Civilian_air_raid_shelters }
+			cost = 5
 
-		search_filters = {  FOCUS_FILTER_POLITICAL }
+			search_filters = {  FOCUS_FILTER_POLITICAL }
+			
+			available_if_capitulated = yes
+			ai_will_do = {
+				factor = 2
+			}
+	
+			completion_reward = {
+				add_tech_bonus = {
+					name = infantry
+					bonus = 1.5
+					uses = 1
+					category = military_police_tech		
+				}			
+			}
+		}
+
 		
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 2
-		}
- 
-		completion_reward = {
-			add_tech_bonus = {
-				name = infantry
-				bonus = 1.5
-				uses = 1
-				category = military_police_tech		
-			}			
-		}
-	}
 
-		focus = {
-		id = SKY_Emergency_Conscription
-		icon = GFX_focus_SKY_emergency_conscription
-		x = 0
-		y = 1
-
-		relative_position_id = SKY_Ohio_at_our_gates
-        prerequisite = { focus = SKY_Ohio_at_our_gates }
-		cost = 5
-
-		search_filters = {  FOCUS_FILTER_POLITICAL }
 		
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 2
-		}
- 
-		completion_reward = {
-			add_manpower = 5000
-			add_timed_idea = { idea = SKY_Emergency_Conscription  days = 70 }			
-		}
-	}
-
-		focus = {
-		id = SKY_Home_Made_Rifle_Production
-		icon = GFX_focus_SKY_Home_Made_Rifle
-		x = 0
-		y = 1
-
-		relative_position_id = SKY_Emergency_Conscription
-        prerequisite = { focus = SKY_Emergency_Conscription }
-		cost = 5
-
-		search_filters = {  FOCUS_FILTER_POLITICAL }
-		
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 2
-		}
- 
-		completion_reward = {
-
-			add_timed_idea = { idea = SKY_Home_made_rifles_idea  days = 365 }	
-		}
-	}
 
 		focus = {
 		id = SKY_Develop_Cumberland_Steel
@@ -3257,8 +3215,8 @@ focus_tree = {
 		x = 0
 		y = 1
 
-		relative_position_id = SKY_Home_Made_Rifle_Production
-        prerequisite = { focus = SKY_Home_Made_Rifle_Production }
+		relative_position_id = SKY_Seeking_New_Horzions
+        prerequisite = { focus = SKY_Seeking_New_Horzions }
 		cost = 5
 
 		search_filters = {  FOCUS_FILTER_POLITICAL }
@@ -3281,7 +3239,7 @@ focus_tree = {
 		focus = {
 		id = SKY_The_Future_of_our_nation
 		icon = GFX_focus_SKY_future_of_nation
-		x = 6
+		x = 2
 		y = 1
 
 		relative_position_id = SKY_Seeking_New_Horzions
@@ -3416,60 +3374,218 @@ focus_tree = {
 	}
 
 		focus = {
-		id = SKY_Ohio_at_our_gates
-		icon = GFX_focus_SKY_enemy_at_gates
-		x = 2
-		y = 1
+			id = SKY_Ohio_at_our_gates
+			icon = GFX_focus_SKY_enemy_at_gates
+			x = 45
+			y = 0
 
-		relative_position_id = SKY_Seeking_New_Horzions
-        prerequisite = { focus = SKY_Seeking_New_Horzions }
-		cost = 5
+			cost = 5
 
-		available = {
-			OR = {
-			has_war = yes
-			threat > 0.45
+			available = {
+				OR = {
+				has_war = yes
+				threat > 0.45
+				}
+			}
+
+			search_filters = {  FOCUS_FILTER_POLITICAL }
+			
+			available_if_capitulated = yes
+			ai_will_do = {
+				factor = 2
+			}
+	
+			completion_reward = {
+				add_war_support = 0.1
 			}
 		}
-
-		search_filters = {  FOCUS_FILTER_POLITICAL }
-		
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 2
-		}
- 
-		completion_reward = {
-			add_war_support = 0.1
-		}
-	}
 
 		focus = {
-		id = SKY_Establish_The_Kentuky_Rifles
-		icon = GFX_focus_SKY_Establish_K_rifles
-		x = 12
-		y = 0
-		cost = 2.7
-
-		search_filters = {  FOCUS_FILTER_RESEARCH }
-		
-		available_if_capitulated = no
-		available = {
-			OR = {
-			has_war = yes
-			threat > 0.05
+			id = SKY_the_ohio_wars
+			icon = GFX_goal_generic_more_territorial_claims 
+			cost = 5
+			x = 0
+			y = 1
+			available = {
+				or = {
+					has_war_with = SOH 
+					SOH = {
+						has_completed_focus = SOH_unite_the_river
+					}
+					AND = {
+						is_in_faction_with = SMI 
+						is_in_faction_with = SIN
+					}
+					has_completed_focus = SKY_The_Ohio_question
+				}
+			}
+			prerequisite = {
+				focus = SKY_Ohio_at_our_gates
+			}
+			relative_position_id = SKY_Ohio_at_our_gates
+			completion_reward = { 
+				custom_effect_tooltip = SXX_if_ohio_league_exists 
+				if = {
+					limit = {
+						is_in_faction_with = SMI 
+					}
+					add_war_support = 0.15 
+				}
+				if = {
+					limit = {
+						NOT = {
+							is_in_faction_with = SMI 
+						}
+						SMI = { 
+							is_faction_leader = yes
+						}
+					}
+					SMI = {
+						country_event = {
+							id = generic.2
+							days = 14
+						}
+					}
+				}
+				else = {
+					add_state_claim = 536
+					add_state_claim = 699
+					create_wargoal = {
+						target = SOH
+						type = take_claimed_state
+					}
+				}
 			}
 		}
 
-		ai_will_do = {
-			factor = 20
+		focus = {
+			id = SKY_Emergency_Conscription
+			icon = GFX_focus_SKY_emergency_conscription
+			x = -1
+			y = 1
+	
+			relative_position_id = SKY_the_ohio_wars
+			prerequisite = { focus = SKY_the_ohio_wars }
+			cost = 5
+	
+			search_filters = {  FOCUS_FILTER_POLITICAL }
+			
+			available_if_capitulated = yes
+			ai_will_do = {
+				factor = 2
+			}
+	 
+			completion_reward = {
+				add_manpower = 5000
+				add_timed_idea = { idea = SKY_Emergency_Conscription  days = 70 }			
+			}
 		}
 
-		completion_reward = {
-			add_ideas = SKY_Kentuky_rilfes
-			add_war_support = 0.01
+		focus = {
+			id = SKY_Home_Made_Rifle_Production
+			icon = GFX_focus_SKY_Home_Made_Rifle
+			x = 1
+			y = 1
+	
+			relative_position_id = SKY_the_ohio_wars
+			prerequisite = { focus = SKY_the_ohio_wars }
+			cost = 5
+	
+			search_filters = {  FOCUS_FILTER_POLITICAL }
+			
+			available_if_capitulated = yes
+			ai_will_do = {
+				factor = 2
+			}
+	 
+			completion_reward = {
+				add_timed_idea = { idea = SKY_Home_made_rifles_idea  days = 365 }	
+			}
 		}
-	}
+
+		focus = {
+			id = SKY_scrap_rifle_programs
+			icon = GFX_focus_ETH_freedom_at_gunpoint
+			cost = 5
+			x = 0 
+			y = 1
+			prerequisite = {
+				focus = SKY_Home_Made_Rifle_Production
+			}
+			relative_position_id = SKY_Home_Made_Rifle_Production
+			completion_reward = { 
+				add_equipment_to_stockpile = {
+					type = infantry_equipment
+					amount = 2500
+				}
+			}
+		}
+
+		focus = {
+			id = SKY_all_must_serve
+			icon = GFX_focus_generic_military_academy
+			cost = 10
+			x = 0 
+			y = 1
+			relative_position_id = SKY_Emergency_Conscription
+			prerequisite = {
+				focus = SKY_Emergency_Conscription
+			}
+			available = {
+				surrender_progress > 0.25
+			}
+			completion_reward = { 
+				add_ideas = service_by_requirement
+			}
+		}
+
+		focus = {
+			id = SKY_victory_over_ohio 
+			icon = GFX_goal_generic_demand_territory
+			cost = 5 
+			x = 0 
+			y = 3
+			available = {
+				owns_state = 536
+				owns_state = 699
+				has_war = no
+			}
+			relative_position_id = SKY_the_ohio_wars
+			prerequisite = {
+				focus = SKY_the_ohio_wars
+			}
+			completion_reward = { 
+				add_state_core = 536
+				add_state_core = 699
+			}
+		}
+
+		focus = {
+			id = SKY_Establish_The_Kentuky_Rifles
+			icon = GFX_focus_SKY_Establish_K_rifles
+			x = 12
+			y = 0
+			cost = 2.7
+
+			search_filters = {  FOCUS_FILTER_RESEARCH }
+			
+			available_if_capitulated = no
+			available = {
+				OR = {
+				has_war = yes
+				threat > 0.05
+				}
+			}
+
+			ai_will_do = {
+				factor = 20
+			}
+
+			completion_reward = {
+				add_ideas = SKY_Kentuky_rilfes
+				add_war_support = 0.01
+			}
+		}
 
 		focus = {
 		id = SKY_Develop_Our_Doctrines
