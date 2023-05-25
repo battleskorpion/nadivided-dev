@@ -2875,13 +2875,29 @@ focus_tree = {
         }
 
         completion_reward = {
-        add_tech_bonus = {
-		name = CAS_bonus
-		bonus = 1.0
-		ahead_reduction = 2
-		uses = 1
-		category = cas_bomber
-	}
+            if = {
+                limit = {
+                    has_dlc = "By Blood Alone"
+                }
+                add_tech_bonus = {
+                    name = CAS_bonus
+                    bonus = 1.0
+                    ahead_reduction = 2
+                    uses = 1
+                    category = light_air
+                }
+            }
+           
+
+            else = {
+                add_tech_bonus = {
+                    name = CAS_bonus
+                    bonus = 1.0
+                    ahead_reduction = 2
+                    uses = 1
+                    category = cas_bomber
+                }
+            }
         }
     }
     focus = {
@@ -3165,18 +3181,32 @@ focus_tree = {
         }
 
         completion_reward = {
-        add_tech_bonus = {
-		name = fighter_bonus
-		bonus = 1.0
-		uses = 2
-		technology = early_fighter
-		technology = fighter1
-		technology = fighter2
-		technology = fighter3
-		technology = heavy_fighter1
-		technology = heavy_fighter2
-		technology = heavy_fighter3
-	}
+            if = {
+                limit = {
+                    has_dlc = "By Blood Alone"
+                }
+                add_tech_bonus = {
+                    name = fighter_bonus
+                    bonus = 1.0
+                    uses = 2
+                    category = light_fighter
+                }
+            }
+
+            else = {
+                add_tech_bonus = {
+                    name = fighter_bonus
+                    bonus = 1.0
+                    uses = 2
+                    technology = early_fighter
+                    technology = fighter1
+                    technology = fighter2
+                    technology = fighter3
+                    technology = heavy_fighter1
+                    technology = heavy_fighter2
+                    technology = heavy_fighter3
+                }
+            }
         }
     }
     focus = {
@@ -3206,21 +3236,38 @@ focus_tree = {
         x = 1
         y = 1
         cost = 10
-       available = {
-        custom_trigger_tooltip = {
-		tooltip = SAK_Concessions_timer_tt
-        NOT = { has_country_flag = SAK_Concessions_timer_flag}
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SAK_Concessions_timer_tt
+                NOT = { 
+                    has_country_flag = SAK_Concessions_timer_flag
+                }
+            }
         }
-       }
         
         completion_reward = {
-        set_country_flag = { flag = SAK_Concessions_timer_flag value = 1 days = 69 }
-        swap_ideas = {
-			add_idea = SAK_Congo_Of_The_East_4
-			remove_idea = SAK_Congo_Of_The_East_3
-			}	
+            custom_effect_tooltip = SAK_lowers_effect_of_vorkda_tt
+            set_country_flag = { flag = SAK_Concessions_timer_flag value = 1 days = 69 }
+            if = { # if taking this focus first
+                limit = {
+                    has_idea = SAK_Congo_Of_The_East_2
+                }
+                swap_ideas = {
+                    remove_idea = SAK_Congo_Of_The_East_2
+                    add_idea = SAK_Congo_Of_The_East_4
+                }
+            }
+            if = { # if taking the other focus first
+                limit = {
+                    has_idea = SAK_Congo_Of_The_East_3
+                }
+                swap_ideas = {
+                    remove_idea = SAK_Congo_Of_The_East_3
+                    add_idea = SAK_Congo_Of_The_East_6
+                }
+            }
         }
-       }
+    }
     focus = {
         id = SAK_Rapid_Industralization_Programs 
         icon = GFX_focus_SAK_Rapid_Industralization_Programs
@@ -3237,20 +3284,23 @@ focus_tree = {
         }
 
         completion_reward = {
+            custom_effect_tooltip = SAK_lowers_effect_of_vorkda_tt
             random_owned_state = {
                 add_extra_state_shared_building_slots = 3
                 add_building_construction = {
-				type = industrial_complex
-				level = 3
-				instant_build = yes
-			}
+                    type = industrial_complex
+                    level = 3
+                    instant_build = yes
+			    }
             }
-             swap_ideas = {
-			add_idea = SAK_Congo_Of_The_East_2
-			remove_idea = SAK_Congo_Of_The_East
+
+            swap_ideas = {
+			    add_idea = SAK_Congo_Of_The_East_2 # 10% production cap and growth
+			    remove_idea = SAK_Congo_Of_The_East 
 			}	
         }
     }
+
     focus = {
         id = SAK_Take_More_Gulag_Prisoners
         icon = GFX_focus_SAK_more_gulag_workers
@@ -3260,18 +3310,34 @@ focus_tree = {
         x = 1
         y = 1
         cost = 10
-       available = {
+        available = {
         
         }
         
         completion_reward = {
-        set_country_flag = { flag = SAK_Concessions_timer_flag value = 1 days = 69 }
-         swap_ideas = {
-			add_idea = SAK_Congo_Of_The_East_3
-			remove_idea = SAK_Congo_Of_The_East_2
-			}	
+            custom_effect_tooltip = SAK_lowers_effect_of_vorkda_tt
+            set_country_flag = { flag = SAK_Concessions_timer_flag value = 1 days = 69 }
+            if = { # if taken this one first 
+                limit = {
+                    has_idea = SAK_Congo_Of_The_East_2
+                }
+                swap_ideas = {
+                    add_idea = SAK_Congo_Of_The_East_3
+                    remove_idea = SAK_Congo_Of_The_East_2
+                }
+            }
+            if = { # if taken the research speed focus first
+                limit = {
+                    has_idea = SAK_Congo_Of_The_East_4
+                }
+                swap_ideas = {
+                    remove_idea = SAK_Congo_Of_The_East_4
+                    add_idea = SAK_Congo_Of_The_East_6
+                }
+            }   
         }
-        }
+    }
+
         focus = {
             id = SAK_Give_Full_Loyality_To_Moscow
             icon = GFX_focus_SAK_full_loyaltytoM
@@ -3282,22 +3348,30 @@ focus_tree = {
             x = 0
             y = 1
             cost = 10
-           available = {
-            custom_trigger_tooltip = {
-            tooltip = SAK_Concessions_timer_tt
-            NOT = { has_country_flag = SAK_Concessions_timer_flag}
+            available = {
+                custom_trigger_tooltip = {
+                    tooltip = SAK_Concessions_timer_tt
+                    NOT = { 
+                        has_country_flag = SAK_Concessions_timer_flag
+                    }
+                }
             }
-           }
             
 
             completion_reward = {
-            set_country_flag = { flag = SAK_Concessions_timer_flag value = 1 days = 69 }
-            swap_ideas = {
-                add_idea = SAK_Congo_Of_The_East_5
-                remove_idea = SAK_Congo_Of_The_East_4
+                custom_effect_tooltip = SAK_lowers_effect_of_vorkda_tt
+                set_country_flag = { flag = SAK_Concessions_timer_flag value = 1 days = 69 }
+                if = {
+                    limit = {
+                        has_idea = SAK_Congo_Of_The_East_6
+                    }
+                    swap_ideas = {
+                        add_idea = SAK_Congo_Of_The_East_5
+                        remove_idea = SAK_Congo_Of_The_East_6
+                    }
                 }	
             }
-            }
+        }
             
              
     focus = {
@@ -3310,14 +3384,14 @@ focus_tree = {
         cost = 3
        
         completion_reward = {
-        set_party_name = { 
-        ideology = communism 
-        long_name = "The Soviet Marxist-Leninist Party"
-        name = "The Soviet Marxist-Leninist Party" 
-        } 
-        set_cosmetic_tag = SAK_AUT
+            set_party_name = { 
+                ideology = communism 
+                long_name = "The All-Union Communist Party"
+                name = "The All-Union Communist Party" 
+            } 
+            set_cosmetic_tag = SAK_AUT
         }
-       }
+    }
     focus = {
         id = SAK_Keep_Up_lies_With_Stalin
         icon = GFX_focus_SAK_keep_up_lies_with_Stalin
