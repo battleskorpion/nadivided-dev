@@ -76,7 +76,7 @@
 		}
 
 		completion_reward = {
-			#add_ideas = SMI_Paramilitary_Force TODO 
+		add_ideas = SMI_Paramilitary_Force  
 		}
 	}
 
@@ -88,7 +88,7 @@
 		y = 1
 		relative_position_id = SMI_The_New_Revolutionaries
         prerequisite = { focus = SMI_The_New_Revolutionaries }
-		cost = 10
+		cost = 4
 
 		search_filters = {   }
 		
@@ -98,7 +98,11 @@
 		}
 
 		completion_reward = {
-
+			add_trait = {
+				character = SMI_effinger
+				ideology = nazism
+				trait = megalomaniac_fascist
+		   }
 		}
 	}
 
@@ -132,7 +136,7 @@
 		y = 1
 		relative_position_id = SMI_Legion_Of_Terror
         prerequisite = { focus = SMI_Legion_Of_Terror }
-		cost = 10
+		cost = 4
 
 		search_filters = {   }
 		
@@ -142,7 +146,10 @@
 		}
 
 		completion_reward = {
-			#fascism
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.15
+			}
 		}
 	}
 
@@ -164,6 +171,10 @@
 		}
 
 		completion_reward = {
+			add_timed_idea = { 
+				idea = SMI_black_legion_labor_idea
+				days = 365		
+			}
 			#idea 365 days of 10% increased construction speed
 		}
 	}
@@ -184,7 +195,7 @@
 		}
 
 		completion_reward = {
-			#stablility 
+		add_stability = 0.05 
 		}
 	}
 
@@ -196,7 +207,7 @@
 		y = 1
 		relative_position_id = SMI_Solidify_Effingers_Cult_Of_Personality
         prerequisite = { focus = SMI_Solidify_Effingers_Cult_Of_Personality }
-		cost = 10
+		cost = 3
 		mutually_exclusive = {
 			focus = SMI_Distance_Ourselves_From_KKK
 		}
@@ -208,7 +219,17 @@
 		}
 
 		completion_reward = {
-			#try to join factions
+			set_rule = {
+				can_join_factions = yes
+			}
+			every_other_country = {
+			LIMIT = {
+			has_country_flag = KKK_led_USA_state	
+			}
+			add_opinion_modifier = {
+				modifier = huge_increase
+		}
+			}
 		}
 	}
 
@@ -219,10 +240,19 @@
 		y = 1
 		relative_position_id = SMI_Expand_Our_Alliance_With_KKK
         prerequisite = { focus = SMI_Expand_Our_Alliance_With_KKK }
-		cost = 10
+		cost = 4
 
 		search_filters = {   }
+		bypass = {
+		OR = {
+		SMS = {
+		NOT = {
+		has_government = fascism	
+		}
 		
+				}		
+		}	
+		}
 		available_if_capitulated = yes
 		ai_will_do = {
 			factor = 1
@@ -240,7 +270,7 @@
 		y = 1
 		relative_position_id = SMI_Reach_Out_To_southern_Klans
         prerequisite = { focus = SMI_Reach_Out_To_southern_Klans }
-		cost = 10
+		cost = 5
 
 		search_filters = {   }
 		
@@ -250,7 +280,7 @@
 		}
 
 		completion_reward = {
-
+		add_ideas = SMI_black_legion_volunteers
 		}
 	}
 
@@ -380,7 +410,12 @@
 		}
 
 		completion_reward = {
-
+			add_tech_bonus = {
+				name = synt
+				bonus = 1.5
+				uses = 3
+				category = synth_resources
+			}
 		}
 	}
     focus = {
@@ -400,7 +435,37 @@
 		}
 
 		completion_reward = {
-
+			custom_effect_tooltip = SLA_research_syth_tt
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = synthetic_refinery 
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = synthetic_refinery
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 1
+					instant_build = yes
+				    }
+			    }	
 		}
 	}
     focus = {
@@ -440,7 +505,8 @@
 		}
 
 		completion_reward = {
-
+		#ai OOB for paras?	
+		add_ideas = SMI_dupont_paratroopers
 		}
 	}
 
@@ -514,7 +580,7 @@
 		}
 
 		completion_reward = {
-			#add_ideas = SMI_black_legion_smuggling TODO 
+		add_ideas = SMI_black_legion_smuggling  
 		}
 	}
 
@@ -640,7 +706,7 @@
 		}
 
 		completion_reward = {
-	#+stablility
+		add_stability = 0.05
 		}
 	}
 
@@ -888,7 +954,7 @@
 		}
 
 		completion_reward = {
-			#idea that makes weapons cost less and less reliablility 
+		add_ideas = SMI_shitty_guns 
 		}
 	}
 	focus = {
@@ -1014,7 +1080,22 @@
 		}
 
 		completion_reward = {
-			#war against superior goal
+			every_other_country = {
+                limit = {
+                    NOT = { is_in_faction_with = ROOT }
+                    NOT = { is_subject_of = ROOT }
+                    any_owned_state = {
+                        state = 90
+                    }
+                }
+                ROOT = {
+                    create_wargoal = {
+                        target = PREV
+                        type = civil_war
+                        expire = 0
+                    }
+                }
+            }
 		}
 	}
 
