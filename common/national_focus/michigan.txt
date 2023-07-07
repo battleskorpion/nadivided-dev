@@ -1135,7 +1135,7 @@
 			focus = SMI_1936_governmental_elections
 			focus = SMI_Ford_Seizes_Control
 		}
-		x = -7
+		x = -11
 		y = 2
 		completion_reward = {
 			unlock_decision_tooltip = SMI_workers_rights_act
@@ -1536,11 +1536,26 @@
 	}
 
 	focus = {
+		id = SMI_workers_liberation_movement
+		icon = GFX_
+		cost = 10
+		x = -1 
+		y = 2
+		relative_position_id = SMI_the_northern_revolution
+		prerequisite = {
+			focus = SMI_the_northern_revolution
+		}
+		completion_reward = { 
+			add_ideas = SMI_workers_liberation_movement_idea
+		}
+	}
+
+	focus = {
 		id = SMI_raise_the_worker_divisions
 		icon = GFX_
 		cost = 10
 		x = 0
-		y = 1
+		y = 3
 		relative_position_id = SMI_the_northern_revolution
 		prerequisite = {
 			focus = SMI_the_northern_revolution
@@ -1552,6 +1567,8 @@
 			}
 		}
 	}
+
+	
 
 	focus = {
 		id = SMI_secure_detroit
@@ -2369,10 +2386,451 @@
 				}
 			}
 		}
+		x = 3
+		y = 1
+		completion_reward = { 
+			set_cosmetic_tag = SMI_social_dem
+		}
+	}
+
+	focus = {
+		id = SMI_write_land_rights_into_law
+		icon = GFX_
+		cost = 10
+		x = -2
+		y = 1
+		prerequisite = {
+			focus = SMI_social_democratic_republic_of_michigan
+		}
+		relative_position_id = SMI_social_democratic_republic_of_michigan
+		completion_reward = { 
+			add_ideas = SMI_codifed_land_rights
+		}
+	}
+
+	focus = {
+		id = SMI_no_mercy_for_political_traitors 
+		icon = GFX_ 
+		cost = 10
+		x = 2
+		y = 1
+		prerequisite = {
+			focus = SMI_social_democratic_republic_of_michigan
+		}
+		relative_position_id = SMI_social_democratic_republic_of_michigan
+		completion_reward = { 
+			remove_ideas = SMI_black_legion_starting
+		}
+	}
+
+	focus = {
+		id = SMI_political_stability
+		icon = GFX_ 
+		cost = 10
+		x = -2
+		y = 1
+		relative_position_id = SMI_no_mercy_for_political_traitors
+		prerequisite = {
+			focus = SMI_no_mercy_for_political_traitors
+		}
+		prerequisite = {
+			focus = SMI_write_land_rights_into_law
+		}
+		available = {
+			power_balance_value = {
+				id = SMI_power_balance
+				value > -0.30
+			}
+		}
+		completion_reward = { 
+			custom_effect_tooltip = SMI_political_stability_tt
+			hidden_effect = {
+				remove_power_balance = {
+					id = SMI_power_balance
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SMI_the_great_lakes_union 
+		icon = GFX_
+		cost = 7.2
+		relative_position_id = SMI_political_stability
+		prerequisite = {
+			focus = SMI_political_stability
+		}
+		x = -1
+		y = 1
+		completion_reward = { 
+			create_faction = "Great Lakes Union"
+			add_political_power = 150
+			add_ideas = SMI_the_great_lakes_union_idea
+		}
+	}
+
+	focus = {
+		id = SMI_invite_wisconsin
+		icon = GFX
+		cost = 5
+		relative_position_id = SMI_the_great_lakes_union
+		prerequisite = {
+			focus = SMI_the_great_lakes_union
+		}
+		x = -2 
+		y = 1
+		bypass = {
+			or = {
+				SWI = {
+					exists = no 
+				}
+				SWI = {
+					is_subject_of = SMI
+				}
+				SWI = {
+					is_in_faction_with = ROOT
+				}
+			}
+		}
+		completion_reward = { 
+			custom_effect_tooltip = SMI_invite_wisconsin_tt 
+			if = {
+				limit = {
+					SWI = {
+						has_opinion = {
+							target = SMI
+							value > 80
+						}
+					}
+				}
+				SWI = {
+					country_event = {
+						days = 14
+						id = michigan.18
+					}
+				}
+			}
+
+			else = {
+				create_wargoal = {
+					target = SWI 
+					type = puppet_wargoal_focus
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SMI_reach_out_to_Minnesota
+		icon = GFX_
+		cost = 5
+		x = -1
+		y = 1
+		relative_position_id = SMI_invite_wisconsin
+		prerequisite = {
+			focus = SMI_invite_wisconsin
+		}
+		bypass = {
+			SMN = {
+				or = {
+					exists = no
+					is_subject_of = SMI
+					is_in_faction_with = SMI
+				}
+			}
+		}
+		completion_reward = { 
+			custom_effect_tooltip = SMI_reach_out_to_Minnesota_tt
+			if = {
+				limit = {
+					SMN = {
+						has_opinion = {
+							target = SMI
+							value > 80
+						}
+					}
+				}
+				SMN = {
+					country_event = {
+						days = 14
+						id = michigan.18
+					}
+				}
+			}
+
+			else = {
+				create_wargoal = {
+					target = SMN 
+					type = puppet_wargoal_focus
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SMI_invite_illinois
+		icon = GFX_
+		cost = 5
+		x = -1
+		y = 2
+		relative_position_id = SMI_the_great_lakes_union
+		prerequisite = {
+			focus = SMI_the_great_lakes_union
+		}
+		bypass = {
+			SIL = {
+				or = {
+					exists = no
+					is_subject_of = SMI
+					is_in_faction_with = SMI
+				}
+			}
+		}
+		completion_reward = { 
+			custom_effect_tooltip = SMI_invite_illinois_tt 
+			if = {
+				limit = {
+					SIL = {
+						has_opinion = {
+							target = SMI
+							value > 80
+						}
+					}
+				}
+				SIL = {
+					country_event = {
+						days = 14
+						id = michigan.18
+					}
+				}
+			}
+
+			else = {
+				create_wargoal = {
+					target = SIL
+					type = puppet_wargoal_focus
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SMI_ohioian_diplomacy
+		icon = GFX_
+		cost = 5
+		relative_position_id = SMI_the_great_lakes_union
+		prerequisite = {
+			focus = SMI_the_great_lakes_union
+		}
+		bypass = {
+			SOH = {
+				or = {
+					exists = no
+					is_subject_of = SMI
+					is_in_faction_with = SMI
+				}
+			}
+		}
+		x = 0
+		y = 1
+		completion_reward = { 
+			custom_effect_tooltip = SMI_ohioian_diplomacy_tt
+			if = {
+				limit = {
+					SOH = {
+						has_opinion = {
+							target = SMI
+							value > 80
+						}
+					}
+				}
+				SOH = {
+					country_event = {
+						days = 14
+						id = michigan.18
+					}
+				}
+			}
+
+			else = {
+				create_wargoal = {
+					target = SOH
+					type = puppet_wargoal_focus
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SMI_reach_out_to_new_york
+		icon = GFX_
+		cost = 5
+		relative_position_id = SMI_the_great_lakes_union
+		prerequisite = {
+			focus = SMI_the_great_lakes_union
+		}
+		bypass = {
+			SNY = {
+				or = {
+					exists = no
+					is_subject_of = SMI
+					is_in_faction_with = SMI
+				}
+			}
+		}
 		x = 2
 		y = 1
 		completion_reward = { 
+			custom_effect_tooltip = SMI_reach_out_to_new_york_tt
+			if = {
+				limit = {
+					SNY = {
+						has_opinion = {
+							target = SMI
+							value > 80
+						}
+					}
+				}
+				SNY = {
+					country_event = {
+						days = 14
+						id = michigan.18
+					}
+				}
+			}
 
+			else = {
+				create_wargoal = {
+					target = SNY
+					type = puppet_wargoal_focus
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SMI_invite_pennsylvania
+		icon = GFX
+		cost = 5
+		x = 1
+		y = 2
+		relative_position_id = SMI_the_great_lakes_union
+		prerequisite = {
+			focus = SMI_the_great_lakes_union
+		}
+		bypass = {
+			SPA = {
+				or = {
+					exists = no
+					is_subject_of = SMI
+					is_in_faction_with = SMI
+				}
+			}
+		}
+		completion_reward = { 
+			custom_effect_tooltip = SMI_invite_pennsylvania_tt
+			if = {
+				limit = {
+					SPA = {
+						has_opinion = {
+							target = SMI
+							value > 80
+						}
+					}
+				}
+				SPA = {
+					country_event = {
+						days = 14
+						id = michigan.18
+					}
+				}
+			}
+
+			else = {
+				create_wargoal = {
+					target = SPA
+					type = puppet_wargoal_focus
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SMI_political_integration
+		icon = GFX
+		cost = 10
+		relative_position_id = SMI_ohioian_diplomacy
+		prerequisite = {
+			focus = SMI_invite_pennsylvania
+			focus = SMI_ohioian_diplomacy
+			focus = SMI_invite_illinois
+			focus = SMI_reach_out_to_Minnesota
+			focus = SMI_cross_lake_superior
+		}
+		x = 0
+		y = 2
+		completion_reward = { 
+			custom_effect_tooltip = SMI_political_integration_tt
+			#TODO
+		}
+	}
+
+	focus = {
+		id = SMI_retake_the_north
+		icon = GFX_
+		cost = 10
+		relative_position_id = SMI_political_stability
+		prerequisite = {
+			focus = SMI_political_stability
+			focus = SMI_no_mercy_for_political_traitors
+		}
+		x = 2
+		y = 1
+		bypass = {
+			SUP = {
+				or = {
+					exists = no
+					is_subject_of = SMI
+					is_in_faction_with = SMI
+				}
+			}
+		}
+		completion_reward = { 
+			create_wargoal = {
+				target = SUP
+				type = annex_everything
+			}
+			add_timed_idea = {
+				idea = SMI_cross_the_mackinac_idea
+				days = 150
+			}
+		}
+	}
+
+	focus = {
+		id = SMI_cross_lake_superior
+		icon = GFX
+		cost = 10
+		relative_position_id = SMI_retake_the_north
+		prerequisite = {
+			focus = SMI_retake_the_north
+		}
+		bypass = {
+			PON = {
+				or = {
+					exists = no
+					is_subject_of = SMI
+					is_in_faction_with = SMI
+				}
+			}
+		}
+		x = 0
+		y = 2
+		completion_reward = { 
+			create_wargoal = {
+				target = PON
+				type = puppet_wargoal_focus
+			}
 		}
 	}
 
@@ -3900,7 +4358,7 @@
 		id = SMI_the_seeds_of_revolution_planted_in_knowledge
 		icon = GFX_
 		cost = 10
-		x = 25
+		x = 20 
 		y = 0
 		mutually_exclusive = {
 			focus = SMI_continue_the_terror
