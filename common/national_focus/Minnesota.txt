@@ -23,6 +23,12 @@ focus_tree = {
 				add_extra_state_shared_building_slots = 2
 			}
 			SMN_great_depression_down = yes
+			if = {
+				limit = {
+					has_idea_with_trait = watch_dog_of_the_state_treasury
+				}
+				set_country_flag = SMN_new_legistlation_being_passed
+			}
 		}
 	}
 	focus = {
@@ -44,12 +50,6 @@ focus_tree = {
 			}
 			else = {
 				remove_ideas = SMN_log_drive
-			}
-			if = {
-				limit = {
-					###HAS ADVISOR AJ ROCKNE
-				}
-				set_country_flag = SMN_new_legistlation_being_passed
 			}
 		}
 	}
@@ -95,15 +95,20 @@ focus_tree = {
 		prerequisite = { focus = SMN_deal_with_great_depression }
 		relative_position_id = SMN_deal_with_great_depression
 		available = {
-			has_country_flag = {
-				flag = SMN_new_legistlation_being_passed
-				days > 200
-			}
-			custom_trigger_tooltip = {
-				tooltip = SMN_days_since_legistlation_passed_tt
+			OR = {
+				NOT = {
+					has_idea_with_trait = watch_dog_of_the_state_treasury
+				}
 				has_country_flag = {
 					flag = SMN_new_legistlation_being_passed
 					days > 200
+				}
+				custom_trigger_tooltip = {
+					tooltip = SMN_days_since_legistlation_passed_tt
+					has_country_flag = {
+						flag = SMN_new_legistlation_being_passed
+						days > 200
+					}
 				}
 			}
 		}
@@ -123,7 +128,7 @@ focus_tree = {
 			}
 			if = {
 				limit = {
-					###HAS ADVISOR AJ ROCKNE
+					has_idea_with_trait = watch_dog_of_the_state_treasury
 				}
 				set_country_flag = SMN_new_legistlation_being_passed
 			}
@@ -138,15 +143,20 @@ focus_tree = {
 		prerequisite = { focus = SMN_deal_with_great_depression }
 		relative_position_id = SMN_deal_with_great_depression
 		available = {
-			has_country_flag = {
-				flag = SMN_new_legistlation_being_passed
-				days > 200
-			}
-			custom_trigger_tooltip = {
-				tooltip = SMN_days_since_legistlation_passed_tt
+			OR = {
+				NOT = {
+					has_idea_with_trait = watch_dog_of_the_state_treasury
+				}
 				has_country_flag = {
 					flag = SMN_new_legistlation_being_passed
 					days > 200
+				}
+				custom_trigger_tooltip = {
+					tooltip = SMN_days_since_legistlation_passed_tt
+					has_country_flag = {
+						flag = SMN_new_legistlation_being_passed
+						days > 200
+					}
 				}
 			}
 		}
@@ -163,7 +173,7 @@ focus_tree = {
 			SMN_great_depression_down = yes
 			if = {
 				limit = {
-					###HAS ADVISOR AJ ROCKNE
+					has_idea_with_trait = watch_dog_of_the_state_treasury
 				}
 				set_country_flag = SMN_new_legistlation_being_passed
 			}
@@ -396,15 +406,8 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			#####unlocks advisor
-			#random_owned_controlled_state = {
-			#	add_extra_state_shared_building_slots = 2
-			#	add_building_construction = {
-			#		type = arms_factory
-			#		level = 2
-			#		instant_build = yes
-			#	}
-			#}
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = SMN_hubert_humphrey
 		}
 	}
 	focus = {
@@ -552,9 +555,13 @@ focus_tree = {
 		id = SMN_the_end_of_the_oconnor_agreement
 		icon = GFX_goal_generic_construct_civilian
 		cost = 10
-		x = 24
+		x = 30
 		y = 0
 		available = {
+			
+		}
+		select_effect = {
+			country_event = minnesota.3
 		}
 		completion_reward = {
 			###EVENT FOR LEADERS AND STUFF
@@ -565,10 +572,10 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = SMN_the_communist_path
+		id = SMN_side_with_the_police
 		icon = GFX_goal_generic_construct_civilian
 		cost = 10
-		x = 34
+		x = 25
 		y = 1
 		mutually_exclusive = {
 			
@@ -576,8 +583,35 @@ focus_tree = {
 		prerequisite = { focus = SMN_the_end_of_the_oconnor_agreement }
 		relative_position_id = SMN_the_end_of_the_oconnor_agreement
 		bypass = {
-			###WILL BYPASS UPON HAVING THE STRIKES
-			###THE EVENT SHALL BE FIRED BY HIRING ADVISOR OR JUST BY TIME
+			AND = {
+				has_country_flag = SMN_teamsters_have_striked
+				has_idea = SMN_corrupt_police
+				has_idea_with_trait = strike_leader
+			}
+		}
+		available = {
+		}
+		completion_reward = {
+			
+		}
+	}
+	focus = {
+		id = SMN_side_with_the_rioters
+		icon = GFX_goal_generic_construct_civilian
+		cost = 10
+		x = 35
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_the_end_of_the_oconnor_agreement }
+		relative_position_id = SMN_the_end_of_the_oconnor_agreement
+		bypass = {
+			AND = {
+				has_country_flag = SMN_teamsters_have_striked
+				has_idea = SMN_corrupt_police
+				has_idea_with_trait = strike_leader
+			}
 		}
 		available = {
 		}
@@ -594,8 +628,8 @@ focus_tree = {
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = SMN_the_communist_path }
-		relative_position_id = SMN_the_communist_path
+		prerequisite = { focus = SMN_side_with_the_rioters }
+		relative_position_id = SMN_side_with_the_rioters
 		available = {
 		}
 		completion_reward = {
@@ -611,33 +645,12 @@ focus_tree = {
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = SMN_the_communist_path }
-		relative_position_id = SMN_the_communist_path
+		prerequisite = { focus = SMN_side_with_the_rioters }
+		relative_position_id = SMN_side_with_the_rioters
 		available = {
 		}
 		completion_reward = {
 			###ADDS IDEAS FOR COMMUNISM SUPPORT
-		}
-	}
-	###TRUCKERS STRIKE IN STPual
-	focus = {
-		id = SMN_the_strike
-		icon = GFX_goal_generic_construct_civilian
-		cost = 10
-		x = 1
-		y = 1
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = SMN_truck_in_collaboraters }
-		prerequisite = {
-			focus = SMN_ally_with_teamsters
-		}
-		relative_position_id = SMN_truck_in_collaboraters
-		available = {
-		}
-		completion_reward = {
-			
 		}
 	}
 	###VINCENT R DUN becomes leader
@@ -646,16 +659,21 @@ focus_tree = {
 		icon = GFX_goal_generic_construct_civilian
 		cost = 10
 		x = 0
-		y = 1
+		y = 2
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = SMN_the_strike}
-		relative_position_id = SMN_the_strike
+		prerequisite = { focus = SMN_ally_with_teamsters }
+		prerequisite = {
+			focus = SMN_truck_in_collaboraters
+		}
+		relative_position_id = SMN_side_with_the_rioters
 		available = {
 		}
 		completion_reward = {
-			
+			set_politics = {
+				ruling_party = communism
+			}
 		}
 	}
 	focus = {
@@ -858,7 +876,7 @@ focus_tree = {
 		id = SMN_olsons_death
 		icon = GFX_goal_generic_construct_civilian
 		cost = 10
-		x = 0
+		x = -12
 		y = 1
 		mutually_exclusive = {
 			
@@ -869,6 +887,7 @@ focus_tree = {
 		prerequisite = { focus = SMN_the_end_of_the_oconnor_agreement }
 		relative_position_id = SMN_the_end_of_the_oconnor_agreement
 		available = {
+			has_idea = SMN_SPPD
 		}
 		completion_reward = {
 			
@@ -944,10 +963,10 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-				set_can_be_fired_in_advisor_role = {
-					character = SMN_anton_j_rockne
-					value = yes
-				}
+			set_can_be_fired_in_advisor_role = {
+				character = SMN_anton_j_rockne
+				value = yes
+			}
 		}
 	}
 	focus = {
@@ -997,9 +1016,10 @@ focus_tree = {
 		prerequisite = { focus = SMN_audit_every_part_of_the_government focus = SMN_continue_olsons_new_deal }
 		relative_position_id = SMN_undermine_AJ_rockne_democratic_path
 		available = {
+			has_country_flag = SMN_teamsters_have_striked
 		}
 		completion_reward = {
-			
+			remove_ideas = strikes_1
 		}
 	}
 	focus = {
@@ -1122,7 +1142,7 @@ focus_tree = {
 		id = SMN_fascist_path
 		icon = GFX_goal_generic_construct_civilian
 		cost = 10
-		x = 10
+		x = -3
 		y = 1
 		mutually_exclusive = {
 			
@@ -1130,6 +1150,7 @@ focus_tree = {
 		prerequisite = { focus = SMN_the_end_of_the_oconnor_agreement }
 		relative_position_id = SMN_the_end_of_the_oconnor_agreement
 		available = {
+			has_idea = SMN_SPPD
 		}
 		completion_reward = {
 			
@@ -1149,7 +1170,6 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			###GET PELLEY IDK
 		}
 	}
 	focus = {
@@ -1209,7 +1229,7 @@ focus_tree = {
 			has_country_flag = SMN_teamsters_have_striked
 		}
 		completion_reward = {
-			####BREAK THE STRIKE
+			remove_ideas = strikes_1
 		}
 	}
 	focus = {
@@ -1441,7 +1461,9 @@ focus_tree = {
 			##EVENT CHAIN IS DONE
 		}
 		completion_reward = {
-			###HJALMAR BECOMES LEADER
+			set_politics = {
+				ruling_party = fascism
+			}
 		}
 	}
 	focus = {
@@ -1458,7 +1480,10 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			###FIRES AJROCKNE
+			set_can_be_fired_in_advisor_role = {
+				character = SMN_anton_j_rockne
+				value = yes
+			}
 		}
 	}
 	focus = {
@@ -1697,34 +1722,18 @@ focus_tree = {
 			add_stability = 0.10
 		}
 	}
-	focus = {
-		id = SMN_continue_the_oconnor_agreement
-		icon = GFX_goal_generic_construct_civilian
-		cost = 10
-		x = 48
-		y = 0
-		available = {
-		}
-		completion_reward = {
-			###EVENT FOR LEADERS AND STUFF
-			#swap_ideas = {
-			#	remove_idea = SMN_corrupt_police
-			#	add_idea = SMN_SPPD
-			#}
-		}
-	}
 	##CRIME SYNDICATE/CHURCH LEAD STATE
 	focus = {
-		id = SMN_have_the_church_takeover
+		id = SMN_enforce_catholitc_ideals_to_the_police
 		icon = GFX_goal_generic_construct_civilian
 		cost = 10
-		x = -4
+		x = -3
 		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = SMN_continue_the_oconnor_agreement }
-		relative_position_id = SMN_continue_the_oconnor_agreement
+		prerequisite = { focus = SMN_side_with_the_police }
+		relative_position_id = SMN_side_with_the_police
 		available = {
 			####THE PEOPLE DEMAND SOMEONE TAKES ACTION, should be an event that happens
 		}
@@ -1732,23 +1741,7 @@ focus_tree = {
 			###WILLIAM BILL RILEY IS ELECTED
 		}
 	}
-	focus = {
-		id = SMN_refuse_modernity
-		icon = GFX_goal_generic_construct_civilian
-		cost = 10
-		x = 0
-		y = 1
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = SMN_have_the_church_takeover }
-		relative_position_id = SMN_have_the_church_takeover
-		available = {
-		}
-		completion_reward = {
-			
-		}
-	}
+
 	focus = {
 		id = SMN_catholic_schools
 		icon = GFX_goal_generic_construct_civilian
@@ -1767,16 +1760,16 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = SMN_enforce_catholitc_ideals_to_the_police
+		id = SMN_alliance_with_the_silver_shirts
 		icon = GFX_goal_generic_construct_civilian
 		cost = 10
-		x = -2
+		x = 1
 		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = SMN_have_the_church_takeover }
-		relative_position_id = SMN_have_the_church_takeover
+		prerequisite = { focus = SMN_enforce_catholitc_ideals_to_the_police }
+		relative_position_id = SMN_enforce_catholitc_ideals_to_the_police
 		available = {
 		}
 		completion_reward = {
@@ -1787,7 +1780,7 @@ focus_tree = {
 		id = SMN_preach_the_jewish_conspiracy
 		icon = GFX_goal_generic_construct_civilian
 		cost = 10
-		x = 0
+		x = -1
 		y = 1
 		mutually_exclusive = {
 			
@@ -1807,24 +1800,65 @@ focus_tree = {
 		id = SMN_grahams_crusade
 		icon = GFX_goal_generic_construct_civilian
 		cost = 10
-		x = 2
+		x = -3
 		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = SMN_have_the_church_takeover }
-		relative_position_id = SMN_have_the_church_takeover
+		prerequisite = { focus = SMN_enforce_catholitc_ideals_to_the_police }
+		relative_position_id = SMN_enforce_catholitc_ideals_to_the_police
 		available = {
 			NOT = {
-				has_completed_focus = SMN_preach_the_jewish_conspiracy
+				OR = {
+					has_completed_focus = SMN_preach_the_jewish_conspiracy
+					has_completed_focus = SMN_alliance_with_the_silver_shirts
+					has_completed_focus = SMN_secure_arms
+				}
 			}
 		}
 		completion_reward = {
-			###UNLOCK ADVISOR
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = SMN_billy_graham
 		}
 	}
 	focus = {
 		id = SMN_racial_integration
+		icon = GFX_goal_generic_construct_civilian
+		cost = 10
+		x = -2
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_the_catholic_state }
+		relative_position_id = SMN_the_catholic_state
+		available = {
+			has_idea_with_trait = the_great_equalizer
+		}
+		completion_reward = {
+			
+		}
+	}
+	focus = {
+		id = SMN_the_catholic_state
+		icon = GFX_goal_generic_construct_civilian
+		cost = 10
+		x = -3
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_attack_the_strikers focus = SMN_negotiate_with_the_strikers }
+		relative_position_id = SMN_attack_the_strikers
+		available = {
+			has_completed_focus = SMN_enforce_catholitc_ideals_to_the_police
+		}
+		completion_reward = {
+			
+		}
+	}
+	focus = {
+		id = SMN_refuse_modernity
 		icon = GFX_goal_generic_construct_civilian
 		cost = 10
 		x = 0
@@ -1832,8 +1866,25 @@ focus_tree = {
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = SMN_grahams_crusade }
-		relative_position_id = SMN_grahams_crusade
+		prerequisite = { focus = SMN_the_catholic_state }
+		relative_position_id = SMN_the_catholic_state
+		available = {
+		}
+		completion_reward = {
+			
+		}
+	}
+	focus = {
+		id = SMN_expansionism
+		icon = GFX_goal_generic_construct_civilian
+		cost = 10
+		x = -1
+		y = 2
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_catholic_schools }
+		relative_position_id = SMN_refuse_modernity
 		available = {
 		}
 		completion_reward = {
@@ -1844,15 +1895,12 @@ focus_tree = {
 		id = SMN_pacifism
 		icon = GFX_goal_generic_construct_civilian
 		cost = 10
-		x = 0
+		x = 1
 		y = 2
 		mutually_exclusive = {
 			
 		}
 		prerequisite = { focus = SMN_catholic_schools }
-		prerequisite = {
-			focus = SMN_racial_integration
-		}
 		relative_position_id = SMN_refuse_modernity
 		available = {
 		}
@@ -1895,17 +1943,22 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = SMN_the_mob_takeover
+		id = SMN_look_to_the_mob
 		icon = GFX_goal_generic_construct_civilian
 		cost = 10
-		x = 1
+		x = 3
 		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = SMN_continue_the_oconnor_agreement }
-		relative_position_id = SMN_continue_the_oconnor_agreement
+		prerequisite = { focus = SMN_side_with_the_police }
+		relative_position_id = SMN_side_with_the_police
 		available = {
+			#AND = {
+			#	has_country_flag = SMN_teamsters_have_striked
+			#	has_idea = SMN_corrupt_police
+			#	has_idea_with_trait = irish_mob_leader
+			#}
 		}
 		completion_reward = {
 			###THEY TAKEOUT THE MOB WITH THE POLICE
@@ -1921,8 +1974,8 @@ focus_tree = {
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = SMN_the_mob_takeover }
-		relative_position_id = SMN_the_mob_takeover
+		prerequisite = { focus = SMN_look_to_the_mob }
+		relative_position_id = SMN_look_to_the_mob
 		available = {
 		}
 		completion_reward = {
@@ -1933,68 +1986,97 @@ focus_tree = {
 		id = SMN_control_the_newspapers
 		icon = GFX_goal_generic_construct_civilian
 		cost = 10
-		x = 0
-		y = 1
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = SMN_distribute_liquor }
-		relative_position_id = SMN_distribute_liquor
-		available = {
-		}
-		completion_reward = {
-			
-		}
-	}
-	focus = {
-		id = SMN_assassinate_aj_rockne
-		icon = GFX_goal_generic_construct_civilian
-		cost = 10
 		x = 1
 		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = SMN_the_mob_takeover }
-		relative_position_id = SMN_the_mob_takeover
+		prerequisite = { focus = SMN_look_to_the_mob }
+		relative_position_id = SMN_look_to_the_mob
 		available = {
 		}
 		completion_reward = {
-			###ADD IDEA FOR MINNESOTA 13
+			
 		}
 	}
 	focus = {
-		id = SMN_finish_off_the_irish_mob
+		id = SMN_secure_arms
 		icon = GFX_goal_generic_construct_civilian
 		cost = 10
-		x = 0
+		x = -3
 		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = SMN_assassinate_aj_rockne }
-		relative_position_id = SMN_assassinate_aj_rockne
+		prerequisite = { focus = SMN_look_to_the_mob focus = SMN_enforce_catholitc_ideals_to_the_police }
+		relative_position_id = SMN_look_to_the_mob
 		available = {
 		}
 		completion_reward = {
-			###KILLS ADVISOR NEED FOR THE TAKEOVER
-			###TOMMY BANKS
+			add_offsite_building = {
+				type = arms_factory
+				level = 2
+			}
+			###ADD IDEA FOR MAFIA CONTROL OF THE COUNTRY
+		}
+	}
+	focus = {
+		id = SMN_negotiate_with_the_strikers
+		icon = GFX_goal_generic_construct_civilian
+		cost = 10
+		x = -6
+		y = 3
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_grahams_crusade }
+		prerequisite = {
+			focus = SMN_control_the_newspapers
+		}
+		relative_position_id = SMN_side_with_the_police
+		available = {
+		}
+		completion_reward = {
+			###ADD IDEA FOR MAFIA CONTROL OF THE COUNTRY
+		}
+	}
+	focus = {
+		id = SMN_attack_the_strikers
+		icon = GFX_goal_generic_construct_civilian
+		cost = 10
+		x = 0
+		y = 3
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_secure_arms }
+		prerequisite = {
+			focus = SMN_control_the_newspapers focus = SMN_alliance_with_the_silver_shirts
+		}
+		prerequisite = {
+			focus = SMN_preach_the_jewish_conspiracy focus = SMN_distribute_liquor
+		}
+		relative_position_id = SMN_side_with_the_police
+		available = {
+		}
+		completion_reward = {
+			###ADD IDEA FOR MAFIA CONTROL OF THE COUNTRY
 		}
 	}
 	focus = {
 		id = SMN_consolidate_the_mobs_power
 		icon = GFX_goal_generic_construct_civilian
 		cost = 10
-		x = -1
-		y = 2
+		x = 3
+		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = SMN_finish_off_the_irish_mob }
 		prerequisite = {
-			focus = SMN_control_the_newspapers
+			focus = SMN_attack_the_strikers
 		}
-		relative_position_id = SMN_assassinate_aj_rockne
+		relative_position_id = 	SMN_attack_the_strikers
+
 		available = {
 		}
 		completion_reward = {
@@ -2024,23 +2106,6 @@ focus_tree = {
 		cost = 10
 		x = -2
 		y = 2
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = SMN_consolidate_the_mobs_power }
-		relative_position_id = SMN_consolidate_the_mobs_power
-		available = {
-		}
-		completion_reward = {
-			###ADD IDEA FOR MAFIA CONTROL OF THE COUNTRY
-		}
-	}
-	focus = {
-		id = SMN_secure_arms
-		icon = GFX_goal_generic_construct_civilian
-		cost = 10
-		x = 1
-		y = 1
 		mutually_exclusive = {
 			
 		}
@@ -2202,7 +2267,7 @@ focus_tree = {
 		id = SMN_army_tree
 		icon = GFX_goal_generic_construct_civilian
 		cost = 10
-		x = 70
+		x = 75
 		y = 0
 		available = {
 		}
