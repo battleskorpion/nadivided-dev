@@ -58,6 +58,7 @@
 				}
 			}
 	
+
 			custom_effect_tooltip = SMI_black_legion_support_start_tt
 			
 		}
@@ -81,6 +82,9 @@
 		}
 
 		completion_reward = {
+			set_politics = {
+				ruling_party = fascism
+			}	
 			add_ideas = SMI_Paramilitary_Force  
 		}
 	}
@@ -223,16 +227,18 @@
 			factor = 1
 		}
 
-		completion_reward = { # to fix
+		completion_reward = { 
+
 			set_rule = {
 				can_join_factions = yes
 			}
+			
 			every_other_country = {
 				LIMIT = {
 					has_country_flag = KKK_led_USA_state	
 				}
 				add_opinion_modifier = {
-					modifier = huge_increase
+					modifier = KKK_love
 					target = PREV
 				}
 			}
@@ -329,7 +335,22 @@
 		}
 
 		completion_reward = {
-			#create our own faction
+			create_faction = "Black League"	
+			every_other_country = {
+				LIMIT = {
+					has_country_flag = KKK_led_USA_state	
+				}
+				add_opinion_modifier = {
+					modifier = faction_traitor
+					target = PREV
+				}
+			}	
+			set_rule = {
+				can_join_factions = yes
+			}
+			set_rule = {
+				can_create_factions = yes
+			}
 		}
 	}
 
@@ -362,17 +383,24 @@
 		relative_position_id = SMI_Legion_Dominance
         prerequisite = { focus = SMI_Legion_Dominance  }
 
-		cost = 10
+		cost = 3
 
 		search_filters = {   }
-		
+		available = {
+		has_war_with = SOH	
+		}
 		available_if_capitulated = yes
 		ai_will_do = {
-			factor = 1
+			factor = 400
 		}
 
 		completion_reward = {
-			#cause black legion revolt in ohio
+		SOH = {
+			add_timed_idea = { 
+				idea = SMI_soh_black_legion
+				days = 365		
+			} 	
+		}
 		}
 	}
 
@@ -941,7 +969,10 @@
 		cost = 10
 
 		search_filters = {   }
-		
+		available = {
+		is_in_faction = yes	
+		}
+
 		available_if_capitulated = yes
 		ai_will_do = {
 			factor = 1
