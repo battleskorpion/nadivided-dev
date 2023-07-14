@@ -8,18 +8,18 @@ focus_tree = {
 			add = 10
 			tag = SAC
 
-		}
+		} 
 	}
 		
 	default = no
 
 	continuous_focus_position = { x = 50 y = 1800 }
 
-		focus = {
+	focus = {
 		id = SAC_arcadian_army
 		icon = GFX_goal_generic_allies_build_infantry
-		x = 1
-		y = 1
+		x = 27
+		y = 0
 		cost = 5
 
 		search_filters = {  FOCUS_FILTER_RESEARCH }
@@ -120,5 +120,2962 @@ focus_tree = {
 			add_ideas = special_forces			
         }
     }
+
+	focus = {
+		id = army_effort
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 1
+		y = 0
+		cost = 10
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		ai_will_do = {
+			factor = 7.2
+		}
+		completion_reward = {
+			army_experience = 5
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine
+			}
+			hidden_effect = {
+				if = {
+					limit = { is_ai = yes }
+					add_manpower = 5000
+					add_equipment_to_stockpile = {
+						type = infantry_equipment
+						amount = 1000
+						producer = WDC
+					}            
+					add_equipment_to_stockpile = {
+						type = support_equipment_1
+						amount = 100
+						producer = WDC
+					} 
+					add_equipment_to_stockpile = {
+						type = artillery_equipment_1
+						amount = 16
+						producer = WDC
+					}
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = equipment_effort
+		icon = GFX_focus_gen_equipment_effort
+		prerequisite = { focus = army_effort }
+		x = -1
+		y = 1
+		relative_position_id = army_effort
+		cost = 7.2
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 1
+				category = infantry_weapons
+				category = artillery
+			}
+
+			hidden_effect = {
+				if = {
+					limit = { is_ai = yes }
+					set_technology = {
+						gw_artillery = 1
+					}
+					set_technology = {
+						interwar_antiair = 1
+					}	
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = motorization_effort1
+		icon = GFX_goal_generic_army_motorized
+		prerequisite = { focus = army_effort }
+		bypass = { has_tech = motorised_infantry }
+		x = 1
+		y = 1
+		relative_position_id = army_effort
+		cost = 7.2
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = motorized_bonus
+				bonus = 3.0
+				technology = motorised_infantry
+			}
+			add_equipment_to_stockpile = {
+				type = motorized_equipment_1
+				amount = 100
+				producer = WDC
+			}
+
+		}
+	}
+
+	focus = {
+		id = doctrine_effort
+		icon = GFX_goal_generic_army_doctrines
+		prerequisite = { focus = army_effort }
+		x = 0
+		y = 2
+		relative_position_id = army_effort
+		cost = 7.2
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			army_experience = 5
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine
+			}
+		}
+	}
+
+	focus = {
+		id = equipment_effort_2
+		icon = GFX_focus_gen_equipment_effort2
+		prerequisite = { focus = equipment_effort }
+		x = 0
+		y = 2
+		relative_position_id = equipment_effort
+		cost = 7.2
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			hidden_effect = {
+				if = {
+					limit = { is_ai = yes }
+					add_equipment_to_stockpile = {
+						type = artillery_equipment_1
+						amount = 100
+						producer = WDC
+					}
+				}
+			}
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 1
+				category = infantry_weapons
+				category = artillery
+			}
+		}
+	}
+	focus = {
+		id = mechanization_effort
+		icon = GFX_goal_generic_build_tank
+		prerequisite = { focus = motorization_effort1 }
+		x = 0
+		y = 2
+		relative_position_id = motorization_effort1
+		cost = 7.2
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = motorized_bonus
+				ahead_reduction = 2
+				uses = 1
+				category = motorized_equipment
+			}
+		}
+	}
+
+	focus = {
+		id = doctrine_effort_2
+		icon = GFX_goal_generic_army_doctrines
+		prerequisite = { focus = doctrine_effort }
+		x = 0
+		y = 2
+		relative_position_id = doctrine_effort
+		cost = 7.2
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			army_experience = 5
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = land_doctrine
+			}
+		}
+	}
+
+	focus = {
+		id = GEN_Mass_Conscription_effort
+		icon = GFX_focus_gen_mass_conscription
+		prerequisite = { focus = doctrine_effort_2 }
+		x = 2
+		y = 2
+		relative_position_id = doctrine_effort_2
+		cost = 10
+
+		available = {
+					date > 1938.1.1
+		}
+
+		ai_will_do = {
+			factor = 10
+			modifier = {
+				factor = 100
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_timed_idea = { idea = GEN_Mass_Conscription_effort_idea  days = 600 }
+		}
+	}
+
+	focus = {
+		id = GEN_professional_garrisons
+		icon = GFX_focus_gen_professional_garrisons
+		prerequisite = { focus = doctrine_effort }
+		x = 2
+		y = 2
+		relative_position_id = doctrine_effort
+		cost = 10
+
+		available = {
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 1
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = GEN_professional_garrisonsidea
+
+		}
+	}
+
+	focus = {
+		id = equipment_effort_3
+		icon = GFX_focus_gen_equipment_effort3
+		prerequisite = { focus = equipment_effort_2 }
+		x = 0
+		y = 2
+		relative_position_id = equipment_effort_2
+		cost = 7.2
+
+		available_if_capitulated = yes
+
+	
+		completion_reward = {
+			if = {
+				limit = { is_ai = yes }
+				add_equipment_to_stockpile = {
+					type = artillery_equipment_1
+					amount = 300
+					producer = WDC
+				}
+			}
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				ahead_reduction = 2
+				uses = 1
+				category = infantry_weapons
+				category = artillery
+			}
+		}	
+	}
+
+	focus = {
+		id = armor_effort
+		icon = GFX_goal_generic_army_tanks
+		prerequisite = { focus = mechanization_effort }
+		x = 0
+		y = 2
+		relative_position_id = mechanization_effort
+		cost = 7.2
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = armor_bonus
+				bonus = 1.0
+				uses = 2
+				category = armor
+			}
+		}
+	}
+
+	focus = {
+		id = special_forces
+		icon = GFX_goal_generic_special_forces
+		prerequisite = { focus = equipment_effort_3 }
+		prerequisite = { focus = doctrine_effort_2 }
+		prerequisite = { focus = armor_effort }
+		x = 1
+		y = 1
+		relative_position_id = equipment_effort_3
+		cost = 7.2
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = special_forces
+			add_tech_bonus = {
+				name = special_forces_bonus
+				bonus = 1.0
+				uses = 1
+				technology = paratroopers
+				technology = paratroopers2
+				technology = marines
+				technology = marines2
+				technology = tech_mountaineers
+				technology = tech_mountaineers2
+			}
+		}
+	}
+
+	focus = {
+		id = aviation_effort
+		icon = GFX_goal_generic_build_airforce
+		x = 6
+		y = 0
+		cost = 10
+
+		available_if_capitulated = yes
+
+			#modifier = {
+			#	factor = 25
+			#}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+
+		complete_tooltip = {
+			
+			air_experience = 25
+			if = { limit = { has_country_flag = aviation_effort_AB }
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}			
+			add_doctrine_cost_reduction = {
+				name =  air_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}		
+		}
+
+		completion_reward = {
+			air_experience = 125
+
+			if = {
+				limit = {
+					capital_scope = {
+						NOT = {
+							free_building_slots = {
+								building = air_base
+								size > 1
+							}
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_AB }
+				}
+			}
+			if = {
+				limit = {
+					capital_scope = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+				}
+				capital_scope = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_AB }
+				}
+			}
+			add_doctrine_cost_reduction = {
+				name = air_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+		}
+	}
+
+	focus = {
+		id = fighter_focus
+		icon = GFX_goal_generic_air_fighter
+		prerequisite = { focus = aviation_effort }
+		mutually_exclusive = { focus = bomber_focus }
+		x = -1
+		y = 1
+		relative_position_id = aviation_effort
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = fighter_bonus
+				bonus = 1.0
+				uses = 2
+				technology = early_fighter
+				technology = fighter1
+				technology = fighter2
+				technology = fighter3
+				technology = heavy_fighter1
+				technology = heavy_fighter2
+				technology = heavy_fighter3
+			}
+			air_experience = 25
+		}
+	}
+
+	focus = {
+		id = bomber_focus
+		icon = GFX_goal_generic_air_bomber
+		prerequisite = { focus = aviation_effort }
+		mutually_exclusive = { focus = fighter_focus }
+		x = 1
+		y = 1
+		relative_position_id = aviation_effort
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = bomber_bonus
+				bonus = 1.0
+				uses = 2
+				technology = strategic_bomber1
+				technology = strategic_bomber2
+				technology = strategic_bomber3
+				category = tactical_bomber
+			}
+			air_experience = 50
+		}
+	}
+
+
+
+	focus = {
+		id = aviation_effort_2
+		icon = GFX_goal_generic_air_doctrine
+		prerequisite = { focus = bomber_focus focus = fighter_focus }
+		x = -1
+		y = 1
+		relative_position_id = bomber_focus
+		cost = 10
+
+		available_if_capitulated = yes
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		
+		complete_tooltip = {
+			air_experience = 25
+			if = { limit = { has_country_flag = aviation_effort_2_AB }
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+			add_doctrine_cost_reduction = {
+				name =  air_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+		}
+		completion_reward = {
+
+			hidden_effect = {
+				if = {
+					limit = { is_ai = yes }
+					air_experience = 75
+				}
+			}
+
+			air_experience = 25
+			if = {
+				limit = {
+					capital_scope = {
+						OR = {
+							NOT = { is_controlled_by = ROOT }
+							NOT = {
+								free_building_slots = {
+									building = air_base
+									size > 1
+								}
+							}
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_2_AB }
+				}
+			}
+			if = {
+				limit = {
+					capital_scope = {
+						is_controlled_by = ROOT
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+				}
+				capital_scope = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}				
+					ROOT = { set_country_flag = aviation_effort_2_AB }
+				}
+			}
+			add_doctrine_cost_reduction = {
+				name = air_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+		}
+	}
+
+	focus = {
+		id = CAS_effort
+		icon = GFX_goal_generic_CAS
+		prerequisite = { focus = aviation_effort_2 }
+		prerequisite = { focus = motorization_effort1 }
+		x = -1
+		y = 1
+		relative_position_id = aviation_effort_2
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = CAS_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = cas_bomber
+			}
+		}
+	}
+
+	focus = {
+		id = rocket_effort
+		icon = GFX_focus_rocketry
+		prerequisite = { focus = aviation_effort_2 }
+		prerequisite = { focus = infrastructure_effort }
+		x = 0
+		y = 2
+		relative_position_id = aviation_effort_2
+		cost = 7.2
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = jet_rocket_bonus
+				ahead_reduction = 2
+				uses = 2
+				category = rocketry
+				category = jet_technology
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.25
+				always = yes
+			}
+		}
+	}
+
+	focus = {
+		id = NAV_effort
+		icon = GFX_goal_generic_air_naval_bomber
+		prerequisite = { focus = aviation_effort_2 }
+		x = 1
+		y = 1
+		relative_position_id = aviation_effort_2
+		cost = 10
+
+		available_if_capitulated = yes
+
+		ai_will_do = {
+			factor = 4
+		}
+		#crashes?
+		#completion_reward = {
+		#hidden_effect = {
+		#	if = {
+		#		limit = { is_ai = yes }
+		#		add_equipment_to_stockpile = {
+		#			type = nav_bomber_equipment_1
+		#			amount = 210
+		#			producer = WDC
+		#			}
+		#		}
+		#	}
+		#}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = nav_bomber_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = naval_bomber
+			}
+		}
+	}
+
+	focus = {
+		id = naval_effort
+		icon = GFX_goal_generic_construct_naval_dockyard
+		x = 10
+		y = 0
+		cost = 10
+
+		available_if_capitulated = yes
+
+			#	modifier = {
+			#	factor = 25
+			#}
+
+		available = {
+			any_owned_state = {
+				is_coastal = yes
+			}
+		}
+
+		complete_tooltip = {
+			navy_experience = 25
+			add_extra_state_shared_building_slots = 3
+			add_building_construction = {
+				type = dockyard
+				level = 3
+				instant_build = yes
+			}
+		}
+		
+		completion_reward = {
+			navy_experience = 25
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+			}			
+		}
+	}
+		
+
+	focus = {
+		id = flexible_navy11
+		icon = GFX_goal_generic_build_navy
+		prerequisite = { focus = naval_effort }
+		#mutually_exclusive = { focus = large_navy11 }
+		x = -1
+		y = 1
+		relative_position_id = naval_effort
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = sub_op_bonus
+				cost_reduction = 0.5
+				uses = 2
+				technology = convoy_interdiction_ti
+				technology = unrestricted_submarine_warfare
+				technology = wolfpacks
+				technology = advanced_submarine_warfare
+				technology = combined_operations_raiding
+			}
+		}
+	}
+
+	focus = {
+		id = large_navy1
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		prerequisite = { focus = naval_effort }
+		mutually_exclusive = { focus = flexible_navy11 }
+		x = 1
+		y = 1
+		relative_position_id = naval_effort
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = fleet_in_being_bonus
+				cost_reduction = 0.5
+				uses = 2
+				category = fleet_in_being_tree
+			}
+		}
+	}
+
+	focus = {
+		id = submarine_effort
+		icon = GFX_goal_generic_navy_submarine
+		prerequisite = { focus = flexible_navy11 focus = large_navy1 }
+		x = 0
+		y = 1
+		relative_position_id = flexible_navy11
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = ss_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = ss_tech
+			}
+		}
+	}
+
+	focus = {
+		id = cruiser_effort
+		icon = GFX_goal_generic_navy_cruiser
+		prerequisite = { focus = large_navy1 focus = flexible_navy11 }
+		x = 0
+		y = 1
+		relative_position_id = large_navy1
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = cr_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = cl_tech
+				category = ca_tech
+			}
+		}
+	}
+
+	focus = {
+		id = destroyer_effort
+		icon = GFX_goal_generic_wolf_pack
+		prerequisite = { focus = submarine_effort }
+		x = 0
+		y = 1
+		relative_position_id = submarine_effort
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = dd_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = dd_tech
+			}
+		}
+	}
+
+	focus = {
+		id = capital_ships_effort
+		icon = GFX_goal_generic_navy_battleship
+		prerequisite = { focus = cruiser_effort }
+		x = 0
+		y = 1
+		relative_position_id = cruiser_effort
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				all_owned_state = {
+					OR = {
+						is_coastal = no
+						dockyard < 1
+					}
+				}
+			}
+		}
+
+		completion_reward = {
+			navy_experience = 25
+			add_tech_bonus = {
+				name = capital_ships_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = bc_tech
+				category = bb_tech
+				category = cv_tech
+			}
+		}
+	}
+
+	focus = {
+		id = industrial_effort
+		icon = GFX_goal_generic_production
+		x = 14
+		y = 0
+		cost = 10
+
+		available_if_capitulated = yes
+
+			#modifier = {
+			#	factor = 26
+			#}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = industrial_bonus
+				bonus = 1.0
+				uses = 1
+				category = industry
+			}
+		}
+
+		ai_will_do = {
+			factor = 8
+			modifier = {
+				factor = 0.2
+				date < 1936.6.1			
+			}
+		}
+	}
+
+	focus = {
+		id = construction_effort
+		icon = GFX_goal_generic_construct_civ_factory
+		prerequisite = { focus = industrial_effort }
+		x = -1
+		y = 1
+		relative_position_id = industrial_effort
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		
+		ai_will_do = {
+			factor = 5
+		}
+
+		completion_reward = {
+        	add_offsite_building = { type = industrial_complex level = 2 }
+		}
+	}
+
+	focus = {
+		id = production_effort
+		icon = GFX_goal_generic_construct_mil_factory
+		prerequisite = { focus = industrial_effort }
+		x = 1
+		y = 1
+		relative_position_id = industrial_effort
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 10			
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = production_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = arms_factory
+						size < 1
+						include_locked = yes
+					}
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+				instant_build = yes
+			}
+		}
+
+		completion_reward = {
+            add_offsite_building = { type = arms_factory level = 1 }
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = construction_effort_2
+		icon = GFX_goal_generic_construct_civ_factory
+		prerequisite = { focus = construction_effort }
+		x = 0
+		y = 1
+		relative_position_id = construction_effort
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 2
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = construction_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = industrial_complex
+						size < 2
+						include_locked = yes
+					}
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}
+		}		
+
+		completion_reward = {
+			if = {
+			limit = {
+				has_idea = destitute_economy
+			}
+			add_ideas = agrarian_economy
+			else = {
+				
+			}
+		}
+           add_offsite_building = { type = industrial_complex level = 1 }
+			random_owned_controlled_state = {
+
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = production_effort_2
+		icon = GFX_goal_generic_construct_mil_factory
+		prerequisite = { focus = production_effort }
+		x = 0
+		y = 1
+		relative_position_id = production_effort
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 2
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = production_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = arms_factory
+						size < 2
+						include_locked = yes
+					}
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = arms_factory
+				level = 2
+				instant_build = yes
+			}
+		}		
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = infrastructure_effort
+		icon = GFX_goal_generic_construct_infrastructure
+		prerequisite = { focus = construction_effort_2 }
+		x = 0
+		y = 1
+		relative_position_id = construction_effort_2
+		cost = 10
+
+		available_if_capitulated = yes
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = infrastructure_effort_tt
+				all_owned_state = {			
+					free_building_slots = {
+						building = infrastructure
+						size < 2
+					}
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_building_construction = {
+				type = infrastructure
+				level = 1
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = infrastructure
+				level = 1
+				instant_build = yes
+			}
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = infrastructure
+										size > 1
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = infrastructure
+										size > 1
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = production_effort_3
+		icon = GFX_goal_generic_construct_mil_factory
+		prerequisite = { focus = production_effort_2 }
+		x = 0
+		y = 1
+		relative_position_id = production_effort_2
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 2
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = production_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = arms_factory
+						size < 2
+						include_locked = yes
+					}					
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = arms_factory
+				level = 2
+				instant_build = yes
+			}
+		}		
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = infrastructure_effort_2
+		icon = GFX_goal_generic_construct_infrastructure
+		prerequisite = { focus = infrastructure_effort }
+		x = 0
+		y = 1
+		relative_position_id = infrastructure_effort
+		cost = 10
+
+		available_if_capitulated = yes
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = infrastructure_effort_tt
+				all_owned_state = {			
+					free_building_slots = {
+						building = infrastructure
+						size < 2
+					}
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_building_construction = {
+				type = infrastructure
+				level = 1
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = infrastructure
+				level = 1
+				instant_build = yes
+			}
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = infrastructure
+										size > 1
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = infrastructure
+										size > 1
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = construction_effort_3
+		icon = GFX_goal_generic_construct_civ_factory
+		prerequisite = { focus = infrastructure_effort }
+		x = 2
+		y = 1
+		relative_position_id = infrastructure_effort
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 2
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = construction_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = industrial_complex
+						size < 2
+						include_locked = yes
+					}
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = nuclear_effort
+		icon = GFX_focus_wonderweapons
+		prerequisite = { focus = infrastructure_effort_2 }
+		x = -2
+		y = 1
+		relative_position_id = infrastructure_effort_2
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = nuclear_bonus
+				ahead_reduction = 2
+				category = nuclear
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.25
+				always = yes
+			}
+		}
+	}
+
+	focus = {
+		id = extra_tech_slot
+		icon = GFX_focus_research
+		prerequisite = { focus = infrastructure_effort_2 }
+		x = 0
+		y = 1
+		relative_position_id = infrastructure_effort_2
+		cost = 10
+
+		available_if_capitulated = yes
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
+	
+	focus = {
+		id = extra_tech_slot_2
+		icon = GFX_focus_research
+		prerequisite = { focus = extra_tech_slot }
+		available = {
+			num_of_factories > 50
+		}
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		x = 0
+		y = 1
+		relative_position_id = extra_tech_slot
+		cost = 10
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}	
+
+    focus = {
+		id = Develop_synth_rubber
+		icon = GFX_focus_rubber
+		x = 0
+		y = 1
+		relative_position_id = construction_effort_3
+        prerequisite = { focus = construction_effort_3 }
+		cost = 7.2
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 150
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = ""
+				bonus = 1.5
+				uses = 1
+				category = synth_resources
+			}
+		}
+	}
+#
+    focus = {
+		id = Construct_rubber_plants
+		icon = GFX_focus_synth_facility
+		x = 0
+		y = 1
+		relative_position_id = Develop_synth_rubber
+        prerequisite = { focus = Develop_synth_rubber }
+		cost = 7.2
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 150
+		}
+
+        available = { has_tech = synth_oil_experiments }
+
+          completion_reward = { 
+            custom_effect_tooltip = SLA_research_syth_tt
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = synthetic_refinery 
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = synthetic_refinery
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 1
+					instant_build = yes
+				    }
+			    }
+			}
+	}
+#
+
+	focus = {
+		id = secret_weapons
+		icon = GFX_goal_generic_secret_weapon
+		prerequisite = { focus = infrastructure_effort_2 }
+		x = -4
+		y = 1
+		relative_position_id = infrastructure_effort_2
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = secret_bonus
+				bonus = 1.0
+				uses = 4
+				category = electronics
+				category = nuclear
+				category = rocketry
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.25
+				always = yes
+			}
+		}
+	}
+###################################################################################################
+#####################################################EDITED CONTENT################################
+###################################################################################################
+
+	focus = {
+		id = GEN_reopen_the_political_sphere
+		icon = GFX_goal_generic_neutrality_focus
+		x = 21
+		y = 0
+		cost = 10
+
+		available_if_capitulated = yes
+
+		ai_will_do = {
+			factor = 1
+		}
+		allow_branch = {
+			NOT = {
+				tag = TXR
+			}
+		}
+
+			#modifier = {
+			#	factor = 150
+			#}
+
+		completion_reward = {
+			add_political_power = 150
+		}
+	}
+#
+	focus = {
+		id = GEN_ideals_of_the_union
+		icon = GFX_goal_support_democracy
+		prerequisite = { focus = GEN_reopen_the_political_sphere}
+		mutually_exclusive = { focus = GEN_sieze_the_means_of_production }
+		mutually_exclusive = { focus = GEN_take_advantage_of_the_chaos }
+		x = 20
+		y = 1
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 100
+				has_country_flag = SLA_huey_is_leader
+			}
+			modifier = {
+				factor = 50
+				OR = {
+					has_government = democratic
+					has_government = progressivism
+					has_government = longism
+				}
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_popularity = {
+				ideology = democratic
+				popularity = .10
+			}
+			add_timed_idea = { idea = democratic_influence  days = 2000 }
+		}
+	}
+#
+	focus = {
+		id = GEN_adopt_the_constitution
+		icon = GFX_focus_generic_treaty
+		prerequisite = { focus = GEN_ideals_of_the_union}
+		mutually_exclusive = { focus = GEN_rewrite_the_constitution}
+		x = 17
+		y = 2
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				has_country_flag = SLA_huey_is_leader
+			}
+			modifier = {
+				factor = 50
+				has_government = democratic
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_stability = 0.1
+		}
+	}
+#
+	focus = {
+		id = GEN_reienstate_free_speech
+		icon = GFX_focus_vote_reenstation_act
+		prerequisite = { focus = GEN_adopt_the_constitution}
+		x = 17
+		y = 3
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_stability = 0.05
+			add_political_power = 50
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.2
+			}
+			add_popularity = {
+				ideology = longism
+				popularity = 0.03
+			}
+			add_popularity = {
+				ideology = progressivism
+				popularity = 0.03
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = 0.01
+			}
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.01
+			}
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.03
+			}
+		}
+	}
+#
+	focus = {
+		id = GEN_encourage_free_enterprise
+		icon = GFX_goal_generic_investments
+		prerequisite = { focus = GEN_reienstate_free_speech}
+		x = 17
+		y = 4
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			has_government = democratic
+			}
+
+		available_if_capitulated = yes
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+
+		completion_reward = {
+			add_ideas = deterrence
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 0
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+#
+	focus = {
+		id = GEN_forign_intervention
+		icon = GFX_goal_generic_political_pressure
+		prerequisite = { focus = GEN_encourage_free_enterprise}
+		x = 17
+		y = 5
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			set_rule = { can_send_volunteers = yes }
+			add_ideas = volunteer_corps_focus
+			if = {
+				limit = {
+					is_ai = no
+				}
+				set_rule = {
+					can_create_factions = yes
+				}
+			}
+		}
+	}
+#
+	focus = {
+		id = GEN_intellectual_property_integrity
+		icon = GFX_goal_generic_political_pressure
+		prerequisite = { focus = GEN_an_iron_fortress focus = GEN_forign_intervention focus = GEN_protect_others}
+		x = 0
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		relative_position_id = GEN_forign_intervention
+		available_if_capitulated = yes
+
+		available = {
+					date > 1940.1.1
+		}
+
+		completion_reward = {
+			add_ideas = GEN_intellectual_property_integrityidea
+		}
+	}
+#
+	focus = {
+		id = GEN_rewrite_the_constitution
+		icon = GFX_goal_generic_forceful_treaty
+		prerequisite = { focus = GEN_ideals_of_the_union}
+		mutually_exclusive = { focus = GEN_adopt_the_constitution}
+		x = 20
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 100
+				has_country_flag = SLA_huey_is_leader
+			}
+			modifier = {
+				factor = 50
+				OR = {
+					has_government = progressivism
+					has_government = longism
+				}
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_political_power = 100
+			add_popularity = {
+				ideology = longism
+				popularity = 0.1
+			}
+			add_popularity = {
+				ideology = progressivism
+				popularity = 0.1
+			}
+			remove_ideas = democratic_influence
+		}
+	}
+#
+	focus = {
+		id = GEN_ban_public_opposition
+		icon = GFX_focus_usa_voter_registration_act
+		prerequisite = { focus = GEN_rewrite_the_constitution}
+		mutually_exclusive = { focus = GEN_create_a_better_union}
+		x = 19
+		y = 3
+		cost = 10
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 100
+				has_country_flag = SLA_huey_is_leader
+			}
+			modifier = {
+				factor = 50
+				has_government = longism
+			}
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_stability = -0.07
+			add_popularity = {
+				ideology = longism
+				popularity = 0.25
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = -0.02
+			}
+			add_popularity = {
+				ideology = democratic
+				popularity = -0.05
+			}
+			add_popularity = {
+				ideology = progressivism
+				popularity = -0.05
+			}
+			add_popularity = {
+				ideology = fascism
+				popularity = -0.02
+			}
+			add_popularity = {
+				ideology = neutrality
+				popularity = -0.01
+			}
+		}
+	}
+#
+	focus = {
+		id = GEN_ignore_corruption
+		icon = GFX_focus_eng_concessions_to_the_trade_unions
+		prerequisite = { focus = GEN_ban_public_opposition}
+		x = 19
+		y = 4
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_political_power = 75
+			add_timed_idea = { idea = idea_political_correctness  days = 2000 }
+			if = {
+				limit = {
+					is_ai = no
+				}
+				set_rule = {
+					can_create_factions = yes
+				}
+			}
+			set_rule = { can_send_volunteers = yes }
+		}
+	}
+#
+	focus = {
+		id = GEN_an_iron_fortress
+		icon = GFX_goal_generic_construct_military
+		prerequisite = { focus = GEN_ignore_corruption}
+		x = 19
+		y = 5
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = deterrence
+			add_war_support = 0.05
+		}
+	}
+#
+	focus = {
+		id = GEN_create_a_better_union
+		icon = GFX_focus_ideology_progressivism
+		prerequisite = { focus = GEN_rewrite_the_constitution}
+		mutually_exclusive = { focus = GEN_ban_public_opposition}
+		x = 1
+		y = 1
+		relative_position_id = GEN_rewrite_the_constitution
+		cost = 10
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				has_country_flag = SLA_huey_is_leader
+			}
+			modifier = {
+				factor = 50
+				has_government = progressivism
+			}
+		}
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_popularity = {
+				ideology = progressivism
+				popularity = 0.2
+			}
+		}
+	}
+	focus = {
+		id = GEN_push_social_reform
+		icon = GFX_focus_generic_treaty
+		prerequisite = { focus = GEN_create_a_better_union}
+		x = 0
+		y = 1
+		relative_position_id = GEN_create_a_better_union
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_stability = 0.05
+			add_war_support = 0.05
+			add_political_power = 50
+		}
+	}
+	focus = {
+		id = GEN_protect_others
+		icon = GFX_goal_generic_improve_relations
+		prerequisite = { focus = GEN_push_social_reform}
+		x = 0
+		y = 1
+		relative_position_id = GEN_push_social_reform
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = liberty_ethos_focus
+			add_ideas = ideological_fanaticism_focus
+			set_rule = { can_send_volunteers = yes }
+			# add_ideas = volunteer_corps_focus
+			if = {
+				limit = {
+					is_ai = no
+				}
+				set_rule = {
+					can_create_factions = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = GEN_call_an_emergency_draft
+		icon = GFX_focus_generic_manpower
+		prerequisite = { focus = GEN_an_iron_fortress focus = GEN_forign_intervention focus = GEN_protect_others}
+		x = 19
+		y = 7
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = militarism_focus
+			add_manpower = 10000
+		}
+	}
+#
+	focus = {
+		id = GEN_Socialism_must_be_contained
+		icon = GFX_focus_contain_communism
+		mutually_exclusive = { focus = GEN_take_out_fascists2}
+		prerequisite = {
+			 focus = GEN_call_an_emergency_draft
+			 focus = GEN_intellectual_property_integrity			 
+			  }
+		x = 19
+		y = 8
+		cost = 10
+		ai_will_do = {
+			factor = 3
+		}
+
+		available = {
+				date > 1948.01.1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			custom_effect_tooltip = take_out_countries_tt
+			random_neighbor_country = {
+				limit = {
+					has_government = communism
+				}
+				every_owned_state = {
+					limit = {
+						is_in_home_area = yes
+					}
+					ROOT = {
+						add_state_claim = PREV 
+					}
+				}
+			}	
+			add_war_support = 0.05
+		}
+	}
+#
+
+#
+
+	focus = {
+		id = GEN_sieze_the_means_of_production
+		icon = GFX_goal_support_communism
+		prerequisite = { focus = GEN_reopen_the_political_sphere}
+		mutually_exclusive = { focus = GEN_ideals_of_the_union}
+		mutually_exclusive = { focus = GEN_take_advantage_of_the_chaos}
+		x = 23
+		y = 1
+		cost = 10
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				has_country_flag = SLA_huey_is_leader
+			}
+			modifier = {
+				factor = 50
+				has_government = communism
+			}
+		}
+
+		available = {
+			communism > 0.10			
+		}
+		
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_popularity = {
+				ideology = communism
+				popularity = 0.25
+			}
+			add_timed_idea = { idea = communist_influence  days = 2000 }
+		}
+	}
+#
+	focus = {
+		id = GEN_work_with_the_workers
+		icon = GFX_goal_generic_improve_relations
+		prerequisite = { focus = GEN_sieze_the_means_of_production}
+		x = 23
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 120
+		}
+
+		available_if_capitulated = yes
+
+		available = {
+			has_government = communism
+			}
+
+		completion_reward = {
+			add_popularity = {
+				ideology = communism
+				popularity = 0.10
+			}
+			if = {
+				limit = {
+					is_ai = no
+				}
+				set_rule = {
+					can_create_factions = yes
+				}
+			}
+		}
+	}
+#
+	focus = {
+		id = GEN_ban_fascist_publications
+		icon = GFX_focus_renounce_the_treaty_of_trianon
+		prerequisite = { focus = GEN_work_with_the_workers}
+		x = 23
+		y = 3
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_popularity = {
+				ideology = fascism
+				popularity = -0.1
+			}
+			add_popularity = {
+				ideology = neutrality
+				popularity = -0.05
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = 0.05
+			}
+		}
+	}
+#
+	focus = {
+		id = GEN_strengthen_unions
+		icon = GFX_focus_generic_join_comintern
+		prerequisite = { focus = GEN_ban_fascist_publications}
+		x = 23
+		y = 4
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = workers_union
+		}
+	}
+#
+	focus = {
+		id = GEN_take_out_fascists
+		icon = GFX_focus_generic_anti_fascist_diplomacy
+		prerequisite = { focus = GEN_strengthen_unions}
+		x = 23
+		y = 5
+		cost = 7.2
+		ai_will_do = {
+			factor = 120
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			custom_effect_tooltip = take_out_countries_tt
+			random_neighbor_country = {
+				limit = {
+					has_government = fascism
+				}
+				every_owned_state = {
+					limit = {
+						is_in_home_area = yes
+					}
+					ROOT = {
+						add_state_claim = PREV 
+					}
+				}
+			}	
+			add_war_support = 0.05
+		}
+	}
+#
+	focus = {
+		id = GEN_take_out_fascists2
+		icon = GFX_focus_generic_anti_fascist_diplomacy
+		prerequisite = { focus = GEN_call_workers_to_arms focus = GEN_call_an_emergency_draft focus = GEN_intellectual_property_integrity}
+		mutually_exclusive = { focus = GEN_Socialism_must_be_contained}
+		x = 23
+		y = 8
+		cost = 10
+		ai_will_do = {
+			factor = 120
+		}
+
+		available = {
+				date > 1943.06.1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			custom_effect_tooltip = take_out_countries_tt
+			random_neighbor_country = {
+				limit = {
+					has_government = fascism
+				}
+				every_owned_state = {
+					limit = {
+						is_in_home_area = yes
+					}
+					ROOT = {
+						add_state_claim = PREV 
+					}
+				}
+			}	
+			add_war_support = 0.05
+		}
+	}
+#
+	focus = {
+		id = GEN_democracy_is_foolish
+		icon = GFX_focus_generic_strike_at_democracy3
+		prerequisite = { focus = GEN_take_out_fascists2 focus = GEN_purge_the_communists2 }
+		prerequisite = { focus = GEN_Fanatical_Ideologicalism }
+		x = 24
+		y = 9
+		cost = 10
+		ai_will_do = {
+			factor = 120
+		}
+
+		available = {
+				date > 1944.06.1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			custom_effect_tooltip = take_out_countries_tt
+			random_neighbor_country = {
+				limit = {
+					has_government = democratic
+				}
+				every_owned_state = {
+					limit = {
+						is_in_home_area = yes
+					}
+					ROOT = {
+						add_state_claim = PREV 
+					}
+				}
+			}	
+			add_war_support = 0.05
+		}
+	}
+#
+	focus = {
+		id = GEN_progressivism_will_fail
+		icon = GFX_focus_generic_anti_fascist_diplomacy
+		prerequisite = { focus = GEN_take_out_fascists2 focus = GEN_purge_the_communists2 }
+		prerequisite = { focus = GEN_Fanatical_Ideologicalism }
+		x = 22
+		y = 9
+		cost = 10
+		ai_will_do = {
+			factor = 120
+		}
+
+		available = {
+				date > 1945.01.1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			custom_effect_tooltip = take_out_countries_tt
+			random_neighbor_country = {
+				limit = {
+					has_government = democratic
+				}
+				every_owned_state = {
+					limit = {
+						is_in_home_area = yes
+					}
+					ROOT = {
+						add_state_claim = PREV 
+					}
+				}
+			}	
+			add_war_support = 0.05
+		}
+	}
+#
+
+	focus = {
+		id = GEN_Huey_long_was_a_fool
+		icon = GFX_focus_generic_anti_fascist_diplomacy
+		prerequisite = { focus = GEN_take_out_fascists2 focus = GEN_purge_the_communists2 }
+		prerequisite = { focus = GEN_Fanatical_Ideologicalism }
+		x = 26
+		y = 9
+		cost = 10
+		ai_will_do = {
+			factor = 120
+		}
+
+		available = {
+				date > 1945.01.1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			custom_effect_tooltip = take_out_countries_tt
+			random_neighbor_country = {
+				limit = {
+					has_government = longism
+				}
+				every_owned_state = {
+					limit = {
+						is_in_home_area = yes
+					}
+					ROOT = {
+						add_state_claim = PREV 
+					}
+				}
+			}	
+			add_war_support = 0.05
+		}
+	}
+#
+
+	focus = {
+		id = GEN_call_workers_to_arms
+		icon = GFX_focus_YUG_pan_slavic_congress
+		prerequisite = { focus = GEN_take_out_fascists}
+		x = 23
+		y = 6
+		cost = 10
+		ai_will_do = {
+			factor = 120
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = militarism_focus
+		}
+	}
+#
+	focus = {
+		id = GEN_take_advantage_of_the_chaos
+		icon = GFX_goal_support_fascism
+		prerequisite = { focus = GEN_reopen_the_political_sphere}
+		mutually_exclusive = { focus = GEN_ideals_of_the_union}
+		mutually_exclusive = { focus = GEN_sieze_the_means_of_production}
+		x = 25
+		y = 1
+		cost = 10
+		ai_will_do = {
+			factor = 1   
+			modifier = {
+				factor = 0
+				has_country_flag = SLA_huey_is_leader
+			}
+			modifier = {
+				factor = 50
+				has_government = fascism
+			}
+		}
+
+		available = {
+			fascism > 0.10			
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_popularity = {            
+				ideology = fascism
+				popularity = 0.2
+			}
+			add_timed_idea = { idea = fascist_influence  days = 2000 }
+		}
+	}
+#
+	focus = {
+		id = GEN_purity_through_unity
+		icon = GFX_focus_usa_honor_the_confederacy
+		prerequisite = { focus = GEN_take_advantage_of_the_chaos}
+		x = 25
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			has_government = fascism
+			}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.10
+			}
+			if = {
+				limit = {
+					is_ai = no
+				}
+				set_rule = {
+					can_create_factions = yes
+				}
+			}
+		}
+	}
+#
+	focus = {
+		id = GEN_purge_non_purists
+		icon = GFX_goal_generic_more_territorial_claims
+		prerequisite = { focus = GEN_purity_through_unity}
+		x = 25
+		y = 3
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_stability = 0.05
+			add_political_power = 25
+			add_popularity = {
+				ideology = democratic
+				popularity = -0.05
+			}
+			add_popularity = {
+				ideology = neutrality
+				popularity = -0.1
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = -0.05
+			}
+		}
+	}
+#
+	focus = {
+		id = GEN_militarize_the_state
+		icon = GFX_focus_generic_manpower
+		prerequisite = { focus = GEN_purge_non_purists}
+		x = 25
+		y = 4
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = militarism_focus
+		}
+	}
+#
+	focus = {
+		id = GEN_nondiscriminate_recruitment
+		icon = GFX_focus_generic_little_entente
+		prerequisite = { focus = GEN_militarize_the_state}
+		x = 25
+		y = 5
+		cost = 7.2
+		ai_will_do = {
+			factor = 120
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = military_youth_focus
+		}
+	}
+#
+	focus = {
+		id = GEN_purge_the_communists
+		icon = GFX_focus_contain_communism
+		prerequisite = { focus = GEN_nondiscriminate_recruitment}
+		x = 25
+		y = 6
+		cost = 10
+		ai_will_do = {
+			factor = 120
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			custom_effect_tooltip = take_out_countries_tt
+			random_neighbor_country = {
+				limit = {
+					has_government = communism
+				}
+				every_owned_state = {
+					limit = {
+						is_in_home_area = yes
+					}
+					
+					ROOT = {
+						add_state_claim = PREV 
+					}
+				}
+			}	
+			add_war_support = 0.05
+		}
+	}
+#
+	focus = {
+		id = GEN_purge_the_communists2
+		icon = GFX_focus_contain_communism
+		prerequisite = { focus = GEN_purge_the_communists}
+		x = 25
+		y = 8
+		cost = 10
+		ai_will_do = {
+			factor = 3
+		}
+
+		available = {
+				date > 1943.06.1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			custom_effect_tooltip = take_out_countries_tt
+			random_neighbor_country = {
+				limit = {
+					has_government = communism
+				}
+				every_owned_state = {
+					limit = {
+						is_in_home_area = yes
+					}
+					ROOT = {
+						add_state_claim = PREV 
+					}
+				}
+			}	
+			add_war_support = 0.05
+		}
+	}
+#
+
+	focus = {
+		id = GEN_Fanatical_Ideologicalism
+		icon = GFX_focus_YUG_pan_slavic_congress
+		prerequisite = { focus = GEN_call_workers_to_arms focus = GEN_purge_the_communists }
+		x = 24
+		y = 7
+		cost = 10
+
+		available = {
+					date > 1939.1.1
+		}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_ideas = GEN_Fanatical_Ideologicalismidea
+		}
+	}
 
 }
