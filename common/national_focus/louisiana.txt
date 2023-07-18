@@ -479,7 +479,7 @@ focus_tree = {
         available_if_capitulated = no
 
         completion_reward = {
-		country_event = { id = usastates_news.21 }
+		news_event = { id = usastates_news.21 } 
             custom_effect_tooltip = SLA_red_river_war_information_tt
         }
     }
@@ -2013,6 +2013,7 @@ focus_tree = {
   			add_tech_bonus = {
 				bonus = 0.75
 				uses = 2
+                name = ""
 				category = jet_technology
 			}
         }
@@ -2035,7 +2036,7 @@ focus_tree = {
         add_ideas =  SLA_jim_crow
         }
     }
-     focus = {
+    focus = {
         id = SLA_army_of_louisiana
         icon = GFX_focus_SLA_louisiana_Army
         prerequisite = { focus = SLA_anti_disease_prevention_center focus = SLA_national_infrasture_project}
@@ -2043,7 +2044,7 @@ focus_tree = {
         x = -3
         y = 1
         available = {
-    has_war = yes
+            has_war = yes
         }
          search_filters = { FOCUS_FILTER_MANPOWER }
         relative_position_id = SLA_dominate_tennessee
@@ -2052,7 +2053,6 @@ focus_tree = {
             factor = 4000
         }
         available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_MANPOWER }
 
         completion_reward = {
           add_ideas = SLA_army_of_louisiana
@@ -2394,18 +2394,17 @@ focus_tree = {
            factor = 160
         }
         available = {
-        has_idea = SLA_goodbye_huey
-        NOT = {
-        has_war_with = STX
+            has_idea = SLA_goodbye_huey
+            NOT = {
+                has_war_with = STX
             }
-        
-            }
+        }
 		prerequisite = { focus = SLA_new_orleans_crisis}
 		#long is dead in thistimelinebypopulist James A Noe
 		completion_reward = { 
             ########huey funeral, Gerald LK Smith speaks####
-			 country_event = {
-				id  = louisiana.11
+			country_event = {
+				id  = louisiana.19
 			}
 		} 
 	}
@@ -2419,17 +2418,29 @@ focus_tree = {
 		y = 1
 		relative_position_id = SLA_long_fall_out
 		cost = 10
-          ai_will_do = {
+        ai_will_do = {
            factor = 320
+        }
+        available = {
+            SLA_james_noe = {
+                is_country_leader = yes
+            }
         }
 		available_if_capitulated = yes 
 		prerequisite = { focus = SLA_long_fall_out}
 		#long is dead in thistimelinebypopulist James A Noe
 		completion_reward = { 
 			add_political_power = 100
-            add_ideas = SLA_Political_machine_breakdown
-			}
-		} 
+            if = {
+                limit = {
+                    not = {
+                        has_idea = SLA_Political_machine_breakdown
+                    }
+                }
+                add_ideas = SLA_Political_machine_breakdown
+            }
+		}
+	} 
 	
     #####this will kick off a event where he's populist noe is removed 
     ####Nutral Richard Leache gets elected by senate as new leader  
@@ -2471,8 +2482,7 @@ focus_tree = {
 		#long is dead in thistimelinebypopulist James A Noe
         ####event add stability and puts in DUMB guy
 		completion_reward = { 
-			#add_event = louisiana.16
-			#add_ideas = SLA_censored_press
+			add_ideas = SLA_censored_press
 		} 
 	}
     #####adds support equipment###########
@@ -2557,10 +2567,13 @@ focus_tree = {
 		prerequisite = { focus = SLA_buy_some_weapons}
 		completion_reward = { 
             ####Hidden where arcadia secedes###
-            ##country_event = { 
-            ##    id = louisiana.21
-            ##    days = 35 
-            ##}
+            custom_effect_tooltip = SLA_louisiana_21_tt
+            hidden_effect = {
+                country_event = { 
+                    id = louisiana.21
+                    days = 100
+                }
+            }
             ####hidden HE DENOUCES THEM
             #country_event = { 
             #    id = louisiana.22
@@ -2607,31 +2620,47 @@ focus_tree = {
         ai_will_do = {
            factor = 4000
         }
+        bypass = {
+            ORL = {
+                exists = no
+            }
+        }
+        will_lead_to_war_with = ORL
 		available_if_capitulated = yes 
 		prerequisite = { focus = SLA_return_to_democratic_party}
         prerequisite = { focus = SLA_denouce_share_the_wealth}
         ############in turn######### hidden event will be true louisina lashes out too kill baton and SLA_every_man_a_trooper
 		completion_reward = { 
 			declare_war_on = {
-            target = ORL
-            type = annex_everything
-        }
-             
-
-         hidden_effect = {
-            country_event = {
-                id = louisiana.25
-                days = 5
+                target = ORL
+                type = annex_everything
             }
-        }
-		add_state_core = 752
-		add_state_core = 753
-		add_state_core = 20
-		add_state_core = 19
-		add_state_core = 75
-		add_state_core = 21
-		add_state_core = 754
-	}
+            if = {
+                limit = {
+                    SAC = {
+                        exists = yes 
+                        is_subject_of = ORL
+                    }
+                }
+                declare_war_on = {
+                    target = SAC
+                    type = annex_everything
+                }
+            }
+            hidden_effect = {
+                country_event = {
+                    id = louisiana.25
+                    days = 5
+                }
+            }
+            add_state_core = 752
+            add_state_core = 753
+            add_state_core = 20
+            add_state_core = 19
+            add_state_core = 75
+            add_state_core = 21
+            add_state_core = 754
+	    }
     }
     #########
       focus = { 
@@ -2639,51 +2668,34 @@ focus_tree = {
 		icon = GFX_focus_SLA_end_civil_war
 		x = 0
 		y = 1
-          available = {
-            OR = {
-                controls_state = 752
+        available = {
+            controls_state = 752
+            controls_state = 19
+            controls_state = 20
+            controls_state = 753
+            controls_state = 21
+            controls_state = 754
+            controls_state = 75
+            STL = {
+                exists = no
             }
-          }
-          available = {
-            OR = {
-                controls_state = 19
+            ORL = {
+                exists = no
             }
-          }
-          available = {
-            OR = {
-                controls_state = 20
+            SAC = {
+                exists = no 
             }
-          }
-          available = {
-            OR = {
-                  controls_state = 753
-            }
-          }
-          available = {
-            OR = {
-                   controls_state = 21
-            }
-          }
-          available = {
-            OR = {
-                    controls_state = 754
-            }
-          }
-          available = {
-            OR = {
-                   controls_state =  75
-                
-            }
-          }
-      
+        }
 		relative_position_id = SLA_stop_out_the_vice_den
 		cost = 7
 		available_if_capitulated = yes 
 		prerequisite = { focus = SLA_stop_out_the_vice_den}
         ############in turn######### hidden event will be true louisina lashes out too kill baton and SLA_every_man_a_trooper
 		completion_reward = { 
-			
-	}
+			add_ideas = SLA_every_man_a_trooper
+            add_ideas = SLA_post_civil_war_stability 
+            custom_effect_tooltip = SLA_post_civil_war_stability_tt
+	    }
     }
     ######rebuild louisinia #####
     focus = { 
@@ -3077,15 +3089,14 @@ focus_tree = {
             }
         }
         
-		prerequisite = { focus = SLA_little_rock_war_games }
-		#goalwillbe to puppet them  
+		prerequisite = { focus = SLA_little_rock_war_games }  
 		completion_reward = { 
             ####take new orleans
             create_wargoal = {
                 target = ORL
-                type = annex_everything
+                type = puppet_wargoal_focus
             }
-            claim_new_orleans = yes
+            claim_new_orleans = yes 
         }
     }
          #####Lemke was real life ally of Huey P Long #######
@@ -3176,6 +3187,7 @@ focus_tree = {
             factor = 160
         }
         available = {
+            date > 1937.01.01
             OR = {
             has_completed_focus = SLA_new_orleans_crisis
             has_completed_focus = SLA_strengthen_the_homeland
@@ -3183,9 +3195,7 @@ focus_tree = {
         }
         available_if_capitulated = yes
         #search_filters = { FOCUS_FILTER_POLITICAL }
-         available = {
-			date > 1937.01.01
-		}
+        
         #smallboosterforthetime
          completion_reward = {
           random_owned_controlled_state = {
@@ -3438,30 +3448,30 @@ focus_tree = {
 				}
          }	
 
-         focus = {
-        id = SLA_tulane_rubber_projects
-        icon = GFX_focus_rubber
-        #lockuntilafter2ndredriverwar
-        prerequisite = { focus = SLA_tulane_technology_classes}
-        x = 0
-        y = 1
-        relative_position_id = SLA_tulane_technology_classes
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        #search_filters = { FOCUS_FILTER_POLITICAL }
+        focus = {
+            id = SLA_tulane_rubber_projects
+            icon = GFX_focus_rubber
+            #lockuntilafter2ndredriverwar
+            prerequisite = { focus = SLA_tulane_technology_classes}
+            x = 0
+            y = 1
+            relative_position_id = SLA_tulane_technology_classes
+            cost = 10
+            ai_will_do = {
+                factor = 1
+            }
+            available_if_capitulated = yes
+            #search_filters = { FOCUS_FILTER_POLITICAL }
 
-          completion_reward = { 
-			add_tech_bonus = {
-				name = synt
-				bonus = 1.5
-				uses = 1
-				category = synth_resources
-			}
-				}
-         }	
+            completion_reward = { 
+                add_tech_bonus = {
+                    name = ""
+                     bonus = 1.5
+                     uses = 1
+                     category = synth_resources
+                }
+            }
+        }	
 
          focus = {
         id = SLA_synthetic_rubber_plants
@@ -3716,17 +3726,16 @@ focus_tree = {
         #add military factory random,plus military army_experience
         completion_reward = {
           
-              add_tech_bonus = {
+            add_tech_bonus = {
                 bonus = 1
                 uses = 1
                 ahead_reduction = 1
                 category = cat_strategic_bomber
-        
-           #air_experience = 100
-				}
-			}
-      }
-        focus = {
+                name = ""
+            }
+		}
+    }
+    focus = {
         id = SLA_fortify_texan_border
         icon = GFX_focus_pab_fort_edmonton
         #lockuntilafter2ndredriverwar
@@ -3740,68 +3749,63 @@ focus_tree = {
         }
         available = {
             OR = {
+                 owns_state = 75
                  owns_state = 20
             }
-          }
-          available = {
-            OR = {
-                 owns_state = 75
-            }
-          }
+        }
         available_if_capitulated = yes
         #search_filters = { FOCUS_FILTER_POLITICAL }
         #add military factory random,plus military army_experience
         completion_reward = {
-           #addfortsonborderwithtexas
-                    75 = {
-	add_building_construction = {
-		type = bunker
-        #province = 1319
-		####note to self it only added five to 8084###
-		province = 2842
-		level = 4
+            75 = {
+                add_building_construction = {
+                    type = bunker
+                    #province = 1319
+                    ####note to self it only added five to 8084###
+                    province = 2842
+                    level = 4
+                }
+            } 
+            75 = {
+                add_building_construction = {
+                    type = bunker
+                    #province = 
+                    ####note to self it only added five to 8084###
+                    province = 1166
+                    level = 4
+                }
+            } 
+            75 = {
+                add_building_construction = {
+                    type = bunker
+                    province = 4839
+                    level = 2
+                }
+            } 
+            20 = {
+                add_building_construction = {
+                    type = bunker
+                    province = 1091
+                    level = 5
+                }
+            } #####eastern ark 
+            20 = {
+                add_building_construction = {
+                    type = bunker
+                    province = 5935
+                    level = 3
+                }
+            } 
+            20 = {
+                add_building_construction = {
+                    type = bunker
+                    province = 1004
+                    level = 2
+                }
+            } 
+		}
 	}
-} 
- 75 = {
-	add_building_construction = {
-		type = bunker
-        #province = 
-		####note to self it only added five to 8084###
-		province = 1166
-		level = 4
-	}
-} 
-75 = {
-	add_building_construction = {
-		type = bunker
-		province = 4839
-		level = 2
-	}
-} 
-20 = {
-	add_building_construction = {
-		type = bunker
-		province = 1091
-		level = 5
-	}
-} #####eastern ark 
-20 = {
-	add_building_construction = {
-		type = bunker
-		province = 5935
-		level = 3
-	}
-} 
-20 = {
-	add_building_construction = {
-		type = bunker
-		province = 1004
-		level = 2
-	}
-} 
-				}
-			}
-             focus = {
+    focus = {
         id = SLA_every_man_a_trooper
         icon = GFX_focus_SLA_every_man_a_trooper
         #lockuntilafter2ndredriverwar
@@ -3879,6 +3883,7 @@ focus_tree = {
             add_tech_bonus = {
                 bonus = 1
                 uses = 1
+                name = ""
                 category = cat_trade_interdiction
             }
 		}
@@ -4044,6 +4049,7 @@ focus_tree = {
 				cost_reduction = 0.5
 				uses = 1
 				category = cat_trade_interdiction
+                name = ""
 			}
 		}
 
