@@ -175,3 +175,66 @@ country_event = {
         }
     }
 }
+# Event asking SWI/SUP for unification
+country_event = {
+	id = minnesota.7
+	title = "Minnesota Proposes Unification"
+	desc = "Minnesota proposes unification of the progressive alliance in these troubling times, should we accept and become apart of the union to deter the greater threats abroad, or shall we keep our indepdence, no matter the cost"
+	picture = GFX_report_event_generic_sign_treaty1
+
+	is_triggered_only = yes
+	
+	# Sounds good
+	option = {
+        ai_chance = {
+            factor = 100
+        }
+		name = "Sounds Good"
+		custom_effect_tooltip = GAME_OVER_TT
+		FROM = {
+			#country_event = { id = minnesota.8 }
+			set_country_flag = SMN_progressive_unify_flag
+            annex_country = {
+			    target = ROOT
+			    transfer_troops = yes
+			}
+		}
+        ROOT = {
+            every_unit_leader = {
+                set_nationality = FROM
+            }
+        }
+        every_state = {
+            limit = {
+                OR = {
+                    is_core_of = ROOT
+                }
+            }
+            add_core_of = FROM
+        }
+	}
+
+	# We think not
+	option = {
+		name = "We Think Not"
+		ai_chance = {
+			factor = 0
+		}
+		FROM = { country_event = { id = minnesota.8 } }
+	}
+}
+
+# Event for Netherlands informing BEL/LUX rejected
+country_event = {
+	id = minnesota.8
+	title = "They Rejected our Proposal"
+	desc = "They have rejected our proposal...it was worth a try"
+	picture = GFX_report_event_generic_sign_treaty1
+
+	is_triggered_only = yes
+	
+	# Unfortunate
+	option = {
+		name = "Unfortunate"
+	}
+}
