@@ -457,6 +457,33 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = SMN_war_manpower_commission
+		icon = GFX_focus_gen_equipment_effort
+		cost = 5
+		x = 4
+		y = 2
+		prerequisite = {
+			focus = SMN_deal_with_great_depression
+		}
+		relative_position_id = SMN_deal_with_great_depression
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = no_great_depression_tt
+				NOT = {
+					OR = {
+						has_idea = SMN_great_depression_1
+						has_idea = SMN_great_depression_2
+						has_idea = SMN_great_depression_3
+					}
+				}
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = SMN_hubert_humphrey
+		}
+	}
+	focus = {
 		id = SMN_develop_arms_industry
 		icon = GFX_goal_generic_construct_mil_factory
 		cost = 5
@@ -566,7 +593,7 @@ focus_tree = {
 		id = SMN_olson_declares_marshal_law
 		icon = GFX_focus_generic_emergency2
 		cost = 10
-		x = 25
+		x = 20
 		y = 1
 		mutually_exclusive = {
 			
@@ -587,7 +614,7 @@ focus_tree = {
 		id = SMN_side_with_the_police
 		icon = GFX_focus_SMN_police_shooting
 		cost = 10
-		x = 21
+		x = 15
 		y = 2
 		mutually_exclusive = {
 			
@@ -607,7 +634,7 @@ focus_tree = {
 		id = SMN_side_with_the_rioters
 		icon = GFX_focus_generic_on_strike
 		cost = 10
-		x = 30
+		x = 25
 		y = 2
 		mutually_exclusive = {
 			
@@ -1094,7 +1121,10 @@ focus_tree = {
 							is_in_faction_with = SMN
 						}
 					}
-					country_event = generic.2
+					country_event = {
+						id = generic.5
+						days = 10
+					}
 				}
 			}
 		}
@@ -1255,7 +1285,10 @@ focus_tree = {
 							is_in_faction_with = SMN
 						}
 					}
-					country_event = generic.5
+					country_event = {
+						id = generic.5
+						days = 10
+					}
 				}
 			}
 			SWI = {
@@ -1265,7 +1298,10 @@ focus_tree = {
 							is_in_faction_with = SMN
 						}
 					}
-					country_event = generic.5
+					country_event = {
+						id = generic.5
+						days = 10
+					}
 				}
 			}
 		}
@@ -1475,7 +1511,10 @@ focus_tree = {
 						original_tag = SWI
 					}
 				}
-				country_event = minnesota.7
+				country_event = {
+					id = minnesota.7
+					days = 10
+				}
 			}
 		}
 	}
@@ -1789,7 +1828,7 @@ focus_tree = {
 	focus = {
 		id = SMN_plunder_the_country_side
 		icon = GFX_focus_SNC_purge_the_oppostion
-		cost = 8
+		cost = 10
 		x = 0
 		y = 1
 		prerequisite = { focus = SMN_attack_illinois focus = SMN_attack_iowa focus = SMN_attack_wisconsin }
@@ -1817,6 +1856,7 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
+			add_war_support = 0.10
 			custom_effect_tooltip = SMN_plunder_the_country_side_tt
 			every_state = {
 				limit = {
@@ -1836,7 +1876,6 @@ focus_tree = {
 					level = -1
 				}
 			}
-			custom_effect_tooltip = SMN_repair_factories_tt
 			every_state = {
 				limit = {
 					is_core_of = SMN
@@ -1851,6 +1890,7 @@ focus_tree = {
 					damage_building = { type = arms_factory damage = 0.5 }
 				}
 			}
+			custom_effect_tooltip = SMN_repair_factories_tt
 		}
 	}
 	focus = {
@@ -3395,80 +3435,552 @@ focus_tree = {
 	}
 	###START OF ARMY TREE
 	focus = {
-		id = SMN_army_tree
+		id = SMN_army_reform
 		icon = GFX_goal_generic_allies_build_infantry
-		cost = 10
-		x = 75
+		cost = 7
+		x = 65
 		y = 0
 		available = {
 		}
 		completion_reward = {
-			
+			army_experience = 25
+			###REMOVE STARTING DEBUFF
+			add_war_support = -0.05
 		}
 	}
 	focus = {
-		id = SMN_a_professional_army
-		icon = GFX_goal_generic_construct_civilian
+		id = SMN_a_new_military_model
+		icon = GFX_focus_generic_tank_offensive
 		cost = 10
 		x = -4
 		y = 1
 		mutually_exclusive = {
-			
+			focus = SMN_old_tactics
 		}
-		prerequisite = { focus = SMN_army_tree }
-		relative_position_id = SMN_army_tree
+		prerequisite = { focus = SMN_army_reform }
+		relative_position_id = SMN_army_reform
 		bypass = {
 		}
 		available = {
 		}
 		completion_reward = {
-			
+			add_doctrine_cost_reduction = {
+				cost_reduction = 1
+				name = minnesota_land
+				category = cat_mobile_warfare
+				category = cat_superior_firepower
+			}
 		}
 	}
 	focus = {
-		id = SMN_minneosta_national_guard
-		icon = GFX_goal_generic_construct_civilian
+		id = SMN_old_tactics
+		icon = GFX_goal_generic_occupy_states_ongoing_war
 		cost = 10
 		x = 4
 		y = 1
 		mutually_exclusive = {
-			
+			focus = SMN_a_new_military_model
 		}
-		prerequisite = { focus = SMN_army_tree }
-		relative_position_id = SMN_army_tree
+		prerequisite = { focus = SMN_army_reform }
+		relative_position_id = SMN_army_reform
 		bypass = {
 		}
 		available = {
 		}
 		completion_reward = {
-			
+			add_doctrine_cost_reduction = {
+				cost_reduction = 1
+				name = minnesota_land
+				category = cat_mass_assault
+				category = cat_grand_battle_plan
+			}
 		}
 	}
 	focus = {
-		id = SMN_war_manpower_commission
-		icon = GFX_focus_gen_equipment_effort
+		id = SMN_modernize_infantry
+		icon = GFX_goal_generic_small_arms
 		cost = 5
-		x = 4
-		y = 2
-		prerequisite = {
-			focus = SMN_deal_with_great_depression
+		x = 7
+		y = 1
+		mutually_exclusive = {
+			
 		}
-		relative_position_id = SMN_deal_with_great_depression
+		prerequisite = { focus = SMN_a_new_military_model focus = SMN_old_tactics }
+		relative_position_id = SMN_a_new_military_model
+		bypass = {
+		}
 		available = {
-			custom_trigger_tooltip = {
-				tooltip = no_great_depression_tt
-				NOT = {
-					OR = {
-						has_idea = SMN_great_depression_1
-						has_idea = SMN_great_depression_2
-						has_idea = SMN_great_depression_3
-					}
-				}
-			}
 		}
 		completion_reward = {
-			custom_effect_tooltip = available_political_advisor
-			show_ideas_tooltip = SMN_hubert_humphrey
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = infantry_weapons
+			}
+		}
+	}
+	focus = {
+		id = SMN_modernize_armor
+		icon = GFX_goal_generic_army_tanks
+		cost = 10
+		x = -1
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_a_new_military_model }
+		relative_position_id = SMN_a_new_military_model
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = armor
+			}
+		}
+	}
+	focus = {
+		id = SMN_modernize_artillery
+		icon = GFX_goal_generic_army_artillery
+		cost = 7
+		x = 1
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_a_new_military_model focus = SMN_old_tactics }
+		relative_position_id = SMN_a_new_military_model
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = arty_plz
+				#ahead_reduction = 1
+				bonus = 1
+				uses = 1
+				category = Artillery
+			}
+		}
+	}
+	focus = {
+		id = SMN_modernize_anti_tank
+		icon = GFX_focus_generic_tank_hunt
+		cost = 5
+		x = 3
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_a_new_military_model focus = SMN_old_tactics }
+		relative_position_id = SMN_a_new_military_model
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = cat_anti_tank
+			}
+
+		}
+	}
+	focus = {
+		id = SMN_modernize_anti_air
+		icon = GFX_focus_generic_airplane_hunt
+		cost = 5
+		x = 6
+		y = 2
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_a_new_military_model focus = SMN_old_tactics }
+		relative_position_id = SMN_a_new_military_model
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = cat_anti_air
+			}
+		}
+	}
+	focus = {
+		id = SMN_modernize_mechanize
+		icon = GFX_focus_generic_mechanized_offensive
+		cost = 5
+		x = 0
+		y = 3
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_a_new_military_model }
+		relative_position_id = SMN_a_new_military_model
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = cat_mechanized_equipment
+			}
+		}
+	}
+	focus = {
+		id = SMN_modernize_support
+		icon = GFX_focus_generic_machine_gun
+		cost = 5
+		x = 5
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_a_new_military_model focus = SMN_old_tactics }
+		relative_position_id = SMN_a_new_military_model
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = engineers_tech
+			}
+		}
+	}
+	focus = {
+		id = SMN_modernize_matience_companies
+		icon = GFX_goal_generic_build_tank
+		cost = 5
+		x = 2
+		y = 2
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_a_new_military_model focus = SMN_old_tactics }
+		relative_position_id = SMN_a_new_military_model
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = maintenance_company_tech
+			}
+		}
+	}
+	focus = {
+		id = SMN_modernize_infantry_tactics
+		icon = GFX_goal_generic_army_doctrines
+		cost = 10
+		x = 6
+		y = 5
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_methodical_battle focus = SMN_wave_tactics }
+		relative_position_id = SMN_a_new_military_model
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				cost_reduction = 1
+				uses = 2
+				name = minnesota_land
+				category = land_doctrine
+			}
+		}
+	}
+	focus = {
+		id = SMN_modernize_tank_tactics
+		icon = GFX_goal_generic_army_doctrines
+		cost = 10
+		x = 2
+		y = 5
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_study_blitzkrieg focus = SMN_overwhelming_firepower }
+		relative_position_id = SMN_a_new_military_model
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				cost_reduction = 1
+				uses = 2
+				name = minnesota_land
+				category = land_doctrine
+			}
+		}
+	}
+	focus = {
+		id = SMN_modernize_recon
+		icon = GFX_focus_generic_radio_development
+		cost = 5
+		x = 9
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_old_tactics }
+		relative_position_id = SMN_a_new_military_model
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = support_tech_research
+				bonus = 0.5
+				uses = 2
+				category = support_tech
+			}
+			###ADD IDEA FOR RECON
+			army_experience = 25
+		}
+	}
+	focus = {
+		id = SMN_railgun
+		icon = GFX_focus_generic_railway_artillery
+		cost = 8
+		x = 9
+		y = 2
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_modernize_recon }
+		relative_position_id = SMN_a_new_military_model
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					NOT = { has_tech = railway_gun }
+				}
+				set_technology = { railway_gun = 1 }
+			}
+			create_railway_gun = {
+				equipment = railway_gun_equipment_1
+				name = "MINNESODAAAA"
+			}
+			add_tech_bonus = {
+				name = arty_plz
+				#ahead_reduction = 1
+				bonus = 1
+				uses = 1
+				category = Artillery
+			}
+		}
+	}
+	focus = {
+		id = SMN_integrate_the_minnesota_national_guard
+		icon = GFX_focus_generic_little_entente
+		cost = 8
+		x = 4
+		y = 2
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_a_new_military_model focus = SMN_old_tactics }
+		relative_position_id = SMN_a_new_military_model
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			army_experience = 25
+			add_political_power = 15
+			add_war_support = 0.05
+		}
+	}
+	focus = {
+		id = SMN_centralize_planning
+		icon = GFX_focus_generic_military_academy
+		cost = 10
+		x = 4
+		y = 3
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_integrate_the_minnesota_national_guard }
+		relative_position_id = SMN_a_new_military_model
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			army_experience = 50
+			add_ideas = SMN_centralize_planning_idea
+		}
+	}
+	focus = {
+		id = SMN_methodical_battle
+		icon = GFX_focus_generic_military_mission
+		cost = 10
+		x = 5
+		y = 4
+		mutually_exclusive = {
+			focus = SMN_wave_tactics focus = SMN_overwhelming_firepower
+		}
+		prerequisite = { focus = SMN_centralize_planning }
+		relative_position_id = SMN_a_new_military_model
+		bypass = {
+		}
+		available = {
+			has_completed_focus = SMN_old_tactics
+			has_tech = prepared_defense
+		}
+		completion_reward = {
+			army_experience = 25
+			add_ideas = SMN_methodical_battle_idea
+		}
+	}
+	focus = {
+		id = SMN_old_stock_piles
+		icon = GFX_focus_focus_fra_maquis
+		cost = 5
+		x = 8
+		y = 3
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_old_tactics }
+		relative_position_id = SMN_a_new_military_model
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment_0
+				amount = 7000
+			}
+		}
+	}
+	focus = {
+		id = SMN_wave_tactics
+		icon = GFX_focus_generic_manpower2
+		cost = 10
+		x = 7
+		y = 4
+		mutually_exclusive = {
+			focus = SMN_methodical_battle
+		}
+		prerequisite = { focus = SMN_centralize_planning }
+		relative_position_id = SMN_a_new_military_model
+		bypass = {
+		}
+		available = {
+			has_completed_focus = SMN_old_tactics
+			has_tech = defence_in_depth
+		}
+		completion_reward = {
+			army_experience = 25
+			add_ideas = SMN_wave_tactics_idea
+		}
+	}
+	focus = {
+		id = SMN_overwhelming_firepower
+		icon = GFX_goal_generic_army_artillery2
+		cost = 10
+		x = 3
+		y = 4
+		mutually_exclusive = {
+			focus = SMN_study_blitzkrieg focus = SMN_methodical_battle
+		}
+		prerequisite = { focus = SMN_centralize_planning }
+		relative_position_id = SMN_a_new_military_model
+		bypass = {
+		}
+		available = {
+			has_completed_focus = SMN_a_new_military_model
+			has_tech = mobile_defence
+		}
+		completion_reward = {
+			army_experience = 35
+			add_ideas = SMN_overwhelming_firepower_idea
+		}
+	}
+	focus = {
+		id = SMN_study_blitzkrieg
+		icon = GFX_goal_generic_major_war
+		cost = 10
+		x = 1
+		y = 4
+		mutually_exclusive = {
+			focus = SMN_overwhelming_firepower
+		}
+		prerequisite = { focus = SMN_centralize_planning }
+		relative_position_id = SMN_a_new_military_model
+		bypass = {
+		}
+		available = {
+			has_completed_focus = SMN_a_new_military_model
+			has_tech = elastic_defence
+		}
+		completion_reward = {
+			army_experience = 35
+			add_ideas = SMN_study_blitzkrieg_idea
+		}
+	}
+	focus = {
+		id = SMN_new_armor_research
+		icon = GFX_focus_generic_tank_production
+		cost = 10
+		x = -1
+		y = 2
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_modernize_armor }
+		relative_position_id = SMN_a_new_military_model
+		bypass = {
+		}
+		available = {
+			AND = {
+				has_tech = assembly_line_production
+				OR = {
+					has_tech = improved_heavy_tank_chassis
+					has_tech = improved_medium_tank_chassis
+				}
+			}
+			
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = armor
+			}
+			army_experience = 25
 		}
 	}
 	###AIR TREE
@@ -3476,13 +3988,13 @@ focus_tree = {
 		id = SMN_build_up_msp
 		icon = GFX_goal_generic_build_airforce
 		cost = 10
-		x = 0
-		y = 2
+		x = 74
+		y = 0
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = SMN_minneosta_national_guard focus = SMN_a_professional_army }
-		relative_position_id = SMN_army_tree
+		#prerequisite = { focus = SMN_minneosta_national_guard focus = SMN_a_professional_army }
+		#relative_position_id = SMN_army_tree
 		bypass = {
 		}
 		available = {
@@ -3495,6 +4007,7 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
+			air_experience = 50
 		}
 	}
 	focus = {
@@ -3515,6 +4028,11 @@ focus_tree = {
 		completion_reward = {
 			####ADDS ACE GENERATION AND AIR ACCIDENT CHANCE BUFF AND AIR XP
 			add_ideas = SMN_link_trainers
+			add_doctrine_cost_reduction = {
+				cost_reduction = 1
+				name = minnesota_air
+				category = air_doctrine
+			}
 		}
 	}
 	focus = {
@@ -3585,6 +4103,11 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_ideas = SMN_mmm_tape
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				name = minnesota_air
+				category = air_doctrine
+			}
 		}
 	}
 	############################
@@ -3594,7 +4117,7 @@ focus_tree = {
 	focus = {
 		id = SMN_duluth_dockyards
 		icon = GFX_goal_generic_build_navy
-		x = 94
+		x = 80
 		y = 0
 
 		cost = 10
