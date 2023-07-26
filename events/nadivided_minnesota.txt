@@ -61,13 +61,12 @@ country_event = {
 
     fire_only_once = yes
 
-    is_triggered_only = yes
+    #is_triggered_only = yes
     
     trigger = {
-		tag = SMN
 		focus_progress = {
-			progress > 0.4
-			focus = SMN_end_the_oconnor_agreement
+			progress > 0.2
+			focus = SMN_the_end_of_the_oconnor_agreement
 		}
 	}
     immediate = {log = "[GetDateText]: [Root.GetName]: event minnesota.3"}
@@ -77,12 +76,15 @@ country_event = {
        custom_effect_tooltip = SMN_end_the_oconnor_agreement
        add_political_power = 5
        #country_event = minnesota.4
+       swap_ideas = {
+        add_idea = SMN_SPPD
+        remove_idea = SMN_corrupt_police
+       }
     }
     ###THE PEOPLE ARE DISPLEASED
     option = {
         name = minnesota.3.b
         country_event = minnesota.4
-        set_country_flag = SMN_corrupt_police
         ###PEOPLE ARE DISPLEASED WITH HOW THE GOVERNEMNT HAS DEALT WITH THE CORRUPTION
     }
 }
@@ -102,13 +104,15 @@ country_event = {
        name =  minnesota.4.a
        hidden_effect = {
         remove_mission = SMN_1938_strikes
+        clr_country_flag = SMN_incoming_strikes
        }
-       activate_mission = SMN
+       activate_mission = SMN_1936_strikes
+       set_country_flag = SMN_incoming_strikes_flag
        ###PEOPLE FLOCK TO THE STRIKES
     }
     ###THE PEOPLE ARE DISPLEASED
 }
-###THE RIOT BEGINS
+###THE RIOT BEGINS NORMAL
 country_event = { 
     id = minnesota.5
     title = minnesota.5.t
@@ -121,6 +125,7 @@ country_event = {
     immediate = {log = "[GetDateText]: [Root.GetName]: event minnesota.5"}
 
     option = {
+        name = minnesota.5.a
         834 = {
             damage_building = {
                 type = industrial_complex
@@ -136,12 +141,6 @@ country_event = {
         add_ideas = strikes_1
         add_stability = -0.10
         set_country_flag = SMN_teamsters_have_striked
-        if = {
-            limit = {
-                has_country_flag = SMN_corrupt_police
-            }
-            retire_character = SMN_anton_j_rockne
-        }
     }
     ###THE PEOPLE ARE DISPLEASED
 }
@@ -244,4 +243,64 @@ country_event = {
 	option = {
 		name = "Unfortunate"
 	}
+}
+###THE RIOT BEGINS
+country_event = { 
+    id = minnesota.9
+    title = minnesota.5.t
+    desc = minnesota.5.d
+    picture = GFX_worker_strike
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    immediate = {log = "[GetDateText]: [Root.GetName]: event minnesota.9"}
+
+    option = {
+        name = minnesota.5.a
+        834 = {
+            damage_building = {
+                type = industrial_complex
+                damage = 3
+            }
+        }
+        834 = {
+            damage_building = {
+                type = arms_factory
+                damage = 3
+            }
+        }
+        add_ideas = strikes_1
+        add_stability = -0.10
+        set_country_flag = SMN_teamsters_have_striked_big
+        custom_effect_tooltip = ANTON_DIES_TT
+        hidden_effect = {
+            retire_character = SMN_anton_j_rockne
+        }
+    }
+    ###THE PEOPLE ARE DISPLEASED
+}
+####OLSON DECLARES MARHSALL LAW
+country_event = { 
+    id = minnesota.10
+    title = "Olson Declares Marshal Law"
+    desc = "Olson has declared a state of emergency in the news of upcoming strikes, reports have come in that it may be worse than the 1934 trucker riots not only two years ago."
+    picture = GFX_worker_strike
+
+    trigger = {
+        has_country_flag = {
+            flag = SMN_incoming_strikes_flag
+            days > 150
+        }
+    }
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    immediate = { log = "[GetDateText]: [Root.GetName]: event minnesota.10" }
+
+    option = {
+        name = "It seems that the strikes from 1934 will happen all over again..."
+        add_ideas = SMN_martial_law_idea
+    }
+    ###THE PEOPLE ARE DISPLEASED
 }
