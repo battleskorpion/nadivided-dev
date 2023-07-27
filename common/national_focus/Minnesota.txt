@@ -592,11 +592,11 @@ focus_tree = {
 	focus = {
 		id = SMN_olson_declares_marshal_law
 		icon = GFX_focus_generic_emergency2
-		cost = 10
-		x = 20
+		cost = 1
+		x = 17
 		y = 1
 		mutually_exclusive = {
-			
+			focus = SMN_fascist_path focus = SMN_olsons_death
 		}
 		prerequisite = { focus = SMN_the_end_of_the_oconnor_agreement }
 		relative_position_id = SMN_the_end_of_the_oconnor_agreement
@@ -614,7 +614,7 @@ focus_tree = {
 		id = SMN_side_with_the_police
 		icon = GFX_focus_SMN_police_shooting
 		cost = 3
-		x = 15
+		x = 11
 		y = 2
 		mutually_exclusive = {
 			focus = SMN_side_with_the_rioters
@@ -685,7 +685,29 @@ focus_tree = {
 	}
 	###VINCENT R DUN becomes leader
 	focus = {
-		id = SMN_the_coup
+		id = SMN_march_on_st_paul
+		icon = GFX_focus_STX_storm_austin
+		cost = 10
+		x = 0
+		y = 3
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_ally_with_teamsters }
+		prerequisite = {
+			focus = SMN_truck_in_collaboraters
+		}
+		relative_position_id = SMN_side_with_the_rioters
+		available = {
+		}
+		completion_reward = {
+			set_politics = {
+				ruling_party = communism
+			}
+		}
+	}
+	focus = {
+		id = SMN_burn_down_the_st_paul_police_station
 		icon = GFX_focus_generic_world_in_flames
 		cost = 10
 		x = 0
@@ -707,68 +729,277 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = SMN_olsons_dream
-		icon = GFX_focus_SMN_olson_struggle
-		cost = 10
-		x = 0
-		y = 1
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = SMN_the_coup }
-		relative_position_id = SMN_the_coup
-		available = {
-		}
-		completion_reward = {
-			####NATIONALIZES INDUSTRIES GIVES IDEA cooperativism
-			####UNLOCKS DECISIONS TO GIVE NATIONAL SPIRITS
-		}
-	}
-	focus = {
-		id = SMN_desegregation
-		icon = GFX_focus_SMN_desegregation
-		cost = 10
+		id = SMN_reconstruction_rioter_side
+		icon = GFX_goal_generic_construct_civilian
+		cost = 3
 		x = -1
 		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = SMN_olsons_dream }
-		relative_position_id = SMN_olsons_dream
+		prerequisite = { focus = SMN_march_on_st_paul }
+		relative_position_id = SMN_march_on_st_paul
 		available = {
+			
 		}
 		completion_reward = {
-			###GIVES MORE RECURITABLE POP
+			add_timed_idea = {
+				idea = SMN_reconstruction
+				days = 120
+			}
 		}
 	}
 	focus = {
-		id = SMN_the_fifth_international
-		icon = GFX_goal_support_fourth_int
-		cost = 10
+		id = SMN_ban_politcal_opponents
+		icon = GFX_focus_generic_opression_of_opposition
+		cost = 5
 		x = 0
 		y = 2
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = SMN_olsons_dream }
-		relative_position_id = SMN_olsons_dream
+		prerequisite = { focus = SMN_march_on_st_paul }
+		relative_position_id = SMN_march_on_st_paul
 		available = {
 		}
 		completion_reward = {
-			###CREATES A FACTION
+			hidden_effect = {
+				set_temp_variable = {
+					var = remove_rivals_var
+					value = party_popularity@democratic
+				}
+				multiply_temp_variable = {
+					var = remove_rivals_var
+					value = -0.4
+				}
+			}
+			add_stability = remove_rivals_var
+			add_ideas = SMN_banned_opposition
+		}
+	}
+	focus = {
+		id = SMN_reorganize_the_universities
+		icon = GFX_focus_generic_socialist_science
+		cost = 8
+		x = 2
+		y = 2
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_an_equal_society }
+		prerequisite = { focus = SMN_rewrite_the_bible  }
+		relative_position_id = SMN_march_on_st_paul
+		available = {
+		}
+		completion_reward = {
+			add_timed_idea = {
+				idea = SMN_reorganizing_universities_idea
+				days = 200
+			}
+		}
+	}
+	focus = {
+		id = SMN_rewrite_the_bible
+		icon = GFX_focus_generic_social_reforms
+		cost = 10
+		x = 1
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_march_on_st_paul }
+		relative_position_id = SMN_march_on_st_paul
+		available = {
+		}
+		completion_reward = {
+			add_stability = -0.10
+			add_political_power = 25
+		}
+	}
+	focus = {
+		id = SMN_politicize_science
+		icon = GFX_goal_generic_scientific_exchange
+		cost = 10
+		x = 2
+		y = 3
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_reorganize_the_universities }
+		relative_position_id = SMN_march_on_st_paul
+		available = {
+			NOT = {
+				has_idea = SMN_reorganizing_universities_idea
+			}
+		}
+		completion_reward = {
+			add_ideas = SMN_politicized_science_idea
+		}
+	}
+	focus = {
+		id = SMN_an_equal_society
+		icon = GFX_focus_generic_desegregated_military
+		cost = 8
+		x = 3
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_march_on_st_paul }
+		relative_position_id = SMN_march_on_st_paul
+		available = {
+		}
+		completion_reward = {
+			add_ideas = SMN_desegregation
+		}
+	}
+	focus = {
+		id = SMN_strengthen_unions
+		icon = GFX_focus_por_workers_of_iberia
+		cost = 7
+		x = -3
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_march_on_st_paul }
+		relative_position_id = SMN_march_on_st_paul
+		available = {
+		}
+		completion_reward = {
+			unlock_decision_category_tooltip = SMN_strengthen_unions_decisions
+		}
+	}
+	focus = {
+		id = SMN_nationalize_minnesota_industry
+		icon = GFX_goal_generic_soviet_construction
+		cost = 10
+		x = -2
+		y = 2
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_strengthen_unions }
+		prerequisite = { focus = SMN_reconstruction_rioter_side  }
+		relative_position_id = SMN_march_on_st_paul
+		available = {
+		}
+		completion_reward = {
+			if = {
+				limit = { has_full_control_of_state = 834 }
+				834 = {
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+			if = {
+				limit = { has_full_control_of_state = 833 }
+				833 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+			if = {
+				limit = { has_full_control_of_state = 832 }
+				832 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+			if = {
+				limit = { has_full_control_of_state = 835 }
+				835 = {
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = industrial_complex
+						level = 1
+						instant_build = yes
+					}
+				}
+			}
+			add_stability = -0.20
+		}
+	}
+	focus = {
+		id = SMN_the_new_economic_model
+		icon = GFX_focus_generic_union_boost
+		cost = 10
+		x = -2
+		y = 3
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_nationalize_minnesota_industry }
+		relative_position_id = SMN_march_on_st_paul
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SMN_has_strengthen_the_unions_tt
+				has_idea = SMN_standard_health_care
+				has_idea = SMN_increase_safety_standards
+				has_idea = SMN_subsidizing_farmers_idea
+				has_idea = SMN_40_hour_work_week
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = SMN_all_buffs_get_combined
+			add_ideas = SMN_strengthened_unions
+			hidden_effect = {
+				remove_ideas = SMN_standard_health_care
+				remove_ideas = SMN_increase_safety_standards
+				remove_ideas = SMN_subsidizing_farmers_idea
+				remove_ideas = SMN_40_hour_work_week
+			}
+		}
+	}
+	focus = {
+		id = SMN_the_fifth_international
+		icon = GFX_goal_support_fourth_int
+		cost = 5
+		x = 0
+		y = 6
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_ban_politcal_opponents  }
+		relative_position_id = SMN_side_with_the_rioters
+		available = {
+		}
+		completion_reward = {
+			add_stability = 0.10
+			set_rule = { can_create_factions = yes }
+			if = {
+				limit = {
+					is_in_faction = yes
+				}
+			}
+			else = {
+				create_faction = TROSKYIST_FACTION
+			}
 		}
 	}
 	focus = {
 		id = SMN_align_wisconsin
 		icon = GFX_goal_generic_construct_civilian
 		cost = 10
-		x = 3
-		y = 1
+		x = 5
+		y = 5
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = SMN_the_coup }
-		relative_position_id = SMN_the_coup
+		prerequisite = { focus = SMN_the_fifth_international }
+		relative_position_id = SMN_march_on_st_paul
 		available = {
 		}
 		completion_reward = {
@@ -835,13 +1066,13 @@ focus_tree = {
 		id = SMN_align_the_dakotas
 		icon = GFX_focus_generic_attack_dakotas
 		cost = 10
-		x = -2
-		y = 1
+		x = -4
+		y = 5
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = SMN_the_coup }
-		relative_position_id = SMN_the_coup
+		prerequisite = { focus = SMN_the_fifth_international }
+		relative_position_id = SMN_march_on_st_paul
 		available = {
 		}
 		will_lead_to_war_with = SND
@@ -910,10 +1141,15 @@ focus_tree = {
 		x = 0
 		y = 1
 		mutually_exclusive = {
-			
+			focus = SMN_fascist_path focus = SMN_olson_declares_marshal_law
 		}
 		bypass = {
-			date > 1936.8.22
+			AND = {
+				NOT = {
+					has_country_flag = SMN_has_oconnor_agreement
+				}
+				date > 1936.8.22
+			}
 		}
 		prerequisite = { focus = SMN_the_end_of_the_oconnor_agreement }
 		relative_position_id = SMN_the_end_of_the_oconnor_agreement
@@ -1628,12 +1864,14 @@ focus_tree = {
 		x = -11
 		y = 1
 		mutually_exclusive = {
-			
+			focus = SMN_olsons_death focus = SMN_olson_declares_marshal_law
 		}
 		prerequisite = { focus = SMN_the_end_of_the_oconnor_agreement }
 		relative_position_id = SMN_the_end_of_the_oconnor_agreement
 		available = {
-			has_idea = SMN_SPPD
+			NOT = {
+				has_country_flag = SMN_has_oconnor_agreement
+			}
 		}
 		completion_reward = {
 			add_timed_idea = {
@@ -2756,7 +2994,7 @@ focus_tree = {
 	focus = {
 		id = SMN_the_catholic_coalition
 		icon = GFX_goal_generic_alliance
-		cost = 10
+		cost = 5
 		x = -1
 		y = 4
 		mutually_exclusive = {
@@ -2857,7 +3095,7 @@ focus_tree = {
 	focus = {
 		id = SMN_defend_our_faith
 		icon = GFX_goal_generic_defence
-		cost = 10
+		cost = 5
 		x = 0
 		y = 5
 		mutually_exclusive = {
@@ -2866,7 +3104,6 @@ focus_tree = {
 		prerequisite = { focus = SMN_restore_faith_in_the_government }
 		relative_position_id = SMN_rileys_minnesota
 		available = {
-			has_idea_with_trait = the_great_equalizer
 		}
 		completion_reward = {
 			add_ideas = SMN_defence_of_relgion
@@ -2875,7 +3112,7 @@ focus_tree = {
 	focus = {
 		id = SMN_the_jewish_conspiracy
 		icon = GFX_focus_generic_ban_jews
-		cost = 10
+		cost = 5
 		x = 1
 		y = 4
 		mutually_exclusive = {
@@ -3274,7 +3511,7 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = SMN_reconstruction
+		id = SMN_reconstruction_police_side
 		icon = GFX_goal_generic_construct_civilian
 		cost = 3
 		x = 0
@@ -3637,7 +3874,7 @@ focus_tree = {
 	focus = {
 		id = SMN_mafia_conscription
 		icon = GFX_focus_SIL_mob_enforcers
-		cost = 10
+		cost = 5
 		x = 0
 		y = 2
 		mutually_exclusive = {
