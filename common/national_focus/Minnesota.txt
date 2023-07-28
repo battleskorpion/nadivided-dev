@@ -2316,7 +2316,7 @@ focus_tree = {
 		id = SMN_olson_declares_marshal_law
 		icon = GFX_focus_generic_emergency2
 		cost = 1
-		x = 17
+		x = 16
 		y = 1
 		mutually_exclusive = {
 			focus = SMN_fascist_path focus = SMN_olsons_death
@@ -2880,6 +2880,12 @@ focus_tree = {
 		completion_reward = {
 			if = {
 				limit = {
+					num_faction_members > 1
+				}
+				add_threat = -2
+			}
+			if = {
+				limit = {
 					num_faction_members > 2
 				}
 				add_threat = -2
@@ -2893,12 +2899,6 @@ focus_tree = {
 			if = {
 				limit = {
 					num_faction_members > 4
-				}
-				add_threat = -2
-			}
-			if = {
-				limit = {
-					num_faction_members > 5
 				}
 				add_threat = -4
 			}
@@ -3382,7 +3382,7 @@ focus_tree = {
 		id = SMN_side_with_the_rioters
 		icon = GFX_focus_generic_on_strike
 		cost = 3
-		x = 23
+		x = 21
 		y = 2
 		mutually_exclusive = {
 			focus = SMN_side_with_the_police
@@ -3400,7 +3400,7 @@ focus_tree = {
 	focus = {
 		id = SMN_truck_in_collaboraters
 		icon = GFX_goal_generic_political_pressure
-		cost = 10
+		cost = 8
 		x = -1
 		y = 1
 		mutually_exclusive = {
@@ -3411,13 +3411,13 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			###ADDS IDEAS FOR COMMUNISM SUPPORT
+			add_popularity = { ideology = communism popularity = 0.05 }
 		}
 	}
 	focus = {
 		id = SMN_ally_with_teamsters
 		icon = GFX_goal_generic_dangerous_deal
-		cost = 10
+		cost = 8
 		x = 1
 		y = 1
 		mutually_exclusive = {
@@ -3428,7 +3428,7 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			###ADDS IDEAS FOR COMMUNISM SUPPORT
+			add_popularity = { ideology = communism popularity = 0.05 }
 		}
 	}
 	###VINCENT R DUN becomes leader
@@ -3449,15 +3449,118 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			set_politics = {
+			hidden_effect = {
+				add_popularity = { ideology = communism popularity = 0.05 }
+			}
+			if = {	#You allied me, I allied you, buddy, but sorry, we are now different
+				limit = {
+					is_in_faction = yes
+					any_other_country = {
+						is_faction_leader = yes
+						is_in_faction_with = ROOT
+						NOT = {
+							has_government = communism
+						} 
+					}
+				}
+				every_other_country = {
+					limit = {
+						is_faction_leader = yes
+						is_in_faction_with = ROOT
+						NOT = {
+							has_government = communism
+						}
+					}
+					remove_from_faction = ROOT
+					add_ai_strategy = {	#your problem, not ours
+						type = ignore
+						id = ROOT
+						value = 300
+					}
+				}
+			}
+			set_capital = { state = 834 }
+			start_civil_war = {
 				ruling_party = communism
+				ideology = ROOT
+				size = 0.75	#This was too much for AI
+				capital = 198
+				states = { 839 838 342 840 837 198 343 836 215 833 832 }
+				keep_unit_leaders = {
+				}
+			}
+			add_stability = -0.1
+			hidden_effect = {
+				division_template = { name = "Teamster Union Guard" division_names_group = SMN_INF_01 is_locked = no regiments = { infantry = { x = 0 y = 0 } infantry = { x = 1 y = 0 } infantry = { x = 1 y = 0 } infantry = { x = 1 y = 1 } } }
+				834 = {
+					create_unit = {
+						division = "name = \"1. Teamster Union Guard\" division_template = \"Teamster Union Guard\" start_experience_factor = 0"
+						owner = ROOT
+					}
+					create_unit = {
+						division = "name = \"2. Teamster Union Guard\" division_template = \"Teamster Union Guard\" start_experience_factor = 0"
+						owner = ROOT
+					}
+					create_unit = {
+						division = "name = \"3. Teamster Union Guard\" division_template = \"Teamster Union Guard\" start_experience_factor = 0"
+						owner = ROOT
+					}
+					create_unit = {
+						division = "name = \"4. Teamster Union Guard\" division_template = \"Teamster Union Guard\" start_experience_factor = 0"
+						owner = ROOT
+					}
+					create_unit = {
+						division = "name = \"5. Teamster Union Guard\" division_template = \"Teamster Union Guard\" start_experience_factor = 0"
+						owner = ROOT
+					}
+				}
+			}
+			hidden_effect = {
+				random_other_country = {
+					limit = {
+						original_tag = SMN
+						has_government = Progressivism
+					}
+					#JAI as tag alias
+					hidden_effect = {
+						division_template = { name = "Minnesota National Guard" division_names_group = SMN_INF_01 is_locked = no regiments = { infantry = { x = 0 y = 0 } infantry = { x = 1 y = 0 } } }
+						198 = {
+							create_unit = {
+								division = "name = \"1. Minnesota National Guard\" division_template = \"Minnesota National Guard\" start_experience_factor = 0"
+								owner = PREV
+							}
+							create_unit = {
+								division = "name = \"2. Minnesota National Guard\" division_template = \"Minnesota National Guard\" start_experience_factor = 0"
+								owner = PREV
+							}
+							create_unit = {
+								division = "name = \"3. Minnesota National Guard\" division_template = \"Minnesota National Guard\" start_experience_factor = 0"
+								owner = PREV
+							}
+							create_unit = {
+								division = "name = \"4. Minnesota National Guard\" division_template = \"Minnesota National Guard\" start_experience_factor = 0"
+								owner = PREV
+							}
+						}
+						832 = {
+							create_unit = {
+								division = "name = \"6. Minnesota National Guard\" division_template = \"Minnesota National Guard\" start_experience_factor = 0"
+								owner = PREV
+							}
+							create_unit = {
+								division = "name = \"7. Minnesota National Guard\" division_template = \"Minnesota National Guard\" start_experience_factor = 0"
+								owner = PREV
+							}
+						}				
+					}
+				}
 			}
 		}
 	}
 	focus = {
 		id = SMN_burn_down_the_st_paul_police_station
 		icon = GFX_focus_generic_world_in_flames
-		cost = 10
+		cost = 7
 		x = 0
 		y = 2
 		mutually_exclusive = {
@@ -3488,7 +3591,7 @@ focus_tree = {
 		prerequisite = { focus = SMN_march_on_st_paul }
 		relative_position_id = SMN_march_on_st_paul
 		available = {
-			
+			has_civil_war = no
 		}
 		completion_reward = {
 			add_timed_idea = {
@@ -3558,6 +3661,7 @@ focus_tree = {
 		prerequisite = { focus = SMN_march_on_st_paul }
 		relative_position_id = SMN_march_on_st_paul
 		available = {
+			has_civil_war = no
 		}
 		completion_reward = {
 			add_stability = -0.10
@@ -3596,6 +3700,7 @@ focus_tree = {
 		prerequisite = { focus = SMN_march_on_st_paul }
 		relative_position_id = SMN_march_on_st_paul
 		available = {
+			has_civil_war = no
 		}
 		completion_reward = {
 			add_ideas = SMN_desegregation
@@ -3613,6 +3718,7 @@ focus_tree = {
 		prerequisite = { focus = SMN_march_on_st_paul }
 		relative_position_id = SMN_march_on_st_paul
 		available = {
+			has_civil_war = no
 		}
 		completion_reward = {
 			unlock_decision_category_tooltip = SMN_strengthen_unions_decisions
@@ -4132,7 +4238,7 @@ focus_tree = {
 		id = SMN_army_reform
 		icon = GFX_goal_generic_allies_build_infantry
 		cost = 7
-		x = 65
+		x = 56
 		y = 0
 		available = {
 		}
@@ -4682,7 +4788,7 @@ focus_tree = {
 		id = SMN_build_up_msp
 		icon = GFX_goal_generic_build_airforce
 		cost = 10
-		x = 74
+		x = 65
 		y = 0
 		mutually_exclusive = {
 			
@@ -4903,7 +5009,7 @@ focus_tree = {
 	focus = {
 		id = SMN_duluth_dockyards
 		icon = GFX_goal_generic_build_navy
-		x = 80
+		x = 71
 		y = 0
 
 		cost = 10
