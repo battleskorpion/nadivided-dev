@@ -14,7 +14,7 @@ focus_tree = {
 	focus = {
 		id = SMN_deal_with_great_depression
 		icon = GFX_goal_generic_investments
-		cost = 10
+		cost = 7
 		x = 4
 		y = 0
 		available = {
@@ -57,7 +57,7 @@ focus_tree = {
 	focus = {
 		id = SMN_forest_conservation
 		icon = GFX_focus_generic_tree
-		cost = 7
+		cost = 5
 		x = 0
 		y = 1
 		prerequisite = { focus = SMN_start_conservation }
@@ -68,7 +68,12 @@ focus_tree = {
 			add_stability = 0.03
 			add_political_power = 15
 			set_country_flag = SMN_log_drive_ready_again
-			unlock_decision_tooltip = SMN_forest_conservation_mission
+			if = {
+				limit = {
+					has_idea = SMN_log_drive_ruined
+				}
+				remove_ideas = SMN_log_drive_ruined
+			}
 		}
 	}
 	focus = {
@@ -80,10 +85,15 @@ focus_tree = {
 		prerequisite = { focus = SMN_forest_conservation }
 		relative_position_id = SMN_forest_conservation
 		available = {
-			NOT = {
-				OR = {
-					has_country_flag = SMN_deforestation
-					has_country_flag = SMN_log_drive_ready_again
+			has_country_flag = {
+				flag = SMN_log_drive_ready_again
+				days > 1865
+			}
+			custom_trigger_tooltip = {
+				tooltip = SMN_log_drive_ready_again_tt
+				has_country_flag = {
+					flag = SMN_log_drive_ready_again
+					days > 1865
 				}
 			}
 		}
@@ -193,7 +203,7 @@ focus_tree = {
 	focus = {
 		id = SMN_increase_university_spending
 		icon = GFX_focus_research
-		cost = 10
+		cost = 8
 		x = -1
 		y = 1
 		prerequisite = { focus = SMN_help_farmers }
@@ -209,7 +219,7 @@ focus_tree = {
 	focus = {
 		id = SMN_domestic_economy
 		icon = GFX_goal_generic_construct_civ_factory
-		cost = 10
+		cost = 7
 		x = 1
 		y = 1
 		prerequisite = { focus = SMN_help_farmers }
@@ -409,7 +419,7 @@ focus_tree = {
 	focus = {
 		id = SMN_more_resources
 		icon = GFX_focus_generic_iron_mining
-		cost = 7
+		cost = 5
 		x = 1
 		y = 1
 		prerequisite = { focus = SMN_favor_mining }
@@ -487,7 +497,7 @@ focus_tree = {
 	focus = {
 		id = SMN_develop_arms_industry
 		icon = GFX_goal_generic_construct_mil_factory
-		cost = 5
+		cost = 3
 		x = 0
 		y = 1
 		prerequisite = { focus = SMN_war_manpower_commission }
@@ -512,7 +522,7 @@ focus_tree = {
 	focus = {
 		id = SMN_mil_factory
 		icon = GFX_focus_generic_combined_arms
-		cost = 10
+		cost = 8
 		x = 0
 		y = 2
 		prerequisite = { focus = SMN_develop_arms_industry}
@@ -578,7 +588,7 @@ focus_tree = {
 	focus = {
 		id = SMN_the_end_of_the_oconnor_agreement
 		icon = GFX_focus_RCA_promote_new_ideas
-		cost = 8
+		cost = 7
 		x = 26
 		y = 0
 		available = {
@@ -744,7 +754,7 @@ focus_tree = {
 	focus = {
 		id = SMN_negotiate_with_teamster_leaders
 		icon = GFX_focus_generic_ban_unions
-		cost = 10
+		cost = 8
 		x = -1
 		y = 1
 		mutually_exclusive = {
@@ -757,6 +767,7 @@ focus_tree = {
 		}
 		completion_reward = {
 			remove_ideas = strikes_1
+			add_stability = 0.10
 		}
 	}
 	focus = {
@@ -774,6 +785,7 @@ focus_tree = {
 		}
 		completion_reward = {
 			remove_ideas = SMN_organized_crime
+			add_stability = 0.10
 		}
 	}
 	focus = {
@@ -1254,7 +1266,7 @@ focus_tree = {
 	focus = {
 		id = SMN_defense_of_our_homeland
 		icon = GFX_focus_defend_democracy
-		cost = 10
+		cost = 8
 		x = 0
 		y = 2
 		mutually_exclusive = {
@@ -1288,7 +1300,7 @@ focus_tree = {
 	focus = {
 		id = SMN_defence_contracts
 		icon = GFX_focus_generic_social_dem_factory
-		cost = 7
+		cost = 8
 		x = -1
 		y = 1
 		mutually_exclusive = {
@@ -1400,7 +1412,7 @@ focus_tree = {
 	focus = {
 		id = SMN_the_silver_shirts
 		icon = GFX_focus_SWA_The_legion_Marches_Onward
-		cost = 10
+		cost = 7
 		x = 0
 		y = 2
 		prerequisite = {
@@ -1421,7 +1433,7 @@ focus_tree = {
 	focus = {
 		id = SMN_attack_teamster_union_guard
 		icon = GFX_focus_generic_ban_unions
-		cost = 10
+		cost = 7
 		x = -2
 		y = 2
 		prerequisite = { focus = SMN_the_silver_shirts focus = SMN_elect_hjalmar focus = SMN_elect_gulbrand_lunde }
@@ -1514,7 +1526,7 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_ideas = SMN_deforestation
-			set_country_flag = SMN_deforestation
+			clr_country_flag = SMN_log_drive_ready_again
 		}
 	}
 	focus = {
@@ -1523,7 +1535,13 @@ focus_tree = {
 		cost = 10
 		x = 0
 		y = 1
-		prerequisite = { focus = SMN_attack_illinois focus = SMN_attack_iowa focus = SMN_attack_wisconsin }
+		prerequisite = { focus = SMN_attack_wisconsin }
+		prerequisite = {
+			focus = SMN_attack_illinois
+		}
+		prerequisite = {
+			focus = SMN_attack_iowa
+		}
 		relative_position_id = SMN_attack_illinois 
 		available = {
 			custom_trigger_tooltip = {
@@ -1701,7 +1719,7 @@ focus_tree = {
 	focus = {
 		id = SMN_attack_wisconsin
 		icon = GFX_focus_generic_attack_wisconsin
-		cost = 10
+		cost = 8
 		x = -1
 		y = 1
 		prerequisite = {
@@ -1727,7 +1745,7 @@ focus_tree = {
 	focus = {
 		id = SMN_attack_iowa
 		icon = GFX_focus_generic_attack_iowa
-		cost = 10
+		cost = 8
 		x = 3
 		y = 1
 		prerequisite = {
@@ -1753,7 +1771,7 @@ focus_tree = {
 	focus = {
 		id = SMN_attack_illinois
 		icon = GFX_focus_generic_attack_illinois
-		cost = 10
+		cost = 8
 		x = 1
 		y = 1
 		prerequisite = {
@@ -1827,6 +1845,9 @@ focus_tree = {
 		cost = 5
 		x = 1
 		y = 1
+		mutually_exclusive = {
+			focus = SMN_elect_gulbrand_lunde
+		}
 		prerequisite = { focus = SMN_send_hjalmar_to_legitimize_the_stones }
 		relative_position_id = SMN_send_hjalmar_to_legitimize_the_stones
 		available = {
@@ -1864,6 +1885,9 @@ focus_tree = {
 		cost = 5
 		x = -1
 		y = 1
+		mutually_exclusive = {
+			focus = SMN_elect_hjalmar
+		}
 		prerequisite = { focus = SMN_send_hjalmar_to_legitimize_the_stones }
 		relative_position_id = SMN_send_hjalmar_to_legitimize_the_stones
 		available = {
@@ -2019,7 +2043,7 @@ focus_tree = {
 	focus = {
 		id = SMN_attack_ontario
 		icon = GFX_focus_generic_attack_ontario
-		cost = 10
+		cost = 8
 		x = 0
 		y = 1
 		prerequisite = { focus = SMN_remember_vinland }
@@ -2047,7 +2071,7 @@ focus_tree = {
 	focus = {
 		id = SMN_attack_quebec
 		icon = GFX_focus_generic_attack_quebec
-		cost = 10
+		cost = 8
 		x = 1
 		y = 2
 		prerequisite = { focus = SMN_attack_ontario }
@@ -2076,7 +2100,7 @@ focus_tree = {
 	focus = {
 		id = SMN_attack_newfoundland
 		icon = GFX_focus_generic_attack_newfoundland
-		cost = 10
+		cost = 8
 		x = -1
 		y = 2
 		prerequisite = { focus = SMN_attack_ontario }
@@ -2197,7 +2221,7 @@ focus_tree = {
 	focus = {
 		id = SMN_attack_montana
 		icon = GFX_focus_generic_attack_montana
-		cost = 10
+		cost = 8
 		x = -1
 		y = 2
 		prerequisite = { focus = SMN_unite_our_people }
@@ -2224,7 +2248,7 @@ focus_tree = {
 	focus = {
 		id = SMN_attack_idaho
 		icon = GFX_focus_generic_attack_idaho
-		cost = 10
+		cost = 8
 		x = 0
 		y = 1
 		prerequisite = { focus = SMN_unite_our_people}
@@ -2245,7 +2269,7 @@ focus_tree = {
 	focus = {
 		id = SMN_attack_washington
 		icon = GFX_focus_generic_attack_washington
-		cost = 10
+		cost = 8
 		x = 1
 		y = 2
 		prerequisite = { focus = SMN_unite_our_people }
@@ -2316,7 +2340,7 @@ focus_tree = {
 		id = SMN_olson_declares_marshal_law
 		icon = GFX_focus_generic_emergency2
 		cost = 1
-		x = 17
+		x = 16
 		y = 1
 		mutually_exclusive = {
 			focus = SMN_fascist_path focus = SMN_olsons_death
@@ -2634,26 +2658,8 @@ focus_tree = {
 					ruling_party = neutrality
 				}
 			}
-		}
-	}
-	focus = {
-		id = SMN_reconstruction_police_side
-		icon = GFX_goal_generic_construct_civilian
-		cost = 3
-		x = 0
-		y = 1
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = SMN_attack_the_strikers focus = SMN_negotiate_with_the_strikers }
-		relative_position_id = SMN_attack_the_strikers
-		available = {
-			
-		}
-		completion_reward = {
-			add_timed_idea = {
-				idea = SMN_reconstruction
-				days = 120
+			hidden_effect = {
+				remove_ideas = SMN_martial_law_idea
 			}
 		}
 	}
@@ -2824,6 +2830,7 @@ focus_tree = {
 			add_stability = 0.10
 			add_political_power = 100
 			remove_ideas = SMN_corrupt_police
+			remove_ideas = SMN_organized_crime
 		}
 	}
 	focus = {
@@ -2901,6 +2908,12 @@ focus_tree = {
 		completion_reward = {
 			if = {
 				limit = {
+					num_faction_members > 1
+				}
+				add_threat = -2
+			}
+			if = {
+				limit = {
 					num_faction_members > 2
 				}
 				add_threat = -2
@@ -2914,12 +2927,6 @@ focus_tree = {
 			if = {
 				limit = {
 					num_faction_members > 4
-				}
-				add_threat = -2
-			}
-			if = {
-				limit = {
-					num_faction_members > 5
 				}
 				add_threat = -4
 			}
@@ -3079,6 +3086,7 @@ focus_tree = {
 				days = 120
 			}
 			set_cosmetic_tag = SMN_syndicate
+			remove_ideas = SMN_organized_crime
 		}
 	}
 	focus = {
@@ -3403,7 +3411,7 @@ focus_tree = {
 		id = SMN_side_with_the_rioters
 		icon = GFX_focus_generic_on_strike
 		cost = 3
-		x = 25
+		x = 21
 		y = 2
 		mutually_exclusive = {
 			focus = SMN_side_with_the_police
@@ -3420,8 +3428,8 @@ focus_tree = {
 	}
 	focus = {
 		id = SMN_truck_in_collaboraters
-		icon = GFX_focus_generic_rally_workers
-		cost = 10
+		icon = GFX_goal_generic_political_pressure
+		cost = 8
 		x = -1
 		y = 1
 		mutually_exclusive = {
@@ -3432,13 +3440,19 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			###ADDS IDEAS FOR COMMUNISM SUPPORT
+			add_popularity = { ideology = communism popularity = 0.05 }
+			834 = {
+				add_manpower = 5000
+			}
+			SMN = {
+				activate_advisor = SMN_carl_skoglund
+			}
 		}
 	}
 	focus = {
 		id = SMN_ally_with_teamsters
-		icon = GFX_focus_socialisst_lessons
-		cost = 10
+		icon = GFX_goal_generic_dangerous_deal
+		cost = 8
 		x = 1
 		y = 1
 		mutually_exclusive = {
@@ -3449,14 +3463,15 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			###ADDS IDEAS FOR COMMUNISM SUPPORT
+			add_popularity = { ideology = communism popularity = 0.05 }
+			custom_effect_tooltip = SMN_teamster_union_guard_tt
 		}
 	}
 	###VINCENT R DUN becomes leader
 	focus = {
 		id = SMN_march_on_st_paul
 		icon = GFX_focus_STX_storm_austin
-		cost = 10
+		cost = 8
 		x = 0
 		y = 3
 		mutually_exclusive = {
@@ -3470,15 +3485,127 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			set_politics = {
+			hidden_effect = {
+				add_popularity = { ideology = communism popularity = 0.05 }
+			}
+			hidden_effect = {
+				retire_character = SMN_carl_skoglund
+			}
+			hidden_effect = {
+				remove_ideas = SMN_organized_crime
+			}
+			hidden_effect = {
+				remove_ideas = SMN_martial_law_idea
+			}
+			if = {	#You allied me, I allied you, buddy, but sorry, we are now different
+				limit = {
+					is_in_faction = yes
+					any_other_country = {
+						is_faction_leader = yes
+						is_in_faction_with = ROOT
+						NOT = {
+							has_government = communism
+						} 
+					}
+				}
+				every_other_country = {
+					limit = {
+						is_faction_leader = yes
+						is_in_faction_with = ROOT
+						NOT = {
+							has_government = communism
+						}
+					}
+					remove_from_faction = ROOT
+					add_ai_strategy = {	#your problem, not ours
+						type = ignore
+						id = ROOT
+						value = 300
+					}
+				}
+			}
+			set_capital = { state = 834 }
+			start_civil_war = {
 				ruling_party = communism
+				ideology = ROOT
+				size = 0.75	#This was too much for AI
+				capital = 198
+				states = { 839 838 342 840 837 198 343 836 215 833 832 }
+				keep_unit_leaders = {
+				}
+			}
+			add_stability = -0.1
+			hidden_effect = {
+				division_template = { name = "Teamster Union Guard" division_names_group = SMN_INF_01 is_locked = no regiments = { infantry = { x = 0 y = 0 } infantry = { x = 1 y = 0 } infantry = { x = 1 y = 0 } infantry = { x = 1 y = 1 } } }
+				834 = {
+					create_unit = {
+						division = "name = \"1. Teamster Union Guard\" division_template = \"Teamster Union Guard\" start_experience_factor = 0"
+						owner = ROOT
+					}
+					create_unit = {
+						division = "name = \"2. Teamster Union Guard\" division_template = \"Teamster Union Guard\" start_experience_factor = 0"
+						owner = ROOT
+					}
+					create_unit = {
+						division = "name = \"3. Teamster Union Guard\" division_template = \"Teamster Union Guard\" start_experience_factor = 0"
+						owner = ROOT
+					}
+					create_unit = {
+						division = "name = \"4. Teamster Union Guard\" division_template = \"Teamster Union Guard\" start_experience_factor = 0"
+						owner = ROOT
+					}
+					create_unit = {
+						division = "name = \"5. Teamster Union Guard\" division_template = \"Teamster Union Guard\" start_experience_factor = 0"
+						owner = ROOT
+					}
+				}
+			}
+			hidden_effect = {
+				random_other_country = {
+					limit = {
+						original_tag = SMN
+						has_government = Progressivism
+					}
+					#JAI as tag alias
+					hidden_effect = {
+						division_template = { name = "Minnesota National Guard" division_names_group = SMN_INF_01 is_locked = no regiments = { infantry = { x = 0 y = 0 } infantry = { x = 1 y = 0 } } }
+						198 = {
+							create_unit = {
+								division = "name = \"1. Minnesota National Guard\" division_template = \"Minnesota National Guard\" start_experience_factor = 0"
+								owner = PREV
+							}
+							create_unit = {
+								division = "name = \"2. Minnesota National Guard\" division_template = \"Minnesota National Guard\" start_experience_factor = 0"
+								owner = PREV
+							}
+							create_unit = {
+								division = "name = \"3. Minnesota National Guard\" division_template = \"Minnesota National Guard\" start_experience_factor = 0"
+								owner = PREV
+							}
+							create_unit = {
+								division = "name = \"4. Minnesota National Guard\" division_template = \"Minnesota National Guard\" start_experience_factor = 0"
+								owner = PREV
+							}
+						}
+						832 = {
+							create_unit = {
+								division = "name = \"6. Minnesota National Guard\" division_template = \"Minnesota National Guard\" start_experience_factor = 0"
+								owner = PREV
+							}
+							create_unit = {
+								division = "name = \"7. Minnesota National Guard\" division_template = \"Minnesota National Guard\" start_experience_factor = 0"
+								owner = PREV
+							}
+						}				
+					}
+				}
 			}
 		}
 	}
 	focus = {
 		id = SMN_burn_down_the_st_paul_police_station
 		icon = GFX_focus_generic_world_in_flames
-		cost = 10
+		cost = 8
 		x = 0
 		y = 2
 		mutually_exclusive = {
@@ -3492,9 +3619,8 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			set_politics = {
-				ruling_party = communism
-			}
+			add_stability = -0.10
+			remove_ideas = SMN_corrupt_police
 		}
 	}
 	focus = {
@@ -3509,7 +3635,7 @@ focus_tree = {
 		prerequisite = { focus = SMN_march_on_st_paul }
 		relative_position_id = SMN_march_on_st_paul
 		available = {
-			
+			has_civil_war = no
 		}
 		completion_reward = {
 			add_timed_idea = {
@@ -3579,10 +3705,11 @@ focus_tree = {
 		prerequisite = { focus = SMN_march_on_st_paul }
 		relative_position_id = SMN_march_on_st_paul
 		available = {
+			has_civil_war = no
 		}
 		completion_reward = {
-			add_stability = -0.10
-			add_political_power = 25
+			add_stability = -0.08
+			add_political_power = 50
 		}
 	}
 	focus = {
@@ -3617,9 +3744,11 @@ focus_tree = {
 		prerequisite = { focus = SMN_march_on_st_paul }
 		relative_position_id = SMN_march_on_st_paul
 		available = {
+			has_civil_war = no
 		}
 		completion_reward = {
-			add_ideas = SMN_desegregation
+			add_ideas = SMN_desegrated_army
+			add_stability = -0.02
 		}
 	}
 	focus = {
@@ -3634,6 +3763,7 @@ focus_tree = {
 		prerequisite = { focus = SMN_march_on_st_paul }
 		relative_position_id = SMN_march_on_st_paul
 		available = {
+			has_civil_war = no
 		}
 		completion_reward = {
 			unlock_decision_category_tooltip = SMN_strengthen_unions_decisions
@@ -3722,7 +3852,7 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			custom_effect_tooltip = SMN_all_buffs_get_combined
+			custom_effect_tooltip = SMN_all_buffs_get_combined_tt
 			add_ideas = SMN_strengthened_unions
 			hidden_effect = {
 				remove_ideas = SMN_standard_health_care
@@ -3754,152 +3884,574 @@ focus_tree = {
 				}
 			}
 			else = {
-				create_faction = TROSKYIST_FACTION
+				create_faction = MIDWEST_WORKERS_FACTION
 			}
 		}
 	}
 	focus = {
-		id = SMN_align_wisconsin
-		icon = GFX_goal_generic_construct_civilian
-		cost = 10
-		x = 5
-		y = 5
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = SMN_the_fifth_international }
-		relative_position_id = SMN_march_on_st_paul
-		available = {
-		}
-		completion_reward = {
-			###GIVES COMMUNISM TO WISCONSIN
-		}
-	}
-	focus = {
-		id = SMN_rally_their_workers
-		icon = GFX_goal_generic_construct_civilian
-		cost = 10
+		id = SMN_vanguard_of_the_revolution
+		icon = GFX_focus_spr_torchbearers_of_tomorrow
+		cost = 7
 		x = 1
 		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = SMN_align_wisconsin}
-		relative_position_id = SMN_align_wisconsin
+		prerequisite = { focus = SMN_an_equal_society }
+		relative_position_id = SMN_an_equal_society
 		available = {
 		}
 		completion_reward = {
-			####NATIONALIZES INDUSTRIES GIVES IDEA cooperativism
+			add_threat = 1
+			add_ideas = SMN_communist_volunteers
 		}
 	}
 	focus = {
-		id = SMN_rally_their_farmers
-		icon = GFX_goal_generic_construct_civilian
-		cost = 10
-		x = -1
+		id = SMN_their_workers
+		icon = GFX_focus_generic_rally_workers
+		cost = 3
+		x = 0
 		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = SMN_align_wisconsin}
-		relative_position_id = SMN_align_wisconsin
+		prerequisite = { focus = SMN_the_fifth_international }
+		relative_position_id = SMN_the_fifth_international
 		available = {
 		}
 		completion_reward = {
-			####NATIONALIZES INDUSTRIES GIVES IDEA cooperativism
+			add_political_power = 15
+			unlock_decision_category_tooltip = SMN_spread_communism_workers
 		}
 	}
 	focus = {
-		id = SMN_the_wisconsin_question
-		icon = GFX_goal_generic_construct_civilian
-		cost = 10
-		x = 0
-		y = 3
+		id = SMN_rally_their_farmers
+		icon = GFX_focus_YUG_pan_slavic_congress
+		cost = 3
+		x = -2
+		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = {
-			focus = SMN_rally_their_farmers focus = SMN_rally_their_workers
-		}
-		prerequisite = {
-			focus = SMN_the_fifth_international
-		}
-		relative_position_id = SMN_align_wisconsin
+		prerequisite = { focus = SMN_the_fifth_international }
+		relative_position_id = SMN_the_fifth_international
 		available = {
 		}
 		completion_reward = {
-			####NATIONALIZES INDUSTRIES GIVES IDEA cooperativism
+			add_political_power = 15
+			unlock_decision_category_tooltip = SMN_spread_communism_peasants
+		}
+	}
+	focus = {
+		id = SMN_influence_their_politics
+		icon = GFX_focus_generic_soviet_politics
+		cost = 3
+		x = 2
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_the_fifth_international }
+		relative_position_id = SMN_the_fifth_international
+		available = {
+		}
+		completion_reward = {
+			add_political_power = 15
+			unlock_decision_category_tooltip = SMN_spread_communism_collaborators
+		}
+	}
+	focus = {
+		id = SMN_align_wisconsin
+		icon = GFX_focus_generic_attack_wisconsin
+		cost = 7
+		x = 2
+		y = 5
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { 
+			focus = SMN_rally_their_farmers 
+		}
+		prerequisite = {
+			focus = SMN_their_workers
+		}
+		prerequisite = {
+			focus = SMN_influence_their_politics
+		}
+		relative_position_id = SMN_march_on_st_paul
+		available = {
+			SWI = {
+				communism > 0.30
+			}
+		}
+		will_lead_to_war_with = SWI
+		completion_reward = {
+			SWI = {
+				country_event = {
+					id = minnesota.11
+					days = 15
+				}
+			}
+			add_war_support = 0.05
+		}
+	}
+	focus = {
+		id = SMN_align_iowa
+		icon = GFX_focus_generic_attack_iowa
+		cost = 7
+		x = 0
+		y = 5
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { 
+			focus = SMN_rally_their_farmers 
+		}
+		prerequisite = {
+			focus = SMN_their_workers
+		}
+		prerequisite = {
+			focus = SMN_influence_their_politics
+		}
+		relative_position_id = SMN_march_on_st_paul
+		available = {
+			SIA = {
+				communism > 0.30
+			}
+		}
+		will_lead_to_war_with = SIA
+		completion_reward = {
+			SIA = {
+				country_event = {
+					id = minnesota.11
+					days = 15
+				}
+			}
+			add_war_support = 0.05
+		}
+	}
+	focus = {
+		id = SMN_align_illinois
+		icon = GFX_focus_generic_attack_illinois
+		cost = 7
+		x = -1
+		y = 6
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { 
+			focus = SMN_rally_their_farmers 
+		}
+		prerequisite = {
+			focus = SMN_their_workers
+		}
+		prerequisite = {
+			focus = SMN_influence_their_politics
+		}
+		relative_position_id = SMN_march_on_st_paul
+		available = {
+			SIL = {
+				communism > 0.30
+			}
+		}
+		will_lead_to_war_with = SIL
+		completion_reward = {
+			SIL = {
+				country_event = {
+					id = minnesota.11
+					days = 15
+				}
+			}
+			add_war_support = 0.05
+		}
+	}
+	focus = {
+		id = SMN_align_superior
+		icon = GFX_focus_SMI_do_not_the_superior
+		cost = 7
+		x = 1
+		y = 6
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { 
+			focus = SMN_rally_their_farmers 
+		}
+		prerequisite = {
+			focus = SMN_their_workers
+		}
+		prerequisite = {
+			focus = SMN_influence_their_politics
+		}
+		relative_position_id = SMN_march_on_st_paul
+		available = {
+			SUP = {
+				communism > 0.30
+			}
+		}
+		will_lead_to_war_with = SUP
+		completion_reward = {
+			SUP = {
+				country_event = {
+					id = minnesota.11
+					days = 15
+				}
+			}
+			add_war_support = 0.05
 		}
 	}
 	focus = {
 		id = SMN_align_the_dakotas
 		icon = GFX_focus_generic_attack_dakotas
-		cost = 10
-		x = -4
+		cost = 7
+		x = -2
 		y = 5
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = SMN_the_fifth_international }
+		prerequisite = { 
+			focus = SMN_rally_their_farmers 
+		}
+		prerequisite = {
+			focus = SMN_their_workers
+		}
+		prerequisite = {
+			focus = SMN_influence_their_politics
+		}
 		relative_position_id = SMN_march_on_st_paul
 		available = {
+			SND = {
+				communism > 0.30
+			}
+			SSD = {
+				communism > 0.30
+			}
 		}
 		will_lead_to_war_with = SND
 		will_lead_to_war_with = SSD
 		bypass = {
-			has_full_control_of_state = 269
-			has_full_control_of_state = 167
-			has_full_control_of_state = 344
-			has_full_control_of_state = 846
-			has_full_control_of_state = 214
-			has_full_control_of_state = 749
-			has_full_control_of_state = 847
 		}
 		completion_reward = {
-			every_other_country = {
-				limit = {
-					OR = {
-						has_full_control_of_state = 269
-						has_full_control_of_state = 167
-						has_full_control_of_state = 344
-						has_full_control_of_state = 846
-						has_full_control_of_state = 214
-						has_full_control_of_state = 749
-						has_full_control_of_state = 847
+			SND = {
+				country_event = minnesota.11
+			}
+			SSD = {
+				country_event = minnesota.11
+			}
+			add_war_support = 0.05
+		}
+	}
+	focus = {
+		id = SMN_midwest_commune_focus
+		icon = GFX_focus_generic_join_comintern
+		cost = 10
+		x = 0
+		y = 4
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_align_illinois focus = SMN_align_superior }
+		relative_position_id = SMN_the_fifth_international
+		available = {
+			OR = {
+				AND = {
+					custom_trigger_tooltip = {
+						tooltip = owns_illinois_tt
+						controls_illinois_trigger = yes
+					}
+					custom_trigger_tooltip = {
+						tooltip = owns_south_dakota_tt
+						controls_south_dakota_trigger = yes
+					}
+					custom_trigger_tooltip = {
+						tooltip = owns_north_dakota_tt
+						controls_north_dakota_trigger = yes
+					}
+					custom_trigger_tooltip = {
+						tooltip = owns_iowa_tt
+						controls_iowa_trigger = yes
+					}
+					custom_trigger_tooltip = {
+						tooltip = owns_wisconsin_tt
+						controls_wisconsin_trigger = yes
 					}
 				}
-				country_event = minnesota.2
-				###DEMAND SUBMISSION
+				AND = {
+					SND = {
+						is_in_faction_with = SMN
+					}
+					SSD = {
+						is_in_faction_with = SMN
+					}
+					SIL = {
+						is_in_faction_with = SMN
+					}
+					SWI = {
+						is_in_faction_with = SMN
+					}
+					SIA = {
+						is_in_faction_with = SMN
+					}
+				}
+				AND = {
+					SND = {
+						is_puppet_of = SMN
+					}
+					SSD = {
+						is_puppet_of = SMN
+					}
+					SIL = {
+						is_puppet_of = SMN
+					}
+					SWI = {
+						is_puppet_of = SMN
+					}
+					SIA = {
+						is_puppet_of = SMN
+					}
+				}
+			}
+		}
+		completion_reward = {
+			add_stability = 0.10
+			hidden_effect = {
+				core_south_dakota = yes
+				core_north_dakota = yes
+				core_wisconsin = yes
+				core_illinois = yes
+				core_iowa = yes
+				every_state = {
+					limit = {
+						is_core_of = SUP
+					}
+					add_core_of = SMN
+				}
+			}
+			set_cosmetic_tag = SMN_midwest_commune
+			if = {
+				limit = {
+					SND = {
+						OR = {
+							is_puppet_of = SMN
+							is_in_faction_with = SMN
+						}
+					}
+				}
+				annex_country = {
+					target = SND
+				}
+			}
+			if = {
+				limit = {
+					SSD = {
+						OR = {
+							is_puppet_of = SMN
+							is_in_faction_with = SMN
+						}
+					}
+				}
+				annex_country = {
+					target = SSD
+				}
+			}
+			if = {
+				limit = {
+					SIL = {
+						OR = {
+							is_puppet_of = SMN
+							is_in_faction_with = SMN
+						}
+					}
+				}
+				annex_country = {
+					target = SIL
+				}
+			}
+			if = {
+				limit = {
+					SWI = {
+						OR = {
+							is_puppet_of = SMN
+							is_in_faction_with = SMN
+						}
+					}
+				}
+				annex_country = {
+					target = SWI
+				}
+			}
+			if = {
+				limit = {
+					SIA = {
+						OR = {
+							is_puppet_of = SMN
+							is_in_faction_with = SMN
+						}
+					}
+				}
+				annex_country = {
+					target = SIA
+				}
+			}
+			if = {
+				limit = {
+					SUP = {
+						OR = {
+							is_puppet_of = SMN
+							is_in_faction_with = SMN
+						}
+					}
+				}
+				annex_country = {
+					target = SUP
+				}
 			}
 		}
 	}
 	focus = {
-		id = SMN_united_under_our_union
-		icon = GFX_goal_generic_construct_civilian
+		id = SMN_declare_world_revolution
+		icon = GFX_goal_generic_war_with_comintern
 		cost = 10
 		x = 0
-		y = 3
+		y = 1
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = SMN_align_the_dakotas }
-		prerequisite = {
-			focus = SMN_the_fifth_international
-		}
-		relative_position_id = SMN_align_the_dakotas
+		prerequisite = { focus = SMN_midwest_commune_focus }
+		relative_position_id = SMN_midwest_commune_focus
 		available = {
 		}
 		completion_reward = {
-			every_state = {
+			add_threat = 5
+			every_other_country = {
 				limit = {
-					OR = {
-						is_core_of = SND
-						is_core_of = SSD
+					NOT = {
+						has_government = communism
 					}
 				}
-				add_core_of = ROOT
+				add_timed_idea = {
+					idea = SMN_spread_the_revolution_idea
+					days = 1095
+				}
 			}
-			add_stability = 0.10
+			add_trait = {
+				character = SMN_vincent_r_dunne
+				slot = country_leader
+				trait = triumphant_revolutionary
+			}
+		}
+	}
+	focus = {
+		id = SMN_class_struggle
+		icon = GFX_focus_ger_great_red_menace
+		cost = 10
+		x = 0
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_declare_world_revolution }
+		relative_position_id = SMN_declare_world_revolution
+		available = {
+		}
+		completion_reward = {
+			add_threat = 5
+			add_ideas = SMN_class_struggle_idea
+			if = {
+				limit = {
+					has_war_support < 0.5
+				}
+				add_war_support = 0.1
+			}
+			else_if = {
+				limit = {
+					OR = {
+					has_idea = war_economy
+					has_idea = tot_economic_mobilisation
+					}
+				}
+				add_political_power = 150
+			}
+			else = {
+				add_ideas = war_economy
+			}
+		}
+	}
+	focus = {
+		id = SMN_idoelogical_propaganda
+		icon = GFX_goal_generic_propaganda
+		cost = 5
+		x = 0
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_class_struggle }
+		relative_position_id = SMN_class_struggle
+		available = {
+		}
+		completion_reward = {
+			add_ideas = SMN_clandestine_propaganda_techniques
+		}
+	}
+	focus = {
+		id = SMN_the_red_army
+		icon = GFX_focus_SOV_builder_of_the_red_army
+		cost = 10
+		x = 2
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_class_struggle }
+		relative_position_id = SMN_class_struggle
+		available = {
+		}
+		completion_reward = {
+			add_ideas = SMN_the_red_army_idea
+		}
+	}
+	focus = {
+		id = SMN_a_gun_in_every_hand
+		icon = GFX_goal_generic_small_arms
+		cost = 10
+		x = -2
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_class_struggle }
+		relative_position_id = SMN_class_struggle
+		available = {
+		}
+		completion_reward = {
+			add_ideas = SMN_a_gun_in_every_hand
+		}
+	}
+	focus = {
+		id = SMN_workers_unite_america
+		icon = GFX_focus_american_peoples_republic
+		cost = 10
+		x = 0
+		y = 2
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_a_gun_in_every_hand }
+		prerequisite = { focus = SMN_the_red_army }
+		prerequisite = { focus = SMN_idoelogical_propaganda }
+		relative_position_id = SMN_class_struggle
+		available = {
+		}
+		completion_reward = {
+			custom_effect_tooltip = SWA_USA_TT
+			hidden_effect = {
+				core_the_united_states = yes	
+			}
+			set_cosmetic_tag = SMN_usa_commune
+			###CORES USA AND GIVES COSMETIC TAG
+			###GIVES IDEA FOR WORKERS UNITED
+			add_ideas = SMN_workers_united
 		}
 	}
 ###ARMY TREE
@@ -3907,7 +4459,7 @@ focus_tree = {
 		id = SMN_army_reform
 		icon = GFX_goal_generic_allies_build_infantry
 		cost = 7
-		x = 65
+		x = 56
 		y = 0
 		available = {
 		}
@@ -3920,7 +4472,7 @@ focus_tree = {
 	focus = {
 		id = SMN_a_new_military_model
 		icon = GFX_goal_generic_major_war
-		cost = 10
+		cost = 8
 		x = -4
 		y = 1
 		mutually_exclusive = {
@@ -3936,15 +4488,14 @@ focus_tree = {
 			add_doctrine_cost_reduction = {
 				cost_reduction = 1
 				name = minnesota_land
-				category = cat_mobile_warfare
-				category = cat_superior_firepower
+				category = land_doctrine
 			}
 		}
 	}
 	focus = {
 		id = SMN_old_tactics
 		icon = GFX_goal_generic_occupy_states_ongoing_war
-		cost = 10
+		cost = 8
 		x = 4
 		y = 1
 		mutually_exclusive = {
@@ -3960,8 +4511,7 @@ focus_tree = {
 			add_doctrine_cost_reduction = {
 				cost_reduction = 1
 				name = minnesota_land
-				category = cat_mass_assault
-				category = cat_grand_battle_plan
+				category = land_doctrine
 			}
 		}
 	}
@@ -4017,7 +4567,7 @@ focus_tree = {
 	focus = {
 		id = SMN_modernize_artillery
 		icon = GFX_goal_generic_army_artillery
-		cost = 7
+		cost = 5
 		x = 1
 		y = 1
 		mutually_exclusive = {
@@ -4139,7 +4689,7 @@ focus_tree = {
 	focus = {
 		id = SMN_modernize_matience_companies
 		icon = GFX_focus_generic_tank_production
-		cost = 7
+		cost = 5
 		x = -1
 		y = 2
 		mutually_exclusive = {
@@ -4276,6 +4826,53 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = SMN_old_stock_piles
+		icon = GFX_focus_focus_fra_maquis
+		cost = 5
+		x = 8
+		y = 3
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_old_tactics }
+		relative_position_id = SMN_a_new_military_model
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment_0
+				amount = 7000
+			}
+		}
+	}
+	focus = {
+		id = SMN_new_armor_research
+		icon = GFX_goal_generic_build_tank
+		cost = 5
+		x = 2
+		y = 2
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SMN_a_new_military_model focus = SMN_old_tactics }
+		relative_position_id = SMN_a_new_military_model
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 0.75
+				uses = 1
+				category = armor
+			}
+			army_experience = 25
+		}
+	}
+	focus = {
 		id = SMN_integrate_the_minnesota_national_guard
 		icon = GFX_focus_generic_little_entente
 		cost = 8
@@ -4324,41 +4921,18 @@ focus_tree = {
 		x = 5
 		y = 4
 		mutually_exclusive = {
-			focus = SMN_wave_tactics focus = SMN_overwhelming_firepower
+			focus = SMN_wave_tactics focus = SMN_overwhelming_firepower focus = SMN_study_blitzkrieg
 		}
 		prerequisite = { focus = SMN_centralize_planning }
 		relative_position_id = SMN_a_new_military_model
 		bypass = {
 		}
 		available = {
-			has_completed_focus = SMN_old_tactics
 			has_tech = prepared_defense
 		}
 		completion_reward = {
 			army_experience = 25
 			add_ideas = SMN_methodical_battle_idea
-		}
-	}
-	focus = {
-		id = SMN_old_stock_piles
-		icon = GFX_focus_focus_fra_maquis
-		cost = 5
-		x = 8
-		y = 3
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = SMN_old_tactics }
-		relative_position_id = SMN_a_new_military_model
-		bypass = {
-		}
-		available = {
-		}
-		completion_reward = {
-			add_equipment_to_stockpile = {
-				type = infantry_equipment_0
-				amount = 7000
-			}
 		}
 	}
 	focus = {
@@ -4368,14 +4942,13 @@ focus_tree = {
 		x = 7
 		y = 4
 		mutually_exclusive = {
-			focus = SMN_methodical_battle
+			focus = SMN_overwhelming_firepower focus = SMN_study_blitzkrieg focus = SMN_methodical_battle
 		}
 		prerequisite = { focus = SMN_centralize_planning }
 		relative_position_id = SMN_a_new_military_model
 		bypass = {
 		}
 		available = {
-			has_completed_focus = SMN_old_tactics
 			has_tech = defence_in_depth
 		}
 		completion_reward = {
@@ -4390,14 +4963,13 @@ focus_tree = {
 		x = 3
 		y = 4
 		mutually_exclusive = {
-			focus = SMN_study_blitzkrieg focus = SMN_methodical_battle
+			focus = SMN_study_blitzkrieg focus = SMN_wave_tactics focus = SMN_methodical_battle
 		}
 		prerequisite = { focus = SMN_centralize_planning }
 		relative_position_id = SMN_a_new_military_model
 		bypass = {
 		}
 		available = {
-			has_completed_focus = SMN_a_new_military_model
 			has_tech = mobile_defence
 		}
 		completion_reward = {
@@ -4412,14 +4984,13 @@ focus_tree = {
 		x = 1
 		y = 4
 		mutually_exclusive = {
-			focus = SMN_overwhelming_firepower
+			focus = SMN_overwhelming_firepower focus = SMN_wave_tactics focus = SMN_methodical_battle
 		}
 		prerequisite = { focus = SMN_centralize_planning }
 		relative_position_id = SMN_a_new_military_model
 		bypass = {
 		}
 		available = {
-			has_completed_focus = SMN_a_new_military_model
 			has_tech = elastic_defence
 		}
 		completion_reward = {
@@ -4427,37 +4998,12 @@ focus_tree = {
 			add_ideas = SMN_study_blitzkrieg_idea
 		}
 	}
-	focus = {
-		id = SMN_new_armor_research
-		icon = GFX_goal_generic_build_tank
-		cost = 7
-		x = 2
-		y = 2
-		mutually_exclusive = {
-			
-		}
-		prerequisite = { focus = SMN_a_new_military_model focus = SMN_old_tactics }
-		relative_position_id = SMN_a_new_military_model
-		bypass = {
-		}
-		available = {
-		}
-		completion_reward = {
-			add_tech_bonus = {
-				name = GER_counter_sloped_armor
-				bonus = 0.75
-				uses = 1
-				category = armor
-			}
-			army_experience = 25
-		}
-	}
 ###AIR TREE
 	focus = {
 		id = SMN_build_up_msp
 		icon = GFX_goal_generic_build_airforce
-		cost = 10
-		x = 74
+		cost = 7
+		x = 65
 		y = 0
 		mutually_exclusive = {
 			
@@ -4481,7 +5027,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SMN_purchase_link_trainers
-		icon = GFX_goal_generic_air_doctrine
+		icon = GFX_focus_SOV_flying_clubs
 		cost = 10
 		x = 0
 		y = 1
@@ -4506,7 +5052,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SMN_aircraft_studies
-		icon = GFX_goal_generic_air_fighter2
+		icon = GFX_goal_generic_air_fighter
 		cost = 10
 		x = -1
 		y = 1
@@ -4554,8 +5100,8 @@ focus_tree = {
 	}
 	focus = {
 		id = SMN_engine_studies
-		icon = GFX_goal_generic_air_fighter
-		cost = 10
+		icon = GFX_goal_generic_air_fighter2
+		cost = 5
 		x = -2
 		y = 2
 		mutually_exclusive = {
@@ -4579,7 +5125,7 @@ focus_tree = {
 	focus = {
 		id = SMN_air_gun_studies
 		icon = GFX_focus_generic_multi_role_aircraft
-		cost = 10
+		cost = 5
 		x = 2
 		y = 2
 		mutually_exclusive = {
@@ -4602,8 +5148,8 @@ focus_tree = {
 	}
 	focus = {
 		id = SMN_air_support_studies
-		icon = GFX_focus_generic_tank_air_support
-		cost = 10
+		icon = GFX_goal_generic_CAS
+		cost = 5
 		x = 0
 		y = 2
 		mutually_exclusive = {
@@ -4678,10 +5224,10 @@ focus_tree = {
 	focus = {
 		id = SMN_duluth_dockyards
 		icon = GFX_goal_generic_build_navy
-		x = 80
+		x = 71
 		y = 0
 
-		cost = 10
+		cost = 5
 
 		ai_will_do = {
 			factor = 50
@@ -4799,7 +5345,7 @@ focus_tree = {
 	focus = {
 		id = SMN_cargill_designer
 		icon = GFX_goal_generic_navy_cruiser
-		cost = 7
+		cost = 5
 		x = 0
 		y = 1
 		prerequisite = { focus = SMN_capital_ships }
