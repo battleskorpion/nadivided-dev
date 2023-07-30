@@ -245,43 +245,11 @@ SMN_choose_devotee = {
 	}
 }
 SMN_conservation = {
-	SMN_forest_conservation_mission = {
-
-		priority = 10
-
-		icon = generic_intel_bonus
-
-		available = {
-			hidden_trigger = { always = no }
-		}
-
-		days_mission_timeout = 1825
-
-		fire_only_once = no
-
-		activation = {
-			has_completed_focus = SMN_forest_conservation
-		}
-
-		visible = {
-			NOT = {
-				has_completed_focus = SMN_take_controlled_approach_to_log_drives
-			}
-		}
-
-		cancel_if_not_visible = yes
-
-		is_good = yes
-
-		timeout_effect = {
-			clr_country_flag = SMN_log_drive_ready_again
-		}
-	}
 	SMN_the_last_log_drive = {
 
 		priority = 10
 
-		icon = generic_intel_bonus
+		icon = GFX_decision_hol_inundate_water_lines
 
 		available = {
 			hidden_trigger = { always = no }
@@ -289,7 +257,7 @@ SMN_conservation = {
 
 		days_mission_timeout = 400
 
-		fire_only_once = no
+		fire_only_once = yes
 
 		activation = {
 			has_country_flag = SMN_final_log_drive
@@ -305,11 +273,20 @@ SMN_conservation = {
 
 		is_good = yes
 
+		cancel_if_invalid = yes
+
 		timeout_effect = {
 			clr_country_flag = SMN_final_log_drive
-			swap_ideas = {
-				remove_idea = SMN_log_drive
-				add_idea = SMN_log_drive_ruined
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = SMN_start_conservation
+					}
+				}
+				swap_ideas = {
+					remove_idea = SMN_log_drive
+					add_idea = SMN_log_drive_ruined
+				}
 			}
 		}
 	}
@@ -319,7 +296,7 @@ SMN_strikes = {
 
 		priority = 10
 
-		icon = generic_intel_bonus
+		icon = GFX_decision_revolt
 
 		available = {
 			hidden_trigger = { always = no }
@@ -351,7 +328,7 @@ SMN_strikes = {
 
 		priority = 10
 
-		icon = generic_intel_bonus
+		icon = GFX_decision_revolt
 
 		available = {
 			hidden_trigger = { always = no }
@@ -382,6 +359,9 @@ SMN_strikes = {
 }
 SMN_unite_baptist = {
 	SMN_invade_wisconsin = {
+
+		icon = GFX_decision_infiltrate_state
+
 		allowed = {
 			original_tag = SMN
 		}
@@ -403,6 +383,9 @@ SMN_unite_baptist = {
 		}
 	}
 	SMN_invade_illinois = {
+
+		icon = GFX_decision_infiltrate_state
+
 		allowed = {
 			original_tag = SMN
 		}
@@ -424,6 +407,7 @@ SMN_unite_baptist = {
 		}
 	}
 	SMN_invade_iowa = {
+		icon = GFX_decision_infiltrate_state
 		allowed = {
 			original_tag = SMN
 		}
@@ -445,6 +429,7 @@ SMN_unite_baptist = {
 		}
 	}
 	SMN_invade_nebraska = {
+		icon = GFX_decision_infiltrate_state
 		allowed = {
 			original_tag = SMN
 		}
@@ -466,6 +451,7 @@ SMN_unite_baptist = {
 		}
 	}
 	SMN_invade_kansas = {
+		icon = GFX_decision_infiltrate_state
 		allowed = {
 			original_tag = SMN
 		}
@@ -489,6 +475,7 @@ SMN_unite_baptist = {
 }
 form_nation_usa_states_category = {
 	form_minnesconsin = {
+		icon = GFX_decision_generic_civil_support
 		ai_will_do = {
 			factor = 20
 		}
@@ -523,6 +510,7 @@ form_nation_usa_states_category = {
 		}
 	}
 	form_progressive_pact = {
+		icon = GFX_decision_generic_civil_support
 		ai_will_do = {
 			factor = 20
 		}
@@ -556,6 +544,7 @@ form_nation_usa_states_category = {
 }
 SMN_funnel_money_to_the_police = {
 	launder_money_to_the_police_department = {
+		icon = GFX_decision_ger_mefo_bills
 		ai_will_do = {
 			factor = 20
 		}
@@ -581,7 +570,7 @@ SMN_funnel_money_to_the_police = {
 		}
 	}
 	give_weapons_to_police = {
-
+		icon = GFX_decision_ger_mefo_bills
 		ai_will_do = {
 			factor = 20
 		}
@@ -634,6 +623,8 @@ SMN_strengthen_unions_decisions = {
 		}
 		
 		modifier = {
+			production_speed_buildings_factor = -0.08
+			industrial_capacity_factory = -0.08
 		}
 		
 		remove_effect = {
@@ -664,6 +655,8 @@ SMN_strengthen_unions_decisions = {
 		}
 		
 		modifier = {
+			production_speed_buildings_factor = -0.08
+			industrial_capacity_factory = -0.08
 		}
 		
 		remove_effect = {
@@ -694,6 +687,8 @@ SMN_strengthen_unions_decisions = {
 		}
 		
 		modifier = {
+			production_speed_buildings_factor = -0.08
+			industrial_capacity_factory = -0.08
 		}
 		
 		remove_effect = {
@@ -724,11 +719,820 @@ SMN_strengthen_unions_decisions = {
 		}
 		
 		modifier = {
+			production_speed_buildings_factor = -0.08
+			industrial_capacity_factory = -0.08
 		}
 		
 		remove_effect = {
 			clr_country_flag = SMN_strengthen_union_flag
 			add_ideas = SMN_standard_health_care
+		}
+	}
+}
+SMN_spread_communism_peasants = {
+	SMN_instigate_peasants_in_SND = {
+
+		icon = decision_generic_nationalism
+
+		allowed = {
+			original_tag = SMN
+		}
+
+		fire_only_once = yes
+
+		available = {
+			NOT = {
+				any_country = {
+					original_tag = SND
+					OR = {
+						has_government = communism
+						has_idea = SMN_agitated_peasants
+					}
+				}
+			}
+		}
+		
+		visible = {
+			original_tag = SMN
+			NOT = {
+				any_country = {
+					original_tag = SND
+					OR = {
+						has_government = communism
+						has_idea = SMN_agitated_peasants
+					}
+				}
+			}
+		}
+
+		cost = 25
+		
+		remove_effect = {
+		}
+
+		complete_effect = {
+			every_country = {
+				limit = {
+					original_tag = SND
+				}
+				add_ideas = SMN_agitated_peasants
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	SMN_instigate_peasants_in_SSD = {
+
+		icon = decision_generic_nationalism
+
+		allowed = {
+			original_tag = SMN
+		}
+
+		fire_only_once = yes
+		
+		available = {
+			NOT = {
+				any_country = {
+					original_tag = SSD
+					OR = {
+						has_government = communism
+						has_idea = SMN_agitated_peasants
+					}
+				}
+			}
+		}
+		
+		visible = {
+			original_tag = SMN
+			NOT = {
+				any_country = {
+					original_tag = SSD
+					OR = {
+						has_government = communism
+						has_idea = SMN_agitated_peasants
+					}
+				}
+			}
+		}
+
+		cost = 25
+		
+		remove_effect = {
+		}
+
+		complete_effect = {
+			every_country = {
+				limit = {
+					original_tag = SSD
+				}
+				add_ideas = SMN_agitated_peasants
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	SMN_instigate_peasants_in_SIA = {
+
+		icon = decision_generic_nationalism
+
+		allowed = {
+			original_tag = SMN
+		}
+
+		fire_only_once = yes
+		
+		available = {
+			NOT = {
+				any_country = {
+					original_tag = SIA
+					OR = {
+						has_government = communism
+						has_idea = SMN_agitated_peasants
+					}
+				}
+			}
+		}
+		
+		visible = {
+			original_tag = SMN
+			NOT = {
+				any_country = {
+					original_tag = SIA
+					OR = {
+						has_government = communism
+						has_idea = SMN_agitated_peasants
+					}
+				}
+			}
+		}
+
+		cost = 25
+		
+		remove_effect = {
+		}
+
+		complete_effect = {
+			every_country = {
+				limit = {
+					original_tag = SIA
+				}
+				add_ideas = SMN_agitated_peasants
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	SMN_instigate_peasants_in_SWI = {
+
+		icon = decision_generic_nationalism
+
+		allowed = {
+			original_tag = SMN
+		}
+
+		fire_only_once = yes
+		
+		available = {
+			NOT = {
+				any_country = {
+					original_tag = SWI
+					OR = {
+						has_government = communism
+						has_idea = SMN_agitated_peasants
+					}
+				}
+			}
+		}
+		
+		visible = {
+			original_tag = SMN
+			NOT = {
+				any_country = {
+					original_tag = SWI
+					OR = {
+						has_government = communism
+						has_idea = SMN_agitated_peasants
+					}
+				}
+			}
+		}
+
+		cost = 25
+		
+		remove_effect = {
+		}
+
+		complete_effect = {
+			every_country = {
+				limit = {
+					original_tag = SWI
+				}
+				add_ideas = SMN_agitated_peasants
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	SMN_instigate_peasants_in_SIL = {
+
+		icon = decision_generic_nationalism
+
+		allowed = {
+			original_tag = SMN
+		}
+
+		fire_only_once = yes
+		
+		available = {
+			NOT = {
+				any_country = {
+					original_tag = SIL
+					OR = {
+						has_government = communism
+						has_idea = SMN_agitated_peasants
+					}
+				}
+			}
+		}
+		
+		visible = {
+			original_tag = SMN
+			NOT = {
+				any_country = {
+					original_tag = SIL
+					OR = {
+						has_government = communism
+						has_idea = SMN_agitated_peasants
+					}
+				}
+			}
+		}
+
+		cost = 25
+		
+		remove_effect = {
+		}
+
+		complete_effect = {
+			every_country = {
+				limit = {
+					original_tag = SIL
+				}
+				add_ideas = SMN_agitated_peasants
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+}
+SMN_spread_communism_workers = {
+
+	SMN_instigate_workers_in_SND = {
+
+		icon = decision_generic_nationalism
+
+		allowed = {
+			original_tag = SMN
+		}
+
+		fire_only_once = yes
+
+		available = {
+			NOT = {
+				any_country = {
+					original_tag = SND
+					OR = {
+						has_government = communism
+						has_idea = SMN_agitated_workers
+					}
+				}
+			}
+		}
+		
+		visible = {
+			original_tag = SMN
+			NOT = {
+				any_country = {
+					original_tag = SND
+					OR = {
+						has_government = communism
+						has_idea = SMN_agitated_workers
+					}
+				}
+			}
+		}
+
+		cost = 25
+		
+		remove_effect = {
+		}
+
+		complete_effect = {
+			every_country = {
+				limit = {
+					original_tag = SND
+				}
+				add_ideas = SMN_agitated_workers
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	SMN_instigate_workers_in_SSD = {
+
+		icon = decision_generic_nationalism
+
+		allowed = {
+			original_tag = SMN
+		}
+
+		fire_only_once = yes
+		
+		available = {
+			NOT = {
+				any_country = {
+					original_tag = SSD
+					OR = {
+						has_government = communism
+						has_idea = SMN_agitated_workers
+					}
+				}
+			}
+		}
+		
+		visible = {
+			original_tag = SMN
+			NOT = {
+				any_country = {
+					original_tag = SSD
+					OR = {
+						has_government = communism
+						has_idea = SMN_agitated_workers
+					}
+				}
+			}
+		}
+
+		cost = 25
+		
+		remove_effect = {
+		}
+
+		complete_effect = {
+			every_country = {
+				limit = {
+					original_tag = SSD
+				}
+				add_ideas = SMN_agitated_workers
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	SMN_instigate_workers_in_SIA = {
+
+		icon = decision_generic_nationalism
+
+		allowed = {
+			original_tag = SMN
+		}
+
+		fire_only_once = yes
+		
+		available = {
+			NOT = {
+				any_country = {
+					original_tag = SIA
+					OR = {
+						has_government = communism
+						has_idea = SMN_agitated_workers
+					}
+				}
+			}
+		}
+		
+		visible = {
+			original_tag = SMN
+			NOT = {
+				any_country = {
+					original_tag = SIA
+					OR = {
+						has_government = communism
+						has_idea = SMN_agitated_workers
+					}
+				}
+			}
+		}
+
+		cost = 25
+		
+		remove_effect = {
+		}
+
+		complete_effect = {
+			every_country = {
+				limit = {
+					original_tag = SIA
+				}
+				add_ideas = SMN_agitated_workers
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	SMN_instigate_workers_in_SWI = {
+
+		icon = decision_generic_nationalism
+
+		allowed = {
+			original_tag = SMN
+		}
+
+		fire_only_once = yes
+		
+		available = {
+			NOT = {
+				any_country = {
+					original_tag = SWI
+					OR = {
+						has_government = communism
+						has_idea = SMN_agitated_workers
+					}
+				}
+			}
+		}
+		
+		visible = {
+			original_tag = SMN
+			NOT = {
+				any_country = {
+					original_tag = SWI
+					OR = {
+						has_government = communism
+						has_idea = SMN_agitated_workers
+					}
+				}
+			}
+		}
+
+		cost = 25
+		
+		remove_effect = {
+		}
+
+		complete_effect = {
+			every_country = {
+				limit = {
+					original_tag = SWI
+				}
+				add_ideas = SMN_agitated_workers
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	SMN_instigate_workers_in_SIL = {
+
+		icon = decision_generic_nationalism
+
+		allowed = {
+			original_tag = SMN
+		}
+
+		fire_only_once = yes
+		
+		available = {
+			NOT = {
+				any_country = {
+					original_tag = SIL
+					OR = {
+						has_government = communism
+						has_idea = SMN_agitated_workers
+					}
+				}
+			}
+		}
+		
+		visible = {
+			original_tag = SMN
+			NOT = {
+				any_country = {
+					original_tag = SIL
+					OR = {
+						has_government = communism
+						has_idea = SMN_agitated_workers
+					}
+				}
+			}
+		}
+
+		cost = 25
+		
+		remove_effect = {
+		}
+
+		complete_effect = {
+			every_country = {
+				limit = {
+					original_tag = SIL
+				}
+				add_ideas = SMN_agitated_workers
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+}
+SMN_spread_communism_collaborators = {
+
+	SMN_instigate_collaborators_in_SND = {
+
+		icon = decision_generic_nationalism
+
+		allowed = {
+			original_tag = SMN
+		}
+
+		fire_only_once = yes
+
+		available = {
+			NOT = {
+				any_country = {
+					original_tag = SND
+					OR = {
+						has_government = communism
+						has_idea = SMN_communist_collaborators
+					}
+				}
+			}
+		}
+		
+		visible = {
+			original_tag = SMN
+			NOT = {
+				any_country = {
+					original_tag = SND
+					OR = {
+						has_government = communism
+						has_idea = SMN_communist_collaborators
+					}
+				}
+			}
+		}
+
+		cost = 25
+		
+		remove_effect = {
+		}
+
+		complete_effect = {
+			every_country = {
+				limit = {
+					original_tag = SND
+				}
+				add_ideas = SMN_communist_collaborators
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SMN_instigate_collaborators_in_SSD = {
+
+		icon = decision_generic_nationalism
+
+		allowed = {
+			original_tag = SMN
+		}
+
+		fire_only_once = yes
+		
+		available = {
+			NOT = {
+				any_country = {
+					original_tag = SSD
+					OR = {
+						has_government = communism
+						has_idea = SMN_communist_collaborators
+					}
+				}
+			}
+		}
+		
+		visible = {
+			original_tag = SMN
+			NOT = {
+				any_country = {
+					original_tag = SSD
+					OR = {
+						has_government = communism
+						has_idea = SMN_communist_collaborators
+					}
+				}
+			}
+		}
+
+		cost = 25
+		
+		remove_effect = {
+		}
+
+		complete_effect = {
+			every_country = {
+				limit = {
+					original_tag = SSD
+				}
+				add_ideas = SMN_communist_collaborators
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SMN_instigate_collaborators_in_SIA = {
+
+		icon = decision_generic_nationalism
+
+		allowed = {
+			original_tag = SMN
+		}
+
+		fire_only_once = yes
+		
+		available = {
+			NOT = {
+				any_country = {
+					original_tag = SIA
+					OR = {
+						has_government = communism
+						has_idea = SMN_communist_collaborators
+					}
+				}
+			}
+		}
+		
+		visible = {
+			original_tag = SMN
+			NOT = {
+				any_country = {
+					original_tag = SIA
+					OR = {
+						has_government = communism
+						has_idea = SMN_communist_collaborators
+					}
+				}
+			}
+		}
+
+		cost = 25
+		
+		remove_effect = {
+		}
+
+		complete_effect = {
+			every_country = {
+				limit = {
+					original_tag = SIA
+				}
+				add_ideas = SMN_communist_collaborators
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SMN_instigate_collaborators_in_SWI = {
+
+		icon = decision_generic_nationalism
+
+		allowed = {
+			original_tag = SMN
+		}
+
+		fire_only_once = yes
+		
+		available = {
+			NOT = {
+				any_country = {
+					original_tag = SWI
+					OR = {
+						has_government = communism
+						has_idea = SMN_communist_collaborators
+					}
+				}
+			}
+		}
+		
+		visible = {
+			original_tag = SMN
+			NOT = {
+				any_country = {
+					original_tag = SWI
+					OR = {
+						has_government = communism
+						has_idea = SMN_communist_collaborators
+					}
+				}
+			}
+		}
+
+		cost = 25
+		
+		remove_effect = {
+		}
+
+		complete_effect = {
+			every_country = {
+				limit = {
+					original_tag = SWI
+				}
+				add_ideas = SMN_communist_collaborators
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
+		}
+	}
+
+	SMN_instigate_collaborators_in_SIL = {
+
+		icon = decision_generic_nationalism
+
+		allowed = {
+			original_tag = SMN
+		}
+
+		fire_only_once = yes
+		
+		available = {
+			NOT = {
+				any_country = {
+					original_tag = SIL
+					OR = {
+						has_government = communism
+						has_idea = SMN_communist_collaborators
+					}
+				}
+			}
+		}
+		
+		visible = {
+			original_tag = SMN
+			NOT = {
+				any_country = {
+					original_tag = SIL
+					OR = {
+						has_government = communism
+						has_idea = SMN_communist_collaborators
+					}
+				}
+			}
+		}
+
+		cost = 25
+		
+		remove_effect = {
+		}
+
+		complete_effect = {
+			every_country = {
+				limit = {
+					original_tag = SIL
+				}
+				add_ideas = SMN_communist_collaborators
+			}
+		}
+
+		ai_will_do = {
+			factor = 100
 		}
 	}
 }

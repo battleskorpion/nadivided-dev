@@ -4,7 +4,7 @@ country_event = {
     id = minnesota.1
     title = minnesota.1.t
     desc = minnesota.1.d
-    picture = x
+    picture = GFX_report_event_generic_sign_treaty1
 
     fire_only_once = yes
 
@@ -23,35 +23,35 @@ country_event = {
         promote_character = SMN_floyd_olson_cancer_now
     }
 }
-country_event = { 
-    id = minnesota.2
-    title = minnesota.2.t
-    desc = minnesota.2.d
-    picture = GFX_gfx_event_pictures_redwinedeath
-
-    fire_only_once = no
-    is_triggered_only = yes
-
-    immediate = {log = "[GetDateText]: [Root.GetName]: event minnesota.2"}
-
-    option = {
-       name = minnesota.2.a
-       SMN = {
-        annex_country = {
-            target = ROOT
-        }
-       }
-    }
-    option = {
-        name = minnesota.2.b
-        SMN = {
-            create_wargoal = {
-                target = ROOT
-                type = annex_everything
-            }
-        }
-    }
-}
+#country_event = { 
+#    id = minnesota.2
+#    title = minnesota.2.t
+#    desc = minnesota.2.d
+#    picture = GFX_gfx_event_pictures_redwinedeath
+#
+#    fire_only_once = no
+#    is_triggered_only = yes
+#
+#    immediate = {log = "[GetDateText]: [Root.GetName]: event minnesota.2"}
+#
+#    option = {
+#       name = minnesota.2.a
+#       SMN = {
+#        annex_country = {
+#            target = ROOT
+#        }
+#       }
+#    }
+#    option = {
+#        name = minnesota.2.b
+#        SMN = {
+#            create_wargoal = {
+#                target = ROOT
+#                type = annex_everything
+#            }
+#        }
+#    }
+#}
 ###THE OCONNOR AGREEMENT
 country_event = { 
     id = minnesota.3
@@ -78,9 +78,9 @@ country_event = {
        #country_event = minnesota.4
        add_stability = 0.05
        swap_ideas = {
-        add_idea = SMN_SPPD
         remove_idea = SMN_corrupt_police
-       }
+        add_idea = SMN_SPPD_idea
+    }
        clr_country_flag = SMN_has_oconnor_agreement
     }
     ###THE PEOPLE ARE DISPLEASED
@@ -151,7 +151,7 @@ country_event = {
     id = minnesota.6
     title = minnesota.6.t
     desc = minnesota.6.d
-    picture = GFX_
+    picture = GFX_report_event_generic_sign_treaty1
 
     fire_only_once = yes
     is_triggered_only = yes
@@ -174,7 +174,7 @@ country_event = {
 			}
 		}
     }
-    ###THE PEOPLE ARE DISPLEASED
+    ###HAROLD BENSON BECOMES PRESIDENT
     option = {
         name = minnesota.6.b
         set_politics = {
@@ -275,6 +275,7 @@ country_event = {
         add_ideas = strikes_1
         add_stability = -0.10
         set_country_flag = SMN_teamsters_have_striked_big
+        set_country_flag = SMN_teamsters_have_striked
         custom_effect_tooltip = ANTON_DIES_TT
         hidden_effect = {
             retire_character = SMN_anton_j_rockne
@@ -305,4 +306,138 @@ country_event = {
         add_ideas = SMN_martial_law_idea
     }
     ###THE PEOPLE ARE DISPLEASED
+}
+# MINNESOTA SENDS ROOT to demand alignment
+country_event = {
+	id = minnesota.11
+	title = "Minnesota Demands Our Alignment"
+	desc = "The State of Minnesota has been influencing our politics, we knew this day would come, shall we become their puppet, align with them, or anger them?"
+	picture = GFX_report_event_journalists_speech
+	
+	is_triggered_only = yes
+	
+	option = { #become their puppet
+		name = "We Surrender"
+		ai_chance = {
+			factor = 25
+		}
+		FROM = { country_event = minnesota.12 }
+	}
+
+	option = { #change government to Romanian type, enter alliance
+		name = "We shall align, but maintain our soverignty"
+		ai_chance = {
+			factor = 25
+		}
+		FROM = { country_event = minnesota.13 }
+	}
+
+	option = { #no deals
+		name = DOD_romania.50.c
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 2
+				ROM = {
+					is_in_faction = no
+				}
+			}
+			modifier = {
+				factor = 10
+				is_in_faction = yes
+			}
+		}
+		FROM = { country_event = minnesota.14 }	
+	}
+}
+#Minnesota has FROM become their puppet
+country_event = {
+	id = minnesota.12
+	title = "They Accepted!"
+	desc = "They are now under our union. Welcome to the Commune"
+	picture = GFX_report_event_generic_sign_treaty2
+	
+	is_triggered_only = yes
+
+	option = { #cool
+		name = "Cool"
+		puppet = FROM
+	}
+
+}
+
+#FROM OFFERS ALIGNMENT
+country_event = {
+	id = minnesota.13
+	title = "They have aligned themselves to our politics"
+	desc = "We have grown our union to further unite the midwest"
+	picture = GFX_report_event_hungary_parliament
+	
+	is_triggered_only = yes
+
+	option = { #cool
+		name = "Awesome"
+		ai_chance = {
+			factor = 80
+		}
+		if = {
+			limit = { is_faction_leader = yes }
+			add_to_faction = FROM
+		}
+		if = {
+			limit = {
+				is_in_faction = no
+			}
+			set_rule = { can_create_factions = yes }
+			create_faction = TROSKYIST_FACTION
+			add_to_faction = FROM
+		}
+	}
+
+	option = { #war
+		name = "It seems we have no other choice but to liberate the workers"
+		ai_chance = {
+			factor = 20
+		}
+		create_wargoal = {
+			type = puppet_wargoal_focus
+			target = FROM
+		}
+	}
+}
+
+#HUN refuses
+country_event = {
+	id = minnesota.14
+	title = "They have Refused alignment"
+	desc = "How dare they refuse to unite!"
+	picture = GFX_report_event_hungarian_soldiers
+	
+	is_triggered_only = yes
+
+	option = { #cool
+		name = "We cannot interfere"
+		ai_chance = {
+			factor = 10
+			modifier = {
+				strength_ratio = { tag = HUN ratio < 0.5 }
+				factor = 7
+			}
+		}
+	}
+
+	option = { #war
+		name = "Liberate the workers"
+		ai_chance = {
+			factor = 90
+			modifier = {
+				has_war = yes
+				factor = 0
+			}
+		}
+		create_wargoal = {
+			type = puppet_wargoal_focus
+			target = FROM
+		}
+	}
 }
