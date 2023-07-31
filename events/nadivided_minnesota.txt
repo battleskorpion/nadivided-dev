@@ -315,7 +315,7 @@ country_event = {
 	picture = GFX_report_event_journalists_speech
 	
 	is_triggered_only = yes
-	
+    fire_only_once = no
 	option = { #become their puppet
 		name = "We Surrender"
 		ai_chance = {
@@ -374,7 +374,7 @@ country_event = {
 	picture = GFX_report_event_hungary_parliament
 	
 	is_triggered_only = yes
-
+    fire_only_once = no
 	option = { #cool
 		name = "Awesome"
 		ai_chance = {
@@ -414,7 +414,7 @@ country_event = {
 	picture = GFX_report_event_hungarian_soldiers
 	
 	is_triggered_only = yes
-
+    fire_only_once = no
 	option = { #cool
 		name = "We cannot interfere"
 		ai_chance = {
@@ -437,6 +437,121 @@ country_event = {
 		}
 		create_wargoal = {
 			type = puppet_wargoal_focus
+			target = FROM
+		}
+	}
+}
+country_event = {
+	id = minnesota.15
+	title = "Minnesota Demands Their Former Territory"
+	desc = "After some radical changes in their government, minnesota has claimed our eastern half, all the way to the Missouri River. This would be devasting, but we may have to accept their demands in order to survive"
+	picture = GFX_report_event_journalists_speech
+	
+	is_triggered_only = yes
+    fire_only_once = no
+	
+	option = { #gives wargoal event
+		name = "Never"
+		ai_chance = {
+			factor = 0
+		}
+		SMN = { country_event = minnesota.16 }
+	}
+
+	option = { #gives in to minnesota for SSD
+		name = "We Surrender"
+        trigger = {
+            original_tag = SSD
+        }
+		ai_chance = {
+			factor = 75
+		}
+        SSD = {
+            transfer_state = 214
+            transfer_state = 749
+            transfer_state = 847
+            transfer_state = 846
+            transfer_state = 845
+        }
+        SSD = {
+            if = {
+                limit = {
+                    AND = {
+                        has_full_control_of_state = 269
+                        has_full_control_of_state = 167
+                    }
+                }
+                transfer_state = 269
+                transfer_state = 167
+            }
+        }
+	}
+
+    option = { #gives in to minnesota for SND
+        name = "We accept"
+        trigger = {
+            original_tag = SND
+        }
+        ai_chance = {
+            factor = 75
+        }
+        SND = {
+            transfer_state = 269
+            transfer_state = 167
+        }
+        SND = {
+            if = {
+                limit = {
+                    and = {
+                        has_full_control_of_state = 214
+                        has_full_control_of_state = 749
+                        has_full_control_of_state = 847
+                        has_full_control_of_state = 846
+                        has_full_control_of_state = 845
+                    }
+                }
+                transfer_state = 214
+                transfer_state = 749
+                transfer_state = 847
+                transfer_state = 846
+                transfer_state = 845
+            }
+
+        }
+    }
+}
+#SND OR SSD REFUSES TO GIVE TERRITORY
+country_event = {
+	id = minnesota.16
+	title = "They have denied our claim"
+	desc = "The dakotas have denied our claim to our former territories"
+	picture = GFX_report_event_hungarian_soldiers
+	
+	is_triggered_only = yes
+    fire_only_once = no
+
+	option = { #cool
+		name = "We cannot interfere"
+		ai_chance = {
+			factor = 10
+			modifier = {
+				strength_ratio = { tag = HUN ratio < 0.5 }
+				factor = 7
+			}
+		}
+	}
+
+	option = { #war
+		name = "We shall take it by force then"
+		ai_chance = {
+			factor = 90
+			modifier = {
+				has_war = yes
+				factor = 0
+			}
+		}
+		create_wargoal = {
+			type = annex_everything
 			target = FROM
 		}
 	}
