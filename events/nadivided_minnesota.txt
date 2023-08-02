@@ -2,8 +2,8 @@ add_namespace = minnesota
 
 country_event = { 
     id = minnesota.1
-    title = minnesota.1.t
-    desc = minnesota.1.d
+    title = "Floyd Olson Ailing Health"
+    desc = "Floyd B. Olson, our beloved govenor has been prescribed stomach cancer, he has fallen quite ill and has been told he does not have long left to live."
     picture = GFX_report_event_generic_sign_treaty1
 
     fire_only_once = yes
@@ -21,43 +21,44 @@ country_event = {
             factor = 100
         }
         promote_character = SMN_floyd_olson_cancer_now
+        country_event = {
+            id =minnesota.2
+            days = 30
+        }
     }
 }
-#country_event = { 
-#    id = minnesota.2
-#    title = minnesota.2.t
-#    desc = minnesota.2.d
-#    picture = GFX_gfx_event_pictures_redwinedeath
-#
-#    fire_only_once = no
-#    is_triggered_only = yes
-#
-#    immediate = {log = "[GetDateText]: [Root.GetName]: event minnesota.2"}
-#
-#    option = {
-#       name = minnesota.2.a
-#       SMN = {
-#        annex_country = {
-#            target = ROOT
-#        }
-#       }
-#    }
-#    option = {
-#        name = minnesota.2.b
-#        SMN = {
-#            create_wargoal = {
-#                target = ROOT
-#                type = annex_everything
-#            }
-#        }
-#    }
-#}
+country_event = { 
+    id = minnesota.2
+    title = "Order of Succession"
+    desc = "The Order of Succession has been started following the Lt.Govenor-Hjalmar Peterson. May he serve well."
+    picture = GFX_report_event_generic_handshake
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    immediate = {log = "[GetDateText]: [Root.GetName]: event minnesota.2"}
+
+    option = {
+        name = "May he continue his predecessor's polcies"
+        add_country_leader_role = {
+			character = SMN_hjalmar_peterson
+			promote_leader = yes
+			country_leader = {
+				ideology = roosevelt_progressivism
+				expire = "1965.1.1.1"
+				traits = {
+                    resolute_social_democrat
+				}
+			}
+		}
+    }
+}
 ###THE OCONNOR AGREEMENT
 country_event = { 
     id = minnesota.3
     title = minnesota.3.t
     desc = minnesota.3.d
-    picture = GFX_worker_strike
+    picture = GFX_report_event_generic_read_write
 
     fire_only_once = yes
 
@@ -151,7 +152,7 @@ country_event = {
     id = minnesota.6
     title = minnesota.6.t
     desc = minnesota.6.d
-    picture = GFX_report_event_generic_sign_treaty1
+    picture = GFX_report_event_election_vote
 
     fire_only_once = yes
     is_triggered_only = yes
@@ -170,6 +171,7 @@ country_event = {
 				ideology = roosevelt_progressivism
 				expire = "1965.1.1.1"
 				traits = {
+                    dealbroker
 				}
 			}
 		}
@@ -283,19 +285,13 @@ country_event = {
     }
     ###THE PEOPLE ARE DISPLEASED
 }
-####OLSON DECLARES MARHSALL LAW
+####OLSON DECLARES MARTIAL LAW
 country_event = { 
     id = minnesota.10
-    title = "Olson Declares Marshal Law"
+    title = "Olson Declares Martial Law"
     desc = "Olson has declared a state of emergency in the news of upcoming strikes, reports have come in that it may be worse than the 1934 trucker riots not only two years ago."
-    picture = GFX_worker_strike
+    picture = GFX_report_event_czech_soldiers_01
 
-    trigger = {
-        has_country_flag = {
-            flag = SMN_incoming_strikes_flag
-            days > 150
-        }
-    }
     fire_only_once = yes
     is_triggered_only = yes
 
@@ -304,6 +300,10 @@ country_event = {
     option = {
         name = "It seems that the strikes from 1934 will happen all over again..."
         add_ideas = SMN_martial_law_idea
+        add_days_mission_timeout = {
+            mission = SMN_1938_strikes
+            days = 50
+        }
     }
     ###THE PEOPLE ARE DISPLEASED
 }
@@ -315,7 +315,7 @@ country_event = {
 	picture = GFX_report_event_journalists_speech
 	
 	is_triggered_only = yes
-	
+    fire_only_once = no
 	option = { #become their puppet
 		name = "We Surrender"
 		ai_chance = {
@@ -333,7 +333,7 @@ country_event = {
 	}
 
 	option = { #no deals
-		name = DOD_romania.50.c
+		name = "No Deal"
 		ai_chance = {
 			factor = 50
 			modifier = {
@@ -374,7 +374,7 @@ country_event = {
 	picture = GFX_report_event_hungary_parliament
 	
 	is_triggered_only = yes
-
+    fire_only_once = no
 	option = { #cool
 		name = "Awesome"
 		ai_chance = {
@@ -414,7 +414,7 @@ country_event = {
 	picture = GFX_report_event_hungarian_soldiers
 	
 	is_triggered_only = yes
-
+    fire_only_once = no
 	option = { #cool
 		name = "We cannot interfere"
 		ai_chance = {
@@ -440,4 +440,155 @@ country_event = {
 			target = FROM
 		}
 	}
+}
+country_event = {
+	id = minnesota.15
+	title = "Minnesota Demands Their Former Territory"
+	desc = "After some radical changes in their government, minnesota has claimed our eastern half, all the way to the Missouri River. This would be devasting, but we may have to accept their demands in order to survive"
+	picture = GFX_report_event_journalists_speech
+	
+	is_triggered_only = yes
+    fire_only_once = no
+	
+	option = { #gives wargoal event
+		name = "Never"
+		ai_chance = {
+			factor = 0
+		}
+		SMN = { country_event = minnesota.16 }
+	}
+
+	option = { #gives in to minnesota for SSD
+		name = "We Surrender"
+        trigger = {
+            has_country_flag = SSD_flag
+        }
+		ai_chance = {
+			factor = 100
+		}
+        SMN = { country_event = minnesota.17 }
+        every_state = {
+            limit = {
+                #is_core_of = SSD
+                is_owned_by = SSD
+                is_claimed_by = SMN
+            }
+            SMN = {
+                transfer_state = PREV
+            }
+        }
+	}
+
+    option = { #gives in to minnesota for SND
+        name = "We accept"
+        trigger = {
+            has_country_flag = SND_flag
+        }
+        ai_chance = {
+            factor = 100
+        }
+        SMN = { country_event = minnesota.17 }
+        every_state = {
+            limit = {
+                #is_core_of = SND
+                is_owned_by = SND
+                is_claimed_by = SMN
+            }
+            SMN = {
+                transfer_state = PREV
+            }
+        }
+    }
+}
+#SND OR SSD REFUSES TO GIVE TERRITORY
+country_event = {
+	id = minnesota.16
+	title = "They have denied our claim"
+	desc = "The dakotas have denied our claim to our former territories"
+	picture = GFX_report_event_hungarian_soldiers
+	
+	is_triggered_only = yes
+    fire_only_once = no
+
+	option = { #cool
+		name = "We cannot interfere"
+		ai_chance = {
+			factor = 10
+			modifier = {
+				strength_ratio = { tag = HUN ratio < 0.5 }
+				factor = 7
+			}
+		}
+	}
+
+	option = { #war
+		name = "We shall take it by force then"
+		ai_chance = {
+			factor = 90
+			modifier = {
+				has_war = yes
+				factor = 0
+			}
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = FROM
+		}
+	}
+}
+#SND OR SSD ACCEPT
+country_event = {
+	id = minnesota.17
+	title = "They Accepted!"
+	desc = "The dakotas have accepted our claim to our former territories"
+	picture = GFX_report_event_hungarian_soldiers
+	
+	is_triggered_only = yes
+    fire_only_once = no
+
+	option = { #cool
+		name = "We Grow Stronger"
+		ai_chance = {
+			factor = 10
+			modifier = {
+				strength_ratio = { tag = HUN ratio < 0.5 }
+				factor = 7
+			}
+		}
+	}
+}
+############ THE MOB
+####################
+ add_namespace = mobbesota
+
+# THE SYNDICATE OVER MINNESOTA
+ news_event = {
+	id = mobbesota.1
+	title = {
+		text = mobbesota.1.t
+	}
+	desc = {
+		text = mobbesota.1.d
+	}
+	picture = GFX_minnesota_mob_coup
+	
+	trigger = {
+		tag = SMN
+		#has_country_flag = SMN_mob_takeover
+		has_completed_focus = SMN_the_mob_takeover
+	}
+	
+	is_triggered_only = yes
+    fire_only_once = yes
+
+	option = {
+		name = mobbesota.1.a
+		ai_chance = {
+			factor = 100
+			
+		}
+	 
+		
+	}
+
 }
