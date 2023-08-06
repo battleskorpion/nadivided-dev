@@ -7,7 +7,7 @@ focus_tree = {
 			tag = SOH
 		} 
 	} 
-continuous_focus_position = { x = 0001 y = 1000 }
+continuous_focus_position = { x = 200 y = 1400 }
 # FOCUS TEMPLATE COPY + PASTE
 #
 # OCTAMAN'S CODE (NO STEALING LOLOLOL)																																															#stfu octOman
@@ -48,595 +48,14 @@ continuous_focus_position = { x = 0001 y = 1000 }
 #	}
 #### NOTES ####
 #REMEMBER TO SET TOLEDO AS A DEMILITARIZED ZONE!!!!#
-	#------------------------------------------------------------------#
-	#	 NAVY SECTION  yeah i know, naval ohio, watch out skorpion.	   #
-	#------------------------------------------------------------------#
-	focus = {
-		id = SOH_naval_ohio
-		icon = GFX_goal_generic_navy_doctrines_tactics
-		x = 17
-		y = 0
-		cost = 7.2
-		ai_will_do = {
-			factor = 1
-		}
-		available = {
-
-		}
-		bypass = {
-		
-		}
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-		completion_reward = {
-			navy_experience = 100
-			set_technology = {
-				early_destroyer = 1
-			}
-			set_technology = {
-				early_submarine = 1
-			}
-			set_technology = {
-				basic_battery = 1
-			}
-		}
-	}
-	focus = {
-		id = SOH_form_the_GLNDF
-		icon = GFX_goal_generic_build_navy
-		prerequisite = { focus = SOH_naval_ohio }
-		x = 0
-		y = 1
-		relative_position_id = SOH_naval_ohio
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		available = {
-
-		}
-		bypass = {
-
-		}
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-		search_filters = { FOCUS_FILTER_RESEARCH }
-		completion_reward = {
-			navy_experience = 50
-			random_owned_controlled_state = {
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = dockyard
-					level = 3
-					instant_build = yes
-				}
-			}
-		}
-	}
-	focus = {
-		id = SOH_more_dockyards
-		icon = GFX_goal_generic_construct_naval_dockyard
-		prerequisite = { focus = SOH_form_the_GLNDF }
-		x = 0
-		y = 2
-		relative_position_id = SOH_naval_ohio
-		cost = 7.2
-		ai_will_do = {
-			factor = 25
-		}
-		available = {
-
-		}
-		bypass = {
-
-		}
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = yes
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-		completion_reward = {
-			random_owned_controlled_state = {
-				limit = {
-					is_coastal = yes
-					free_building_slots = {
-						building = dockyard
-						size > 1
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = dockyard
-					level = 2
-					instant_build = yes
-				}
-				set_state_flag = SOH_more_dockyards
-			}
-			
-		}
-	}
-	focus = {
-		id = SOH_coastal_forts
-		icon = GFX_goal_generic_fortify_city
-		prerequisite = { focus = SOH_form_the_GLNDF }
-		x = 2
-		y = 2
-		relative_position_id = SOH_naval_ohio
-		cost = 7.2
-		ai_will_do = {
-			factor = 25
-		}
-		available = {
-
-		}
-		bypass = {
-			NOT = {
-				controls_state = 538
-			}
-			NOT = {
-				controls_state = 540
-			}
-			NOT = {
-				controls_state = 48
-			}
-			NOT = {
-				controls_state = 39
-			}
-		}
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-		completion_reward = {
-			every_owned_state = {
-				limit = {
-					is_controlled_by = ROOT
-					OR = {
-						state = 39
-						state = 48
-					}
-				}
-				add_building_construction = {
-					type = coastal_bunker
-					province = {
-						all_provinces = yes
-						limit_to_coastal = yes
-					}
-					level = 4
-					instant_build = yes
-				}
-				#Extra fort on naval bases
-				add_building_construction = {
-					type = bunker
-					province = {
-						all_provinces = yes
-						limit_to_naval_base = yes
-					}
-					level = 4
-					instant_build = yes
-				}
-				add_building_construction = {
-					type = coastal_bunker
-					province = {
-						all_provinces = yes
-						limit_to_naval_base = yes
-					}
-					level = 4
-					instant_build = yes
-				}
-			}
-		}
-	}
-	focus = {
-		id = SOH_destroyers
-		icon = GFX_goal_generic_navy_anti_submarine
-		prerequisite = { focus = SOH_more_dockyards  }
-		mutually_exclusive = { focus = SOH_submarines }
-		x = -2
-		y = 3
-		relative_position_id = SOH_naval_ohio
-		cost = 7.2
-		ai_will_do = {
-			factor = 20
-		}
-		available = {
-
-		}
-		bypass = {
-
-		}
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-		search_filters = { FOCUS_FILTER_RESEARCH }
-		completion_reward = {
-			add_tech_bonus = {
-				name = SOH_destroyer_bonus
-				bonus = 1.0
-				ahead_reduction = 2
-				uses = 1
-				category = dd_tech
-			}
-		}
-	}
-	focus = {
-		id = SOH_submarines
-		icon = GFX_goal_generic_navy_submarine
-		prerequisite = { focus = SOH_more_dockyards }
-		mutually_exclusive = { focus = SOH_destroyers }
-		x = 0
-		y = 3
-		relative_position_id = SOH_naval_ohio
-		cost = 7.2
-		ai_will_do = {
-			factor = 2
-		}
-		available = {
-
-		}
-		bypass = {
-
-		}
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-		search_filters = { FOCUS_FILTER_RESEARCH }
-		completion_reward = {
-			add_tech_bonus = {
-				name = SOH_submarine_bonus
-				bonus = 1.0
-				ahead_reduction = 2
-				uses = 1
-				category = ss_tech
-			}
-		}
-	}
-	focus = {
-		id = SOH_light_cruisers
-		icon = GFX_goal_generic_navy_cruiser
-		prerequisite = { focus = SOH_destroyers focus = SOH_submarines }
-		x = -2
-		y = 4
-		relative_position_id = SOH_naval_ohio
-		cost = 7.2
-		ai_will_do = {
-			factor = 1
-		}
-		available = {
-
-		}
-		bypass = {
-
-		}
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-		search_filters = { FOCUS_FILTER_RESEARCH }
-		completion_reward = {
-			add_tech_bonus = {
-				name = SOH_light_cruisers
-				bonus = 1.0
-				ahead_reduction = 2
-				uses = 1
-				category = cl_tech
-			}
-		}
-	}
-	focus = {
-		id = SOH_big_ships
-		icon = GFX_goal_generic_navy_battleship
-		prerequisite = { focus = SOH_destroyers focus = SOH_submarines }
-		x = 0
-		y = 4
-		relative_position_id = SOH_naval_ohio
-		cost = 7.2
-		ai_will_do = {
-			factor = 1
-		}
-		available = {
-
-		}
-		bypass = {
-
-		}
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-		search_filters = { FOCUS_FILTER_RESEARCH }
-		completion_reward = {
-			add_tech_bonus = {
-				name = SOH_capital_ships
-				bonus = 1.0
-				ahead_reduction = 2
-				uses = 1
-				category = bb_tech
-				category = cv_tech
-			}
-		}
-	}
-	################################################
-	############################if anyone ever goes naval ohio i will shit myself ######################
-	####### AIR SECTION  hell yeah airplanes VROOOOOOOM ########
-	############################
-	focus = {
-		id = SOH_buy_planes
-		icon = GFX_goal_generic_air_doctrine
-		x = 22
-		y = 0
-		cost = 5
-		ai_will_do = {
-			factor = 1
-		}
-		available = {
-
-		}
-		bypass = {
-
-		}
-		ai_will_do = { 
-			factor = 320
-		} 
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = yes
-		completion_reward = {
-			add_tech_bonus = {
-					bonus = 0.5
-					uses = 2
-					category = light_air
-				}
-			
-		}
-	}
-	focus = {
-		id = SOH_form_GLAF
-		icon = GFX_goal_generic_build_airforce
-		prerequisite = { focus = SOH_buy_planes }
-		x = 0
-		y = 1
-		relative_position_id = SOH_buy_planes
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		available = {
-
-		}
-		bypass = {
-
-		}
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = no
-		search_filters = { FOCUS_FILTER_RESEARCH }
-		complete_tooltip = {
-			air_experience = 25
-			random_state = {				
-				limit = {
-					has_state_flag = SOH_form_GLAF
-				}
-				add_building_construction = {
-					type = air_base
-					level = 2
-					instant_build = yes
-				}
-			}
-			add_doctrine_cost_reduction = {
-				name = SOH_form_GLAF
-				cost_reduction = 0.5
-				uses = 1
-				category = air_doctrine
-			}
-		}
-		completion_reward = {
-			air_experience = 25
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = air_base
-						size > 1
-					}
-				}
-				add_building_construction = {
-					type = air_base
-					level = 2
-					instant_build = yes
-				}
-				set_state_flag = SOH_form_GLAF
-			}
-			add_doctrine_cost_reduction = {
-				name = SOH_form_GLAF
-				cost_reduction = 0.5
-				uses = 1
-				category = air_doctrine
-			}
-		}
-	}
-	focus = {
-		id = SOH_fighters
-		icon = GFX_goal_generic_air_fighter2
-		prerequisite = { focus = SOH_form_GLAF }
-		mutually_exclusive = { focus = SOH_bombers }
-		x = -1
-		y = 2
-		relative_position_id = SOH_buy_planes
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-		available = {
-
-		}
-		bypass = {
-
-		}
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = yes
-		search_filters = { FOCUS_FILTER_RESEARCH }
-		completion_reward = {
-			add_tech_bonus = {
-				name = SOH_fighters
-				bonus = 1.0
-				uses = 1
-				category = light_fighter
-			}
-		}
-	}
-	focus = {
-		id = SOH_bombers
-		icon = GFX_goal_generic_occupy_start_war
-		prerequisite = { focus = SOH_form_GLAF }
-		mutually_exclusive = { focus = SOH_fighters }
-		x = 1
-		y = 2
-		relative_position_id = SOH_buy_planes
-		cost = 10
-		ai_will_do = {
-			factor = 2
-		}
-		available = {
-
-		}
-		bypass = {
-
-		}
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = yes
-		search_filters = { FOCUS_FILTER_RESEARCH }
-		completion_reward = {
-			add_tech_bonus = {
-				name = SOH_bombers
-				bonus = 1.00
-				uses = 2
-				category = cat_strategic_bomber
-				category = tactical_bomber
-			}
-		}
-	}
-	focus = {
-		id = SOH_navbombers
-		icon = GFX_goal_generic_air_naval_bomber
-		prerequisite = { focus = SOH_fighters focus = SOH_coastal_forts }
-		x = -3
-		y = 3
-		relative_position_id = SOH_buy_planes
-		cost = 7.2
-		ai_will_do = {
-			factor = 25
-		}
-		available = {
-
-		}
-		bypass = {
-
-		}
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = yes
-		search_filters = { FOCUS_FILTER_RESEARCH }
-		completion_reward = {
-			add_tech_bonus = {
-				name = SOH_navbombers
-				bonus = 1.00
-				uses = 2
-				category = naval_air
-			}
-		}
-	}
-	focus = {
-		id = SOH_better_fighters
-		icon = GFX_goal_generic_air_fighter
-		prerequisite = { focus = SOH_fighters focus = SOH_bombers }
-		mutually_exclusive = { focus = SOH_better_bombers }
-		x = -1
-		y = 3
-		relative_position_id = SOH_buy_planes
-		cost = 10
-		ai_will_do = {
-			factor = 25
-		}
-		available = {
-
-		}
-		bypass = {
-
-		}
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = yes
-		search_filters = { FOCUS_FILTER_RESEARCH }
-		completion_reward = {
-			add_tech_bonus = {
-				name = SOH_better_fighters
-				bonus = 1.0
-				uses = 1
-				technology = early_fighter
-				technology = fighter1
-				technology = fighter2
-				technology = fighter3
-				category = cat_heavy_fighter
-			}
-		}
-	}
-	focus = {
-		id = SOH_better_bombers
-		icon = GFX_goal_generic_air_bomber
-		prerequisite = { focus = SOH_fighters focus = SOH_bombers }
-		mutually_exclusive = { focus = SOH_better_fighters }
-		x = 1
-		y = 3
-		relative_position_id = SOH_buy_planes
-		cost = 10
-		ai_will_do = {
-			factor = 2
-		}
-		available = {
-
-		}
-		bypass = {
-
-		}
-		cancel_if_invalid = yes
-		continue_if_invalid = no
-		available_if_capitulated = yes
-		search_filters = { FOCUS_FILTER_RESEARCH }
-		completion_reward = {
-			add_tech_bonus = {
-				name = SOH_better_bombers
-				bonus = 1.0
-				uses = 2
-				category = cat_strategic_bomber
-			}
-		}
-	}
 ####################################
 #####The good stuff focus path######
 ####################################
-	focus = {
-		id = SOH_the_gang
-		icon = GFX_focus_SOH_the_gang
-		x = 1
-		y = 0
-		cost = 7.2
-		ai_will_do = {
-			factor = 45
-		}
-		available_if_capitulated = yes
-		search_filters = { FOCUS_FILTER_POLITICAL }	
-		completion_reward = {
-			add_political_power = 150
-			
-			country_event = { days=0 id = Ohio.1}
-		}
-	}
 
 	focus = {
 		id = SOH_Investing_In_Ohio_Army
 		icon = GFX_focus_SOH_Investing_In_Ohio_Army
-		x = -10
+		x = -7
 		y = 1
 		cost = 7.2
 		ai_will_do = {
@@ -1133,991 +552,6 @@ continuous_focus_position = { x = 0001 y = 1000 }
 		completion_reward = {
 			add_offsite_building = { type = arms_factory level = 1 }
 			add_timed_idea = { idea = SOH_conscription  days = 694 }
-		}
-	}
-
-	focus = {
-		id = SOH_Recovery_From_Steel_Wars
-		icon = GFX_focus_SOH_Recovery_From_Steel_Wars
-		x = -2
-		y = 1
-		prerequisite = { focus = SOH_the_gang }
-		relative_position_id = SOH_the_gang
-		cost = 7.2
-		ai_will_do = {
-			factor = 45
-		}
-		available = {
-	
-		}
-		bypass = {
-	
-		}
-		cancel_if_invalid = no
-		continue_if_invalid = yes
-		available_if_capitulated = yes
-		complete_tooltip = {
-	
-		}
-		completion_reward = {
-			add_offsite_building = { type = industrial_complex level = 1 }
-			add_stability = 0.15
-			add_tech_bonus = {
-				name = industrial_bonus
-				bonus = 0.75
-				uses = 1
-				category = industry
-			}
-		}
-	}
-	focus = {
-		id = SOH_Redevelop_Youngstown
-		icon = GFX_focus_SOH_steel1
-		x = 2
-		y = 1
-		prerequisite = { focus = SOH_Recovery_From_Steel_Wars }
-		relative_position_id = SOH_Recovery_From_Steel_Wars
-		cost = 7.2
-		ai_will_do = {
-			factor = 45
-		}
-		available = {
-	
-		}
-		bypass = {
-	
-		}
-		cancel_if_invalid = no
-		continue_if_invalid = yes
-		available_if_capitulated = yes
-		complete_tooltip = {
-	
-		}
-		completion_reward = {
-			690 = {
-				add_resource = {
-					type = steel
-					amount = 40
-				}
-				if = {
-					limit = {
-						free_building_slots = {
-							building = infrastructure
-							size > 1
-						}
-						OR = {
-							is_in_home_area = yes
-							NOT = {
-								owner = {
-									any_owned_state = {
-										free_building_slots = {
-											building = infrastructure
-											size > 1
-										}
-										is_in_home_area = yes
-									}
-								}
-							}
-						}
-					}
-					add_building_construction = {
-						type = infrastructure
-						level = 1
-						instant_build = yes
-					}
-				} 
-			
-			}
-		}
-	}
-	focus = {
-		id = SOH_Redevelop_SE_Ohio
-		icon = GFX_focus_SOH_steel1
-		x = 0
-		y = 1
-		prerequisite = { focus = SOH_Recovery_From_Steel_Wars }
-		relative_position_id = SOH_Recovery_From_Steel_Wars
-		cost = 7.2
-		ai_will_do = {
-			factor = 45
-		}
-		available = {
-	
-		}
-		bypass = {
-	
-		}
-		cancel_if_invalid = no
-		continue_if_invalid = yes
-		available_if_capitulated = yes
-		complete_tooltip = {
-	
-		}
-		completion_reward = {
-			365 = {
-				add_resource = {
-					type = steel
-					amount = 36
-				}
-				if = {
-					limit = {
-						free_building_slots = {
-							building = infrastructure
-							size > 1
-						}
-						OR = {
-							is_in_home_area = yes
-							NOT = {
-								owner = {
-									any_owned_state = {
-										free_building_slots = {
-											building = infrastructure
-											size > 1
-										}
-										is_in_home_area = yes
-									}
-								}
-							}
-						}
-					}
-					add_building_construction = {
-						type = infrastructure
-						level = 2
-						instant_build = yes
-					}
-				} 
-			} 
-		}
-		
-	}
-	focus = {
-		id = SOH_Develop_Ohio_Autobahn
-		icon = GFX_focus_SOH_Develop_Ohio_Autobahn
-		x = 0
-		y = 1
-		prerequisite = { focus = SOH_Redevelop_SE_Ohio }
-		prerequisite = { focus = SOH_Redevelop_Sandusky }
-		prerequisite = { focus = SOH_Redevelop_Youngstown }
-
-		relative_position_id = SOH_Redevelop_SE_Ohio
-		cost = 7.2
-		ai_will_do = {
-			factor = 45
-		}
-		available = {
-	
-		}
-		bypass = {
-	
-		}
-		cancel_if_invalid = no
-		continue_if_invalid = yes
-		available_if_capitulated = yes
-		complete_tooltip = {
-	
-		}
-
-		available = {
-			OR = {
-				has_full_control_of_state = 689
-				has_full_control_of_state = 694
-				has_full_control_of_state = 695
-				has_full_control_of_state = 696
-			}
-		}
-		search_filters = { FOCUS_FILTER_INDUSTRY }
-		completion_reward = {
-			custom_effect_tooltip = SOH_autobahn_tt
-			hidden_effect = {
-				689 = {
-					if = {
-						limit = { is_controlled_by = ROOT }
-						add_building_construction = {
-							type = infrastructure
-							level = 5
-							instant_build = yes
-						}
-					}
-				}
-				694 = {
-					if = {
-						limit = { is_controlled_by = ROOT }
-
-						add_building_construction = {
-							type = infrastructure
-							level = 5
-							instant_build = yes
-						}
-					}
-				}
-				695 = {
-					if = {
-						limit = { is_controlled_by = ROOT }
-						add_building_construction = {
-							type = infrastructure
-							level = 5
-							instant_build = yes
-						}
-					}
-				}
-				696 = {
-					if = {
-						limit = { is_controlled_by = ROOT }
-						add_building_construction = {
-							type = infrastructure
-							level = 5
-							instant_build = yes
-						}
-					}
-				}
-			}		
-		}
-	}
-	focus = {
-		id = SOH_SE_Ohio_Tungsten
-		icon = GFX_focus_SOH_Ohio_Tungsten
-		x = 0
-		y = 1
-		prerequisite = { focus = SOH_Develop_Ohio_Autobahn }
-		relative_position_id = SOH_Develop_Ohio_Autobahn
-		cost = 7.2
-		ai_will_do = {
-			factor = 45
-		}
-		available = {
-	
-		}
-		bypass = {
-	
-		}
-		cancel_if_invalid = no
-		continue_if_invalid = yes
-		available_if_capitulated = yes
-		complete_tooltip = {
-	
-		}
-		completion_reward = {
-			537 = {
-				add_resource = {
-					type = tungsten
-					amount = 12
-				}
-			}
-		}
-	}
-	focus = {
-		id = SOH_Redevelop_Van_Wort
-		icon = GFX_focus_SOH_steel1
-		x = -2
-		y = 1
-		prerequisite = { focus = SOH_Develop_Ohio_Autobahn }
-		relative_position_id = SOH_Develop_Ohio_Autobahn
-		cost = 7.2
-		ai_will_do = {
-			factor = 45
-		}
-		available = {
-	
-		}
-		bypass = {
-	
-		}
-		cancel_if_invalid = no
-		continue_if_invalid = yes
-		available_if_capitulated = yes
-		complete_tooltip = {
-	
-		}
-		completion_reward = {
-			99 = {
-				add_resource = {
-					type = steel
-					amount = 38
-				}
-			}
-		}
-	}
-	focus = {
-		id = SOH_Re_Open_Steel_Exports
-		icon = GFX_focus_SOH_steel2
-		x = 2
-		y = 1
-		prerequisite = { focus = SOH_Redevelop_SE_Ohio }
-
-
-		relative_position_id = SOH_Redevelop_SE_Ohio
-		cost = 7.2
-		ai_will_do = {
-			factor = 45
-		}
-		available = {
-	
-		}
-		bypass = {
-	
-		}
-		cancel_if_invalid = no
-		continue_if_invalid = yes
-		available_if_capitulated = yes
-		complete_tooltip = {
-	
-		}
-		completion_reward = {
-			add_ideas = SOH_Re_Open_Steel_Exports_idea
-		}
-	}
-
-	focus = {
-		id = SOH_Redevelop_Sandusky
-		icon = GFX_focus_SOH_steel1
-		x = -2
-		y = 1
-		prerequisite = { focus = SOH_Recovery_From_Steel_Wars }
-		relative_position_id = SOH_Recovery_From_Steel_Wars
-		cost = 7.2
-		ai_will_do = {
-			factor = 45
-		}
-		available = {
-	
-		}
-		bypass = {
-	
-		}
-		cancel_if_invalid = no
-		continue_if_invalid = yes
-		available_if_capitulated = yes
-		complete_tooltip = {
-	
-		}
-		completion_reward = {
-			540 = {
-				add_resource = {
-					type = steel
-					amount = 32.000
-				}
-				if = {
-					limit = {
-						free_building_slots = {
-							building = infrastructure
-							size > 1
-						}
-						OR = {
-							is_in_home_area = yes
-							NOT = {
-								owner = {
-									any_owned_state = {
-										free_building_slots = {
-											building = infrastructure
-											size > 1
-										}
-										is_in_home_area = yes
-									}
-								}
-							}
-						}
-					}
-					add_building_construction = {
-						type = infrastructure
-						level = 1
-						instant_build = yes
-					}
-				} 
-			}
-		}
-	}
-
-
-	focus = {
-		id = SOH_Ohio_Defense_Plan
-		icon = GFX_focus_SOH_Ohio_Defense_Plan
-		x = -3
-		y = 1
-		mutually_exclusive = {
-			focus = SOH_greater_ohio_defence_plan
-		}
-		relative_position_id = SOH_economy_start
-		prerequisite = {
-			focus = SOH_economy_start
-		}
-		cost = 7.2
-		ai_will_do = {
-			factor = 300
-		}
-		available = {
-			OR = {
-				has_war = yes
-				has_war_support > 0.50
-			}
-		}
-		bypass = {
-	
-		}
-		cancel_if_invalid = no
-		continue_if_invalid = yes
-		available_if_capitulated = yes
-		complete_tooltip = {
-	
-		}
-		completion_reward = {
-			add_offsite_building = { type = arms_factory level = 1 }
-			add_timed_idea = { idea = SOH_defensive  days = 354 }
-		}
-	}
-	focus = {
-		id = SOH_spa_defense_Line
-		icon = GFX_focus_SOH_fort
-		x = -1
-		y = 1
-		prerequisite = { focus = SOH_Ohio_Defense_Plan }
-		relative_position_id = SOH_Ohio_Defense_Plan
-		cost = 7.2
-		ai_will_do = {
-			factor = 5
-		}
-		available = {
-			any_country = {
-				OR = {
-					tag = SOH
-					is_in_faction_with = SOH
-				}
-				OR = {
-					has_full_control_of_state = 690
-					has_full_control_of_state = 538
-					has_full_control_of_state = 365
-				}
-			}
-		}
-		bypass = {
-	
-		}
-		cancel_if_invalid = no
-		continue_if_invalid = yes
-		available_if_capitulated = yes
-		complete_tooltip = {
-	
-		}
-		completion_reward = {
-			if = {
-				limit = { 
-					any_country = {
-						OR = {
-							tag = SOH
-							is_in_faction_with = SOH
-						}
-						has_full_control_of_state = 690 
-					}
-				}
-
-					690 = {
-						add_building_construction = {
-							type = bunker
-							level = 2
-							province = 7587
-							instant_build = yes
-						}
-						add_building_construction = {
-							type = bunker
-							level = 2
-							province = 2192
-							instant_build = yes
-						}
-						add_building_construction = {
-							type = bunker
-							level = 2
-							province = 3978
-							instant_build = yes
-						}
-					}
-				
-			}
-			if = {
-				limit = { 
-					any_country = {
-						OR = {
-							tag = SOH
-							is_in_faction_with = SOH
-						}
-						has_full_control_of_state = 538 
-					}
-				}
-
-				538 = {
-						add_building_construction = {
-							type = bunker
-							level = 3
-							province = 7607
-							instant_build = yes
-						}
-						add_building_construction = {
-							type = bunker
-							level = 2
-							province = 3988
-							instant_build = yes
-						}
-						add_building_construction = {
-							type = bunker
-							level = 2
-							province = 3996
-							instant_build = yes
-						}
-					}
-				
-			}
-		}
-	}
-
-	focus = {
-		id = SOH_Sin_defense_Line
-		icon = GFX_focus_SOH_fort
-		x = 0
-		y = 1
-		prerequisite = { focus = SOH_spa_defense_Line }
-		relative_position_id = SOH_spa_defense_Line
-		cost = 7.2
-		ai_will_do = {
-			factor = 5
-		}
-		available = {
-			any_country = {
-				OR = {
-					tag = SOH
-					is_in_faction_with = SOH
-				}
-				OR = {
-					has_full_control_of_state = 98
-					has_full_control_of_state = 39
-					has_full_control_of_state = 99
-					has_full_control_of_state = 702
-					has_full_control_of_state = 701
-					has_full_control_of_state = 364
-
-				}
-			}
-		}
-		bypass = {
-	
-		}
-		cancel_if_invalid = no
-		continue_if_invalid = yes
-		available_if_capitulated = yes
-		complete_tooltip = {
-	
-		}
-		completion_reward = {
-			if = {
-				limit = { 
-					any_country = {
-						OR = {
-							tag = SOH
-							is_in_faction_with = SOH
-						}
-						has_full_control_of_state = 98 
-					}
-				}
-
-					98 = {
-						add_building_construction = {
-							type = bunker
-							level = 2
-							province = 3981
-							instant_build = yes
-						}
-					}
-				
-			}
-			if = {
-				limit = { 
-					any_country = {
-						OR = {
-							tag = SOH
-							is_in_faction_with = SOH
-						}
-						has_full_control_of_state = 39 
-					}
-				}
-
-					39 = {
-						add_building_construction = {
-							type = bunker
-							level = 1
-							province = 3494
-							instant_build = yes
-						}
-					}
-				
-			}
-			if = {
-				limit = { 
-					any_country = {
-						OR = {
-							tag = SOH
-							is_in_faction_with = SOH
-						}
-						has_full_control_of_state = 99 
-					}
-				}
-
-					99 = {
-						add_building_construction = {
-							type = bunker
-							level = 1
-							province = 2186
-							instant_build = yes
-						}
-					}
-				
-			}
-			if = {
-				limit = { 
-					any_country = {
-						OR = {
-							tag = SOH
-							is_in_faction_with = SOH
-						}
-						has_full_control_of_state = 702 
-					}
-				}
-
-					702 = {
-						add_building_construction = {
-							type = bunker
-							level = 1
-							province = 7636
-							instant_build = yes
-						}
-					}
-				
-			}
-			if = {
-				limit = { 
-					any_country = {
-						OR = {
-							tag = SOH
-							is_in_faction_with = SOH
-						}
-						has_full_control_of_state = 701 
-					}
-				}
-
-					701 = {
-						add_building_construction = {
-							type = bunker
-							level = 1
-							province = 3954
-							instant_build = yes
-						}
-						add_building_construction = {
-							type = bunker
-							level = 1
-							province = 7621
-							instant_build = yes
-						}
-					}
-				
-			}
-			if = {
-				limit = { 
-					any_country = {
-						OR = {
-							tag = SOH
-							is_in_faction_with = SOH
-						}
-						has_full_control_of_state = 364 
-					}
-				}
-
-					364 = {
-						add_building_construction = {
-							type = bunker
-							level = 1
-							province = 7618
-							instant_build = yes
-						}
-						add_building_construction = {
-							type = bunker
-							level = 1
-							province = 3937
-							instant_build = yes
-						}
-					}
-				
-			}
-		}
-	}
-
-	focus = {
-		id = SOH_swv_defense_Line
-		icon = GFX_focus_SOH_fort
-		x = 1
-		y = 1
-		prerequisite = { focus = SOH_Ohio_Defense_Plan }
-		relative_position_id = SOH_Ohio_Defense_Plan
-		cost = 7.2
-		ai_will_do = {
-			factor = 300
-		}
-		available = {
-			any_country = {
-				OR = {
-					tag = SOH
-					is_in_faction_with = SOH
-				}
-				OR = {
-					has_full_control_of_state = 365
-					has_full_control_of_state = 537
-				}
-			}
-		}
-		bypass = {
-	
-		}
-		cancel_if_invalid = no
-		continue_if_invalid = yes
-		available_if_capitulated = yes
-		complete_tooltip = {
-	
-		}
-		completion_reward = {
-			if = {
-				limit = { 
-					any_country = {
-						OR = {
-							tag = SOH
-							is_in_faction_with = SOH
-						}
-						has_full_control_of_state = 365 
-						has_full_control_of_state = 537 
-					}
-				}
-
-				365 = {
-					add_building_construction = {
-						type = bunker
-						level = 1
-						province = 7574
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = bunker
-						level = 2
-						province = 7569
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = bunker
-						level = 2
-						province = 3948
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = bunker
-						level = 2
-						province = 7559
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = bunker
-						level = 2
-						province = 7557
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = bunker
-						level = 2
-						province = 3946
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = bunker
-						level = 2
-						province = 3942
-						instant_build = yes
-					}
-				}
-			}
-				if = {
-					limit = { 
-						any_country = {
-							OR = {
-								tag = SOH
-								is_in_faction_with = SOH
-							}
-							has_full_control_of_state = 537 
-						}
-					}
-	
-				537 = {
-					add_building_construction = {
-						type = bunker
-						level = 1
-						province = 3941
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = bunker
-						level = 2
-						province = 7659
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = bunker
-						level = 2
-						province = 1917
-						instant_build = yes
-					}
-					add_building_construction = {
-						type = bunker
-						level = 2
-						province = 5938
-						instant_build = yes
-					}
-				}
-			}
-		}
-	}
-	
-	focus = {
-		id = SOH_SKY_defense_Line
-		icon = GFX_focus_SOH_fort
-		x = 0
-		y = 1
-		prerequisite = { focus = SOH_swv_defense_Line }
-		relative_position_id = SOH_swv_defense_Line
-		cost = 7.2
-		ai_will_do = {
-			factor = 5
-		}
-		available = {
-			any_country = {
-				OR = {
-					tag = SOH
-					is_in_faction_with = SOH
-				}
-				OR = {
-					has_full_control_of_state = 539
-					has_full_control_of_state = 699
-				}
-			}
-		}
-		bypass = {
-	
-		}
-		cancel_if_invalid = no
-		continue_if_invalid = yes
-		available_if_capitulated = yes
-		complete_tooltip = {
-	
-		}
-		completion_reward = {
-			if = {
-				limit = { 
-					any_country = {
-						OR = {
-							tag = SOH
-							is_in_faction_with = SOH
-						}
-						has_full_control_of_state = 539 
-					}
-				}
-
-					539 = {
-						add_building_construction = {
-							type = bunker
-							level = 2
-							province = 3936
-							instant_build = yes
-						}
-						add_building_construction = {
-							type = bunker
-							level = 2
-							province = 3932
-							instant_build = yes
-						}
-						add_building_construction = {
-							type = bunker
-							level = 2
-							province = 1927
-							instant_build = yes
-						}
-					}
-				
-			}
-			if = {
-				limit = { 
-					any_country = {
-						OR = {
-							tag = SOH
-							is_in_faction_with = SOH
-						}
-						has_full_control_of_state = 699 
-					}
-				}
-
-					699 = {
-						add_building_construction = {
-							type = bunker
-							level = 2
-							province = 3930
-							instant_build = yes
-						}
-						add_building_construction = {
-							type = bunker
-							level = 2
-							province = 7613
-							instant_build = yes
-						}
-						add_building_construction = {
-							type = bunker
-							level = 2
-							province = 3931
-							instant_build = yes
-						}
-						add_building_construction = {
-							type = bunker
-							level = 2
-							province = 7612
-							instant_build = yes
-						}
-					}
-				
-			}
-		}
-	}
-	focus = {
-		id = SOH_greater_ohio_defence_plan
-		icon = GFX_goal_generic_construct_military
-		x = -7
-		y = 1
-		mutually_exclusive = {
-			focus = SOH_Ohio_Defense_Plan
-		}
-		relative_position_id = SOH_economy_start
-		prerequisite = {
-			focus = SOH_economy_start
-		}
-		cost = 7.2
-		ai_will_do = {
-			factor = 300
-		}
-		available = {
-			OR = {
-				has_war = yes
-				has_war_support > 0.50
-			}
-		}
-		bypass = {
-	
-		}
-		cancel_if_invalid = no
-		continue_if_invalid = yes
-		available_if_capitulated = yes
-		complete_tooltip = {
-	
-		}
-		completion_reward = {
-			add_offsite_building = { type = arms_factory level = 1 }
-			add_timed_idea = { idea = SOH_defensive  days = 354 }
 		}
 	}
 	
@@ -3286,12 +1720,12 @@ continuous_focus_position = { x = 0001 y = 1000 }
 		}
 		completion_reward = { }
 	}
-	#####ECO TREE START
+#####ECO TREE START
 	focus = {
 		id = SOH_economy_start
 		icon = GFX_goal_generic_construct_civ_factory
-		x = 5
-		y = 12
+		x = -22
+		y = 0
 
 		cost = 10
 		ai_will_do = {
@@ -3368,6 +1802,49 @@ continuous_focus_position = { x = 0001 y = 1000 }
 		}
 	}
 	focus = {
+		id = SOH_war_economy
+		icon = GFX_goal_generic_construct_mil_factory
+		x = 0
+		y = 1
+		available = {
+		}
+		prerequisite = { focus = SOH_Munitions_Standardization_Act }
+		relative_position_id = SOH_Munitions_Standardization_Act
+		cost = 5
+		ai_will_do = {
+			factor = 650
+		}
+		available = {
+	
+		}
+		bypass = {
+	
+		}
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+		complete_tooltip = {
+	
+		}
+		completion_reward = {
+			if = {
+				limit = {	
+					has_war_support < 0.5
+				}
+				add_war_support = 0.1
+			}
+			else_if = {
+				limit = {
+					has_idea = war_economy
+				}
+				add_political_power = 150
+			}
+			else = {
+				add_ideas = war_economy
+			}
+		}
+	}
+	focus = {
 		id = SOH_solve_the_disagreement
 		icon = GFX_goal_generic_construction2
 		x = 3
@@ -3418,7 +1895,7 @@ continuous_focus_position = { x = 0001 y = 1000 }
 		}
 	}
 	focus = {
-		id = SOH_ohio_infrastructure
+		id = SOH_Develop_Ohio_Autobahn
 		icon = GFX_focus_SOH_Develop_Ohio_Autobahn
 		x = 2
 		y = 2
@@ -3495,7 +1972,7 @@ continuous_focus_position = { x = 0001 y = 1000 }
 
 
 		relative_position_id = SOH_economy_start
-		cost = 6
+		cost = 5
 		ai_will_do = {
 			factor = 45
 		}
@@ -3512,6 +1989,7 @@ continuous_focus_position = { x = 0001 y = 1000 }
 	
 		}
 		completion_reward = {
+			add_political_power = 25
 			99 = {
 				add_manpower = 1000
 				add_extra_state_shared_building_slots = 1
@@ -3546,7 +2024,7 @@ continuous_focus_position = { x = 0001 y = 1000 }
 		y = 1
 		prerequisite = { focus = SOH_Agriculture_Development }
 		relative_position_id = SOH_Agriculture_Development
-		cost = 10
+		cost = 8
 		ai_will_do = {
 			factor = 45
 		}
@@ -3651,11 +2129,11 @@ continuous_focus_position = { x = 0001 y = 1000 }
 		icon = GFX_focus_generic_combined_arms
 		x = 0
 		y = 1
-		prerequisite = { focus = SOH_ohio_infrastructure }
+		prerequisite = { focus = SOH_Develop_Ohio_Autobahn }
 
 
-		relative_position_id = SOH_ohio_infrastructure
-		cost = 7.2
+		relative_position_id = SOH_Develop_Ohio_Autobahn
+		cost = 8
 		ai_will_do = {
 			factor = 450
 		}
@@ -3841,7 +2319,7 @@ continuous_focus_position = { x = 0001 y = 1000 }
 		y = 1
 		prerequisite = { focus = SOH_Cleveland_Industrial_Complex focus = SOH_Synth_Factories2 }
 		relative_position_id = SOH_Cleveland_Industrial_Complex 
-		cost = 10
+		cost = 7.2
 		ai_will_do = {
 			factor = 5
 		}
@@ -3922,7 +2400,628 @@ continuous_focus_position = { x = 0001 y = 1000 }
 		}
 	}
 	}
-	#####ARMY TREE START
+	focus = {
+		id = SOH_Ohio_Defense_Plan
+		icon = GFX_focus_SOH_Ohio_Defense_Plan
+		x = -3
+		y = 1
+		mutually_exclusive = {
+			focus = SOH_greater_ohio_defence_plan
+		}
+		relative_position_id = SOH_economy_start
+		prerequisite = {
+			focus = SOH_economy_start
+		}
+		cost = 7.2
+		ai_will_do = {
+			factor = 300
+		}
+		available = {
+			OR = {
+				has_war = yes
+				has_war_support > 0.50
+			}
+		}
+		bypass = {
+	
+		}
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+		complete_tooltip = {
+	
+		}
+		completion_reward = {
+			add_offsite_building = { type = arms_factory level = 1 }
+			add_timed_idea = { idea = SOH_defensive  days = 354 }
+		}
+	}
+	focus = {
+		id = SOH_spa_defense_Line
+		icon = GFX_focus_SOH_fort
+		x = -1
+		y = 1
+		prerequisite = { focus = SOH_Ohio_Defense_Plan }
+		relative_position_id = SOH_Ohio_Defense_Plan
+		cost = 7.2
+		ai_will_do = {
+			factor = 5
+		}
+		available = {
+			any_country = {
+				OR = {
+					tag = SOH
+					is_in_faction_with = SOH
+				}
+				OR = {
+					has_full_control_of_state = 690
+					has_full_control_of_state = 538
+					has_full_control_of_state = 365
+				}
+			}
+		}
+		bypass = {
+	
+		}
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+		complete_tooltip = {
+	
+		}
+		completion_reward = {
+			if = {
+				limit = { 
+					any_country = {
+						OR = {
+							tag = SOH
+							is_in_faction_with = SOH
+						}
+						has_full_control_of_state = 690 
+					}
+				}
+
+					690 = {
+						add_building_construction = {
+							type = bunker
+							level = 2
+							province = 7587
+							instant_build = yes
+						}
+						add_building_construction = {
+							type = bunker
+							level = 2
+							province = 2192
+							instant_build = yes
+						}
+						add_building_construction = {
+							type = bunker
+							level = 2
+							province = 3978
+							instant_build = yes
+						}
+					}
+				
+			}
+			if = {
+				limit = { 
+					any_country = {
+						OR = {
+							tag = SOH
+							is_in_faction_with = SOH
+						}
+						has_full_control_of_state = 538 
+					}
+				}
+
+				538 = {
+						add_building_construction = {
+							type = bunker
+							level = 3
+							province = 7607
+							instant_build = yes
+						}
+						add_building_construction = {
+							type = bunker
+							level = 2
+							province = 3988
+							instant_build = yes
+						}
+						add_building_construction = {
+							type = bunker
+							level = 2
+							province = 3996
+							instant_build = yes
+						}
+					}
+				
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_Sin_defense_Line
+		icon = GFX_focus_SOH_fort
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_spa_defense_Line }
+		relative_position_id = SOH_spa_defense_Line
+		cost = 7.2
+		ai_will_do = {
+			factor = 5
+		}
+		available = {
+			any_country = {
+				OR = {
+					tag = SOH
+					is_in_faction_with = SOH
+				}
+				OR = {
+					has_full_control_of_state = 98
+					has_full_control_of_state = 39
+					has_full_control_of_state = 99
+					has_full_control_of_state = 702
+					has_full_control_of_state = 701
+					has_full_control_of_state = 364
+
+				}
+			}
+		}
+		bypass = {
+	
+		}
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+		complete_tooltip = {
+	
+		}
+		completion_reward = {
+			if = {
+				limit = { 
+					any_country = {
+						OR = {
+							tag = SOH
+							is_in_faction_with = SOH
+						}
+						has_full_control_of_state = 98 
+					}
+				}
+
+					98 = {
+						add_building_construction = {
+							type = bunker
+							level = 2
+							province = 3981
+							instant_build = yes
+						}
+					}
+				
+			}
+			if = {
+				limit = { 
+					any_country = {
+						OR = {
+							tag = SOH
+							is_in_faction_with = SOH
+						}
+						has_full_control_of_state = 39 
+					}
+				}
+
+					39 = {
+						add_building_construction = {
+							type = bunker
+							level = 1
+							province = 3494
+							instant_build = yes
+						}
+					}
+				
+			}
+			if = {
+				limit = { 
+					any_country = {
+						OR = {
+							tag = SOH
+							is_in_faction_with = SOH
+						}
+						has_full_control_of_state = 99 
+					}
+				}
+
+					99 = {
+						add_building_construction = {
+							type = bunker
+							level = 1
+							province = 2186
+							instant_build = yes
+						}
+					}
+				
+			}
+			if = {
+				limit = { 
+					any_country = {
+						OR = {
+							tag = SOH
+							is_in_faction_with = SOH
+						}
+						has_full_control_of_state = 702 
+					}
+				}
+
+					702 = {
+						add_building_construction = {
+							type = bunker
+							level = 1
+							province = 7636
+							instant_build = yes
+						}
+					}
+				
+			}
+			if = {
+				limit = { 
+					any_country = {
+						OR = {
+							tag = SOH
+							is_in_faction_with = SOH
+						}
+						has_full_control_of_state = 701 
+					}
+				}
+
+					701 = {
+						add_building_construction = {
+							type = bunker
+							level = 1
+							province = 3954
+							instant_build = yes
+						}
+						add_building_construction = {
+							type = bunker
+							level = 1
+							province = 7621
+							instant_build = yes
+						}
+					}
+				
+			}
+			if = {
+				limit = { 
+					any_country = {
+						OR = {
+							tag = SOH
+							is_in_faction_with = SOH
+						}
+						has_full_control_of_state = 364 
+					}
+				}
+
+					364 = {
+						add_building_construction = {
+							type = bunker
+							level = 1
+							province = 7618
+							instant_build = yes
+						}
+						add_building_construction = {
+							type = bunker
+							level = 1
+							province = 3937
+							instant_build = yes
+						}
+					}
+				
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_swv_defense_Line
+		icon = GFX_focus_SOH_fort
+		x = 1
+		y = 1
+		prerequisite = { focus = SOH_Ohio_Defense_Plan }
+		relative_position_id = SOH_Ohio_Defense_Plan
+		cost = 7.2
+		ai_will_do = {
+			factor = 300
+		}
+		available = {
+			any_country = {
+				OR = {
+					tag = SOH
+					is_in_faction_with = SOH
+				}
+				OR = {
+					has_full_control_of_state = 365
+					has_full_control_of_state = 537
+				}
+			}
+		}
+		bypass = {
+	
+		}
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+		complete_tooltip = {
+	
+		}
+		completion_reward = {
+			if = {
+				limit = { 
+					any_country = {
+						OR = {
+							tag = SOH
+							is_in_faction_with = SOH
+						}
+						has_full_control_of_state = 365 
+						has_full_control_of_state = 537 
+					}
+				}
+
+				365 = {
+					add_building_construction = {
+						type = bunker
+						level = 1
+						province = 7574
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = bunker
+						level = 2
+						province = 7569
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = bunker
+						level = 2
+						province = 3948
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = bunker
+						level = 2
+						province = 7559
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = bunker
+						level = 2
+						province = 7557
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = bunker
+						level = 2
+						province = 3946
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = bunker
+						level = 2
+						province = 3942
+						instant_build = yes
+					}
+				}
+			}
+				if = {
+					limit = { 
+						any_country = {
+							OR = {
+								tag = SOH
+								is_in_faction_with = SOH
+							}
+							has_full_control_of_state = 537 
+						}
+					}
+	
+				537 = {
+					add_building_construction = {
+						type = bunker
+						level = 1
+						province = 3941
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = bunker
+						level = 2
+						province = 7659
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = bunker
+						level = 2
+						province = 1917
+						instant_build = yes
+					}
+					add_building_construction = {
+						type = bunker
+						level = 2
+						province = 5938
+						instant_build = yes
+					}
+				}
+			}
+		}
+	}
+	
+	focus = {
+		id = SOH_SKY_defense_Line
+		icon = GFX_focus_SOH_fort
+		x = 0
+		y = 1
+		prerequisite = { focus = SOH_swv_defense_Line }
+		relative_position_id = SOH_swv_defense_Line
+		cost = 7.2
+		ai_will_do = {
+			factor = 5
+		}
+		available = {
+			any_country = {
+				OR = {
+					tag = SOH
+					is_in_faction_with = SOH
+				}
+				OR = {
+					has_full_control_of_state = 539
+					has_full_control_of_state = 699
+				}
+			}
+		}
+		bypass = {
+	
+		}
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+		complete_tooltip = {
+	
+		}
+		completion_reward = {
+			if = {
+				limit = { 
+					any_country = {
+						OR = {
+							tag = SOH
+							is_in_faction_with = SOH
+						}
+						has_full_control_of_state = 539 
+					}
+				}
+
+					539 = {
+						add_building_construction = {
+							type = bunker
+							level = 2
+							province = 3936
+							instant_build = yes
+						}
+						add_building_construction = {
+							type = bunker
+							level = 2
+							province = 3932
+							instant_build = yes
+						}
+						add_building_construction = {
+							type = bunker
+							level = 2
+							province = 1927
+							instant_build = yes
+						}
+					}
+				
+			}
+			if = {
+				limit = { 
+					any_country = {
+						OR = {
+							tag = SOH
+							is_in_faction_with = SOH
+						}
+						has_full_control_of_state = 699 
+					}
+				}
+
+					699 = {
+						add_building_construction = {
+							type = bunker
+							level = 2
+							province = 3930
+							instant_build = yes
+						}
+						add_building_construction = {
+							type = bunker
+							level = 2
+							province = 7613
+							instant_build = yes
+						}
+						add_building_construction = {
+							type = bunker
+							level = 2
+							province = 3931
+							instant_build = yes
+						}
+						add_building_construction = {
+							type = bunker
+							level = 2
+							province = 7612
+							instant_build = yes
+						}
+					}
+				
+			}
+		}
+	}
+	focus = {
+		id = SOH_greater_ohio_defence_plan
+		icon = GFX_goal_generic_construct_military
+		x = -7
+		y = 1
+		mutually_exclusive = {
+			focus = SOH_Ohio_Defense_Plan
+		}
+		relative_position_id = SOH_economy_start
+		prerequisite = {
+			focus = SOH_economy_start
+		}
+		cost = 7.2
+		ai_will_do = {
+			factor = 300
+		}
+		available = {
+			OR = {
+				has_war = yes
+				has_war_support > 0.50
+			}
+		}
+		bypass = {
+	
+		}
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+		complete_tooltip = {
+	
+		}
+		completion_reward = {
+			add_offsite_building = { type = arms_factory level = 1 }
+			add_timed_idea = { idea = SOH_defensive  days = 354 }
+		}
+	}
+	focus = {
+		id = SOH_consolidated_plan
+		icon = GFX_goal_generic_construct_mil_factory
+		x = 2
+		y = 3
+		available = {
+		}
+		prerequisite = { focus = SOH }
+		relative_position_id = SOH_greater_ohio_defence_plan
+		cost = 5
+		ai_will_do = {
+			factor = 650
+		}
+		available = {
+	
+		}
+		bypass = {
+	
+		}
+		cancel_if_invalid = no
+		continue_if_invalid = yes
+		available_if_capitulated = yes
+		complete_tooltip = {
+	
+		}
+		completion_reward = {
+			add_ideas = SOH_defence_plan_completed
+		}
+	}
+#####ARMY TREE START
 	focus = {
 		id = SOH_army_start
 		icon = GFX_goal_generic_construct_civ_factory
@@ -3947,6 +3046,511 @@ continuous_focus_position = { x = 0001 y = 1000 }
 		}
 		completion_reward = {
 
+		}
+	}
+################################################
+############################if anyone ever goes naval ohio i will shit myself ######################
+####### AIR SECTION  hell yeah airplanes VROOOOOOOM ########
+############################
+	focus = {
+		id = SOH_buy_planes
+		icon = GFX_goal_generic_air_doctrine
+		x = -2
+		y = 0
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		bypass = {
+
+		}
+		ai_will_do = { 
+			factor = 320
+		} 
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+		completion_reward = {
+			air_experience = 25
+			random_owned_controlled_state = {
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+			add_doctrine_cost_reduction = {
+				name = SOH_form_GLAF
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+		}
+	}
+	focus = {
+		id = SOH_form_GLAF
+		icon = GFX_goal_generic_build_airforce
+		prerequisite = { focus = SOH_buy_planes }
+		x = 0
+		y = 1
+		relative_position_id = SOH_buy_planes
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		bypass = {
+
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		search_filters = { FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			add_tech_bonus = {
+				name = SOH_fighters
+				bonus = 1.0
+				uses = 1
+				category = cat_air_bombs
+				category = cat_air_engine
+				category = cat_air_guns
+			}
+		}
+	}
+	focus = {
+		id = SOH_fighters
+		icon = GFX_goal_generic_air_fighter2
+		prerequisite = { focus = SOH_form_GLAF }
+		mutually_exclusive = { focus = SOH_bombers }
+		x = 1
+		y = 2
+		relative_position_id = SOH_buy_planes
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		bypass = {
+
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+		search_filters = { FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			add_tech_bonus = {
+				name = SOH_fighters
+				bonus = 1.0
+				uses = 1
+				category = light_air
+			}
+		}
+	}
+	focus = {
+		id = SOH_bombers
+		icon = GFX_goal_generic_occupy_start_war
+		prerequisite = { focus = SOH_form_GLAF }
+		mutually_exclusive = { focus = SOH_fighters }
+		x = -1
+		y = 2
+		relative_position_id = SOH_buy_planes
+		cost = 10
+		ai_will_do = {
+			factor = 2
+		}
+		available = {
+
+		}
+		bypass = {
+
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+		search_filters = { FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			add_tech_bonus = {
+				name = SOH_bombers
+				bonus = 1.00
+				uses = 1
+				category = heavy_air
+			}
+		}
+	}
+	focus = {
+		id = SOH_navbombers
+		icon = GFX_goal_generic_air_naval_bomber
+		prerequisite = { focus = SOH_fighters }
+		prerequisite = {
+			focus = SOH_coastal_forts 
+		}
+		x = 2
+		y = 3
+		relative_position_id = SOH_buy_planes
+		cost = 7.2
+		ai_will_do = {
+			factor = 25
+		}
+		available = {
+
+		}
+		bypass = {
+
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+		search_filters = { FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			add_tech_bonus = {
+				name = SOH_navbombers
+				bonus = 1.00
+				uses = 1
+				category = naval_air
+			}
+		}
+	}
+	focus = {
+		id = SOH_fighter_production_plan
+		icon = GFX_goal_generic_air_production
+		prerequisite = { focus = SOH_fighters focus = SOH_bombers }
+		mutually_exclusive = { focus = SOH_better_bombers }
+		x = 0
+		y = 3
+		relative_position_id = SOH_buy_planes
+		cost = 10
+		ai_will_do = {
+			factor = 25
+		}
+		available = {
+
+		}
+		bypass = {
+
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+		search_filters = { FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			add_timed_idea = {
+				idea = SOH_fighter_production_plan_idea
+				days = 200
+			}
+		}
+	}
+#------------------------------------------------------------------#
+#	 NAVY SECTION  yeah i know, naval ohio, watch out skorpion.	   #
+#------------------------------------------------------------------#
+	focus = {
+		id = SOH_naval_ohio
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		x = 3
+		y = 0
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		bypass = {
+		
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		completion_reward = {
+			navy_experience = 100
+			set_technology = {
+				early_destroyer = 1
+			}
+			set_technology = {
+				early_submarine = 1
+			}
+			set_technology = {
+				basic_battery = 1
+			}
+		}
+	}
+	focus = {
+		id = SOH_form_the_GLNDF
+		icon = GFX_goal_generic_build_navy
+		prerequisite = { focus = SOH_naval_ohio }
+		x = 0
+		y = 1
+		relative_position_id = SOH_naval_ohio
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		bypass = {
+
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		search_filters = { FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			navy_experience = 50
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = dockyard
+					level = 3
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = SOH_more_dockyards
+		icon = GFX_goal_generic_construct_naval_dockyard
+		prerequisite = { focus = SOH_form_the_GLNDF }
+		x = 0
+		y = 2
+		relative_position_id = SOH_naval_ohio
+		cost = 5
+		ai_will_do = {
+			factor = 25
+		}
+		available = {
+
+		}
+		bypass = {
+
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					is_coastal = yes
+					free_building_slots = {
+						building = dockyard
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = SOH_more_dockyards
+			}
+			
+		}
+	}
+	focus = {
+		id = SOH_coastal_forts
+		icon = GFX_goal_generic_fortify_city
+		prerequisite = { focus = SOH_form_the_GLNDF }
+		x = -2
+		y = 2
+		relative_position_id = SOH_naval_ohio
+		cost = 7.2
+		ai_will_do = {
+			factor = 25
+		}
+		available = {
+
+		}
+		bypass = {
+			NOT = {
+				controls_state = 538
+			}
+			NOT = {
+				controls_state = 540
+			}
+			NOT = {
+				controls_state = 48
+			}
+			NOT = {
+				controls_state = 39
+			}
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		completion_reward = {
+			every_owned_state = {
+				limit = {
+					is_controlled_by = ROOT
+					OR = {
+						state = 39
+						state = 48
+					}
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					province = {
+						all_provinces = yes
+						limit_to_coastal = yes
+					}
+					level = 4
+					instant_build = yes
+				}
+				#Extra fort on naval bases
+				add_building_construction = {
+					type = bunker
+					province = {
+						all_provinces = yes
+						limit_to_naval_base = yes
+					}
+					level = 4
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					province = {
+						all_provinces = yes
+						limit_to_naval_base = yes
+					}
+					level = 4
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = SOH_destroyers
+		icon = GFX_goal_generic_navy_anti_submarine
+		prerequisite = { focus = SOH_more_dockyards  }
+		mutually_exclusive = { focus = SOH_submarines }
+		x = 1
+		y = 3
+		relative_position_id = SOH_naval_ohio
+		cost = 7.2
+		ai_will_do = {
+			factor = 20
+		}
+		available = {
+
+		}
+		bypass = {
+
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		search_filters = { FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			add_tech_bonus = {
+				name = SOH_destroyer_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = dd_tech
+			}
+		}
+	}
+	focus = {
+		id = SOH_submarines
+		icon = GFX_goal_generic_navy_submarine
+		prerequisite = { focus = SOH_more_dockyards }
+		mutually_exclusive = { focus = SOH_destroyers }
+		x = -1
+		y = 3
+		relative_position_id = SOH_naval_ohio
+		cost = 7.2
+		ai_will_do = {
+			factor = 2
+		}
+		available = {
+
+		}
+		bypass = {
+
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		search_filters = { FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			add_tech_bonus = {
+				name = SOH_submarine_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = ss_tech
+			}
+		}
+	}
+	focus = {
+		id = SOH_light_cruisers
+		icon = GFX_goal_generic_navy_cruiser
+		prerequisite = { focus = SOH_destroyers focus = SOH_submarines }
+		x = 1
+		y = 4
+		relative_position_id = SOH_naval_ohio
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		bypass = {
+
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		search_filters = { FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			add_tech_bonus = {
+				name = SOH_light_cruisers
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = cl_tech
+			}
+		}
+	}
+	focus = {
+		id = SOH_big_ships
+		icon = GFX_goal_generic_navy_battleship
+		prerequisite = { focus = SOH_destroyers focus = SOH_submarines }
+		x = -1
+		y = 4
+		relative_position_id = SOH_naval_ohio
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		bypass = {
+
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		search_filters = { FOCUS_FILTER_RESEARCH }
+		completion_reward = {
+			add_tech_bonus = {
+				name = SOH_capital_ships
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = bb_tech
+				category = cv_tech
+			}
 		}
 	}
 }	
