@@ -24,7 +24,7 @@ country_event = {
 		promote_character = SOH_daughtery
 	}
 
-option = {
+	option = {
 		name = Ohio.1.c
 		ai_chance = { factor = 50 }
 		add_political_power = 25
@@ -36,26 +36,138 @@ country_event = {
 	title = ohio.2.t
 	desc = ohio.2.d
 	picture = GFX_youngstown
-  is_triggered_only = yes
-  fire_only_once = yes
+ 	is_triggered_only = yes
+  	fire_only_once = yes
 
 	trigger = {
 
 	}
-  option = {
-        
-    name = ohio.2.a
-    add_political_power = -100
-	add_manpower = -150
-	SOH = { add_timed_idea = { idea = SOH_youngstown_steel_strike  days = 30 }
-    }
+  	option = {
+        name = ohio.2.a
+   		add_political_power = -100
+		add_manpower = -150
+		SOH = { 
+			add_timed_idea = { 
+				idea = SOH_youngstown_steel_strike  
+				days = 30 
+			}
+    	}
 	}
+	option = {   
+    	name = ohio.2.b
+    	add_political_power = -150
+		add_war_support = -0.05
+		SOH = { 
+			add_timed_idea = { 
+				idea = SOH_youngstown_steel_strike  
+				days = 20 
+			}
+    	}
+	}
+}
+
+country_event = { # Ohio stages ohio river conflict with Kentucky
+	id = ohio.3
+	title = ohio.3.t
+	desc = ohio.3.d
+	picture = GFX_report_event_china_ledo_road
+	is_triggered_only = yes 
+	fire_only_once = yes
+
+	option = { # accept demands 
+		name = ohio.3.a
+		ai_chance = {
+			base = 5 # very low chance 
+		}
+		if = {
+			limit = {
+				SKY = {
+					owns_state = 362
+				}
+			}
+			SOH = {
+				transfer_state = 362
+			}
+		}
+
+		if = {
+			limit = {
+				SKY = {
+					owns_state = 772
+				}
+			}
+			SOH = {
+				transfer_state = 772
+			}
+		}
+		if = {
+			limit = {
+				SKY = {
+					owns_state = 363
+				}
+			}
+			SOH = {
+				transfer_state = 363
+			}
+		}
+		if = {
+			limit = {
+				SKY = {
+					owns_state = 774
+				}
+			}
+			SOH = {
+				transfer_state = 774
+			}
+		}
+
+		if = {
+			limit = {
+				SKY = {
+					owns_state = 154
+				}
+			}
+			SOH = {
+				transfer_state = 154
+			}
+		}
+
+		SOH = {
+			puppet = SKY
+		}
+
+		SKY = {
+			set_cosmetic_tag = SKY_SOH_TAG 
+		}
+	}
+
+	option = { # no fuck off 
+		name = ohio.3.b
+		add_political_power = 50
+		complete_national_focus = SKY_Ohio_at_our_gates
+		custom_effect_tooltip = SKY_ohio_will_go_to_war
+		SOH = {
+			country_event = {
+				id = ohio.4 
+				days = 5 
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ohio.4 # kentucky says no 
+	title = ohio.4.t
+	desc = ohio.4.d
+	picture = GFX_report_event_soldiers_marching
+	is_triggered_only = yes
+	fire_only_once = yes
+
 	option = {
-        
-    name = ohio.2.b
-    add_political_power = -150
-	add_war_support = -0.05
-	SOH = { add_timed_idea = { idea = SOH_youngstown_steel_strike  days = 20 }
-    }
-}
-}
+		name = ohio.4.a
+		create_wargoal = {
+			target = SKY
+			type = annex_everything
+		}
+	}
+} 
