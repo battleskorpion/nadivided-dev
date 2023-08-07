@@ -1700,6 +1700,23 @@ continuous_focus_position = { x = 200 y = 1400 }
 		cost = 10
 		x = 0
 		y = 1
+		available = {
+			has_army_manpower = {
+				size > 225000
+			}
+		}
+		bypass = {
+			AND = {
+				SKY = {
+					exists = no 
+				}
+				SIN = {
+					exists = no
+				}
+			}
+		}
+		will_lead_to_war_with = SKY
+		will_lead_to_war_with = SIN
 		prerequisite = {
 			focus = SMI_extensive_conscription_act
 		}
@@ -1710,6 +1727,7 @@ continuous_focus_position = { x = 200 y = 1400 }
 				limit = {
 					SKY = {
 						exists = yes
+						is_subject = no
 					}
 				}
 				custom_effect_tooltip = SOH_unite_the_ohio_river_SKY_tt
@@ -1719,7 +1737,559 @@ continuous_focus_position = { x = 200 y = 1400 }
 					}
 				}
 			}
+
+			if = {
+				limit = {
+					SIN = {
+						exists = yes
+						is_subject = no
+					}
+				}
+				custom_effect_tooltip = SOH_unite_the_ohio_river_SIN_tt
+				SIN = {
+					country_event = {
+						id = ohio.5
+					}
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_plunder_the_river
+		icon = GFX_
+		cost = 10
+		x = -4
+		y = 1
+		relative_position_id = SOH_unite_the_ohio_river
+		prerequisite = {
+			focus = SOH_unite_the_ohio_river
+		}
+		available = {
+			or = {
+				AND = {
+					controls_state = 362
+					controls_state = 772
+					controls_state = 363
+					controls_state = 774
+					controls_state = 154
+					controls_state = 708
+					controls_state = 366
+					controls_state = 710
+					controls_state = 709
+					SIN = {
+						has_capitulated = yes 
+					}
+					SKY = {
+						has_capitulated = yes 
+					}
+				}
+				AND = {
+					controls_state = 362
+					controls_state = 772
+					controls_state = 363
+					controls_state = 774
+					controls_state = 154
+					controls_state = 708
+					controls_state = 366
+					controls_state = 710
+					controls_state = 709
+					SIN = {
+						exists = no
+					}
+					SKY = {
+						exists = no 
+					}
+				}
+			}
+		}
+		completion_reward = { 
+			custom_effect_tooltip = SOH_plunder_focus_tt
+			#TODO judd
+		}
+	}
+
+	focus = {
+		id = SOH_take_out_west_virgina
+		icon = GFX
+		cost = 7.2
+		x = -2
+		y = 1
+		relative_position_id = SOH_unite_the_ohio_river
+		prerequisite = {
+			focus = SOH_unite_the_ohio_river
+		}
+		mutually_exclusive = {
+			focus = SOH_respect_west_virginia
+		}
+		mutually_exclusive = {
+			focus = SOH_demand_west_virginian_loyality
+		}
+		available = {
+			controls_state = 362
+		}
+		completion_reward = { 
+			create_wargoal = {
+				target = SWV
+				type = annex_everything
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_100_days_offensive
+		icon = GFX
+		cost = 10
+		x = 4
+		y = 1
+		relative_position_id = SOH_unite_the_ohio_river
+		prerequisite = {
+			focus = SOH_unite_the_ohio_river
+		}
+		completion_reward = { 
+			custom_effect_tooltip = SOH_100_days_offensive_tt
+			#TODO
+		}
+	}
+
+	focus = {
+		id = SOH_respect_west_virginia
+		icon = GFX
+		cost = 4
+		x = 0
+		y = 1
+		relative_position_id = SOH_unite_the_ohio_river
+		prerequisite = {
+			focus = SOH_unite_the_ohio_river
+		}
+		mutually_exclusive = {
+			focus = SOH_demand_west_virginian_loyality
+		}
+		mutually_exclusive = {
+			focus = SOH_take_out_west_virgina
+		}
+		completion_reward = { 
+			SWV = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = large_increase
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_demand_west_virginian_loyality
+		icon = GFX_ 
+		cost = 10
+		x = 2
+		y = 1
+		relative_position_id = SOH_unite_the_ohio_river
+		prerequisite = {
+			focus = SOH_unite_the_ohio_river
+		}
+		mutually_exclusive = {
+			focus = SOH_respect_west_virginia
+		}
+		mutually_exclusive = {
+			focus = SOH_take_out_west_virgina
+		}
+		select_effect = {
+			SVA = {
+				country_event = {
+					id = ohio.9
+					days = 5
+				}
+			}
+		}
+		completion_reward = { 
+			custom_effect_tooltip = SOH_west_virginia_tt 
+			if = {
+				limit = {
+					SVA = {
+						has_guaranteed = SWV
+					}
+				}
+				SWV = {
+					country_event = Ohio.8
+				}
+
+			}
+			else = {
+				SWV = {
+					country_event = Ohio.7
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_unify_the_ohio_river
+		icon = GFX 
+		cost = 10
+		x = 0
+		y = 1
+		relative_position_id = SOH_respect_west_virginia
+		available = {
+			controls_state = 362
+			controls_state = 772
+			controls_state = 363
+			controls_state = 774
+			controls_state = 154
+			controls_state = 708
+			controls_state = 366
+			controls_state = 710
+			controls_state = 709
+			or = {
+				SIN = {
+					is_subject_of = ROOT
+				}
+				SIN = {
+					exists = no 
+				}
+			}
+			or = {
+				SKY = {
+					is_subject_of = ROOT
+				}
+				SKY = {
+					exists = no 
+				}
+			}
+		}
+		
+		prerequisite = {
+			focus = SOH_demand_west_virginian_loyality
+			focus = SOH_respect_west_virginia
+			focus = SOH_take_out_west_virgina
+		}
+		completion_reward = { 
+			set_cosmetic_tag = GREATER_OHIO 
+			add_stability = 0.15
+		}
+	}
+
+	focus = {
+		id = SOH_consolidate_control 
+		icon = GFX
+		cost = 10
+		x = -1
+		y = 1
+		relative_position_id = SOH_unify_the_ohio_river
+		prerequisite = {
+			focus = SOH_unify_the_ohio_river
+		}
+		completion_reward = { 
+			custom_effect_tooltip = SOH_consolidate_control_tt
+			hidden_effect = {
+				core_indiana = yes 
+				core_illinois = yes
+				core_kentucky = yes 
+				293 = {
+					add_core_of = ROOT
+				}
+			}
+			if = {
+				limit = {
+					SKY = {
+						is_subject_of = SOH
+					}
+				}
+				annex_country = {
+					target = SKY
+					transfer_troops = yes
+				}
+			}
+			if = {
+				limit = {
+					SIN = {
+						is_subject_of = SOH
+					}
+				}
+				annex_country = {
+					target = SIN
+					transfer_troops = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_trimph_over_the_ohio_valley
+		icon = GFX
+		cost = 10
+		x = 1
+		y = 1
+		relative_position_id = SOH_unify_the_ohio_river
+		prerequisite = {
+			focus = SOH_unify_the_ohio_river
+		}
+		completion_reward = { 
+			swap_ideas = {
+				remove_idea = SOH_Memories_Of_The_Steek_Wars
+				add_idea = SOH_Memories_Of_The_Steek_Wars_2
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_preempt_michigander_allignment
+		icon = GFX 
+		cost = 10
+		x = -1
+		y = 1
+		available = {
 			
+		}
+		relative_position_id = SOH_trimph_over_the_ohio_valley
+		prerequisite = {
+			focus = SOH_trimph_over_the_ohio_valley
+		}
+		prerequisite = {
+			focus = SOH_consolidate_control
+		}
+		completion_reward = { 
+			create_wargoal = {
+				target = SMI
+				type = puppet_wargoal_focus
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_reunify_michigan
+		icon = GFX
+		cost = 10
+		x = -3
+		y = 1
+		relative_position_id = SOH_preempt_michigander_allignment
+		prerequisite = {
+			focus = SOH_preempt_michigander_allignment
+		}
+		available = {
+			or = {
+				SMI = {
+					is_subject_of = SOH
+				}
+				SMI = {
+					exists = no 
+				}
+				owns_state = 228
+			}
+		}
+		completion_reward = { 
+			create_wargoal = {
+				target = SUP 
+				type = annex_everything
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_regrant_the_upper_penisiula
+		icon = GFX 
+		cost = 5 
+		x = -1
+		y = 1
+		available = {
+			controls_state = 90
+			controls_state = 89
+			controls_state = 746
+			controls_state = 231
+			SMI = {
+				is_subject_of = SOH
+			}
+		}
+		prerequisite = {
+			focus = SOH_reunify_michigan 
+		}
+		bypass = {
+			or = {
+				SMI = {
+					exists = no 
+				}
+			}
+			SMI = {
+				controls_state = 90 
+				controls_state = 89
+				controls_state = 746
+				controls_state = 231
+			}
+		}
+		relative_position_id = SOH_reunify_michigan
+		completion_reward = { 
+			SMI = {
+				transfer_state = 90
+				transfer_state = 89
+				transfer_state = 746
+				transfer_state = 231
+			}
+			if = {
+				limit = {
+					SOH = {
+						controls_state = 505
+					}
+				}
+				SMI = {
+					transfer_state = 505 
+				}
+			}
+			SMI = {
+				add_autonomy_score = {
+					value = -1000
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_cross_the_detroit_river
+		icon = GFX
+		cost = 10 
+		x = 1
+		y = 1
+		prerequisite = {
+			focus = SOH_reunify_michigan 
+		}
+		available = {
+			or = {
+				SMI = {
+					is_subject_of = SOH 
+				}
+				controls_state = 36
+			}
+		}
+		bypass = {
+			PON = {
+				exists = no 
+			}
+		}
+		relative_position_id = SOH_reunify_michigan
+		completion_reward = { 
+			create_wargoal = {
+				target = PON
+				type = puppet_wargoal_focus
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_strike_at_pennsylvania
+		icon = GFX 
+		cost = 10 
+		x = 1
+		y = 1
+		relative_position_id = SOH_preempt_michigander_allignment
+		prerequisite = {
+			focus = SOH_preempt_michigander_allignment
+		}
+		bypass = {
+			SPA = {
+				exists = no 
+			}
+		}
+		will_lead_to_war_with = SPA
+		completion_reward = { 
+			create_wargoal = {
+				target = SPA
+				type = annex_everything
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_bring_illinois_into_the_fold
+		icon = GFX_ 
+		cost = 10
+		x = -1 
+		y = 1
+		relative_position_id = SOH_preempt_michigander_allignment
+		prerequisite = {
+			focus = SOH_preempt_michigander_allignment
+		}
+		bypass = {
+			SIL = {
+				exists = no 
+			}
+		}
+		will_lead_to_war_with = SIL
+		completion_reward = { 
+			create_wargoal = {
+				target = SIL
+				type = annex_everything
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_take_down_new_york 
+		icon = GFX 
+		cost = 10 
+		x = 0 
+		y = 2
+		relative_position_id = SOH_preempt_michigander_allignment
+		prerequisite = {
+			focus = SOH_preempt_michigander_allignment
+		}
+		bypass = {
+			SNY = {
+				exists = no 
+			}
+		}
+		will_lead_to_war_with = SNY
+		completion_reward = { 
+			create_wargoal = {
+				target = SNY
+				type = annex_everything
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_reign_in_the_big_city
+		icon = GFX 
+		cost = 10
+		x = 0
+		y = 1
+		relative_position_id = SOH_take_down_new_york
+		prerequisite = {
+			focus = SOH_take_down_new_york
+		}
+		will_lead_to_war_with = NYC 
+		bypass = {
+			NYC = {
+				exists = no
+			}
+		}
+		completion_reward = { 
+			create_wargoal = {
+				target = NYC
+				type = annex_everything
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_attack_wisconsin
+		icon = GFX
+		cost = 10
+		x = 3
+		y = 1
+		bypass = {
+			SWI = {
+				exists = no 
+			}
+		}
+		relative_position_id = SOH_preempt_michigander_allignment
+		prerequisite = {
+			focus = SOH_preempt_michigander_allignment
+		}
+		will_lead_to_war_with = SWI
+		completion_reward = { 
+			create_wargoal = {
+				target = SWI
+				type = annex_everything
+			}
 		}
 	}
 
