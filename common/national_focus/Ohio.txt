@@ -2307,6 +2307,21 @@ continuous_focus_position = { x = 200 y = 1400 }
 	}
 
 	focus = {
+		id = SOH_no_more_concessions 
+		icon = GFX 
+		cost = 10
+		x = 0
+		y = 1
+		relative_position_id = SOH_farmor_labor_control
+		prerequisite = {
+			focus = SOH_farmor_labor_control
+		}
+		completion_reward = { 
+			add_ideas = SOH_no_more_concessions_idea
+		}
+	}
+
+	focus = {
 		id = SOH_grow_the_army
 		icon = GFX
 		cost = 5
@@ -2328,6 +2343,274 @@ continuous_focus_position = { x = 200 y = 1400 }
 	}
 
 	focus = {
+		id = SOH_march_on_columbus
+		icon = GFX 
+		cost = 10
+		x = -2
+		y = 1
+		relative_position_id = SOH_no_more_concessions
+		prerequisite = {
+			focus = SOH_no_more_concessions
+			focus = SOH_promise_share_the_wealth
+		}
+		completion_reward = { 
+			custom_effect_tooltip = SOH_march_on_columbus_civil_war_tt
+			custom_effect_tooltip = SOH_march_on_colubus_switch_tt
+			if = { # if have less then  49 stab and progressive civil war 
+				limit = {
+					has_stability < 0.49 
+					has_completed_focus = SOH_farmor_labor_control
+				}
+				start_civil_war = {
+					ideology = neutrality
+					army_ratio = 0.5
+					ruling_party = progressivism
+				}
+			}
+
+			if = { # if have less then  49 stab and longism civil war 
+				limit = {
+					has_stability < 0.49 
+					has_completed_focus = SOH_union_party_dominance
+				}
+				start_civil_war = {
+					ideology = neutrality
+					army_ratio = 0.5
+					ruling_party = longism
+				}
+			}
+
+			else_if = {
+				limit = {
+					has_stability > 0.49 
+					has_completed_focus = SOH_farmor_labor_control
+				}
+				set_politics = {
+					ruling_party = progressivism
+				}
+			}
+
+			else_if = {
+				limit = {
+					has_stability > 0.49 
+					has_completed_focus = SOH_union_party_dominance
+				}
+				set_politics = {
+					ruling_party = longism
+				}
+			}
+
+			if = {
+				limit = {
+					has_idea = SOH_economic_disagreement
+				}
+				remove_ideas = SOH_economic_disagreement
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_progressive_victory 
+		icon = GFX 
+		cost = 10
+		x = 3
+		y = 1
+		available = {
+			has_government = progressivism 
+			has_civil_war = no
+		}
+		relative_position_id = SOH_march_on_columbus
+		prerequisite = {
+			focus = SOH_march_on_columbus
+		}
+		mutually_exclusive = {
+			focus = SOH_populist_victory
+		}
+		completion_reward = { }
+	}
+
+	focus = {
+		id = SOH_populist_victory 
+		icon = GFX 
+		cost = 10
+		x = -3
+		y = 1
+		available = {
+			has_government = longism
+			has_civil_war = no
+		}
+		relative_position_id = SOH_march_on_columbus
+		prerequisite = {
+			focus = SOH_march_on_columbus
+		}
+		mutually_exclusive = {
+			focus = SOH_progressive_victory
+		}
+		completion_reward = { }
+	}
+
+	focus = {
+		id = SOH_share_the_wealth_programs
+		icon = GFX
+		cost = 10
+		x = -2
+		y = 1
+		prerequisite = {
+			focus = SOH_populist_victory
+		}
+		mutually_exclusive = {
+			focus = SOH_break_our_promise 
+		}
+		relative_position_id = SOH_populist_victory
+		completion_reward = { 
+			add_political_power = -50
+			add_popularity = {
+				ideology = longism
+				popularity = 0.15
+			}
+			add_ideas = SOH_share_the_wealth_program
+		}
+	}
+
+	focus = {
+		id = SOH_our_brothers_in_louisiana 
+		icon = GFX 
+		cost = 10 
+		x = -2
+		y = 1
+		available = {
+			is_in_faction = no
+			or = {
+				or = {
+					SLA = {
+						has_government = longism
+					}
+					SLA = {
+						exists = no
+					}
+				}
+	
+				or = {
+					SOK = {
+						has_government = longism
+					}
+					SOK = {
+						exists = no 
+					}
+				}
+			}
+		}
+		relative_position_id = SOH_share_the_wealth_programs
+		prerequisite = {
+			focus = SOH_share_the_wealth_programs
+		}
+		completion_reward = { 
+			custom_effect_tooltip = SOH_our_brothers_in_louisiana_tt
+			if = {
+				limit = {
+					SLA = {
+						is_faction_leader = yes
+					}
+				}
+				SLA = {
+					country_event = generic.2
+				}
+			}
+
+			if = {
+				limit = {
+					SOK = {
+						is_faction_leader = yes
+					}
+				}
+				SOK = {
+					country_event = generic.2
+				}
+			}
+
+			else = {
+				set_rule = {
+					can_create_factions = yes 
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_break_our_promise 
+		icon = GFX 
+		cost = 10 
+		x = 2
+		y = 1
+		prerequisite = {
+			focus = SOH_populist_victory
+		}
+		mutually_exclusive = {
+			focus = SOH_share_the_wealth_programs
+		}
+		relative_position_id = SOH_populist_victory
+		completion_reward = { 
+			add_political_power = 200
+			add_popularity = {
+				ideology = longism
+				popularity = -0.1
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_idea = war_economy
+					}
+				}
+				add_ideas = war_economy
+			}
+
+			if = {
+				limit = {
+					has_idea = war_economy
+				}
+				add_ideas = tot_economic_mobilisation
+			}
+
+			add_timed_idea = {
+				idea = SOH_broken_promises
+				days = 365
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_work_with_farmor_labor
+		icon = GFX 
+		cost = 5
+		x = 2
+		y = 1
+		relative_position_id = SOH_share_the_wealth_programs
+		prerequisite = {
+			focus = SOH_share_the_wealth_programs
+			focus = SOH_break_our_promise
+		}
+		completion_reward = { 
+			add_stability = 0.1
+		}
+	}
+
+	focus = {
+		id = SOH_merge_the_parties 
+		icon = GFX
+		cost = 10 
+		x = 0
+		y = 1
+		available = {
+			longism > 0.49
+		}
+		relative_position_id = SOH_work_with_farmor_labor
+		prerequisite = {
+			focus = SOH_work_with_farmor_labor
+		}
+		completion_reward = { }
+	}
+
+	focus = {
 		id = SOH_the_people_have_stood_up
 		icon = GFX 
 		cost = 10 
@@ -2340,7 +2623,12 @@ continuous_focus_position = { x = 200 y = 1400 }
 		}
 		x = 20
 		y = 1
-		completion_reward = { }
+		completion_reward = { 
+			add_timed_idea = {
+				idea = SOH_the_people_have_stood_up_idea
+				days = 1000 # 50 %
+			}
+		}
 	}
 	focus = {
 		id = SOH_host_elections
