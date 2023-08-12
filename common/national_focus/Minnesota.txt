@@ -8,14 +8,14 @@ focus_tree = {
 		} 	
 	}
 	# 		   continous focus position 		   #
-	continuous_focus_position = { x = 200 y = 1600 }
+	continuous_focus_position = { x = 200 y = 2200 }
 	#
 ####ECO TREE#
 	focus = {
 		id = SMN_deal_with_great_depression
 		icon = GFX_goal_generic_investments
 		cost = 7
-		x = 4
+		x = 39
 		y = 0
 		available = {
 		}
@@ -95,6 +95,9 @@ focus_tree = {
 					flag = SMN_log_drive_ready_again
 					days > 1865
 				}
+			}
+			NOT = {
+				has_completed_focus = SMN_deforestation
 			}
 		}
 		completion_reward = {
@@ -590,8 +593,24 @@ focus_tree = {
 		id = SMN_the_end_of_the_oconnor_agreement
 		icon = GFX_focus_RCA_promote_new_ideas
 		cost = 7
-		x = 26
+		x = 10
 		y = 0
+		offset = {
+			trigger = {
+				OR = {
+					has_country_flag = SMN_non_riot_side_tree
+				}
+			}
+			x = 15
+			y = 0
+		}
+		offset = {
+			trigger = {
+				has_country_flag = SMN_riot_side_tree
+			}
+			x = 16
+			y = 0
+		}
 		available = {
 			
 		}
@@ -611,6 +630,18 @@ focus_tree = {
 		y = 1
 		mutually_exclusive = {
 			focus = SMN_fascist_path focus = SMN_olson_declares_marshal_law
+		}
+		allow_branch = {
+			NOT = {
+				has_country_flag = SMN_riot_side_tree
+			}
+		}
+		offset = {
+			trigger = {
+				has_country_flag = SMN_non_riot_side_tree
+			}
+			x = 5
+			y = 0
 		}
 		bypass = {
 			AND = {
@@ -1328,6 +1359,94 @@ focus_tree = {
 			}
 		}
 	}
+	focus = {
+		id = SMN_tackle_the_communist_threat_democratic
+		icon = GFX_goal_anti_comintern_pact
+		available = {
+			has_completed_focus = SMN_a_state_of_emergency
+		}
+		prerequisite = {
+			focus = SMN_propose_unification focus = SMN_take_out_wisconsin
+		}
+		x = -1
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 3
+		}
+		relative_position_id = SMN_defense_of_our_homeland
+		available = {
+			any_country = {
+				has_government = communism
+				is_major = yes
+				is_subject = no
+			}
+		}
+		available_if_capitulated = yes
+
+		completion_reward = {
+			custom_effect_tooltip = SMN_wargoal_against_government_communist_tt
+			every_country = {
+				limit = {
+					has_government = communism
+					is_major = yes
+					NOT = { is_in_faction_with = ROOT }
+				}
+				ROOT = {
+					create_wargoal = {
+						target = PREV
+						type = topple_government
+						expire = 0
+					}
+				}
+			}
+			add_war_support = 0.05
+		}
+	}
+	focus = {
+		id = SMN_tackle_the_fascist_threat_democratic
+		icon = GFX_focus_generic_anti_fascist_diplomacy
+		available = {
+			has_completed_focus = SMN_a_state_of_emergency
+		}
+		prerequisite = {
+			focus = SMN_propose_unification focus = SMN_take_out_wisconsin
+		}
+		x = 1
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 3
+		}
+		relative_position_id = SMN_defense_of_our_homeland
+
+		available_if_capitulated = yes
+		available = {
+			any_country = {
+				has_government = fascism
+				is_major = yes
+				is_subject = no
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = SMN_wargoal_against_government_fascist_tt
+			every_country = {
+				limit = {
+					has_government = fascism
+					is_major = yes
+					NOT = { is_in_faction_with = ROOT }
+				}
+				ROOT = {
+					create_wargoal = {
+						target = PREV
+						type = topple_government
+						expire = 0
+					}
+				}
+			}
+			add_war_support = 0.05
+		}
+	}
 ####FASCIST PATH
 	focus = {
 		id = SMN_fascist_path
@@ -1337,6 +1456,18 @@ focus_tree = {
 		y = 1
 		mutually_exclusive = {
 			focus = SMN_olsons_death focus = SMN_olson_declares_marshal_law
+		}
+		allow_branch = {
+			NOT = {
+				has_country_flag = SMN_riot_side_tree
+			}
+		}
+		offset = {
+			trigger = {
+				has_country_flag = SMN_non_riot_side_tree
+			}
+			x = 6
+			y = 0
 		}
 		prerequisite = { focus = SMN_the_end_of_the_oconnor_agreement }
 		relative_position_id = SMN_the_end_of_the_oconnor_agreement
@@ -1364,6 +1495,22 @@ focus_tree = {
 		prerequisite = { focus = SMN_fascist_path }
 		relative_position_id = SMN_fascist_path
 		available = {
+			###UNTIL PELLEY IS REPLACED
+			NOT = {
+				any_other_country = {
+					OR = {
+						has_country_leader = {
+							character = USA_william_dudley_pelley
+						}
+						has_country_leader = {
+							character = SNC_william_dudley_pelley
+						}
+						has_country_leader = {
+							character = SWA_pelley
+						}
+					}
+				}
+			}
 		}
 		completion_reward = {
 			add_popularity = {
@@ -2241,7 +2388,7 @@ focus_tree = {
 				add_idea = SMN_vikings_idea_2
 			}
 			set_cosmetic_tag = vinland_tag
-			add_threat = 10
+			add_threat = 5
 			swap_ruler_traits = {
 				remove = illegitimate_ruler
 				add = legitimized_the_stones
@@ -2392,10 +2539,121 @@ focus_tree = {
 				core_the_united_states = yes	
 			}
 			set_cosmetic_tag = nordic_america
-			add_threat = 10
+			add_threat = 5
 			swap_ruler_traits = {
 				remove = illegitimate_ruler
 				add = united_our_people
+			}
+		}
+	}
+	focus = {
+		id = SMN_lebenstrum
+		icon = GFX_goal_generic_territory_or_war
+		cost = 14.4
+		x = 2
+		y = 1
+		prerequisite = {
+			focus = SMN_nordic_america focus = SMN_claim_vinland
+		}
+		relative_position_id = SMN_nordic_america
+		available = {
+		}
+		will_lead_to_war_with = PMB
+		will_lead_to_war_with = PSK
+		will_lead_to_war_with = PAB
+		will_lead_to_war_with = PBC
+		will_lead_to_war_with = PYT
+		will_lead_to_war_with = PNT
+		completion_reward = {
+			add_named_threat = {
+				threat = 10
+				name = SMN_lebenstrum_delcared_threat
+			}
+			add_war_support = 0.10
+			news_event = {
+				id = usastates_news.51
+				days = 4
+			}
+			create_wargoal = {
+				target = PMB
+				type = annex_everything
+			}
+			create_wargoal = {
+				target = PSK
+				type = annex_everything
+			}
+			create_wargoal = {
+				target = PAB
+				type = annex_everything
+			}
+			create_wargoal = {
+				target = PBC
+				type = annex_everything
+			}
+			create_wargoal = {
+				target = PYT
+				type = annex_everything
+			}
+			create_wargoal = {
+				target = PNT
+				type = annex_everything
+			}
+			every_state = {
+				limit = {
+					OR = {
+						is_core_of = PMB
+						is_core_of = PSK
+						is_core_of = PAB
+						is_core_of = PBC
+						is_core_of = PYT
+						is_core_of = PNT
+					}
+				}
+				add_claim_by = SMN
+			}
+		}
+	}
+	focus = {
+		id = SMN_take_out_the_communist
+		icon = GFX_goal_anti_comintern_pact
+		cost = 8
+		x = 0
+		y = 1
+		prerequisite = {
+			focus = SMN_lebenstrum
+		}
+		relative_position_id = SMN_lebenstrum
+		available = {
+			OR = {
+				SAK = {
+					exists = yes
+					has_government = communism
+				}
+				SOJ = {
+					exists = yes
+					has_government = communism
+				}
+			}
+			
+		}
+		will_lead_to_war_with = SAK
+		will_lead_to_war_with = SOJ
+		completion_reward = {
+			if = {
+				limit = {
+					SAK = {
+						has_government = communism
+					}
+				}
+				create_wargoal = {
+					target = SAK
+					type = annex_everything
+				}
+			}
+			###THEY HAVE NO OTHER PATH SO WHY BOTHER WITH LIMIT
+			create_wargoal = {
+				target = SOJ
+				type = annex_everything
 			}
 		}
 	}
@@ -2406,6 +2664,18 @@ focus_tree = {
 		cost = 1
 		x = 16
 		y = 1
+		allow_branch = {
+			NOT = {
+				has_country_flag = SMN_non_riot_side_tree
+			}
+		}
+		offset = {
+			x = -16
+			y = 0
+			trigger = {
+				has_country_flag = SMN_riot_side_tree
+			}
+		}
 		mutually_exclusive = {
 			focus = SMN_fascist_path focus = SMN_olsons_death
 		}
@@ -2426,13 +2696,13 @@ focus_tree = {
 		id = SMN_side_with_the_police
 		icon = GFX_focus_generic_on_strike
 		cost = 3
-		x = 11
-		y = 2
+		x = -5
+		y = 1
 		mutually_exclusive = {
 			focus = SMN_side_with_the_rioters
 		}
 		prerequisite = { focus = SMN_olson_declares_marshal_law }
-		relative_position_id = SMN_the_end_of_the_oconnor_agreement
+		relative_position_id = SMN_olson_declares_marshal_law
 		bypass = {
 		}
 		available = {
@@ -2771,6 +3041,9 @@ focus_tree = {
 			
 		}
 		prerequisite = { focus = SMN_rileys_minnesota }
+		prerequisite = {
+			focus = SMN_negotiate_with_the_strikers
+		}
 		relative_position_id = SMN_rileys_minnesota
 		available = {
 			has_country_flag = SMN_negotiated_with_strikers_flag
@@ -2828,6 +3101,9 @@ focus_tree = {
 			
 		}
 		prerequisite = { focus = SMN_rileys_minnesota }
+		prerequisite = {
+			focus = SMN_attack_the_strikers
+		}
 		relative_position_id = SMN_rileys_minnesota
 		available = {
 			has_country_flag = SMN_broke_the_strike_flag
@@ -3138,6 +3414,46 @@ focus_tree = {
 					remove_core_of = SMN
 				}
 			}
+		}
+	}
+	focus = {
+		id = SMN_takeout_threats_to_gods_children
+		icon = GFX_goal_generic_major_war
+		prerequisite = {
+			focus = SMN_defend_gods_children focus = SMN_one_catholic_america
+		}
+		prerequisite = {
+			focus = SMN_defend_our_faith
+		}
+		x = 0
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 3
+		}
+		relative_position_id = SMN_defend_our_faith
+
+		available_if_capitulated = yes
+		available = {
+			any_country = {
+				has_added_tension_amount > 20
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = SMN_country_generated_world_tension_tt
+			every_other_country = {
+				limit = {
+					has_added_tension_amount > 20
+				}
+				ROOT = {
+					create_wargoal = {
+						target = PREV
+						type = topple_government
+						expire = 0
+					}
+				}
+			}
+			add_war_support = 0.05
 		}
 	}
 	focus = {
@@ -3548,13 +3864,13 @@ focus_tree = {
 		id = SMN_side_with_the_rioters
 		icon = GFX_focus_SMN_collective_labor
 		cost = 3
-		x = 21
-		y = 2
+		x = 5
+		y = 1
 		mutually_exclusive = {
 			focus = SMN_side_with_the_police
 		}
 		prerequisite = { focus = SMN_olson_declares_marshal_law }
-		relative_position_id = SMN_the_end_of_the_oconnor_agreement
+		relative_position_id = SMN_olson_declares_marshal_law
 		bypass = {
 		}
 		available = {
@@ -4263,8 +4579,8 @@ focus_tree = {
 		id = SMN_align_illinois
 		icon = GFX_focus_generic_attack_illinois
 		cost = 7
-		x = -1
-		y = 6
+		x = -4
+		y = 5
 		mutually_exclusive = {
 			
 		}
@@ -4311,8 +4627,8 @@ focus_tree = {
 		id = SMN_align_superior
 		icon = GFX_focus_SMI_do_not_the_superior
 		cost = 7
-		x = 1
-		y = 6
+		x = 4
+		y = 5
 		mutually_exclusive = {
 			
 		}
@@ -4414,11 +4730,23 @@ focus_tree = {
 		icon = GFX_focus_generic_join_comintern
 		cost = 10
 		x = 0
-		y = 4
+		y = 3
 		mutually_exclusive = {
 			
 		}
-		prerequisite = { focus = SMN_align_illinois focus = SMN_align_superior }
+		prerequisite = { focus = SMN_align_illinois }
+		prerequisite = {
+			focus = SMN_align_iowa
+		}
+		prerequisite = {
+			focus = SMN_align_the_dakotas
+		}
+		prerequisite = {
+			focus = SMN_align_wisconsin
+		}
+		prerequisite = {
+			focus = SMN_align_superior
+		}
 		relative_position_id = SMN_the_fifth_international
 		available = {
 			OR = {
@@ -4894,6 +5222,7 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
+			custom_effect_tooltip = SMN_wargoal_against_government_fascist_tt
 			every_country = {
 				limit = {
 					has_government = fascism
@@ -4938,6 +5267,7 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
+			custom_effect_tooltip = SMN_wargoal_against_government_capitalist_tt
 			every_country = {
 				limit = {
 					OR = {
@@ -4962,7 +5292,7 @@ focus_tree = {
 		id = SMN_army_reform
 		icon = GFX_goal_generic_allies_build_infantry
 		cost = 7
-		x = 56
+		x = 50
 		y = 0
 		available = {
 		}
@@ -5193,7 +5523,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SMN_modernize_matience_companies
-		icon = GFX_focus_generic_tank_production
+		icon = GFX_goal_generic_build_tank
 		cost = 5
 		x = -1
 		y = 2
@@ -5354,7 +5684,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SMN_new_armor_research
-		icon = GFX_goal_generic_build_tank
+		icon = GFX_focus_generic_tank_production
 		cost = 5
 		x = 2
 		y = 2
@@ -5508,7 +5838,7 @@ focus_tree = {
 		id = SMN_build_up_msp
 		icon = GFX_goal_generic_build_airforce
 		cost = 7
-		x = 65
+		x = 59
 		y = 0
 		mutually_exclusive = {
 			
@@ -5732,7 +6062,7 @@ focus_tree = {
 	focus = {
 		id = SMN_duluth_dockyards
 		icon = GFX_goal_generic_build_navy
-		x = 71
+		x = 65
 		y = 0
 
 		cost = 5
