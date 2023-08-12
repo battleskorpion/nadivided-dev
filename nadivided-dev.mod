@@ -10,6 +10,8 @@ tags={
 	"Gameplay"
 	"Alternative History"
 	"National Focuses"
+	"Graphics"
+	"Technologies"
 }
 replace_path="common/abilities"
 replace_path="common/achievements.txt"
