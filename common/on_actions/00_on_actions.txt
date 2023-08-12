@@ -310,18 +310,25 @@ on_actions = {
 					set_country_flag = mefo_bills_removed_through_war
 				}
 			}
-
-			#if = {
-			#	limit = {
-			#		FROM = {
-			#			has_civil_war = yes
-			#			original_tag = SPR
-			#		}
-			#		has_civil_war = yes
-			#		original_tag = SPR
-            #
-			#	}
-			#}
+			###EVENTS FOR LESS THAN 
+			if = {
+				limit = {
+					ROOT = { original_tag = SOH }
+					ROOT = { has_idea = SOH_military_readiness }
+					check_variable = {
+						SOH_military_readiness_variable < 90	
+					}
+					NOT = { FROM = { original_tag = SOH } } # Don't remove it from Fascist Germany if they start the civil war
+					NOT = { ROOT = { has_country_flag = SOH_has_gone_to_war_unready } } ###DONT HAPPEN TWICE
+				}
+				ROOT = {
+					country_event = {
+						id = ohio.10
+						days = 10
+					}
+					set_country_flag = SOH_has_gone_to_war_unready
+				}
+			}
 		}
 	}
 
@@ -496,6 +503,11 @@ on_actions = {
 		effect = {
 			SMN = {
 				activate_advisor = SMN_anton_j_rockne
+			}
+			####THE STEEL WARS OHIO GIVES CONCESSIONS
+			SOH = {
+				give_resource_rights = { receiver = SIN state = 99 }
+				give_resource_rights = { receiver = SMI state = 540 }
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 add_namespace = Ohio
 
+####THIS NEEDS TO BE REDONE FOR OHIO GANG INFIGHTING, IS OMITTED FOR CURRENT TREE DUE TO KOM RUSH
 country_event = {
 	id = Ohio.1
 	title = Ohio.1.t
@@ -10,7 +11,7 @@ country_event = {
 
 	trigger = {
 		tag = SOH
-		has_completed_focus = SOH_the_gang
+		#has_completed_focus = SOH_the_gang
 	}
 	option = {
 		name = Ohio.1.a
@@ -421,5 +422,87 @@ country_event = {
 		name = ohio.9.b 
 		add_political_power = 100
 		add_stability = 0.05
+	}
+}
+##### OHIO GOES TO WAR WITH A SET MILITARY READINESS, events for declaring war from on_actions
+country_event = {
+	id = ohio.10 # 
+	title = ohio.10.t
+	desc = ohio.10.d 
+	#is_triggered_only = no 
+	fire_only_once = yes
+	picture = GFX_report_event_soldiers_marching
+	#trigger = {
+	#	check_variable = {
+	#		SOH_military_readiness_variable < 90
+	#	}
+	#	has_war = yes
+	#}
+	option = { #####WORST EVENT TYPE READINESS LESS THAN 25
+		name = ohio.10.a
+		trigger = {
+			clamp_temp_variable = {
+				var = SOH_military_readiness_variable
+				min = 0
+				max = 25
+			}
+		}
+		set_country_flag = SOH_bad_readiness_flag
+		add_political_power = -75
+		###FOR DECISions
+		add_ideas = SOH_ill_prepared_planning
+		add_ideas = SOH_ill_prepared_supply_lines
+		add_ideas = SOH_ill_prepared_industries
+		add_ideas = SOH_ill_prepared_industrial_capacity
+	}
+
+	option = { # MEDIUM EVENT, LESSER IDEAS
+		name = ohio.10.b
+		trigger = {
+			clamp_temp_variable = {
+				var = SOH_military_readiness_variable
+				min = 25
+				max = 55
+			}
+		}
+		set_country_flag = SOH_mid_readiness_flag
+		add_political_power = -50
+		###FOR DECISions
+		add_ideas = SOH_ill_prepared_planning_lesser
+		add_ideas = SOH_ill_prepared_supply_lines_lesser
+		add_ideas = SOH_ill_prepared_industries_lesser
+		add_ideas = SOH_ill_prepared_industrial_capacity_lesser
+	}
+	option = { # NOT SO BAD< TIMED IDEAS OF LESSER
+		name = ohio.10.c
+		trigger = {
+			clamp_temp_variable = {
+				var = SOH_military_readiness_variable
+				min = 55
+				max = 90
+			}
+		}
+		add_political_power = -25
+		set_country_flag = SOH_mid_readiness_flag
+		###FOR DECISions
+		set_variable = {
+			SOH_plunder_time = 70
+		}
+		add_timed_idea = {
+			idea = SOH_ill_prepared_planning_lesser
+			days = 180
+		}
+		add_timed_idea = {
+			idea = SOH_ill_prepared_supply_lines_lesser
+			days = 180
+		}
+		add_timed_idea = {
+			idea = SOH_ill_prepared_industries_lesser
+			days = 180
+		}
+		add_timed_idea = {
+			idea = SOH_ill_prepared_industrial_capacity_lesser
+			days = 180
+		}
 	}
 }
