@@ -654,9 +654,6 @@ focus_tree = {
 				SOR = {
 					is_subject_of = SWA
 				}
-				NOT = {
-				country_exists = SOR	
-				}
 			}
 		}
 		
@@ -1131,7 +1128,6 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-		custom_effect_tooltip = SWA_cali_aid3_tt	
 		SCA = {
 		country_event = {
                 id = washington.23
@@ -1169,7 +1165,6 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-		custom_effect_tooltip = SWA_cali_aid2_tt	
 		SCA = {
 		country_event = {
                 id = washington.22
@@ -1207,7 +1202,6 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-		custom_effect_tooltip = SWA_cali_aid1_tt	
 		SCA = {
 		country_event = {
                 id = washington.21
@@ -1240,7 +1234,6 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			
 			unlock_decision_category_tooltip = SWA_republican_cores
 			add_state_claim = 681
 			add_state_claim = 194
@@ -1254,7 +1247,9 @@ focus_tree = {
 		y = 5
 		cost = 5
 		available_if_capitulated = yes
-		prerequisite = { focus = SWA_claim_greater_washington}
+		prerequisite = { focus = SWA_ask_for_equipment
+		focus = SWA_ask_for_manpower
+		focus = SWA_request_a_military_mission}
 		allow_branch = {
 			NOT = {
 				OR = {
@@ -1386,16 +1381,9 @@ focus_tree = {
 		y = 8
 		cost = 3
 		bypass = {
-		OR = {
 		SCA = {
 		NOT = { has_government = democratic }	
-		}
-		NOT = {
-		country_exists = SOR
-		country_exists = SRO	
-		}
 		}	
-			
 		}
 		available_if_capitulated = no
 		available = {
@@ -1420,10 +1408,12 @@ focus_tree = {
 		}
 		#eventforcalitogivepermissiontoWA
 		completion_reward = {
-		create_wargoal = {
-				type = annex_everything
-				target = SOR
-			}
+		custom_effect_tooltip = SWA_SCA_ACCEPT_tt	
+		SCA = {
+		country_event = {
+                id = washington.26
+            }
+		}
 		}
 	}
 	focus = {
@@ -1771,7 +1761,6 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-		
 		add_political_power = -50
 			add_popularity = {
 				ideology = progressivism
@@ -2160,10 +2149,6 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-		swap_ideas = {
-				remove_idea = SWA_communist_agitation
-				add_idea = SWA_communist_agitation2
-			}	
 		add_ideas = SWA_working_with_unions	
 		add_political_power = -30
 			add_popularity = {
@@ -2185,10 +2170,6 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-		swap_ideas = {
-				remove_idea = SWA_communist_agitation2
-				add_idea = SWA_communist_agitation3
-			}	
 		add_popularity = {
 				ideology = communism
 				popularity = -0.03
@@ -2249,7 +2230,19 @@ focus_tree = {
     long_name = SWA_repub_long 
     name = SWA_repub 
 }	
-		promote_character = SWA_hartley
+		recruit_character = SWA_hartley
+		remove_country_leader_role = {
+			character = SWA_martin
+			ideology = liberalism
+		}
+		add_country_leader_role = {
+			character = "SWA_hartley"
+			country_leader = {
+				ideology = conservatism
+				traits = { experienced_lawyer }
+				expire = "1965.3.1.1"
+			}
+    }
 		}
 	}
 	focus = {
@@ -3390,9 +3383,6 @@ focus_tree = {
 		prerequisite = { focus = SWA_reach_out_to_progressive_heartland }
 		mutually_exclusive = { focus = SWA_form_our_own_progressive_faction }
 		available = {
-		NOT = {
-		country_exists = SSW	
-		}	
 		SWI = {
 		is_faction_leader = yes	
 		}
@@ -3537,7 +3527,7 @@ focus_tree = {
 		}
 		completion_reward = {
 		add_political_power = -50	
-		core_all_of_oregon = yes	
+		core_oregon = yes	
 			create_wargoal = {
 				type = annex_everything
 				target = SOR
@@ -3557,9 +3547,6 @@ focus_tree = {
 		cost = 5
 		available_if_capitulated = yes
 		prerequisite = { focus = SWA_a_northern_corridor }
-		available = {
-		is_neighbor_of = SMT	
-		}
 		ai_will_do = {
 			factor = 1
 		}
@@ -3577,15 +3564,8 @@ focus_tree = {
 		y = 1
 		relative_position_id = SWA_montana
 		cost = 5
-		available_if_capitulated = no
+		available_if_capitulated = yes
 		prerequisite = { focus = SWA_montana }
-		available = {
-		OR = { 
-		is_neighbor_of = SND
-		is_neighbor_of = SND
-		}	
-		
-		}
 		ai_will_do = {
 			factor = 1
 		}
@@ -5458,7 +5438,6 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			promote_character = SWA_Kellog
 			set_cosmetic_tag = SWA_klan_time
 			add_ideas = SWA_outraged_at_klan_rule
 			set_politics = {
@@ -5860,16 +5839,10 @@ focus_tree = {
 		y = 1
 		relative_position_id = SWA_super_rallies
 		available = {
-		OR = {
-		country_exists = SRO
-		country_exists = SOR
+		SOR = {
+		has_government = fascism	
 		}	
-		}
-		bypass = {
-		NOT = {
-		country_exists = SRO
-		country_exists = SOR	
-		}	
+		is_faction_leader = yes	
 		}
 		cost = 5
 		available_if_capitulated = yes
@@ -6112,11 +6085,6 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-		set_party_name = { 
-				ideology = fascism 
-				long_name = SWA_silver_shirt_party_long
-				name = SWA_silver_shirt_party 
-			}	
 		add_popularity = {
 				ideology = longism
 				popularity = 0.10
@@ -6859,11 +6827,6 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-		set_party_name = { 
-				ideology = fascism 
-				long_name = SWA_silver_shirt_party_long
-				name = SWA_silver_shirt_party 
-			}	
 		add_popularity = {
 				ideology = fascism
 				popularity = 0.10
@@ -7376,8 +7339,7 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-		promote_character = SWA_pelley
-		add_war_support = 0.05
+		#recruit character pelley	
 		}
 	}
 	#timed idea for mil building
