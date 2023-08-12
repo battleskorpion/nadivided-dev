@@ -1,0 +1,3430 @@
+
+focus_tree = { 
+	id = SMA
+	country = { 
+		factor = 0 
+		modifier = { 
+			add = 10 
+			tag = SMA 
+		} 	
+	} 
+	
+	# 		   continous focus position 		   #
+	continuous_focus_position = { x = 200 y = 1600 }
+	#						   					   #
+	
+	# TODO: add in the Kennedy's and stuff? 
+	
+	#Focus for 
+	focus = { 
+		id = SMA_the_commonwealth
+		icon = GFX_goal_unknown
+		x = 8
+		y = 0
+		cost = 2
+		available_if_capitulated = yes 
+		#prerequisite = { focus =  } 
+		#mutually_exclusive = { focus =  } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			add_political_power = 25
+			add_stability = 0.01
+		}
+	} 
+	
+	#Focus for 
+	focus = { 
+		id = SMA_uphold_the_constitution
+		icon = GFX_goal_unknown
+		x = 7
+		y = 1
+		cost = 2
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_the_commonwealth } 
+		mutually_exclusive = { focus = SMA_a_new_era_of_governance } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			add_stability = 0.05
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.03
+			} 
+			add_popularity = {
+				ideology = neutrality 
+				popularity = -0.06
+			}
+			add_popularity = {
+				ideology = communism 
+				popularity = 0.005
+			} 
+			add_popularity = {
+				ideology = longism
+				popularity = 0.01
+			} 
+			add_popularity = {
+				ideology = fascism
+				popularity = -0.005
+			}
+			add_popularity = {
+				ideology = progressivism
+				popularity = 0.025
+			}
+		}
+	} 
+	
+	#Focus for 
+	focus = { 
+		id = SMA_a_new_era_of_governance
+		icon = GFX_goal_unknown
+		x = 9
+		y = 1
+		cost = 2
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_the_commonwealth} 
+		mutually_exclusive = { focus = SMA_uphold_the_constitution} 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			add_political_power = -50
+			add_stability = -0.03
+			add_popularity= { 
+				ideology = democratic 
+				popularity = -0.03
+			}
+			add_popularity = {
+				ideology = neutrality
+				popularity = -0.025
+			}
+			add_popularity = {
+				ideology = longism
+				popularity = 0.015
+			} 
+			add_popularity = {
+				ideology = communism
+				popularity = 0.015
+			} 
+			add_popularity = {
+				ideology = progressivism
+				popularity = 0.02
+			} 
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.007
+			}
+		}
+	} 
+	
+	#Focus for 
+	focus = { 
+		id = SMA_a_perservering_nation
+		icon = GFX_goal_unknown
+		x = 8
+		y = 2
+		cost = 2
+		available_if_capitulated = no 
+		prerequisite = { focus = SMA_uphold_the_constitution focus = SMA_a_new_era_of_governance } 
+		#mutually_exclusive = { focus =  } 		
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		available = {
+			date > 1940.1.1
+			country_exists = SMA
+		}
+		completion_reward = {
+			add_political_power = 25
+			add_stability = 0.10
+			add_war_support = 0.01
+		}
+	} 
+
+
+	#------------------------------#
+	 
+	#			ECONOMIC		   # 
+	
+	#------------------------------#
+	
+	#Focus for Industry of Massachusetts
+	focus = { 
+		id = SMA_industryofmassachusetts
+		#icon = GFX_industryofmassachusetts
+		icon = GFX_focus_SMA_flag_democratic_banner
+		x = 8
+		y = 5
+		cost = 5
+		available_if_capitulated = yes 
+		completion_reward = { 
+			random_owned_controlled_state={
+				add_extra_state_shared_building_slots = 2
+				set_state_flag = SMA_industryofmassachusetts_flag
+			}
+		}
+	} 
+	
+	#Focus for In Memorium of the Tea Party
+	focus = { 
+		id = SMA_inmemoriumoftheteaparty
+		icon = GFX_goal_generic_navy_cruiser
+		x = 4
+		y = 7
+		cost = 8
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_expandbostonharbor } 
+		completion_reward = { 
+			navy_experience = 20 
+			
+			add_equipment_to_stockpile= {
+				type = convoy_1 
+				amount = 50
+				producer = SMA
+			}
+			random_owned_controlled_state={
+				limit = {
+					free_building_slots = {
+						building = dockyard
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = SMA_in_memorium_of_the_tea_party
+			}
+			
+			add_ideas = {
+				boston_tea_party_convoy_raiding
+			}
+			add_ideas = {
+				boston_tea_party_other 				#naval legacy
+			}
+			# you can see all info better when these are seperately added, can see the effects of both. 
+		} 
+	} 
+
+	#Focus for Highway Upgrades
+	focus = { 
+		id = SMA_highwayupgrades
+		icon = GFX_goal_generic_construct_infrastructure
+		x = 10
+		y = 7
+		cost = 8
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_revivetextileindustry focus = SMA_servicebasedeconomy }  
+		completion_reward = { 
+			random_owned_controlled_state= {
+				add_building_construction = {
+					type = infrastructure
+					level = 4
+					instant_build = yes
+				}
+			}
+		} 
+	} 
+
+	#Focus for Subsidize Springfield Armory
+	focus = { 
+		id = SMA_subsidizespringfieldarmory
+		icon = GFX_goal_generic_construct_mil_factory
+		x = 6
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_industryofmassachusetts } 
+		completion_reward = { 
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 2
+				set_state_flag = SMA_subsidize_springfield_armory
+			}
+		}
+	}
+	
+	#Focus for M1 "Garand" Rifle Contract
+	focus = { 
+		id = SMA_m1garandriflecontract
+		icon = GFX_goal_generic_military_sphere
+		x = 6
+		y = 7
+		cost = 8
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_subsidizespringfieldarmory } 
+		completion_reward = { 
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = SMA_m1_garand_rifle_contract
+			}	
+
+			add_equipment_production = {
+				equipment = {
+					type = USA_infantry_equipment_1 
+					creator = 'SMA'
+				}
+				requested_factories = 2
+				progress = 0.95 
+			}
+			add_equipment_to_stockpile = {
+				type = infantry_equipment_1		#was USA_infantry_equipment_1, I just want it to add M1 Garands, hopefully this will fix
+				amount = 10000 
+				producer = SMA 
+			}
+		}		
+	}
+
+	#Focus for Expand Boston Harbor
+	focus = { 
+		id = SMA_expandbostonharbor
+		icon = GFX_goal_generic_construct_naval_dockyard
+		x = 4
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_industryofmassachusetts } 
+		completion_reward = { 
+			random_owned_controlled_state={
+				limit = {
+					free_building_slots = {
+						building = dockyard
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}
+				add_extra_state_shared_building_slots = 2
+				set_state_flag = SMA_expand_boston_harbor
+			}
+		}
+	}
+
+	#Focus for Service-Based Economy
+	focus = { 
+		id = SMA_servicebasedeconomy
+		icon = GFX_goal_generic_production
+		x = 10
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_industryofmassachusetts } 
+		mutually_exclusive = { focus = SMA_revivetextileindustry }
+		
+		completion_reward = { 
+			random_owned_controlled_state= {
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state= {
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state={
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = SMA_service_based_economy
+			}
+		} 
+	} 
+
+	#Focus for Revive Textile Industry
+	focus = { 
+		id = SMA_revivetextileindustry
+		icon = GFX_goal_generic_construct_civ_factory
+		x = 8
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_industryofmassachusetts }
+		mutually_exclusive = { focus = SMA_servicebasedeconomy } 
+		
+		completion_reward = { 
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = SMA_revive_textile_industry
+			}
+			
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = SMA_revive_textile_industry
+			}
+		} 
+	} 
+
+	#Focus for Harvard Research Projects
+	focus = { 
+		id = SMA_harvardresearchprojects
+		icon = GFX_goal_tfv_generic_tech_sharing
+		x = 8
+		y = 9
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_hireharvardalumni } 
+		
+		available = { 
+			num_of_factories > 25
+		}
+		
+		completion_reward = { 
+			add_research_slot= 1
+			
+		}
+	}
+
+	#Focus for Hire Harvard Alumni
+	focus = { 
+		id = SMA_hireharvardalumni
+		icon = GFX_goal_continuous_research
+		x = 8
+		y = 8
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_additionalbusinesssubsidies focus = SMA_highwayupgrades } 
+		
+		completion_reward = { 
+			add_tech_bonus= {
+				bonus = 0.10
+				uses = 7 
+				category = industry 
+			}
+		}
+	}
+	
+	#Focus for MIT Research Projects
+	focus = { 
+		id = SMA_mitresearchprojects
+		icon = GFX_focus_research2
+		x = 10
+		y = 9
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_hiremitalumni } 
+		available = { 
+			num_of_factories > 50
+		} 
+		completion_reward = { 
+			add_research_slot= 1
+		} 
+	} 
+	
+	#Focus for Hire MIT Alumni
+	focus = { 
+		id = SMA_hiremitalumni
+		icon = GFX_goal_generic_scientific_exchange
+		x = 10
+		y = 8
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_highwayupgrades focus = SMA_additionalbusinesssubsidies } 
+		completion_reward = { 
+			add_tech_bonus= {
+				bonus = 0.10
+				uses = 2 
+				category = radar_tech 
+			}
+
+			add_tech_bonus= {
+				bonus = 0.10
+				uses = 5
+				category = electronics 
+			}
+		} 
+	}
+
+	#Focus for Nuclear Ambitions
+	focus = { 
+		id = SMA_nuclear_ambitions
+		icon = GFX_goal_tfv_generic_tech_sharing
+		x = 9
+		y = 10
+		cost = 8
+		available_if_capitulated = yes 
+		available = {
+			date > 1939.1.1
+		}
+		prerequisite = { focus = SMA_harvardresearchprojects } 
+		prerequisite = { focus = SMA_mitresearchprojects } 
+		
+		available = { 
+			num_of_factories > 25
+		}
+		
+		completion_reward = { 
+			add_tech_bonus= {
+				bonus = 0.15
+				uses = 3
+				category = nuclear 
+			}
+		}
+	}
+
+	#Focus for Additional Business Subsidies
+	focus = { 
+		id = SMA_additionalbusinesssubsidies
+		icon = GFX_goal_generic_construct_civ_factory
+		x = 8
+		y = 7
+		cost = 8
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_revivetextileindustry focus = SMA_servicebasedeconomy } 
+		completion_reward = {  
+			random_owned_controlled_state={
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				set_state_flag = SMA_additional_industrial_subsidies
+			}
+		} 
+	} 
+	
+	#Focus for Forts of Boston
+	focus = { 
+		id = SMA_fortsofboston
+		icon = GFX_goal_unknown
+		x = 12
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_industryofmassachusetts } 
+		ai_will_do = { 
+			factor = 1
+		}
+		
+		completion_reward = {
+			5 = { 					#city/state of boston
+				add_building_construction = {
+					type = bunker
+					province = 2394		#boston
+					level = 4
+                }  
+				add_building_construction = {
+					type = coastal_bunker
+					province = 2394		#boston
+					level = 4
+				}
+            }
+			
+		}
+	} 
+
+	#Focus for Revitalize the New Bedford Forts
+	focus = { 
+		id = SMA_revitalizethenewbedfordforts
+		icon = GFX_revitalizethenewbedfordforts
+		x = 12
+		y = 7
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_fortsofboston } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			3 = { 					#bristol county ma 
+				add_building_construction = {
+					type = coastal_bunker
+					province = 3437		#new bedford
+					level = 4
+				}
+				add_building_construction = {
+					type = coastal_bunker
+					province = 3504		#fall river
+					level = 4
+				}
+            }
+			
+		}
+	}
+	
+	#Focus for Return to the New England Road Marking System
+	focus = { 
+		id = SMA_returntothenewenglandroadmarkingsystem
+		icon = GFX_focus_NE_road_marking
+		x = 11
+		y = 10
+		cost = 5
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_highwayupgrades } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		completion_reward = { 	
+			random_owned_controlled_state = {
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			
+			SRI = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = new_england_road_marking_modifier
+				}
+			}
+			SCT = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = new_england_road_marking_modifier
+				}
+			}
+			SVT = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = new_england_road_marking_modifier
+				}
+			}
+			SNH = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = new_england_road_marking_modifier
+				}
+			}
+			SME = {
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = new_england_road_marking_modifier
+				}
+			}
+			#add opinion modifier of other new england states
+		}
+	} 
+
+	#Focus for Unify New England
+	focus = { 
+		id = SMA_unifynewengland
+		icon = GFX_focus_new_england_flag_democratic_banner
+		x = 11
+		y = 11
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_returntothenewenglandroadmarkingsystem } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		available = { 
+			OR = {
+				has_government = democratic
+				AND = {
+					has_government = neutrality
+					fascism < 0.25
+					communism < 0.25
+				}
+				date > 1938.8.1
+			}
+		}
+		completion_reward = { 
+			SRI = {
+				country_event = {
+					id = massachusetts.1
+					days = 10
+					random = 50
+				}	
+			}
+			SCT = {
+				country_event = {
+					id = massachusetts.1
+					days = 10
+					random = 50
+				}	
+			}
+			SVT = {
+				country_event = {
+					id = massachusetts.1
+					days = 10
+					random = 50
+				}	
+			}
+			SNH = {
+				country_event = {
+					id = massachusetts.1
+					days = 10
+					random = 50
+				}	
+			}
+			SME = {
+				country_event = {
+					id = massachusetts.1
+					days = 10
+					random = 50
+				}	
+			}
+			#it will spark an event for countries to decide to join. ai will have a higher chance of joining, maybe depending on their ideology not sure yet, if they dont join, obtain wargoal. A way for democratic mass to actually do something.
+		} 
+	} 
+	
+	
+	##################################################################################
+	
+	
+	#Focus for Winning
+	focus = { 
+		id = SMA_winning
+		icon = GFX_goal_unknown
+		x = 45
+		y = 7
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_gettingthepopularvote } 
+		prerequisite = { focus = SMA_reclaimallies } 
+		prerequisite = { focus = SMA_gainmobfavor } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = { 
+			add_stability = 0.15
+			add_ideas = { SMA_winning_idea }
+		}
+	} 
+
+	#Focus for Our State
+	focus = { 
+		id = SMA_ourstate
+		icon = GFX_goal_unknown
+		x = 38
+		y = 5
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_theopposition } 
+		ai_will_do = { 
+			factor = 1
+		} 
+	} 
+	
+	#Focus for An offensive project
+	focus = { 
+		id = SMA_offensive_project
+		icon = GFX_goal_unknown
+		x = 37
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_ourstate } 
+		mutually_exclusive = { focus = SMA_armed_defense }
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			custom_effect_tooltip = SMA_offensive_projects_branch_tt
+			#will unlock branch stuff elsewhere in focus tree
+		}
+	} 
+	
+	#Focus for Armed Defense
+	focus = { 
+		id = SMA_armed_defense
+		icon = GFX_goal_unknown
+		x = 39
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_ourstate } 
+		mutually_exclusive = { focus = SMA_offensive_project }
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			custom_effect_tooltip = SMA_armed_defense_branch_tt
+			#will unlock branch stuff elsewhere in focus tree
+		}
+	} 
+	
+
+	#Focus for Our People
+	focus = { 
+		id = SMA_ourpeople
+		icon = GFX_goal_unknown
+		x = 34
+		y = 5
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_theopposition } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			
+		}
+	} 
+	
+	#Focus for A Nation of Immigrants
+	focus = { 
+		id = SMA_a_nation_of_immigrants
+		icon = GFX_goal_unknown
+		x = 33
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_ourpeople } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			
+		}
+	}
+	
+	#Focus for Appeal to New Jersey
+	focus = { 
+		id = SMA_appeal_to_nj
+		icon = GFX_goal_unknown
+		x = 32
+		y = 7
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_a_nation_of_immigrants }
+		mutually_exclusive = { focus = SMA_appeal_to_ny }
+		
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			
+		}
+	}
+	
+	#Focus for Invade New York
+	focus = { 
+		id = SMA_invade_new_york
+		icon = GFX_goal_unknown
+		x = 32
+		y = 8
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_appeal_to_nj } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			
+		}
+	}
+	
+	#Focus for Appeal to New York
+	focus = { 
+		id = SMA_appeal_to_ny
+		icon = GFX_goal_unknown
+		x = 34
+		y = 7
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_a_nation_of_immigrants } 
+		mutually_exclusive = { focus = SMA_appeal_to_nj }
+		
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			
+		}
+	}
+	
+	#Focus for A Nation of Puritans
+	focus = { 
+		id = SMA_a_nation_of_puritans
+		icon = GFX_goal_unknown
+		x = 35
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_ourpeople } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			
+		}
+	}
+
+	#Focus for Protestant Legacy
+	focus = { 
+		id = SMA_protestant_legacy
+		icon = GFX_goal_unknown
+		x = 35
+		y = 8
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_a_nation_of_puritans } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			add_stability = 0.05
+			add_political_power = 10
+		}
+	}
+	
+	#Focus for Catholic Legtations
+	focus = { 
+		id = SMA_catholic_legations
+		icon = GFX_goal_unknown
+		x = 36
+		y = 7
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_a_nation_of_puritans } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+		
+		}
+	}
+	
+	#Focus for A Christian Nation
+	focus = { 
+		id = SMA_a_christian_nation
+		icon = GFX_goal_unknown
+		x = 36
+		y = 9
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_catholic_legations } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+		
+		}
+	}
+	
+	#Focus for Getting the Popular Vote
+	focus = { 
+		id = SMA_gettingthepopularvote
+		icon = GFX_goal_unknown
+		x = 45
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_a180 } 
+		ai_will_do = { 
+			factor = 1
+		}
+	}
+
+	#Focus for Increase Spending
+	focus = { 
+		id = SMA_increasespending
+		icon = GFX_goal_unknown
+		x = 49
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_militaryindustrialcomplex focus = SMA_libertarianism } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = { 
+			add_stability = 0.05
+			add_ideas = SMA_increase_spending_idea
+		}
+	} 
+
+	#Focus for Connections
+	focus = { 
+		id = SMA_connections
+		icon = GFX_goal_unknown
+		x = 60
+		y = 5
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_securitymoney } 
+		mutually_exclusive = { focus = SMA_mafioso focus = SMA_leniency focus = SMA_extendprohibition} 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			if = {
+				limit = {
+					SNY = {
+						NOT = {
+							has_government = communism
+						}
+					}
+				}
+				SNY = {
+					add_opinion_modifier = {
+						target = ROOT
+						modifier = SMA_connections_modifier
+					}
+				}
+			}
+			if = {
+				limit = {
+					SNJ = {
+						NOT = {
+							has_government = communism
+						}
+					}
+				}
+				SNJ = {
+					add_opinion_modifier = {
+						target = ROOT
+						modifier = SMA_connections_modifier
+					}
+				}
+			}
+		}
+	} 
+
+	#Focus for Mafioso
+	focus = { 
+		id = SMA_mafioso
+		icon = GFX_goal_unknown
+		x = 62
+		y = 5
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_securitymoney } 
+		mutually_exclusive = { focus = SMA_connections focus = SMA_leniency focus = SMA_extendprohibition} 
+		ai_will_do = { 
+			factor = 1
+		} 
+		completion_reward
+		{
+			custom_effect_tooltip = SMA_mafiosofocuseffect_tt
+			add_political_power = 10
+		}
+	} 
+
+	# TODO: add in the Kennedy's and stuff? 
+	#Focus for The Opposition
+	focus = { 
+		id = SMA_theopposition
+		icon = GFX_goal_unknown
+		x = 37
+		y = 4
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_assassinatecurley } 
+		mutually_exclusive = { focus = SMA_thelieutenantgovernor } 
+		mutually_exclusive = { focus = SMA_mobrule } 
+		ai_will_do = { 
+			factor = 1
+		} 
+	} 
+
+	#Focus for Military Industrial Complex
+		focus = { 
+		id = SMA_militaryindustrialcomplex
+		icon = GFX_goal_unknown
+		x = 48
+		y = 5
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_promisejobs } 
+		mutually_exclusive = { focus = SMA_libertarianism }
+		
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			add_stability = -0.05
+			add_political_power = 10
+			add_ideas = SMA_mil_ind_complex_idea
+		}
+	}
+
+	#Focus for Harbor Improvments
+	focus = { 
+		id = SMA_harborimprovments
+		icon = GFX_goal_generic_construct_naval_dockyard
+		x = 54
+		y = 5
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_promiseinfrastructure } 
+		mutually_exclusive = { focus = SMA_tollsfortrolls } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = { 
+			custom_effect_tooltip = SMA_harborimprovementseffect_tt
+			random_owned_controlled_state = { #may not work - may have to change cause port -> province
+				add_building_construction = {
+					type = naval_base
+					level = 10
+					instant_build = yes
+					province = {
+						level > 0
+					}
+				}
+			}
+		}
+	} 
+	
+	#Focus for Promise Infrastructure
+	focus = { 
+		id = SMA_promiseinfrastructure
+		icon = GFX_goal_generic_construct_infrastructure
+		x = 53
+		y = 4
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_dealwithfriends } 
+		mutually_exclusive = { focus = SMA_promisejobs } 
+		ai_will_do = { 
+			factor = 1
+		} 
+	}
+
+	#Focus for The Dividends
+	focus = { 
+		id = SMA_thedividends
+		icon = GFX_goal_unknown
+		x = 57
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_extendprohibition focus = SMA_leniency } 
+		available = { date > 1939.10.1 }
+		
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			add_political_power = 500
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.10
+			}
+			add_ideas = SMA_investing_idea 
+		}
+	} 
+
+	#Focus for Legalize Gambling
+	focus = { 
+		id = SMA_legalizegambling
+		icon = GFX_goal_unknown
+		x = 61
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_connections focus = SMA_mafioso } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			SNY = {
+				add_opinion_modifier = {
+						target = ROOT
+						modifier = SMA_legalize_gambling_modifier
+				}
+			}
+			SNJ = {
+				add_opinion_modifier = {
+						target = ROOT
+						modifier = SMA_legalize_gambling_modifier
+				}
+			}
+			add_political_power = 20
+			add_stability = -0.03
+			add_ideas = {
+				SMA_legal_gambling
+			}
+		}
+	} 
+
+	#Focus for Extend Prohibition
+	focus = { 
+		id = SMA_extendprohibition
+		icon = GFX_goal_unknown
+		x = 58
+		y = 5
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_investing }
+		mutually_exclusive = { focus = SMA_mafioso focus = SMA_leniency focus = SMA_connections} 		
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			add_stability = 0.02
+			add_war_support = 0.1
+			add_ideas = SMA_extend_prohibition_idea
+			add_political_power = -450
+		}
+	} 
+
+	#Focus for Leniency
+	focus = { 
+		id = SMA_leniency
+		icon = GFX_goal_unknown
+		x = 56
+		y = 5
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_investing } 
+		mutually_exclusive = { focus = SMA_mafioso focus = SMA_extendprohibition focus = SMA_connections} 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			add_stability = -0.05
+			add_ideas = SMA_leniency_idea
+			add_political_power = -100
+		}
+	} 
+
+	#Focus for Investing
+		focus = { 
+		id = SMA_investing
+		icon = GFX_goal_unknown
+		x = 57
+		y = 4
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_dealwiththemob } 
+		ai_will_do = { 
+			factor = 1
+		}
+	} 
+
+	#Focus for Take Bribes
+	focus = { 
+		id = SMA_takebribes
+		icon = GFX_goal_generic_intelligence_exchange
+		x = 55
+		y = 2
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_adealwiththedevil } 
+		ai_will_do = { 
+			factor = 1
+		}
+	} 
+
+	#Focus for Sellout Partners
+	focus = { 
+		id = SMA_selloutpartners
+		icon = GFX_goal_generic_intelligence_exchange
+		x = 37
+		y = 2
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_adealwiththedevil } 
+		ai_will_do = { 
+			factor = 1
+		}
+	} 
+
+	#Focus for To Deal With the Devil
+	focus = { 
+		id = SMA_todealwiththedevil
+		icon = GFX_goal_generic_major_alliance
+		x = 24
+		y = 1
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_continuewithcurley }
+			mutually_exclusive = { focus = SMA_adealwiththedevil } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			
+		}
+	} 
+	
+	#Focus for Crackdown On Crime
+	focus = { 
+		id = SMA_crackdown_crime
+		icon = GFX_goal_generic_major_alliance
+		x = 2
+		y = 1
+		relative_position_id = SMA_todealwiththedevil
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_todealwiththedevil } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			add_political_power = 10
+		}
+	} 
+	
+	#Focus for the Irish Question
+	focus = { 
+		id = SMA_the_irish_question
+		icon = GFX_goal_generic_major_alliance
+		x = 1
+		y = 2
+		relative_position_id = SMA_todealwiththedevil
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_crackdown_crime } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			
+		}
+	} 
+	
+	#Focus for The Path to Forgiveness
+	focus = { 
+		id = SMA_path_to_forgiveness
+		icon = GFX_goal_generic_major_alliance
+		x = 2
+		y = 3
+		relative_position_id = SMA_todealwiththedevil
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_the_irish_question } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			
+		}
+	} 
+	
+	#Focus for The Second Minutemen Brigade
+	focus = { 
+		id = SMA_second_minutemen_brigade
+		icon = GFX_goal_generic_major_alliance
+		x = 1
+		y = 4
+		relative_position_id = SMA_todealwiththedevil
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_path_to_forgiveness } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			
+		}
+	} 
+	
+	#Focus for Enlistment
+	focus = { 
+		id = SMA_enlistment
+		icon = GFX_goal_generic_major_alliance
+		x = 0
+		y = 5
+		relative_position_id = SMA_todealwiththedevil
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_second_minutemen_brigade } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			
+		}
+	} 
+	
+	#Focus for Sins Paid in Blood
+	focus = { 
+		id = SMA_sins_paid_in_blood
+		icon = GFX_goal_generic_major_alliance
+		x = 0
+		y = 3
+		relative_position_id = SMA_todealwiththedevil
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_the_irish_question } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			
+		}
+	}
+	
+	#Focus for Elimination
+	focus = { 
+		id = SMA_elimination
+		icon = GFX_goal_generic_major_alliance
+		x = -3
+		y = 4
+		relative_position_id = SMA_todealwiththedevil
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_sins_paid_in_blood } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			
+		}
+	}
+	
+	#Focus for Spring the Trap
+	focus = { 
+		id = SMA_spring_the_trap
+		icon = GFX_goal_generic_major_alliance
+		x = -1
+		y = 4
+		relative_position_id = SMA_todealwiththedevil
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_sins_paid_in_blood } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			
+		}
+	}
+	
+	#Focus for A city on a Hill
+	focus = { 
+		id = SMA_city_on_a_hill
+		icon = GFX_goal_generic_major_alliance
+		x = -3
+		y = 5
+		relative_position_id = SMA_todealwiththedevil
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_spring_the_trap focus = SMA_elimination } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			
+		}
+	}
+	
+	#Focus for A Common Mission
+	focus = { 
+		id = SMA_common_mission
+		icon = GFX_goal_generic_major_alliance
+		x = -4
+		y = 1
+		relative_position_id = SMA_todealwiththedevil
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_todealwiththedevil } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			add_political_power = 10
+		}
+	} 
+	
+	#Focus for Unite The East
+	focus = { 
+		id = SMA_unite_the_east
+		icon = GFX_goal_generic_major_alliance
+		x = -1
+		y = 2
+		relative_position_id = SMA_todealwiththedevil
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_common_mission } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+		
+		}
+	}
+	
+	#Focus for The Thirteen Colonies
+	focus = { 
+		id = SMA_thirteen_colonies
+		icon = GFX_goal_generic_major_alliance
+		x = -1
+		y = 1
+		relative_position_id = SMA_unite_the_east
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_unite_the_east } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+		
+		}
+	}
+	
+	#Focus for Guarantees 13 Colonies
+	focus = { 
+		id = SMA_guarantees_colonies
+		icon = GFX_goal_generic_major_alliance
+		x = -1
+		y = 4
+		relative_position_id = SMA_unite_the_east
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_thirteen_colonies } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+		
+		}
+	}
+	
+	#Focus for The Thirteen States
+	focus = { 
+		id = SMA_thirteen_states
+		icon = GFX_goal_generic_major_alliance
+		x = -3
+		y = 1
+		relative_position_id = SMA_unite_the_east
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_unite_the_east } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+		
+		}
+	}
+	
+	#Focus for The Annexation Clause
+	focus = { 
+		id = SMA_annexation_clause
+		icon = GFX_goal_generic_major_alliance
+		x = -3
+		y = 4
+		relative_position_id = SMA_unite_the_east
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_thirteen_states } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			#stuff
+			# will opens up The Federal Republic of AMerican states - decisions and stuff
+		}
+	}
+	
+	#Focus for Unite New England
+	focus = { 
+		id = SMA_new_england_unite
+		icon = GFX_goal_generic_major_alliance
+		x = -4
+		y = 2
+		relative_position_id = SMA_todealwiththedevil
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_common_mission } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+		
+		}
+	}
+	
+	#Focus for Together We Stand
+	focus = { 
+		id = SMA_together_we_stand
+		icon = GFX_goal_generic_major_alliance
+		x = -1
+		y = 2
+		relative_position_id = SMA_new_england_unite
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_new_england_unite } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+		
+		}
+	}
+	
+	#Focus for New England Guarantees
+	focus = { 
+		id = SMA_guarantees_ne
+		icon = GFX_goal_generic_major_alliance
+		x = -1
+		y = 3
+		relative_position_id = SMA_new_england_unite
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_together_we_stand } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+		
+		}
+	}
+	
+	#Focus for Divide And Conquer
+	focus = { 
+		id = SMA_divide_and_conquer_ne
+		icon = GFX_goal_generic_major_alliance
+		x = -2
+		y = 1
+		relative_position_id = SMA_new_england_unite
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_new_england_unite } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+		
+		}
+	}
+	
+	#Focus for Proclamation of Soverignity
+	focus = { 
+		id = SMA_proclamation_of_soverignity
+		icon = GFX_goal_generic_major_alliance
+		x = -2
+		y = 4
+		relative_position_id = SMA_new_england_unite
+		cost = 5
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_divide_and_conquer_ne } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+		
+		}
+	}
+	
+	#Focus for Internationalism
+	focus = { 
+		id = SMA_internationalism
+		icon = GFX_goal_generic_major_alliance
+		x = -7
+		y = 2
+		relative_position_id = SMA_todealwiththedevil
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_common_mission } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			add_stability = 0.05
+			add_war_support = -0.10
+		}
+	}
+	
+	#Focus for Mercantilism
+	focus = { 
+		id = SMA_mercantilism
+		icon = GFX_goal_generic_major_alliance
+		x = -1
+		y = 1
+		relative_position_id = SMA_internationalism
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_internationalism } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+		
+		}
+	}
+	
+	#Focus for Capitalism
+	focus = { 
+		id = SMA_capitalism
+		icon = GFX_goal_generic_major_alliance
+		x = -2
+		y = 2
+		relative_position_id = SMA_internationalism
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_mercantilism } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+		
+		}
+	}
+	
+	#Focus for Politics
+	focus = { 
+		id = SMA_politics
+		icon = GFX_goal_generic_major_alliance
+		x = 0
+		y = 2
+		relative_position_id = SMA_internationalism
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_mercantilism } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			add_stability = 0.05
+		}
+	}
+	
+	#Focus for A Deal With the Devil
+	focus = { 
+		id = SMA_adealwiththedevil
+		icon = GFX_goal_generic_dangerous_deal
+		x = 47
+		y = 1
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_continuewithcurley } 
+		mutually_exclusive = { focus = SMA_todealwiththedevil } 
+		ai_will_do = { 
+			factor = 1
+		}
+		
+		completion_reward = {
+
+		}
+	}
+
+	##Focus for Secure the New Empire
+	#focus = { 
+	#	id = SMA_securethenewempire
+	#	icon = GFX_goal_generic_political_pressure
+	#	x = 88
+	#	y = 3
+	#	cost = 7
+	#	available_if_capitulated = yes 
+	#	prerequisite = {focus = SMA_reclaimmaine }
+	#	prerequisite = {focus = SMA_secure_bristol } 
+	#	prerequisite = {focus = SMA_secure_connecticut_valley } 
+	#	prerequisite = {focus = SMA_secure_vermont }
+	#	prerequisite = {focus = SMA_secure_new_hampshire } 
+	#
+	#	completion_reward = { 
+	#		add_stability = 0.05
+	#	} 
+	#
+	#} 
+
+	 
+
+	##Focus for Revive Old Border Disputes
+	#focus = { 
+	#	id = SMA_reviveoldborderdisputes
+	#	icon = GFX_goal_generic_territory_or_war
+	#	x = 88
+	#	y = 0
+	#	cost = 10
+	#	available_if_capitulated = yes 
+	#	
+	#	available = { 
+	#		#OR = {
+	#			has_government = communism
+	#			#has_government = fascism
+	#		#}
+	#	} 
+	#	
+	#	completion_reward = { 
+	#		add_war_support= 0.10
+	#		add_manpower= 1000
+	#	} 
+	#	
+	#} 
+	
+	# Secure Bristol 
+	#focus = { 
+	#	id = SMA_secure_bristol
+	#	icon = GFX_goal_generic_territory_or_war
+	#	x = 88
+	#	y = 1
+	#	cost = 5
+	#	available_if_capitulated = yes 
+	#	prerequisite = { focus = SMA_reviveoldborderdisputes } 
+	#	available = { 
+	#	
+	#	} 
+	#	
+	#	completion_reward = { 
+	#		create_wargoal= { 
+	#			type = annex_everything 
+	#			target = SRI
+	#		}
+	#	} 
+	#	
+	#}
+	#
+	## March Into the Connecticut Valley
+	#focus = { 
+	#	id = SMA_secure_connecticut_valley
+	#	icon = GFX_goal_generic_territory_or_war
+	#	x = 90
+	#	y = 1
+	#	cost = 5
+	#	available_if_capitulated = yes 
+	#	prerequisite = { focus = SMA_reviveoldborderdisputes } 
+	#	available = { 
+	#	
+	#	} 
+	#	
+	#	completion_reward = { 
+	#		create_wargoal= { 
+	#			type = annex_everything 
+	#			target = SCT
+	#		}
+	#	} 
+	#	
+	#}
+	
+	# Secure New Hampshire
+	#focus = { 
+	#	id = SMA_secure_new_hampshire
+	#	icon = GFX_goal_generic_territory_or_war
+	#	x = 87
+	#	y = 2
+	#	cost = 5
+	#	available_if_capitulated = yes 
+	#	prerequisite = { focus = SMA_reviveoldborderdisputes } 
+	#	available = { 
+	#	
+	#	} 
+	#	
+	#	completion_reward = { 
+	#		create_wargoal= { 
+	#			type = annex_everything 
+	#			target = SNH
+	#		}
+	#	} 
+	#	
+	#}
+	#
+	## Secure Vermont
+	#focus = { 
+	#	id = SMA_secure_vermont
+	#	icon = GFX_goal_generic_territory_or_war
+	#	x = 89
+	#	y = 2
+	#	cost = 5
+	#	available_if_capitulated = yes 
+	#	prerequisite = { focus = SMA_reviveoldborderdisputes } 
+	#	available = { 
+	#	
+	#	} 
+	#	
+	#	completion_reward = { 
+	#		create_wargoal= { 
+	#			type = annex_everything 
+	#			target = SVT
+	#		}
+	#	} 
+	#	
+	#} 
+	
+	##########################	
+	######## FASCISM #########
+	##########################
+
+	#Focus for Minutemen Militia
+	focus = { 
+		id = SMA_minutemenmilitia
+		icon = GFX_focus_eng_special_air_service
+		x = 79
+		y = 1
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_bytheswordweseekpeace } 
+		completion_reward = { 
+			add_stability= -0.10
+			army_experience = 50
+			add_timed_idea= {
+				idea = sma_fascist_nat_guard_timed
+				days = 180
+			}
+		} 
+	} 
+	
+	#assassinate leader
+	focus = { 
+		id = SMA_assassinate_leader
+		dynamic = yes #fluid localization
+		#loc change based off of current leader??? i know its possible i think
+		icon = GFX_focus_eng_special_air_service
+		x = 79
+		y = 2
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_minutemenmilitia } 
+		prerequisite = { focus = SMA_promote_nationalist_cause }
+		
+		completion_reward = { 
+			kill_country_leader = yes
+			add_stability= -0.10
+			add_timed_idea = {
+				idea = mass_leader_assassinated_fascism
+				days = 30
+			}
+			#add "no leader" leader / temporary gov etc...
+		} 
+	}
+	
+	#march on Boston
+	focus = { 
+		id = SMA_march_on_boston
+		#loc change based off of current leader??? i know its possible i think
+		icon = GFX_focus_eng_special_air_service
+		x = 79
+		y = 3
+		cost = 3
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_assassinate_leader } 
+		
+		#must have over 40 percent support,
+		#will cause some unrest if between 40 -60 percent support but still possible, 
+		# - alot of stability, will be able to be regained 
+		# later somehow -> minutemen Militia activities???
+		# under 40 will cause a coup / civil war, TELL THE PLAYER!!!
+			
+		completion_reward = { 
+			set_rule = {
+				can_create_factions = yes
+			}
+			if = {
+				limit = {
+					fascism > 0.6
+				}
+				add_stability = -0.05
+				set_politics = {
+					ruling_party = fascism
+				}
+			} 
+			else_if = {
+				limit = {
+					fascism > 0.4
+				}
+				add_stability = -0.10
+				set_politics = {
+					ruling_party = fascism
+				}
+				add_ideas = {
+					mass_political_unrest_fascism
+					#tell player this must be removed through restructuring the gov. 
+				}
+			} 
+			else = {
+				set_temp_variable = { mass_stability = stability }
+				divide_temp_variable = {mass_stability = 2}
+				subtract_from_temp_variable = {mass_stability = 0.01}
+				multiply_temp_variable = {mass_stability = -1}
+				
+				clamp_temp_variable = {
+					var = mass_stability
+					max = -0.15
+				}
+				#under about 30 percent stability with this it will subtract at least 15. higher stability = more lost. 
+				add_stability = mass_stability
+				
+				#divide_temp_variable = {mass_stability = 100}
+				#add_to_temp_variable = {mass_stability = 0.25}	
+				start_civil_war = {
+					ruling_party = fascism
+					ideology = ROOT
+					#size = mass_stability
+					#only_own_territory = no		# was giving error now? idk
+					capital = 5
+				}
+			}
+		}
+	}
+	
+	# restructure the government (nationalist)
+	focus = { 
+		id = SMA_restructure_government_fascism
+		icon = GFX_focus_eng_special_air_service
+		x = 79
+		y = 4
+		cost = 13
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_march_on_boston } 
+		
+		cancelable = no
+		select_effect = {
+			add_timed_idea = {
+				idea = mass_restructure_government
+				days = 90
+				#tell the player about this they wont know theyll get this :( paradoxxxxxxxx
+			}
+		}
+		
+		completion_reward = { 
+			add_stability = 0.10
+			add_political_power = 150
+			if = {
+				limit = {
+					has_idea = mass_political_unrest_fascism
+				}
+				remove_ideas = mass_political_unrest_fascism
+			}
+			add_timed_idea = {
+				idea = mass_restructured_government
+				days = 180
+			}
+		} 
+	}
+	
+	# promote the nationalist cause
+	focus = { 
+		id = SMA_promote_nationalist_cause
+		icon = GFX_focus_eng_special_air_service
+		x = 77
+		y = 1
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_bytheswordweseekpeace } 
+		completion_reward = { 
+			add_political_power = -50
+			add_popularity= { 
+				ideology = fascism 
+				popularity = 0.05
+			}
+			add_timed_idea= {
+				idea = SMA_promote_nat_cause_idea
+				days = 180
+			}
+		} 
+	} 
+	
+	#greater ambitions
+	focus = { 
+		id = SMA_greater_ambitions
+		icon = GFX_focus_eng_special_air_service
+		x = 77
+		y = 2
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_promote_nationalist_cause }
+		prerequisite = { focus = SMA_minutemenmilitia }		
+		completion_reward = { 
+			add_timed_idea= {
+				idea = mass_greater_ambitions_fascism
+				days = 180
+			}
+		} 
+	} 
+	
+	#minutemen national guard
+	focus = { 
+		id = SMA_minutemen_national_guard
+		icon = GFX_focus_eng_special_air_service
+		x = 74
+		y = 3
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_greater_ambitions } 
+		mutually_exclusive = { focus = SMA_minutemen_army } 
+		
+		completion_reward = { 
+			add_stability = -0.05
+			add_ideas = sma_fascist_nat_guard
+		} 
+	}
+	
+	#A Minutemen Army
+	focus = { 
+		id = SMA_minutemen_army
+		icon = GFX_focus_eng_special_air_service
+		x = 76
+		y = 3
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_greater_ambitions }
+		mutually_exclusive = { focus = SMA_minutemen_national_guard }
+		
+		completion_reward = { 
+			add_war_support = 0.10
+			add_stability = -0.05
+			add_ideas = {
+				mass_minutemen_army_fascism#conscription_factor = 0.10 
+			}
+		} 
+	}
+	
+	#Reclaim Bristol
+	focus = { 
+		id = SMA_reclaim_bristol_fascism
+		icon = GFX_focus_eng_special_air_service
+		x = 77
+		y = 5
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_greater_ambitions }
+		prerequisite = { focus = SMA_restructure_government_fascism }	
+
+		bypass = {
+			AND = {
+				OR = {
+					SRI = {
+						NOT = {
+							any_state = {
+								is_new_england_state = yes
+							}
+						}
+					}
+					NOT = {
+						country_exists = SRI
+					}
+				}
+				has_government = fascism
+			}
+		}
+		completion_reward = { 
+			#war with RI
+			if = {
+				limit = {
+					SMA = {
+						NOT = {
+							is_in_faction_with = SRI 
+						}
+					}
+				}
+				422 = { add_core_of = SMA }
+				declare_war_on = {
+					target = SRI
+					type = annex_everything
+				}
+			}
+			add_war_support = 0.03
+			
+		} 
+	} 
+	
+	#Secure The Connecticut River Valley
+	focus = { 
+		id = SMA_secure_connecticut_river_valley
+		icon = GFX_focus_eng_special_air_service
+		x = 77
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_reclaim_bristol_fascism }	
+		
+		bypass = {
+			AND = {
+				OR = {
+					SCT = {
+						NOT = {
+							any_state = {
+								is_new_england_state = yes
+							}
+						}
+					}
+					NOT = {
+						country_exists = SCT
+					}
+				}
+				OR = {
+					SVT = {
+						NOT = {
+							any_state = {
+								is_new_england_state = yes
+							}
+						}
+					}
+					NOT = {
+						country_exists = SVT
+					}
+				}
+				OR = {
+					SNH = {
+						NOT = {
+							any_state = {
+								is_new_england_state = yes
+							}
+						}
+					}
+					NOT = {
+						country_exists = SNH
+					}
+				}
+				has_government = fascism
+			}
+		}
+		
+		completion_reward = { 
+			#war with Connecticut, Vermont, New Hampshire) 
+			#(Maine will be able to step in via event - nh will ask them to if NH wishes to and etc.) 
+			if = {
+				limit = {
+					SMA = {
+						NOT = {
+							is_in_faction_with = SCT 
+						}
+					}
+				}
+				declare_war_on = {
+					target = SCT
+					type = annex_everything
+				}
+			}
+			if = {
+				limit = {
+					SMA = {
+						NOT = {
+							is_in_faction_with = SVT 
+						}
+					}
+				}
+				declare_war_on = {
+					target = SVT
+					type = annex_everything
+				}
+			}
+			if = {
+				limit = {
+					SMA = {
+						NOT = {
+							is_in_faction_with = SNH 
+						}
+					}
+				}
+				declare_war_on = {
+					target = SNH
+					type = annex_everything
+				}
+			}
+		} 
+	} 
+	
+	#The New England Empire
+	focus = { 
+		id = SMA_new_england_empire
+		icon = GFX_focus_eng_special_air_service
+		x = 77
+		y = 7
+		cost = 13
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_secure_connecticut_river_valley }
+
+		bypass = {
+			AND = {
+				controls_new_england_trigger = yes
+				has_government = fascism
+			}
+		}
+		
+		completion_reward = { 
+			# If not all of new England is had, and is not puppet part, 
+			# or ME doesn't join etc. 
+			# (Otherwise will be bypassed when other things done) 
+			# (will also give wargoal on Nova Scotia assuming not in faction and stuff) 
+			if = {
+				limit = {
+					controls_new_england_trigger = no 
+				}
+				if = {
+					limit = { 201 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } } 
+					add_state_claim = 201
+				}
+				if = {
+					limit = { 249 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }
+					add_state_claim = 249
+				}
+				if = {
+					limit = { 248 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 248
+				}
+				if = {
+					limit = { 247 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 247
+				}
+				if = {
+					limit = { 246 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 246
+				}
+				if = {
+					limit = { 245 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 245
+				}	
+				if = {
+					limit = { 10 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 10
+				}	
+				if = {
+					limit = { 6 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 6
+				}	
+				if = {
+					limit = { 242 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 242
+				}	
+				if = {
+					limit = { 422 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 422
+				}	
+				if = {
+					limit = { 421 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 421
+				}	
+				if = {
+					limit = { 7 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 7
+				}	
+				if = {
+					limit = { 1 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 1
+				}	
+				if = {
+					limit = { 2 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 2
+				}	
+				if = {
+					limit = { 3 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 3
+				}	
+				if = {
+					limit = { 4 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 4
+				}	
+				if = {
+					limit = { 5 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 5
+				}	
+				if = {
+					limit = { 199 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 199
+				}		
+				if = {
+					limit = { 200 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 200
+				}	
+				if = {
+					limit = { 9 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 9
+				}	
+				if = {
+					limit = { 8 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 8
+				}	
+				if = {
+					limit = { 210 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 210
+				}	
+				if = {
+					limit = { 211 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 211
+				}	
+				if = {
+					limit = { 185 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 185
+				}	
+				if = {
+					limit = { 326 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 326
+				}	
+				if = {
+					limit = { 324 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 324
+				}	
+				if = {
+					limit = { 417 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 417
+				}	
+				if = {
+					limit = { 186 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 186
+				}	
+				if = {
+					limit = { 327 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 327
+				}	
+				if = {
+					limit = { 325 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 325
+				}	
+				if = {
+					limit = { 329 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 329
+				}	
+				if = {
+					limit = { 418 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 418
+				}	
+				if = {
+					limit = { 419 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 419
+				}	
+				if = {
+					limit = { 420 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 420
+				}	
+				if = {
+					limit = { 328 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 328
+				}	
+				if = {
+					limit = { 416 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 416
+				}	
+				if = {
+					limit = { 415 = { OWNER = { AND = { NOT = { is_in_faction_with = ROOT } NOT = { original_tag = ROOT } } } } }  
+					add_state_claim = 415
+				}	
+				add_political_power = -40				
+				add_war_support = 0.05
+			}
+			add_named_threat = { threat = 1 name = SMA_claim_new_england_empire }
+			add_political_power = 75
+			add_stability = 0.12
+		} 
+	}
+	
+	focus = { 
+		id = SMA_imperial_lands
+		icon = GFX_focus_eng_special_air_service
+		x = 77
+		y = 8
+		cost = 13
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_new_england_empire }
+
+		bypass = {
+			AND = {
+				controls_nova_scotia_trigger = yes
+				has_completed_focus = SMA_bytheswordweseekpeace
+			}
+		}
+		
+		completion_reward = { 
+			add_political_power = -75
+			add_war_support = 0.05
+			core_nova_scotia = yes 
+			core_new_brunswick = yes # was part of nova scotia colony it seems
+			add_state_claim = 274
+			add_state_claim = 275
+			add_state_claim = 250
+			add_state_claim = 29
+			add_state_claim = 273
+			add_state_claim = 272
+			add_state_claim = 35
+			add_state_claim = 38
+			
+		}
+	}
+	
+	##########################	
+	####### DEMOCRACY ########
+	##########################
+
+	#Focus for Continue with Curley
+	focus = { 
+		id = SMA_continuewithcurley
+		icon = GFX_goal_unknown ##Unfortunately, the tool could not find your icon in the game's files
+		x = 37
+		y = 0
+		cost = 1
+		available_if_capitulated = yes 
+		mutually_exclusive = { focus = SMA_bytheswordweseekpeace focus = SMA_peaceonlythroughliberty }
+		bypass = { 
+			NOT = {
+				original_tag = SMA
+			}
+		} 
+	
+		completion_reward = { 
+			add_stability = 0.1
+			add_war_support = -0.05
+			#political_power_factor = -0.02
+			#need to add idea for this or something for pp factor
+		} 
+
+	} 
+	
+	#-------------------------------#
+	#			COMMUNISM			#
+	#-------------------------------#
+	
+	#Focus for "Peace only through liberty"
+	focus = { 
+		id = SMA_peaceonlythroughliberty
+		icon = GFX_goal_unknown 
+		x = 83
+		y = 0
+		cost = 2
+		available_if_capitulated = yes 
+		mutually_exclusive = { focus = SMA_continuewithcurley focus = SMA_bytheswordweseekpeace }
+		
+		completion_reward = { 
+			add_popularity= { 
+				ideology = communism 
+				popularity = 0.05
+			}
+		} 
+	}
+	
+	#Focus for
+	focus = { 
+		id = SMA_communism_temp
+		icon = GFX_goal_unknown 
+		x = 83
+		y = 1
+		cost = 2
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_peaceonlythroughliberty } 
+		
+		completion_reward = { 
+			
+		} 
+	}
+	
+	#########################################################
+
+	#Focus for "By the sword we seek peace"
+	focus = { 
+		id = SMA_bytheswordweseekpeace
+		icon = GFX_goal_unknown ##Unfortunately, the tool could not find your icon in the game's files
+		x = 78
+		y = 0
+		cost = 2
+		available_if_capitulated = yes 
+		mutually_exclusive = { focus = SMA_continuewithcurley focus = SMA_peaceonlythroughliberty }
+		
+		completion_reward = { 
+			add_popularity= { 
+				ideology = fascism 
+				popularity = 0.05
+			}
+		}
+	}
+
+	##Focus for Reclaim Maine
+	#focus = { 
+	#	id = SMA_reclaimmaine
+	#	icon = GFX_goal_generic_territory_or_war
+	#	x = 86
+	#	y = 1
+	#	cost = 5
+	#	available_if_capitulated = yes 
+	#	prerequisite = { focus = SMA_reviveoldborderdisputes } 
+	#	completion_reward = { 
+	#		create_wargoal= { 
+	#			type = annex_everything 
+	#			target = SME
+	#		}
+	#	}
+	#} 
+
+	#Focus for A New Governor
+	focus = { 
+		id = SMA_anewgovernor
+		icon = GFX_goal_unknown
+		x = 40
+		y = 7
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_theterror } 
+		ai_will_do = { 
+			factor = 1
+		}
+	}	
+
+	#Focus for The Terror
+	focus = { 
+		id = SMA_theterror
+		icon = GFX_goal_unknown
+		x = 41
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_continuingthefight } 
+		ai_will_do = { 
+			factor = 1
+		}
+	}
+
+
+	#Focus for A 180
+		focus = { 
+		id = SMA_a180
+		icon = GFX_goal_unknown
+		x = 45
+		y = 5
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_thelieutenantgovernor } 
+		ai_will_do = { 
+			factor = 1
+		}
+	}
+
+
+	#Focus for Continuing the Fight
+	focus = { 
+		id = SMA_continuingthefight
+		icon = GFX_goal_unknown
+		x = 41
+		y = 5
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_thelieutenantgovernor } 
+		ai_will_do = { 
+			factor = 1
+		}
+	}
+
+
+	#Focus for Assassinate Curley
+	focus = { 
+		id = SMA_assassinatecurley
+		icon = GFX_goal_unknown
+		x = 37
+		y = 3
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_selloutpartners } 
+		ai_will_do = { 
+			factor = 1
+		}
+		
+		completion_reward = {
+			kill_country_leader = yes
+			add_stability= -0.10
+			#add_timed_idea = {
+			#	idea = mass_leader_assassinated_fascism
+			#	days = 30
+			#}
+			#add "no leader" leader / temporary gov etc...
+		}
+	}
+
+	#Focus for Deal With the Mob
+	focus = { 
+		id = SMA_dealwiththemob
+		icon = GFX_goal_unknown
+		x = 59
+		y = 3
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_takebribes } 
+		ai_will_do = { 
+			factor = 1
+		}
+	}
+
+
+	#Focus for Deal With Friends
+	focus = { 
+		id = SMA_dealwithfriends
+		icon = GFX_goal_tripartite_pact
+		x = 51
+		y = 3
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_takebribes } 
+		ai_will_do = { 
+		factor = 1
+		}
+	}
+
+	#Focus for The Lieutenant Governor
+		focus = { 
+		id = SMA_thelieutenantgovernor
+		icon = GFX_goal_unknown
+		x = 43
+		y = 4
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_assassinatecurley } 
+		mutually_exclusive = { focus = SMA_theopposition } 
+		mutually_exclusive = { focus = SMA_mobrule } 
+		ai_will_do = { 
+		factor = 1
+		}
+	}
+
+	#Focus for Memetic Campaign
+	focus = { 
+		id = SMA_memeticcampaign
+		icon = GFX_goal_unknown
+		x = 39
+		y = 9
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_anewgovernor } 
+		
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = { 
+			add_political_power = 100
+			add_war_support= 0.2
+			add_stability= -0.05
+			add_ideas = { SMA_memetic_campaign_idea }
+			# - relations with democracy, + relations with fascists
+		}
+	}
+
+	#Focus for Martial Law
+	focus = { 
+		id = SMA_martiallaw
+		icon = GFX_goal_unknown
+		x = 41
+		y = 9
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_anewgovernor } 
+		
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = { 
+			add_stability= -0.10
+			add_war_support= -0.10
+			add_timed_idea = {
+				idea = SMA_martial_law_idea
+				days = 120
+			}
+			# add chance of civil war - 50/50 ? 
+		}
+	}
+
+	#Focus for A Grandiose Triumph
+	focus = { 
+		id = SMA_agrandiosetriumph
+		icon = GFX_goal_unknown
+		x = 42
+		y = 7
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_theterror } 
+		ai_will_do = { 
+		factor = 1
+		}
+	}
+
+	#Focus for End Corruption
+	focus = { 
+		id = SMA_endcorruption
+		icon = GFX_goal_unknown
+		x = 42
+		y = 8
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_agrandiosetriumph } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		completion_reward = { 
+			add_stability = 0.25
+			add_political_power= 200
+			add_war_support= -0.05
+		}
+	}
+
+	#Focus for Gain Mob Favor
+	focus = { 
+		id = SMA_gainmobfavor
+		icon = GFX_goal_unknown
+		x = 47
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_a180 } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		completion_reward = { 
+			add_stability= 0.05
+		}
+	}
+
+	#Focus for Security Money
+		focus = { 
+		id = SMA_securitymoney
+		icon = GFX_focus_mex_privatisation
+		x = 61
+		y = 4
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_dealwiththemob } 
+		ai_will_do = { 
+		factor = 1
+		}
+	}
+
+	#Focus for Tolls for Trolls
+	focus = { 
+		id = SMA_tollsfortrolls
+		icon = GFX_goal_unknown
+		x = 52
+		y = 5
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_promiseinfrastructure } 
+		mutually_exclusive = { focus = SMA_harborimprovments } 
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			add_political_power = -100
+			add_ideas = { SMA_troll_tolls }
+		}
+	} 
+
+	#Focus for Promise Jobs
+		focus = { 
+		id = SMA_promisejobs
+		icon = GFX_goal_unknown
+		x = 49
+		y = 4
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_dealwithfriends } 
+		mutually_exclusive = { focus = SMA_promiseinfrastructure } 
+		ai_will_do = { 
+		factor = 1
+		}
+	}
+
+	#Focus for Libertarianism
+	focus = { 
+		id = SMA_libertarianism
+		icon = GFX_goal_unknown
+		x = 50
+		y = 5
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_promisejobs } 
+		mutually_exclusive = { focus = SMA_militaryindustrialcomplex } 
+		
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			add_political_power = -10
+			add_ideas = { SMA_libertarian_idea }
+			add_stability = 0.10
+		}
+	}
+
+	#Focus for Mob Rule #the mob
+	focus = { 
+		id = SMA_mobrule
+		icon = GFX_goal_unknown
+		x = 29
+		y = 4
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_assassinatecurley } 
+		mutually_exclusive = { focus = SMA_theopposition focus = SMA_thelieutenantgovernor }
+		ai_will_do = { 
+			factor = 1
+		} 
+	} 
+	
+	#Focus for Eire Nua
+	focus = { 
+		id = SMA_eire_nua
+		icon = GFX_goal_unknown
+		x = 27
+		y = 5
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_mobrule } 
+		
+		ai_will_do = { 
+			factor = 1
+		} 
+	} 
+	
+	#Focus for Our Identity
+	focus = { 
+		id = SMA_our_identity 
+		icon = GFX_goal_unknown
+		x = 28
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_eire_nua } 
+		
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			add_political_power = 20
+			add_stability = 0.05
+		}
+	} 
+	
+	#Focus for Irish Republicans
+	focus = { 
+		id = SMA_irish_republicans
+		icon = GFX_goal_unknown
+		x = 26
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_eire_nua } 
+		
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			add_political_power = 20
+			add_stability = -0.03
+			add_war_support = 0.03
+		}
+	} 
+	
+	#Focus for Irish Neutrality
+	focus = { 
+		id = SMA_irish_neutrality
+		icon = GFX_goal_unknown
+		x = 27
+		y = 7
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_irish_republicans } 
+		mutually_exclusive = { focus = SMA_war_is_profit }
+		
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			#party popularity stuff? 
+		}
+	} 
+	
+	#Focus for taxation without representation
+	focus = { 
+		id = SMA_taxation_without_representation_irish
+		icon = GFX_goal_unknown
+		x = 27
+		y = 8
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_irish_neutrality } 
+		
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			
+		}
+	}
+	
+	#Focus for War is Profit
+	focus = { 
+		id = SMA_war_is_profit
+		icon = GFX_goal_unknown
+		x = 25
+		y = 7
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_irish_republicans } 
+		mutually_exclusive = { focus = SMA_irish_neutrality }
+		
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			# war stuff! profit stuff! 
+		}
+	}
+
+	#Focus for Mod Modernization
+	focus = { 
+		id = SMA_mob_modernization
+		icon = GFX_goal_unknown
+		x = 25
+		y = 8
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_war_is_profit } 
+		
+		ai_will_do = { 
+			factor = 1
+		} 
+		
+		completion_reward = {
+			
+		}
+	}
+
+	#Focus for Reclaim Allies
+	focus = { 
+		id = SMA_reclaimallies
+		icon = GFX_goal_unknown
+		x = 43
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_a180 } 
+		ai_will_do = { 
+			factor = 1
+		} 
+	} 
+
+	#Focus for Anarcho-Capitalism
+	focus = { 
+		id = SMA_anarchocapitalism
+		icon = GFX_goal_unknown
+		x = 31
+		y = 5
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_mobrule } 
+		ai_will_do = { 
+			factor = 1
+		} 
+	} 
+	
+	#Focus for Let the Money Flow
+	focus = { 
+		id = SMA_let_money_flow
+		icon = GFX_goal_unknown
+		x = 31
+		y = 6
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_anarchocapitalism } 
+		ai_will_do = { 
+			factor = 1
+		} 
+	} 
+	
+	#Focus for Guinness and Business
+	focus = { 
+		id = SMA_guinness_and_business
+		icon = GFX_goal_unknown
+		x = 30
+		y = 7
+		cost = 10
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_anarchocapitalism } 
+		ai_will_do = { 
+			factor = 1
+		} 
+	} 
+	
+	#Focus for Ancapistan
+	focus = { 
+		id = SMA_ancapistan
+		icon = GFX_goal_unknown
+		x = 30
+		y = 8
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_guinness_and_business } 
+		ai_will_do = { 
+			factor = 1
+		} 
+	}
+	
+	#Focus for Alternative Taxation
+	focus = { 
+		id = SMA_alternative_taxation
+		icon = GFX_goal_unknown
+		x = 30
+		y = 9
+		cost = 7
+		available_if_capitulated = yes 
+		prerequisite = { focus = SMA_ancapistan } 
+		ai_will_do = { 
+			factor = 1
+		} 
+	} 
+	
+	####################################
+	###								 ###
+	###				ARMY			 ###
+	###								 ###
+	####################################
+	
+	# Army Effort
+	focus = {
+		id = SMA_army_effort
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 98
+		y = 0
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			army_experience = 75
+			add_tech_bonus = {
+				name = land_doc_bonus
+				bonus = 1.0
+				uses = 1
+				category = land_doctrine
+			}
+		}
+	}
+	
+	# The Minutemen will Protect! minutemen protection
+	focus = {
+		id = SMA_minutemen_protection
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 96
+		y = 1
+		cost = 10
+
+		available_if_capitulated = yes
+		prerequisite = { focus = SMA_army_effort }
+		mutually_exclusive = { focus = SMA_flexible_militia focus = SMA_disband_minutemen }
+
+		completion_reward = {
+			# idea is to rely on minutemen for protection in case of war, will give civilian factory bonuses and etc. 
+		}
+	}
+	
+	# A flexible militia
+	focus = {
+		id = SMA_flexible_militia
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 98
+		y = 1
+		cost = 10
+
+		available_if_capitulated = yes
+		prerequisite = { focus = SMA_army_effort }
+		mutually_exclusive = { focus = SMA_minutemen_protection focus = SMA_disband_minutemen }
+
+		completion_reward = {
+			# in between on relying on minutemen, and fully disbanding them. 
+		}
+	}
+	
+	# Disband the Minutemen
+	focus = {
+		id = SMA_disband_minutemen
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 100
+		y = 1
+		cost = 10
+
+		available_if_capitulated = yes
+		prerequisite = { focus = SMA_army_effort }
+		mutually_exclusive = { focus = SMA_minutemen_protection focus = SMA_flexible_militia }
+
+		completion_reward = {
+			# remove the minutemen national spirit, replace it with a new one perhaps
+		}
+	}
+	
+	# An army of rubber
+	focus = {
+		id = SMA_army_of_rubber
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 97
+		y = 2
+		cost = 10
+
+		available_if_capitulated = yes
+		prerequisite = { focus = SMA_army_effort }
+		mutually_exclusive = { focus = SMA_army_of_tungsten }
+
+		completion_reward = {
+			# focused on motorized and etc. 
+		}
+	}
+	
+	# An army of tungsten
+	focus = {
+		id = SMA_army_of_tungsten
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 99
+		y = 2
+		cost = 10
+
+		available_if_capitulated = yes
+		prerequisite = { focus = SMA_army_effort }
+		mutually_exclusive = { focus = SMA_army_of_rubber }
+
+		completion_reward = {
+			# focused on artillery and etc. 
+		}
+	}
+	
+	# National Guard Centers
+	focus = {
+		id = SMA_nat_guard_centers
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 96
+		y = 3
+		cost = 10
+
+		available_if_capitulated = yes
+		prerequisite = { focus = SMA_minutemen_protection focus = SMA_flexible_militia}
+		mutually_exclusive = { focus = SMA_fund_army_training }
+
+		completion_reward = {
+			# 
+		}
+	}
+	
+	# Fund Army Training Infrastructure
+	focus = {
+		id = SMA_fund_army_training
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 98
+		y = 3
+		cost = 10
+
+		available_if_capitulated = yes
+		prerequisite = { focus = SMA_minutemen_protection focus = SMA_flexible_militia focus = SMA_disband_minutemen }
+		mutually_exclusive = { focus = SMA_additional_army_bases focus = SMA_nat_guard_centers }
+
+		completion_reward = {
+			# 
+		}
+	}
+	
+	# Fund Additional Army Bases
+	focus = {
+		id = SMA_additional_army_bases
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 100
+		y = 3
+		cost = 10
+
+		available_if_capitulated = yes
+		prerequisite = { focus = SMA_flexible_militia focus = SMA_disband_minutemen }
+		mutually_exclusive = { focus = SMA_fund_army_training}
+
+		completion_reward = {
+			# 
+		}
+	}
+	
+	# artillery improvements
+	focus = {
+		id = SMA_artillery_improvements
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 99
+		y = 4
+		cost = 10
+
+		available_if_capitulated = yes
+		prerequisite = { focus = SMA_army_of_tungsten }
+		mutually_exclusive = { focus = SMA_motorized_improvements }
+
+		completion_reward = {
+			# focused on artillery and etc. 
+		}
+	}
+	
+	# motorized improvements
+	focus = {
+		id = SMA_motorized_improvements
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 97
+		y = 4
+		cost = 10
+
+		available_if_capitulated = yes
+		prerequisite = { focus = SMA_army_of_rubber }
+		mutually_exclusive = { focus = SMA_artillery_improvements }
+
+		completion_reward = {
+			# focused on motorized and etc. 
+		}
+	}
+	
+	# strong army 
+	focus = {
+		id = SMA_strong_army
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 100
+		y = 5
+		cost = 10
+
+		available_if_capitulated = yes
+		prerequisite = { focus = SMA_artillery_improvements }
+		prerequisite = { focus = SMA_additional_army_bases }
+		mutually_exclusive = { focus = SMA_diverse_army focus = SMA_motorized_minutemen }
+
+		completion_reward = {
+			# boost to defense or something related idk
+		}
+	}
+	
+	# diverse army
+	focus = {
+		id = SMA_diverse_army
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 98
+		y = 5
+		cost = 10
+
+		available_if_capitulated = yes
+		prerequisite = { focus = SMA_motorized_improvements focus = SMA_artillery_improvements }
+		prerequisite = { focus = SMA_fund_army_training }
+		mutually_exclusive = { focus = SMA_motorized_minutemen focus = SMA_strong_army }
+
+		completion_reward = {
+			# 
+		}
+	}
+	
+	# motorized minutemen
+	focus = {
+		id = SMA_motorized_minutemen
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 96
+		y = 5
+		cost = 10
+
+		available_if_capitulated = yes
+		prerequisite = { focus = SMA_motorized_improvements }
+		prerequisite = { focus = SMA_nat_guard_centers }
+		mutually_exclusive = { focus = SMA_diverse_army focus = SMA_strong_army}
+
+		completion_reward = {
+			# focused on motorized and etc. 
+		}
+	}
+	#End of focuses 
+}

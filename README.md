@@ -4,7 +4,7 @@
 
 ## Dev
 
-This Dev is constantly being uploaded with small changes very often. Don't expect a smooth gameplay experience as you will most likely encounter thousands of game breaking bugs. There are several branch's for different versions of the mod. If you are interested in helping our team of developers, please consider joining are 'Discord' and asking if you can help develop a part of the mod. There are still plenty of TODO's for the whole game and would like more.
+This Dev is constantly being uploaded with small changes very often. Don't expect a smooth gameplay experience as you will most likely encounter thousands of game breaking bugs. There are several branch's for different versions of the mod. If you are interested in helping our team of developers, please consider joining are 'Discord' and asking if you can help develop a part of the mod. There are still plenty of TODO's for the whole game and would like more support. 
 > Discord: <https://discord.gg/2n7Ym7m>
 
 ### GitHub Desktop

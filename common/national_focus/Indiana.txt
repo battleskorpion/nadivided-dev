@@ -673,7 +673,7 @@ focus_tree = {
 		id = SIN_flexible_navy
 		icon = GFX_goal_generic_build_navy
 		prerequisite = { focus = SIN_naval_effort }
-		mutually_exclusive = { focus = large_navy }
+		mutually_exclusive = { focus = SIN_large_navy }
 		x = -1
 		y = 1
 		relative_position_id = SIN_naval_effort
@@ -713,7 +713,7 @@ focus_tree = {
 		id = SIN_large_navy
 		icon = GFX_goal_generic_navy_doctrines_tactics
 		prerequisite = { focus = SIN_naval_effort }
-		mutually_exclusive = { focus = flexible_navy }
+		mutually_exclusive = { focus = SIN_flexible_navy }
 		x = 1
 		y = 1
 		relative_position_id = SIN_naval_effort
@@ -2429,20 +2429,89 @@ focus_tree = {
 		}
 	}
 
-#
+#	
+
 	focus = {
-		id = SIN_Convince_Concenecious_Objectors_To_fight
-		icon = GFX_goal_generic_improve_relations
+		id = SIN_the_ohio_wars
+		icon = GFX_goal_generic_major_war
 		x = 28
 		y = 0
 		cost = 10
 
 		available_if_capitulated = yes
 
-		available = {
-					date > 1938.3.1
+		ai_will_do = {
+			factor = 200
 		}
 
+		available = {
+			or = {
+				has_war_with = SOH 
+				SOH = {
+					has_completed_focus = SOH_unite_the_river
+				}
+				AND = {
+					is_in_faction_with = SMI 
+					is_in_faction_with = SKY
+				}
+			}
+		}
+
+		completion_reward = {
+			custom_effect_tooltip = SXX_if_ohio_league_exists 
+			if = {
+				limit = {
+					is_in_faction_with = SMI 
+				}
+				add_war_support = 0.15 
+			}
+			if = {
+				limit = {
+					NOT = {
+						is_in_faction_with = SMI 
+					}
+					SMI = { 
+						is_faction_leader = yes
+					}
+				}
+				SMI = {
+					country_event = {
+						id = generic.2
+						days = 14
+					}
+				}
+			}
+			else = {
+				add_state_claim = 364
+				add_state_claim = 701
+				add_state_claim = 702
+				add_state_claim = 99
+				create_wargoal = {
+					target = SOH
+					type = take_claimed_state
+				}
+			}
+		}
+	}
+	focus = {
+		id = SIN_Convince_Concenecious_Objectors_To_fight
+		icon = GFX_focus_generic_little_entente
+		x = 28
+		y = 1
+		cost = 10
+
+		available_if_capitulated = yes
+
+		available = {
+			date > 1938.3.1
+		}
+
+		prerequisite = {
+			focus = SIN_the_ohio_wars
+		}
+		prerequisite = {
+			focus = SIN_Weary_of_Ohio_Menace
+		}
 		ai_will_do = {
 			factor = 200
 		}
@@ -2455,28 +2524,25 @@ focus_tree = {
 
 	focus = {
 		id = SIN_Quakers_Will_Fight
-		icon = GFX_goal_generic_improve_relations
-		prerequisite = { focus = SIN_Convince_Concenecious_Objectors_To_fight}
-		relative_position_id = SIN_Convince_Concenecious_Objectors_To_fight
-		x = 0
+		icon = GFX_focus_POL_beck_ribbentrop
+		prerequisite = { focus = SIN_the_ohio_wars }
+		relative_position_id = SIN_the_ohio_wars
+		x = -2
 		y = 1
-		cost = 10
+		cost = 7.2
 		ai_will_do = {
 			factor = 100
 		}
 		completion_reward = {
 			add_ideas = SIN_Quaker_Recruitment
-					}
-				
-
-			
-		}
+		}	
+	}
 
 	
 
 	focus = {
 		id = SIN_Indiana_Last_Stand
-		icon = GFX_goal_support_democracy
+		icon = GFX_goal_generic_secret_weapon
 		prerequisite = { focus = SIN_Quakers_Will_Fight}
 		relative_position_id = SIN_Quakers_Will_Fight
 		x = 0
@@ -2486,8 +2552,9 @@ focus_tree = {
 			factor = 200
 		}
 		available = {
-				has_war = yes
-			}
+			has_war = yes 
+			surrender_progress > 0.35
+		}
 		
 
 		completion_reward = {
@@ -2498,55 +2565,49 @@ focus_tree = {
 
 	focus = {
 		id = SIN_Victory_Is_Ours
-		icon = GFX_goal_support_democracy
-		prerequisite = { focus = SIN_Indiana_Last_Stand}
-		relative_position_id = SIN_Indiana_Last_Stand
-		x = 0
+		icon = GFX_focus_generic_support_the_left_right
+		prerequisite = { 
+			focus = SIN_Convince_Concenecious_Objectors_To_fight
+		}
+		prerequisite = {
+			focus = SIN_Quakers_Will_Fight
+		}
+		relative_position_id = SIN_Quakers_Will_Fight
+		x = 1
 		y = 2
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 200
 		}
 		available = {
-			date > 1941.01.1
-			owns_state = 697
-			owns_state = 536
+			owns_state = 99
+			owns_state = 702
+			owns_state = 701
+			owns_state = 364
 		}
 		
 
 		completion_reward = {
-			add_state_core = 364			
-			add_state_core = 701
-			add_state_core = 702
 			add_state_core = 99
-			add_state_core = 98
-			add_state_core = 39
-			add_state_core = 707
-			add_state_core = 706
-			add_state_core = 705
-			add_state_core = 700
-			add_state_core = 705
-			add_state_core = 539
-			add_state_core = 700
-			add_state_core = 705
-			add_state_core = 537
-			add_state_core = 365
-			add_state_core = 694
-			add_state_core = 689
-			add_state_core = 48
+			add_state_core = 702 
+			add_state_core = 701
+			add_state_core = 364
 		}
 	
 	}
 
 	focus = {
 		id = SIN_A_Rifle_Behind_Every_Blade_Of_Grass
-		icon = GFX_goal_generic_neutrality_focus
+		icon = GFX_focus_ETH_freedom_at_gunpoint
 		x = 30
-		y = 0
+		y = 1
 		cost = 10
 
 		available_if_capitulated = yes
 
+		prerequisite = {
+			focus = SIN_the_ohio_wars
+		}
 		available = {
 					date > 1937.4.1
 		}
@@ -2567,7 +2628,7 @@ focus_tree = {
 
 	focus = {
 		id = SIN_Steal_Ford_Armored_Car
-		icon = GFX_goal_generic_neutrality_focus
+		icon = GFX_focus_generic_armored_air_support
 		x = 0
 		y = 1
 		cost = 10
@@ -2582,13 +2643,10 @@ focus_tree = {
 
 		completion_reward = {
 			set_technology = {
-    		armored_car1 = 1
-			
-			add_ideas = SIN_Stolen_Fords_Licence			
+    			armored_car1 = 1	
 			}
 
+			add_ideas = SIN_Stolen_Fords_Licence		
 		}
 	}
-
-#
 }

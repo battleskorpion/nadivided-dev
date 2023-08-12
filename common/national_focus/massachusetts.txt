@@ -10,6 +10,7 @@ focus_tree = {
 	# 		   continous focus position 		   #
 	continuous_focus_position = { x = 200 y = 1600 }
 	#						   					   #
+
 	# TODO: add in the Kennedy's and stuff? 
 	#------------------------------#
 	
@@ -122,6 +123,32 @@ focus_tree = {
 			}
 		}
 	}
+
+	focus = {
+		id = SMA_Worcester_Steel_Factory
+		icon = GFX_focus_steel_ladle
+		prerequisite = { focus = SMA_subsidizespringfieldarmory }
+		x = 0
+		y = 1
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+		relative_position_id = SMA_subsidizespringfieldarmory
+		available_if_capitulated = yes
+		available = {
+	
+		}
+		completion_reward = {
+			9 = {
+				add_resource = {
+					type = steel
+					amount = 9
+				}
+			}
+		}
+	}
+
 	#Focus for M1 "Garand" Rifle Contract
 	focus = { 
 		id = SMA_m1garandriflecontract
@@ -154,7 +181,7 @@ focus_tree = {
 				amount = 2000 
 				producer = SMA 
 			}
-			add_ideas = SMA_m1_garandcontract
+			#add_ideas = SMA_m1_garandcontract
 			add_tech_bonus = {
 				name = infantry_artillery_bonus
 				bonus = 3.0
@@ -249,20 +276,22 @@ focus_tree = {
 		mutually_exclusive = { focus = SMA_servicebasedeconomy } 
 		completion_reward = { 
 			5 = {
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = industrial_complex
-					level = 3
-					instant_build = yes
-				}
-				set_state_flag = SMA_revive_textile_industry
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
+				if = {
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = industrial_complex
+						level = 3
+						instant_build = yes
 					}
-				}
+					set_state_flag = SMA_revive_textile_industry
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = yes
+						}
+					}
+				} 
 			}
 		} 
 	}
@@ -520,7 +549,7 @@ focus_tree = {
 		available_if_capitulated = yes 
 		prerequisite = { focus = SMA_The_Curley_Effect } 
 		ai_will_do = { 
-			factor = 1
+			factor = 200
 		} 
 		available = { 
 			OR = {
@@ -577,7 +606,7 @@ focus_tree = {
 				core_maine = yes
 				core_rhode_island = yes
 				core_connecticut = yes
-			
+				set_cosmetic_tag = new_england_unified
 			
 		} 
 	} 
@@ -724,6 +753,9 @@ focus_tree = {
 		y = 1
 		relative_position_id = SMA_Unification_with_Rhode_Island
 		cost = 13
+		ai_will_do = {
+			factor = 300
+		}
 		available_if_capitulated = yes 
 		prerequisite = { focus = SMA_Unification_with_Rhode_Island }
 		available = {
@@ -829,7 +861,7 @@ focus_tree = {
 		bypass = {
 			AND = {
 				controls_nova_scotia_trigger = yes
-				has_completed_focus = SMA_bytheswordweseekpeace
+				
 			}
 		}
 		completion_reward = { 
@@ -860,7 +892,7 @@ focus_tree = {
 		available_if_capitulated = yes 
 		mutually_exclusive = { focus = SMA_Our_Future focus = SMA_Stirrings_of_a_Revolution }
 		ai_will_do = {
-			factor = 5
+			factor = 55
 		}
 		completion_reward = { 
 
@@ -1204,9 +1236,9 @@ focus_tree = {
 		icon = GFX_focus_SMA_irish_army
 		prerequisite = { focus = SMA_Hurly_General_President focus = SMA_Rally_For_Catholic_Cause }
 		x = -2
-		y = 3
+		y = 4
 		relative_position_id = SMA_Hurly_General_President
-		cost = 10
+		cost = 7.2
 		ai_will_do = {
 			factor = 1
 		}
@@ -1488,12 +1520,33 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = SMA_Establish_Overloardship_over_our_new_territory
-		icon = GFX_focus_SMA_overlord
+		id = SMA_Grant_Powers_To_The_Church
+		icon = GFX_focus_SMA_churhc
 		prerequisite = { focus = SMA_Reignite_Fenian_raids }
 		x = 0
 		y = 1
 		relative_position_id = SMA_Reignite_Fenian_raids
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = yes
+		available = {
+
+		}
+		completion_reward = { 
+			add_political_power = 75
+			add_stability = 0.05
+		}
+	}
+
+	focus = {
+		id = SMA_Establish_Overloardship_over_our_new_territory
+		icon = GFX_focus_SMA_overlord
+		prerequisite = { focus = SMA_Grant_Powers_To_The_Church }
+		x = 0
+		y = 1
+		relative_position_id = SMA_Grant_Powers_To_The_Church
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -1512,19 +1565,22 @@ focus_tree = {
 					core_new_brunswick = yes	
 				}
 	}
+
 	focus = {
 		id = SMA_Establish_New_Hibernia
 		icon = GFX_focus_SMA_new_hiberia
 		prerequisite = { focus = SMA_Establish_Overloardship_over_our_new_territory }
+		prerequisite = { focus = SMA_Raise_Irish_Legions }
 		x = 0
 		y = 1
 		relative_position_id = SMA_Establish_Overloardship_over_our_new_territory
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 1
 		}
 		available_if_capitulated = yes
 		completion_reward = { 
+		add_war_support = 0.03
 					set_cosmetic_tag = irish_mass
 		}
 	}
@@ -1532,7 +1588,7 @@ focus_tree = {
 		id = SMA_Standardization_of_Fenian_Army
 		icon = GFX_focus_SMA_fenian_armystand
 		prerequisite = { focus = SMA_Establish_New_Hibernia}
-		x = -1
+		x =4
 		y = 1
 		relative_position_id = SMA_Establish_New_Hibernia
 		cost = 7.2
@@ -1551,13 +1607,63 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = SMA_Muntions_Standardization
+		icon = GFX_focus_SMA_Muntions_Standardization
+		prerequisite = { focus = SMA_Standardization_of_Fenian_Army}
+		x =0
+		y = 1
+		relative_position_id = SMA_Standardization_of_Fenian_Army
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = yes
+		completion_reward = {
+			add_ideas = SNC_standardizes_our_ammunitions_idea
+		}
+	}
+	focus = {
+		id = SMA_Arms_Importation
+		icon = GFX_focus_SMA_Arms_Importation
+		prerequisite = { focus = SMA_Muntions_Standardization}
+		x =-1
+		y = 1
+		relative_position_id = SMA_Muntions_Standardization
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = yes
+		completion_reward = {
+            add_offsite_building = { type = arms_factory level = 4 }
+		}
+	}
+	focus = {
+		id = SMA_Fenian_Army_Propaganda
+		icon = GFX_focus_SMA_Fenian_Army_Propaganda
+		prerequisite = { focus = SMA_Muntions_Standardization}
+		x =1
+		y = 1
+		relative_position_id = SMA_Muntions_Standardization
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = yes
+		completion_reward = {
+			add_war_support = 0.15
+		}
+	}
+
+
+	focus = {
 		id = SMA_Fenian_Airforce_Investment
 		icon = GFX_focus_SMA_fenian_airforces
 		prerequisite = { focus = SMA_Establish_New_Hibernia}
 		x = 1
 		y = 1
 		relative_position_id = SMA_Establish_New_Hibernia
-		cost = 7.2
+		cost = 5
 		ai_will_do = {
 			factor = 1
 		}
@@ -1619,11 +1725,11 @@ focus_tree = {
 	focus = {
 		id = SMA_Bring_New_York_into_Our_Fold
 		icon = GFX_focus_SMA_claimsi
-		prerequisite = { focus = SMA_Standardization_of_Fenian_Army }
-		x = -2
+		prerequisite = { focus = SMA_Fumigate_the_WASP_Nest }
+		x = 1
 		y = 1
-		relative_position_id = SMA_Standardization_of_Fenian_Army
-		cost = 10
+		relative_position_id = SMA_Fumigate_the_WASP_Nest
+		cost = 7.2
 		ai_will_do = {
 			factor = 1
 		}
@@ -1634,16 +1740,21 @@ focus_tree = {
 				target = SNY
 			}
 			claim_new_york = yes
+				26 = { add_core_of = PREV }
+	27 = { add_core_of = PREV }
+	28 = { add_core_of = PREV }
+	202 = { add_core_of = PREV }
+	
 		}
 	}
 	focus = {
 		id = SMA_New_Jersey_Is_Ours
 		icon = GFX_focus_SMA_claimsi
-		prerequisite = { focus = SMA_Standardization_of_Fenian_Army }
-		x = 0
+		prerequisite = { focus = SMA_Fumigate_the_WASP_Nest }
+		x = -1
 		y = 1
-		relative_position_id = SMA_Standardization_of_Fenian_Army
-		cost = 10
+		relative_position_id = SMA_Fumigate_the_WASP_Nest
+		cost = 7.2
 		ai_will_do = {
 			factor = 1
 		}
@@ -1659,15 +1770,16 @@ focus_tree = {
 	focus = {
 		id = SMA_Welcome_Our_Celtic_Brothers
 		icon = GFX_focus_SMA_claimsi
-		prerequisite = { focus = SMA_Standardization_of_Fenian_Army }
-		x = 2
+		prerequisite = { focus = SMA_Fumigate_the_WASP_Nest }
+		prerequisite = { focus = SMA_Fenian_Airforce_Investment }
+		x = 4
 		y = 1
-		relative_position_id = SMA_Standardization_of_Fenian_Army
-		cost = 10
+		relative_position_id = SMA_Fumigate_the_WASP_Nest
+		cost = 7.2
 		ai_will_do = {
 			factor = 1
 		}
-		prerequisite = {focus = X }
+		#prerequisite = {focus = X }
 		available_if_capitulated = yes
 		completion_reward = {
 			claim_newfoundland = yes
@@ -1684,11 +1796,11 @@ focus_tree = {
 		x = 0
 		y = 1
 		relative_position_id = SMA_Welcome_Our_Celtic_Brothers
-		cost = 10
+		cost = 7.2
 		ai_will_do = {
 			factor = 1
 		}
-		prerequisite = {focus = X }
+		#prerequisite = {focus = X }
 		available_if_capitulated = yes
 		completion_reward = {
 			create_wargoal = {
@@ -1703,6 +1815,32 @@ focus_tree = {
 			claim_rhode_island = yes
 		}
 	}
+
+	focus = {
+		id = SMA_Irish_American_Supremacy
+		icon = GFX_focus_SMA_Irish_American_Supremacy
+		prerequisite = { focus = SMA_Mop_Up_the_Rest }
+		prerequisite = { focus = SMA_Destroy_the_Closet_Germans }
+		prerequisite = { focus = SMA_Arms_Importation }
+		prerequisite = { focus = SMA_Fenian_Army_Propaganda }
+
+		x = 0
+		y = 1
+		relative_position_id = SMA_Mop_Up_the_Rest
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		#prerequisite = {focus = X }
+		available_if_capitulated = yes
+		completion_reward = {
+			custom_effect_tooltip = SWA_USA_TT
+			hidden_effect = {
+			core_the_united_states = yes
+			}
+		}
+	}
+
 	focus = {
 		id = SMA_Destroy_the_Closet_Germans
 		icon = GFX_focus_SMA_claimsi
@@ -1710,11 +1848,11 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = SMA_Bring_New_York_into_Our_Fold
-		cost = 10
+		cost = 7.2
 		ai_will_do = {
 			factor = 1
 		}
-		prerequisite = {focus = X }
+		#prerequisite = {focus = X }
 		available_if_capitulated = yes
 		completion_reward = {
 			create_wargoal = {
@@ -1727,24 +1865,20 @@ focus_tree = {
 	focus = {
 		id = SMA_Fumigate_the_WASP_Nest
 		icon = GFX_focus_SMA_eliminate_wasp
-		prerequisite = { focus = SMA_Welcome_Our_Celtic_Brothers }
-		x = 2
+		prerequisite = { focus = SMA_Establish_New_Hibernia }
+		x = -3
 		y = 1
-		relative_position_id = SMA_Welcome_Our_Celtic_Brothers
-		cost = 10
+		relative_position_id = SMA_Establish_New_Hibernia
+		cost = 5
 		ai_will_do = {
 			factor = 1
 		}
-		prerequisite = {focus = X }
+		#prerequisite = {focus = X }
 		available_if_capitulated = yes
 		completion_reward = {
 			create_wargoal = {
 				type = annex_everything
 				target = SVT
-			}
-			custom_effect_tooltip = SWA_USA_TT
-			hidden_effect = {
-			core_the_united_states = yes
 			}
 		}
 	}
@@ -1864,18 +1998,20 @@ focus_tree = {
 		available_if_capitulated = yes
 		completion_reward = { 
 			5 = {
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = industrial_complex
-					level = 3
-					instant_build = yes
-				}
-				set_state_flag = SMA_revive_textile_industry
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 0
-						include_locked = yes
+				if = {
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = industrial_complex
+						level = 3
+						instant_build = yes
+					}
+					set_state_flag = SMA_revive_textile_industry
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 0
+							include_locked = yes
+						}
 					}
 				}
 			}
@@ -1912,7 +2048,7 @@ focus_tree = {
 		mutually_exclusive = { focus = SMA_Saltonstall  }
 		cost = 5
 		ai_will_do = {
-			factor = 1
+			factor = 75
 		}
 		available_if_capitulated = yes
 		completion_reward = { 
@@ -2326,24 +2462,11 @@ focus_tree = {
 		mutually_exclusive = { focus = SMA_Lodge  }
 		cost = 5
 		ai_will_do = {
-			factor = 1
+			factor = 75
 		}
 		available_if_capitulated = yes
 		completion_reward = { 
-			recruit_character = SMA_LeverettSaltonstall
-			remove_country_leader_role = {
-				character = SMA_Henry_Cabot_Lodge_Jr
-				ideology = conservatism
-			}
-			add_country_leader_role = {
-				character = "SMA_LeverettSaltonstall"
-				country_leader = {
-					ideology = conservatism
-                    traits = {}
-					expire = "1965.3.1.1"
-				}
-				promote_leader = yes
-            }
+			promote_character = SMA_LeverettSaltonstall
 			set_politics = {
 				ruling_party = democratic
 				elections_allowed = no
@@ -2357,9 +2480,9 @@ focus_tree = {
 		x = 0
 		y = 1
 		relative_position_id = SMA_Our_Future
-		cost = 10
+		cost = 4.5
 		ai_will_do = {
-			factor = 1
+			factor = 20
 		}
 		available_if_capitulated = yes
 		completion_reward = { 
@@ -2386,7 +2509,11 @@ focus_tree = {
 		available_if_capitulated = yes 
 		mutually_exclusive = { focus = SMA_Elections_Will_Continue focus = SMA_Our_Future }
 		ai_will_do = {
-			factor = 1
+			factor = 20
+			modifier = {
+				factor = 1
+				has_country_flag = SLA_huey_is_leader
+			}
 		}
 		completion_reward = { 
 			add_popularity= { 
@@ -2402,17 +2529,13 @@ focus = {
 	id = SMA_Hood_Leads_the_Revolution
 	icon = GFX_focus_SMA_hood_leads_rev
 	prerequisite = { focus = SMA_Stirrings_of_a_Revolution}
-	mutually_exclusive = { focus = SMA_rewrite_the_constitution}
+	#mutually_exclusive = { focus = SMA_rewrite_the_constitution}
 	x = 0
 	y = 1
 	relative_position_id = SMA_Stirrings_of_a_Revolution
 	cost = 7.2
 	ai_will_do = {
 		factor = 1
-		modifier = {
-			factor = 0
-			has_country_flag = SLA_huey_is_leader
-		}
 		modifier = {
 			factor = 50
 			has_government = communism
@@ -2434,32 +2557,32 @@ focus = {
 	}
 }
 #focus = {
-	id = SMA_Looking_Outwards_with_the_Republicans
-	icon = GFX_
-	prerequisite = { focus = SMA_Elections_Will_Continue}
-
-	x = 15
-	y = 1
-	relative_position_id = SMA_Elections_Will_Continue
-	available = {
-		has_completed_focus = SMA_Fulfil_the_Promise
-	}
-	cost = 5
-	ai_will_do = {
-		factor = 1
-		modifier = {
-			factor = 0
-			has_country_flag = SLA_huey_is_leader
-		}
-		modifier = {
-			factor = 50
-			has_government = communism
-		}
-	}
-	available_if_capitulated = yes
-	completion_reward = {
-
-	}
+#	id = SMA_Looking_Outwards_with_the_Republicans
+#	icon = GFX_
+#	prerequisite = { focus = SMA_Elections_Will_Continue}
+#
+#	x = 15
+#	y = 1
+#	relative_position_id = SMA_Elections_Will_Continue
+#	available = {
+#		has_completed_focus = SMA_Fulfil_the_Promise
+#	}
+#	cost = 5
+#	ai_will_do = {
+#		factor = 1
+#		modifier = {
+#			factor = 0
+#			has_country_flag = SLA_huey_is_leader
+#		}
+#		modifier = {
+#			factor = 50
+#			has_government = communism
+#		}
+#	}
+#	available_if_capitulated = yes
+#	completion_reward = {
+#
+#	}
 #}
 focus = {
 	id = SMA_Dreams_Of_a_Red_New_England
@@ -2514,7 +2637,7 @@ focus = {
 	}
 	available_if_capitulated = yes
 	completion_reward = {
-		add_timed_idea = { idea = SMA_Soviet_Military_Advisors  days = 300 }
+		add_ideas = SMA_Soviet_Military_Advisors
 	}
 }
 focus = {
@@ -2531,20 +2654,7 @@ focus = {
 	}
 	available_if_capitulated = yes
 	completion_reward = {
-		recruit_character = SMA_adolph_germer
-		remove_country_leader_role = {
-			character = SMA_Otis_A_Hood
-			ideology = stalinism
-		}
-		add_country_leader_role = {
-			character = "SMA_adolph_germer"
-			country_leader = {
-				ideology = leninism
-				traits = { devoted_trotskyist }
-				expire = "1965.3.1.1"
-			}
-			promote_leader = yes 
-		}
+		promote_character = SMA_adolph_germer
 		add_ideas = SMA_permanent_revolution
 	}
 }
@@ -2909,7 +3019,7 @@ focus = {
 	}
 	available_if_capitulated = yes
 	completion_reward = {
-		add_timed_idea = { idea = SMA_New_Red_Constitution_idea  days = 60 }		
+		add_timed_idea = { idea = SMA_New_Red_Constitution_idea  days = 120 }		
 		#ill add an event later
 		add_stability = 0.05
 		add_popularity = { 
@@ -2948,7 +3058,7 @@ focus = {
 	}
 	available_if_capitulated = yes
 	completion_reward = {
-		add_political_power = -100
+		add_political_power = -40
 		add_ideas = SMA_revolutionary_equality
 	}
 }
@@ -3174,7 +3284,7 @@ focus = {
 	mutually_exclusive = { focus = SMA_Elections_Will_Continue focus = SMA_Stirrings_of_a_Revolution }
 	cost = 0.2
 	ai_will_do = {
-		factor = 1
+		factor = 25
 	}
 	available_if_capitulated = yes
 	completion_reward = { 
@@ -3223,63 +3333,67 @@ focus = {
 	completion_reward = {
 		add_offsite_building = { type = arms_factory level = 1 }
 		2 = {
-			limit = {
-				free_building_slots = {
-					building = arms_factory
-					size > 1
-					include_locked = yes
-				}
-				OR = {
-					is_in_home_area = yes
-					NOT = {
-						owner = {
-							any_owned_state = {
-								free_building_slots = {
-									building = arms_factory
-									size > 1
-									include_locked = yes
+			if = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
 								}
-								is_in_home_area = yes
 							}
 						}
 					}
 				}
-			}
-			add_extra_state_shared_building_slots = 1
-			add_building_construction = {
-				type = arms_factory
-				level = 1
-				instant_build = yes
-			}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			} 
 		}
 		5 = {
-			limit = {
-				free_building_slots = {
-					building = arms_factory
-					size > 1
-					include_locked = yes
-				}
-				OR = {
-					is_in_home_area = yes
-					NOT = {
-						owner = {
-							any_owned_state = {
-								free_building_slots = {
-									building = arms_factory
-									size > 1
-									include_locked = yes
+			if = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
 								}
-								is_in_home_area = yes
 							}
 						}
 					}
 				}
-			}
-			add_extra_state_shared_building_slots = 1
-			add_building_construction = {
-				type = arms_factory
-				level = 1
-				instant_build = yes
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
 			}
 		}
 	}
@@ -3388,9 +3502,9 @@ focus = {
 	}
 	relative_position_id = SMA_Draper_Plan
 	available_if_capitulated = yes
-	available = {
-		add_ideas = x
-	}
+	#available = {
+	#	add_ideas = x
+	#}
 	completion_reward = {
 		add_ideas = advanced_production_centers
 	}
@@ -3466,6 +3580,10 @@ focus = {
 	cost = 7.2
 	ai_will_do = {
 		factor = 1
+		modifier = {
+			date > 1938.6.1
+			factor = 15
+		}
 	}
 	relative_position_id = SMA_Solidify_The_Partys_Rule
 	available_if_capitulated = yes
@@ -3640,7 +3758,7 @@ focus = {
 	prerequisite = { focus = SMA_Fueling_our_war_industries }
 	x = 0
 	y = 1
-	cost = 7.2
+	cost = 5
 	ai_will_do = {
 		factor = 1
 	}
@@ -3651,33 +3769,35 @@ focus = {
 	}
 	completion_reward = {
 		199 = {
-			limit = {
-				free_building_slots = {
-					building = synthetic_refinery 
-					size > 3
-					include_locked = yes
-				}
-				OR = {
-					is_in_home_area = yes
-					NOT = {
-						owner = {
-							any_owned_state = {
-								free_building_slots = {
-									building = synthetic_refinery
-									size > 3
-									include_locked = yes
+			if = {
+				limit = {
+					free_building_slots = {
+						building = synthetic_refinery 
+						size > 3
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = synthetic_refinery
+										size > 3
+										include_locked = yes
+									}
+									is_in_home_area = yes
 								}
-								is_in_home_area = yes
 							}
 						}
 					}
 				}
-			}
-			add_extra_state_shared_building_slots = 3
-			add_building_construction = {
-				type = synthetic_refinery
-				level = 3
-				instant_build = yes
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 3
+					instant_build = yes
+					}
 				}
 			}
 		}
@@ -4439,33 +4559,35 @@ focus = {
 		completion_reward = {
 			add_offsite_building = { type = arms_factory level = 3 }
 			5 = {
-				limit = {
-					free_building_slots = {
-						building = arms_factory
-						size > 1
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = arms_factory
-										size > 1
-										include_locked = yes
+				if = {
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 1
+							include_locked = yes
+						}
+						OR = {
+							is_in_home_area = yes
+							NOT = {
+								owner = {
+									any_owned_state = {
+										free_building_slots = {
+											building = arms_factory
+											size > 1
+											include_locked = yes
+										}
+										is_in_home_area = yes
 									}
-									is_in_home_area = yes
 								}
 							}
 						}
 					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
 				}
 			}
 		}

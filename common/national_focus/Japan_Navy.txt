@@ -21,25 +21,34 @@ focus_tree = {
 	}
 	completion_reward = { 
 	custom_effect_tooltip = IJA_hate_tt
-	hidden_effect = {	
-	every_country = {
-		add_opinion_modifier = {
+	488 = { 
+	add_extra_state_shared_building_slots = 3
+	add_building_construction = {
+				type = dockyard
+				level = 5
+				instant_build = yes
+			}
+	}
+	hidden_effect = {
+	
+		every_country = {
+			add_opinion_modifier = {
 					modifier = hostile_status
-				}	
+			}	
 		}
 		add_equipment_to_stockpile = {
 				type = infantry_equipment
-				amount = 1000
+				amount = 2000
 				producer = IJA
 			}
 			add_equipment_to_stockpile = {
 				type = support_equipment
-				amount = 1500
+				amount = 2500
 				producer = IJA
 			}
 	}	
-	add_offsite_building = { type = dockyard level = 2 }	
-	navy_experience = 35
+	
+	navy_experience = 100
 	add_manpower = 10000
 }
 
@@ -140,11 +149,7 @@ focus = {
 		factor = 100
 	}
 	completion_reward = {
-		add_equipment_to_stockpile = {
-			type = nav_bomber_equipment_1
-			amount = 210
-			producer = IJA
-			}
+		
 		add_tech_bonus = {
 			name = nav_bomber_bonus
 			bonus = 1.0
@@ -167,6 +172,7 @@ focus = {
 		factor = 100
 	}
 	completion_reward = {
+		
 		add_tech_bonus = {
 			name = CAS_bonus
 			bonus = 1.0
@@ -280,7 +286,8 @@ focus = {
 		completion_reward = {
 		navy_experience = 25
 		add_ideas = IJA_naval_invasion_skill
-		}
+		add_offsite_building = { type = arms_factory level = 3 }
+	}
 	}
 	focus = {
 		id = IJA_Demand_Manpower
@@ -296,7 +303,17 @@ focus = {
 			factor = 100
 		}
 		completion_reward = { 
-			add_manpower = 25000
+			add_manpower = 26000
+
+			hidden_effect = {
+				if = {
+					limit = {
+						has_idea = Chohei_conscription
+					}
+
+					remove_ideas = Chohei_conscription
+				}
+			}
 		}
 	}
 	focus = {
@@ -325,19 +342,32 @@ focus = {
 		cost = 5
 		available_if_capitulated = yes
 		ai_will_do = {
-			factor = 100
+			factor = 320
 		}
 		completion_reward = { 
 			add_threat = 3
 			claim_hawaii = yes
 				declare_war_on = {
-    target = SHI
-    type = annex_everything
-}
+    			target = SHI
+   				type = annex_everything
+			}
 			activate_mission = IJA_a_sun_rises_on_the_east
 			add_timed_idea = {
 				idea = IJA_Strike_Hawaii_idea
-				days = 365
+				days = 805
+			}
+			news_event = {
+				id = usastates_news.35
+			}
+
+			hidden_effect = {
+				if = {
+					limit = {
+						has_idea = Chohei_conscription
+					}
+
+					remove_ideas = Chohei_conscription
+				}
 			}
 		}	
 	}
@@ -354,7 +384,8 @@ focus = {
 			factor = 100
 		}
 		completion_reward = { 
-			add_offsite_building = { type = industrial_complex level = 2 }
+			add_offsite_building = { type = industrial_complex level = 3 }
+			
 		}
 	}
 	focus = {
@@ -399,10 +430,10 @@ focus = {
 						}
 					}
 				}
-				add_extra_state_shared_building_slots = 1
+				add_extra_state_shared_building_slots = 2
 				add_building_construction = {
 					type = industrial_complex
-					level = 1
+					level = 2
 					instant_build = yes
 				}
 			}
@@ -469,7 +500,14 @@ focus = {
 			controls_state = 395
 			controls_state = 398
 		}
-		completion_reward = { 
+		completion_reward = {
+			if = {
+    limit = { 
+        is_ai = no
+    }
+	IJA = { add_ideas =  IJA_american_resistance}
+}
+
 			custom_effect_tooltip = IJA_stage_tt
 			hidden_effect = { 
 			load_oob = IJA_stage_2
@@ -525,124 +563,132 @@ focus = {
 		}
 		completion_reward = { 
 			398 = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 2
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = industrial_complex
-										size > 2
-										include_locked = yes
+				if = {
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 2
+							include_locked = yes
+						}
+						OR = {
+							is_in_home_area = yes
+							NOT = {
+								owner = {
+									any_owned_state = {
+										free_building_slots = {
+											building = industrial_complex
+											size > 2
+											include_locked = yes
+										}
+										is_in_home_area = yes
 									}
-									is_in_home_area = yes
 								}
 							}
 						}
 					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-				}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
+				} 
 			}
 			396 = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 2
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = industrial_complex
-										size > 2
-										include_locked = yes
+				if = {
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 2
+							include_locked = yes
+						}
+						OR = {
+							is_in_home_area = yes
+							NOT = {
+								owner = {
+									any_owned_state = {
+										free_building_slots = {
+											building = industrial_complex
+											size > 2
+											include_locked = yes
+										}
+										is_in_home_area = yes
 									}
-									is_in_home_area = yes
 								}
 							}
 						}
 					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-				}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
+				} 
 			}
 			397 = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 2
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = industrial_complex
-										size > 2
-										include_locked = yes
+				if = {
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 2
+							include_locked = yes
+						}
+						OR = {
+							is_in_home_area = yes
+							NOT = {
+								owner = {
+									any_owned_state = {
+										free_building_slots = {
+											building = industrial_complex
+											size > 2
+											include_locked = yes
+										}
+										is_in_home_area = yes
 									}
-									is_in_home_area = yes
 								}
 							}
 						}
 					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-				}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
+				} 
 			}
 			395 = {
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 2
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = industrial_complex
-										size > 2
-										include_locked = yes
+				if = {
+					limit = {
+						free_building_slots = {
+							building = industrial_complex
+							size > 2
+							include_locked = yes
+						}
+						OR = {
+							is_in_home_area = yes
+							NOT = {
+								owner = {
+									any_owned_state = {
+										free_building_slots = {
+											building = industrial_complex
+											size > 2
+											include_locked = yes
+										}
+										is_in_home_area = yes
 									}
-									is_in_home_area = yes
 								}
 							}
 						}
 					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 2
-					instant_build = yes
-				}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = industrial_complex
+						level = 2
+						instant_build = yes
+					}
+				} 
 			}
 		}
 	}	
@@ -1562,14 +1608,19 @@ focus = {
 		mutually_exclusive = { focus = IJA_Demand_Manpower }
 		available_if_capitulated = yes
 		ai_will_do = {
-			factor = 100
+			factor = 700
 		}
 		completion_reward = { 
 			add_equipment_to_stockpile = {
 				type = infantry_equipment
 				amount = 7500
 				producer = IJA
-			}     
+			} 
+			add_equipment_to_stockpile = {
+				type = support_equipment
+				amount = 2500
+				producer = IJA
+			}
 		}
 	}
 	focus = {
@@ -1585,6 +1636,7 @@ focus = {
 			factor = 100
 		}
 		completion_reward = { 
+			add_offsite_building = { type = arms_factory level = 1 }
 			add_ideas = IJA_Imperial_Japanese_Marines_idea
 			add_tech_bonus = {
 				name = special_forces_bonus
@@ -1593,6 +1645,15 @@ focus = {
 				technology = tech_mountaineers
 				technology = tech_mountaineers2
 				technology = tech_mountaineers3
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_idea = Chohei_conscription
+					}
+
+					remove_ideas = Chohei_conscription
+				}
 			}
 		}
 	}
@@ -1613,11 +1674,7 @@ focus = {
 			hidden_effect = {
 			load_oob = IJA_paratroopers
 			}
-			add_equipment_to_stockpile = {
-				type = transport_plane_equipment
-				amount = 20
-				producer = IJA
-			}
+			
 			add_ideas = IJA_IJM_Paratroopers_idea
 			add_tech_bonus = {
 				name = special_forces_bonus

@@ -17,10 +17,10 @@ focus_tree = {
 
 		focus = {
 		id = COZ_fate_of_the_1935_emergency_legislature_meeting
-		icon = GFX_focus_goal_tripartite_pact
+		icon = GFX_goal_generic_neutrality_focus
 		x = 5
 		y = 1
-		cost = 5
+		cost = 4
 
 		search_filters = {  FOCUS_FILTER_POLITICAL }
 		
@@ -33,8 +33,1146 @@ focus_tree = {
 		}
 
 		completion_reward = {
-		#event to pick between the 2	
+		country_event = {
+					id  = cozumel.1
+				}
 		add_political_power = 150
+		}
+	}
+	focus = {
+		id = COZ_paved_roads
+		icon = GFX_goal_generic_construct_infrastructure
+		x = 5
+		y = 3
+		cost = 7.2
+
+		search_filters = {  FOCUS_FILTER_INDUSTRY }
+		prerequisite = {focus = COZ_fate_of_the_1935_emergency_legislature_meeting}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		747 = {
+		add_extra_state_shared_building_slots = 2	
+		}
+		random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = infrastructure
+										size > 1
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 4
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = COZ_logging_camp
+		icon = GFX_goal_generic_construct_infrastructure
+		x = 0
+		y = 1
+		cost = 5
+		relative_position_id = COZ_paved_roads
+		search_filters = {  FOCUS_FILTER_INDUSTRY }
+		prerequisite = {focus = COZ_paved_roads}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		747 = {
+		add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+    				type = industrial_complex
+    				level = 1
+    				instant_build = yes
+				}	
+		}
+		}
+	}
+	focus = {
+		id = COZ_rubber_development
+		icon = GFX_focus_rubber
+		x = -2
+		y = 1
+		cost = 7.2
+		relative_position_id = COZ_paved_roads
+		search_filters = {  FOCUS_FILTER_INDUSTRY }
+		prerequisite = {focus = COZ_paved_roads}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		add_resource = {
+	      state = 747
+	      type = rubber
+	       amount = 45
+			}
+		}
+	}
+	focus = {
+		id = COZ_grand_fishery
+		icon = GFX_goal_generic_construct_naval_dockyard
+		x = 2
+		y = 1
+		cost = 5
+		relative_position_id = COZ_paved_roads
+		search_filters = {  FOCUS_FILTER_INDUSTRY }
+		prerequisite = {focus = COZ_paved_roads}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 4000
+		}
+
+		completion_reward = {
+		747 = {
+		add_extra_state_shared_building_slots = 2
+		add_building_construction = {
+					type = dockyard
+					level = 2
+					instant_build = yes
+				}	
+		}
+		}
+	}
+	focus = {
+		id = COZ_agricultural_cooperatives
+		icon = GFX_goal_generic_construct_civ_factory
+		x = 0
+		y = 2
+		cost = 7.2
+		relative_position_id = COZ_paved_roads
+		search_filters = {  FOCUS_FILTER_INDUSTRY }
+		prerequisite = {focus = COZ_rubber_development}
+		prerequisite = {focus = COZ_logging_camp}
+		prerequisite = {focus = COZ_grand_fishery}
+		available_if_capitulated = no
+		available = {
+		OR = {
+		controls_state = 569	
+		controls_state = 570
+		controls_state = 467
+		}
+		}
+		ai_will_do = {
+			factor = 4000
+		}
+
+		completion_reward = {
+		add_ideas = COZ_hennquen_coops
+		}
+	}
+	focus = {
+		id = COZ_domestic_arms_industry
+		icon = GFX_goal_generic_construct_mil_factory
+		x = 0
+		y = 3
+		cost = 7.2
+		relative_position_id = COZ_paved_roads
+		search_filters = {  FOCUS_FILTER_INDUSTRY }
+		prerequisite = {focus = COZ_agricultural_cooperatives}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 1000
+		}
+
+		completion_reward = {
+		add_ideas = COZ_domestic_arms	
+		add_offsite_building = { type = arms_factory level = 2 }
+		}
+	}
+	focus = {
+		id = COZ_enforce_state_atheism
+		icon = GFX_focus_generic_treaty
+		x = -1
+		y = 4
+		cost = 5
+		relative_position_id = COZ_paved_roads
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		prerequisite = {focus = COZ_domestic_arms_industry}
+		mutually_exclusive = {focus = COZ_maintain_secularism}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 1000
+		}
+
+		completion_reward = {
+		add_ideas = COZ_atheism
+		}
+	}
+	focus = {
+		id = COZ_maintain_secularism
+		icon = GFX_goal_generic_neutrality_focus
+		x = 1
+		y = 4
+		cost = 5
+		relative_position_id = COZ_paved_roads
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		prerequisite = {focus = COZ_domestic_arms_industry}
+		mutually_exclusive = {focus = COZ_enforce_state_atheism}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 1000
+		}
+
+		completion_reward = {
+		add_ideas = COZ_secularism
+		}
+	}
+	focus = {
+		id = COZ_melgars_administrative_genius_returns
+		icon = GFX_focus_research
+		x = 0
+		y = 5
+		cost = 5
+		relative_position_id = COZ_paved_roads
+		search_filters = {  FOCUS_FILTER_INDUSTRY }
+		prerequisite = {focus = COZ_maintain_secularism focus = COZ_enforce_state_atheism}
+		available_if_capitulated = no
+		available = {
+		NOT = {
+		country_exists = MCA
+		country_exists = MYU	
+		}
+		}
+		ai_will_do = {
+			factor = 1000
+		}
+
+		completion_reward = {
+		add_research_slot = 1	
+		467 = {
+		add_dynamic_modifier = {
+    	modifier = COZ_melgar_genius_state
+		}	
+		}
+		570 = {
+		add_dynamic_modifier = {
+    	modifier = COZ_melgar_genius_state
+		}	
+		}
+		569 = {
+		add_dynamic_modifier = {
+    	modifier = COZ_melgar_genius_state
+		}	
+		}
+		564 = {
+		add_dynamic_modifier = {
+    	modifier = COZ_melgar_genius_state
+		}	
+		}
+		469 = {
+		add_dynamic_modifier = {
+    	modifier = COZ_melgar_genius_state
+		}	
+		}
+		567 = {
+		add_dynamic_modifier = {
+    	modifier = COZ_melgar_genius_state
+		}	
+		}
+		468 = {
+		add_dynamic_modifier = {
+    	modifier = COZ_melgar_genius_state
+		}	
+		}
+		568 = {
+		add_dynamic_modifier = {
+    	modifier = COZ_melgar_genius_state
+		}	
+		}
+		747 = {
+		add_dynamic_modifier = {
+    	modifier = COZ_melgar_genius_state
+		}	
+		}
+		#state modifiers for quintana roo to make em cool
+		}
+	}
+	focus = {
+		id = COZ_work_with_yucatecos
+		icon = GFX_focus_mexico_hat
+		x = -3
+		y = 2
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		mutually_exclusive = { focus = COZ_work_with_foreigners}
+		prerequisite = {focus = COZ_fate_of_the_1935_emergency_legislature_meeting}
+		available_if_capitulated = no
+		available = {
+		always = no
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+			
+		add_political_power = 20
+		}
+	}
+	focus = {
+		id = COZ_campeche_cooperation
+		icon = GFX_focus_boston_plan
+		x = -2
+		y = 1
+		cost = 5
+		relative_position_id = COZ_work_with_yucatecos
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		mutually_exclusive = { focus = COZ_submit_to_merida_govt}
+		prerequisite = {focus = COZ_work_with_yucatecos}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		MCA = {
+				add_opinion_modifier = {
+					target = COZ
+					modifier = COZ_they_sided_wit_us
+				}
+			}
+		}
+	}
+	focus = {
+		id = COZ_invite_campeche_hennequen_haciendas
+		icon = GFX_aisle_shake
+		x = -2
+		y = 2
+		cost = 10
+		relative_position_id = COZ_work_with_yucatecos
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		prerequisite = {focus = COZ_campeche_cooperation}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		add_offsite_building = { type = industrial_complex level = 2 }
+		}
+	}
+	focus = {
+		id = COZ_campeche_annexation
+		icon = GFX_focus_gen_professional_garrisons
+		x = -2
+		y = 3
+		cost = 10
+		relative_position_id = COZ_work_with_yucatecos
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		prerequisite = {focus = COZ_invite_campeche_hennequen_haciendas}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		MCA = {
+		add_political_power = 150
+		add_manpower = 3500	
+		annex_country = {
+                    target = COZ
+                    transfer_troops = yes
+                }	
+		}
+		}
+	}
+	focus = {
+		id = COZ_submit_to_merida_govt
+		icon = GFX_goal_generic_political_pressure
+		x = 2
+		y = 1
+		cost = 5
+		relative_position_id = COZ_work_with_yucatecos
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		mutually_exclusive = { focus = COZ_campeche_cooperation}
+		prerequisite = {focus = COZ_work_with_yucatecos}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		MYU = {
+				add_opinion_modifier = {
+					target = COZ
+					modifier = COZ_they_sided_wit_us
+				}
+			}
+		}
+	}
+	focus = {
+		id = COZ_merida_light_industry_investment
+		icon = GFX_goal_generic_construct_civ_factory
+		x = 2
+		y = 2
+		cost = 10
+		relative_position_id = COZ_work_with_yucatecos
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		prerequisite = {focus = COZ_submit_to_merida_govt}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		add_offsite_building = { type = industrial_complex level = 2 }
+		}
+	}
+	focus = {
+		id = COZ_yucatan_annex
+		icon = GFX_ww1_assault
+		x = 2
+		y = 3
+		cost = 10
+		relative_position_id = COZ_work_with_yucatecos
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		prerequisite = {focus = COZ_merida_light_industry_investment}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		MYU = {
+		add_political_power = 100
+		add_manpower = 2500
+		annex_country = {
+                    target = COZ
+                    transfer_troops = yes
+                }	
+		}	
+		}
+	}
+	focus = {
+		id = COZ_cozumel_academy_of_war
+		icon = GFX_goal_generic_allies_build_infantry
+		x = 25
+		y = 2
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+
+		prerequisite = {focus = COZ_fate_of_the_1935_emergency_legislature_meeting}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 1000
+		}
+
+		completion_reward = {
+		add_command_power = 60
+		army_experience = 20
+		navy_experience = 25
+		}
+	}
+	focus = {
+		id = COZ_field_gun_imrpovements
+		icon = GFX_focus_gen_equipment_effort
+		x = 1
+		y = 1
+		cost = 5
+		relative_position_id = COZ_cozumel_academy_of_war
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		prerequisite = {focus = COZ_cozumel_academy_of_war}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 2
+				category = infantry_weapons
+			}
+		}
+	}
+	focus = {
+		id = COZ_army_specialization
+		icon = GFX_goal_generic_army_doctrines
+		x = 0
+		y = 2
+		cost = 5
+		relative_position_id = COZ_cozumel_academy_of_war
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		prerequisite = {focus = COZ_field_gun_imrpovements}
+		prerequisite = {focus = COZ_purchase_a_dutch_ship}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 100
+		}
+
+		completion_reward = {
+		army_experience = 15
+		swap_ideas = {
+    remove_idea = COZ_military_legacy_of_defeat
+    add_idea = COZ_army2
+	}	
+		}
+	}
+	focus = {
+		id = COZ_restore_melgar_field_command
+		icon = GFX_focus_gen_equipment_effort2
+		x = 0
+		y = 3
+		cost = 4
+		relative_position_id = COZ_cozumel_academy_of_war
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		prerequisite = {focus = COZ_army_specialization}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 100
+		}
+
+		completion_reward = {
+		add_offsite_building = { type = arms_factory level = 2 }	
+		add_manpower = 3500
+		add_field_marshal_role = {
+    Character = COZ_melgar
+    skill = 2
+	traits = { 
+		adaptable 
+		expert_improviser
+		jungle_rat 
+		ranger 
+	}
+    attack_skill = 2
+    defense_skill = 1
+    planning_skill = 3
+    logistics_skill = 5
+}	
+		}
+	}
+	focus = {
+		id = COZ_motorized_force
+		icon = GFX_goal_generic_army_motorized
+		x = 1
+		y = 4
+		cost = 5
+		relative_position_id = COZ_cozumel_academy_of_war
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		mutually_exclusive = {focus = COZ_marine_force}
+		prerequisite = {focus = COZ_restore_melgar_field_command}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		add_tech_bonus = {
+				name = motorized_bonus
+				ahead_reduction = 2
+				uses = 1
+				category = motorized_equipment
+			}
+		}
+	}
+	focus = {
+		id = COZ_elite_motorized_forces
+		icon = GFX_goal_generic_army_motorized
+		x = 1
+		y = 5
+		cost = 5
+		relative_position_id = COZ_cozumel_academy_of_war
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		prerequisite = {focus = COZ_motorized_force}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		swap_ideas = {
+    remove_idea = COZ_army2
+    add_idea = COZ_elite_motorized_army_idea
+	}
+		}
+	}
+	focus = {
+		id = COZ_marine_force
+		icon = GFX_goal_generic_special_forces
+		x = -1
+		y = 4
+		cost = 5
+		relative_position_id = COZ_cozumel_academy_of_war
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		mutually_exclusive = {focus = COZ_motorized_force}
+		prerequisite = {focus = COZ_restore_melgar_field_command}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 100
+		}
+
+		completion_reward = {
+		add_tech_bonus = {
+				bonus = 1.25
+				uses = 2
+				category = marine_tech
+			}
+		}
+	}
+	focus = {
+		id = COZ_elite_marines
+		icon = GFX_goal_generic_special_forces
+		x = -1
+		y = 5
+		cost = 5
+		relative_position_id = COZ_cozumel_academy_of_war
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		prerequisite = {focus = COZ_marine_force}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		swap_ideas = {
+    remove_idea = COZ_army2
+    add_idea = COZ_elite_marines_idea
+	}	
+		}
+	}
+	focus = {
+		id = COZ_purchase_a_dutch_ship
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		x = -1
+		y = 1
+		cost = 5
+		relative_position_id = COZ_cozumel_academy_of_war
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		prerequisite = {focus = COZ_cozumel_academy_of_war}
+		available_if_capitulated = no
+		available = {
+		has_completed_focus = COZ_grand_fishery
+		}
+		ai_will_do = {
+			factor = 2000
+		}
+
+		completion_reward = {
+		add_tech_bonus = {
+				name = ss_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 3
+				category = ss_tech
+			}	
+		add_timed_idea = { idea = PSP_horrible_national_debt_idea  days = 140 }
+			add_timed_idea = { idea = PSP_ship_purchase_effort_idea  days = 365 }
+		navy_experience = 25
+		}
+	}
+	focus = {
+		id = COZ_work_with_foreigners
+		icon = GFX_goal_generic_improve_relations
+		x = 15
+		y = 2
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		mutually_exclusive = { focus = COZ_work_with_yucatecos}
+		prerequisite = {focus = COZ_fate_of_the_1935_emergency_legislature_meeting}
+		available_if_capitulated = no
+		available = {
+		always = no
+		}
+		ai_will_do = {
+			factor = 100
+		}
+
+		completion_reward = {
+		SMS = {
+				add_opinion_modifier = {
+					target = COZ
+					modifier = COZ_they_sided_wit_us
+				}
+			}
+		SFL = {
+				add_opinion_modifier = {
+					target = COZ
+					modifier = COZ_they_sided_wit_us
+				}
+			}	
+		}
+	}
+	focus = {
+		id = COZ_the_dutch_connection
+		icon = GFX_goal_generic_improve_relations
+		x = -2
+		y = 1
+		cost = 10
+		relative_position_id = COZ_work_with_foreigners
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		prerequisite = {focus = COZ_work_with_foreigners}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 1000
+		}
+
+		completion_reward = {
+		add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 7500
+				producer = LON
+			}
+		}
+	}
+	focus = {
+		id = COZ_dutch_administrative_aid
+		icon = GFX_focus_army_moderization
+		x = -2
+		y = 2
+		cost = 7.2
+		relative_position_id = COZ_work_with_foreigners
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		prerequisite = {focus = COZ_the_dutch_connection}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		add_ideas = COZ_dutch_admin_aid
+		}
+	}
+	focus = {
+		id = COZ_smuggling_for_merc_funds
+		icon = GFX_focus_arms_purchase
+		x = 2
+		y = 1
+		cost = 10
+		relative_position_id = COZ_work_with_foreigners
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		prerequisite = {focus = COZ_work_with_foreigners}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		add_manpower = 10000
+		add_political_power = 250
+
+		}
+	}
+	focus = {
+		id = COZ_cuban_mafia_funding
+		icon = GFX_focus_attack_cuba
+		x = 2
+		y = 2
+		cost = 10
+		relative_position_id = COZ_work_with_foreigners
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		prerequisite = {focus = COZ_smuggling_for_merc_funds}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		CUB = {
+				add_opinion_modifier = {
+					target = COZ
+					modifier = COZ_they_sided_wit_us
+				}
+			}	
+		add_manpower = 3500
+		add_ideas = COZ_smugglers_paradise
+
+		}
+	}
+	focus = {
+		id = COZ_request_dutch_volunteers
+		icon = GFX_focus_upgrade_troops
+		x = -1
+		y = 3
+		cost = 7.2
+		relative_position_id = COZ_work_with_foreigners
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		prerequisite = {focus = COZ_cuban_mafia_funding}
+		prerequisite = {focus = COZ_dutch_administrative_aid}
+		mutually_exclusive = {focus = COZ_request_south_volunteers}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		custom_effect_tooltip = COZ_dutch_TT
+		add_manpower = 8500
+		hidden_effect = {
+		load_oob = COZ_dutch_tank
+		}
+		
+
+		}
+	}
+	focus = {
+		id = COZ_request_south_volunteers
+		icon = GFX_focus_upgrade_troops
+		x = 1
+		y = 3
+		cost = 7.2
+		relative_position_id = COZ_work_with_foreigners
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		mutually_exclusive = {focus = COZ_request_dutch_volunteers}
+		prerequisite = {focus = COZ_southern_officer_support}
+		prerequisite = {focus = COZ_cuban_mafia_funding}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		custom_effect_tooltip = COZ_southern_TT
+		add_manpower = 8500
+		hidden_effect = {
+		load_oob = COZ_southern_marine	
+		}
+		
+
+		}
+	}
+	focus = {
+		id = COZ_the_ultimate_sacrifice
+		icon = GFX_focus_generic_provoke_border_clashes
+		x = 0
+		y = 4
+		cost = 5
+		relative_position_id = COZ_work_with_foreigners
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		prerequisite = {focus = COZ_request_south_volunteers focus = COZ_request_dutch_volunteers}
+		available_if_capitulated = no
+		bypass = {
+		NOT = {
+		country_exists = MQR
+		}
+		}
+		available = {
+		has_completed_focus = COZ_purchase_a_dutch_ship
+		}
+		ai_will_do = {
+			factor = 100
+		}
+
+		completion_reward = {
+		custom_effect_tooltip = COZ_sacrifice_TT
+		declare_war_on = {
+		target = MQR
+		type = annex_everything
+		}
+		
+
+		}
+	}
+	focus = {
+		id = COZ_reclaim_the_yucatan
+		icon = GFX_focus_gen_mass_conscription
+		x = 0
+		y = 5
+		cost = 3
+		relative_position_id = COZ_work_with_foreigners
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		prerequisite = {focus = COZ_the_ultimate_sacrifice }
+		available_if_capitulated = no
+		available = {
+		controls_state = 467
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+			remove_ideas = COZ_government_in_exile
+			custom_effect_tooltip = COZ_core_TT
+			set_capital = {state = 467}
+			hidden_effect = {
+				core_yucatan = yes
+				# add_state_core = 468
+				# add_state_core = 566
+				# add_state_core = 568
+
+				core_quintana_roo = yes
+				# add_state_core = 570
+				# add_state_core = 467
+				# add_state_core = 569
+				# add_state_core = 747
+				
+				core_campeche = yes
+				# add_state_core = 564
+				# add_state_core = 469
+				# add_state_core = 567
+				
+				core_tabasco = yes
+				# add_state_core = 563
+				# also 465
+
+				# wtf is all this
+				# add_state_core = 794
+				# add_state_core = 466
+				# add_state_core = 227	#THIS IS LABRADOR KEK MAN
+					
+			}	
+			create_wargoal = {
+				type = annex_everything
+				target = MYU
+			}
+			create_wargoal = {
+				type = annex_everything
+				target = MCA
+			}
+		}
+	}
+	focus = {
+		id = COZ_yucatan_republic
+		icon = GFX_goal_generic_neutrality_focus
+		x = -1
+		y = 6
+		cost = 5
+		mutually_exclusive = {focus = COZ_rival_mexican_govt}
+		relative_position_id = COZ_work_with_foreigners
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		prerequisite = {focus = COZ_reclaim_the_yucatan }
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		custom_effect_tooltip = core_central_america_tt
+			set_cosmetic_tag = COZ_new_yucatan
+			467 = { 
+			add_manpower = 50000
+			}
+		add_ideas = COZ_switzerland	
+			
+		add_state_core = 563
+		add_state_core = 464
+		add_state_core = 465
+		add_state_core = 565
+		hidden_effect = { 
+		195 = { add_core_of = ROOT }
+					227 = { add_core_of = ROOT }
+					309 = { add_core_of = ROOT }
+					312 = { add_core_of = ROOT }
+					463 = { add_core_of = ROOT }
+					466 = { add_core_of = ROOT }
+					470 = { add_core_of = ROOT }
+					471 = { add_core_of = ROOT }
+					472 = { add_core_of = ROOT }
+					473 = { add_core_of = ROOT }
+					474 = { add_core_of = ROOT }
+					778 = { add_core_of = ROOT }
+					779 = { add_core_of = ROOT }
+					780 = { add_core_of = ROOT }
+					781 = { add_core_of = ROOT }
+					782 = { add_core_of = ROOT }
+					791 = { add_core_of = ROOT }
+					792 = { add_core_of = ROOT }
+					793 = { add_core_of = ROOT }
+					795 = { add_core_of = ROOT }
+					796 = { add_core_of = ROOT }
+					797 = { add_core_of = ROOT }
+					799 = { add_core_of = ROOT }
+					800 = { add_core_of = ROOT }
+					801 = { add_core_of = ROOT }
+					802 = { add_core_of = ROOT }
+		}
+		#cosmetic tag and OP defense idea
+		#more pop too
+
+		}
+	}
+	focus = {
+		id = COZ_rival_mexican_govt
+		icon = GFX_focus_mexico_civil_war
+		x = 1
+		y = 6
+		cost = 5
+		mutually_exclusive = {focus = COZ_yucatan_republic}
+		relative_position_id = COZ_work_with_foreigners
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		prerequisite = {focus = COZ_reclaim_the_yucatan }
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 100
+		}
+
+		completion_reward = {
+			set_cosmetic_tag = COZ_rival_mexico
+		#cores on mexico+justify speed time
+		#cosmetic tag
+		custom_effect_tooltip = core_mexico_tt
+		hidden_effect = {
+		core_all_of_mexico = yes	
+		}
+
+		}
+	}
+	focus = {
+		id = COZ_ask_south_for_blacks
+		icon = GFX_focus_expand_the_minutemen
+		x = 0
+		y = 1
+		cost = 7.2
+		relative_position_id = COZ_work_with_foreigners
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		prerequisite = {focus = COZ_work_with_foreigners}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		747 = {
+		add_manpower = 65000	
+		}
+		#jamaica ally decision ?
+		#historical basis behind this
+
+		}
+	}
+	focus = {
+		id = COZ_southern_officer_support
+		icon = GFX_focus_harsh_treatment
+		x = 0
+		y = 2
+		cost = 10
+		relative_position_id = COZ_work_with_foreigners
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		prerequisite = {focus = COZ_ask_south_for_blacks}
+		available_if_capitulated = no
+		available = {
+		
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		add_ideas = COZ_southern_officers
 		}
 	}
 }

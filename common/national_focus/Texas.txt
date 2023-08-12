@@ -1,6 +1,5 @@
 focus_tree = {
     id = texas_focus
-
     country = {
         factor = 0
         modifier = {
@@ -8,9 +7,7 @@ focus_tree = {
             tag = STX
         }
     }
-
     default = no
-
     #FOCUS_FILTER_STABILITY
     #FOCUS_FILTER_INDUSTRY
     #FOCUS_FILTER_ANNEXATION
@@ -18,11 +15,11 @@ focus_tree = {
     #FOCUS_FILTER_POLITICAL
     #FOCUS_FILTER_RESEARCH
     #FOCUS_FILTER_WAR_SUPPORT
-
     continuous_focus_position = { x = 50 y = 1400 } #Temporary
 
 
-	focus = {
+	shared_focus = SXS_Southern_Consolidation
+    focus = {
 		id = STX_Unionists_Storm_Austin
 		icon = GFX_focus_STX_storm_austin
 		prerequisite = { focus = STX_1937_presidential_election }
@@ -34,9 +31,7 @@ focus_tree = {
 		x = -32
 		y = 1
 		relative_position_id = STX_1937_presidential_election
-
 		cost = 5
-
 		ai_will_do = {
 			factor = 1
 		}
@@ -46,18 +41,9 @@ focus_tree = {
                 has_completed_focus = STX_send_apology_to_oklahoma 
             }
         }
-		
-		bypass = {
-
-		}
-
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
-		complete_tooltip = {
-
-		}
-
 		completion_reward = {
             remove_ideas = STX_Texas_pacifists
 			add_popularity = {
@@ -68,36 +54,20 @@ focus_tree = {
             add_ideas = STX_Conservative_Backlash
 		}
 	}
-
 	focus = {
 		id = STX_Emma_Tenayuca_makes_radio_speech
 		icon = GFX_focus_portrait_emma
 		prerequisite = { focus = STX_Unionists_Storm_Austin }
-
 		x = 0
 		y = 1
 		relative_position_id = STX_Unionists_Storm_Austin
-
 		cost = 5
-
 		ai_will_do = {
 			factor = 1
 		}
-        available = {
-
-        }
-		
-		bypass = {
-
-		}
-
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
-		complete_tooltip = {
-
-		}
-
 		completion_reward = {
 			set_politics = {
 				ruling_party = communism
@@ -109,10 +79,9 @@ focus_tree = {
 			}
 		}
 	}
-
 	focus = {
 		id = STX_Equality_for_all
-		icon = GFX_focus_generic_join_comintern
+		icon = GFX_focus_Equality_for_all
 		prerequisite = { focus = STX_Emma_Tenayuca_makes_radio_speech }
 
 		x = 0
@@ -294,7 +263,7 @@ focus_tree = {
 		y = 3
 		relative_position_id = STX_Seize_Means_of_production
 
-		cost = 12
+		cost = 11.5
 
 		ai_will_do = {
 			factor = 2
@@ -750,10 +719,19 @@ focus_tree = {
         }
 		
 		bypass = {
-
-		}
-
-		cancel_if_invalid = yes
+			OR = {
+				is_in_faction_with = MCO
+				NOT = { country_exists = MCO }
+				MCO = { is_subject = yes }
+				is_in_faction_with = MNL
+				NOT = { country_exists = MNL }
+				MNL = { is_subject = yes }
+				is_in_faction_with = MTA
+				NOT = { country_exists = MTA }
+				MTA = { is_subject = yes }
+            }
+        }
+        cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = no
 		complete_tooltip = {
@@ -785,9 +763,9 @@ focus_tree = {
 			factor = 1
 		}
 		available = {
-			own_coahuila = yes
-            own_nuevo_leon = yes
-            own_tamaulipas = yes
+			controls_coahuila = yes
+            controls_nuevo_leon = yes
+            controls_tamaulipas = yes
 		}
 		
 		bypass = {
@@ -925,7 +903,6 @@ focus_tree = {
                 add_resource = {
                     type = rubber
                     amount = 5
-                    state = THIS
                 }
             }
         }
@@ -1792,11 +1769,11 @@ focus_tree = {
 
         completion_reward = {
             162 = { #Southern Texas
-                add_resource = {
-                    type = oil
-                    amount = 48
-                    state = THIS
-                }
+                #add_resource = {
+                #    type = oil
+                #    amount = 48
+                #    state = THIS
+                #}
             }
         }
     }
@@ -1824,11 +1801,11 @@ focus_tree = {
 
         completion_reward = {
             222 = { #North-Eastern Texas
-                add_resource = {
-                    type = oil
-                    amount = 48
-                    state = THIS
-                }
+                #add_resource = {
+                #    type = oil
+                #    amount = 48
+                #    state = THIS
+                #}
             }
         }
     }
@@ -1856,11 +1833,11 @@ focus_tree = {
 
         completion_reward = {
             162 = { #Southern Texas
-                add_resource = {
-                    type = oil
-                    amount = 48
-                    state = THIS
-                }
+                #add_resource = {
+                #    type = oil
+                #    amount = 48
+                #    state = THIS
+                #}
             }
         }
     }
@@ -2523,6 +2500,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_RESEARCH }
 
         completion_reward = {
+            add_offsite_building = { type = arms_factory level = 1 }    
             add_ideas = STX_insabordonate_officers
             army_experience = 55
             add_stability = -0.1
@@ -2968,6 +2946,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
 
         completion_reward = {
+            add_offsite_building = { type = arms_factory level = 2 }    
             add_stability = 0.05
             add_war_support = 0.025
         }
@@ -3079,7 +3058,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
 
         completion_reward = {
-            add_political_power = 25
+            add_offsite_building = { type = arms_factory level = 2 }    
             add_stability = 0.025
             add_war_support = 0.025
         }
@@ -3402,6 +3381,7 @@ focus_tree = {
         completion_reward = {
             add_political_power = 25
             add_stability = 0.025
+
         }
     }
     focus = {
@@ -4600,24 +4580,24 @@ focus_tree = {
     focus = {
         id = STX_Victory_in_Red_river_war2
         icon = GFX_focus_STX_Victory
-        prerequisite = { focus = STX_Organize_our_forces
-                        focus = STX_our_military_is_falling_apart
+        prerequisite = { 
+            focus = STX_Organize_our_forces
         }
 
 
 
         available = {
             has_war = no
-            NOT = {
-                completed_focus = x
-            }
+            #NOT = {
+            #    has_completed_focus = x
+            #}
                 OR = {
-			controls_oklahoma_trigger = yes
-                NOT = {
-                    country_exists = SOK
-                }          
+			        controls_oklahoma_trigger = yes
+                    NOT = {
+                        country_exists = SOK
+                    }          
             }
-        OR = {
+            OR = {
 
 			controls_louisiana_trigger = yes         
                 NOT = {
@@ -4637,6 +4617,8 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_RED_RIVER_WAR FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_STABILITY }
 
         completion_reward = {
+		
+			add_political_power = 100
             add_stability = 0.15
         }
         
@@ -4691,7 +4673,9 @@ focus_tree = {
     focus = {
         id = STX_our_military_is_falling_apart
         icon = GFX_focus_STX_ourmilitary_is_falling_apart
-        prerequisite = { focus = STX_Victory_in_Red_river_war2}
+        prerequisite = { 
+            focus = STX_Victory_in_Red_river_war2
+        }
         mutually_exclusive = { focus = STX_Texas_rangers_out_of_control}
         available = {
             has_war = no
@@ -5195,7 +5179,7 @@ focus_tree = {
         id = STX_james_allred_wins_the_election
         icon = GFX_focus_create_the_minutemen
         prerequisite = { focus = STX_1937_presidential_election}
-        mutually_exclusive = { focus = STX_james_allred_seizes_power}
+        #mutually_exclusive = { focus = STX_james_allred_seizes_power}
         mutually_exclusive = { focus = STX_elect_lyndon_b_johnson}
         mutually_exclusive = { focus = STX_elect_w_lee_o_daniel}
         mutually_exclusive = { focus = STX_elect_hiram_wesley_evans}
@@ -6065,7 +6049,6 @@ focus_tree = {
             factor = 1
         }
         available_if_capitulated = yes
-
         completion_reward = {
             add_ideas = STX_isolation
             set_rule = {
@@ -6177,7 +6160,7 @@ focus_tree = {
         icon = GFX_goal_generic_construction
         prerequisite = { focus = STX_development_bank_of_texas}
         available = {
-            custom_effect_tooltip = {
+            custom_trigger_tooltip = {
                 tooltip = STX_at_least_25_currency_available_to_spend_tt
                 check_variable = {
                     var = STX_money
@@ -6247,7 +6230,7 @@ focus_tree = {
         icon = GFX_focus_generic_coastal_fort
         prerequisite = { focus = STX_expand_public_infrastructure}
         available = {
-            custom_effect_tooltip = {
+            custom_trigger_tooltip = {
                 tooltip = STX_at_least_25_currency_available_to_spend_tt
                 check_variable = {
                     var = STX_money
@@ -6302,7 +6285,7 @@ focus_tree = {
         icon = GFX_goal_generic_fortify_city
         prerequisite = { focus = STX_protect_against_coastal_flooding}
         available = {
-            custom_effect_tooltip = {
+            custom_trigger_tooltip = {
                 tooltip = STX_at_least_25_currency_available_to_spend_tt
                 check_variable = {
                     var = STX_money
@@ -6346,7 +6329,7 @@ focus_tree = {
         icon = GFX_focus_research
         prerequisite = { focus = STX_development_bank_of_texas}
         available = {
-            custom_effect_tooltip = {
+            custom_trigger_tooltip = {
                 tooltip = STX_at_least_50_currency_available_to_spend_tt
                 check_variable = {
                     var = STX_money
@@ -6364,7 +6347,6 @@ focus_tree = {
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_RESEARCH }
-
         completion_reward = {
             custom_effect_tooltip = STX_spend_50_development_money_tt
             add_to_variable = { STX_money = -50 }
@@ -6376,7 +6358,7 @@ focus_tree = {
         icon = GFX_goal_generic_construction
         prerequisite = { focus = STX_pour_funding_into_technology}
         available = {
-            custom_effect_tooltip = {
+            custom_trigger_tooltip = {
                 tooltip = STX_at_least_25_currency_available_to_spend_tt
                 check_variable = {
                     var = STX_money
@@ -6394,7 +6376,6 @@ focus_tree = {
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_INDUSTRY }
-
         completion_reward = {
             custom_effect_tooltip = STX_spend_25_development_money_tt
             add_to_variable = { STX_money = -25 }
@@ -6424,28 +6405,10 @@ focus_tree = {
             factor = 5
         }
         available_if_capitulated = no
-
         completion_reward = {
-            recruit_character = STX_LBJ
-		remove_country_leader_role = {
-			character = STX_james_allred
-			ideology = conservatism
-		}
-		add_country_leader_role = {
-			character = "STX_LBJ"
-			country_leader = {
-				ideology = liberalism
-				traits = {  }
-				expire = "1965.3.1.1"
-			}
-			promote_leader = yes
-            add_popularity = {
-                ideology = democratic
-                popularity = 0.05
-            }
+            promote_character = STX_LBJ
         }
     }
-	}
     focus = {
         id = STX_endorse_the_civil_rights_movement
         icon = GFX_focus_STX_endorse_civil_rights
@@ -6459,7 +6422,6 @@ focus_tree = {
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_MANPOWER }
-
         completion_reward = {
             swap_ideas = {
                 remove_idea = STX_segregation
@@ -6468,19 +6430,59 @@ focus_tree = {
         }
     }
     focus = {
-        id = STX_pass_the_civil_rights_bill_lbj
-        icon = GFX_focus_STX_promise_civil_rightsbill
+        id = STX_desegrate_the_military
+        icon = GFX_STX_desegrate_the_military
         prerequisite = { focus = STX_endorse_the_civil_rights_movement}
         x = 0
         y = 1
         relative_position_id = STX_endorse_the_civil_rights_movement
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MANPOWER }
+        completion_reward = {
+            add_ideas = STX_equal_military
+        }
+    }
+    focus = {
+        id = STX_sway_conservatives
+        icon = GFX_STX_sway_conservatives
+        prerequisite = { focus = STX_desegrate_the_military}
+        x = 0
+        y = 1
+        relative_position_id = STX_desegrate_the_military
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_MANPOWER }
+        completion_reward = {
+            add_popularity = {
+                ideology = neutrality
+                popularity = -0.15
+            }
+            add_popularity = {
+                ideology = democratic
+                popularity = 0.10
+            }
+        }
+    }
+    focus = {
+        id = STX_pass_the_civil_rights_bill_lbj
+        icon = GFX_focus_STX_promise_civil_rightsbill
+        prerequisite = { focus = STX_sway_conservatives}
+        x = 0
+        y = 1
+        relative_position_id = STX_sway_conservatives
         cost = 7.2
         ai_will_do = {
             factor = 1
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
-
         completion_reward = {
             remove_ideas = STX_segregation2
         }
@@ -6498,15 +6500,19 @@ focus_tree = {
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_STABILITY }
-
         completion_reward = {
-            add_stability = 0.1
+            create_faction = STX_MIDWESTERN_UNION
         }
     }
     focus = {
         id = STX_look_towards_the_midwest
         icon = GFX_focus_STX_Create_look_to_midwest
         prerequisite = { focus = STX_distance_texas_from_the_south}
+        bypass = {
+        	NOT ={
+            	country_exists = SNM
+        	}
+        }
         x = 0
         y = 1
         relative_position_id = STX_distance_texas_from_the_south
@@ -6515,7 +6521,6 @@ focus_tree = {
             factor = 1
         }
         available_if_capitulated = yes
-
         completion_reward = {
             add_opinion_modifier = {
                 target = SNM
@@ -6530,9 +6535,14 @@ focus_tree = {
         }
     }
     focus = {
-        id = STX_create_a_midwestern_brotherhood
-        icon = GFX_focus_STX_Create_midwesternBrotherhood
+        id = STX_kansas_coop
+        icon = GFX_focus_STX_kansas_coope
         prerequisite = { focus = STX_look_towards_the_midwest}
+        bypass = {
+        	NOT ={
+        		country_exists = SKS
+        	}
+        }
         x = 0
         y = 1
         relative_position_id = STX_look_towards_the_midwest
@@ -6541,208 +6551,276 @@ focus_tree = {
             factor = 1
         }
         available_if_capitulated = yes
-
         available = {
-            is_in_faction = no
             is_puppet = no  
+            is_faction_leader = yes
         }
-
-
         completion_reward = {
             set_rule = {
                 can_create_factions = yes
             }
-            create_faction = STX_MIDWESTERN_BROTHERHOOD
+            add_opinion_modifier = {
+                target = SKS
+                modifier = generic_improved_relations
+            }
+            SKS = {
+                add_opinion_modifier = {
+                    target = STX
+                    modifier = generic_improved_relations
+                }
+            }
         }
     }
     focus = {
-        id = STX_invite_kansas_and_nebraska_to_the_brotherhood
-        icon = GFX_focus_STX_kansus
-        prerequisite = { focus = STX_create_a_midwestern_brotherhood}
+        id = STX_nebra_and_wyo_frens
+        icon = GFX_focus_STX_nebra_and_wyo_frens
+        prerequisite = { focus = STX_kansas_coop }
         available = {
             is_faction_leader = yes
         }
-        x = -2
+        bypass = {
+        	NOT ={
+        		AND = {
+            		country_exists = SWY  
+	            	country_exists = SNE      		
+        		}
+        	}
+        }        
+        x = 0
         y = 1
-        relative_position_id = STX_create_a_midwestern_brotherhood
+        relative_position_id = STX_kansas_coop
         cost = 7.2
         ai_will_do = {
             factor = 1
         }
         available_if_capitulated = no
-
         completion_reward = {
-            SKS = {
-                country_event = {
-                    id = texas.40
-                }
+            add_opinion_modifier = {
+                target = SNE
+                modifier = generic_improved_relations
             }
             SNE = {
-                country_event = {
-                    id = texas.40
+                add_opinion_modifier = {
+                    target = STX
+                    modifier = generic_improved_relations
+                }
+            }
+            add_opinion_modifier = {
+                target = SWY
+                modifier = generic_improved_relations
+            }
+            SWY = {
+                add_opinion_modifier = {
+                    target = STX
+                    modifier = generic_improved_relations
                 }
             }
         }
     }
     focus = {
-        id = STX_invite_new_mexico_to_the_brotherhood
-        icon = GFX_focus_STX_New_mexico
-        prerequisite = { focus = STX_create_a_midwestern_brotherhood}
+        id = STX_unite_the_midwest
+        icon = GFX_focus_STX_unite_the_midwest
+        prerequisite = { focus = STX_nebra_and_wyo_frens}
         available = {
-            is_faction_leader = yes
+            OR = {
+                NOT = {
+                    country_exists = "SLA"
+                }  
+                NOT = {
+                    country_exists = "SOK"
+                }  
+                STX = {
+	                controls_state = 239
+            	}
+                STX = {
+	                controls_state = 752
+            	}
+            }
         }
-        x = 0
+        x = -1
         y = 1
-        relative_position_id = STX_create_a_midwestern_brotherhood
-        cost = 7.2
+        relative_position_id = STX_nebra_and_wyo_frens
+        cost = 2
         ai_will_do = {
             factor = 2
         }
         available_if_capitulated = no
-
         completion_reward = {
-            SNM = {
-                country_event = {
-                    id = texas.40
-                }
+            add_stability = 0.1
+			SNM = {
+				country_event = {
+					id = texas.46
+				}
+			}
+            SKS = {
+				country_event = {
+					id = texas.47
+				}
+			}
+            SNE = {
+				country_event = {
+					id = texas.48
+				}
+			}
+            SWY = {
+				country_event = {
+					id = texas.49
+				}
+			}
+			
+        }
+    }
+    focus = {
+        id = STX_secure_mexican_imports
+        icon = GFX_focus_STX_secure_mexican_imports
+        prerequisite = { focus = STX_unite_the_midwest}
+        available = {
+            
+        }
+        x = 0
+        y = 2
+        relative_position_id = STX_nebra_and_wyo_frens
+        cost = 2
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        completion_reward = {
+            create_wargoal = {
+                target = MEX
+                type = annex_everything
+            }
+            create_wargoal = {
+                target = MDC
+                type = annex_everything
+            }
+            create_wargoal = {
+                target = MCH
+                type = annex_everything
+            }
+            create_wargoal = {
+                target = MNL
+                type = annex_everything
+            }
+            create_wargoal = {
+                target = MTA
+                type = annex_everything
+            }
+            create_wargoal = {
+                target = MCA
+                type = annex_everything
+            }
+			
+        }
+    }
+    focus = {
+        id = STX_battle_of_the_west
+        icon = GFX_focus_STX_battle_of_the_west
+        prerequisite = { focus = STX_unite_the_midwest}
+        available = {
+            
+        }
+        x = -2
+        y = 2
+        relative_position_id = STX_nebra_and_wyo_frens
+        cost = 2
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        completion_reward = {
+            create_wargoal = {
+                target = SUT
+                type = annex_everything
+            }
+			create_wargoal = {
+                target = SCA
+                type = annex_everything
+            }
+            create_wargoal = {
+                target = SAZ
+                type = annex_everything
+            }
+            create_wargoal = {
+                target = SNV
+                type = annex_everything
             }
         }
     }
     focus = {
-        id = STX_a_brotherhood_to_last_forever
-        icon = GFX_focus_STX_brotherhood_to_last_forever
-        prerequisite = { focus = STX_invite_kansas_and_nebraska_to_the_brotherhood}
-        prerequisite = { focus = STX_invite_new_mexico_to_the_brotherhood}
+        id = STX_up_north
+        icon = GFX_focus_STX_up_north
+        prerequisite = { focus = STX_battle_of_the_west}
+        available = {
+            
+        }
+        x = 0
+        y = 1
+        relative_position_id = STX_battle_of_the_west
+        cost = 2
+        ai_will_do = {
+            factor = 2
+        }
+        available_if_capitulated = no
+        completion_reward = {
+            create_wargoal = {
+                target = SWA
+                type = annex_everything
+            }
+            create_wargoal = {
+                target = SID
+                type = annex_everything
+            }
+            create_wargoal = {
+                target = SRO
+                type = annex_everything
+            }
+            create_wargoal = {
+                target = SOR
+                type = annex_everything
+            }
+            create_wargoal = {
+                target = SMT
+                type = annex_everything
+            }
+            create_wargoal = {
+                target = SND
+                type = annex_everything
+            }
+            create_wargoal = {
+                target = SSD
+                type = annex_everything
+            }
+        }
+    }
+    focus = {
+        id = STX_a_new_union
+        icon = GFX_focus_STX_a_new_union
+        prerequisite = { focus = STX_unite_the_midwest }
+        prerequisite = { focus = STX_up_north }
         available = {
             is_faction_leader = yes
+            date > 1943.01.1
         }
-        x = 1
-        y = 1
-        relative_position_id = STX_invite_kansas_and_nebraska_to_the_brotherhood
+        x = 0
+        y = 3
+        relative_position_id = STX_unite_the_midwest
         cost = 7.2
         ai_will_do = {
             factor = 1
         }
         available_if_capitulated = no
-
         completion_reward = {
-            every_country = {
-                limit = {
-                    exists = yes
-                    OR = {
-                        tag = SOK
-                        tag = SIA
-                    }
-                }
-                country_event = {
-                    id = texas.40
-                }
-            }
-        }
-    }
-    focus = {
-        id = STX_a_brotherhood_forged_in_blood
-        icon = GFX_focus_STX_brotherhood_forged_in_blood
-        prerequisite = { focus = STX_a_brotherhood_to_last_forever}
-        available = {
-
-        }
-        x = -1
-        y = 1
-        relative_position_id = STX_a_brotherhood_to_last_forever
-        cost = 7.2
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_RESEARCH } 
-
-        completion_reward = {
-            remove_ideas = STX_Texas_pacifists
-            add_doctrine_cost_reduction = {
-                cost_reduction = 0.35
-                uses = 1
-                category = land_doctrine
-            }
-            every_country = {
-                limit = {
-                    is_in_faction_with = STX
-                }
-                add_doctrine_cost_reduction = {
-                    cost_reduction = 0.35
-                    uses = 1
-                    category = land_doctrine
-                }
-            }
-        }
-    }
-    focus = {
-        id = STX_a_brotherhood_forged_in_steel
-        icon = GFX_focus_STX_brotherhood_forged_in_steel
-        prerequisite = { focus = STX_a_brotherhood_to_last_forever}
-        available = {
-
-        }
-        x = 1
-        y = 1
-        relative_position_id = STX_a_brotherhood_to_last_forever
-        cost = 15
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_INDUSTRY }
-
-        completion_reward = {
-            random_owned_controlled_state = {
-                add_extra_state_shared_building_slots = 2
-                add_building_construction = {
-                    type = arms_factory
-                    level = 2
-                    instant_build = yes
-                }
-            }
-            every_country = {
-                limit = {
-                    is_in_faction_with = STX
-                    num_of_controlled_states > 0
-                }
-                random_owned_controlled_state = {
-                    add_extra_state_shared_building_slots = 1
-                    add_building_construction = {
-                        type = arms_factory
-                        level = 1
-                        instant_build = yes
-                    }
-                }
-            }
-            random_owned_controlled_state = {
-                add_extra_state_shared_building_slots = 2
-                add_building_construction = {
-                    type = arms_factory
-                    level = 2
-                    instant_build = yes
-                }
-            }
-            every_country = {
-                limit = {
-                    is_in_faction_with = STX
-                    num_of_controlled_states > 0
-                }
-                random_owned_controlled_state = {
-                    add_extra_state_shared_building_slots = 1
-                    add_building_construction = {
-                        type = arms_factory
-                        level = 1
-                        instant_build = yes
-                    }
-                }
-            }
+            custom_effect_tooltip = SWA_USA_TT
+            #COMPLETE buLLSHIT
+            hidden_effect = {
+				core_the_united_states = yes
+			}
         }
     }
     focus = {
         id = STX_declare_war_on_poverty
-        icon = GFX_focus_PON_declare_war_on_poverty
+        icon = GFX_focus_trvd_vvar_on_poor_people
         prerequisite = { focus = STX_elect_lyndon_b_johnson}
         x = 2
         y = 1
@@ -6753,7 +6831,6 @@ focus_tree = {
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
-
         completion_reward = {
             add_political_power = 75
             custom_effect_tooltip = STX_eventually_the_crimewave_will_be_dealt_with_tt
@@ -6764,6 +6841,308 @@ focus_tree = {
                     random = 150
                 }
             }
+        }
+    }
+    focus = {
+        id = STX_social_security
+        icon = GFX_focus_STX_social_security
+        prerequisite = { focus = STX_declare_war_on_poverty }
+        x = 0
+        y = 1
+        relative_position_id = STX_declare_war_on_poverty
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_political_power = 75
+        }
+    }
+    focus = {
+        id = STX_healthcare_bills
+        icon = GFX_STX_healthcare_bills
+        prerequisite = { focus = STX_social_security }
+        x = 0
+        y = 1
+        relative_position_id = STX_social_security
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = STX_public_healthcare
+        }
+    }
+    focus = {
+        id = STX_tax_cuts
+        icon = GFX_STX_tax_cuts
+        prerequisite = { focus = STX_healthcare_bills }
+        x = 0
+        y = 1
+        relative_position_id = STX_healthcare_bills
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = STX_tax_cuts
+        }
+    }
+    focus = {
+        id = STX_infrastructure_projects
+        icon = GFX_STX_infrastructure_projects
+        prerequisite = { focus = STX_declare_war_on_poverty }
+        x = 2
+        y = 1
+        relative_position_id = STX_declare_war_on_poverty
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            79 = {
+                add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+            }
+        }
+    }
+    focus = {
+        id = STX_help_urban_folks
+        icon = GFX_STX_help_urban_folks
+        prerequisite = { focus = STX_infrastructure_projects }
+        x = 0
+        y = 1
+        relative_position_id = STX_infrastructure_projects
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            42 = {
+                add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+            }
+        }
+    }
+    focus = {
+        id = STX_help_rural_folks
+        icon = GFX_STX_help_rural_folks
+        prerequisite = { focus = STX_help_urban_folks }
+        x = 0
+        y = 1
+        relative_position_id = STX_help_urban_folks
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            212 = {
+                add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+                add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+            }
+            224 = {
+                add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+                add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+            }
+        }
+    }
+    focus = {
+        id = STX_new_deal
+        icon = GFX_STX_new_deal
+        prerequisite = { focus = STX_help_rural_folks }
+        prerequisite = { focus = STX_tax_cuts }
+        x = -1
+        y = 2
+        relative_position_id = STX_help_urban_folks
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = STX_new_deal
+        }
+    }
+    focus = {
+        id = STX_education_reforms
+        icon = GFX_STX_education_reforms
+        prerequisite = { focus = STX_new_deal }
+        x = 0
+        y = 1
+        relative_position_id = STX_new_deal
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = STX_research_grants
+        }
+    }
+    focus = {
+        id = STX_university_funding
+        icon = GFX_STX_university_funding
+        prerequisite = { focus = STX_education_reforms }
+        x = 0
+        y = 1
+        relative_position_id = STX_education_reforms
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_research_slot = 1
+        }
+    }
+    focus = {
+        id = STX_a_perfect_society
+        icon = GFX_STX_a_perfect_society
+        prerequisite = { focus = STX_university_funding }
+        x = 0
+        y = 1
+        relative_position_id = STX_university_funding
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            swap_ideas = {
+                remove_idea = STX_new_deal
+                add_idea = STX_perfect_society
+            }
+        }
+    }
+    focus = {
+        id = STX_war_on_crime
+        icon = GFX_focus_STX_war_on_crime
+        prerequisite = { focus = STX_declare_war_on_poverty }
+        x = 4
+        y = 1
+        relative_position_id = STX_declare_war_on_poverty
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_stability = 0.05 
+        }
+    }
+    focus = {
+        id = STX_law_enforement_funding
+        icon = GFX_focus_STX_law_enforement_funding
+        prerequisite = { focus = STX_war_on_crime }
+        x = 0
+        y = 1
+        relative_position_id = STX_war_on_crime
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_ideas = STX_funded_police
+        }
+    }
+    focus = {
+        id = STX_engageing_local_police
+        icon = GFX_focus_STX_engageing_local_police
+        prerequisite = { focus = STX_law_enforement_funding }
+        x = 0
+        y = 1
+        relative_position_id = STX_law_enforement_funding
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            swap_ideas = {
+                remove_idea = STX_funded_police
+                add_idea = STX_better_local_police
+            }
+        }
+    }
+    focus = {
+        id = STX_cleaning_urban_violence
+        icon = GFX_focus_STX_cleaning_urban_violence
+        prerequisite = { focus = STX_engageing_local_police }
+        x = 0
+        y = 1
+        relative_position_id = STX_engageing_local_police
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_stability = 0.10
+        }
+    }
+    focus = {
+        id = STX_modern_law_enforcement
+        icon = GFX_focus_STX_modern_law_enforcement
+        prerequisite = { focus = STX_cleaning_urban_violence }
+        x = 0
+        y = 1
+        relative_position_id = STX_cleaning_urban_violence
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_POLITICAL }
+        completion_reward = {
+            add_tech_bonus = {
+                bonus = 0.5
+                uses = 1
+                category = military_police_tech
+            }
+            remove_ideas = STX_crimewave
         }
     }
     focus = {
@@ -6789,7 +7168,7 @@ focus_tree = {
                 has_completed_focus = STX_send_apology_to_oklahoma
             }
         }
-        x = 9
+        x = 14
         y = 1
         relative_position_id = STX_1937_presidential_election
         cost = 5
@@ -6797,7 +7176,6 @@ focus_tree = {
             factor = 5
         }
         available_if_capitulated = no
-
         completion_reward = {
             set_politics = {
                 ruling_party = longism
@@ -6821,7 +7199,6 @@ focus_tree = {
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
-
         completion_reward = {
             add_political_power = 100
             add_popularity = {
@@ -6845,7 +7222,6 @@ focus_tree = {
             factor = 1
         }
         available_if_capitulated = yes
-
         completion_reward = {
             add_popularity = {
                 ideology = longism
@@ -6874,7 +7250,7 @@ focus_tree = {
     }
     focus = {
         id = STX_side_with_the_lobbyists
-        icon = GFX_goal_generic_improve_relations
+        icon = GFX_goal_STX_side_with_the_lobbyists
         prerequisite = { focus = STX_meet_with_lobbyists}
         mutually_exclusive = { focus = STX_keep_our_campaign_promises}
         available = {
@@ -6896,7 +7272,7 @@ focus_tree = {
     }
     focus = {
         id = STX_strengthen_the_armed_forces
-        icon = GFX_focus_joint_military_training
+        icon = GFX_focus_STX_strengthen_the_armed_forces
         prerequisite = { focus = STX_side_with_the_lobbyists}
         x = 1
         y = 1
@@ -6913,9 +7289,9 @@ focus_tree = {
     }
     focus = {
         id = STX_crack_down_on_communism
-        icon = GFX_goal_generic_war_with_comintern
+        icon = GFX_goal_STX_crack_down_on_communism
         prerequisite = { focus = STX_side_with_the_lobbyists}
-        x = -2
+        x = -1
         y = 1
         relative_position_id = STX_side_with_the_lobbyists
         cost = 7.2
@@ -6938,7 +7314,7 @@ focus_tree = {
     }
     focus = {
         id = STX_forcefully_remove_socialist_professers
-        icon = GFX_focus_pab_military_police
+        icon = GFX_focus_STX_remove_professors
         prerequisite = { focus = STX_crack_down_on_communism}
         available = {
             custom_trigger_tooltip = {
@@ -6975,7 +7351,7 @@ focus_tree = {
     }
     focus = {
         id = STX_arrest_james_allred
-        icon = GFX_focus_pab_handcuffs
+        icon = GFX_focus_STX_arrest_james_allred
         prerequisite = { focus = STX_crack_down_on_communism}
         x = 0
         y = 1
@@ -6998,7 +7374,7 @@ focus_tree = {
     }
     focus = {
         id = STX_laws_against_labor
-        icon = GFX_focus_paper_stacked
+        icon = GFX_focus_STX_laws_against_labor
         prerequisite = { focus = STX_crack_down_on_communism}
         x = 2
         y = 1
@@ -7018,7 +7394,7 @@ focus_tree = {
     }
     focus = {
         id = STX_anti_violence_act
-        icon = GFX_focus_paper_stacked
+        icon = GFX_focus_STX_anti_violence_act
         prerequisite = { focus = STX_laws_against_labor}
         x = 0
         y = 1
@@ -7043,7 +7419,7 @@ focus_tree = {
     }
     focus = {
         id = STX_a_populist_texas
-        icon = GFX_focus_pab_pitchforkt
+        icon = GFX_focus_STX_populist_texas_but_bad
         prerequisite = { focus = STX_anti_violence_act}
         prerequisite = { focus = STX_arrest_james_allred}
         x = -1
@@ -7073,14 +7449,14 @@ focus_tree = {
     }
     focus = {
         id = STX_deal_with_the_civilwar
-        icon = GFX_focus_pab_goal_Worker
+        icon = GFX_focus_STX_daniel_civilwar
         prerequisite = { focus = STX_a_populist_texas}
         available = {
             custom_trigger_tooltip = {
-                #tooltip = STX_not_political_backlash_tt
-                #NOT = {
-                #    has_country_flag = STX_political_backlash
-               # }
+                tooltip = STX_not_political_backlash_tt
+                NOT = {
+                    has_country_flag = STX_political_backlash
+                }
             }
             has_war_with = MTX
         }
@@ -7101,7 +7477,7 @@ focus_tree = {
     }
     focus = {
         id = STX_enact_nationwide_conscription
-        icon = GFX_goal_generic_allies_build_infantry
+        icon = GFX_focus_STX_national_conscription
         prerequisite = { focus = STX_deal_with_the_civilwar}
         available = {
             has_war_with = MTX
@@ -7174,6 +7550,7 @@ focus_tree = {
         available_if_capitulated = no
 
         completion_reward = {
+            remove_ideas = STX_crimewave
             division_template = {
                 name = "Texas Ranger Division"
                 is_locked = yes
@@ -7257,7 +7634,7 @@ focus_tree = {
     }
     focus = {
         id = STX_mobolize_our_industry
-        icon = GFX_goal_generic_production
+        icon = GFX_goal_STX_mobilize_our_industry
         prerequisite = { focus = STX_enact_nationwide_conscription}
         available = {
             has_war_with = MTX
@@ -7320,7 +7697,7 @@ focus_tree = {
     }
     focus = {
         id = STX_compensate_for_lost_weapons
-        icon = GFX_focus_cascadian_dollar
+        icon = GFX_focus_STX_compensate_for_lost_weapons
         prerequisite = { focus = STX_deal_with_the_civilwar}
         available = {
             has_war_with = MTX
@@ -7349,7 +7726,7 @@ focus_tree = {
     }
     focus = {
         id = STX_restructure_the_country_for_war
-        icon = GFX_goal_generic_construction
+        icon = GFX_goal_STX_restructure_country
         prerequisite = { focus = STX_compensate_for_lost_weapons}
         available = {
             has_war_with = MTX
@@ -7376,7 +7753,7 @@ focus_tree = {
     }
     focus = {
         id = STX_rebuild_texas
-        icon = GFX_focus_STX_build_a_better_texas
+        icon = GFX_focus_STX_rebuild_texas
         prerequisite = { focus = STX_mobolize_our_industry}
         prerequisite = { focus = STX_restructure_the_country_for_war}
         x = 1
@@ -7401,7 +7778,7 @@ focus_tree = {
     }
     focus = {
         id = STX_state_mandated_white_supremacy
-        icon = GFX_focus_paper_stacked
+        icon = GFX_focus_STX_state_mandated_white_supremacy
         prerequisite = { focus = STX_rebuild_texas}
         x = -2
         y = 1
@@ -7425,7 +7802,7 @@ focus_tree = {
     }
     focus = {
         id = STX_crush_external_communism
-        icon = GFX_goal_generic_war_with_comintern
+        icon = GFX_goal_STX_crush_external_communism
         prerequisite = { focus = STX_rebuild_texas}
         x = 0
         y = 1
@@ -7444,7 +7821,7 @@ focus_tree = {
     }
     focus = {
         id = STX_guard_against_communism
-        icon = GFX_goal_generic_war_with_comintern
+        icon = GFX_goal_STX_guard_against_communism
         prerequisite = { focus = STX_crush_external_communism}
         x = -1
         y = 1
@@ -7477,7 +7854,7 @@ focus_tree = {
                         value > 50
                     }
                     NOT = {
-                        ruling_party = communism
+                        has_government = communism
                     }
                 }
                 add_ideas = STX_anti_communist_influence
@@ -7486,7 +7863,7 @@ focus_tree = {
     }
     focus = {
         id = STX_cleanse_arkansas
-        icon = GFX_goal_generic_war_with_comintern
+        icon = GFX_goal_STX_cleanse_arkansas
         prerequisite = { focus = STX_crush_external_communism}
         available = {
             SAR = {
@@ -7502,6 +7879,13 @@ focus_tree = {
         }
         available_if_capitulated = no
         search_filters = { FOCUS_FILTER_ANNEXATION }
+		bypass = {
+			OR = {
+				is_in_faction_with = SAR
+				NOT = { country_exists = SAR }
+				SAR = { is_subject = yes }
+			}
+		}
 
         completion_reward = {
             create_wargoal = {
@@ -7512,7 +7896,7 @@ focus_tree = {
     }
     focus = {
         id = STX_ensure_lobbyist_loyalty
-        icon = GFX_focus_NYC_smooze
+        icon = GFX_focus_STX_lobbyist_loyalty
         prerequisite = { focus = STX_rebuild_texas}
         x = 2
         y = 1
@@ -7969,10 +8353,35 @@ focus_tree = {
                     level = 2
                     instant_build = yes
                     province = 6027
+                }
+                add_building_construction = {
+                    type = bunker
+                    level = 2
+                    instant_build = yes
                     province = 1009
+                }
+                add_building_construction = {
+                    type = bunker
+                    level = 2
+                    instant_build = yes
                     province = 4914
+                }
+                add_building_construction = {
+                    type = bunker
+                    level = 2
+                    instant_build = yes
                     province = 4923
+                }
+                add_building_construction = {
+                    type = bunker
+                    level = 2
+                    instant_build = yes
                     province = 6065
+                }
+                add_building_construction = {
+                    type = bunker
+                    level = 2
+                    instant_build = yes
                     province = 6079
                 }
             }
@@ -8015,9 +8424,33 @@ focus_tree = {
                     level = 3
                     instant_build = yes
                     province = 6039
+                }
+                #province = 4917
+                #province = 4922
+                #province = 6074
+                #province = 6085
+                add_building_construction = {
+                    type = bunker
+                    level = 3
+                    instant_build = yes
                     province = 4917
+                }
+                add_building_construction = {
+                    type = bunker
+                    level = 3
+                    instant_build = yes
                     province = 4922
+                }
+                add_building_construction = {
+                    type = bunker
+                    level = 3
+                    instant_build = yes
                     province = 6074
+                }
+                add_building_construction = {
+                    type = bunker
+                    level = 3
+                    instant_build = yes
                     province = 6085
                 }
             }
@@ -8153,7 +8586,8 @@ focus_tree = {
                     has_idea = STX_segregation2
                 }
                 remove_ideas = STX_segregation2
-            } else {
+            } 
+            else = {
                 remove_ideas = STX_segregation3
             }
         }
@@ -8248,7 +8682,7 @@ focus_tree = {
     }
     focus = {
         id = STX_keep_our_campaign_promises
-        icon = GFX_goal_generic_improve_relations
+        icon = GFX_goal_STX_keep_campaign_promises
         prerequisite = { focus = STX_meet_with_lobbyists}
         mutually_exclusive = { focus = STX_side_with_the_lobbyists}
         available = {
@@ -8277,7 +8711,7 @@ focus_tree = {
     }
     focus = {
         id = STX_turn_texas_into_an_economic_powerhouse
-        icon = GFX_focus_pab_goal_custom_industry
+        icon = GFX_focus_STX_texas_powerhouse
         prerequisite = { focus = STX_keep_our_campaign_promises}
         x = -2
         y = 1
@@ -8299,7 +8733,7 @@ focus_tree = {
     }
     focus = {
         id = STX_expand_our_civilian_industry
-        icon = GFX_goal_generic_construct_civ_factory
+        icon = GFX_goal_STX_civilian_industry
         prerequisite = { focus = STX_turn_texas_into_an_economic_powerhouse}
         x = -1
         y = 1
@@ -8327,7 +8761,7 @@ focus_tree = {
     }
     focus = {
         id = STX_expand_our_civilian_industry2
-        icon = GFX_goal_generic_construct_civ_factory
+        icon = GFX_goal_STX_civilian_industry2
         prerequisite = { focus = STX_expand_our_civilian_industry}
         x = 0
         y = 1
@@ -8351,7 +8785,7 @@ focus_tree = {
     }
     focus = {
         id = STX_expand_our_civilian_industry3
-        icon = GFX_goal_generic_construct_civ_factory
+        icon = GFX_goal_STX_civilian_industry3
         prerequisite = { focus = STX_expand_our_civilian_industry2}
         x = 0
         y = 1
@@ -8375,7 +8809,7 @@ focus_tree = {
     }
     focus = {
         id = STX_improve_our_infrastructure
-        icon = GFX_goal_generic_construct_infrastructure
+        icon = GFX_goal_STX_improve_our_infrastructure
         prerequisite = { focus = STX_turn_texas_into_an_economic_powerhouse}
         x = 1
         y = 1
@@ -8414,7 +8848,7 @@ focus_tree = {
     }
     focus = {
         id = STX_improve_our_infrastructure2
-        icon = GFX_goal_generic_construct_infrastructure
+        icon = GFX_goal_STX_improve_our_infrastructure2
         prerequisite = { focus = STX_improve_our_infrastructure}
         x = 0
         y = 1
@@ -8449,7 +8883,7 @@ focus_tree = {
     }
     focus = {
         id = STX_improve_our_infrastructure3
-        icon = GFX_goal_generic_construct_infrastructure
+        icon = GFX_goal_STX_improve_our_infrastructure3
         prerequisite = { focus = STX_improve_our_infrastructure2}
         x = 0
         y = 1
@@ -8484,7 +8918,7 @@ focus_tree = {
     }
     focus = {
         id = STX_abolish_capital_punishment
-        icon = GFX_goal_generic_forceful_treaty
+        icon = GFX_goal_STX_abolish_death_penalty
         prerequisite = { focus = STX_keep_our_campaign_promises}
         x = 0
         y = 1
@@ -8542,7 +8976,7 @@ focus_tree = {
     }
     focus = {
         id = STX_shared_populist_values
-        icon = GFX_focus_pab_goal_progressive
+        icon = GFX_goal_STX_populist_values
         prerequisite = { focus = STX_mend_ties_with_huey_long}
         available = {
             custom_trigger_tooltip = {
@@ -8703,17 +9137,18 @@ focus_tree = {
             is_puppet = no  
 
             OR = {
-            custom_trigger_tooltip = {
+                #custom_trigger_tooltip = {
 
 
-                
+                #
+                #   
+                #
                 has_country_flag = texas_klan_has_agreegated
-                }
                 has_completed_focus = STX_Texas_settlers
                 has_completed_focus = STX_send_apology_to_oklahoma
             } 
         }
-        x = 24
+        x = 28
         y = 1
         relative_position_id = STX_1937_presidential_election
         cost = 5
@@ -8723,6 +9158,7 @@ focus_tree = {
         available_if_capitulated = no
 
         completion_reward = {
+		set_country_flag = KKK_led_USA_state
             set_politics = {
                 ruling_party = fascism
             }
@@ -8843,35 +9279,36 @@ focus_tree = {
 
         completion_reward = {
 			165 = {
-
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 1
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = industrial_complex
-										size > 1
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
+                if = {
+				    limit = {
+				    	free_building_slots = {
+				    		building = industrial_complex
+				    		size > 1
+				    		include_locked = yes
+				    	}
+				    	OR = {
+				    		is_in_home_area = yes
+				    		NOT = {
+				    			owner = {
+				    				any_owned_state = {
+				    					free_building_slots = {
+				    						building = industrial_complex
+				    						size > 1
+				    						include_locked = yes
+				    					}
+				    					is_in_home_area = yes
+				    				}
+				    			}
+				    		}
+				    	}
+				    }
+				    add_extra_state_shared_building_slots = 1
+				    add_building_construction = {
+				    	type = industrial_complex
+				    	level = 1
+				    	instant_build = yes
+				    }
+                } 
 			}
         }
     }
@@ -8920,35 +9357,36 @@ focus_tree = {
 
         completion_reward = {
 			621 = {
-
-				limit = {
-					free_building_slots = {
-						building = industrial_complex
-						size > 1
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = industrial_complex
-										size > 1
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
+                if = {
+				    limit = {
+				    	free_building_slots = {
+				    		building = industrial_complex
+				    		size > 1
+				    		include_locked = yes
+				    	}
+				    	OR = {
+				    		is_in_home_area = yes
+				    		NOT = {
+				    			owner = {
+				    				any_owned_state = {
+				    					free_building_slots = {
+				    						building = industrial_complex
+				    						size > 1
+				    						include_locked = yes
+				    					}
+				    					is_in_home_area = yes
+				    				}
+				    			}
+				    		}
+				    	}
+				    }
+				    add_extra_state_shared_building_slots = 1
+				    add_building_construction = {
+				    	type = industrial_complex
+				    	level = 1
+				    	instant_build = yes
+				    }
+                } 
 			}
         }
     }
@@ -9073,34 +9511,36 @@ focus_tree = {
         completion_reward = {
             #add_offsite_building = { type = arms_factory level = 1 }
 			224 = {
-				limit = {
-					free_building_slots = {
-						building = arms_factory
-						size > 3
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = arms_factory
-										size > 3
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = arms_factory
-					level = 3
-					instant_build = yes
-				}
+                if = {
+				    limit = {
+				    	free_building_slots = {
+				    		building = arms_factory
+				    		size > 3
+				    		include_locked = yes
+				    	}
+				    	OR = {
+				    		is_in_home_area = yes
+				    		NOT = {
+				    			owner = {
+				    				any_owned_state = {
+				    					free_building_slots = {
+				    						building = arms_factory
+				    						size > 3
+				    						include_locked = yes
+				    					}
+				    					is_in_home_area = yes
+				    				}
+				    			}
+				    		}
+				    	}
+				    }
+				    add_extra_state_shared_building_slots = 3
+				    add_building_construction = {
+				    	type = arms_factory
+				    	level = 3
+				    	instant_build = yes
+				    }
+                } 
 			}
         }
     }
@@ -9312,34 +9752,36 @@ focus_tree = {
         completion_reward = { 
             custom_effect_tooltip = SLA_research_syth_tt
 			42 = {
-				limit = {
-					free_building_slots = {
-						building = synthetic_refinery 
-						size > 2
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = synthetic_refinery
-										size > 2
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = synthetic_refinery
-					level = 2
-					instant_build = yes
-                }
+                if = {
+				    limit = {
+				    	free_building_slots = {
+				    		building = synthetic_refinery 
+				    		size > 2
+				    		include_locked = yes
+				    	}
+				    	OR = {
+				    		is_in_home_area = yes
+				    		NOT = {
+				    			owner = {
+				    				any_owned_state = {
+				    					free_building_slots = {
+				    						building = synthetic_refinery
+				    						size > 2
+				    						include_locked = yes
+				    					}
+				    					is_in_home_area = yes
+				    				}
+				    			}
+				    		}
+				    	}
+				    }
+				    add_extra_state_shared_building_slots = 2
+				    add_building_construction = {
+				    	type = synthetic_refinery
+				    	level = 2
+				    	instant_build = yes
+                    }
+                } 
             }
         }
     }
@@ -9438,113 +9880,121 @@ focus_tree = {
         }
         completion_reward = {
 			165 = {
-				limit = {
-					free_building_slots = {
-						building = infrastructure
-						size > 1
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = infrastructure
-										size > 1
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
+                if = {
+				    limit = {
+				    	free_building_slots = {
+				    		building = infrastructure
+				    		size > 1
+				    	}
+				    	OR = {
+				    		is_in_home_area = yes
+				    		NOT = {
+				    			owner = {
+				    				any_owned_state = {
+				    					free_building_slots = {
+				    						building = infrastructure
+				    						size > 1
+				    					}
+				    					is_in_home_area = yes
+				    				}
+				    			}
+				    		}
+				    	}
+				    }
+				    add_building_construction = {
+				    	type = infrastructure
+				    	level = 1
+                    	instant_build = yes
+				    }
+                } 
 			}
 			42 = {
-				limit = {
-					free_building_slots = {
-						building = infrastructure
-						size > 1
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = infrastructure
-										size > 1
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
+                if = {
+				    limit = {
+				    	free_building_slots = {
+				    		building = infrastructure
+				    		size > 1
+				    	}
+				    	OR = {
+				    		is_in_home_area = yes
+				    		NOT = {
+				    			owner = {
+				    				any_owned_state = {
+				    					free_building_slots = {
+				    						building = infrastructure
+				    						size > 1
+				    					}
+				    					is_in_home_area = yes
+				    				}
+				    			}
+				    		}
+				    	}
+				    }
+				    add_building_construction = {
+				    	type = infrastructure
+				    	level = 1
+				    	instant_build = yes
+				    }
+                } 
 			}
         
         224 = {
-            limit = {
-                free_building_slots = {
-                    building = infrastructure
-                    size > 1
-                }
-                OR = {
-                    is_in_home_area = yes
-                    NOT = {
-                        owner = {
-                            any_owned_state = {
-                                free_building_slots = {
-                                    building = infrastructure
-                                    size > 1
+            if = {
+                limit = {
+                    free_building_slots = {
+                        building = infrastructure
+                        size > 1
+                    }
+                    OR = {
+                        is_in_home_area = yes
+                        NOT = {
+                            owner = {
+                                any_owned_state = {
+                                    free_building_slots = {
+                                        building = infrastructure
+                                        size > 1
+                                    }
+                                    is_in_home_area = yes
                                 }
-                                is_in_home_area = yes
                             }
                         }
                     }
                 }
-            }
-            add_building_construction = {
-                type = infrastructure
-                level = 1
-                instant_build = yes
-            }
+                add_building_construction = {
+                    type = infrastructure
+                    level = 1
+                    instant_build = yes
+                }
+            } 
         }
         225 = {
-            limit = {
-                free_building_slots = {
-                    building = infrastructure
-                    size > 1
-                }
-                OR = {
-                    is_in_home_area = yes
-                    NOT = {
-                        owner = {
-                            any_owned_state = {
-                                free_building_slots = {
-                                    building = infrastructure
-                                    size > 1
+            if = {
+                limit = {
+                    free_building_slots = {
+                        building = infrastructure
+                        size > 1
+                    }
+                    OR = {
+                        is_in_home_area = yes
+                        NOT = {
+                            owner = {
+                                any_owned_state = {
+                                    free_building_slots = {
+                                        building = infrastructure
+                                        size > 1
+                                    }
+                                    is_in_home_area = yes
                                 }
-                                is_in_home_area = yes
                             }
                         }
                     }
                 }
-            }
-            add_building_construction = {
-                type = infrastructure
-                level = 1
-                instant_build = yes
-            }
+                add_building_construction = {
+                    type = infrastructure
+                    level = 1
+                    instant_build = yes
+                }
+            } 
         }
     }
 
@@ -9566,6 +10016,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_WAR_SUPPORT }
         completion_reward = {
             add_war_support = 0.1
+            remove_ideas = STX_crimewave
         }
     }
     focus = {
@@ -9834,7 +10285,7 @@ focus_tree = {
         available_if_capitulated = yes
 
         completion_reward = {
-            add_ideas = STX_Klan_Blitzkrieg_idea
+            #add_ideas = STX_Klan_Blitzkrieg_idea
             add_doctrine_cost_reduction = {
 				name = land_doc_bonus
 				cost_reduction = 0.5
@@ -9896,12 +10347,14 @@ focus_tree = {
             is_faction_leader = yes
         }
         bypass = {
-			SMS = {
+		OR = { 
+		SMS = {
 		NOT = { has_government = fascism }	
 		}
             NOT = {
                 country_exists = SMS
             }
+		}
         }
         x = -1
         y = 1
@@ -10014,6 +10467,19 @@ focus_tree = {
             factor = 80
         }
         available_if_capitulated = no
+		
+		bypass = {
+		OR = {
+		has_war_with = SOK
+		has_war_with = SLA
+		NOT = {
+		country_exists = SOK	
+		}
+		NOT = {
+		country_exists = SLA	
+		}
+		}
+		}
 
         completion_reward = {
             unlock_decision_category_tooltip = STX_third_red_river_war_dcat
@@ -10064,6 +10530,14 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_ANNEXATION }
         will_lead_to_war_with = SAR
         will_lead_to_war_with = SMS
+
+		bypass = {
+			OR = {
+				is_in_faction_with = SAR
+				NOT = { country_exists = SAR }
+				SAR = { is_subject = yes }
+			}
+		}
 
         completion_reward = {
             if = {
@@ -10119,6 +10593,14 @@ focus_tree = {
         available_if_capitulated = no
         search_filters = { FOCUS_FILTER_ANNEXATION }
 
+		bypass = {
+			OR = {
+				is_in_faction_with = SAL
+				NOT = { country_exists = SAL }
+				SAL = { is_subject = yes }
+			}
+		}
+
         completion_reward = {
             create_wargoal = {
                 target = SAL
@@ -10144,6 +10626,14 @@ focus_tree = {
         }
         available_if_capitulated = no
         search_filters = { FOCUS_FILTER_ANNEXATION }
+
+		bypass = {
+			OR = {
+				is_in_faction_with = SGA
+				NOT = { country_exists = SGA }
+				SGA = { is_subject = yes }
+			}
+		}
 
         completion_reward = {
             create_wargoal = {
@@ -10171,6 +10661,14 @@ focus_tree = {
         available_if_capitulated = no
         search_filters = { FOCUS_FILTER_ANNEXATION }
 
+		bypass = {
+			OR = {
+				is_in_faction_with = STN
+				NOT = { country_exists = STN }
+				STN = { is_subject = yes }
+			}
+		}
+
         completion_reward = {
             create_wargoal = {
                 target = STN
@@ -10196,6 +10694,15 @@ focus_tree = {
         }
         available_if_capitulated = no
         search_filters = { FOCUS_FILTER_ANNEXATION }
+
+
+		bypass = {
+			OR = {
+				is_in_faction_with = SSC
+				NOT = { country_exists = SSC }
+				SSC = { is_subject = yes }
+			}
+		}
 
         completion_reward = {
             create_wargoal = {
@@ -10383,6 +10890,18 @@ focus_tree = {
             owns_state = 223
             owns_state = 163
         }
+        bypass = {
+        	STX = {
+        		AND = {
+		            controls_state = 146
+		            controls_state = 147
+		            controls_state = 151
+		            controls_state = 150
+		            controls_state = 316
+		            controls_state = 682  
+	            }        		            		
+        	}
+        } 
         x = 0
         y = 1
         relative_position_id = STX_a_country_lead_by_the_texas_rangers
@@ -10411,9 +10930,14 @@ focus_tree = {
             }
         }
         bypass = {
-            NOT ={
-                country_exists = SOK
-            }
+        	OR = {
+            	NOT ={
+                	country_exists = SOK
+            	}
+            	STX = {
+            		controls_state = 152
+            	}
+        	}
         }
         x = -1
         y = 1
@@ -10445,6 +10969,19 @@ focus_tree = {
                 controls_state = 150
             }
         }
+        bypass = {
+        	OR = {
+            	NOT ={
+                	country_exists = SNM
+            	}
+            	STX = {
+	                controls_state = 146
+	                controls_state = 147
+	                controls_state = 151
+	                controls_state = 150
+            	}
+        	}
+        }        
         x = 1
         y = 1
         relative_position_id = STX_claim_greater_texas
@@ -10468,6 +11005,14 @@ focus_tree = {
         icon = GFX_focus_stx_wargoal_rang
         prerequisite = { focus = STX_demand_the_oklahoman_panhandle }
         prerequisite = { focus = STX_demand_eastern_new_mexico }
+        bypass = {
+        	STX = {
+        		AND = {
+	                controls_state = 316
+	                controls_state = 682
+                }
+        	}
+        }         
         x = 1
         y = 1
         relative_position_id = STX_demand_the_oklahoman_panhandle
@@ -10791,6 +11336,32 @@ focus_tree = {
         will_lead_to_war_with = MCO
         will_lead_to_war_with = MNL
         will_lead_to_war_with = MCH
+
+
+		bypass = {
+        AND = {
+            OR = {
+				is_in_faction_with = MTA
+				NOT = { country_exists = MTA }
+				MTA = { is_subject = yes }
+			}
+            OR = {
+				is_in_faction_with = MCO
+				NOT = { country_exists = MCO }
+				MCO = { is_subject = yes }
+			}
+            OR = {
+				is_in_faction_with = MNL
+				NOT = { country_exists = MNL }
+				MNL = { is_subject = yes }
+			}
+            OR = {
+				is_in_faction_with = MCH
+				NOT = { country_exists = MCH }
+				MCH = { is_subject = yes }
+			}
+        }
+        }
 
         completion_reward = {
             create_wargoal = {
@@ -11208,6 +11779,13 @@ focus_tree = {
                 }
             }
         }
+
+        bypass = {
+            owns_state = 153
+            owns_state = 222
+            owns_state = 223
+            owns_state = 163
+        }
         x = 5
         y = 1
         relative_position_id = STX_a_country_lead_by_the_texas_rangers
@@ -11230,7 +11808,15 @@ focus_tree = {
             NOT = {
                 owns_state = 153
             }
-            any_neighbor_state = { state = 153 }
+            all_controlled_state = {
+                any_neighbor_state = { 
+                    state = 153 
+                }
+            }
+        }
+
+        bypass = {
+            owns_state = 153
         }
         x = -1
         y = 1
@@ -11292,6 +11878,12 @@ focus_tree = {
                     owns_state = 163
                 }
             }
+        }
+
+        bypass = {
+            owns_state = 222
+            owns_state = 223
+            owns_state = 163
         }
         x = 1
         y = 1
