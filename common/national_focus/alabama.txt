@@ -8,8 +8,11 @@ focus_tree = {
 		}
 	}
 	continuous_focus_position = { x = 000 y = 2400 }
-	defualt = no
-#Focus for Highway Project###
+	default = no
+
+	shared_focus = SXS_Southern_Consolidation
+
+	#Focus for Highway Project###
     #historically Governor Bibbs did alot to build up roadway
 	focus = {
 		id = SAL_highwayproject
@@ -538,32 +541,34 @@ focus = {
 		}
 		completion_reward = {
 			640 = {
-				limit = {
-					free_building_slots = {
-						building = infrastructure
-						size > 0
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = infrastructure
-										size > 0
+				if = {
+					limit = {
+						free_building_slots = {
+							building = infrastructure
+							size > 0
+						}
+						OR = {
+							is_in_home_area = yes
+							NOT = {
+								owner = {
+									any_owned_state = {
+										free_building_slots = {
+											building = infrastructure
+											size > 0
+										}
+										is_in_home_area = yes
 									}
-									is_in_home_area = yes
 								}
 							}
 						}
 					}
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+						instant_build = yes
+					}
 				}
-				add_building_construction = {
-					type = infrastructure
-					level = 1
-					instant_build = yes
-				}
-			}
+			} 
 		}
 	}
 	focus = {
@@ -705,10 +710,14 @@ focus = {
 		icon = GFX_focus_SAL_provoke_tenneessee
 		x = -1
 		y = 1
-		cost = 10
-		#THIS SHOULD BE UNLOCKED VIA EVENT 
+		cost = 4
 		relative_position_id = SAL_work_with_arkansas
 		available_if_capitulated = yes
+		bypass = { 
+		NOT = {
+    	country_exists = STN
+		}
+		}
 		prerequisite = { focus = SAL_work_with_arkansas focus = SAL_invade_arkansas}
 		ai_will_do = {
 			factor = 80
@@ -820,12 +829,17 @@ focus = {
 		####civ factories
 		completion_reward = { 
 		remove_ideas = SAL_Black_Rebels
-			640 = {	add_offsite_building = { type = industrial_complex level = 1 }}
+			#640 = {	
+				add_offsite_building = { 
+					type = industrial_complex 
+					level = 1 
+				}
+			#}
 		}
 	}
 	####defend_the_croppers 
 	###will come with many events tied to it and decisions
-		focus = {
+	focus = {
 		id = SAL_liberate_the_hicks
 		icon = GFX_focus_SAL_liberate_rednecks
 		x = 0
@@ -880,6 +894,11 @@ focus = {
 			factor = 80
 		}
 		completion_reward = {
+		set_party_name = { 
+    ideology = neutrality 
+    long_name = SAL_bigman_party_long 
+    name = SAL_bigman_party 
+	}
 			SAL = {
         start_civil_war = {
     ruling_party = neutrality
@@ -899,26 +918,14 @@ focus = {
             }
 			add_stability = -0.10
 			hidden_effect = {
-		recruit_character = SAL_Walt_Cagle
-		remove_country_leader_role = {
-			character = SAL_bibb_graves
-			ideology = centrism
-		}
-		add_country_leader_role = {
-			character = "SAL_Walt_Cagle"
-			country_leader = {
-				ideology = despotism
-				traits = {  }
-				expire = "1965.3.1.1"
+		promote_character = SAL_Walt_Cagle
 			}
-			promote_leader = yes
-			}
-			}
+			
 			country_event = {
 				id  = alabama.27
 			}
-     		
-		}
+     		}
+		
 	}
 	focus = {
 		id = SAL_Economic_Philosophy
@@ -1145,9 +1152,9 @@ focus = {
         }
 		relative_position_id = SAL_Appellation_Rubber_plants
 		available_if_capitulated = yes
-		prerequisite = { focus = SAL_Appellation_Rubber_plants }
+		prerequisite = { focus = SAL_Appellation_Rubber_plants focus = SAL_Fund_Thinktanks  }
 		prerequisite = { focus = SAL_Fund_Heavy_industries }
-		prerequisite = { focus = SAL_Fund_Thinktanks }
+		prerequisite = { }
 		ai_will_do = {
 			factor = 80
 		}
@@ -1189,7 +1196,7 @@ focus = {
         }
 		relative_position_id = SAL_Free_Market_Doctrine
 		available_if_capitulated = yes
-		prerequisite = { focus = SAL_Free_Market_Doctrine }
+		prerequisite = { focus = SAL_BigMan_Interventionism  focus = SAL_Free_Market_Doctrine}
 		ai_will_do = {
 			factor = 80
 		}
@@ -1209,7 +1216,7 @@ focus = {
         }
 		relative_position_id = SAL_Free_Market_Doctrine
 		available_if_capitulated = yes
-		prerequisite = { focus = SAL_Free_Market_Doctrine }
+		prerequisite = { focus = SAL_BigMan_Interventionism  focus = SAL_Free_Market_Doctrine}
 		ai_will_do = {
 			factor = 80
 		}
@@ -1329,26 +1336,22 @@ focus = {
 			factor = 2
 		}
 		completion_reward = {
-		hidden_effect = {
-		recruit_character = SAL_bibb_general
-		remove_country_leader_role = {
-			character = SAL_bibb_graves
-			ideology = centrism
-		}
-		add_country_leader_role = {
-			character = "SAL_bibb_general"
-			country_leader = {
-				ideology = centrism
-				traits = { great_war_hero }
-				expire = "1965.3.1.1"
+			add_field_marshal_role = {
+    			Character = SAL_bibb_general
+   		 		skill = 2
+				traits = { war_hero  }
+    			attack_skill = 2
+    			defense_skill = 2
+    			planning_skill = 3
+    			logistics_skill = 3
 			}
-			promote_leader = yes
+			hidden_effect = {
+				promote_character = SAL_bibb_general
 			}
-			}
-		add_war_support = 0.10
-		add_manpower = 1500
+			add_war_support = 0.10
+			add_manpower = 1500
 	
-	}
+		}
 	}
 #	focus = {
 #		id = SAL_1938_electional_Crisis
@@ -1356,7 +1359,7 @@ focus = {
 #		x = -2
 #		y = 1
 #		relative_position_id = SAL_general_governor
- #       prerequisite = { focus = SAL_general_governor}
+#       prerequisite = { focus = SAL_general_governor}
 #		cost = 1
 #		search_filters = {  FOCUS_FILTER_POLITICAL }
 #		
@@ -1370,7 +1373,7 @@ focus = {
 #		}
 #	}
 	##temp artillery increase
-		focus = {
+	focus = {
 		id = SAL_heavy_rounds
 		icon = GFX_focus_SAL_Heavy_Rounds
 		x = 2
@@ -1397,7 +1400,7 @@ focus = {
 			}
 		}
 	}
-####temp calvery idea increase
+	####temp calvery idea increase
 	focus = {
 		id = SAL_calvary_experience
 		icon = GFX_focus_SAL_Cavalry_Experience
@@ -1426,7 +1429,7 @@ focus = {
 
 		}
 	}
-		focus = {
+	focus = {
 		id = SAL_gulf_power
 		icon = GFX_focus_SAL_Gulf_Power
 		x = 1
@@ -1443,12 +1446,12 @@ focus = {
 		controls_state = 22	
 		}
 		completion_reward = {
-		add_tech_bonus = {
+			add_tech_bonus = {
 				bonus = 1
 				uses = 1
 				category = marine_tech
 			}
-		add_tech_bonus = {
+			add_tech_bonus = {
 				bonus = 1.35
 				uses = 1
 				category = dd_tech
@@ -1456,7 +1459,7 @@ focus = {
 		}
 	}
 	###will create 
-		focus = {
+	focus = {
 		id = SAL_pensacola_bay
 		icon = GFX_focus_SAL_Pensacola_Bay
 		x = 0
@@ -1465,7 +1468,7 @@ focus = {
         prerequisite = { focus = SAL_gulf_power }
 		cost = 10
 		available = {
-		controls_state = 13	
+			controls_state = 13	
 		}
 		search_filters = {  FOCUS_FILTER_ANNEXATION }
 		available_if_capitulated = yes
@@ -1473,16 +1476,18 @@ focus = {
 			factor = 2
 		}
 		completion_reward = {
-		add_state_core = 13	
-		if = {
-				13 = {
-					limit = {
+			add_state_core = 13	
+			if = {
+				limit = {
+					13 = {
 						free_building_slots = {
 							building = dockyard
 							size > 2
 							include_locked = yes
 						}
-					}
+					} 
+				}
+				13 = {
 					add_extra_state_shared_building_slots = 3
 					add_building_construction = {
 						type = dockyard
@@ -1491,8 +1496,7 @@ focus = {
 					}
 				}
 			}
-
-		}
+		} 
 	}
 	##graves gives a speech on free trade which MS, FL, GA will get 
 	focus = {
@@ -1510,13 +1514,13 @@ focus = {
 			factor = 5
 		}
 		completion_reward = {
-		add_ideas = SAL_free_trade_idea
-                		set_rule = {
-    can_join_factions = yes
-}
+			add_ideas = SAL_free_trade_idea
+        	set_rule = {
+    			can_join_factions = yes
+			}
 		}
 	}
- #####Alabama will ask Georgia for help, GA ai will always agree 
+ 	#####Alabama will ask Georgia for help, GA ai will always agree 
 	focus = {
 		id = SAL_georgia_aide
 		icon = GFX_focus_SAL_Georgian_Aid
@@ -1995,7 +1999,7 @@ focus = {
 		
         relative_position_id = SAL_rallyupklan
 		bypass = {
-		SGA { NOT = { has_government = fascism } }
+			SGA = { NOT = { has_government = fascism } }
 	     }
 		available_if_capitulated = yes
 		prerequisite = { focus = SAL_denouceyankees focus = SAL_nationalizerailroads }
@@ -2046,24 +2050,22 @@ focus = {
 		}	
         ###eventtoask georgia to join southern Committiee IF THEY EXIST IF NOT BYPASS
         completion_reward = {
-		recruit_character = SAL_quentin_crommelin
-		remove_country_leader_role = {
-			character = SAL_james_tom_cotton_heflin
-			ideology = fascism_ideology
-		}
-		add_country_leader_role = {
-			character = "SAL_quentin_crommelin"
-			country_leader = {
+			recruit_character = SAL_quentin_crommelin
+			remove_country_leader_role = {
+				character = SAL_james_tom_cotton_heflin
 				ideology = fascism_ideology
-				traits = {  }
-				expire = "1965.3.1.1"
 			}
-			promote_leader = yes	 
-           
-			
+			add_country_leader_role = {
+				character = "SAL_quentin_crommelin"
+				country_leader = {
+					ideology = fascism_ideology
+					traits = {  }
+					expire = "1965.3.1.1"
+				}
+				promote_leader = yes	 
+      	  }
 			set_cosmetic_tag = EUFULAREGENCY
-        }
-	}
+		}
 	}
     focus = {
 		id =  SAL_corparate_tax_cut
@@ -2432,7 +2434,9 @@ focus = {
 			factor = 320
 		}	
         completion_reward = {
-			add_claim_by = SAL
+			13 = {
+				add_claim_by = SAL
+			} 
 			create_wargoal = {
 				type = take_state_focus
 				target = SFL
@@ -2584,14 +2588,16 @@ focus = {
         ###eventtoask georgia to join southern Committiee IF THEY EXIST IF NOT BYPASS
         completion_reward = {
 			if = {
-				22 = {
-					limit = {
+				limit = {
+					22 = {
 						free_building_slots = {
 							building = dockyard
 							size > 2
 							include_locked = yes
 						}
 					}
+				} 
+				22 = {
 					add_extra_state_shared_building_slots = 3
 					add_building_construction = {
 						type = dockyard
@@ -2821,8 +2827,8 @@ focus = {
 		}	
         ###attack any communist near by
         completion_reward = {
-         add_ideas =  SAL_jeffersonian_democrat_dominance
-		 remove_idea = SLA_hueys_influence
+         	add_ideas =  SAL_jeffersonian_democrat_dominance
+		 	remove_ideas = SLA_hueys_influence
         }
 	}
 		#Focus for Thank the Mothers
@@ -3185,34 +3191,36 @@ focus = {
 
 		completion_reward = {
 			336 = {
-				limit = {
-					free_building_slots = {
-						building = arms_factory
-						size > 0
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = arms_factory
-										size > 0
-										include_locked = yes
+				if = {
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = yes
+						}
+						OR = {
+							is_in_home_area = yes
+							NOT = {
+								owner = {
+									any_owned_state = {
+										free_building_slots = {
+											building = arms_factory
+											size > 0
+											include_locked = yes
+										}
+										is_in_home_area = yes
 									}
-									is_in_home_area = yes
 								}
 							}
 						}
 					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				} 
 			}
 		}
 	}
@@ -3238,34 +3246,36 @@ focus = {
 		}
 		completion_reward = {
 			640 = {
-				limit = {
-					free_building_slots = {
-						building = arms_factory
-						size > 0
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = arms_factory
-										size > 0
-										include_locked = yes
+				if = {
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 0
+							include_locked = yes
+						}
+						OR = {
+							is_in_home_area = yes
+							NOT = {
+								owner = {
+									any_owned_state = {
+										free_building_slots = {
+											building = arms_factory
+											size > 0
+											include_locked = yes
+										}
+										is_in_home_area = yes
 									}
-									is_in_home_area = yes
 								}
 							}
 						}
 					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
+					add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				} 
 			}
 		}
 	}
@@ -3281,7 +3291,7 @@ focus = {
 		cost = 7.2
 
 		mutually_exclusive = { focus = SAL_Alabama_Marines focus = SAL_Nickajack_Mountaineer_Corps }
-
+		
 		search_filters = {  FOCUS_FILTER_POLITICAL }
 		
 		available_if_capitulated = yes
@@ -3388,7 +3398,11 @@ focus = {
 		cost = 10
 		mutually_exclusive = { focus = SAL_Mechanization focus = SAL_Nickajack_Mountaineer_Corps }
 		search_filters = {  FOCUS_FILTER_POLITICAL }
-		
+		available = { 
+		NOT = { 
+		has_completed_focus = SAL_alabama_civil_war
+		}
+		}
 		available_if_capitulated = yes
 		ai_will_do = {
 			factor = 2
@@ -3506,11 +3520,12 @@ focus = {
 		cost = 10
 
 		available_if_capitulated = yes
-
+		ai_will_do = {
 			modifier = {
 				factor = 1
 			}
-
+		}
+									
 		complete_tooltip = {
 			air_experience = 25
 			if = { limit = { has_country_flag = aviation_effort_AB }
@@ -3791,11 +3806,12 @@ focus = {
 		cost = 10
 
 		available_if_capitulated = yes
-
+		ai_will_do = {
 			modifier = {
 				factor = 5
 			}
-
+		}
+		
 		available = {
 			any_owned_state = {
 				is_coastal = yes
@@ -3911,7 +3927,7 @@ focus = {
 		}
 	}
 
-		focus = {
+	focus = {
 		id = SAL_destoyers
 		icon = GFX_goal_generic_wolf_pack
 		x = -1
@@ -3946,7 +3962,7 @@ focus = {
 				}
 			}
 		}
-		focus = {
+	focus = {
 		id = SAL_submarines
 		icon = GFX_goal_generic_navy_submarine
 		x = 0
@@ -3972,7 +3988,7 @@ focus = {
 		}
 	}
 
-		focus = {
+	focus = {
 		id = SAL_Cruiser_effort
 		icon = GFX_goal_generic_navy_cruiser
 		x = 1
@@ -4011,7 +4027,7 @@ focus = {
 
 
 
-		focus = {
+	focus = {
 		id = SAL_Battle_ships_of_the_south
 		icon = GFX_goal_generic_navy_battleship
 		x = 1
@@ -4046,7 +4062,7 @@ focus = {
 		}
 	}
 
-		focus = {
+	focus = {
 		id = SAL_Fleet_in_being
 		icon = GFX_goal_generic_navy_doctrines_tactics
 		x = 0
@@ -4085,7 +4101,7 @@ focus = {
 		}
 	}
 
-		focus = {
+	focus = {
 		id = SAL_Carrier_effort
 		icon = GFX_focus_SCA_carrier
 		x = 0
@@ -4110,7 +4126,7 @@ focus = {
 			}
 		}
 	}
-		focus = {
+	focus = {
 		id = SAL_1942_election
 		icon = GFX_focus_vote_reenstation_act
 		x = 0
@@ -4207,7 +4223,7 @@ focus = {
 		}
 		completion_reward = {
 			add_political_power = 150
-              stability = -0.10
+              add_stability = -0.10
 			  add_popularity = {
 				ideology = fascism
 				popularity = -0.05
@@ -4650,7 +4666,7 @@ focus = {
 	###Hugo black will be former Unionist aligned with 
 	##governor Bibbs. However, Bibbs dies so he takes his place
 	#Progressive
-focus = {
+	focus = {
 		id = SAL_hugo_black
 		icon = GFX_focus_SAL_hugo_black
 		x = -6
@@ -4675,7 +4691,7 @@ focus = {
 			}
 		}
 	}
-focus = {
+	focus = {
 		id = SAL_bibbs_graves_memorial_day
 		icon = GFX_focus_SAL_bibs_memorial
 		x = 0
@@ -4689,7 +4705,7 @@ focus = {
 			factor = 2
 		}
 		completion_reward = {
-			stability = 0.10
+			add_stability = 0.10
 				add_popularity = {
 				ideology = progressivism
 				popularity = 0.10
@@ -4760,7 +4776,7 @@ focus = {
 			}
 		}
 	}
-focus = {
+	focus = {
 		id = SAL_create_labor_department
 		icon = GFX_focus_SAL_labour_department
 		x = 0
@@ -4802,7 +4818,7 @@ focus = {
             }
 		}
 	}
-		focus = {
+	focus = {
 		id = SAL_Naval_doctrines
 		icon = GFX_goal_generic_build_navy
 		x = 0
@@ -4927,5 +4943,6 @@ focus = {
 	#		}
 	##	}
 	#}
+} 
 
-}
+

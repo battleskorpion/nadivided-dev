@@ -5,36 +5,64 @@ country_event = {
     desc = california.1.d
     fire_only_once = yes
 	picture = GFX_report_event_election_vote
-	limit = {
-		has_government = democratic
-	}
+	#limit = {								# bruh moment
+	#	has_government = democratic
+	#}
 	is_triggered_only = yes
     option = {
-	ai_chance = {
-		factor = 80
-	}
-    name = california.1.a
-		complete_national_focus = SCA_the_establishment
-		set_political_party = {
-			ideology = democratic
-			popularity = 65
+		ai_chance = {
+			factor = 70
+
+			modifier = {
+				SWA = {
+					has_government = democratic
+				} 
+
+				factor = 15
+			}
+		}
+   		 name = california.1.a
+			complete_national_focus = SCA_the_establishment
+			set_political_party = {
+				ideology = democratic
+				popularity = 65
+			}
+   	 	}
+		option = {
+		ai_chance = {
+			modifier = {
+				SWA = {
+					has_government = democratic
+				} 
+
+				factor = -15
+			}
+		
+			factor = 30
+		}
+    	name = california.1.b
+			complete_national_focus = SCA_anti_establishment
+			complete_national_focus = SCA_revitalize_our_system
+			set_politics = {
+				ruling_party = progressivism
+				elections_allowed = no
+				last_election = "1935.12.17"
+				election_frequency = 0
+			}
+			hidden_effect = { 
+			country_event = usastates_news.28
 		}
     }
 	option = {
-	ai_chance = {
-		factor = 20
-	}
-    name = california.1.b
-		complete_national_focus = SCA_anti_establishment
-		complete_national_focus = SCA_revitalize_our_system
-		set_politics = {
-			ruling_party = progressivism
-			elections_allowed = no
-			last_election = "1935.12.17"
-			election_frequency = 0
+		ai_chance = {
+			
+		
+			factor = 20
 		}
-		hidden_effect = { 
-		country_event = usastates_news.28
+    	name = california.1.c
+			complete_national_focus = SCA_second_longshore_strike
+			hidden_effect = { 
+			country_event = usastates_news.28
 		}
     }
 } 
@@ -73,16 +101,10 @@ country_event = {
 				ruling_party = fascism
 				elections_allowed = no
 			}
-			create_country_leader = {
-				name = "George S Patton"
-				picture = "portrait_george_patton.dds"
-				expire = "1965.1.1"
-				ideology = junta
-				traits = {
-					generalissimo_patton
-					old_blood_and_guts
-				}
-			}
+			promote_character = {
+    character = SCA_george_s._patton
+    ideology = fascist_military_dictatorship
+}
 			set_cosmetic_tag = SCA_patton
 			complete_national_focus = SCA_the_military_steps_in
 		}
@@ -218,15 +240,16 @@ country_event = {
 	
 	option = {
 		name = california.88.a
-		}
 		SCA = {
 			send_equipment = {
-    		equipment = infantry_equipment
-    		amount = 2000
-    		target = SOR
+    			equipment = infantry_equipment
+    			amount = 2000
+    			target = SOR
+			} 
 		}
+	}	
 }
-}
+
 # Pressure Siam to become a puppet
 country_event = {
 	id = california.89
@@ -361,7 +384,10 @@ country_event = {
 	fire_only_once = yes
 	trigger = {
 	TAG = SCA
-	SCA = { 
+	SCA = {
+	NOT = { 
+	has_government = progressivism
+	}
 	has_war = yes
 	}
 	}
@@ -421,7 +447,7 @@ country_event = {
     	damage = 3
 		}
 		}
-		add_political_power = - 60
+		add_political_power = -60
 		add_stability = 0.02
         name = california.36.b
 	}

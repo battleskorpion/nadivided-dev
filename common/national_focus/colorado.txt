@@ -32,7 +32,7 @@ focus_tree = {
 focus = {
     id = SCO_aviation_effort
     icon = GFX_goal_generic_build_airforce
-    x = 2
+    x = 5
     y = 1
     cost = 10
 
@@ -40,13 +40,13 @@ focus = {
 
     available = {
         OR = {
-        has_completed_focus = SCO_Colorado_Com_hidden_start
-        has_completed_focus = SCO_Colorado_Empire_hidden_start
-    }
-    }
-        modifier = {
-            factor = 25
+            has_completed_focus = SCO_Colorado_Com_hidden_start
+            has_completed_focus = SCO_Colorado_Empire_hidden_start
         }
+    }
+        #modifier = {
+        #    factor = 25
+        #}
 
     ai_will_do = {
         factor = 1
@@ -213,7 +213,7 @@ focus = {
     }
 #if ai is getting steamrolled give them back these planes
 #		completion_reward = {
-        air_experience = 150
+        #air_experience = 150
         #hidden_effect = {
         #	if = {
         #		limit = { is_ai = yes }
@@ -229,13 +229,13 @@ focus = {
 #}
 
     completion_reward = {
-    hidden_effect = {
-        if = {
-            limit = { is_ai = yes }
-        air_experience = 75
+        hidden_effect = {
+            if = {
+                limit = { is_ai = yes }
+            air_experience = 75
+            }
         }
     }
-}
 
     complete_tooltip = {
         air_experience = 25
@@ -316,7 +316,7 @@ focus = {
     id = SCO_CAS_effort
     icon = GFX_goal_generic_CAS
     prerequisite = { focus = SCO_aviation_effort_2 }
-    prerequisite = { focus = SCO_motorization_effort1 }
+    #prerequisite = { focus = SCO_motorization_effort1 }
     x = -1
     y = 1
     relative_position_id = SCO_aviation_effort_2
@@ -403,15 +403,15 @@ focus = {
 focus = {
     id = SCO_naval_effort
     icon = GFX_goal_generic_construct_naval_dockyard
-    x = 6
+    x = 9
     y = 1
     cost = 10
 
     available_if_capitulated = yes
 
-            modifier = {
-            factor = 25
-        }
+        #modifier = {
+        #    factor = 25
+        #}
 
     available = {
         any_owned_state = {
@@ -630,7 +630,7 @@ focus = {
     id = SCO_flexible_navy11
     icon = GFX_goal_generic_build_navy
     prerequisite = { focus = SCO_naval_effort }
-    mutually_exclusive = { focus = SCO_large_navy11 }
+    #mutually_exclusive = { focus = SCO_large_navy11 }
     x = -1
     y = 1
     relative_position_id = SCO_naval_effort
@@ -851,6 +851,296 @@ focus = {
 }
 
 
+focus = {
+    id = SCO_Depression_Relief_Effort
+    icon = GFX_focus_SMD_depression_relief
+    prerequisite = {}
+    available = {
+        date > 1938.0.1
+    }
+    x = 1
+    y = 1
+    cost = 5
+    ai_will_do = {
+        factor = 50
+    }
+    available_if_capitulated = no
+    search_filters = {   }
+    completion_reward = {
+        remove_ideas = SCO_eastern_Dustbowl_idea
+    }
+}
+
+focus = {
+    id = SCO_Soup_Kitchen_Expansions
+    icon = GFX_focus_SCO_SoupKitchen
+    prerequisite = { focus = SCO_Depression_Relief_Effort}
+    available = {
+
+    }
+    x = 1
+    y = 1
+    relative_position_id = SCO_Depression_Relief_Effort
+    cost = 3.5
+    ai_will_do = {
+        factor = 40
+    }
+    available_if_capitulated = no
+    search_filters = {     }
+    completion_reward = {
+        add_stability = 0.05
+
+    }
+}
+
+focus = {
+    id = SCO_Rationing_Program
+    icon = GFX_focus_SCO_Rationing_Program
+    prerequisite = { focus = SCO_Depression_Relief_Effort}
+    available = {
+
+    }
+    x = -1
+    y = 1
+    relative_position_id = SCO_Depression_Relief_Effort
+    cost = 3.5
+    ai_will_do = {
+        factor = 40
+    }
+    available_if_capitulated = no
+    search_filters = {     }
+    completion_reward = {
+        add_timed_idea = { idea = SCO_Rationing_Program_idea days = 75 }
+    }
+}
+
+focus = {
+    id = SCO_Revive_Gold_silver_mining_and_coal
+    icon = GFX_focus_usa_reestablish_the_gold_standard
+    prerequisite = { focus = SCO_Rationing_Program}
+    prerequisite = { focus = SCO_Soup_Kitchen_Expansions}
+    available = {
+
+    }
+    x = 1
+    y = 1
+    relative_position_id = SCO_Rationing_Program
+    cost = 5
+    ai_will_do = {
+        factor = 40
+    }
+    available_if_capitulated = no
+    search_filters = {     }
+    completion_reward = {
+        add_offsite_building = { type = industrial_complex level = 2 }
+    }
+}
+
+focus = {
+    id = SCO_Colorado_Works
+    icon = GFX_goal_generic_construct_civ_factory
+    prerequisite = { focus = SCO_Rationing_Program}
+    prerequisite = { focus = SCO_Soup_Kitchen_Expansions}
+    available = {
+
+    }
+    x = 3
+    y = 1
+    relative_position_id = SCO_Rationing_Program
+    cost = 7.2
+    ai_will_do = {
+        factor = 40
+    }
+    available_if_capitulated = no
+    search_filters = {     }
+    completion_reward = {
+        318 = {
+
+            limit = {
+                free_building_slots = {
+                    building = industrial_complex
+                    size > 2
+                    include_locked = yes
+                }
+                OR = {
+                    is_in_home_area = yes
+                    NOT = {
+                        owner = {
+                            any_owned_state = {
+                                free_building_slots = {
+                                    building = industrial_complex
+                                    size > 2
+                                    include_locked = yes
+                                }
+                                is_in_home_area = yes
+                            }
+                        }
+                    }
+                }
+            }
+            add_extra_state_shared_building_slots = 2
+            add_building_construction = {
+                type = industrial_complex
+                level = 2
+                instant_build = yes
+            }
+        }
+    }
+}
+focus = {
+    id = SCO_Colorado_Autarky
+    icon = GFX_focus_SWA_push_for_autarky
+    prerequisite = { focus = SCO_Revive_Gold_silver_mining_and_coal}
+    mutually_exclusive = { focus = SCO_Global_Trade_Program }
+    available = {
+
+    }
+    x = 1
+    y = 1
+    relative_position_id = SCO_Revive_Gold_silver_mining_and_coal
+    cost = 5
+    ai_will_do = {
+        factor = 40
+    }
+    available_if_capitulated = no
+    search_filters = {     }
+    completion_reward = {
+        add_offsite_building = { type = arms_factory level = 2 }
+        completion_reward = {
+            add_timed_idea = { idea = SCO_Colorado_Autarky_idea days = 75 
+            }
+        }
+    }
+}
+focus = {
+    id = SCO_Develop_synth_rubber
+    icon = GFX_focus_rubber
+    x = 1
+    y = 1
+    relative_position_id = SCO_Colorado_Autarky
+    prerequisite = { focus = SCO_Colorado_Autarky }
+    cost = 7.2
+
+    search_filters = {  FOCUS_FILTER_RESEARCH }
+    
+    available_if_capitulated = yes
+    ai_will_do = {
+        factor = 150
+    }
+
+    completion_reward = {
+        add_tech_bonus = {
+            name = synt
+            bonus = 1.5
+            uses = 1
+            category = synth_resources
+        }
+    }
+}
+#
+focus = {
+    id = SCO_Construct_rubber_plants
+    icon = GFX_focus_synth_facility
+    x = 0
+    y = 1
+    relative_position_id = SCO_Develop_synth_rubber
+    prerequisite = { focus = SCO_Develop_synth_rubber }
+    cost = 7.2
+
+    search_filters = {  FOCUS_FILTER_RESEARCH }
+    
+    available_if_capitulated = yes
+    ai_will_do = {
+        factor = 150
+    }
+
+    available = { has_tech = synth_oil_experiments }
+
+      completion_reward = { 
+        custom_effect_tooltip = SLA_research_syth_tt
+        random_owned_controlled_state = {
+            limit = {
+                free_building_slots = {
+                    building = synthetic_refinery 
+                    size > 1
+                    include_locked = yes
+                }
+                OR = {
+                    is_in_home_area = yes
+                    NOT = {
+                        owner = {
+                            any_owned_state = {
+                                free_building_slots = {
+                                    building = synthetic_refinery
+                                    size > 3
+                                    include_locked = yes
+                                }
+                                is_in_home_area = yes
+                            }
+                        }
+                    }
+                }
+            }
+            add_extra_state_shared_building_slots = 3
+            add_building_construction = {
+                type = synthetic_refinery
+                level = 3
+                instant_build = yes
+                }
+            }
+        }
+}
+#
+
+
+focus = {
+    id = SCO_Global_Trade_Program
+    icon = GFX_focus_cascadian_dollar
+    prerequisite = { focus = SCO_Revive_Gold_silver_mining_and_coal}
+    mutually_exclusive = { focus = SCO_Colorado_Autarky }
+    available = {
+
+    }
+    x = -1
+    y = 1
+    relative_position_id = SCO_Revive_Gold_silver_mining_and_coal
+    cost = 5
+    ai_will_do = {
+        factor = 40
+    }
+    available_if_capitulated = no
+    search_filters = {     }
+    completion_reward = {
+        add_ideas = SCO_Global_Trade_Program_idea
+    }
+}
+
+
+focus = {
+    id = SCO_Colorado_to_LA_Corridor
+    icon = GFX_focus_SOR_east_asian_trade
+    prerequisite = { focus = SCO_Global_Trade_Program}
+    
+    available = {
+		controls_state = 43	
+    }
+    x = 0
+    y = 1
+    relative_position_id = SCO_Global_Trade_Program
+    cost = 5
+    ai_will_do = {
+        factor = 40
+    }
+    available_if_capitulated = no
+    search_filters = {     }
+    completion_reward = {
+        add_offsite_building = { type = industrial_complex level = 2 }
+        swap_ideas = {
+            remove_idea = SCO_Global_Trade_Program_idea
+            add_idea = SCO_Global_Trade_Program_Boom_idea
+        }
+    }
+}
 
 focus = {
     id = SCO_Raise_Colorado_Militias
@@ -861,7 +1151,6 @@ focus = {
     }
     x = -2
     y = 1
-    relative_position_id = SCO_Stirring_Miners
     cost = 10
     ai_will_do = {
         factor = 50
@@ -928,7 +1217,6 @@ focus = {
         }
         x = -5
         y = 1
-        relative_position_id = SCO_Stirring_Miners
         cost = 5
         ai_will_do = {
             factor = 25
@@ -999,19 +1287,33 @@ focus = {
         available_if_capitulated = no
         search_filters = {  FOCUS_FILTER_POLITICAL   }
         completion_reward = {
-		hidden_effect = {
-		country_event = usastates_news.38
-		}
-        add_political_power = -65 
-        add_popularity = {
-        ideology = communism
-        popularity = 0.30
-    }    
-		add_named_threat = { 
-		threat = 4
-		name = SCO_colorado_civil_war_tt
-		}
-        
+            hidden_effect = {
+                country_event = usastates_news.38
+            }
+            add_political_power = -65 
+            add_popularity = {
+                ideology = communism
+                popularity = 0.30
+            }    
+            add_named_threat = { 
+                threat = 4
+                name = SCO_colorado_civil_war_tt
+            }
+            SCO = {
+                start_civil_war = {
+                    ruling_party = neutrality
+                    ideology = communism
+                    capital = 318
+                    states = { 
+                        315 748 314 306 305 
+                    }
+                    keep_unit_leaders = {
+                        33 44
+                    }
+                    keep_political_leader = yes
+                    keep_political_party_members = yes
+                }
+            }
         }
     }
     focus = {
@@ -1158,7 +1460,7 @@ focus = {
     focus = {
 		id = SCO_Colorado_Empire_hidden_start
 		icon = GFX_focus_SCO_colorado_empire_start
-		x = -6
+		x = 0
 		y = 11
 		cost = 5
 		search_filters = {  FOCUS_FILTER_RESEARCH }
@@ -1242,12 +1544,27 @@ focus = {
         ai_will_do = {
             factor = 25
         }
+        bypass = {
+        controls_state = 150
+        }
         available_if_capitulated = no
         search_filters = {    }
         completion_reward = {
-        create_wargoal = {
-                type = annex_everything
-                target = SNM
+        every_other_country = {
+                limit = {
+                    NOT = { is_in_faction_with = ROOT }
+                    NOT = { is_subject_of = ROOT }
+                    any_owned_state = {
+                        state = 150
+                    }
+                }
+                ROOT = {
+                    create_wargoal = {
+                        target = PREV
+                        type = annex_everything
+                        expire = 0
+                    }
+                }
             }
         }
     }
@@ -1265,12 +1582,27 @@ focus = {
         ai_will_do = {
             factor = 25
         }
+        bypass = {
+        controls_state = 77
+        }
         available_if_capitulated = no
         search_filters = {    }
         completion_reward = {
-        create_wargoal = {
-                type = annex_everything
-                target = SAZ
+        every_other_country = {
+                limit = {
+                    NOT = { is_in_faction_with = ROOT }
+                    NOT = { is_subject_of = ROOT }
+                    any_owned_state = {
+                        state = 77
+                    }
+                }
+                ROOT = {
+                    create_wargoal = {
+                        target = PREV
+                        type = annex_everything
+                        expire = 0
+                    }
+                }
             }
         }
     }
@@ -1293,12 +1625,27 @@ focus = {
         ai_will_do = {
             factor = 25
         }
+        bypass = {
+        controls_state = 49
+        }
         available_if_capitulated = no
         search_filters = {    }
         completion_reward = {
-        create_wargoal = {
-                type = annex_everything
-                target = SUT
+        every_other_country = {
+                limit = {
+                    NOT = { is_in_faction_with = ROOT }
+                    NOT = { is_subject_of = ROOT }
+                    any_owned_state = {
+                        state = 49
+                    }
+                }
+                ROOT = {
+                    create_wargoal = {
+                        target = PREV
+                        type = annex_everything
+                        expire = 0
+                    }
+                }
             }
         }
     }
@@ -1316,12 +1663,27 @@ focus = {
         ai_will_do = {
             factor = 25
         }
+        bypass = {
+        controls_state = 143
+        }
         available_if_capitulated = no
         search_filters = {    }
         completion_reward = {
-        create_wargoal = {
-                type = annex_everything
-                target = SNV
+        every_other_country = {
+                limit = {
+                    NOT = { is_in_faction_with = ROOT }
+                    NOT = { is_subject_of = ROOT }
+                    any_owned_state = {
+                        state = 143
+                    }
+                }
+                ROOT = {
+                    create_wargoal = {
+                        target = PREV
+                        type = annex_everything
+                        expire = 0
+                    }
+                }
             }
         }
     }
@@ -1342,6 +1704,7 @@ focus = {
         ai_will_do = {
             factor = 25
         }
+        
         available_if_capitulated = no
         search_filters = {    }
         completion_reward = {
@@ -1583,6 +1946,11 @@ focus = {
         cost = 5
         ai_will_do = {
             factor = 25
+        }
+        bypass = {
+            SWY = {
+                exists = no
+            }
         }
         available_if_capitulated = no
         search_filters = {    }
@@ -1838,6 +2206,11 @@ focus = {
         ai_will_do = {
             factor = 25
         }
+        bypass = {
+            SMT = {
+                exists = no
+            }
+        }
         available_if_capitulated = no
         search_filters = {    }
         completion_reward = {
@@ -1865,6 +2238,11 @@ focus = {
         cost = 7.2
         ai_will_do = {
             factor = 25
+        }
+        bypass = {
+            SID = {
+                exists = no
+            }
         }
         available_if_capitulated = no
         search_filters = {    }
@@ -2426,6 +2804,12 @@ focus = {
         available_if_capitulated = no
         search_filters = {    }
         completion_reward = {
+		set_rule = {
+		can_create_factions = yes	
+		}
+		set_rule = {
+				can_join_factions = yes
+		}
             add_ideas = SCO_Communist_Diplomacy
         }
     }
@@ -2455,11 +2839,11 @@ focus = {
 		icon = GFX_focus_SCO_utahcom
         prerequisite = { focus = SCO_Begin_struggle_of_liberation}
         available = {
-        strength_ratio = {
-        tag = SUT
-        ratio > 0.5
-    }
+        
         }
+		bypass = { 
+		controls_state = 49
+		}
         x = 0
         y = 1
         relative_position_id = SCO_Begin_struggle_of_liberation
@@ -2470,9 +2854,21 @@ focus = {
         available_if_capitulated = no
         search_filters = {    }
         completion_reward = {
-            create_wargoal = {
-                type = annex_everything
-                target = SUT
+            every_other_country = {
+                limit = {
+                    NOT = { is_in_faction_with = ROOT }
+                    NOT = { is_subject_of = ROOT }
+                    any_owned_state = {
+                        state = 49
+                    }
+                }
+                ROOT = {
+                    create_wargoal = {
+                        target = PREV
+                        type = annex_everything
+                        expire = 0
+                    }
+                }
             }
         }
     }
@@ -2487,7 +2883,10 @@ focus = {
         y = 1
         relative_position_id = SCO_wargoal
 		available = { 
-		is_neighbor_of = SNV
+		
+		}
+		bypass = { 
+		controls_state = 143
 		}
         cost = 5
         ai_will_do = {
@@ -2496,9 +2895,21 @@ focus = {
         available_if_capitulated = no
         search_filters = {    }
         completion_reward = {
-            create_wargoal = {
-                type = annex_everything
-                target = SNV
+            every_other_country = {
+                limit = {
+                    NOT = { is_in_faction_with = ROOT }
+                    NOT = { is_subject_of = ROOT }
+                    any_owned_state = {
+                        state = 143
+                    }
+                }
+                ROOT = {
+                    create_wargoal = {
+                        target = PREV
+                        type = annex_everything
+                        expire = 0
+                    }
+                }
             }
         }
     }
@@ -2506,8 +2917,8 @@ focus = {
         id = SCO_wargoal4
 		icon = GFX_focus_SCO_northand_southdakota
         prerequisite = { focus = SCO_wargoal1}
-        available = {
-		is_neighbor_of = SSD
+        available = { 
+         
         }
         x = 0
         y = 1
@@ -2516,23 +2927,45 @@ focus = {
         ai_will_do = {
             factor = 25
         }
-		available = { 
-		OR = { 
-		is_neighbor_of = SND
-		is_neighbor_of = SND
-		}
+		bypass = { 
+		controls_state = 846
+		controls_state = 269
 		}
         available_if_capitulated = no
         search_filters = {    }
         completion_reward = {
-            create_wargoal = {
-                type = annex_everything
-                target = SND
+        every_other_country = {
+                limit = {
+                    NOT = { is_in_faction_with = ROOT }
+                    NOT = { is_subject_of = ROOT }
+                    any_owned_state = {
+                        state = 846
+                    }
+                }
+                ROOT = {
+                    create_wargoal = {
+                        target = PREV
+                        type = annex_everything
+                        expire = 0
+                    }
+                }
             }
-            create_wargoal = {
-                type = annex_everything
-                target = SSD
-            }
+		every_other_country = {
+                limit = {
+                    NOT = { is_in_faction_with = ROOT }
+                    NOT = { is_subject_of = ROOT }
+                    any_owned_state = {
+                        state = 269
+                    }
+                }
+                ROOT = {
+                    create_wargoal = {
+                        target = PREV
+                        type = annex_everything
+                        expire = 0
+                    }
+                }
+            }	
         }
     }
     focus = {
@@ -2549,13 +2982,28 @@ focus = {
         ai_will_do = {
             factor = 25
         }
+		bypass = { 
+		controls_state = 193
+		}
         available_if_capitulated = no
         search_filters = {    }
         completion_reward = {
-            create_wargoal = {
-                type = annex_everything
-                target = SMT
-            }
+        every_other_country = {
+                limit = {
+                    NOT = { is_in_faction_with = ROOT }
+                    NOT = { is_subject_of = ROOT }
+                    any_owned_state = {
+                        state = 193
+                    }
+                }
+                ROOT = {
+                    create_wargoal = {
+                        target = PREV
+                        type = annex_everything
+                        expire = 0
+                    }
+                }
+            }    
         }
     }
     focus = {
@@ -2565,6 +3013,9 @@ focus = {
         available = {
 
         }
+		bypass = { 
+		controls_state = 510
+		}
         x = 0
         y = 1
         relative_position_id = SCO_wargoal2
@@ -2575,9 +3026,21 @@ focus = {
         available_if_capitulated = no
         search_filters = {    }
         completion_reward = {
-            create_wargoal = {
-                type = annex_everything
-                target = SID
+            every_other_country = {
+                limit = {
+                    NOT = { is_in_faction_with = ROOT }
+                    NOT = { is_subject_of = ROOT }
+                    any_owned_state = {
+                        state = 510
+                    }
+                }
+                ROOT = {
+                    create_wargoal = {
+                        target = PREV
+                        type = annex_everything
+                        expire = 0
+                    }
+                }
             }
         }
     }
@@ -2595,13 +3058,28 @@ focus = {
         ai_will_do = {
             factor = 25
         }
+		bypass = { 
+		controls_state = 271
+		}
         available_if_capitulated = no
         search_filters = {    }
         completion_reward = {
-            create_wargoal = {
-                type = annex_everything
-                target = SWY
-            }
+         every_other_country = {
+                limit = {
+                    NOT = { is_in_faction_with = ROOT }
+                    NOT = { is_subject_of = ROOT }
+                    any_owned_state = {
+                        state = 271
+                    }
+                }
+                ROOT = {
+                    create_wargoal = {
+                        target = PREV
+                        type = annex_everything
+                        expire = 0
+                    }
+                }
+            }   
         }
     }
     focus = {
@@ -2719,12 +3197,7 @@ focus = {
             core_utah = yes
             core_idaho = yes
             core_montana = yes
-            hidden_effect = {
-            add_state_core = 303
-            add_state_core = 302
-            add_state_core = 86
-            add_state_core = 304
-            }
+            set_cosmetic_tag = SCO_rocky_union
         }
     }
     focus = {
@@ -2930,7 +3403,14 @@ focus = {
         available_if_capitulated = no
         search_filters = {    }
         completion_reward = {
-			
+		air_experience = 40
+		
+		add_equipment_to_stockpile = { 
+					type = small_plane_cas_airframe
+					amount = 100
+					producer = SCO
+					
+				}
         }
     }
     focus = {
@@ -3006,7 +3486,18 @@ focus = {
 		threat = 4
 		name = SCO_colorado_civil_war_tt
 		}
-          
+            
+
+            
+        start_civil_war = {
+		ideology = neutrality
+		capital = 318
+		states = { 
+		318 317 316 
+		}
+		keep_all_characters = yes
+		}
+            
         }
     }
     focus = {
@@ -3063,7 +3554,14 @@ focus = {
         available_if_capitulated = no
         search_filters = {    }
         completion_reward = {
-			
+		air_experience = 40
+		
+		add_equipment_to_stockpile = { 
+					type = small_plane_cas_airframe
+					amount = 100
+					producer = SCO
+					
+				}	
 			
                 
         }
@@ -3123,13 +3621,16 @@ focus = {
         x = 0
         y = 1
         relative_position_id = SCO_Organizing_Our_Munition_Production
-        cost = 5
+        cost = 2.6
         ai_will_do = {
-            factor = 25
+            factor = 125
         }
         available_if_capitulated = no
         search_filters = {    }
         completion_reward = {
+            completion_reward = {
+                add_offsite_building = { type = arms_factory level = 1 }
+            }
             add_ideas = SCO_The_Peoples_Rifles_idea
         }
     }

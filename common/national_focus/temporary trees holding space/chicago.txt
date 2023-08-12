@@ -1,0 +1,1895 @@
+focus_tree = {
+    id = CHI_chicago_tree #This is the id of the focus tree, this is mostly unimportant unless you want other countries to switch to this focus tree mid-game
+    country = { #This basically makes it so that only Washington gets this tree, as every other country has a factor of 0 with it. 
+        factor = 0
+        modifier = {
+            add = 10 #Gives Washington a total factor of 10 to receive this focus tree, which is a higher factor than any focus tree, so they receive only this one
+            tag = CHI #The tag of Washington
+        }
+    }
+    continuous_focus_position = { x = 50 y = 2000 } #Determines the location of the Continuous Focus Window. If you find that it gets in the way of your normal focuses, move it here.
+#FOCUS_FILTER_STABILITY     #These are all "search_filters = { }" they help the player search for focuses in your focus tree.
+#FOCUS_FILTER_INDUSTRY
+#FOCUS_FILTER_ANNEXATION
+#FOCUS_FILTER_MANPOWER
+#FOCUS_FILTER_POLITICAL
+#FOCUS_FILTER_RESEARCH
+#FOCUS_FILTER_WAR_SUPPORT
+#################################################
+#############  Dummy Example Focus  #############
+#################################################
+
+#    focus = {                                                          ###This denotes the very beginning of the focus
+#        id = SSW_dummy_focus                                           ###This is the id of the focus, it is used often when giving the focuses localization and when relating it to other focuses
+#        icon = GFX_Goal_Unknown                                                    ###This is the icon of the focus, it's what it looks like in-game. When it has an icon it'll look something like: "GFX_focus_mex_jefe_maximo"
+#        prerequisite = { focus = SSW_1936_Elections_prerequisite }        ###This command tells the game which FOCUSES must be completed before this can can be completed, it also draws the blue lines between focuses
+#        mutually_exclusive = { focus = SSW_1936_Elections_exclusive }     ###THis command tells the game that if this focus is complete the stated focus can no longer be completed, must be stated in the other focus
+#        available = {                                                  ###This command tells the game what conditions should be met before the focus can be completed
+#            has_war = yes                                              ###Washington must be at war to complete this focus
+#        }                                                              
+#        bypass = {                                                     ###This command tells the game what things, when true, bypass the focus. This skips the focus entirely without completing it
+#            has_war = no                                               ###If Washington is NOT at war, this focus will be bypassed
+#        }                                                              
+#        x = 2                                                        ###The x position of the focus in-game. Each focus is 2 x wide, so a neighboring focus should be no closer than x = 8 and x = 12
+#        y = 1                                                          ###The y position of the focus in-game. each focus is only 1 y tall, so a neighboring focus should be no closer than y = 0 and y = 2
+#        #relative_position_id = SSW_1936_Elections_position                      ###The relative position of the focus. If SSW_dummy_position was at x = 20 and y = 5, then SSW_dummy_focus would be actually at x = 30 and y = 6
+#        cost = 10                                                      ###How LONG a focus takes to complete. A cost of 10 is 70 days. Each 1 cost is 7 days in total.
+#        ai_will_do = {                                                 ###Denotes how likely the ai will pick this focus.
+#            factor = 1                                                 ###With a factor of 1 the ai would pick this focus less often than another focus with a factor of 2 or higher.
+#            modifier = {                                               ###modifies the chance an ai will pick this focus
+#                factor = 2                                             ###A factor of 2 doubles the chance this focus is picked, when in a modifier "factor" is a multiplier and "add" merely adds the two chances
+#                has_war = yes                                          ###Modifier triggers and applies when Washington has a war
+#            }
+#        }                                                              
+#        available_if_capitulated = yes                                 ###Tells the game if the focus can be completed if the country is capitulated from war
+#        search_filters = { FOCUS_FILTER_POLITICAL }  ###The search filter of the focus, there can be multiple of them, or just 1, or even 0.
+#
+#        completion_reward = {                                          ###The completion_reward of the focus. When a focus is completed these commands fire.
+#           add_political_power = 50                                        ###Adds 10,000 manpower to Washington when completed
+#                                               ###Gives Washington 50 Political Power when completed
+#        }
+#    } 
+
+	###The end of the focus, always check your brackets###
+	focus = {
+		id = CHI_stairway_to_hell
+		icon = GFX_Goal_Unknown
+		x = 60
+		y = 0
+		cost = 1
+		available_if_capitulated = yes
+		mutually_exclusive = {focus = CHI_distribute_arms_to_proletarians}
+		available = {
+		has_government = fascism
+        }
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 4000
+				producer = CHI
+			}
+		}
+	}
+	focus = {
+		id = CHI_oppositionists_seize_power
+		icon = GFX_Goal_Unknown
+		x = -40
+		y = 0
+		cost = 1
+		available_if_capitulated = yes
+		mutually_exclusive = {focus = CHI_distribute_arms_to_proletarians}
+		mutually_exclusive = {focus = CHI_stairway_to_hell}
+		available = {
+		always = no
+        }
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		
+		
+		}
+	}
+	focus = {
+		id = CHI_distribute_arms_to_proletarians
+		icon = GFX_Goal_Unknown
+		x = 20
+		y = 0
+		cost = 1
+		available_if_capitulated = yes
+		mutually_exclusive = {focus = CHI_stairway_to_hell}
+		available = {
+		has_government = communism
+        }
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 4000
+				producer = CHI
+			}
+		
+		}
+	}
+	focus = {
+		id = CHI_hold_the_fort
+		icon = GFX_Goal_Unknown
+		x = 0
+		y = 1
+		cost = 2
+		relative_position_id = CHI_distribute_arms_to_proletarians
+		available_if_capitulated = yes
+		available = {
+
+        }
+		prerequisite = {focus = CHI_distribute_arms_to_proletarians }
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		692 = {
+			add_building_construction = {
+			type = bunker
+			level = 2
+			instant_build = yes
+			province = 7827
+			}
+			add_building_construction = {
+				type = bunker
+				level = 2
+				instant_build = yes
+				province = 2283
+			}
+			add_building_construction = {
+				type = bunker
+				level = 2
+				instant_build = yes
+				province = 3915
+			}	
+		}
+		}
+	}
+	focus = {
+		id = CHI_war_communism
+		icon = GFX_Goal_Unknown
+		x = 0
+		y = 2
+		cost = 2
+		relative_position_id = CHI_distribute_arms_to_proletarians
+		available_if_capitulated = yes
+		available = {
+		
+        }
+		prerequisite = {focus = CHI_hold_the_fort }
+		
+		
+		ai_will_do = {
+			factor = 3000
+		}
+		completion_reward = {
+		add_ideas = CHI_war_communism_idea
+		add_ideas = tot_economic_mobilisation
+		}
+	}
+	focus = {
+		id = CHI_victory_day
+		icon = GFX_Goal_Unknown
+		x = 0
+		y = 3
+		cost = 1
+		relative_position_id = CHI_distribute_arms_to_proletarians
+		available_if_capitulated = yes
+		available = {
+		controls_state = 725
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			#turn back into SIL w/cosmetic tag
+			hidden_effect = {
+				add_ideas = CHI_bloc_of_opposition
+				add_ideas = CHI_reactionary_opposition
+			}
+
+		}
+	}
+	focus = {
+		id = CHI_revolutionary_tribunals
+		icon = GFX_Goal_Unknown
+		x = 0
+		y = 2
+		cost = 5
+		relative_position_id = CHI_victory_day
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_victory_day}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		add_political_power = 100
+
+		}
+	}
+	focus = {
+		id = CHI_empower_the_TUUL
+		icon = GFX_Goal_Unknown
+		x = 0
+		y = 1
+		cost = 7.2
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_revolutionary_tribunals}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		add_ideas = CHI_TUUL_one
+		add_popularity = {
+			ideology = communism
+			popularity = 0.1
+		}
+
+		}
+	}
+	focus = {
+		id = CHI_autoworker_unions
+		icon = GFX_Goal_Unknown
+		x = -1
+		y = 2
+		cost = 5
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		mutually_exclusive = {focus = CHI_rail_unions}
+		prerequisite = {focus = CHI_empower_the_TUUL}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		add_political_power = 100
+
+		}
+	}
+	focus = {
+		id = CHI_rail_unions
+		icon = GFX_Goal_Unknown
+		x = 1
+		y = 2
+		cost = 5
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		mutually_exclusive = {focus = CHI_autoworker_unions}
+		prerequisite = {focus = CHI_empower_the_TUUL}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		
+
+		}
+	}
+	focus = {
+		id = CHI_steel_worker_unions
+		icon = GFX_Goal_Unknown
+		x = -1
+		y = 3
+		cost = 7.2
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		
+		prerequisite = {focus = CHI_autoworker_unions focus = CHI_rail_unions }
+		
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		#chicago state modifier
+
+		}
+	}
+	focus = {
+		id = CHI_manufacturer_unions
+		icon = GFX_Goal_Unknown
+		x = 1
+		y = 3
+		cost = 7.2
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		
+		prerequisite = {focus = CHI_autoworker_unions focus = CHI_rail_unions }
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		#chicago state modifier
+
+		}
+	}
+	focus = {
+		id = CHI_cities_for_the_proletariat
+		icon = GFX_Goal_Unknown
+		x = 0
+		y = 4
+		cost = 7.2
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		
+		prerequisite = {focus = CHI_manufacturer_unions }
+		prerequisite = {focus = CHI_steel_worker_unions}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		#chicago state modifier
+
+		}
+	}
+	focus = {
+		id = CHI_proletarian_internationalism
+		icon = GFX_Goal_Unknown
+		x = -10
+		y = 1
+		cost = 5
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_revolutionary_tribunals}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		#decisions to invade
+		add_political_power = 100
+		}
+	}
+	focus = {
+		id = CHI_support_the_black_belt
+		icon = GFX_Goal_Unknown
+		x = -0
+		y = 1
+		cost = 5
+		relative_position_id = CHI_proletarian_internationalism
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_proletarian_internationalism}
+		available = {
+		date > 1937.09.01
+		OR = {
+		country_exists = DOU
+		country_exists = TDW
+		country_exists = FNS
+		}
+        }
+		bypass = {
+		NOT = {
+		country_exists = DOU
+		country_exists = TDW
+		country_exists = FNS
+		}	
+		}
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		
+		}
+	}
+	focus = {
+		id = CHI_great_lakes_socialist_republic
+		icon = GFX_Goal_Unknown
+		x = -0
+		y = 2
+		cost = 5
+		relative_position_id = CHI_proletarian_internationalism
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_support_the_black_belt}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		#cosmetic tag
+		}
+	}
+	focus = {
+		id = CHI_red_volunteers
+		icon = GFX_Goal_Unknown
+		x = 2
+		y = 1
+		cost = 5
+		relative_position_id = CHI_proletarian_internationalism
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_proletarian_internationalism}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		add_ideas = CHI_red_volunteers_idea
+		}
+	}
+	focus = {
+		id = CHI_proletarian_league
+		icon = GFX_Goal_Unknown
+		x = -2
+		y = 1
+		cost = 5
+		relative_position_id = CHI_proletarian_internationalism
+		available_if_capitulated = yes
+		mutually_exclusive = {focus = CHI_join_our_brothers}
+		prerequisite = {focus = CHI_proletarian_internationalism}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		
+		}
+	}
+	focus = {
+		id = CHI_join_our_brothers
+		icon = GFX_Goal_Unknown
+		x = -4
+		y = 1
+		cost = 5
+		relative_position_id = CHI_proletarian_internationalism
+		available_if_capitulated = yes
+		mutually_exclusive = {focus = CHI_proletarian_league}
+		prerequisite = {focus = CHI_proletarian_internationalism}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		
+		}
+	}
+	focus = {
+		id = CHI_worker_democracy
+		icon = GFX_Goal_Unknown
+		x = -5
+		y = 1
+		cost = 5
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_revolutionary_tribunals}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		add_political_power = 100
+
+		}
+	}
+	focus = {
+		id = CHI_power_to_the_toilers
+		icon = GFX_Goal_Unknown
+		x = -4
+		y = 2
+		cost = 5
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_worker_democracy}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		add_political_power = 100
+
+		}
+	}
+	focus = {
+		id = CHI_honor_haymarket_martyrs
+		icon = GFX_Goal_Unknown
+		x = -5
+		y = 3
+		cost = 5
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_power_to_the_toilers}
+		prerequisite = {focus = CHI_democratic_centralism}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		
+
+		}
+	}
+	focus = {
+		id = CHI_unshackle_the_youth
+		icon = GFX_Goal_Unknown
+		x = -5
+		y = 4
+		cost = 10
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_honor_haymarket_martyrs}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		add_research_slot = 1
+
+		}
+	}
+	focus = {
+		id = CHI_democratic_centralism
+		icon = GFX_Goal_Unknown
+		x = -6
+		y = 2
+		cost = 5
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_worker_democracy}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		
+		}
+	}
+	focus = {
+		id = CHI_new_socialist_man
+		icon = GFX_Goal_Unknown
+		x = 5
+		y = 1
+		cost = 5
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_revolutionary_tribunals}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		add_war_support = 0.05
+		add_stability = 0.05
+
+		}
+	}
+	focus = {
+		id = CHI_end_redlining
+		icon = GFX_Goal_Unknown
+		x = 6
+		y = 2
+		cost = 5
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_new_socialist_man}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		add_war_support = 0.05
+
+		}
+	}
+	focus = {
+		id = CHI_develop_black_communities
+		icon = GFX_Goal_Unknown
+		x = 4
+		y = 2
+		cost = 5
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_new_socialist_man}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		
+		
+
+		}
+	}
+	focus = {
+		id = CHI_unemployment_relief
+		icon = GFX_Goal_Unknown
+		x = 3
+		y = 4
+		cost = 5
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_women_participation_in_workforce}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		
+
+		}
+	}
+	focus = {
+		id = CHI_forced_labor
+		icon = GFX_Goal_Unknown
+		x = 5
+		y = 4
+		cost = 5
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_women_participation_in_workforce}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		
+		}
+	}
+	focus = {
+		id = CHI_crush_the_mob
+		icon = GFX_Goal_Unknown
+		x = 5
+		y = 5
+		cost = 7.2
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_forced_labor}
+		prerequisite = {focus = CHI_unemployment_relief}
+		prerequisite = {focus = CHI_end_prohibition}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		
+		}
+	}
+	focus = {
+		id = CHI_attack_ultra_leftists
+		icon = GFX_Goal_Unknown
+		x = 4
+		y = 6
+		cost = 7.2
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_crush_the_mob}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		
+		}
+	}
+	focus = {
+		id = CHI_crush_the_rightists
+		icon = GFX_Goal_Unknown
+		x = 6
+		y = 6
+		cost = 7.2
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_crush_the_mob}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		
+		}
+	}
+	focus = {
+		id = CHI_chicago_trials
+		icon = GFX_Goal_Unknown
+		x = 5
+		y = 7
+		cost = 7.2
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_crush_the_rightists}
+		prerequisite = {focus = CHI_attack_ultra_leftists}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		
+		}
+	}
+	focus = {
+		id = CHI_end_prohibition
+		icon = GFX_Goal_Unknown
+		x = 7
+		y = 4
+		cost = 5
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_women_participation_in_workforce}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		
+		}
+	}
+	focus = {
+		id = CHI_women_participation_in_workforce
+		icon = GFX_Goal_Unknown
+		x = 5
+		y = 3
+		cost = 5
+		relative_position_id = CHI_revolutionary_tribunals
+		available_if_capitulated = yes
+		
+		prerequisite = {focus = CHI_develop_black_communities}
+		prerequisite = {focus = CHI_end_redlining}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		
+		}
+	}
+	focus = {
+		id = CHI_workers_n_peasants_red_army
+		icon = GFX_Goal_Unknown
+		x = -35
+		y = 2
+		cost = 4
+		relative_position_id = CHI_victory_day
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_victory_day}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		add_command_power = 150
+		army_experience = 10
+		}
+	}
+	focus = {
+		id = CHI_army_equality
+		icon = GFX_Goal_Unknown
+		x = 0
+		y = 2
+		cost = 5
+		relative_position_id = CHI_workers_n_peasants_red_army
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_workers_n_peasants_red_army}
+		
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		
+		}
+	}
+	focus = {
+		id = CHI_urban_warfare_experts
+		icon = GFX_Goal_Unknown
+		x = 0
+		y = 3
+		cost = 5
+		relative_position_id = CHI_workers_n_peasants_red_army
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_army_equality}
+		
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		#urban warfare tech
+		}
+	}
+	focus = {
+		id = CHI_underground_armories
+		icon = GFX_Goal_Unknown
+		x = 0
+		y = 4
+		cost = 10
+		relative_position_id = CHI_workers_n_peasants_red_army
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_urban_warfare_experts}
+		
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		add_offsite_building = { type = arms_factory level = 3 }
+		}
+	}
+	focus = {
+		id = CHI_supremacy_of_the_riflemen
+		icon = GFX_Goal_Unknown
+		x = -5
+		y = 1
+		cost = 5
+		relative_position_id = CHI_workers_n_peasants_red_army
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_workers_n_peasants_red_army}
+		mutually_exclusive = {focus = CHI_deep_battle}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = mass_assault_cat
+				cost_reduction = 0.5
+				uses = 2
+				category = cat_mass_assault
+			}
+		}
+	}
+	focus = {
+		id = CHI_rifle_research
+		icon = GFX_Goal_Unknown
+		x = 0
+		y = 1
+		cost = 5
+		relative_position_id = CHI_supremacy_of_the_riflemen
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_supremacy_of_the_riflemen}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 2
+				category = infantry_weapons
+				category = artillery
+			}
+		}
+	}
+	focus = {
+		id = CHI_rifle_grenade_development
+		icon = GFX_Goal_Unknown
+		x = 2
+		y = 1
+		cost = 5
+		relative_position_id = CHI_supremacy_of_the_riflemen
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_supremacy_of_the_riflemen}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		#mass produce type writers
+		#commissars for morale
+		#idea for inf attack
+		#red riflemen reference somewhere
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 1
+				category = infantry_weapons
+				category = artillery
+			}
+		}
+	}
+	focus = {
+		id = CHI_artillery_research
+		icon = GFX_Goal_Unknown
+		x = -2
+		y = 1
+		cost = 5
+		relative_position_id = CHI_supremacy_of_the_riflemen
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_supremacy_of_the_riflemen}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			army_experience = 5
+			add_tech_bonus = {
+				name = FRA_artillery_focus
+				bonus = 1.0
+				uses = 2
+				category = artillery
+			}
+		}
+	}
+
+	focus = {
+		id = CHI_deep_battle
+		icon = GFX_Goal_Unknown
+		x = 5
+		y = 1
+		cost = 5
+		relative_position_id = CHI_workers_n_peasants_red_army
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_workers_n_peasants_red_army}
+		mutually_exclusive = {focus = CHI_supremacy_of_the_riflemen}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			army_experience = 30
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 2
+				category = cat_mobile_warfare
+			}
+		}
+	}
+	focus = {
+		id = CHI_red_aid_recovery
+		icon = GFX_Goal_Unknown
+		x = 12
+		y = 2
+		cost = 3
+		relative_position_id = CHI_victory_day
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_victory_day}
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		add_timed_idea = { idea = SSW_recovery_effort  days = 100 }
+		}
+	}
+	focus = {
+		id = CHI_nationalize_caterpillar
+		icon = GFX_Goal_Unknown
+		x = -1
+		y = 1
+		cost = 5
+		relative_position_id = CHI_red_aid_recovery
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_red_aid_recovery }
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		725 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+		727 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+		}
+	}
+	focus = {
+		id = CHI_mechanize_agriculture
+		icon = GFX_Goal_Unknown
+		x = -1
+		y = 2
+		cost = 7.2
+		relative_position_id = CHI_red_aid_recovery
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_nationalize_caterpillar }
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		add_ideas = CHI_mechanization_of_agriculture
+		}
+	}
+	focus = {
+		id = CHI_collectivize_agriculture
+		icon = GFX_Goal_Unknown
+		x = 0
+		y = 3
+		cost = 7.2
+		relative_position_id = CHI_red_aid_recovery
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_mechanize_agriculture }
+		prerequisite = {focus = CHI_aluminium_plants }
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		add_stability = -0.05
+		 custom_effect_tooltip = SIL_little_egypt_tt
+			swap_ideas = {
+				remove_idea = CHI_mechanization_of_agriculture
+				add_idea = CHI_collective_farms
+				}
+		}
+	}
+	focus = {
+		id = CHI_5_year_plan
+		icon = GFX_Goal_Unknown
+		x = 0
+		y = 4
+		cost = 7.2
+		relative_position_id = CHI_red_aid_recovery
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_collectivize_agriculture }
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+					limit = {
+						free_building_slots = {
+							building = arms_factory
+							size > 1
+						}
+						OR = {
+							is_in_home_area = yes
+							NOT = {
+								owner = {
+									any_owned_state = {
+										free_building_slots = {
+											building = arms_factory
+											size < 1
+										}
+										is_in_home_area = yes
+									}
+								}
+							}
+						}
+					}
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}
+				}
+				random_owned_controlled_state = {
+					add_extra_state_shared_building_slots = 1
+						limit = {
+							free_building_slots = {
+								building = arms_factory
+								size > 1
+							}
+							OR = {
+								is_in_home_area = yes
+								NOT = {
+									owner = {
+										any_owned_state = {
+											free_building_slots = {
+												building = arms_factory
+												size < 1
+											}
+											is_in_home_area = yes
+										}
+									}
+								}
+							}
+						}
+						add_building_construction = {
+							type = arms_factory
+							level = 1
+							instant_build = yes
+						}
+					}		
+		}
+	}
+	focus = {
+		id = CHI_mobilize_railworkers
+		icon = GFX_Goal_Unknown
+		x = 2
+		y = 5
+		cost = 7.2
+		relative_position_id = CHI_red_aid_recovery
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_5_year_plan }
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		41 = {
+			add_building_construction = {
+				type = infrastructure
+				level = 1
+				instant_build = yes
+			}	
+		}
+		730 = {
+			add_building_construction = {
+				type = infrastructure
+				level = 1
+				instant_build = yes
+			}	
+		}
+		380 = {
+			add_building_construction = {
+				type = infrastructure
+				level = 2
+				instant_build = yes
+			}	
+		}
+		725 = {
+			add_building_construction = {
+				type = infrastructure
+				level = 1
+				instant_build = yes
+			}	
+		}
+		729 = {
+			add_building_construction = {
+				type = infrastructure
+				level = 1
+				instant_build = yes
+			}	
+		}
+		727 = {
+			add_building_construction = {
+				type = infrastructure
+				level = 2
+				instant_build = yes
+			}	
+		}
+		}
+	}
+	focus = {
+		id = CHI_central_planning
+		icon = GFX_Goal_Unknown
+		x = 0
+		y = 5
+		cost = 7.2
+		relative_position_id = CHI_red_aid_recovery
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_5_year_plan }
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		add_ideas = CHI_central_planning_idea
+		}
+	}
+	focus = {
+		id = CHI_arms_factories
+		icon = GFX_Goal_Unknown
+		x = 0
+		y = 6
+		cost = 7.2
+		relative_position_id = CHI_red_aid_recovery
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_central_planning }
+		available = {
+		controls_state = 41
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			41 = {
+				set_state_category = metropolis
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+				}
+		}
+	}
+	focus = {
+		id = CHI_planned_economy
+		icon = GFX_Goal_Unknown
+		x = 0
+		y = 7
+		cost = 7.2
+		relative_position_id = CHI_red_aid_recovery
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_arms_factories }
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = CHI_central_planning_idea
+				add_idea = CHI_planned_eco
+			}
+		}
+	}
+	focus = {
+		id = CHI_great_lakes_shipping
+		icon = GFX_Goal_Unknown
+		x = -2
+		y = 5
+		cost = 7.2
+		relative_position_id = CHI_red_aid_recovery
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_5_year_plan }
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		navy_experience = 10
+		692 = {
+		add_extra_state_shared_building_slots = 3
+		add_building_construction = {
+			type = dockyard
+			level = 3
+			instant_build = yes
+		}	
+		}
+		}
+	}
+	focus = {
+		id = CHI_further_industrialization
+		icon = GFX_Goal_Unknown
+		x = -2
+		y = 6
+		cost = 7.2
+		relative_position_id = CHI_red_aid_recovery
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_great_lakes_shipping }
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			725 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}	
+			set_state_category = large_city	
+			}
+			692 = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}	
+			}
+		}
+	}
+	focus = {
+		id = CHI_metallurgical_plants
+		icon = GFX_Goal_Unknown
+		x = -2
+		y = 7
+		cost = 7.2
+		relative_position_id = CHI_red_aid_recovery
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_further_industrialization }
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		692 = {
+		add_extra_state_shared_building_slots = 2
+		add_resource = {
+			type = steel
+			amount = 42
+		}
+		add_resource = {
+			type = tungsten
+			amount = 12
+		}
+		}
+		}
+	}
+	focus = {
+		id = CHI_second_3_year_plan
+		icon = GFX_Goal_Unknown
+		x = 0
+		y = 8
+		cost = 11.5
+		relative_position_id = CHI_red_aid_recovery
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_planned_economy }
+		prerequisite = {focus = CHI_metallurgical_plants }
+		prerequisite = {focus = CHI_heavy_industry }
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		custom_effect_tooltip = CHI_5_year_plan_tt
+		every_owned_state = {
+		limit = {
+		infrastructure > 3
+		}
+		add_extra_state_shared_building_slots = 1
+					add_building_construction = {
+						type = arms_factory
+						level = 1
+						instant_build = yes
+					}	
+		}									
+		}
+	}
+	focus = {
+		id = CHI_technical_expertise
+		icon = GFX_Goal_Unknown
+		x = 2
+		y = 6
+		cost = 7.2
+		relative_position_id = CHI_red_aid_recovery
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_mobilize_railworkers }
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				category = industry
+				uses = 3
+				bonus = 1.5
+			}
+		}
+	}
+	focus = {
+		id = CHI_heavy_industry
+		icon = GFX_Goal_Unknown
+		x = 2
+		y = 7
+		cost = 7.2
+		relative_position_id = CHI_red_aid_recovery
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_technical_expertise }
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		730 = {
+		add_extra_state_shared_building_slots = 2
+		set_state_category = large_city
+		add_building_construction = {
+			type = industrial_complex
+			level = 2
+			instant_build = yes
+		}
+		}
+		725 = {
+		add_extra_state_shared_building_slots = 1
+		add_building_construction = {
+			type = arms_factory
+			level = 1
+			instant_build = yes
+		}
+		}
+		}
+	}
+	focus = {
+		id = CHI_nationalize_walgreens
+		icon = GFX_Goal_Unknown
+		x = 1
+		y = 1
+		cost = 7.2
+		relative_position_id = CHI_red_aid_recovery
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_red_aid_recovery }
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		41 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+		730 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = industrial_complex
+				level = 1
+				instant_build = yes
+			}
+		}
+		}
+	}
+	focus = {
+		id = CHI_aluminium_plants
+		icon = GFX_Goal_Unknown
+		x = 1
+		y = 2
+		cost = 5
+		relative_position_id = CHI_red_aid_recovery
+		available_if_capitulated = yes
+		prerequisite = {focus = CHI_nationalize_walgreens }
+		available = {
+		
+		
+        }
+		
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		692 = {
+			add_extra_state_shared_building_slots = 1
+			add_resource = {
+				type = aluminium
+				amount = 32
+			}
+		}
+		}
+	}
+	focus = {
+		id = CHI_lake_michigan_supply_shipments
+		icon = GFX_Goal_Unknown
+		x = -2
+		y = 1
+		cost = 3
+		relative_position_id = CHI_distribute_arms_to_proletarians
+		available_if_capitulated = yes
+		available = {
+
+        }
+		prerequisite = {focus = CHI_distribute_arms_to_proletarians }
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		#red aid support	
+			692 = {			
+				add_building_construction = {
+					 type = naval_base
+					level = 3
+					instant_build = yes
+					province = 2283
+						}			
+					}
+					add_equipment_to_stockpile = {
+						type = support_equipment
+						amount = 800
+						producer = SWI
+					}
+					add_equipment_to_stockpile = {
+						type = convoy
+						amount = 20
+						producer = SWI
+					}
+					add_equipment_to_stockpile = {
+						type = train_equipment
+						amount = 10
+						producer = SWI
+					}			
+		}
+	}
+	focus = {
+		id = CHI_international_brigades
+		icon = GFX_Goal_Unknown
+		x = -2
+		y = 2
+		cost = 3
+		relative_position_id = CHI_distribute_arms_to_proletarians
+		available_if_capitulated = yes
+		available = {
+
+        }
+		prerequisite = {focus = CHI_lake_michigan_supply_shipments }
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+		#2 divs			
+		}
+	}
+	focus = {
+		id = CHI_slaughterhouse_logistics
+		icon = GFX_Goal_Unknown
+		x = 2
+		y = 1
+		cost = 5
+		relative_position_id = CHI_distribute_arms_to_proletarians
+		available_if_capitulated = yes
+		available = {
+
+        }
+		prerequisite = {focus = CHI_distribute_arms_to_proletarians }
+		
+		
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+	add_timed_idea = { idea = CHI_slaughter_house_idea  days = 500 }
+		}
+	}
+	focus = {
+		id = CHI_steel_worker_red_guards
+		icon = GFX_Goal_Unknown
+		x = 2
+		y = 2
+		cost = 4
+		relative_position_id = CHI_distribute_arms_to_proletarians
+		available_if_capitulated = yes
+		available = {
+
+        }
+		prerequisite = {focus = CHI_slaughterhouse_logistics }
+		
+		
+		ai_will_do = {
+			factor = 1000
+		}
+		completion_reward = {
+		#spawn troops
+		}
+	}
+	
+	
+	
+
+	
+} #hi aiden
