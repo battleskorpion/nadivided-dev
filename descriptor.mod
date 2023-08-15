@@ -12,7 +12,7 @@ tags = {
 		"Graphics"
 		"Technologies"
 		}
-remote_file_id = "2780506619"`
+remote_file_id = "2780506619"
 replace_path = "common/abilities"
 replace_path = "common/achievements.txt"
 replace_path = "common/ai_equipment"
