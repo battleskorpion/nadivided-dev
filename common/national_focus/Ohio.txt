@@ -1552,7 +1552,7 @@ continuous_focus_position = { x = 200 y = 1400 }
 	focus = {
 		id = SOH_take_out_the_gang
 		icon = GFX_focus_generic_opression_of_opposition
-		cost = x
+		cost = 5
 		x = 20
 		y = 0
 		cost = 10
@@ -3902,29 +3902,32 @@ continuous_focus_position = { x = 200 y = 1400 }
 				SOH_military_readiness_variable = 2
 			}
 			add_ideas = SOH_defence_plan
-			39 = {
-				LIMIT = {
+			if = {
+				limit = {
 					has_full_control_of_state = 39
 				}
-				add_building_construction = {
-					type = bunker
-					level = 1
-					province = 2310
-				}
-				add_building_construction = {
-					type = bunker
-					level = 1
-					province = 7609
-				}
-				add_building_construction = {
-					type = bunker
-					level = 1
-					province = 3991
-				}
-				add_building_construction = {
-					type = bunker
-					level = 1
-					province = 3494
+				39 = {
+				
+					add_building_construction = {
+						type = bunker
+						level = 1
+						province = 2310
+					}
+					add_building_construction = {
+						type = bunker
+						level = 1
+						province = 7609
+					}
+					add_building_construction = {
+						type = bunker
+						level = 1
+						province = 3991
+					}
+					add_building_construction = {
+						type = bunker
+						level = 1
+						province = 3494
+					}
 				}
 			}
 			####GIVES PROPAGANDA CAMPAIGN FOR DEFENSE ON CORE AND FORT BUILDING SPEED
@@ -5784,7 +5787,10 @@ continuous_focus_position = { x = 200 y = 1400 }
 		prerequisite = {
 			focus = SOH_stay_with_Alfred_Wagenknecht
 		}
-		completion_reward = { }
+		completion_reward = { 
+			custom_effect_tooltip = SOH_control_over_the_south_tt
+			set_country_flag = SOH_control_over_the_south_flag
+		}
 	}
 
 	focus = {
@@ -5803,8 +5809,1223 @@ continuous_focus_position = { x = 200 y = 1400 }
 			focus = SOH_get_the_farmers_on_our_side
 			focus = SOH_assemble_the_workers_militas
 		}
-		completion_reward = { }
+		completion_reward = { 
+			custom_effect_tooltip = SOH_ignite_the_sparks_tt 
+			if = {
+				limit = {
+					ROOT = {
+						has_country_flag = assembled_workers_militas_flag
+					}
+				}
+				custom_effect_tooltip = SOH_workers_milita_tt
+				hidden_effect = {
+					load_oob = SOH_worker_divisions
+				}
+			}
+
+			if = { ## easier one
+				limit = { 
+					ROOT = {
+						has_country_flag = SOH_control_over_the_south_flag
+					}
+				}
+				start_civil_war = {
+					ideology = neutrality
+					army_ratio = 0.3
+					navy_ratio = 0.0
+					ruling_party = communism
+					states = {
+						540 698 697 705 704 701 703 364 39 98 99 707 706 702
+					}
+				}
+			}
+
+			if = { ## harder civil war
+				limit = {
+					NOT = {
+						has_country_flag = SOH_control_over_the_south_flag
+					}
+				}
+
+				start_civil_war = {
+					ideology = neutrality
+					army_ratio = 0.4
+					navy_ratio = 0.0
+					ruling_party = communism
+					states = {
+						540 698 697 705 704 701 703 364 39 98 99 707 706 702 536 700 539 699 537
+					}
+				}
+			}
+
+
+		}
 	}
+
+
+	focus = {
+		id = SOH_the_revolution_triumphant
+		icon = GFX 
+		cost = 10
+		x = 0
+		y = 2
+		relative_position_id = SOH_ignite_the_sparks
+		prerequisite = {
+			focus = SOH_ignite_the_sparks
+		}
+		available = {
+			has_civil_war = no
+			has_war = no 
+			has_government = communism
+		} 
+		completion_reward = { 
+			if = {
+				limit = {
+					has_idea = SOH_revolutionary_spirt
+				}
+				swap_ideas = {
+					remove_idea = SOH_revolutionary_spirt
+					add_idea = SOH_revolution_triumphant
+				}
+			}
+
+			if = {
+				limit = {
+					has_idea = SOH_revolutionary_spirt_farmers
+				}
+				swap_ideas = {
+					remove_idea = SOH_revolutionary_spirt_farmers
+					add_idea = SOH_revolution_triumphant_farmers
+				}
+			}
+
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_flag = SOH_sided_with_unions_flag
+					}
+					swap_ideas = {
+						remove_idea = SOH_union_backed_revolution_idea
+						add_idea = SOH_union_backed_revolution_demands_idea
+					}
+				}
+
+				if = {
+					limit = {
+						has_country_flag = SOH_sided_with_the_farmers_flag
+					}
+					add_timed_idea = {
+						idea = SOH_farmers_demands_idea
+						days = 365
+					}
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_recovery_from_the_civil_war
+		icon = GFX 
+		cost = 10 
+		x = -1 
+		y = 1
+		relative_position_id = SOH_the_revolution_triumphant
+		prerequisite = {
+			focus = SOH_the_revolution_triumphant
+		}
+		completion_reward = { 
+			add_timed_idea = {
+				idea = SOH_civil_war_recovery_idea
+				days = 322
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_rebuild_columbus
+		icon = GFX 
+		cost = 10
+		x = -1
+		y = 1
+		available = {
+			has_idea = SOH_civil_war_recovery_idea
+		}
+		bypass = {
+			not = {
+				has_idea = SOH_civil_war_recovery_idea
+			}
+		}
+		relative_position_id = SOH_recovery_from_the_civil_war
+		prerequisite = {
+			focus = SOH_recovery_from_the_civil_war
+		}
+		completion_reward = { 
+			697 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+
+			697 = {
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+			if = { # just a check to be sure who knows what weird stuff could happen
+				limit = {
+					697 = {
+						is_capital = no
+					}
+				}
+				set_capital = {
+					state = 697
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_refortify_toledo
+		icon = GFX 
+		cost = 10
+		x = 1
+		y = 1
+		available = {
+			has_idea = SOH_civil_war_recovery_idea
+		}
+		bypass = {
+			not = {
+				has_idea = SOH_civil_war_recovery_idea
+			}
+		}
+		relative_position_id = SOH_recovery_from_the_civil_war
+		prerequisite = {
+			focus = SOH_recovery_from_the_civil_war
+		}
+		completion_reward = { 
+			39 = {
+				add_building_construction = {
+					type = bunker
+					level = 3
+					province = 2310
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+
+			39 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_the_1st_5_year_plan
+		icon = GFX 
+		cost = 10
+		x = -1
+		y = 1
+		available = {
+			not = {
+				has_idea = SOH_civil_war_recovery_idea
+			}
+		}
+		relative_position_id = SOH_refortify_toledo
+		prerequisite = {
+			focus = SOH_refortify_toledo
+			focus = SOH_rebuild_columbus
+		}
+		completion_reward = { 
+			add_ideas = SOH_1st_5_year_plan_idea
+			hidden_effect = {
+				add_timed_idea = {
+					idea = SOH_hidden_5_year_plan_idea
+					days = 1825
+				}
+			} 
+		}
+	}
+
+	focus = {
+		id = SOH_great_lakes_dockyards 
+		icon = GFX
+		cost = 10
+		x = 2
+		y = 1
+		
+		relative_position_id = SOH_the_1st_5_year_plan
+		prerequisite = {
+			focus = SOH_the_1st_5_year_plan
+		}
+		completion_reward = { 
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = SOH_the_1st_5_year_plan
+					}
+				}
+				custom_effect_tooltip = SOH_effect_visible_when_you_have_5_year_plan
+			}
+			SOH_1st_plan_naval_tickup = yes
+			random_owned_controlled_state = {
+				limit = {
+					is_coastal = yes
+				}
+				add_building_construction = {
+					type = dockyard
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+
+			random_owned_controlled_state = {
+				limit = {
+					is_coastal = yes
+				}
+				add_building_construction = {
+					type = dockyard
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_collectivisation_of_farms
+		icon = GFX
+		cost = 10
+		x = 0
+		y = 2
+		
+		relative_position_id = SOH_the_1st_5_year_plan
+		prerequisite = {
+			focus = SOH_the_1st_5_year_plan
+		}
+		completion_reward = { 
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = SOH_the_1st_5_year_plan
+					}
+				}
+				custom_effect_tooltip = SOH_effect_visible_when_you_have_5_year_plan
+			}
+			SOH_1st_plan_farm_tickup = yes
+		}
+	}
+
+	focus = {
+		id = SOH_invest_in_the_road_system 
+		icon = GFX 
+		cost = 10 
+		x = -2 
+		y = 1
+		
+		relative_position_id = SOH_the_1st_5_year_plan
+		prerequisite = {
+			focus = SOH_the_1st_5_year_plan
+		}
+		completion_reward = { 
+			custom_effect_tooltip = SOH_invest_in_the_road_system_tt
+			random_owned_controlled_state = {
+				limit = {
+					infrastructure < 4
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+
+			random_owned_controlled_state = {
+				limit = {
+					infrastructure < 4
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+
+			random_owned_controlled_state = {
+				limit = {
+					infrastructure < 4
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+
+			random_owned_controlled_state = {
+				limit = {
+					infrastructure < 4
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+
+			random_owned_controlled_state = {
+				limit = {
+					infrastructure < 4
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_the_2nd_5_year_plan 
+		icon = GFX 
+		cost = 10
+		x = 0 
+		y = 1
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SOH_2nd_5_year_plan_tt
+				NOT = {
+					has_idea = SOH_hidden_5_year_plan_idea
+				}
+			}
+		}
+		relative_position_id = SOH_collectivisation_of_farms
+		prerequisite = {
+			focus = SOH_collectivisation_of_farms
+		}
+		prerequisite = {
+			focus = SOH_invest_in_the_road_system
+			focus = SOH_great_lakes_dockyards
+		}
+		completion_reward = { 
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = SOH_the_1st_5_year_plan
+					}
+				}
+				custom_effect_tooltip = SOH_effect_visible_when_you_have_5_year_plan
+			}
+			SOH_2nd_5year_plan_tickup = yes 
+			hidden_effect = {
+				add_timed_idea = {
+					idea = SOH_2nd_5_year_plan_hidden_idea
+					days = 1825
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_rebuild_detroit
+		icon = GFX 
+		cost = 10 
+		x = 2
+		y = 2
+		available = {
+			controls_state = 36
+		}
+		relative_position_id = SOH_the_2nd_5_year_plan
+		prerequisite = {
+			focus = SOH_the_2nd_5_year_plan
+		}
+		completion_reward = { 
+			36 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+
+			36 = {
+				add_building_construction = {
+					type = air_base
+					level = 3
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+
+			36 = {
+				add_building_construction = {
+					type = dockyard
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_industral_investments
+		icon = GFX 
+		cost = 10 
+		x = -2
+		y = 2
+		relative_position_id = SOH_the_2nd_5_year_plan
+		prerequisite = {
+			focus = SOH_the_2nd_5_year_plan
+		}
+		completion_reward = { 
+			random_owned_controlled_state = {
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+
+			random_owned_controlled_state = {
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+
+			random_owned_controlled_state = {
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_dayton_airbases
+		icon = GFX 
+		cost = 5 
+		x = -4
+		y = 1
+		relative_position_id = SOH_the_2nd_5_year_plan
+		prerequisite = {
+			focus = SOH_the_2nd_5_year_plan
+		}
+		completion_reward = { 
+			703 = {
+				add_building_construction = {
+					type = air_base
+					level = 4
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+
+			704 = {
+				add_building_construction = {
+					type = air_base
+					level = 2
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_invest_in_heavy_industry
+		icon = GFX 
+		cost = 10 
+		x = 0
+		y = 1
+		relative_position_id = SOH_the_2nd_5_year_plan
+		prerequisite = {
+			focus = SOH_the_2nd_5_year_plan
+		}
+		completion_reward = { 
+			random_owned_controlled_state = {
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+				}
+				add_extra_state_shared_building_slots = 2
+			}
+
+			random_owned_controlled_state = {
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+				}
+				add_extra_state_shared_building_slots = 2
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_reinvigorate_ohio_steel_works
+		icon = GFX 
+		cost = 7.2
+		x = 4
+		y = 1
+		relative_position_id = SOH_the_2nd_5_year_plan
+		prerequisite = {
+			focus = SOH_the_2nd_5_year_plan
+		}
+		completion_reward = { 
+			random_owned_controlled_state = {
+				add_building_construction = {
+					type = steel_mill
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+
+			random_owned_controlled_state = {
+				add_building_construction = {
+					type = steel_mill
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_the_3rd_5_year_plan 
+		icon = GFX 
+		cost = 10
+		x = 0
+		y = 3
+		relative_position_id = SOH_invest_in_heavy_industry
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = SOH_the_3rd_5_year_plan_tt
+				NOT = {
+					has_idea = SOH_2nd_5_year_plan_hidden_idea
+				}
+			}
+		}
+		prerequisite = {
+			focus = SOH_invest_in_heavy_industry
+		}
+		prerequisite = {
+			focus = SOH_reinvigorate_ohio_steel_works
+			focus = SOH_industral_investments
+			focus = SOH_dayton_airbases
+			focus = SOH_rebuild_detroit
+		}
+		completion_reward = { 
+			if = {
+				limit = {
+					NOT = {
+						has_completed_focus = SOH_the_1st_5_year_plan
+					}
+				}
+				custom_effect_tooltip = SOH_effect_visible_when_you_have_5_year_plan
+			}
+			SOH_3rd_5year_plan_tickup = yes
+		}
+	}
+
+	focus = {
+		id = SOH_spread_the_revoultion_marxism
+		icon = GFX 
+		cost = 10
+		x = 12
+		y = 2
+		relative_position_id = SOH_the_revolution_triumphant
+		prerequisite = {
+			focus = SOH_the_revolution_triumphant
+		}
+		completion_reward = { 
+			add_ideas = SOH_spread_the_revoultion_idea
+		}
+	}
+
+	focus = {
+		id = SOH_the_great_lakes_sssr_concept 
+		icon = GFX 
+		cost = 10
+		x = 0
+		y = 2
+		relative_position_id = SOH_spread_the_revoultion_marxism
+		prerequisite = {
+			focus = SOH_spread_the_revoultion_marxism
+		}
+		completion_reward = { 
+			custom_effect_tooltip = SOH_claims_the_midwest_tt
+			hidden_effect = {
+				claim_michigan = yes 
+				claim_indiana = yes
+				claim_illinois = yes 
+				claim_wisconsin = yes
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_handle_michigan
+		icon = GFX 
+		cost = 7.2
+		x = -2
+		y = 2
+		relative_position_id = SOH_the_great_lakes_sssr_concept
+		prerequisite = {
+			focus = SOH_the_great_lakes_sssr_concept
+		}
+		bypass = {
+			or = {
+				SMI = {
+					exists = no 
+				}
+				SMI = {
+					is_subject_of = SOH 
+				}
+			}
+		}
+		completion_reward = { 
+			create_wargoal = {
+				target = SMI
+				type = puppet_wargoal_focus
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_reign_in_michigan 
+		icon = GFX 
+		cost = 5
+		x = 0
+		y = 1
+		available = {
+			SMI = {
+				is_subject_of = SOH
+			}
+		}
+
+		bypass = {
+			SMI = {
+				exists = no
+			}
+		}
+		relative_position_id = SOH_handle_michigan
+		prerequisite = {
+			focus = SOH_handle_michigan
+		}
+		completion_reward = { 
+			SMI = {
+				add_autonomy_score = {
+					value = -1000
+				}
+				set_cosmetic_tag = SMI_SOH_SSSR
+			}
+			if = {
+				limit = {
+					SUP = {
+						exists = yes 
+					}
+				}
+				create_wargoal = {
+					target = SUP 
+					type = annex_everything
+				}
+			}
+
+		}
+	}
+
+	focus = {
+		id = SOH_bring_in_indiana
+		icon = GFX 
+		cost = 7.2 
+		x = 0
+		y = 1
+		relative_position_id = SOH_the_great_lakes_sssr_concept
+		prerequisite = {
+			focus = SOH_the_great_lakes_sssr_concept
+		}
+		bypass = {
+			or = {
+				SIN = {
+					exists = no 
+				}
+				SIN = {
+					is_subject_of = SOH
+				}
+			}
+		}
+		completion_reward = { 
+			create_wargoal = {
+				target = SIN
+				type = puppet_wargoal_focus
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_reign_in_indiana
+		icon = GFX 
+		cost = 5
+		x = 0 
+		y = 1
+		available = {
+			SIN = {
+				is_subject_of = SOH
+			}
+		}
+		bypass = {
+			SIN = {
+				exists = no 
+			}
+		}
+		relative_position_id = SOH_bring_in_indiana
+		prerequisite = {
+			focus = SOH_bring_in_indiana
+		}
+		completion_reward = { 
+			SIN  = {
+				add_autonomy_score = {
+					value = -1000
+				}
+				set_cosmetic_tag = SIN_SOH_SSSR
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_invite_the_eastern_states
+		icon = GFX 
+		cost = 10 
+		x = 3
+		y = 2
+		relative_position_id = SOH_the_great_lakes_sssr_concept
+		prerequisite = {
+			focus = SOH_the_great_lakes_sssr_concept
+		}
+		bypass = {
+			AND = {
+				SPA = {
+					exists = no 
+				}
+
+				SNY = {
+					exists = no 
+				}
+			}
+		}
+		completion_reward = { 
+			create_wargoal = {
+				target = SPA 
+				type = puppet_wargoal_focus
+			}
+
+			create_wargoal = {
+				target = SNY
+				type = puppet_wargoal_focus
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_regin_in_new_york
+		icon = GFX 
+		cost = 5 
+		x = 1
+		y = 1
+		available = {
+			SNY = {
+				is_subject_of = SMI
+			}
+		}
+		bypass = {
+			SNY = {
+				exists = no
+			}
+		}
+		relative_position_id = SOH_invite_the_eastern_states
+		prerequisite = {
+			focus = SOH_invite_the_eastern_states
+		}
+		completion_reward = { 
+			SNY = {
+				add_autonomy_score = {
+					value = -1000
+				}
+				set_cosmetic_tag = SNY_SOH_SSSR
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_regin_in_pennsylvania
+		icon = GFX 
+		cost = 5 
+		x = -1
+		y = 1
+		relative_position_id = SOH_invite_the_eastern_states
+		prerequisite = {
+			focus = SOH_invite_the_eastern_states
+		}
+		available = {
+			SPA = {
+				is_subject_of = SOH
+			}
+		}
+		bypass = {
+			SPA = {
+				exists = no 
+			}
+		}
+		completion_reward = { 
+			SPA = {
+				add_autonomy_score = {
+					value = -1000
+				}
+				set_cosmetic_tag = SPA_SOH_SSSR
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_invite_the_western_states
+		icon = GFX 
+		cost = 10 
+		x = -6
+		y = 2
+		relative_position_id = SOH_the_great_lakes_sssr_concept
+		prerequisite = {
+			focus = SOH_the_great_lakes_sssr_concept
+		}
+		bypass = {
+			AND = {
+				SIL = {
+					exists = no 
+				}
+				SWI = {
+					exists = no 
+				}
+			}
+		}
+		completion_reward = { 
+			create_wargoal = {
+				target = SIL
+				type = puppet_wargoal_focus
+			}
+
+			create_wargoal = {
+				target = SWI
+				type = puppet_wargoal_focus
+			}
+		}
+	}
+
+
+	focus = {
+		id = SOH_regin_in_illinois
+		icon = GFX 
+		cost = 5 
+		x = -1 
+		y = 1
+		available = {
+			SIL = {
+				is_subject_of = SOH 
+			}
+		}
+		bypass = {
+			SIL = {
+				exists = no
+			}
+		}
+		relative_position_id = SOH_invite_the_western_states
+		prerequisite = {
+			focus = SOH_invite_the_western_states 
+		}
+		completion_reward = { 
+			SIL = {
+				add_autonomy_score = {
+					value = -1000
+				}
+				set_cosmetic_tag = SIL_SOH_SSSR
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_regin_in_wisconsin
+		icon = GFX 
+		cost = 5 
+		x = 1 
+		y = 1
+		available = {
+			SWI = {
+				is_subject_of = SOH
+			}
+		}
+		bypass = {
+			SWI = {
+				exists = no 
+			}
+		}
+		relative_position_id = SOH_invite_the_western_states
+		prerequisite = {
+			focus = SOH_invite_the_western_states 
+		}
+		completion_reward = { 
+			SWI = {
+				add_autonomy_score = {
+					value = -1000
+				}
+				set_cosmetic_tag = SWI_SOH_SSSR
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_centralize_the_union
+		icon = GFX 
+		cost = 10 
+		x = -4
+		y = 1
+		relative_position_id = SOH_reign_in_michigan
+		prerequisite = {
+			focus = SOH_reign_in_michigan
+			focus = SOH_regin_in_illinois
+			focus = SOH_reign_in_indiana
+			focus = SOH_regin_in_pennsylvania
+			focus = SOH_regin_in_wisconsin
+			focus = SOH_regin_in_new_york
+		}
+		mutually_exclusive = {
+			focus = SOH_autonomous_sssrs
+		}
+		completion_reward = { 
+			custom_effect_tooltip = SOH_centralize_the_union_tt
+			hidden_effect = {
+				core_illinois = yes
+				core_michigan = yes 
+				core_wisconsin = yes 
+				core_indiana = yes 
+				core_pennsylvania = yes 
+				core_new_york = yes 
+			}
+			if = {		
+				limit = {
+					SMI = {
+						is_subject_of = SOH 
+					}
+				}
+				annex_country = {
+					target = SMI
+				}
+			}
+
+			if = {		
+				limit = {
+					SIL = {
+						is_subject_of = SOH 
+					}
+				}
+				annex_country = {
+					target = SIL
+				}
+			}
+
+			if = {		
+				limit = {
+					SIN = {
+						is_subject_of = SOH 
+					}
+				}
+				annex_country = {
+					target = SIN
+				}
+			}
+
+			if = {		
+				limit = {
+					SPA = {
+						is_subject_of = SOH 
+					}
+				}
+				annex_country = {
+					target = SPA
+				}
+			}
+
+			if = {		
+				limit = {
+					SWI = {
+						is_subject_of = SOH 
+					}
+				}
+				annex_country = {
+					target = SWI 
+				}
+			}
+
+			if = {		
+				limit = {
+					SNY = {
+						is_subject_of = SOH 
+					}
+				}
+				annex_country = {
+					target = SNY
+				}
+			}
+
+			
+		}
+	}
+
+	focus = {
+		id = SOH_east_coast_conquest
+		icon = GFX 
+		cost = 10 
+		x = -1 
+		y = 1
+		relative_position_id = SOH_centralize_the_union
+		prerequisite = {
+			focus = SOH_centralize_the_union
+		}
+		completion_reward = { 
+			create_wargoal = {
+				target = SCT
+				type = annex_everything
+			}
+			create_wargoal = {
+				target = SMA
+				type = annex_everything
+			}
+			create_wargoal = {
+				target = SVT 
+				type = annex_everything
+			}
+			create_wargoal = {
+				target = SNH 
+				type = annex_everything
+			}
+			create_wargoal = {
+				target = SME 
+				type = annex_everything
+			}
+			create_wargoal = {
+				target = SWV
+				type = annex_everything
+			}
+			create_wargoal = {
+				target = SVA
+				type = annex_everything
+			}
+			create_wargoal = {
+				target = SNC
+				type = annex_everything
+			}
+			create_wargoal = {
+				target = SSC
+				type = annex_everything
+			}
+			create_wargoal = {
+				target = SGA
+				type = annex_everything
+			}
+			create_wargoal = {
+				target = SFL
+				type = annex_everything
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_west_coast_conquest
+		icon = GFX 
+		cost = 10 
+		x = 1
+		y = 1
+		relative_position_id = SOH_centralize_the_union
+		prerequisite = {
+			focus = SOH_centralize_the_union
+		}
+		completion_reward = { 
+			create_wargoal = {
+				target = SCA
+				type = annex_everything
+			}
+			create_wargoal = {
+				target = SNV
+				type = annex_everything
+			}
+			create_wargoal = {
+				target = SOR
+				type = annex_everything
+			}
+			create_wargoal = {
+				target = SRO 
+				type = annex_everything
+			}
+			create_wargoal = {
+				target = SWA
+				type = annex_everything
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_a_true_union_united
+		icon = GFX 
+		cost = 10
+		x = -1 
+		y = 1
+		relative_position_id = SOH_west_coast_conquest
+		prerequisite = {
+			focus = SOH_west_coast_conquest
+		}
+		prerequisite = {
+			focus = SOH_east_coast_conquest
+		}
+		completion_reward = { 
+			custom_effect_tooltip = SOH_a_true_union_united_tt
+			set_cosmetic_tag = SOH_USA_COMMIE
+			hidden_effect = {
+				core_the_united_states = yes 
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_autonomous_sssrs 
+		icon = GFX 
+		cost = 10
+		x = 4
+		y = 1
+		relative_position_id = SOH_reign_in_michigan
+		prerequisite = {
+			focus = SOH_reign_in_michigan
+			focus = SOH_regin_in_illinois
+			focus = SOH_reign_in_indiana
+			focus = SOH_regin_in_pennsylvania
+			focus = SOH_regin_in_wisconsin
+			focus = SOH_regin_in_new_york
+		}
+		mutually_exclusive = {
+			focus = SOH_centralize_the_union
+		}
+		completion_reward = { 
+			set_rule = {
+				can_create_factions = yes
+			}
+		}
+	}
+
+
+
 ######SHIT FROM GARBAGE TREE
 	focus = {
 		id = SOH_Elect_george_White
