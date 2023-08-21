@@ -749,7 +749,7 @@ continuous_focus_position = { x = 200 y = 1400 }
 		x = 10
 		y = 0
 		mutually_exclusive = {
-			focus = SOH_take_out_the_gang
+			focus = SOH_give_up_toledo
 		}
 		mutually_exclusive = {
 			focus = SOH_plot_the_revolution
@@ -760,7 +760,7 @@ continuous_focus_position = { x = 200 y = 1400 }
 		}
 		allow_branch = {
 			NOT = {
-				has_completed_focus = SOH_take_out_the_gang
+				has_completed_focus = SOH_give_up_toledo
 			}
 		}
 		completion_reward = {
@@ -800,7 +800,7 @@ continuous_focus_position = { x = 200 y = 1400 }
 
 	focus = {
 		id = SOH_the_greater_ohio_concept
-		icon = GFX_focus_SOH_the_gang
+		icon = GFX_goal_generic_occupy_states_ongoing_war
 		cost = 10
 		x = 0
 		y = 1
@@ -1188,7 +1188,7 @@ continuous_focus_position = { x = 200 y = 1400 }
 	}
 	focus = {
 		id = SOH_no_more_parties
-		icon = GFX_focus_rom_parties_end
+		icon = GFX_focus_SOH_the_gang
 		cost = 5
 		x = -1
 		y = 1
@@ -1550,8 +1550,8 @@ continuous_focus_position = { x = 200 y = 1400 }
 	}
 #####OTHER PARTIES PATH/CIVIL WAR/COUP THE GANG
 	focus = {
-		id = SOH_take_out_the_gang
-		icon = GFX_focus_generic_opression_of_opposition
+		id = SOH_give_up_toledo
+		icon = GFX_focus_CZE_german_puppet
 		cost = 5
 		x = 20
 		y = 0
@@ -1567,22 +1567,38 @@ continuous_focus_position = { x = 200 y = 1400 }
 		mutually_exclusive = {
 			focus = SOH_plot_the_revolution
 		}
-		completion_reward = { 
+		completion_reward = {
 			mark_focus_tree_layout_dirty = yes
+			39 = {
+				set_demilitarized_zone = no
+			}
+			39 = {
+				transfer_state_to = SMI
+			}
+			custom_effect_tooltip = SOH_may_start_civil_war_tt
+			remove_ideas = SOH_Memories_Of_The_Steek_Wars
 		}
 	}
 
 	focus = {
 		id = SOH_stamp_out_the_gang
 		icon = GFX_focus_generic_support_the_left_right
-		cost = 10
-		relative_position_id = SOH_take_out_the_gang
+		cost = 5
+		relative_position_id = SOH_give_up_toledo
 		prerequisite = {
-			focus = SOH_take_out_the_gang
+			focus = SOH_give_up_toledo
 		}
 		x = 0
 		y = 1
-		completion_reward = { 
+		available = {
+			has_civil_war = no
+			#had_civil_war = yes
+		}
+		completion_reward = {
+			add_timed_idea = {
+				idea = SOH_anti_ohio_gang_measures
+				days = 365
+			}
 			###GETS EVENT TO EITHER GET STAB AND DEMOCRACY SUPPORT OR NONALGINED SUPPORT AND PP(DELAYING THE REQUIREMNTS TO GO CERTAIN IDEOLOGICAL PATHS
 		}
 	}
@@ -1600,7 +1616,7 @@ continuous_focus_position = { x = 200 y = 1400 }
 		x = 0
 		y = 1
 		completion_reward = { 
-			
+			add_ideas = SOH_birth_place_of_presidents
 		}
 	}
 	focus = {
@@ -1629,6 +1645,9 @@ continuous_focus_position = { x = 200 y = 1400 }
 		mutually_exclusive = {
 			focus = SOH_vic_donahey_wins
 		}
+		available = {
+			always = NO
+		}
 		x = 1
 		y = 1
 		completion_reward = { 
@@ -1645,6 +1664,9 @@ continuous_focus_position = { x = 200 y = 1400 }
 		}
 		x = -1
 		y = 1
+		available = {
+			always = NO
+		}
 		mutually_exclusive = {
 			focus = SOH_george_white_wins
 		}
@@ -1701,7 +1723,7 @@ continuous_focus_position = { x = 200 y = 1400 }
 	focus = {
 		id = SOH_end_extravagant_bureauacy
 		icon = GFX_focus_generic_self_management
-		cost = 5
+		cost = 7.2
 		relative_position_id = SOH_host_elections
 		prerequisite = {
 			focus = SOH_vic_donahey_wins
@@ -1811,7 +1833,21 @@ continuous_focus_position = { x = 200 y = 1400 }
 		x = -4
 		y = 5
 		completion_reward = { 
-			###GETS RELATIONS WITH 
+			custom_effect_tooltip = SOH_will_begin_toledo_negotiations_tt
+		}
+	}
+	focus = {
+		id = SOH_propose_unification_with_michigan
+		icon = GFX_goal_generic_national_unity
+		cost = 10
+		relative_position_id = SOH_amend_ties_with_michigan
+		prerequisite = {
+			focus = SOH_amend_ties_with_michigan
+		}
+		x = 0
+		y = 2
+		completion_reward = { 
+			###EVENT FOR UNIFICATION TO MICHIGAN
 		}
 	}
 	focus = {
@@ -1827,7 +1863,7 @@ continuous_focus_position = { x = 200 y = 1400 }
 		}
 		x = 4
 		y = 5
-		completion_reward = { 
+		completion_reward = {
 			declare_war_on = {
 				target = SMI
 			}
@@ -1858,8 +1894,41 @@ continuous_focus_position = { x = 200 y = 1400 }
 		}
 		x = 4
 		y = 1
-		completion_reward = { 
-			###INVITES PEOPLE AND CREATES FACTION
+		available = {
+			has_war = no
+			39 = {
+				is_controlled_by = SOH
+			}
+		}
+		completion_reward = {
+			set_rule = { can_create_factions = yes }
+			if = {
+				limit = {
+					is_in_faction = yes
+				}
+			}
+			else = {
+				create_faction = GREAT_LAKES_PACT
+			}
+			custom_effect_tooltip = SOH_will_invite_great_lakes_democratic_nations_tt
+			hidden_effect = {
+				every_other_country = {
+					limit = {
+						has_government = democratic
+						OR = {
+							tag = SWI
+							tag = SMN
+							tag = SMI
+							tag = SIN
+							tag = SUP
+							tag = SIL
+							tag = SPA
+							tag = PON
+						}
+					}
+					country_event = { id = generic.5 days = 10 }
+				}
+			}
 		}
 	}
 	focus = {
@@ -1886,8 +1955,15 @@ continuous_focus_position = { x = 200 y = 1400 }
 		}
 		x = -2
 		y = 1
-		completion_reward = { 
-			###INVITES PEOPLE AND CREATES FACTION
+		completion_reward = {
+			add_ideas = SOH_pool_technical_know_how
+			custom_effect_tooltip = GER_pool_technical_know_how_tt
+			hidden_effect = {
+				every_other_country = {
+					limit = { is_in_faction_with = SOH }
+					add_ideas = SOH_pool_technical_know_how
+				}
+			}
 		}
 	}
 	focus = {
@@ -3257,7 +3333,7 @@ continuous_focus_position = { x = 200 y = 1400 }
 	
 		}
 		completion_reward = {
-				add_offsite_building = { type = arms_factory level = 2 }
+			custom_effect_tooltip = War_Economy_if_war_support_tt
 			if = {
 				limit = {	
 					has_war_support < 0.5
@@ -3722,7 +3798,7 @@ continuous_focus_position = { x = 200 y = 1400 }
 
 	focus = {
 		id = SOH_Akron_Foundry
-		icon = GFX_focus_SOH_steel2
+		icon = GFX_goal_generic_army_artillery
 		x = 1
 		y = 1
 		prerequisite = { focus = SOH_Dayton_Works }
@@ -4975,11 +5051,11 @@ continuous_focus_position = { x = 200 y = 1400 }
 	focus = {
 		id = SOH_ohio_army_Snipers
 		icon = GFX_focus_SOH_Ohio_Sniper_Program
-		x = 0
+		x = -3
 		y = 1
-		prerequisite = { focus = SOH_finish_starting_doctrine focus = SOH_focus_of_army_research2 }
-		relative_position_id = SOH_finish_starting_doctrine
-		cost = 10
+		prerequisite = { focus = SOH_focus_of_army_research2 }
+		relative_position_id = SOH_focus_of_army_research
+		cost = 7.2
 		ai_will_do = {
 			factor = 450
 		}
@@ -5668,7 +5744,7 @@ continuous_focus_position = { x = 200 y = 1400 }
 		x = 60
 		y = 0
 		mutually_exclusive = {
-			focus = SOH_take_out_the_gang
+			focus = SOH_give_up_toledo
 		}
 		mutually_exclusive = {
 			focus = SOH_remilitarize_toledo
