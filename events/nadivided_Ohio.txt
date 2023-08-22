@@ -728,7 +728,7 @@ country_event = {
 		set_capital = { state = 697 }
 		start_civil_war = {
 			ruling_party = democratic
-			ideology = ROOT
+			ideology = PREV
 			size = 0.35	#This was too much for AI
 			capital = 48
 			states = { 540 693 689 690 538 48 }
@@ -736,10 +736,29 @@ country_event = {
 			#}
 		}
 		hidden_effect = {
+			division_template = { name = "Ohio Guard" division_names_group = SOH_INF_01 is_locked = no regiments = { infantry = { x = 0 y = 0 } infantry = { x = 1 y = 0 } infantry = { x = 1 y = 0 } infantry = { x = 0 y = 1 } infantry = { x = 0 y = 2 }
+			infantry = { x = 0 y = 3 } artillery_brigade = { x = 1 y = 1 } artillery_brigade = { x = 1 y = 2 }} }
+			697 = {
+				create_unit = {
+					division = "name = \"1. Ohio Guard\" division_template = \"Ohio Guard\" start_experience_factor = 0 start_equipment_factor = 0.7"
+					owner = ROOT
+				}
+				create_unit = {
+					division = "name = \"2. Ohio Guard\" division_template = \"Ohio Guard\" start_experience_factor = 0 start_equipment_factor = 0.7"
+					owner = ROOT
+				}
+				create_unit = {
+					division = "name = \"3. Ohio Guard\" division_template = \"Ohio Guard\" start_experience_factor = 0 start_equipment_factor = 0.7"
+					owner = ROOT
+				}
+			}
+		}
+		hidden_effect = {
 			random_other_country = {
 				limit = {
 					original_tag = SOH
 					has_government = neutrality
+					has_country_leader = { character = SOH_the_ohio_gang }
 				}
 				hidden_effect = {
 					division_template = { name = "Cleveland Guard" division_names_group = SOH_INF_01 is_locked = no regiments = { infantry = { x = 0 y = 0 } infantry = { x = 1 y = 0 } infantry = { x = 1 y = 0 } infantry = { x = 0 y = 1 } infantry = { x = 0 y = 2 }
@@ -827,4 +846,119 @@ country_event = {
 		}
 	}
 }
-
+###EVENT TO MICHIGAN
+country_event = {
+	id = ohio.20
+	title = ohio.20.t
+	desc = ohio.20.d
+	picture = GFX_report_event_partition_of_india
+ 	#is_triggered_only = no
+  	fire_only_once = yes
+	trigger = {
+		AND = {
+			country_exists = SMI
+			focus_progress = {
+				focus = SOH_amend_ties_with_michigan
+				progress = 0.5
+			}
+		}
+	}
+  	option = {
+        name = ohio.20.a
+		add_timed_idea = {
+			idea = SOH_ohio_payments
+			days = 150
+		}
+		SOH = {
+			add_timed_idea = {
+				idea = SOH_ohio_payments2
+				days = 150
+			}
+		}
+		add_political_power = 20
+		add_stability = 0.02
+		country_event = {	###ACCEPT THEIR PROPOSAL, gets consumer goods for timed days, and ohio also pays
+			id = ohio.21
+			days = 7
+		}
+	}
+	option = {	####DENY THEM ### OHIO GET EVENT TO AUTOCOMPLETE WARGOAL FOCUS
+		name = ohio.20.a
+		country_event = {
+			id = ohio.22
+			days = 7
+		}
+		custom_effect_tooltip = this_will_lead_to_war_tt
+	}
+}
+###MICHIGAN ACCEPTED
+country_event = {
+	id = ohio.21
+	title = ohio.21.t
+	desc = ohio.21.d
+	picture = GFX_report_event_generic_handshake
+ 	is_triggered_only = yes
+  	fire_only_once = yes
+  	option = {
+        name = ohio.21.a
+		39 = {
+			transfer_state_to = SOH
+		}
+	}
+}
+###MICHIGAN DENIED US
+country_event = {
+	id = ohio.22
+	title = ohio.22.t
+	desc = ohio.22.d
+	picture = GFX_report_event_ast_army
+ 	is_triggered_only = yes
+  	fire_only_once = yes
+  	option = {
+        name = ohio.22.a
+		complete_national_focus = SOH_take_back_toledo
+		add_war_support = 0.05
+		declare_war_on = {
+			target = SMI
+		}
+	}
+}
+###PROPOSAL TO MICHIGAN FOR UNIFICATION
+country_event = {
+	id = ohio.23
+	title = ohio.23.t
+	desc = ohio.23.d
+	picture = GFX_report_event_generic_read_write
+ 	is_triggered_only = yes
+  	fire_only_once = yes
+  	option = { ###WE THINK NOT
+        name = ohio.23.a
+		country_event = {
+			id = ohio.24
+			days = 7
+		}
+	}
+	option = { ###SURE WE ACCEPT UNIFICATION
+        name = ohio.23.a
+		custom_effect_tooltip = GAME_OVER_TT
+		SOH = {
+			annex_country = {
+				target = SMI
+			}
+			core_michigan = yes
+			add_political_power = 50
+		}
+	}
+}
+###MICHIGAN DENIED unification
+country_event = {
+	id = ohio.24
+	title = ohio.24.t
+	desc = ohio.24.d
+	picture = GFX_report_event_ast_army
+ 	is_triggered_only = yes
+  	fire_only_once = yes
+  	option = {
+        name = ohio.24.a
+	}
+}
