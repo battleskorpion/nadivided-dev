@@ -2231,6 +2231,10 @@ continuous_focus_position = { x = 200 y = 1400 }
 		available = {
 			has_civil_war = yes
 		}
+		bypass = {
+			has_civil_war = no
+			date > 1937.1.1
+		}
 		x = 10
 		y = 1
 		completion_reward = {
@@ -3153,7 +3157,7 @@ continuous_focus_position = { x = 200 y = 1400 }
 		id = SOH_progressive_victory 
 		icon = GFX 
 		cost = 10
-		x = 3
+		x = 4
 		y = 1
 		available = {
 			has_government = progressivism 
@@ -3167,6 +3171,148 @@ continuous_focus_position = { x = 200 y = 1400 }
 			focus = SOH_populist_victory
 		}
 		completion_reward = { }
+	}
+
+	focus = {
+		id = SOH_rural_recovery_programs
+		icon = GFX
+		cost = 10
+		x = 0
+		y = 1
+		relative_position_id = SOH_progressive_victory
+		prerequisite = {
+			focus = SOH_progressive_victory
+		}
+		completion_reward = { 
+			add_timed_idea = {
+				idea = SOH_rural_recovery_programs_idea
+				days = 365
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_appeal_to_the_farmer_labor_league
+		icon = GFX 
+		cost = 10
+		x = 3
+		y = 1
+		available = {
+			or = {
+				custom_trigger_tooltip = {
+					tooltip = SOH_appeal_to_the_farmer_labor_league_trigger_tt 
+					SMN = {
+						has_completed_focus = SMN_the_progressive_alliance
+					}
+				}
+
+				custom_trigger_tooltip = {
+					tooltip = SOH_appeal_to_the_farmer_labor_league_not_trigger_tt 
+					NOT = {
+						SMN = {
+							has_completed_focus = SMN_the_progressive_alliance
+						}
+					}
+				}
+			}
+		}
+		relative_position_id = SOH_rural_recovery_programs
+		prerequisite = {
+			focus = SOH_rural_recovery_programs
+		}
+		completion_reward = { 
+			custom_effect_tooltip = SOH_appeal_to_the_farmer_labor_league_tt
+			if = {
+				limit = { 
+					SMN = {
+						has_completed_focus = SMN_the_progressive_alliance
+					}
+				}
+				SMN = {
+					country_event = generic.2 
+				}
+			}
+
+			else_if = {
+				limit = { 
+					NOT = {
+						SMN = {
+							has_completed_focus = SMN_the_progressive_alliance
+						}
+					}
+					date > 1939.1.1
+				}
+			}
+
+			else = {
+				set_rule = {
+					can_create_factions = yes
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_bridge_the_divide
+		icon = GFX 
+		cost = 10 
+		x = -1
+		y = 1
+		available = {
+			SMI = {
+				not = {
+					has_government = progressivism
+				}
+			}
+		}
+		bypass = {
+			SMI = {
+				has_government = progressivism
+			}
+		}
+		relative_position_id = SOH_appeal_to_the_farmer_labor_league
+		prerequisite = {
+			focus = SOH_appeal_to_the_farmer_labor_league
+		}
+		completion_reward = { 
+			create_wargoal = {
+				target = SMI
+				type = topple_government
+			}
+
+			if = {
+				limit = {
+					SUP = {
+						is_in_faction_with = ROOT
+					}
+				}
+				SUP = {
+					create_wargoal = {
+						target = SMI
+						type = annex_everything
+					}
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SOH_expand_the_alliance_south 
+		icon = GFX 
+		cost = 10
+		x = 1
+		y = 1
+		relative_position_id = SOH_appeal_to_the_farmer_labor_league
+		prerequisite = {
+			focus = SOH_appeal_to_the_farmer_labor_league
+		}
+		completion_reward = { 
+			if = {
+				limit = {
+					
+				}
+			}
+		}
 	}
 
 	focus = {
@@ -3521,6 +3667,12 @@ continuous_focus_position = { x = 200 y = 1400 }
 		relative_position_id = SOH_focus_internally
 		prerequisite = {
 			focus = SOH_focus_internally
+			focus = SOH_rural_recovery_programs
+		}
+		available = {
+			NOT = {
+				has_idea = SOH_rural_recovery_programs_idea
+			}
 		}
 		completion_reward = { 
 			custom_effect_tooltip = SOH_rural_development_tt
@@ -8002,6 +8154,98 @@ continuous_focus_position = { x = 200 y = 1400 }
 		}
 	}
 
+	focus = {
+		id = SOH_all_union_conscription
+		icon = GFX
+		cost = 10
+		x = -2
+		y = 1
+		relative_position_id = SOH_autonomous_sssrs
+		prerequisite = {
+			focus = SOH_autonomous_sssrs
+		}
+		completion_reward = {
+			custom_effect_tooltip = SOH_all_union_conscription_tt
+			every_country = {
+				limit = {
+					is_subject_of = SOH 
+				}
+				add_ideas = SOH_all_union_conscription_idea
+			}
+		}
+	}
 
+	focus = {
+		id = SOH_autonomous_infrastructure_projects
+		icon = GFX 
+		cost = 10
+		x = 2
+		y = 1
+		relative_position_id = SOH_autonomous_sssrs
+		prerequisite = {
+			focus = SOH_autonomous_sssrs
+		}
+		completion_reward = { 
+			custom_effect_tooltip = SOH_autonomous_infrastructure_projects_tt
+			every_country = {
+				limit = {
+					is_subject_of = SOH
+				}
+				add_ideas = SOH_autonomous_infrastructure_projects_idea
+			}
+		}
+	}
+
+
+	focus = {
+		id = SOH_the_great_union_congress
+		icon = GFX 
+		cost = 10 
+		x = 0
+		y = 2
+		relative_position_id = SOH_autonomous_sssrs
+		prerequisite = {
+			focus = SOH_autonomous_sssrs
+		}
+		completion_reward = { 
+			custom_effect_tooltip = SOH_the_great_union_congress_focus_tt
+			if = {
+				limit = { # MAXED out idea needs 20 subjects
+					or = {
+						num_subjects > 20
+						num_subjects = 20
+					}
+				}
+				add_ideas = SOH_the_great_union_congress_20
+			}
+
+			else_if = {
+				limit = { 
+					or = {
+						num_subjects > 10
+						num_subjects = 10
+					}
+				}
+				add_ideas = SOH_the_great_union_congress_10 
+			}
+
+			else_if = {
+				limit = { 
+					or = {
+						num_subjects > 5
+						num_subjects = 5
+					}
+				}
+				add_ideas = SOH_the_great_union_congress_5
+			}
+
+			else_if = {
+				limit = {
+					num_subjects < 5
+				}
+				add_ideas = SOH_the_great_union_congress
+			}
+		}
+	}
 
 }	
