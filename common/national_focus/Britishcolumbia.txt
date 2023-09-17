@@ -1980,10 +1980,10 @@ focus = {
 			always = yes
 		}
 		completion_reward = {	
-			#event
-			#country_event = {
-			#	id = britishcolumbia.X
-			#}
+			add_timed_idea = {
+				idea = PBC_The_fifteen_Points_idea
+				days = 365
+			}
 		}
 		ai_will_do = {
 			factor = 1
@@ -2517,10 +2517,10 @@ focus = {
 		}
 	}
 	focus = {
-		id = PBC_Preserveing_Oral_Traditions
+		id = PBC_the_first_potlatch
 		icon = GFX_focus_PBC_oral_traditions
 		prerequisite = { focus = PBC_Give_Haida_People_Postions_in_government }		
-		x = 1
+		x = 0
 		y = 1
 		relative_position_id = PBC_Give_Haida_People_Postions_in_government
 		cost = 10
@@ -2533,19 +2533,98 @@ focus = {
 		}
 	}
 	focus = {
-		id = PBC_Renaming_Prince_Charollette_island
-		icon = GFX_focus_PBC_haida_guai
-		prerequisite = { focus = PBC_Give_Haida_People_Postions_in_government }
+		id = PBC_Dismantle_Residential_Schools
+		icon = GFX_focus_PBC_dismantle_residential_Schools
+		prerequisite = { focus = PBC_the_first_potlatch }		
 		x = -1
 		y = 1
-		relative_position_id = PBC_Give_Haida_People_Postions_in_government
+		relative_position_id = PBC_the_first_potlatch
 		cost = 10
 		available_if_capitulated = yes
 		completion_reward = {
-			72 = {
-				set_state_name = "Haida Gwaii"
+			add_stability = 0.05
+			add_political_power = 25
+			add_war_support = 0.05
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.05
 			}
-			set_capital = { state = 72 }
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.25
+				always = yes
+			}
+		}
+	}
+	focus = {
+		id = PBC_centralize_the_government
+		icon = GFX_focus_PBC_dismantle_residential_Schools
+		prerequisite = { focus = PBC_the_first_potlatch }		
+		x = 1
+		y = 1
+		relative_position_id = PBC_the_first_potlatch
+		cost = 10
+		available_if_capitulated = yes
+		completion_reward = {
+			remove_ideas = PBC_Vancouver_Over_Centralization
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.25
+				always = yes
+			}
+		}
+	}
+	focus = {
+		id = PBC_prepare_for_the_attack
+		icon = GFX_focus_PBC_dismantle_residential_Schools
+		prerequisite = { focus = PBC_Dismantle_Residential_Schools focus = PBC_centralize_the_government }		
+		x = 0
+		y = 2
+		relative_position_id = PBC_the_first_potlatch
+		cost = 10
+		available_if_capitulated = yes
+		completion_reward = {
+			add_timed_idea = {
+				idea = PBC_preparing_for_the_reconquest_idea
+				days = 365
+			}
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.25
+				always = yes
+			}
+		}
+	}
+	focus = {
+		id = PBC_nationalize_victorian_shipyards
+		icon = GFX_focus_PBC_raven_c
+		prerequisite = { focus = PBC_prepare_for_the_attack }		
+		x = -2
+		y = 1
+		relative_position_id = PBC_prepare_for_the_attack
+		cost = 5
+		available_if_capitulated = yes
+		available = {
+			has_full_control_of_state = 61
+		}
+		completion_reward = {
+			navy_experience = 25
+			61 = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = dockyard
+					level = 3
+				}
+			}
 		}
 		ai_will_do = {
 			factor = 1
@@ -2556,33 +2635,192 @@ focus = {
 		}
 	}
 	focus = {
-		id = PBC_Teachings_of_the_Creator
+		id = PBC_deal_with_the_unions
 		icon = GFX_focus_PBC_raven_c
-		prerequisite = { focus = PBC_Preserveing_Oral_Traditions focus = PBC_Renaming_Prince_Charollette_island }		
-		x = -1
+		prerequisite = { focus = PBC_nationalize_victorian_shipyards }		
+		x = 0
 		y = 1
-		relative_position_id = PBC_Preserveing_Oral_Traditions
+		relative_position_id = PBC_nationalize_victorian_shipyards
 		cost = 5
 		available_if_capitulated = yes
+		available = {
+		}
 		completion_reward = {
-			add_political_power = 65
-			add_war_support = 0.05
+			remove_ideas = PBC_The_Union_Problems
 		}
 		ai_will_do = {
 			factor = 1
 			modifier = {
 				factor = 0.25
 				always = yes
+			}
+		}
+	}
+	focus = {
+		id = PBC_a_new_generation_of_warriors
+		icon = GFX_focus_PBC_raven_c
+		prerequisite = { focus = PBC_prepare_for_the_attack }		
+		x = 0
+		y = 1
+		relative_position_id = PBC_prepare_for_the_attack
+		cost = 5
+		available_if_capitulated = yes
+		available = {
+			
+		}
+		completion_reward = {
+			custom_effect_tooltip = PBC_spawn_cheifs_tt
+			hidden_effect = {
+				division_template = { name = "Cheifs" division_names_group = PBC_INF_01 is_locked = no regiments = { mountaineers = { x = 0 y = 0 } mountaineers = { x = 1 y = 0 } mountaineers = { x = 1 y = 0 } mountaineers = { x = 0 y = 1 } mountaineers = { x = 0 y = 2 }
+				mountaineers = { x = 0 y = 3 } artillery_brigade = { x = 1 y = 1 } artillery_brigade = { x = 1 y = 2 }} }
+				72 = {
+					create_unit = {
+						division = "name = \"1. Cheifs\" division_template = \"Cheifs\" start_experience_factor = 0 start_equipment_factor = 0.5"
+						owner = ROOT
+					}
+					create_unit = {
+						division = "name = \"2. Cheifs\" division_template = \"Cheifs\" start_experience_factor = 0 start_equipment_factor = 0.5"
+						owner = ROOT
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.25
+				always = yes
+			}
+		}
+	}
+	focus = {
+		id = PBC_incorpate_the_other_tribes_or_die
+		icon = GFX_focus_PBC_raven_c
+		prerequisite = { focus = PBC_a_new_generation_of_warriors }		
+		x = 0
+		y = 1
+		relative_position_id = PBC_a_new_generation_of_warriors
+		cost = 5
+		available_if_capitulated = yes
+		available = {
+		}
+		completion_reward = {
+			add_stability = -0.10
+			add_ideas = PBC_incorpated_the_other_tribes
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.25
+				always = yes
+			}
+		}
+	}
+	focus = {
+		id = PBC_key_military_positions_to_haida
+		icon = GFX_focus_PBC_Promote_Haida_To_Key_Military_Positions
+		prerequisite = { focus = PBC_prepare_for_the_attack }
+		x = 2
+		y = 1
+		relative_position_id = PBC_prepare_for_the_attack
+		cost = 10
+		available_if_capitulated = yes
+		completion_reward = {
+			#spawn generals we need to find people or make them
+			add_ideas = PBC_Promote_Haida_To_Key_Military_Positions_idea 
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.25
+				always = yes
+			}
+		}
+	}
+	focus = {
+		id = PBC_modern_canoes
+		icon = GFX_focus_PBC_canoe_raiders
+		prerequisite = { focus = PBC_key_military_positions_to_haida }		
+		x = 0
+		y = 1
+		relative_position_id = PBC_key_military_positions_to_haida
+		cost = 10
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.25
+				always = yes
+			}
+		}
+		available_if_capitulated = yes
+		completion_reward = {
+			add_ideas = PBC_haida_marines
+			add_tech_bonus = {
+				bonus = 1
+				uses = 1
+				category = tp_tech
+			}
+		}
+	}
+	focus = {
+		id = PBC_Reclaim_The_Coast_of_Our_Ansestors
+		icon = GFX_focus_PBC_reclaim_our_coast
+		prerequisite = { focus = PBC_incorpate_the_other_tribes_or_die }
+		prerequisite = {
+			focus = PBC_deal_with_the_unions
+		}
+		prerequisite = {
+			focus = PBC_modern_canoes
+		}
+		x = 0
+		y = 1
+		relative_position_id = PBC_incorpate_the_other_tribes_or_die
+		cost = 10
+		available = {
+			#has_idea = PBC_The_New_Chiefs
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.25
+				always = yes
+			}
+		}
+		available_if_capitulated = yes
+		completion_reward = {
+			create_wargoal = {
+				target = SAK
+				type = annex_everything
+			}
+			#swap_ideas = {
+			#	remove_idea = PBC_The_New_Chiefs
+			#	add_idea = PBC_The_New_Chiefs_2
+			#}
+		}
+	}
+	focus = {
+		id = PBC_raising_a_grand_totem
+		icon = GFX_focus_PBC_oral_traditions
+		prerequisite = { focus = PBC_Reclaim_The_Coast_of_Our_Ansestors }		
+		x = -2
+		y = 1
+		relative_position_id = PBC_Reclaim_The_Coast_of_Our_Ansestors
+		cost = 10
+		available_if_capitulated = yes
+		completion_reward = {
+			add_timed_idea = { idea = PBC_oral_traditions days = 100 }
+			country_event = {
+				id = british_columbia.13
 			}
 		}
 	}
 	focus = {
 		id = PBC_Return_to_our_raider_origins
 		icon = GFX_focus_PBC_raiders_hg
-		prerequisite = { focus = PBC_The_Totem }		
+		prerequisite = { focus = PBC_raising_a_grand_totem }		
 		x = -4
 		y = 1
-		relative_position_id = PBC_The_Totem
+		relative_position_id = PBC_raising_a_grand_totem
 		cost = 10
 		ai_will_do = {
 			factor = 1
@@ -2635,6 +2873,102 @@ focus = {
 			}
 		}
 	}
+
+		
+	focus = {
+		id = PBC_construction_of_the_longhouse
+		icon = GFX_focus_PBC_oral_traditions
+		prerequisite = { focus = PBC_Reclaim_The_Coast_of_Our_Ansestors }		
+		x = 2
+		y = 1
+		relative_position_id = PBC_Reclaim_The_Coast_of_Our_Ansestors
+		cost = 10
+		available_if_capitulated = yes
+		completion_reward = {
+			add_timed_idea = { idea = PBC_oral_traditions days = 100 }
+			country_event = {
+				id = british_columbia.13
+			}
+		}
+	}
+		
+	focus = {
+		id = PBC_raise_the_copper_shield
+		icon = GFX_focus_PBC_oral_traditions
+		prerequisite = { focus = PBC_construction_of_the_longhouse }		
+		x = 3
+		y = 1
+		relative_position_id = PBC_construction_of_the_longhouse
+		cost = 10
+		available_if_capitulated = yes
+		completion_reward = {
+			add_timed_idea = { idea = PBC_oral_traditions days = 100 }
+			country_event = {
+				id = british_columbia.13
+			}
+		}
+	}
+	focus = {
+		id = PBC_Preserveing_Oral_Traditions
+		icon = GFX_focus_PBC_oral_traditions
+		prerequisite = { focus = PBC_Give_Haida_People_Postions_in_government }		
+		x = -3
+		y = 1
+		relative_position_id = PBC_Give_Haida_People_Postions_in_government
+		cost = 10
+		available_if_capitulated = yes
+		completion_reward = {
+			add_timed_idea = { idea = PBC_oral_traditions days = 100 }
+			country_event = {
+				id = british_columbia.13
+			}
+		}
+	}
+	focus = {
+		id = PBC_Renaming_Prince_Charollette_island
+		icon = GFX_focus_PBC_haida_guai
+		prerequisite = { focus = PBC_Give_Haida_People_Postions_in_government }
+		x = -5
+		y = 1
+		relative_position_id = PBC_Give_Haida_People_Postions_in_government
+		cost = 10
+		available_if_capitulated = yes
+		completion_reward = {
+			72 = {
+				set_state_name = "Haida Gwaii"
+			}
+			set_capital = { state = 72 }
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.25
+				always = yes
+			}
+		}
+	}
+	focus = {
+		id = PBC_Teachings_of_the_Creator
+		icon = GFX_focus_PBC_raven_c
+		prerequisite = { focus = PBC_Preserveing_Oral_Traditions focus = PBC_Renaming_Prince_Charollette_island }		
+		x = -1
+		y = 1
+		relative_position_id = PBC_Preserveing_Oral_Traditions
+		cost = 5
+		available_if_capitulated = yes
+		completion_reward = {
+			add_political_power = 65
+			add_war_support = 0.05
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.25
+				always = yes
+			}
+		}
+	}
+	
 	focus = {
 		id = PBC_Canoe_Training
 		icon = GFX_focus_PBC_canoe_raiders
@@ -3098,33 +3432,12 @@ focus = {
 		}
 	}
 	focus = {
-		id = PBC_Dismantle_Residential_Schools
-		icon = GFX_focus_PBC_dismantle_residential_Schools
-		prerequisite = { focus = PBC_The_Lodges }		
-		x = -1
-		y = 1
-		relative_position_id = PBC_The_Lodges
-		cost = 10
-		available_if_capitulated = yes
-		completion_reward = {
-			add_ideas = deterrence
-		}
-		
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0.25
-				always = yes
-			}
-		}
-	}
-	focus = {
 		id = PBC_Teach_Europeans_About_Our_Culture
 		icon = GFX_focus_PBC_teach_euros
-		prerequisite = { focus = PBC_Dismantle_Residential_Schools }
+		prerequisite = { focus = PBC_Allow_Foreigner_To_become_Honorary_Haida }
 		x = -1
 		y = 1
-		relative_position_id = PBC_Dismantle_Residential_Schools
+		relative_position_id = PBC_Allow_Foreigner_To_become_Honorary_Haida
 		cost = 10
 		available_if_capitulated = yes
 		completion_reward = {
@@ -3139,43 +3452,13 @@ focus = {
 		}
 	}
 	focus = {
-		id = PBC_Reclaim_The_Coast_of_Our_Ansestors
-		icon = GFX_focus_PBC_reclaim_our_coast
-		prerequisite = { focus = PBC_Teach_Europeans_About_Our_Culture }
-		x = 0
-		y = 1
-		relative_position_id = PBC_Teach_Europeans_About_Our_Culture
-		cost = 10
-		available = {
-			has_idea = PBC_The_New_Chiefs
-		}
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0.25
-				always = yes
-			}
-		}
-		available_if_capitulated = yes
-		completion_reward = {
-			create_wargoal = {
-				target = SAK
-				type = annex_everything
-			}
-			swap_ideas = {
-				remove_idea = PBC_The_New_Chiefs
-				add_idea = PBC_The_New_Chiefs_2
-			}
-		}
-	}
-	focus = {
 		id = PBC_A_New_Genearation_Of_Chiefs
 		icon = GFX_focus_PBC_next_gen_Cheifs
-		prerequisite = { focus = PBC_Dismantle_Residential_Schools }		
+		prerequisite = { focus = PBC_Allow_Foreigner_To_become_Honorary_Haida }		
 		prerequisite = { focus = PBC_Policies_of_Coexistants }	
 		x = 1
 		y = 1
-		relative_position_id = PBC_Dismantle_Residential_Schools
+		relative_position_id = PBC_Allow_Foreigner_To_become_Honorary_Haida
 		cost = 10
 		ai_will_do = {
 			factor = 1
