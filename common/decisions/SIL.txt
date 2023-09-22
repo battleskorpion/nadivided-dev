@@ -92,12 +92,22 @@ SIL_spread_the_machine_category = {
 		cost = 25
 		days_remove = 7
 		war_with_target_on_complete = yes
+
+        remove_effect = {
+            
+        }
+        
 		complete_effect = {
             every_state = {
                 limit = {
                     is_core_of = FROM
-                }
+                    is_owned_and_controlled_by = FROM
+                } 
                 add_claim_by = ROOT
+                add_to_array = {
+                    array = SIL_this_is_what_you_cored_before_i_invaded_array
+                    value = FROM.FROM
+                }
             }
 			create_wargoal = {
 				target = FROM
@@ -105,7 +115,7 @@ SIL_spread_the_machine_category = {
 			}
             add_to_array = {
                 array = global.SIL_invaded_countries_array
-                value = @FROM
+                value = FROM.id
             }
 		}
 	}
@@ -119,34 +129,36 @@ SIL_spread_the_machine_integration_category = {
             has_completed_focus = SIL_mafia_diplomacy
         }
 		target_root_trigger = {
-            any_country = {
-                is_in_array = {
-                    array = global.SIL_invaded_countries_array
-                    value = @ROOT
-                }
-            }
+            has_completed_focus = SIL_mafia_diplomacy
 		}
 		available = {
-                is_in_array = {
-                    array = global.SIL_invaded_countries_array
-                    value = @FROM
-                }
+            is_in_array = {
+                array = global.SIL_invaded_countries_array
+                value = FROM.id
+            }
+            FROM = {
+                exists = no
+            }
+            ####DYANMIC REFERENCE TO THE STATES
 		}
 		target_array = global.SIL_invaded_countries_array
 		icon = GFX_decision_hol_draw_up_staff_plans
 		cost = 25
 		days_remove = 7
-		war_with_target_on_complete = yes
+		#war_with_target_on_complete = yes
 		complete_effect = {
             every_state = {
                 limit = {
-                    is_core_of = FROM
+                    is_in_array = {
+                        array = SIL_this_is_what_you_cored_before_i_invaded_array
+                        value = FROM.FROM
+                    }
                 }
                 add_core_of = ROOT
             }
             remove_from_array = {
                 array = global.SIL_invaded_countries_array
-                value = @FROM
+                value = FROM.id
             }
 		}
 	}
