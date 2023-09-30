@@ -173,6 +173,7 @@ country_event = {
 	title = illinois.5.t
 	desc =  illinois.5.d
 
+
 	is_triggered_only = yes
      fire_only_once = yes
 
@@ -241,63 +242,59 @@ country_event = {
 #civilwar
 country_event = {
 	id = illinois.10
-	title = illinois.10.t
+	title = illinois.10.t 
 	desc = illinois.10.d
-	picture = GFX_
+	picture = GFX_worker_strike
 	is_triggered_only = yes
 	fire_only_once = yes
-	trigger = {
-	}
-	option = {
-		name = illinois.10.a
+	option = { # Dont Play as CHI 
+		name = illinois.10.a 
 		hidden_effect = {
-		country_event = usastates_news.39
+		    country_event = usastates_news.39
+            country_event = { 
+                id = illinois.11
+                days = 10 
+            } 
 		}
         
 		CHI = {
             transfer_state = 41
 			transfer_state = 692
-            load_oob = CHI_spawnables
+           # load_oob = CHI_spawnables
 			
         }
 		CHI = {
-		add_named_threat = { 
-		threat = 5
-		name = CHI_IL_civil_war_tt
+		    add_named_threat = { 
+		        threat = 5
+		        name = CHI_IL_civil_war_tt
+		    }
+		    inherit_technology = SIL
 		}
-		inherit_technology = SIL
-		}
-		hidden_effect = {
-				country_event = { 
-					id = illinois.11
-					days = 10 
-				} 
-			}
 	}
-	option = {
-	name = illinois.10.b
-		hidden_effect = {
-		country_event = usastates_news.39
-		}
-		CHI = { change_tag_from = SIL }
-		CHI = {
-            transfer_state = 41
-			transfer_state = 692
-            load_oob = CHI_spawnables
+
+	option = { # Play as CHI
+        name = illinois.10.b
+        hidden_effect = {
+            country_event = usastates_news.39 
+            country_event = { 
+                id = illinois.11
+                days = 10 
+            }
         }
-		hidden_effect = {
-				country_event = { 
-					id = illinois.11
-					days = 10 
-				} 
-			}
-		CHI = {
-		add_named_threat = { 
-		threat = 5
-		name = CHI_IL_civil_war_tt
-		}
-		inherit_technology = SIL
-		}
+        CHI = { change_tag_from = SIL }
+        CHI = {
+            transfer_state = 41
+            transfer_state = 692
+            #load_oob = CHI_spawnables
+        }
+        CHI = {
+            add_named_threat = { 
+                threat = 5
+                name = CHI_IL_civil_war_tt
+            }
+            inherit_technology = SIL
+        }
+        custom_effect_tooltip = SIL_illinois_10_tt
 	}
 }
 #dec war
@@ -307,12 +304,54 @@ country_event = {
     desc = illinois.11.d
     is_triggered_only = yes
     fire_only_once = yes
+    picture = GFX_illinois4
     option = { 
         name = illinois.11.a
         ai_chance = {
             factor = 4000
         }
-		
+		create_wargoal = {
+            target = CHI
+            type = annex_everything
+        }
+        add_war_support = 0.05
+    }
+
+    option = {
+        name = illinois.11.b
+        add_stability = -0.2
+        add_political_power = 50
+    }
+}
+
+country_event = { # Memorial Day Massacre event
+    id = illinois.14 
+    title = illinois.14.t 
+    desc = illinois.14.d
+    is_triggered_only = yes
+    fire_only_once = yes
+
+    option = { # Punish the CPD officers responsible for the massacre.
+        name = illinois.14.a 
+        add_stability = 0.1
+        add_political_power = -150
+        custom_effect_tooltip = SIL_illinois_14_a_tt
+        hidden_effect = {
+            news_event = usastates_news.23
+        }
+    }
+
+    option = { # Take the side of the CPD and crack down on organized labor! 
+        name = illinois.14.b 
+        add_stability = -0.1 
+        custom_effect_tooltip = SIL_illinois_14_b_tt
+        hidden_effect = {
+            news_event = usastates_news.23
+            country_event = {
+                id = illinois.10
+                days = 14
+            }
+        }
     }
 }
 #GEORGE ORWELL GENERAL
