@@ -26,11 +26,14 @@
 			focus = SMI_the_seeds_of_revolution_planted_in_knowledge
 		}
 		allow_branch = {
-			NOT = {
-				OR = {
-					has_completed_focus = SMI_continue_the_terror
-					has_completed_focus = SMI_the_seeds_of_revolution_planted_in_knowledge
+			or = {
+				NOT = {
+					OR = {
+						has_completed_focus = SMI_continue_the_terror
+						has_completed_focus = SMI_the_seeds_of_revolution_planted_in_knowledge
+					}
 				}
+				has_country_flag = SMI_other_civil_war_flag
 			}
 		}
 		completion_reward = {
@@ -5494,12 +5497,37 @@
 		prerequisite = {
 			focus = SMI_revolutionary_education_campaigns
 		}
+		available = {
+			hidden_trigger = {
+				or = {
+					is_ai = no 
+					AND = {
+						is_ai = yes
+						or = {
+							has_completed_focus = SMI_construct_lansing_proletarian_clubs
+							has_completed_focus = SMI_construct_traverse_city_proletarian_clubs
+						}
+					}
+				}
+			}
+		}
 		completion_reward = { 
 			# start civil war
+			hidden_effect = {
+				if = {
+					limit = {
+						is_ai = yes 
+					}
+					add_timed_idea = {
+						idea = SMI_AI_pls_win_idea
+						days = 100
+					}
+				}
+			}
 			start_civil_war = {
 				ideology = neutrality
 				ruling_party = communism
-				army_ratio = 0.5 
+				army_ratio = 0.35
 				navy_ratio = 0.5
 				air_ratio = 0.5
 				states = all 
@@ -5507,6 +5535,15 @@
 					NOT = {
 						has_state_flag = SMI_civil_war_educated_flag
 					}
+				}
+				hidden_effect = {
+					load_focus_tree = {
+						tree = SMI_Michigan
+					}
+					complete_national_focus = SMI_the_state_of_the_union
+					complete_national_focus = SMI_1936_governmental_elections
+					complete_national_focus = SMI_republicans_stay_in_control
+					set_country_flag = SMI_other_civil_war_flag
 				}
 			}
 			set_party_name = {
