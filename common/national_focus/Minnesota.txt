@@ -4361,9 +4361,14 @@ focus_tree = {
 						original_tag = SMN
 						has_government = Progressivism
 					}
+					load_focus_tree = {
+						tree = SMN
+					}
+					complete_national_focus = SMN_the_end_of_the_oconnor_agreement
+					complete_national_focus = SMN_olsons_death
 					#JAI as tag alias
 					hidden_effect = {
-						division_template = { name = "Minnesota Gaurd" division_names_group = SMN_INF_01 is_locked = no regiments = { infantry = { x = 0 y = 0 } infantry = { x = 1 y = 0 } infantry = { x = 1 y = 0 } infantry = { x = 0 y = 1 } infantry = { x = 0 y = 2 }
+						division_template = { name = "Minnesota Guard" division_names_group = SMN_INF_01 is_locked = no regiments = { infantry = { x = 0 y = 0 } infantry = { x = 1 y = 0 } infantry = { x = 1 y = 0 } infantry = { x = 0 y = 1 } infantry = { x = 0 y = 2 }
 						infantry = { x = 0 y = 3 } artillery_brigade = { x = 1 y = 1 } artillery_brigade = { x = 1 y = 2 }} }
 						division_template = { name = "Minnesota National Guard" division_names_group = SMN_INF_01 is_locked = no regiments = { infantry = { x = 0 y = 0 } infantry = { x = 1 y = 0 } } }
 						198 = {
@@ -4396,15 +4401,15 @@ focus_tree = {
 						}
 						839 = {
 							create_unit = {
-								division = "name = \"1. Minnesota Gaurd\" division_template = \"Teamster Union Guard\" start_experience_factor = 0.4 start_equipment_factor = 0.7"
+								division = "name = \"1. Minnesota Guard\" division_template = \"Minnesota Guard\" start_experience_factor = 0.4 start_equipment_factor = 0.7"
 								owner = ROOT
 							}
 							create_unit = {
-								division = "name = \"2. Minnesota Gaurd\" division_template = \"Teamster Union Guard\" start_experience_factor = 0.4 start_equipment_factor = 0.7"
+								division = "name = \"2. Minnesota Guard\" division_template = \"Minnesota Guard\" start_experience_factor = 0.4 start_equipment_factor = 0.7"
 								owner = ROOT
 							}
 							create_unit = {
-								division = "name = \"3. Minnesota Gaurd\" division_template = \"Teamster Union Guard\" start_experience_factor = 0.4 start_equipment_factor = 0.7"
+								division = "name = \"3. Minnesota Guard\" division_template = \"Minnesota Guard\" start_experience_factor = 0.4 start_equipment_factor = 0.7"
 								owner = ROOT
 							}
 						}				
@@ -5046,31 +5051,21 @@ focus_tree = {
 						}
 					}
 					OR = {
-						custom_trigger_tooltip = {
-							tooltip = owns_south_dakota_tt
-							controls_south_dakota_trigger = yes
-						}
-						SSD = {
-							is_in_faction_with = SMN
-						}
-						SSD = {
-							is_puppet_of = SMN
-						}
-						SSD = {
-							is_in_faction_with = SMN
-							SND = {
-								exists = no
-							}
+						AND = {
 							custom_trigger_tooltip = {
 								tooltip = owns_north_dakota_tt
 								controls_north_dakota_trigger = yes
 							}
 						}
-						SSD = {
-							is_puppet_of = SMN
-							SND = {
-								exists = no
+						any_country = {
+							is_in_faction_with = SMN
+							custom_trigger_tooltip = {
+								tooltip = owns_north_dakota_tt
+								controls_north_dakota_trigger = yes
 							}
+						}
+						any_country = {
+							is_puppet_of = SMN
 							custom_trigger_tooltip = {
 								tooltip = owns_north_dakota_tt
 								controls_north_dakota_trigger = yes
@@ -5078,31 +5073,21 @@ focus_tree = {
 						}
 					}
 					OR = {
-						custom_trigger_tooltip = {
-							tooltip = owns_north_dakota_tt
-							controls_north_dakota_trigger = yes
-						}
-						SND = {
-							is_in_faction_with = SMN
-						}
-						SND = {
-							is_puppet_of = SMN
-						}
-						SND = {
-							is_in_faction_with = SMN
-							SSD = {
-								exists = no
-							}
+						AND = {
 							custom_trigger_tooltip = {
 								tooltip = owns_south_dakota_tt
 								controls_south_dakota_trigger = yes
 							}
 						}
-						SND = {
-							is_puppet_of = SMN
-							SSD = {
-								exists = no
+						any_country = {
+							is_in_faction_with = SMN
+							custom_trigger_tooltip = {
+								tooltip = owns_south_dakota_tt
+								controls_south_dakota_trigger = yes
 							}
+						}
+						any_country = {
+							is_puppet_of = SMN
 							custom_trigger_tooltip = {
 								tooltip = owns_south_dakota_tt
 								controls_south_dakota_trigger = yes
@@ -5609,6 +5594,314 @@ focus_tree = {
 			}
 		}
 	}
+###NATIONAL GUARD TREE
+focus = {
+	id = SMN_the_fight_for_the_state
+	icon = GFX_focus_defend_democracy
+	#prerequisite = { focus = SMN_the_father_of_our_nation focus = SMN_workers_unite_america }
+	x = 10
+	y = 12
+	cost = 5
+	#relative_position_id = 
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			has_civil_war = yes
+		}	
+	}
+	#offset = {
+	#	
+	#}
+	#allow_branch = {
+	#	
+	#}
+	bypass = {
+		has_civil_war = no
+	}
+	available = {
+		has_civil_war = yes
+	}
+	completion_reward = {
+		add_stability = -0.10
+		add_timed_idea = {
+			idea = SMN_fight_for_the_state_idea
+			days = 120
+		}
+		set_politics = {
+			ruling_party = neutrality
+		}
+	}
+}
+focus = {
+	id = SMN_the_northern_defence_command_center
+	icon = GFX_focus_ger_bulwark_against_bolshevism
+	prerequisite = { focus = SMN_the_fight_for_the_state }
+	x = 0
+	y = 1
+	cost = 7
+	relative_position_id = SMN_the_fight_for_the_state
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			has_civil_war = yes
+		}	
+	}
+	bypass = {
+		has_civil_war = no
+	}
+	available = {
+		has_full_control_of_state = 342
+		has_civil_war = yes
+	}
+	completion_reward = {
+		set_capital = {
+			state = 342
+		}
+		add_victory_points = {
+			province = 6508
+			value = 19
+		}
+		342 = {
+			add_extra_state_shared_building_slots = 1
+			add_building_construction = {
+				type = arms_factory
+				level = 1
+			}
+			add_building_construction = {
+				type = anti_air_building
+				level = 1
+			}
+			add_building_construction = {
+				type = supply_node
+				level = 1
+				province = 6508
+			}
+			add_building_construction = {
+				type = bunker
+				level = 2
+				province = 6508
+			}
+			add_building_construction = {
+				type = bunker
+				level = 2
+				province = 6507
+			}
+			add_building_construction = {
+				type = bunker
+				level = 2
+				province = 8178
+			}
+			add_building_construction = {
+				type = bunker
+				level = 2
+				province = 8182 
+			}
+			add_building_construction = {
+				type = bunker
+				level = 2
+				province = 2861
+			}
+		}
+		add_timed_idea = {
+			idea = SMN_massive_construction_spending
+			days = 200
+		}
+	}
+}
+focus = {
+	id = SMN_emergency_conversion
+	icon = GFX_focus_generic_land_seizure
+	prerequisite = { focus = SMN_the_northern_defence_command_center }
+	x = -1
+	y = 1
+	cost = 5
+	relative_position_id = SMN_the_northern_defence_command_center
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			has_civil_war = yes
+		}	
+	}
+	bypass = {
+		has_civil_war = no
+	}
+	available = {
+		has_civil_war = yes
+	}
+	completion_reward = {
+		add_offsite_building = {
+			type = arms_factory
+			level = 3
+		}
+		random_owned_controlled_state = {
+			limit = {
+				industrial_complex > 1
+			}
+			remove_building = {
+				type = industrial_complex
+				level = 1
+			}
+		}
+		add_stability = -0.10
+	}
+}
+focus = {
+	id = SMN_emergency_conscription
+	icon = GFX_focus_generic_martial_law_paper
+	prerequisite = { focus = SMN_the_northern_defence_command_center }
+	x = 1
+	y = 1
+	cost = 5
+	relative_position_id = SMN_the_northern_defence_command_center
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			has_civil_war = yes
+		}	
+	}
+	bypass = {
+		has_civil_war = no
+	}
+	available = {
+		has_full_control_of_state = 342
+		has_civil_war = yes
+	}
+	completion_reward = {
+		add_war_support = -0.05
+		custom_effect_tooltip = SMN_spawn_two_veteran_national_guard_units_tt
+		hidden_effect = {
+			342 = {
+				create_unit = {
+					division = "name = \"1. Minnesota Guard\" division_template = \"Minnesota Guard\" start_experience_factor = 0.7 start_equipment_factor = 0.7"
+					owner = ROOT
+				}
+				create_unit = {
+					division = "name = \"2. Minnesota Guard\" division_template = \"Minnesota Guard\" start_experience_factor = 0.7 start_equipment_factor = 0.7"
+					owner = ROOT
+				}
+			}
+		}
+		
+	}
+}
+focus = {
+	id = SMN_one_final_push
+	icon = GFX_focus_generic_militarist_society
+	prerequisite = { focus = SMN_emergency_conversion }
+	prerequisite = {
+		focus = SMN_emergency_conscription
+	}
+	x = 0
+	y = 2
+	cost = 10
+	relative_position_id = SMN_the_northern_defence_command_center
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			has_civil_war = yes
+		}	
+	}
+	bypass = {
+		has_civil_war = no
+	}
+	available = {
+		has_civil_war = yes
+	}
+	completion_reward = {
+		add_ideas = SMN_one_final_push_idea
+		add_equipment_to_stockpile = {
+			type = infantry_equipment_0
+			amount = 1000
+		}
+	}
+}
+focus = {
+	id = SMN_begin_reconstruction
+	icon = GFX_focus_generic_road2
+	prerequisite = {
+		focus = SMN_one_final_push
+	}
+	x = 0
+	y = 1
+	cost = 10
+	relative_position_id = SMN_one_final_push
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			has_civil_war = yes
+		}	
+	}
+	
+	available = {
+		NOT = {
+			has_civil_war = yes
+		}
+	}
+	completion_reward = {
+		custom_effect_tooltip = SMN_will_start_an_event_chain_for_reconstruction_tt
+	}
+}
+focus = {
+	id = SMN_hand_the_reigns_back_to_democracy
+	icon = GFX_focus_generic_elections
+	prerequisite = {
+		focus = SMN_begin_reconstruction
+	}
+	mutually_exclusive = {
+		focus = SMN_the_military_takesover
+	}
+	x = -4
+	y = 1
+	cost = 10
+	relative_position_id = SMN_begin_reconstruction
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			has_civil_war = yes
+		}	
+	}
+	
+	available = {
+	}
+	completion_reward = {
+		
+	}
+}
+focus = {
+	id = SMN_the_military_takesover
+	icon = GFX_focus_generic_centralize_power
+	prerequisite = {
+		focus = SMN_begin_reconstruction
+	}
+	mutually_exclusive = {
+		focus = SMN_hand_the_reigns_back_to_democracy
+	}
+	x = 4
+	y = 1
+	cost = 10
+	relative_position_id = SMN_begin_reconstruction
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 0
+			has_civil_war = yes
+		}	
+	}
+	
+	available = {
+
+	}
+	completion_reward = {
+		
+	}
+}
 ###ARMY TREE
 	focus = {
 		id = SMN_army_reform
