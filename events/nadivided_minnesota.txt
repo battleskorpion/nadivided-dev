@@ -571,7 +571,6 @@ country_event = {
 	desc = "Currently Vincent R. Dunne leads to government but the party has called for an election as the civil war is over. Shall we choose the current Troskyists Candidate.Or shall we choose Gus Hall, an up and coming Marxist-Leninist."
 	picture = GFX_report_event_election_vote
 	
-	is_triggered_only = no
     fire_only_once = yes
 	trigger = {
 		has_completed_focus = SMN_march_on_st_paul
@@ -678,7 +677,7 @@ country_event = {
 country_event = {
 	id = minnesota.21
 	title = "Reconstruction"
-	desc = "The State has deemed it beneficial to rebuild the infrastructure of infrastructure, be thankful citizen"
+	desc = "The State has deemed it beneficial to rebuild the infrastructure of Minnesota, be thankful citizen"
 	picture = GFX_report_event_SOV_young_builders_of_communism
 	is_triggered_only = yes
 	#fire_only_once = 
@@ -711,30 +710,123 @@ country_event = {
 		ai_chance = {
 			base = 10
 		}
-		add_timed_idea = {
-			idea = SMN_consolidated_power_idea
-			days = 200
+		set_capital = {
+			state = 834
 		}
 	}
 }
+###CIVIL WAR BABY MINNEEESODAA
 country_event = {
 	id = minnesota.23
 	title = "Minnesota Civil War"
 	desc = "A few rocks were thrown, the national guard was called and who knows who started shooting;burning and looting has ensued. All of this from a simple protest for workers rights. Who shall prevail?"
-	picture = GFX_report_event_hitler_parade
+	picture = GFX_report_event_french_resistance_01
 	is_triggered_only = yes
-	#fire_only_once = 
+	fire_only_once = yes
+
+	immediate = {
+		random_country = {
+			limit = {
+				original_tag = SMN
+				NOT = {
+					tag = SMN
+				}
+				has_government = progressivism
+			}
+			save_event_target_as = THE_state_of_MN
+		}
+		every_character = {
+			limit = {
+				OR = {
+					is_character = SMN_hjalmar_peterson
+					is_character = SMN_richard_canyon
+					is_character = SMN_hubert_humphrey_state
+					is_character = SMN_josh_williams
+					is_character = SMN_bob_wilson
+					is_character = SMN_bob_doug
+					is_character = SMN_henry_johnson
+				}
+			}
+			set_nationality = event_target:THE_state_of_MN
+		}
+		
+		event_target:THE_state_of_MN = {
+			#recruit_character = SMN_hjalmar_peterson
+			#recruit_character = SMN_richard_canyon
+			SMN_hjalmar_peterson = {
+				add_country_leader_role = {
+					promote_leader = yes
+					country_leader = {
+						ideology = roosevelt_progressivism
+						expire = "1965.1.1.1" 
+						traits = { 
+							resolute_social_democrat
+						}
+					}
+				}
+			}
+			
+			add_equipment_to_stockpile = { #buff to compensate for lack of industry, 5-divisions worth
+				type = infantry_equipment
+				amount = 500
+				producer = SMN
+			}
+			add_equipment_to_stockpile = { #buff to compensate for lack of industry, 5-divisions worth
+				type = support_equipment
+				amount = 25
+				producer = SMN
+			}
+			set_country_flag = SMN_anti_communist_tree_chosen
+			every_state = {
+				limit = {
+					is_controlled_by = ROOT
+					is_core_of = ROOT
+					NOT = {
+						is_controlled_by = event_target:THE_state_of_MN
+					}
+				}
+				add_core_of = PREV
+			}
+		}
+		transfer_units_fraction= {
+			target = event_target:THE_state_of_MN 
+			size = 0.3
+			stockpile_ratio = 0.2
+			army_ratio = 0.3
+			navy_ratio = 1
+			air_ratio = 0.10
+			keep_unit_leaders_trigger = {
+				always = yes 
+			}
+		}
+	}
 	
 	option = {
 		name = "For the Workers!"
 		custom_effect_tooltip = SMN_stay_as_communist_tt
+		event_target:THE_state_of_MN = {
+			SMN_spawn_national_guard_units_CW = yes
+		}
+		SMN_spawn_communist_units_CW = yes
 	}
 	option = {
 		name = "For the Republic!"
 		custom_effect_tooltip = SMN_play_as_the_state_tt
-		change_tag_from = D02
-	}
-	immediate = {
+		event_target:THE_state_of_MN = {
+			SMN_spawn_national_guard_units_CW = yes
+		}
+		SMN_spawn_communist_units_CW = yes
+		event_target:THE_state_of_MN = {
+			change_tag_from = ROOT
+		}
+		hidden_effect = {
+			every_character = {
+				limit = {
+					has_nationality = SMN
+				}
+				set_nationality = event_target:THE_state_of_MN
+			}
+		}
 	}
 }
 ############ THE MOB
