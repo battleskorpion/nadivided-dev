@@ -49,6 +49,11 @@
 	FIELD_EXPERIENCE_ON_DIVISION_MULT = 0.005					-- default -- Victory points with values higher than or equal to this are considered to be of medium importance.
 --},
 
+NDefines.NMilitary.NUKE_MIN_DAMAGE_PERCENT = 1.0;
+NDefines.NMilitary.NUKE_MAX_DAMAGE_PERCENT = 1.2;
+
+
+
 --NRailwayGun = {
 	RAILWAY_GUN_RANGE = 50					-- default -- Victory points with values higher than or equal to this are considered to be of medium importance.
 --},
