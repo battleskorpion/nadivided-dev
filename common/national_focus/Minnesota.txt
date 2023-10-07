@@ -19,6 +19,8 @@ focus_tree = {
 		y = 0
 		available = {
 		}
+		bypass = {
+		}
 		completion_reward = {
 			random_owned_controlled_state = {
 				add_extra_state_shared_building_slots = 2
@@ -42,6 +44,9 @@ focus_tree = {
 		relative_position_id = SMN_deal_with_great_depression
 		available = {
 		}
+		bypass = {
+			has_country_flag = SMN_anti_communist_tree_chosen
+		}
 		completion_reward = {
 			if = {
 				limit = {
@@ -51,12 +56,6 @@ focus_tree = {
 			}
 			else = {
 				remove_ideas = SMN_log_drive
-			}
-			if = {
-				limit = {
-					has_country_flag = SMN_anti_communist_tree_chosen
-				}
-				add_stability = 0.05
 			}
 		}
 	}
@@ -3465,6 +3464,9 @@ focus_tree = {
 					level = 2
 				}
 			}
+			set_rule = {
+				can_join_factions = yes
+			}
 		}
 	}
 	focus = {
@@ -3614,6 +3616,7 @@ focus_tree = {
 				id = usastates_news.56
 				days = 1
 			}
+			set_rule = { can_create_factions = yes }
 		}
 	}
 	focus = {
@@ -5605,7 +5608,7 @@ focus_tree = {
 		#prerequisite = { focus = SMN_the_father_of_our_nation focus = SMN_workers_unite_america }
 		x = 10
 		y = 12
-		cost = 3
+		cost = 1
 		#relative_position_id = 
 		ai_will_do = {
 			factor = 1
@@ -5633,10 +5636,33 @@ focus_tree = {
 		select_effect = {
 		}
 		completion_reward = {
-			add_stability = -0.10
 			add_timed_idea = {
 				idea = SMN_fight_for_the_state_idea
-				days = 120
+				days = 200
+			}
+			if = {
+				limit = {
+					is_ai = no
+				}
+				add_political_power = 150
+			}
+			custom_effect_tooltip = SMN_spawn_two_veteran_national_guard_units_tt
+			army_experience = 10
+			hidden_effect = {
+				342 = {
+					create_unit = {
+						division = "name = \"9. Minnesota Guard\" division_template = \"Minnesota Guard\" start_experience_factor = 0.7 start_equipment_factor = 0.7"
+						owner = PREV
+					}
+					create_unit = {
+						division = "name = \"10. Minnesota Guard\" division_template = \"Minnesota Guard\" start_experience_factor = 0.7 start_equipment_factor = 0.7"
+						owner = PREV
+					}
+					create_unit = {
+						division = "name = \"11. Minnesota Guard\" division_template = \"Minnesota Guard\" start_experience_factor = 0.7 start_equipment_factor = 0.7"
+						owner = PREV
+					}
+				}
 			}
 			set_politics = {
 				ruling_party = neutrality
@@ -5661,7 +5687,7 @@ focus_tree = {
 		prerequisite = { focus = SMN_the_fight_for_the_state }
 		x = 0
 		y = 1
-		cost = 7
+		cost = 5
 		relative_position_id = SMN_the_fight_for_the_state
 		ai_will_do = {
 			factor = 1
@@ -5738,7 +5764,7 @@ focus_tree = {
 		prerequisite = { focus = SMN_the_northern_defence_command_center }
 		x = -1
 		y = 1
-		cost = 3
+		cost = 2
 		relative_position_id = SMN_the_northern_defence_command_center
 		ai_will_do = {
 			factor = 1
@@ -5776,7 +5802,7 @@ focus_tree = {
 		prerequisite = { focus = SMN_the_northern_defence_command_center }
 		x = 1
 		y = 1
-		cost = 3
+		cost = 2
 		relative_position_id = SMN_the_northern_defence_command_center
 		ai_will_do = {
 			factor = 1
@@ -6022,6 +6048,20 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_ideas = SMN_armament_production_idea
+			random_owned_controlled_state = {
+				prioritize = { 324 }
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 	focus = {
@@ -6032,7 +6072,7 @@ focus_tree = {
 		}
 		x = 3
 		y = 1
-		cost = 10
+		cost = 7.2
 		mutually_exclusive = {
 			focus = SMN_tighten_recruitment_standards
 		}
@@ -6063,7 +6103,7 @@ focus_tree = {
 		}
 		x = 1
 		y = 1
-		cost = 10
+		cost = 7.2
 		relative_position_id = SMN_the_military_takesover
 		ai_will_do = {
 			factor = 1
@@ -6347,13 +6387,7 @@ focus_tree = {
 		id = SMN_the_occupation
 		icon = GFX_goal_generic_position_armies
 		prerequisite = {
-			focus = SMN_march_across_the_st_croix
-		}
-		prerequisite = {
-			focus = SMN_secure_the_missouri_river_line
-		}
-		prerequisite = {
-			focus = SMN_march_on_des_moines
+			focus = SMN_march_across_the_st_croix focus = SMN_secure_the_missouri_river_line focus = SMN_march_on_des_moines
 		}
 		x = 0
 		y = 2
@@ -6438,6 +6472,11 @@ focus_tree = {
 		x = 50
 		y = 0
 		available = {
+		}
+		bypass = {
+			NOT = {
+				has_idea = SMN_Minnesota_home_army_ruined
+			}
 		}
 		completion_reward = {
 			army_experience = 25
