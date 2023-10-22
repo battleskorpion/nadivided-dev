@@ -2,9 +2,9 @@ add_namespace = minnesota
 
 country_event = { 
     id = minnesota.1
-    title = minnesota.1.t
-    desc = minnesota.1.d
-    picture = x
+    title = "Floyd Olson Ailing Health"
+    desc = "Floyd B. Olson, our beloved govenor has been prescribed stomach cancer, he has fallen quite ill and has been told he does not have long left to live."
+    picture = GFX_report_event_generic_sign_treaty1
 
     fire_only_once = yes
 
@@ -16,10 +16,942 @@ country_event = {
     immediate = {log = "[GetDateText]: [Root.GetName]: event minnesota.1"}
 
     option = {
-        name = minnesota.1.a
+        name = "May he live the rest of his days gracefully"
         ai_chance = {
             factor = 100
         }
         promote_character = SMN_floyd_olson_cancer_now
+        country_event = {
+            id =minnesota.2
+            days = 30
+        }
     }
+}
+country_event = { 
+    id = minnesota.2
+    title = "Order of Succession"
+    desc = "The Order of Succession has been started following the Lt.Govenor-Hjalmar Peterson. May he serve well."
+    picture = GFX_report_event_generic_handshake
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    immediate = {log = "[GetDateText]: [Root.GetName]: event minnesota.2"}
+
+    option = {
+        name = "May he continue his predecessor's policies"
+        add_country_leader_role = {
+			character = SMN_hjalmar_peterson
+			promote_leader = yes
+			country_leader = {
+				ideology = roosevelt_progressivism
+				expire = "1965.1.1.1"
+				traits = {
+                    resolute_social_democrat
+				}
+			}
+		}
+    }
+}
+###THE OCONNOR AGREEMENT
+country_event = { 
+    id = minnesota.3
+    title = minnesota.3.t
+    desc = minnesota.3.d
+    picture = GFX_report_event_generic_read_write
+
+    fire_only_once = yes
+
+    #is_triggered_only = yes
+    
+    trigger = {
+		focus_progress = {
+			progress > 0.2
+			focus = SMN_the_end_of_the_oconnor_agreement
+		}
+	}
+    immediate = {log = "[GetDateText]: [Root.GetName]: event minnesota.3"}
+
+    option = {
+      	name =  minnesota.3.a
+      	custom_effect_tooltip = SMN_end_the_oconnor_agreement
+      	add_political_power = 5
+      	#country_event = minnesota.4
+       	add_stability = 0.05
+       	swap_ideas = {
+       		remove_idea = SMN_corrupt_police
+       		add_idea = SMN_SPPD_idea
+    	}
+    	clr_country_flag = SMN_has_oconnor_agreement
+		mark_focus_tree_layout_dirty = yes
+		set_country_flag = SMN_non_riot_side_tree
+    }
+    ###THE PEOPLE ARE DISPLEASED
+    option = {
+        name = minnesota.3.b
+        country_event = minnesota.4
+		mark_focus_tree_layout_dirty = yes
+		set_country_flag = SMN_riot_side_tree
+        ###PEOPLE ARE DISPLEASED WITH HOW THE GOVERNEMNT HAS DEALT WITH THE CORRUPTION
+    }
+}
+###PEOPLE READY TO STRIKE
+country_event = { 
+    id = minnesota.4
+    title = minnesota.4.t
+    desc = minnesota.4.d
+    picture = GFX_worker_strike
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    immediate = {log = "[GetDateText]: [Root.GetName]: event minnesota.4"}
+
+    option = {
+       name =  minnesota.4.a
+       hidden_effect = {
+        remove_mission = SMN_1938_strikes
+        clr_country_flag = SMN_incoming_strikes
+       }
+       activate_mission = SMN_1936_strikes
+       set_country_flag = SMN_incoming_strikes_flag
+       ###PEOPLE FLOCK TO THE STRIKES
+    }
+    ###THE PEOPLE ARE DISPLEASED
+}
+###THE RIOT BEGINS NORMAL
+country_event = { 
+    id = minnesota.5
+    title = minnesota.5.t
+    desc = minnesota.5.d
+    picture = GFX_worker_strike
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    immediate = {log = "[GetDateText]: [Root.GetName]: event minnesota.5"}
+
+    option = {
+        name = minnesota.5.a
+        834 = {
+            damage_building = {
+                type = industrial_complex
+                damage = 3
+            }
+        }
+        834 = {
+            damage_building = {
+                type = arms_factory
+                damage = 3
+            }
+        }
+        add_ideas = strikes_1
+        add_stability = -0.10
+        set_country_flag = SMN_teamsters_have_striked
+    }
+    ###THE PEOPLE ARE DISPLEASED
+}
+###ELECTIONS for democratic side
+country_event = { 
+    id = minnesota.6
+    title = minnesota.6.t
+    desc = minnesota.6.d
+    picture = GFX_report_event_election_vote
+
+    fire_only_once = yes
+    is_triggered_only = yes
+    
+    mean_time_to_happen = {
+        days = 7
+    }
+    immediate = {log = "[GetDateText]: [Root.GetName]: event minnesota.6"}
+
+    option = {
+        name = minnesota.6.a
+        add_country_leader_role = {
+			character = SMN_elmer_benson
+			promote_leader = yes
+			country_leader = {
+				ideology = roosevelt_progressivism
+				expire = "1965.1.1.1"
+				traits = {
+                    dealbroker
+				}
+			}
+		}
+    }
+    ###HAROLD BENSON BECOMES PRESIDENT
+    option = {
+        name = minnesota.6.b
+        set_politics = {
+            ruling_party = democratic
+        }
+    }
+}
+# Event asking SWI/SUP for unification
+country_event = {
+	id = minnesota.7
+	title = "Minnesota Proposes Unification"
+	desc = "Minnesota proposes unification of the progressive alliance in these troubling times, should we accept and become apart of the union to deter the greater threats abroad, or shall we keep our indepdence, no matter the cost"
+	picture = GFX_report_event_generic_sign_treaty1
+    immediate = {log = "[GetDateText]: [Root.GetName]: event minnesota.7"}
+	is_triggered_only = yes
+	
+	# Sounds good
+	option = {
+        ai_chance = {
+            factor = 100
+        }
+		name = "Sounds Good"
+		custom_effect_tooltip = GAME_OVER_TT
+		FROM = {
+			#country_event = { id = minnesota.8 }
+			set_country_flag = SMN_progressive_unify_flag
+            annex_country = {
+			    target = ROOT
+			    transfer_troops = yes
+			}
+		}
+        ROOT = {
+            every_unit_leader = {
+                set_nationality = FROM
+            }
+        }
+        every_state = {
+            limit = {
+                OR = {
+                    is_core_of = ROOT
+                }
+            }
+            add_core_of = FROM
+        }
+	}
+
+	# We think not
+	option = {
+		name = "We Think Not"
+		ai_chance = {
+			factor = 0
+		}
+		FROM = { country_event = { id = minnesota.8 } }
+	}
+}
+
+# Event for Netherlands informing BEL/LUX rejected
+country_event = {
+	id = minnesota.8
+	title = "They Rejected our Proposal"
+	desc = "They have rejected our proposal...it was worth a try"
+	picture = GFX_report_event_generic_sign_treaty1
+    immediate = {log = "[GetDateText]: [Root.GetName]: event minnesota.8"}
+
+	is_triggered_only = yes
+	
+	# Unfortunate
+	option = {
+		name = "Unfortunate"
+	}
+}
+###THE RIOT BEGINS
+country_event = { 
+    id = minnesota.9
+    title = minnesota.5.t
+    desc = minnesota.5.d
+    picture = GFX_worker_strike
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    immediate = {log = "[GetDateText]: [Root.GetName]: event minnesota.9"}
+
+    option = {
+        name = minnesota.5.a
+        834 = {
+            damage_building = {
+                type = industrial_complex
+                damage = 3
+            }
+        }
+        834 = {
+            damage_building = {
+                type = arms_factory
+                damage = 3
+            }
+        }
+        add_ideas = strikes_1
+        add_stability = -0.10
+        set_country_flag = SMN_teamsters_have_striked_big
+        set_country_flag = SMN_teamsters_have_striked
+        custom_effect_tooltip = ANTON_DIES_TT
+        hidden_effect = {
+            retire_character = SMN_anton_j_rockne
+        }
+		news_event = {
+			id = usastates_news.55
+			days = 7
+		}
+    }
+    ###THE PEOPLE ARE DISPLEASED
+}
+####OLSON DECLARES MARTIAL LAW
+country_event = { 
+    id = minnesota.10
+    title = "Olson Declares Martial Law"
+    desc = "Olson has declared a state of emergency in the news of upcoming strikes, reports have come in that it may be worse than the 1934 trucker riots not only two years ago."
+    picture = GFX_report_event_czech_soldiers_01
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    immediate = { log = "[GetDateText]: [Root.GetName]: event minnesota.10" }
+
+    option = {
+        name = "It seems that the strikes from 1934 will happen all over again..."
+        add_ideas = SMN_martial_law_idea
+        add_days_mission_timeout = {
+            mission = SMN_1938_strikes
+            days = 50
+        }
+		every_other_country = {
+			news_event = usastates_news.55
+		}
+    }
+    ###THE PEOPLE ARE DISPLEASED
+}
+# MINNESOTA SENDS ROOT to demand alignment
+country_event = {
+	id = minnesota.11
+	title = "Minnesota Demands Our Alignment"
+	desc = "The State of Minnesota has been influencing our politics, we knew this day would come, shall we become their puppet, align with them, or anger them?"
+	picture = GFX_report_event_journalists_speech
+	
+	is_triggered_only = yes
+    fire_only_once = no
+	option = { #become their puppet
+		name = "We Surrender"
+		ai_chance = {
+			factor = 25
+		}
+		FROM = { country_event = minnesota.12 }
+	}
+
+	option = { #change government to Romanian type, enter alliance
+		name = "We shall align, but maintain our soverignty"
+		ai_chance = {
+			factor = 25
+		}
+		FROM = { country_event = minnesota.13 }
+	}
+
+	option = { #no deals
+		name = "No Deal"
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 2
+				ROM = {
+					is_in_faction = no
+				}
+			}
+			modifier = {
+				factor = 10
+				is_in_faction = yes
+			}
+		}
+		FROM = { country_event = minnesota.14 }	
+	}
+}
+#Minnesota has FROM become their puppet
+country_event = {
+	id = minnesota.12
+	title = "They Accepted!"
+	desc = "They are now under our union. Welcome to the Commune"
+	picture = GFX_report_event_generic_sign_treaty2
+	
+	is_triggered_only = yes
+
+	option = { #cool
+		name = "Cool"
+		puppet = FROM
+	}
+
+}
+
+#FROM OFFERS ALIGNMENT
+country_event = {
+	id = minnesota.13
+	title = "They have aligned themselves to our politics"
+	desc = "We have grown our union to further unite the midwest"
+	picture = GFX_report_event_hungary_parliament
+	
+	is_triggered_only = yes
+    fire_only_once = no
+	option = { #cool
+		name = "Awesome"
+		ai_chance = {
+			factor = 80
+		}
+		if = {
+			limit = { is_faction_leader = yes }
+			add_to_faction = FROM
+		}
+		if = {
+			limit = {
+				is_in_faction = no
+			}
+			set_rule = { can_create_factions = yes }
+			create_faction = TROSKYIST_FACTION
+			add_to_faction = FROM
+		}
+	}
+
+	option = { #war
+		name = "It seems we have no other choice but to liberate the workers"
+		ai_chance = {
+			factor = 20
+		}
+		create_wargoal = {
+			type = puppet_wargoal_focus
+			target = FROM
+		}
+	}
+}
+
+#HUN refuses
+country_event = {
+	id = minnesota.14
+	title = "They have Refused alignment"
+	desc = "How dare they refuse to unite!"
+	picture = GFX_report_event_hungarian_soldiers
+	
+	is_triggered_only = yes
+    fire_only_once = no
+	option = { #cool
+		name = "We cannot interfere"
+		ai_chance = {
+			factor = 10
+		}
+	}
+
+	option = { #war
+		name = "Liberate the workers"
+		ai_chance = {
+			factor = 90
+			modifier = {
+				has_war = yes
+				factor = 0
+			}
+		}
+		create_wargoal = {
+			type = puppet_wargoal_focus
+			target = FROM
+		}
+	}
+}
+country_event = {
+	id = minnesota.15
+	title = "Minnesota Demands Their Former Territory"
+	desc = "After some radical changes in their government, minnesota has claimed our eastern half, all the way to the Missouri River. This would be devasting, but we may have to accept their demands in order to survive"
+	picture = GFX_report_event_journalists_speech
+	
+	is_triggered_only = yes
+    fire_only_once = no
+	
+	option = { #gives wargoal event
+		name = "Never"
+		ai_chance = {
+			factor = 0
+		}
+		SMN = { country_event = minnesota.16 }
+	}
+
+	option = { #gives in to minnesota for SSD
+		name = "We Surrender"
+        trigger = {
+            has_country_flag = SSD_flag
+        }
+		ai_chance = {
+			factor = 100
+		}
+        SMN = { country_event = minnesota.17 }
+        every_state = {
+            limit = {
+                #is_core_of = SSD
+                is_owned_by = SSD
+                is_claimed_by = SMN
+            }
+            SMN = {
+                transfer_state = PREV
+            }
+        }
+	}
+
+    option = { #gives in to minnesota for SND
+        name = "We accept"
+        trigger = {
+            has_country_flag = SND_flag
+        }
+        ai_chance = {
+            factor = 100
+        }
+        SMN = { country_event = minnesota.17 }
+        every_state = {
+            limit = {
+                #is_core_of = SND
+                is_owned_by = SND
+                is_claimed_by = SMN
+            }
+            SMN = {
+                transfer_state = PREV
+            }
+        }
+    }
+}
+#SND OR SSD REFUSES TO GIVE TERRITORY
+country_event = {
+	id = minnesota.16
+	title = "They have denied our claim"
+	desc = "The dakotas have denied our claim to our former territories"
+	picture = GFX_report_event_hungarian_soldiers
+	
+	is_triggered_only = yes
+    fire_only_once = no
+
+	option = { #cool
+		name = "We cannot interfere"
+		ai_chance = {
+			factor = 10
+			modifier = {
+				strength_ratio = { tag = HUN ratio < 0.5 }
+				factor = 7
+			}
+		}
+	}
+
+	option = { #war
+		name = "We shall take it by force then"
+		ai_chance = {
+			factor = 90
+			modifier = {
+				has_war = yes
+				factor = 0
+			}
+		}
+		create_wargoal = {
+			type = annex_everything
+			target = FROM
+		}
+	}
+}
+#SND OR SSD ACCEPT
+country_event = {
+	id = minnesota.17
+	title = "They Accepted!"
+	desc = "The dakotas have accepted our claim to our former territories"
+	picture = GFX_report_event_hungarian_soldiers
+	
+	is_triggered_only = yes
+    fire_only_once = no
+
+	option = { #cool
+		name = "We Grow Stronger"
+		ai_chance = {
+			factor = 10
+			modifier = {
+				strength_ratio = { tag = HUN ratio < 0.5 }
+				factor = 7
+			}
+		}
+	}
+}
+#Decide who will rule commie minnesota after civil war
+country_event = {
+	id = minnesota.18
+	title = "End of The Civil War"
+	desc = "Currently Vincent R. Dunne leads to government but the party has called for an election as the civil war is over. Shall we choose the current Troskyists Candidate.Or shall we choose Gus Hall, an up and coming Marxist-Leninist."
+	picture = GFX_report_event_election_vote
+	
+    fire_only_once = yes
+	trigger = {
+		has_completed_focus = SMN_march_on_st_paul
+		original_tag = SMN
+		has_civil_war = no
+		has_government = communism
+	}
+    option = {
+        name = "Keep Vincent, who follows the Troskyists doctrine"
+		custom_effect_tooltip = SMN_vincent_r_dunne_stay_leader_tt
+		set_country_flag = SMN_vincent_r_dunne_won_chosen_flag
+		mark_focus_tree_layout_dirty = yes
+    }
+	option = {
+        name = "Choose Gus Hall, who follows the Marxist-Leninist doctrine"
+		add_country_leader_role = {
+			character = SMN_gus_hall
+			promote_leader = yes
+			country_leader = {
+				ideology = union_communism
+				expire = "1965.1.1.1"
+				traits = {
+					labor_leader
+				}
+			}
+		}
+		mark_focus_tree_layout_dirty = yes
+		custom_effect_tooltip = SMN_gus_hall_becomes_leader_tt
+		set_country_flag = SMN_gus_hall_chosen_flag
+    }
+}
+country_event = {
+	id = minnesota.19
+	title = "Minnesota Offers Support"
+	desc = "Minnesota has offered support as they thought we may need it."
+	picture = GFX_report_event_generic_factory
+	is_triggered_only = yes
+	#fire_only_once = 
+	
+	option = {
+		name = "We Shall Accept Industrial Help From Our Brothers"
+		ai_chance = {
+			base = 10
+		}
+		ROOT = {
+			add_timed_idea = {
+				idea = SMN_help_from_minnesota_idea
+				days = 200
+			}
+		}
+		FROM = {
+			add_political_power = 10
+			add_war_support = 0.02
+		}
+	}
+	option = {
+		name = "May the soviet navy prevail!"
+		ai_chance = {
+			base = 20
+		}
+		ROOT = {
+			add_timed_idea = {
+				idea = SMN_help_from_minnesota_naval_idea
+				days = 200
+			}
+		}
+		FROM = {
+			add_political_power = 10
+			add_war_support = 0.02
+		}
+	}
+}
+country_event = {
+	id = minnesota.20
+	title = "The Ban Of Political Opposition"
+	desc = "The State has deemed it necessary to never have to deal with any political opposition ever again."
+	picture = GFX_report_event_fascist_speech
+	is_triggered_only = yes
+	#fire_only_once = 
+	
+	option = {
+		name = "Away with them!"
+		ai_chance = {
+			base = 10
+		}
+		hidden_effect = {
+			set_temp_variable = {
+				var = remove_rivals_var
+				value = party_popularity@progressivism
+			}
+			multiply_temp_variable = {
+				var = remove_rivals_var
+				value = -0.4
+			}
+		}
+		add_stability = remove_rivals_var
+		add_ideas = SMN_banned_opposition_authoritian
+		country_event = {
+			days = 15
+			id = minnesota.21
+		}
+	}
+}
+country_event = {
+	id = minnesota.21
+	title = "Reconstruction"
+	desc = "The State has deemed it beneficial to rebuild the infrastructure of Minnesota, be thankful citizen"
+	picture = GFX_report_event_SOV_young_builders_of_communism
+	is_triggered_only = yes
+	#fire_only_once = 
+	
+	option = {
+		name = "Oh you betcha"
+		ai_chance = {
+			base = 10
+		}
+		add_timed_idea = {
+			idea = SMN_reconstruction
+			days = 250
+		}
+		country_event = {
+			days = 15
+			id = minnesota.22
+		}
+	}
+}
+country_event = {
+	id = minnesota.22
+	title = "The Parade of The State"
+	desc = "The State has announced it new plan for Minnesota, a plan in which the traditions that once made of us strong shall be put in order; the military shall be set above all else; and the exploitation of other regions to the benefit of the state shall be forseen."
+	picture = GFX_report_event_hitler_parade
+	is_triggered_only = yes
+	#fire_only_once = 
+	
+	option = {
+		name = "Glory to [SMN.GetLeader]! Glory to The State!"
+		ai_chance = {
+			base = 10
+		}
+		set_capital = {
+			state = 834
+		}
+	}
+}
+###CIVIL WAR BABY MINNEEESODAA
+country_event = {
+	id = minnesota.23
+	title = "Minnesota Civil War"
+	desc = "A few rocks were thrown, the national guard was called and who knows who started shooting;burning and looting has ensued. All of this from a simple protest for workers rights. Who shall prevail?"
+	picture = GFX_report_event_french_resistance_01
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	immediate = {
+		random_country = {
+			limit = {
+				original_tag = SMN
+				NOT = {
+					tag = SMN
+				}
+				has_government = progressivism
+			}
+			save_event_target_as = THE_state_of_MN
+		}
+		every_character = {
+			limit = {
+				OR = {
+					is_character = SMN_hjalmar_peterson
+					is_character = SMN_richard_canyon
+					is_character = SMN_hubert_humphrey_state
+					is_character = SMN_josh_williams
+					is_character = SMN_bob_wilson
+					is_character = SMN_bob_doug
+					is_character = SMN_henry_johnson
+				}
+			}
+			set_nationality = event_target:THE_state_of_MN
+		}
+		
+		event_target:THE_state_of_MN = {
+			inherit_technology = SMN
+			#recruit_character = SMN_hjalmar_peterson
+			#recruit_character = SMN_richard_canyon
+			SMN_hjalmar_peterson = {
+				add_country_leader_role = {
+					promote_leader = yes
+					country_leader = {
+						ideology = roosevelt_progressivism
+						expire = "1965.1.1.1" 
+						traits = { 
+							resolute_social_democrat
+						}
+					}
+				}
+			}
+			
+			add_equipment_to_stockpile = { #buff to compensate for lack of industry, 5-divisions worth
+				type = infantry_equipment
+				amount = 500
+				producer = SMN
+			}
+			add_equipment_to_stockpile = { #buff to compensate for lack of industry, 5-divisions worth
+				type = support_equipment
+				amount = 25
+				producer = SMN
+			}
+			set_country_flag = SMN_anti_communist_tree_chosen
+			every_state = {
+				limit = {
+					is_controlled_by = ROOT
+					is_core_of = ROOT
+					NOT = {
+						is_controlled_by = event_target:THE_state_of_MN
+					}
+				}
+				add_core_of = PREV
+			}
+		}
+		transfer_units_fraction= {
+			target = event_target:THE_state_of_MN 
+			size = 0.3
+			stockpile_ratio = 0.2
+			army_ratio = 0.3
+			navy_ratio = 1
+			air_ratio = 0.10
+			keep_unit_leaders_trigger = {
+				always = yes 
+			}
+		}
+	}
+	
+	option = {
+		name = "For the Workers!"
+		custom_effect_tooltip = SMN_stay_as_communist_tt
+		hidden_effect = {
+			remove_ideas = strikes_1
+		}
+		event_target:THE_state_of_MN = {
+			SMN_spawn_national_guard_units_CW = yes
+		}
+		SMN_spawn_communist_units_CW = yes
+	}
+	option = {
+		name = "For the Republic!"
+		custom_effect_tooltip = SMN_play_as_the_state_tt
+		event_target:THE_state_of_MN = {
+			SMN_spawn_national_guard_units_CW = yes
+			set_country_flag = SMN_teamsters_have_striked
+		}
+		SMN_spawn_communist_units_CW = yes
+		event_target:THE_state_of_MN = {
+			change_tag_from = ROOT
+		}
+		hidden_effect = {
+			every_character = {
+				limit = {
+					has_nationality = SMN
+				}
+				set_nationality = event_target:THE_state_of_MN
+			}
+		}
+	}
+}
+############ THE MOB
+####################
+ add_namespace = mobbesota
+
+# THE SYNDICATE OVER MINNESOTA
+ news_event = {
+	id = mobbesota.1
+	title = {
+		text = mobbesota.1.t
+	}
+	desc = {
+		text = mobbesota.1.d
+	}
+	picture = GFX_minnesota_mob_coup
+	
+	trigger = {
+		tag = SMN
+		#has_country_flag = SMN_mob_takeover
+		has_completed_focus = SMN_the_mob_takeover
+	}
+	
+	is_triggered_only = yes
+    fire_only_once = yes
+
+	option = {
+		name = mobbesota.1.a
+		ai_chance = {
+			factor = 100
+			
+		}
+	 
+		
+	}
+}
+country_event = {
+	id = mobbesota.2
+	title = {
+		text = "Decide the fate of our new capital"
+	}
+	desc = {
+		text = "Now that we have secured our position over the other mobs/crime syndicates, we may now want to consider if we want to keep our base of operations in Minnesota. Or shall we base them somewhere else like Chicago or New York City?"
+	}
+	picture = GFX_minnesota_mob_coup
+	
+	is_triggered_only = yes
+    fire_only_once = yes
+
+	option = {
+		trigger = {
+			has_full_control_of_state = 834
+		}
+		name = "Our Position is more secure here"
+		add_stability = 0.05
+		834 = {
+			add_extra_state_shared_building_slots = 3
+		}
+		country_event = mobbesota.3
+	}
+	option = {
+		trigger = {
+			has_full_control_of_state = 692
+		}
+		name = "We should have a more centralized capital for distribution and administration"
+		set_capital = {
+			state = 692
+		}
+		692 = {
+			add_extra_state_shared_building_slots = 3
+		}
+		country_event = mobbesota.3
+	}
+	option = {
+		trigger = {
+			has_full_control_of_state = 27
+		}
+		name = "Manhattan, one of the greatest cities of all time, will ser us well"
+		set_capital = {
+			state = 27
+		}
+		27 = {
+			add_extra_state_shared_building_slots = 3
+		}
+		country_event = mobbesota.3
+	}
+}
+country_event = {
+	id = mobbesota.3
+	title = {
+		text = "The Next Big Thing"
+	}
+	desc = {
+		text = "Now that we have secured our position over the other mobs/crime syndicates, we should consider what our next plan is for the syndicate. Shall we expand our network, shall we influence those abroad with agents, or shall we focus on our internal development?"
+	}
+	picture = GFX_minnesota_mob_coup
+	
+	is_triggered_only = yes
+    fire_only_once = yes
+
+	option = {
+		name = "We should expand the syndicate"
+		add_ideas = SMN_expansion_of_the_syndicate
+	}
+	option = {
+		name = "We should focus on intel gathering and spreading our ideology through other means than warfare"
+		add_ideas = SMN_syndicate_agency
+		if = {
+			limit = {
+				has_dlc = "La Resistance"
+				has_intelligence_agency = no
+			}
+			create_intelligence_agency = yes
+		}
+	}
+	option = {
+		name = "We should focus on internal development"
+		add_timed_idea = {
+			idea = SMN_syndicate_four_year_plan
+			days = 1460
+		}
+	}
 }

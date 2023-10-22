@@ -349,14 +349,23 @@ country_event = {
 	fire_only_once = yes
 
 	trigger = {
+		has_government = democratic
 		tag = SMI
 	}
 	option = {
+		###DOUBLE CHECK
+		trigger = {
+			has_government = democratic
+		}
         name = michigan.10.a
 		add_political_power = 100
 		remove_ideas = SMI_labor_struggles
 	}
 	option = {
+		###DOUBLE CHECK
+		trigger = {
+			has_government = democratic
+		}
         name = michigan.10.b
 		add_political_power = -100
 		remove_ideas = SMI_labor_struggles
@@ -678,6 +687,7 @@ country_event = { #SOH accepts subjection
 	}
 }
 
+
 country_event = { #Black Terror Flavor Event 1
 	id = michigan.17
 	title = michigan.17.t 
@@ -687,6 +697,162 @@ country_event = { #Black Terror Flavor Event 1
 
 	option = {
 		name = michigan.17.a
+	}
+}
+
+country_event = { # Michigan invites NATION to union
+	id = michigan.18 
+	title = michigan.18.t
+	desc = michigan.18.d
+	picture = GFX_report_event_generic_sign_treaty2
+	is_triggered_only = yes
+
+	option = { # Accept
+		name = michigan.18.a
+		SMI = {
+			add_to_faction = ROOT
+		}
+		add_political_power = 100
+		custom_effect_tooltip = SMI_michigan_union_autonomy_tt
+		ai_chance = {
+			modifier = {
+				factor = 90
+			}
+		}
+	}
+
+	option = { #Hell No
+		name = michigan.18.b 
+		add_political_power = -25
+		SMI = {
+			create_wargoal = {
+				target = FROM
+				type = puppet_wargoal_focus
+			}
+		}
+		ai_chance = {
+			modifier = {
+				factor = 10
+			}
+		}
+	}
+}
+
+country_event = { #Black Terror Flavor Event 2
+	id = michigan.19
+	title = michigan.19.t 
+	desc = michigan.19.d 
+	picture = GFX_michigan19
+	trigger = {
+		tag = SMI
+		has_completed_focus = SMI_continue_the_terror
+	}
+	mean_time_to_happen = {
+		days = 15
+	}
+	
+	fire_only_once = yes
+
+	option = {
+		name = michigan.19.a
+		#to-do make the "Betrayal of Dayton Dean" national spirit which adds several debuffs but also gives +1 daily political power as a result of scapegoating.
+	}
+}
+
+country_event = { #Black Terror Flavor Event 3
+	id = michigan.20
+	title = michigan.20.t 
+	desc = michigan.20.d 
+	picture = GFX_michigan20
+	is_triggered_only = yes
+
+	option = {
+		name = michigan.20.a
+		#to-do: removes "Betrayal of Dayton Dean" national spirit from michigan.19 the spirit may also be removed by the focus itself.
+	}
+}
+
+country_event = { # desginate nuclear test site 
+	id = michigan.21
+	title = michigan.21.t 
+	desc = michigan.21.d
+	picture = GFX_report_event_pierre_laval
+	is_triggered_only = yes
+
+	immediate = {
+		set_country_flag = SMI_picked_nuclear_site_flag
+	}
+
+	option = {
+		name = michigan.21.a #woods near gaylord
+		set_country_flag = SMI_nuclear_picked_gaylord_flag 
+		custom_effect_tooltip = SMI_nuclear_picked_gaylord_tt
+	}
+
+	option = {
+		name = michigan.21.b # woods near traverse city
+		set_country_flag = SMI_nuclear_picked_traverse_city_flag
+		custom_effect_tooltip = SMI_nuclear_picked_traverse_city_tt
+	}
+
+	option = {
+		trigger = {
+			controls_state = 505
+		}
+		name = michigan.21.c # isle royale 
+		set_country_flag = SMI_nuclear_picked_isle_royale_flag
+		custom_effect_tooltip = SMI_nuclear_picked_isle_royale_tt
+	}
+}
+
+country_event = { # the fate of superior
+	id = michigan.22
+	title = michigan.22.t
+	desc = michigan.22.d 
+	picture = GFX_michigan22
+	is_triggered_only = yes 
+	option = { # peace out michigan annexes superior
+		name = michigan.22.a 
+		ai_chance = {
+			base = 75
+		}
+		if = {
+			limit = {
+				SWI = {
+					has_war_with = SMI
+				}
+			}
+			SWI = {
+				white_peace = SMI
+			}
+		}
+		if = {
+			limit = {
+				SMN = {
+					has_war_with = SMI
+				}
+			}
+			SMN = {
+				white_peace = SMI 
+			}
+		}
+		SMI = {
+			white_peace = SUP
+		}
+		SMI = {
+			annex_country = {
+				target = SUP
+				transfer_troops = no
+			}
+		}
+	}
+
+	option = { # keep fighting for superior 
+		name = michigan.22.b
+		add_war_support = 0.1
+		ai_chance = {
+			base = 25
+		}
 	}
 }
 

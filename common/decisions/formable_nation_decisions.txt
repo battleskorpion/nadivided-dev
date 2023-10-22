@@ -463,7 +463,7 @@ form_nation_usa_states_category = {
 			custom_trigger_tooltip = {
 				tooltip = controls_northwest_territories_tt
 				controls_state = 500
-				state = 461
+				controls_state = 461
 				controls_state = 504
 				controls_state = 501
 				controls_state = 502
@@ -698,6 +698,7 @@ form_nation_usa_states_category = {
 					791 = { add_core_of = ROOT }
 					792 = { add_core_of = ROOT }
 					793 = { add_core_of = ROOT }
+					794 = { add_core_of = ROOT }
 					795 = { add_core_of = ROOT }
 					796 = { add_core_of = ROOT }
 					797 = { add_core_of = ROOT }
@@ -705,6 +706,8 @@ form_nation_usa_states_category = {
 					800 = { add_core_of = ROOT }
 					801 = { add_core_of = ROOT }
 					802 = { add_core_of = ROOT }
+					798 = { add_core_of = ROOT }
+
 			}
 		}
 	}
@@ -894,7 +897,15 @@ form_nation_usa_states_category = {
 		}
 		visible = {
 			OR = {
-				original_tag = SOH
+				AND = { # populist ohio only gets it from event this just does that 
+					original_tag = SOH
+					or = {
+						NOT = {
+							has_government = longism
+						}
+						has_country_flag = SOH_picked_cleveland_for_sum_reason
+					}
+				}
 				original_tag = SPA
 				original_tag = SMI
 				original_tag = SIN
@@ -1057,6 +1068,9 @@ form_cascadia_category = {
 			factor = 200
 		}
 		visible = {
+			NOT = {
+				has_cosmetic_tag = HAIDA_CONFEDERACY
+			}
 			OR = {
 				original_tag = SID
 				original_tag = SRO
@@ -1281,10 +1295,13 @@ pazifik_category = {
 				has_cosmetic_tag = UNITED_STATES_BIG
 			}
 			NOT = {
-				original_tag = SCA 
+				#original_tag = SCA 
 				original_tag = SWA 
 				original_tag = SOR
 				original_tag = SRO
+			}
+			NOT = {
+				has_completed_focus = SCA_halt_the_elections
 			}
 		}
 		available = {
@@ -1481,6 +1498,109 @@ pazifik_category = {
 			hidden_effect = {
 				core_arizona = yes
 				86 = { add_core_of = ROOT }
+			}
+		}
+	}
+}
+
+	#-----------------#
+	#  Western Canada #
+	#-----------------#
+
+form_west_canada_category = {
+	form_western_canada = {
+		ai_will_do = {
+			factor = 20
+			#modifier = {
+			#	factor = 0
+			#	is_historical_focus_on = yes
+			#}
+		}
+		visible = {
+			OR = {
+				original_tag = PAB
+				original_tag = PSK
+				original_tag = PMB
+				#original_tag = PBC
+			}
+			NOT = {
+				has_global_flag = west_canada_formed
+			}
+		}
+		available = {
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = control_alberta_tt
+				controls_alberta_trigger = yes
+			}
+			custom_trigger_tooltip = {
+				tooltip = control_saskatchewan_tt
+				controls_saskatchewan_trigger = yes
+			}
+			custom_trigger_tooltip = {
+				tooltip = control_manitoba_tt
+				controls_manitoba_trigger = yes
+			}
+			custom_trigger_tooltip = {
+				tooltip = control_british_columbia_tt
+				controls_british_columbia_trigger = yes
+			}
+		}
+		complete_effect = {
+			set_cosmetic_tag = Western_Canadian_Canada
+			custom_effect_tooltip = core_western_canada_tt
+			hidden_effect = {
+				set_global_flag = west_canada_formed
+				core_manitoba = yes
+				core_british_columbia = yes
+				core_saskatchewan = yes
+				core_alberta = yes
+				core_nwt = yes
+				core_yukon = yes
+			}
+		}
+	}
+	integrate_the_columbia_district = {
+		ai_will_do = {
+			factor = 20
+		}
+
+		fire_only_once = yes
+
+		visible = {
+			has_global_flag = west_canada_formed
+		}
+		available = {
+			is_subject = no
+			custom_trigger_tooltip = {
+				tooltip = controls_teton_triangle_tt
+				controls_state = 681
+			}
+			custom_trigger_tooltip = {
+				tooltip = controls_missoula_tt
+				controls_state = 194
+			}	
+			custom_trigger_tooltip = {
+				tooltip = controls_washington_tt
+				controls_washington_trigger = yes
+			}	
+			custom_trigger_tooltip = {
+				tooltip = controls_oregon_tt
+				controls_all_of_oregon_trigger = yes
+			}	
+			custom_trigger_tooltip = {
+				tooltip = controls_idaho_tt
+				controls_idaho_trigger = yes
+			}	
+		}
+		complete_effect = {
+			custom_effect_tooltip = core_columbia_district
+			hidden_effect = {
+				core_washington = yes
+				core_all_of_oregon = yes
+				core_idaho = yes
+				681 = { add_core_of = ROOT }
+				194 = { add_core_of = ROOT }
 			}
 		}
 	}
@@ -1885,7 +2005,161 @@ form_CSA_category = {
 		complete_effect = {
 			set_cosmetic_tag = G_CONFEDERATE_STATES
 			add_political_power = 250
+			ROOT = {
+				set_country_flag = GCSAFORMED
+			}
+		}
+	}
 
+	realize_the_golden_circle_concept = {
+		
+
+		ai_will_do = {
+			factor = 20
+		}
+
+		visible = {
+			has_country_flag = GCSAFORMED
+			or = {
+				tag = SFL
+				tag = SGA
+				tag = SAL 
+				tag = SMS 
+				tag = STX 
+			}
+		}
+
+
+
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = form_golden_circle_mexico_tt
+				controls_all_of_mexico = yes 
+			}
+
+			custom_trigger_tooltip = {
+				tooltip = form_golden_circle_controls_cuba_tt
+				controls_cuba = yes
+			}
+
+			custom_trigger_tooltip = {
+				tooltip = form_golden_circle_controls_haiti_tt
+				controls_haiti = yes
+			}
+
+			custom_trigger_tooltip = {
+				tooltip = form_golden_circle_controls_dominca_tt
+				controls_dominica = yes 
+			}
+
+			custom_trigger_tooltip = {
+				tooltip = form_golden_circle_controls_central_america_tt
+				controls_central_america_trigger = yes 
+			}
+
+			custom_trigger_tooltip = {
+				tooltip = form_golden_circle_controls_south_america_tt
+				controls_state = 806
+				controls_state = 816
+				controls_state = 817
+				controls_state = 815
+				controls_state = 813
+				controls_state = 818
+				controls_state = 814
+				controls_state = 819
+				controls_state = 820
+				controls_state = 812
+				controls_state = 823
+				controls_state = 822
+				controls_state = 825
+				controls_state = 827
+				controls_state = 462
+				controls_state = 826
+				controls_state = 824
+				controls_state = 829
+				controls_state = 821
+			}
+
+			controls_state = 479
+			controls_state = 226
+			controls_state = 631
+			controls_state = 525
+			controls_state = 526
+			controls_state = 486
+			controls_state = 399
+			controls_state = 483
+			controls_state = 630
+			controls_state = 482
+			controls_state = 623
+			controls_state = 624
+			controls_state = 625
+			controls_state = 626
+			controls_state = 627
+			controls_state = 628
+			controls_state = 485
+		}
+		fire_only_once = yes
+		complete_effect = {
+			set_cosmetic_tag = GCSA_GOLDEN_CIRCLE
+			custom_effect_tooltip = GRAN_COLOMBIA_EFFECT_TT
+			hidden_effect = {  
+				core_all_of_mexico = yes 
+				core_cuba = yes 
+				core_haiti = yes 
+				core_dominica = yes 
+				add_state_core = 195
+				add_state_core = 227
+				add_state_core = 309
+				add_state_core = 312
+				add_state_core = 463
+				add_state_core = 466
+				add_state_core = 470
+				add_state_core = 471
+				add_state_core = 472
+				add_state_core = 473
+				add_state_core = 474
+				add_state_core = 778
+				add_state_core = 779
+				add_state_core = 780
+				add_state_core = 781
+				add_state_core = 782
+				add_state_core = 806
+				add_state_core = 816
+				add_state_core = 817
+				add_state_core = 815
+				add_state_core = 813
+				add_state_core = 818
+				add_state_core = 814
+				add_state_core = 819
+				add_state_core = 820
+				add_state_core = 812
+				add_state_core = 823
+				add_state_core = 822
+				add_state_core = 825
+				add_state_core = 827
+				add_state_core = 462
+				add_state_core = 826
+				add_state_core = 824
+				add_state_core = 829
+				add_state_core = 821
+				add_state_core = 479
+				add_state_core = 226
+				add_state_core = 631
+				add_state_core = 525
+				add_state_core = 526
+				add_state_core = 486
+				add_state_core = 399
+				add_state_core = 483
+				add_state_core = 630
+				add_state_core = 482
+				add_state_core = 623
+				add_state_core = 624
+				add_state_core = 625
+				add_state_core = 626
+				add_state_core = 627
+				add_state_core = 628
+				add_state_core = 485
+			}
 		}
 	}
 }			
@@ -1998,38 +2272,7 @@ form_nation_maritime_states_category = {
 	}
 
 
-	proclaim_greater_csa = {
-		
-		fire_only_once = yes
-
-		ai_will_do = {
-			factor = 20
-		}
-		
-		visible = {
-			has_global_flag = confederate_states
-
-		}
-
-		available = {
-			is_subject = no
-			custom_trigger_tooltip = {
-				tooltip = controls_greater_csa_tt
-				controls_missouri_trigger = yes
-				controls_new_mexico_trigger = yes
-				controls_arizona_trigger = yes
-				controls_oklahoma_trigger = yes
-				controls_kentucky_trigger = yes
-				controls_west_virginia_trigger = yes
-			}
-		}
-
-		complete_effect = {
-			set_cosmetic_tag = G_CONFEDERATE_STATES
-			add_political_power = 250
-
-		}
-	}
+	
 }			
 
 form_nation_usa_states_category = {
@@ -2790,6 +3033,103 @@ form_nation_usa_states_category = {
 			custom_effect_tooltip = core_america_tt
 			hidden_effect = {
 				core_the_united_states = yes 
+			}
+		}
+	}
+}
+
+form_nation_gran_columbia_category = { #mispell to avoid loc key collision
+	form_gran_colubmia = {
+		fire_only_once = yes
+		available = {
+			or = {
+				original_tag = VEN
+				original_tag = COL
+				original_tag = PAN
+			}
+			custom_trigger_tooltip = {
+				tooltip = form_gran_columbia_ven_tt
+				controls_state = 806
+				controls_state = 816
+				controls_state = 817
+				controls_state = 815
+				controls_state = 813
+				controls_state = 818
+				controls_state = 814
+				controls_state = 819
+				controls_state = 820
+				controls_state = 812
+			}
+			custom_trigger_tooltip = {
+				tooltip = form_gran_colombia_col_tt
+				controls_state = 823
+				controls_state = 822
+				controls_state = 825
+				controls_state = 827
+				controls_state = 462
+				controls_state = 826
+				controls_state = 824
+				controls_state = 829
+				controls_state = 821
+			}
+			custom_trigger_tooltip = {
+				tooltip = form_gran_colombia_pan_tt
+				controls_state = 802
+				controls_state = 463
+				controls_state = 312
+				controls_state = 801
+			}
+			controls_state = 309
+		}
+
+		cost = 50
+
+		visible = {
+			or = {
+				original_tag = VEN
+				original_tag = COL
+				original_tag = PAN
+			}
+		}
+
+		complete_effect = {
+			set_cosmetic_tag = NATION_gran_colombia
+			custom_effect_tooltip = GRAN_COLOMBIA_EFFECT_TT
+			hidden_effect = {
+				ROOT = {
+					add_state_core = 806
+					add_state_core = 816
+					add_state_core = 817
+					add_state_core = 815
+					add_state_core = 813
+					add_state_core = 818
+					add_state_core = 814
+					add_state_core = 819
+					add_state_core = 820
+					add_state_core = 812
+					add_state_core = 823
+					add_state_core = 822
+					add_state_core = 825
+					add_state_core = 827
+					add_state_core = 462
+					add_state_core = 826
+					add_state_core = 824
+					add_state_core = 829
+					add_state_core = 821
+					add_state_core = 802
+					add_state_core = 463
+					add_state_core = 312
+					add_state_core = 801
+					add_state_core = 309
+					add_state_core = 807
+					add_state_core = 810
+					add_state_core = 809
+					add_state_core = 485
+					add_state_core = 811
+					add_state_core = 808
+					add_state_core = 628
+					add_state_core = 828
+				}
 			}
 		}
 	}
