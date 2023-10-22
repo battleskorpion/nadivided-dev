@@ -1017,7 +1017,7 @@ focus_tree = {
         id = STX_quality_education_for_farmers
         icon = GFX_focus_STX_education
         prerequisite = { focus = STX_introduce_hybrid_seed_corn}
-        prerequisite = { focus = STX_expand_the_power_grid}
+        #prerequisite = { focus = STX_expand_the_power_grid}
         available = {
 				date > 1940.01.1
             hidden_trigger = {
@@ -1105,7 +1105,7 @@ focus_tree = {
             }
         }
         x = 0
-        y = 1
+        y = 3
         relative_position_id = STX_deal_with_the_depression
         cost = 7.2
         ai_will_do = {
@@ -1214,8 +1214,8 @@ focus_tree = {
                 }
             }
         }
-        x = 0
-        y = 2
+        x = 1
+        y = 1
         relative_position_id = STX_expand_the_power_grid
         cost = 7.2
         ai_will_do = {
@@ -1240,7 +1240,7 @@ focus_tree = {
                 }
             }
         }
-        x = -3
+        x = 0
         y = 1
         relative_position_id = STX_never_another_dust_bowl
         cost = 3
@@ -2856,7 +2856,7 @@ focus_tree = {
             }
         }
         x = 15
-        y = 6
+        y = 10
         cost = 5
         ai_will_do = {
             factor = 1
@@ -3807,7 +3807,7 @@ focus_tree = {
     }
     focus = {
         id = STX_to_stand_the_test_of_time
-        icon = GFX_
+        icon = GFX_focus_generic_machine_gun
         prerequisite = { focus = STX_an_infantry_army}
         available = {
             hidden_trigger = {
@@ -4530,7 +4530,6 @@ focus_tree = {
         ai_will_do = {
             factor = 100
         }
-        cost = 10
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
 
@@ -4922,6 +4921,9 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_RED_RIVER_WAR FOCUS_FILTER_WAR_SUPPORT FOCUS_FILTER_STABILITY }
         completion_reward = {
             add_political_power = -150
+            SOK = {
+                add_political_power = 150
+            }
         }
         
     }
@@ -5029,7 +5031,7 @@ focus_tree = {
     focus = {
         id = STX_a_just_war
         icon = GFX_goal_generic_neutrality_focus
-        prerequisite = { focus = STX_enact_temporary_conscription focus = STX_let_the_rangers_handle_it focus = STX_send_apology_to_oklahoma focus = STX_Texas_settlers}
+        prerequisite = { focus = STX_enact_temporary_conscription focus = STX_let_the_rangers_handle_it focus = STX_send_apology_to_oklahoma }
         x = -1
         y = 1
         relative_position_id = STX_enact_temporary_conscription
@@ -5037,11 +5039,176 @@ focus_tree = {
         ai_will_do = {
             factor = 100
         }
-        available_if_capitulated = no
         search_filters = { FOCUS_FILTER_RED_RIVER_WAR FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
         completion_reward = {
             add_stability = 0.05
             add_war_support = 0.05
+        }
+    }
+    focus = {
+        id = STX_infantry_developments
+        icon = GFX_focus_gen_equipment_effort2
+        prerequisite = { focus = STX_a_just_war }
+        x = -1
+        y = 1
+        relative_position_id = STX_a_just_war
+        cost = 4
+        ai_will_do = {
+            factor = 100
+        }
+        bypass = {
+            custom_trigger_tooltip = {
+                tooltip = red_river_war_over_tt
+                has_global_flag = red_river_war_is_over
+            }
+        }
+        search_filters = { FOCUS_FILTER_RED_RIVER_WAR FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+        completion_reward = {
+            add_tech_bonus = {
+                name = stx_winnn_Tech
+                bonus = 0.35
+                uses = 1
+                category = infantry_weapons
+            }
+        }
+    }
+    focus = {
+        id = STX_artillery_developments
+        icon = GFX_focus_line_arty
+        prerequisite = { focus = STX_a_just_war }
+        x = 1
+        y = 1
+        relative_position_id = STX_a_just_war
+        cost = 4
+        ai_will_do = {
+            factor = 100
+        }
+        bypass = {
+            custom_trigger_tooltip = {
+                tooltip = red_river_war_over_tt
+                has_global_flag = red_river_war_is_over
+            }
+        }
+        search_filters = { FOCUS_FILTER_RED_RIVER_WAR FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+        completion_reward = {
+            add_tech_bonus = {
+                name = stx_winnn_Tech
+                bonus = 0.35
+                uses = 1
+                category = mio_cat_all_artillery_equipment
+            }
+        }
+    }
+    focus = {
+        id = STX_secure_more_airports
+        icon = GFX_goal_expand_the_luftwaffe
+        prerequisite = { focus = STX_artillery_developments focus = STX_infantry_developments }
+        x = 0
+        y = 2
+        relative_position_id = STX_a_just_war
+        cost = 5
+        ai_will_do = {
+            factor = 100
+        }
+        bypass = {
+            custom_trigger_tooltip = {
+                tooltip = red_river_war_over_tt
+                has_global_flag = red_river_war_is_over
+            }
+        }
+        search_filters = { FOCUS_FILTER_RED_RIVER_WAR FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+        completion_reward = {
+            random_owned_controlled_state = {
+                prioritize = {
+                    42
+                }
+                limit = {
+                    is_fully_controlled_by = ROOT
+                }
+                add_building_construction = {
+		    		type = air_base
+		    		level = 2
+		    		instant_build = yes
+		    	}
+            }
+            random_owned_controlled_state = {
+                prioritize = {
+                    621
+                }
+                limit = {
+                    is_fully_controlled_by = ROOT
+                }
+                add_building_construction = {
+		    		type = air_base
+		    		level = 2
+		    		instant_build = yes
+		    	}
+            }
+        }
+    }
+    focus = {
+        id = STX_call_for_a_war_council
+        icon = GFX_focus_generic_trial
+        prerequisite = { focus = STX_secure_more_airports }
+        x = 0
+        y = 1
+        relative_position_id = STX_secure_more_airports
+        cost = 5
+        ai_will_do = {
+            factor = 100
+        }
+        bypass = {
+            custom_trigger_tooltip = {
+                tooltip = red_river_war_over_tt
+                has_global_flag = red_river_war_is_over
+            }
+        }
+        search_filters = { FOCUS_FILTER_RED_RIVER_WAR FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+        completion_reward = {
+            add_war_support = 0.05
+            add_political_power = 50
+            add_popularity = {
+                ideology = democratic
+                popularity = 0.05
+            }
+            add_popularity = {
+                ideology = progressivism
+                popularity = -0.05
+            }
+            add_popularity = {
+                ideology = longism
+                popularity = -0.05
+            }
+            add_popularity = {
+                ideology = fascism
+                popularity = -0.05
+            }
+            add_popularity = {
+                ideology = neutrality
+                popularity = -0.05
+            }
+        }
+    }
+    focus = {
+        id = STX_kick_out_the_invaders
+        icon = GFX_focus_generic_militarist_society
+        prerequisite = { focus = STX_call_for_a_war_council }
+        x = 0
+        y = 1
+        relative_position_id = STX_call_for_a_war_council
+        cost = 5
+        ai_will_do = {
+            factor = 100
+        }
+        bypass = {
+            custom_trigger_tooltip = {
+                tooltip = red_river_war_over_tt
+                has_global_flag = red_river_war_is_over
+            }
+        }
+        search_filters = { FOCUS_FILTER_RED_RIVER_WAR FOCUS_FILTER_STABILITY FOCUS_FILTER_WAR_SUPPORT }
+        completion_reward = {
+            add_ideas = STX_kick_out_the_invaders_idea
         }
     }
     focus = {
