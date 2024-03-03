@@ -28,6 +28,6 @@ To use GitHub Desktop follow the steps below.
 ###### Copyrights
 
 This is open source project. However, please contact the developer team if you wish to use the code for your project! We will happily allow the use of our content within reason.
-Copyright (c) 2022 BattleSkorpion
+Copyright (c) 2024 BattleSkorpion
 
 ## Enjoy! :)

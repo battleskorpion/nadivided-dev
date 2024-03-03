@@ -9,69 +9,99 @@ focus_tree = {
 	}
 	continuous_focus_position = { x = 500 y = 500 }
 	default = no
+
+	#
+
 	focus = {
-	id = SOJ_Prepare_Our_Navy
-	icon = GFX_focus_SOJ_Prepare_Our_Navy
-	x = 25
-	y = 1
-	cost = 5
-	available_if_capitulated = yes
-	ai_will_do = {
-		factor = 100
-	}
-	bypass = {
-		custom_trigger_tooltip = {
-			tooltip = production_effort_tt
-			all_owned_state = {
-				free_building_slots = {
-					building = arms_factory
-					size < 2
-					include_locked = yes
-				}
-			}
+		id = SOJ_Prepare_Our_Navy
+		icon = GFX_focus_SOJ_Prepare_Our_Navy
+		x = 25
+		y = 1
+		cost = 5
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 100
 		}
-	}
-
-	complete_tooltip = {
-		add_extra_state_shared_building_slots = 2
-		add_building_construction = {
-			type = arms_factory
-			level = 2
-			instant_build = yes
-		}
-	}		
-
-	completion_reward = {
-		random_owned_controlled_state = {
-			limit = {
-				free_building_slots = {
-					building = arms_factory
-					size > 1
-					include_locked = yes
-				}
-				OR = {
-					is_in_home_area = yes
-					NOT = {
-						owner = {
-							any_owned_state = {
-								free_building_slots = {
-									building = arms_factory
-									size > 1
-									include_locked = yes
-								}
-								is_in_home_area = yes
-							}
-						}
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = production_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = arms_factory
+						size < 2
+						include_locked = yes
 					}
 				}
 			}
+		}
+
+		complete_tooltip = {
 			add_extra_state_shared_building_slots = 2
 			add_building_construction = {
 				type = arms_factory
 				level = 2
 				instant_build = yes
 			}
+		}		
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+	}
+}
+focus = {
+	id = SOJ_Expand_Military_Settlements
+	icon = GFX_focus_SOJ_Demanding_More_Comrades
+	cost = 14.4
+	x = 14
+	y = 1
+	relative_position_id = SOJ_Prepare_Our_Navy
+	prerequisite = {
+		focus = SOJ_Prepare_Our_Navy
+	}
+	available = {
+		or = {
+			has_war = yes 
+			num_of_factories > 5
 		}
+	}
+	completion_reward = { 
+		71 = {
+			add_manpower = 50000
+			add_building_construction = {
+				type = infrastructure
+				level = 1
+			}
+		}
+		
 	}
 }
 focus = {
