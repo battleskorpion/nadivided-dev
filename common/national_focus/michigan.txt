@@ -148,7 +148,19 @@
 				character = SMI_effinger
 				ideology = nazism
 				trait = megalomaniac_fascist
-		   }
+		 }
+		 add_field_marshal_role = {
+			Character = "SMI_effinger"
+			skill = 3
+			traits = {
+				infantry_leader
+			}
+			attack_skill = 3
+			defense_skill = 2
+			planning_skill = 1
+			logistics_skill = 4
+		}
+
 		}
 	}
 
@@ -216,13 +228,9 @@
 			factor = 1
 		}
 
-		completion_reward = {
-			add_timed_idea = { 
-				idea = SMI_black_legion_labor_idea
-				days = 365		
-			}
+		completion_reward = { 
+			add_ideas = SMI_black_legion_labor_idea
 			remove_ideas = SMI_labor_struggles
-			#idea 365 days of 10% increased construction speed
 		}
 	}
     focus = {
@@ -266,9 +274,12 @@
 		}
 
 		completion_reward = { 
-
+            create_faction = SMI_black_league
 			set_rule = {
 				can_join_factions = yes
+			}
+			set_rule = {
+				can_create_factions = yes
 			}
 			
 			every_other_country = {
@@ -383,7 +394,6 @@
 		}
 
 		completion_reward = {
-			create_faction = SMI_black_league
 			every_other_country = {
 				LIMIT = {
 					has_country_flag = KKK_led_USA_state	
@@ -1093,7 +1103,7 @@
 	}
     focus = {
 		id = SMI_The_Statue_Of_Terror
-		icon = GFX_
+		icon = GFX_focus_SIL_Engrained_Paramilitarism
 		x = -5
 		y = 1
 		relative_position_id = SMI_Legion_Research_League
@@ -1111,12 +1121,12 @@
 		}
 
 		completion_reward = {
-			#add_idea beacon_of_new_states +15% non core manpower
+			add_ideas = SMI_beacon_of_new_states1 
 		}
 	}
     focus = {
 		id = SMI_Legion_Of_Doom
-		icon = GFX_
+		icon = GFX_SIL_a_change_in_course-217104
 		x = 0
 		y = 1
 		relative_position_id = SMI_The_Statue_Of_Terror
@@ -1126,21 +1136,35 @@
 
 		search_filters = {   }
 		
-		#available  = { owns nyc  }
+		available  = { 
 
+			custom_trigger_tooltip = {
+				tooltip = form_country_required_states_nyc_tt
+				AND = {
+					controls_state = 27 #manhattan
+					controls_state = 28 #staten island
+					controls_state = 26 #long island
+					controls_state = 202 #brooklyn
+				}
+			}
+			
+		}
 		available_if_capitulated = yes
 		ai_will_do = {
 			factor = 1
 		}
 
 		completion_reward = {
-			#add_idea beacon_of_new_states +15% non core manpower
+			swap_ideas = {
+				remove_idea = SMI_beacon_of_new_states1
+				add_idea = SMI_beacon_of_new_states2
+			} 
 		}
 	}
 
 	focus = {
 		id = SMI_A_Legion_Of_Progress
-		icon = GFX_
+		icon = GFX_focus_SMI_black_Legion_research
 		x = -3
 		y = 1
 		relative_position_id = SMI_Legion_Research_League
@@ -1163,7 +1187,7 @@
 	}
     focus = {
 		id = SMI_A_Legion_Of_Expansion
-		icon = GFX_
+		icon = GFX_focus_SKY_lessons_of_war
 		x = -1
 		y = 1
 		relative_position_id = SMI_Legion_Research_League
@@ -1186,7 +1210,7 @@
 	}
     focus = {
 		id = SMI_Expanding_War_Effort
-		icon = GFX_
+		icon = GFX_focus_generic_manpower
 		x = 2
 		y = 1
 		relative_position_id = SMI_Legion_Research_League
@@ -1202,15 +1226,16 @@
 		}
 
 		completion_reward = {
-			add_timed_idea = {
-				idea = SMI_Expanding_War_Effort_idea
-				days = 100
-			}
+			
+			    add_timed_idea = {
+			 	idea = SMI_Expanding_War_Effort_idea
+			 	days = 100
+			 }
 		}
 	}
     focus = {
 		id = SMI_Black_Bombers
-		icon = GFX_
+		icon = GFX_focus_RCA_bomber_strategems
 		x = 1
 		y = 1
 		relative_position_id = SMI_Expanding_War_Effort
@@ -1226,12 +1251,17 @@
 		}
 
 		completion_reward = {
-
+			add_tech_bonus = {
+				name = SMI_bombers
+				bonus = 1.00
+				uses = 2
+				category = heavy_air
+			}
 		}
 	}
     focus = {
 		id = SMI_Black_DockYards
-		icon = GFX_
+		icon = GFX_goal_generic_construct_naval_dockyard
 		x = -1
 		y = 1
 		relative_position_id = SMI_Expanding_War_Effort
@@ -1245,15 +1275,43 @@
 		ai_will_do = {
 			factor = 1
 		}
-
-		completion_reward = {
-
+		completion_reward = { 
+			random_owned_controlled_state = {
+				prioritize = {
+					739 744 139 220 138 736
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+				}
+			}
+			random_owned_controlled_state = {
+				prioritize = {
+					138 744 139 220 739 736
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+				}
+			}
+			random_owned_controlled_state = {
+				prioritize = {
+					220 744 139 138 739 736
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 1
+				}
+			}
 		}
 	}
 
 	focus = {
 		id = SMI_Legion_Youth
-		icon = GFX_
+		icon = GFX_focus_SPA_Send_Volunteers_to_the_War_in_Europe
 		x = 5
 		y = 1
 		relative_position_id = SMI_Legion_Research_League
@@ -1275,7 +1333,7 @@
 
 	focus = {
 		id = SMI_Fanatical_Ideologicalism
-		icon = GFX_
+		icon = GFX_focus_SPA_Take_out_New_York_City
 		x = 0
 		y = 1
 		relative_position_id = SMI_Legion_Youth
@@ -4604,6 +4662,29 @@
 		}
 	
 		completion_reward = {
+			custom_effect_tooltip = "SMI_Ford_Coup_A_tt"
+			set_politics = {
+				ruling_party = fascism
+				elections_allowed = no
+			}
+
+			retire_country_leader = yes
+			promote_character = SMI_Henry_Ford
+
+			hidden_effect = {
+
+				set_party_name = { 
+					ideology = neutrality 
+					long_name = SMI_Ford_Co_Party_Long
+					name = SMI_Ford_Co_Party
+				}
+				set_party_name = { 
+					ideology = fascism 
+					long_name = SMI_Ford_Co_Party_Long
+					name = SMI_Ford_Co_Party
+				}
+				set_cosmetic_tag = SMI_Ford_Motor_Co
+			}
 
 	 	} 
 	}
@@ -4619,7 +4700,14 @@
 
 		search_filters = {   }
 		allow_branch = {
-			always = no 
+			or = {
+				NOT = {
+					OR = {
+						has_completed_focus = SMI_continue_the_terror
+						has_completed_focus = SMI_the_seeds_of_revolution_planted_in_knowledge
+					}
+				}
+			}
 		}
 		available_if_capitulated = yes
 		ai_will_do = {
@@ -4627,6 +4715,39 @@
 		}
 
 		completion_reward = { 
+			35 = { 
+			set_state_category = metropolis
+			}
+			35 = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 1
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}			
 			custom_effect_tooltip = SMI_work_with_ford_tt
 			if = {
 				limit = {
@@ -4691,6 +4812,9 @@
 		}
 
 		completion_reward = {
+			35 = {
+				add_manpower = 15000
+			}
 			add_timed_idea = {
 				idea = SMI_workers_immigration
 				days = 365
@@ -4716,6 +4840,101 @@
 
 		completion_reward = {
 			add_ideas = SMI_Revival_Of_Naval_Engine_Program_idea 
+			navy_experience = 25
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+			}
 		}
 	}
     focus = {
@@ -4735,6 +4954,37 @@
 		}
 
 		completion_reward = {
+			36 = {
+
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 3
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = industrial_complex
+										size > 3
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+					instant_build = yes
+				}
+			}
 			add_resource = {
 				type = steel
 				amount = 20
@@ -4808,9 +5058,17 @@
 			factor = 1
 		}
 		allow_branch = {
-			always = no
+			or = {
+				NOT = {
+					OR = {
+						has_completed_focus = SMI_continue_the_terror
+						has_completed_focus = SMI_the_seeds_of_revolution_planted_in_knowledge
+					}
+				}
+			}
 		}
 		completion_reward = {
+           	add_offsite_building = { type = arms_factory level = 1 }
 			add_ideas = SMI_steel_wars_tank_programs
 		}
 	}
@@ -5042,7 +5300,12 @@
 			focus = SMI_The_Shareholders_Plot
 		}
 		completion_reward = {
-			#sr ford remains in power
+			add_political_power = 100
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.1
+			}
+
 		}
 	}
 
@@ -5064,6 +5327,12 @@
 		}
 
 		completion_reward = {
+			add_equipment_to_stockpile = {
+				type = motorized_equipment_1
+				amount = 2500
+				producer = SMI
+			}
+			#add_ideas = SMI_Only_Black_Paint_idea
 			#trucks and half tracks cost even less
 		}
 	}
@@ -5167,6 +5436,12 @@
 
 		completion_reward = {
 			#ford senior dies in 1947 new leader Board_Of_Directors
+			#custom_effect_tooltip = "SMI_FordSR_death_B_tt"
+			hidden_effect = {
+				retire_country_leader = yes
+				promote_character = SMI_Board_Of_Directors
+				#Edsil takes over
+			}
 		}
 	}
 
@@ -5189,6 +5464,7 @@
 		}
 
 		completion_reward = {
+			add_research_slot = 1
 			#idea factory output + max efficency factor
 		}
 	}
@@ -5278,7 +5554,7 @@
 		}
 	}
 
-
+		# Edsil Ford Coup D'etat
 	focus = {
 		id = SMI_The_Shareholders_Plot
 		icon = GFX_focus_SMI_The_Shareholders_Plot
@@ -5299,7 +5575,12 @@
 			focus = SMI_Continue_Deprecatory_Behavior
 		}
 		completion_reward = {
-			#Edsil takes over
+			custom_effect_tooltip = "SMI_Ford_Coup_B_tt"
+			hidden_effect = {
+				retire_country_leader = yes
+				promote_character = SMI_Edsel_Ford
+				#Edsil takes over
+			}
 		}
 	}
 
@@ -5343,7 +5624,7 @@
 		}
 
 		completion_reward = {
-			#offmap factories
+        	add_offsite_building = { type = industrial_complex level = 3 }
 		}
 	}
 
@@ -5364,9 +5645,39 @@
 			factor = 1
 		}
 
-		completion_reward = {
-			#Artificial_Rubber_Factories
-		}
+          completion_reward = { 
+            custom_effect_tooltip = SLA_research_syth_tt
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = synthetic_refinery 
+						size > 3
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = synthetic_refinery
+										size > 3
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 3
+					instant_build = yes
+				    }
+			    }
+			}
 	}
     focus = {
 		id = SMI_hydraulic_brakes_Priority
@@ -5549,6 +5860,9 @@
 		}
 
 		completion_reward = {
+			#custom_effect_tooltip = "SMI_FordSR_death_B_tt"
+			retire_country_leader = yes
+			promote_character = SMI_Henry_FordII
 			#dies 1943 from cancer # Henry Ford II Takes over
 			#event funeral
 		}
@@ -5573,6 +5887,7 @@
 
 		completion_reward = {
 			#dies 1943 from cancer #ford II Takes over 
+
 		}
 	}
 
@@ -5628,7 +5943,14 @@
 			factor = 1
 		}
 		allow_branch = {
-			always = no
+			or = {
+				NOT = {
+					OR = {
+						has_completed_focus = SMI_continue_the_terror
+						has_completed_focus = SMI_the_seeds_of_revolution_planted_in_knowledge
+					}
+				}
+			}
 		}
 
 		completion_reward = {
@@ -5706,6 +6028,7 @@
 
 		completion_reward = {
 			#advisor Harry_Bennett Prince of Terror NEEDS UI
+			custom_effect_tooltip = SMI_Harry_Bennett_tt
 		}
 	}
     focus = {
@@ -6703,7 +7026,7 @@
 		id = SMI_michigan_infrastructure_programs
 		icon = GFX_focus_generic_road
 		cost = 5
-		x = 64
+		x = 62
 		y = 16
 		available = {
 			num_of_factories > 100

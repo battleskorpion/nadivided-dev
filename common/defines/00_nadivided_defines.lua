@@ -16,7 +16,7 @@
 --NDiplomacy = {
 	NDefines.NDiplomacy.EMBARGO_COST = 70							-- def 100 -- One-time cost
 	NDefines.NDiplomacy.VOLUNTEERS_DIVISIONS_REQUIRED = 12			-- def 30
-	NDefines.NDiplomacy.TENSION_DECAY_DAILY = 0.027 				-- def 0.005
+	NDefines.NDiplomacy.TENSION_DECAY_DAILY = 0.017 				-- def 0.005
 
 --},
 
@@ -26,12 +26,13 @@
 	NDefines.NCountry.BASE_TENSION_MAJOR_COUNTRY_INDEX = 1			-- Which major country should be considered the base country when scaling generated world tension. 0 is the country with the most factories, 1 is the second most-factories country etc. This number has to be lower than MIN_MAJOR_COUNTRIES
 
 	NDefines.NCountry.MIN_FOCUSES_FOR_CONTINUOUS = 8				-- def 10 -- Focuses needed to unlock continuous focuses
-	NDefines.NCountry.POPULATION_YEARLY_GROWTH_BASE = 0.015			-- def 0.015 -- basic population growth per year, used for monthly manpower gain
---},
+	NDefines.NCountry.POPULATION_YEARLY_GROWTH_BASE = 0.020			-- def 0.015 -- basic population growth per year, used for monthly manpower gain
+	--},
 
 --NAI = {
 	NDefines.NAI.VP_LEVEL_IMPORTANCE_MEDIUM = 10					-- default -- Victory points with values higher than or equal to this are considered to be of medium importance.
---},
+	NDefines.NAI.DILPOMATIC_ACTION_DECLARE_WAR_WARGOAL_BASE = 40 				-- def 	50 lower
+	--},
 
 --NTechnology = {
 	NDefines.NTechnology.MAX_SUBTECHS = 5							-- def. 3 -- Max number of sub technologies a technology can have.
@@ -45,12 +46,18 @@
 
 --},
 
---NMilitary = {
-	FIELD_EXPERIENCE_ON_DIVISION_MULT = 0.005					-- default -- Victory points with values higher than or equal to this are considered to be of medium importance.
+--NProduction = {
+	NDefines.NProduction.BASE_FACTORY_EFFICIENCY_BALANCE_FACTOR = 0.20			-- def 0.1 -- more production
 --},
 
+
+--NMilitary = {
+	FIELD_EXPERIENCE_ON_DIVISION_MULT = 0.005					-- default 0.005-- Victory points with values higher than or equal to this are considered to be of medium importance.
+	NDefines.NMilitary.REINFORCEMENT_MANPOWER_CHUNK = 0.4				-- default 0.2-- MOREMANPOWER
+	--},
+
 --NRailwayGun = {
-	RAILWAY_GUN_RANGE = 50					-- default -- Victory points with values higher than or equal to this are considered to be of medium importance.
+	RAILWAY_GUN_RANGE = 50					-- default 50 -- Victory points with values higher than or equal to this are considered to be of medium importance.
 --},
 
 --}
