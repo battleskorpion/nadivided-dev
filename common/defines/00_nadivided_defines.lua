@@ -20,6 +20,15 @@
 
 --},
 
+--NSupply = {
+	NDefines.NSupply.CAPITAL_STARTING_PENALTY_PER_PROVINCE = 0.3
+	NDefines.NSupply.CAPITAL_ADDED_PENALTY_PER_PROVINCE = 1.0
+	NDefines.NSupply.NODE_INITIAL_SUPPLY_FLOW = 3.2 
+	NDefines.NSupply.MIN_TRAIN_REQUIREMENT = 3
+	NDefines.NSupply.SUPPLY_HUB_FULL_MOTORIZATION_TRUCK_COST = 90
+
+--},
+
 --NCountry = {
 	NDefines.NCountry.MIN_MAJOR_COUNTRIES	= 40					-- MIN_MAJOR_COUNTRIES countries with most factories will be considered as major countries
 	NDefines.NCountry.ADDITIONAL_MAJOR_COUNTRIES_IC_RATIO = 0.7		-- Countries will also be considered major when having more factories that the average of top MIN_MAJOR_COUNTRIES countries' factories times ADDITIONAL_MAJOR_COUNTRIES_IC_RATIO
