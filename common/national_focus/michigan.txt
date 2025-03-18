@@ -2939,7 +2939,7 @@
 		prerequisite = {
 			focus = SMI_the_great_lakes_union
 		}
-		x = -2 
+		x = -4
 		y = 1
 		bypass = {
 			or = {
@@ -2986,7 +2986,7 @@
 		id = SMI_reach_out_to_Minnesota
 		icon = GFX_focus_eng_move_to_secure_the_dominions
 		cost = 5
-		x = -1
+		x = 1
 		y = 1
 		relative_position_id = SMI_invite_wisconsin
 		prerequisite = {
@@ -3218,6 +3218,53 @@
 	}
 
 	focus = {
+		id = SMI_invite_indiana
+		icon = GFX_focus_eng_move_to_secure_the_dominions
+		cost = 5
+		relative_position_id = SMI_the_great_lakes_union
+		prerequisite = {
+			focus = SMI_the_great_lakes_union
+		}
+		bypass = {
+			SIN = {
+				or = {
+					exists = no
+					is_subject_of = SMI
+					is_in_faction_with = SMI
+				}
+			}
+		}
+		x = -2
+		y = 1
+		completion_reward = { 
+			custom_effect_tooltip = SMI_invite_indiana_tt
+			if = {
+				limit = {
+					SIN = {
+						has_opinion = {
+							target = SMI
+							value > 80
+						}
+					}
+				}
+				SIN = {
+					country_event = {
+						days = 14
+						id = michigan.18
+					}
+				}
+			}
+
+			else = {
+				create_wargoal = {
+					target = SIN
+					type = puppet_wargoal_focus
+				}
+			}
+		}
+	}
+
+	focus = {
 		id = SMI_political_integration
 		icon = GFX_goal_generic_national_unity
 		cost = 10
@@ -3228,6 +3275,7 @@
 			focus = SMI_invite_illinois
 			focus = SMI_reach_out_to_Minnesota
 			focus = SMI_cross_lake_superior
+			focus = SMI_invite_indiana
 		}
 		x = 0
 		y = 2
@@ -3495,6 +3543,10 @@
 		y = 1
 
 		completion_reward = {
+			custom_effect_tooltip = SMI_centralism_is_key_tt
+			effect_tooltip = {
+				show_ideas_tooltip = SMI_centralism_idea
+			}
 			every_country = {
 				limit = {
 					is_subject_of = SMI
@@ -6409,6 +6461,15 @@
 				bonus = 2.0
 				uses = 1
 			}
+			if = {
+				limit = {
+					has_dlc = Gotterdammerung
+				}
+				add_breakthrough_points = {
+					specialization = specialization_air
+					value = 1
+				}
+			}
 		}
 	}
 
@@ -6466,7 +6527,16 @@
 		x = -1
 		y = 1
 		available = {
-			has_tech = rocket_engines
+			if = {
+				limit = {
+					has_dlc = Gotterdammerung
+				}
+				has_scientist_specialization = specialization_air
+			}
+			else = {
+				has_tech = rocket_engines
+			}
+			
 		}
 		relative_position_id = SMI_the_most_advanced_bombers
 		prerequisite = {
@@ -6474,11 +6544,22 @@
 			focus = SMI_our_ground_support_is_key
 		}
 		completion_reward = { 
-			add_tech_bonus = {
-				name = "The Power of the Jet"
-				category = jet_technology
-				uses = 1
-				bonus = 2.0
+			if = {
+				limit = {
+					has_dlc = Gotterdammerung
+				}
+				add_breakthrough_points = {
+					specialization = specialization_air
+					value = 3
+				}
+			}
+			else = {
+				add_tech_bonus = {
+					name = "The Power of the Jet"
+					category = jet_technology
+					uses = 1
+					bonus = 2.0
+				}
 			}
 		}
 	}
@@ -6490,7 +6571,18 @@
 		x = 0
 		y = 1
 		available = {
-			has_tech = jet_fighter1
+			if = {
+				limit = {
+					has_dlc = Gotterdammerung
+				}
+				or = {
+					is_special_project_being_researched = sp:sp_air_axial_jet_engine
+					is_special_project_completed = sp:sp_air_axial_jet_engine
+				}
+			}
+			else = {
+				has_tech = jet_fighter1
+			}
 		}
 		prerequisite = {
 			focus = SMI_the_power_of_the_jet
@@ -6500,12 +6592,23 @@
 			
 			add_ideas = SMI_the_next_generation_of_warfare_idea
 
-			add_tech_bonus = {
-				name = "The Next Generation of Warfare"
-				category = jet_technology
-				uses = 1
-				bonus = 1.0
-				ahead_reduction = 2.0
+			if = {
+				limit = {
+					has_dlc = Gotterdammerung
+				}
+				add_breakthrough_points = {
+					specialization = specialization_air
+					value = 4
+				}
+			}
+			else = {
+				add_tech_bonus = {
+					name = "The Next Generation of Warfare"
+					category = jet_technology
+					uses = 1
+					bonus = 1.0
+					ahead_reduction = 2.0
+				}
 			}
 		}
 	}
@@ -6565,7 +6668,15 @@
 		icon = GFX_focus_wonderweapons
 		cost = 10
 		available = {
-			has_tech = atomic_research
+			if = {
+				limit = {
+					has_dlc = Gotterdammerung
+				}
+				has_scientist_specialization = specialization_nuclear
+			}
+			else = {
+				has_tech = atomic_research
+			}
 		}
 		x = 2
 		y = 1
@@ -6574,11 +6685,28 @@
 		}
 		relative_position_id = SMI_education_first
 		completion_reward = { 
-			add_tech_bonus = {
-				name = ""
-				category = nuclear
-				bonus = 1.0
-				uses = 2
+			if = {
+				limit = {
+					has_dlc = Gotterdammerung
+				}
+				add_tech_bonus = {
+					name = ""
+					category = nuclear
+					bonus = 1.0
+					uses = 1
+				}
+				add_breakthrough_points = {
+					specialization = specialization_nuclear
+					value = 2
+				}
+			}
+			else = {
+				add_tech_bonus = {
+					name = ""
+					category = nuclear
+					bonus = 1.0
+					uses = 2
+				}
 			}
 		}
 	}
@@ -6590,7 +6718,15 @@
 		x = -1
 		y = 1
 		available = {
-			has_tech = nuclear_reactor
+			if = {
+				limit = {
+					has_dlc = Gotterdammerung
+				}
+				is_special_project_completed = sp:sp_nuclear_reactor
+			}
+			else = {
+				has_tech = nuclear_reactor
+			}
 		}
 		relative_position_id = SMI_wonders_of_the_atom
 		prerequisite = {
@@ -6626,9 +6762,20 @@
 			focus = SMI_wonders_of_the_atom
 		}
 		available = {
-			or = {
-				is_researching_technology = nukes
-				has_tech = nukes
+			if = {
+				limit = {
+					has_dlc = Gotterdammerung
+				}
+				or = {
+					is_special_project_being_researched = sp:sp_nuclear_bomb
+					is_special_project_completed = sp:sp_nuclear_bomb
+				}
+			}
+			else = {
+				or = {
+					is_researching_technology = nukes
+					has_tech = nukes
+				}
 			}
 		} 
 		completion_reward = { 
@@ -6641,7 +6788,21 @@
 					add_idea = SMI_nuclear_power_idea_2
 				}
 			}
-			custom_effect_tooltip = SMI_the_atom_bomb_project_tt 
+			if = {
+				limit = {
+					NOT = {
+						has_dlc = Gotterdammerung
+					}
+				}
+				custom_effect_tooltip = SMI_the_atom_bomb_project_tt 
+			}
+			else = {
+				add_nuclear_bombs = 1
+				add_breakthrough_points = {
+					specialization = specialization_nuclear
+					value = 2
+				}
+			}
 
 		}
 	}
