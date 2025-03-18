@@ -177,4 +177,8 @@
 	RAILWAY_GUN_RANGE = 50					-- default 50 -- Victory points with values higher than or equal to this are considered to be of medium importance.
 --},
 
+--NProject = {
+	NDefines.NProject.BREAKTHROUGH_DAILY_TECHNOLOGY_GAIN = 0.15 -- default 0.12 pecentage gained from researching tech related, in 1/100ths eg 0.15 0.15% daily
+	NDefines.NProject.RAID_DEFAULT_TARGET_COOLDOWN_DAYS = 120 -- default 365 
+--},
 --}
