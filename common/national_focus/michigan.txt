@@ -2852,6 +2852,7 @@
 		y = 1
 		completion_reward = { 
 			set_cosmetic_tag = SMI_social_dem
+			SMI_shift_power_corporatist_25_effect = yes
 		}
 	}
 
@@ -2866,7 +2867,100 @@
 		}
 		relative_position_id = SMI_social_democratic_republic_of_michigan
 		completion_reward = { 
-			add_ideas = SMI_codifed_land_rights
+			add_timed_idea = {
+				idea = SMI_codifed_land_rights
+				days = 730
+			}
+			if = {
+				limit = {
+					has_idea = SMI_scars_from_the_great_depression_starting
+				}
+				swap_ideas = {
+					remove_idea = SMI_scars_from_the_great_depression_starting
+					add_idea = SMI_scars_from_the_great_depression_1
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = SMI_support_corporate_intrests
+		icon = GFX_focus_generic_monetary_union
+		cost = 5
+		x = -2
+		y = 1
+		available = {
+			has_power_balance = {
+				id = SMI_power_balance
+			}
+		}
+		prerequisite = {
+			focus = SMI_write_land_rights_into_law
+		}
+		relative_position_id = SMI_write_land_rights_into_law
+		mutually_exclusive = {
+			focus = SMI_continue_backing_the_unions
+		}
+		completion_reward = { 
+			SMI_shift_power_corporatist_5_effect = yes 
+			add_political_power = -50
+		}
+	}
+
+	focus = {
+		id = SMI_continue_backing_the_unions
+		icon = GFX_focus_AUS_union_of_danubian_socialist_republics
+		cost = 10
+		x = 0
+		y = 1
+		available = {
+			has_power_balance = {
+				id = SMI_power_balance
+			}
+		}
+		prerequisite = {
+			focus = SMI_write_land_rights_into_law
+		}
+		relative_position_id = SMI_write_land_rights_into_law
+		mutually_exclusive = {
+			focus = SMI_support_corporate_intrests
+		}
+		completion_reward = { 
+			SMI_shift_power_unionist_5_effect = yes
+			add_stability = 0.30
+		}
+	}
+
+	focus = {
+		id = SMI_erase_the_scars
+		icon = GFX_focus_SOV_merge_plants
+		cost = 10
+		prerequisite = {
+			focus = SMI_write_land_rights_into_law
+		}
+		relative_position_id = SMI_write_land_rights_into_law
+		x = -1 
+		y = 2
+		completion_reward = { 
+			if = {
+				limit = {
+					has_idea = SMI_scars_from_the_great_depression_1
+				}
+				remove_ideas = SMI_scars_from_the_great_depression_1
+			}
+			else = {
+				swap_ideas = {
+					remove_idea = SMI_scars_from_the_great_depression_starting
+					add_idea = SMI_scars_from_the_great_depression_1
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+				}
+			}
 		}
 	}
 
@@ -2901,7 +2995,7 @@
 		available = {
 			power_balance_value = {
 				id = SMI_power_balance
-				value > -0.30
+				value > -0.75
 			}
 		}
 		completion_reward = { 
