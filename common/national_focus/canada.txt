@@ -1110,7 +1110,7 @@ focus_tree = {
 		icon = GFX_focus_CAN_pinetree_line
 		prerequisite = { focus = CAN_Canadian_Radar }
 		available = {
-			has_tech = decimetric_radar
+			#has_tech = decimetric_radar
 			has_full_control_of_state = 67
 			has_full_control_of_state = 386
 			has_full_control_of_state = 388
@@ -2044,6 +2044,15 @@ focus_tree = {
 		available_if_capitulated = yes
 		available = {
 			has_full_control_of_state = 128
+			PNL = {
+				exists = no
+			}
+		}
+
+		bypass = {
+			PNL = {
+				is_subject_of = ROOT
+			}
 		}
 
 		ai_will_do = {
@@ -2079,7 +2088,7 @@ focus_tree = {
 		id = CAN_relaiming_carribean_holdings
 		icon = GFX_focus_CAN_wargoal
 		prerequisite = { focus = CAN_give_newfoundland_and_labrador_back_to_UK }
-		x = -2
+		x = -4
 		y = 2
 		relative_position_id = CAN_give_newfoundland_and_labrador_back_to_UK
 		cost = 10
@@ -2201,8 +2210,8 @@ focus_tree = {
 		id = CAN_Give_UK_back_Belize
 		icon = GFX_focus_CAN_belize
 		prerequisite = { focus = CAN_relaiming_carribean_holdings }
-		x = 4
-		y = 2
+		x = 1
+		y = 1
 		relative_position_id = CAN_relaiming_carribean_holdings
 		cost = 10
 
@@ -2227,10 +2236,127 @@ focus_tree = {
 	}
 
 	focus = {
+		id = CAN_the_maine_gambit
+		icon = GFX_theatre_army_group_shield
+		cost = 5
+		x = 2
+		y = 2
+		bypass = {
+			or = {
+				SME = {
+					exists = no
+				}
+				SME = {
+					is_subject_of = ROOT
+				}
+			}
+		}
+		allow_branch = {
+			always = no 
+		}
+		prerequisite = {
+			focus = CAN_give_newfoundland_and_labrador_back_to_UK
+		}
+		relative_position_id = CAN_give_newfoundland_and_labrador_back_to_UK
+		completion_reward = { 
+			claim_maine = yes 
+			create_wargoal = {
+				target = SME
+				type = puppet_wargoal_focus
+			}
+		}
+	}
+
+	focus = {
+		id = CAN_thirteen_colonies 
+		icon = GFX_theatre_army_group_shield
+		cost = 10
+		x = 0
+		y = 1
+		prerequisite = {
+			focus = CAN_the_maine_gambit
+		}
+
+		relative_position_id = CAN_the_maine_gambit 
+		available = {
+			or = {
+				SME = {
+					is_subject_of = ROOT
+				}
+				controls_maine_trigger = yes
+			}
+		}
+		completion_reward = { 
+			if = {
+				limit = {
+					SME = {
+						is_subject_of = ROOT
+					}
+				}
+				SME = {
+					set_cosmetic_tag = SME_CAN_thirteen_colonies_tag
+				}
+			}
+			else = {
+				release_puppet = SME
+				SME = {
+					set_cosmetic_tag = SME_CAN_thirteen_colonies_tag 
+				}
+			}
+			custom_effect_tooltip = CAN_thirteen_colonies_tt
+			hidden_effect = {
+				ROOT = {
+					claim_maine = yes 
+					claim_new_hampshire = yes
+					claim_vermont = yes
+					claim_massachusetts = yes
+					claim_new_york = yes
+					claim_rhode_island = yes 
+					claim_connecticut = yes 
+					claim_new_jersey = yes
+					claim_pennsylvania = yes 
+					claim_maryland = yes 
+					claim_delaware = yes 
+					claim_virginia = yes 
+					claim_west_virginia = yes
+					claim_north_carolina = yes 
+					claim_south_carolina = yes 
+					claim_georgia = yes
+					add_state_claim = 829
+					add_state_claim = 828
+					add_state_claim = 44 
+				}
+				SME = {
+					core_maine = yes 
+					core_new_hampshire = yes 
+					core_vermont = yes
+					core_massachusetts = yes
+					core_new_york = yes
+					core_rhode_island = yes 
+					core_connecticut = yes 
+					core_new_jersey = yes
+					core_pennsylvania = yes 
+					core_maryland = yes
+					core_delaware = yes
+					core_virginia = yes 
+					core_west_virginia = yes 
+					core_north_carolina = yes 
+					core_south_carolina = yes 
+					core_georgia = yes
+					core_new_york_city = yes
+					add_state_core = 829
+					add_state_core = 828
+					add_state_core = 44
+				}
+			}
+		}
+	}
+
+	focus = {
 		id = CAN_ask_the_uk_for_help
 		icon = GFX_focus_CAN_ask_uk_for_help
 		prerequisite = { focus = CAN_give_newfoundland_and_labrador_back_to_UK }
-		x = 0
+		x = -1
 		y = 1
 		relative_position_id = CAN_give_newfoundland_and_labrador_back_to_UK
 		cost = 10
@@ -2244,17 +2370,25 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			add_offsite_building = { type = arms_factory level = 4 }
+			add_political_power = 25
+			add_offsite_building = { 
+				type = arms_factory 
+				level = 2 
+			}
+			add_offsite_building = {
+				type = industrial_complex
+				level = 2
+			}
 		}
 	}
 
 	focus = {
 		id = CAN_Invite_immigrants_from_commonwealth
 		icon = GFX_focus_CAN_immigrants_from_commonwealth
-		prerequisite = { focus = CAN_ask_the_uk_for_help }
-		x = 0
+		prerequisite = { focus = CAN_give_newfoundland_and_labrador_back_to_UK }
+		x = 1
 		y = 1
-		relative_position_id = CAN_ask_the_uk_for_help
+		relative_position_id = CAN_give_newfoundland_and_labrador_back_to_UK
 		cost = 10
 
 		available_if_capitulated = yes
@@ -2268,15 +2402,45 @@ focus_tree = {
 		completion_reward = {
 			32 = {
 				add_manpower = 50000
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
 			}
 			34 = {
 				add_manpower = 500000
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
 			}
 			111 = {
 				add_manpower = 50000
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
 			}
-			118 = {
+			68 = {
+				add_manpower = 100000
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+			}
+			427 = {
 				add_manpower = 50000
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+			}
+			61 = {
+				add_manpower = 250000
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
 			}
 		}
 	}
@@ -2319,7 +2483,7 @@ focus_tree = {
 		id = CAN_Mackenzie_King_Cult
 		icon = GFX_focus_CAN_macking
 		prerequisite = { focus = CAN_Nationalist_win_election }
-		x = 0
+		x = -1 
 		y = 1
 		relative_position_id = CAN_Nationalist_win_election
 		cost = 10
@@ -2340,11 +2504,11 @@ focus_tree = {
 	focus = {
 		id = CAN_Deal_with_Orange_order
 		icon = GFX_focus_CAN_deal_with_orange_order
-		prerequisite = { focus = CAN_Mackenzie_King_Cult }
-		x = 0
+		prerequisite = { focus = CAN_Nationalist_win_election }
+		x = 1
 		y = 1
-		relative_position_id = CAN_Mackenzie_King_Cult
-		cost = 10
+		relative_position_id = CAN_Nationalist_win_election
+		cost = 5
 
 		available_if_capitulated = yes
 
@@ -2363,12 +2527,40 @@ focus_tree = {
 	}
 
 	focus = {
-		id = CAN_Mackenzie_King_seances
-		icon = GFX_focus_CAN_seances
-		prerequisite = { focus = CAN_Deal_with_Orange_order }
+		id = CAN_nationalist_economics
+		icon = GFX_focus_generic_economic_recovery
+		cost = 10
 		x = 0
 		y = 1
+		prerequisite = {
+			focus = CAN_Deal_with_Orange_order
+		}
 		relative_position_id = CAN_Deal_with_Orange_order
+		completion_reward = { 
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+				}
+			}
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = CAN_Mackenzie_King_seances
+		icon = GFX_focus_CAN_seances
+		prerequisite = { focus = CAN_Mackenzie_King_Cult }
+		x = 0
+		y = 1
+		relative_position_id = CAN_Mackenzie_King_Cult
 		cost = 10
 
 		available_if_capitulated = yes
@@ -2387,8 +2579,11 @@ focus_tree = {
 	focus = {
 		id = CAN_The_summoning
 		icon = GFX_focus_CAN_seances2
-		prerequisite = { focus = CAN_Mackenzie_King_seances }
-		x = 0
+		prerequisite = { 
+			focus = CAN_Mackenzie_King_seances 
+			focus = CAN_Deal_with_Orange_order
+		}
+		x = 1
 		y = 1
 		relative_position_id = CAN_Mackenzie_King_seances
 		cost = 10
@@ -2402,13 +2597,17 @@ focus_tree = {
 		}
 
 		completion_reward = {
-					create_corps_commander = {
+				create_corps_commander = {
 					name = "Ghost of Sam Steel"
 					picture = "Portrait_Ghost_of_sam_steel.dds"
-					traits = {
-						}
-						skill = 5
-						
+					traits = { # Actually make this path half worth it give a free god general
+						trickster
+						ranger 
+						hill_fighter
+						adaptable
+						expert_improviser
+					}
+					skill = 5			
 					attack_skill = 4
 					defense_skill = 5
 					planning_skill = 5
@@ -2422,7 +2621,7 @@ focus_tree = {
 		id = CAN_Social_credit_union
 		icon = GFX_focus_CAN_social_credit_union
 		prerequisite = { focus = CAN_Canadian_elections }
-		x = 4
+		x = 6
 		y = 1
 		relative_position_id = CAN_Canadian_elections
 		cost = 10
@@ -2456,7 +2655,7 @@ focus_tree = {
 		id = CAN_Canadian_Populism
 		icon = GFX_focus_CAN_canadian_populism
 		prerequisite = { focus = CAN_Social_credit_union }
-		x = 0
+		x = -2
 		y = 1
 		relative_position_id = CAN_Social_credit_union
 		cost = 10
@@ -2474,36 +2673,15 @@ focus_tree = {
 		}
 	}
 
-	focus = {
-		id = CAN_move_our_capitol_west
-		icon = GFX_focus_CAN_calgarycap
-		prerequisite = { focus = CAN_Canadian_Populism }
-		x = 0
-		y = 1
-		relative_position_id = CAN_Canadian_Populism
-		cost = 10
-
-		available_if_capitulated = yes
-
-
-		
-		ai_will_do = {
-			factor = 2
-		}
-
-		completion_reward = {
-			set_capital = {state = 390}
-			add_political_power = 150
-		}
-	}
+	
 
 	focus = {
 		id = CAN_Great_westward_expansion_act
 		icon = GFX_focus_CAN_westward_expansion
-		prerequisite = { focus = CAN_move_our_capitol_west }
-		x = 0
+		prerequisite = { focus = CAN_Social_credit_union }
+		x = 2
 		y = 1
-		relative_position_id = CAN_move_our_capitol_west
+		relative_position_id = CAN_Social_credit_union
 		cost = 10
 
 		available_if_capitulated = yes
@@ -2537,12 +2715,35 @@ focus_tree = {
 	}
 
 	focus = {
-		id = CAN_Found_the_NDP_Party
-		icon = GFX_focus_CAN_ndp_party
+		id = CAN_move_our_capitol_west
+		icon = GFX_focus_CAN_calgarycap
 		prerequisite = { focus = CAN_Great_westward_expansion_act }
 		x = 0
 		y = 1
 		relative_position_id = CAN_Great_westward_expansion_act
+		cost = 10
+
+		available_if_capitulated = yes
+
+
+		
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			set_capital = {state = 390}
+			add_political_power = 150
+		}
+	}
+
+	focus = {
+		id = CAN_Found_the_NDP_Party
+		icon = GFX_focus_CAN_ndp_party
+		prerequisite = { focus = CAN_Social_credit_union }
+		x = 0
+		y = 1
+		relative_position_id = CAN_Social_credit_union
 		cost = 10
 
 		available_if_capitulated = yes
@@ -2559,7 +2760,23 @@ focus_tree = {
 				long_name = PON_progressivism_NDP_party_long
 				name = PON_progressivism_NDP_party
 			}
-			
+			add_political_power = 50
+		}
+	}
+
+	focus = {
+		id = CAN_SPD_reforms 
+		icon = GFX_focus_generic_currency_reforms
+		cost = 10
+		x = -1
+		y = 1
+		relative_position_id = CAN_Found_the_NDP_Party
+		prerequisite = {
+			focus = CAN_Found_the_NDP_Party
+			focus = CAN_Canadian_Populism
+		}
+		completion_reward = { 
+			add_ideas = CAN_SPD_reform
 		}
 	}
 
