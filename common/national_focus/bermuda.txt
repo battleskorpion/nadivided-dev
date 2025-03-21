@@ -10,8 +10,29 @@ focus_tree = {
 	# 		   continous focus position 		   #
 	continuous_focus_position = { x = 3000 y = 2300 }
 	#
-####ECO TREE#
+	focus = {
+		id = BER_the_pirate_king
+		icon = GFX_focus_ICE_the_viking_spirit
+		cost = 5
+		x = -2
+		y = 0
+		mutually_exclusive = {
+			focus = BER_under_the_crown
+		}
+		allow_branch = {
+			NOT = {
+				has_completed_focus = BER_under_the_crown
+			}
+		}
+		available = {
+			always = no
+		}
+		bypass = {
 
+		}
+		completion_reward = {
+		}
+	}
 ####POLITICAL TREE
 	focus = {
 		id = BER_under_the_crown
@@ -19,6 +40,9 @@ focus_tree = {
 		cost = 5
 		x = 0
 		y = 0
+		mutually_exclusive = {
+			focus = BER_the_pirate_king
+		}
 		available = {
 		}
 		bypass = {
@@ -28,12 +52,13 @@ focus_tree = {
 			add_political_power = 25
 			add_war_support = 0.02
 			add_stability = 0.02
+			mark_focus_tree_layout_dirty = yes
 		}
 	}
 	focus = {
 		id = BER_british_intelligence
 		icon = GFX_focus_generic_secret_service_agency
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = BER_under_the_crown
 		}
@@ -46,13 +71,13 @@ focus_tree = {
 
 		}
 		completion_reward = {
-			add_ideas = BER_MI5
+			add_ideas = BER_MI6
 			if = {
 				limit = {
 					has_intelligence_agency = no
 				}
 				create_intelligence_agency = {
-					name = "MI5"
+					name = "MI6"
 					icon = GFX_intelligence_agency_logo_uk
 				}
 			}
@@ -62,9 +87,9 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = BER_begin_exile_program
+		id = BER_expand_exile_programme
 		icon = GFX_SOV_barrier_troops_ccp_2d_sov_compatibility
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = BER_under_the_crown
 		}
@@ -75,6 +100,9 @@ focus_tree = {
 		}
 		bypass = {
 
+		}
+		ai_will_do = {
+			factor = 100
 		}
 		completion_reward = {
 			####ADDS DEBUFF AND ADDS DECISONS WITH REQUIREMENTS LIKE MAJORS AT WAR, this is how bermuda gets manpowers for the most part
@@ -94,7 +122,7 @@ focus_tree = {
 	}
 	focus = {
 		id = BER_request_new_responsibilities
-		icon = GFX_SOV_claims_in_baltic_ccp_2d_sov_compatibility
+		icon = GFX_goal_generic_neutrality_focus
 		cost = 10
 		prerequisite = {
 			focus = BER_under_the_crown
@@ -111,17 +139,28 @@ focus_tree = {
 			###GET AN EVENT STATING YOUR OBJECTIVE
 			add_political_power = 120
 			###LEADER SHOULD GET TRAIT about being in charge of killing america for britain
+			country_event = bermuda.1
+			every_country = {
+				if = {
+					limit = {
+						NOT = {
+							original_tag = BER
+						}
+					}
+					news_event = bermuda.2
+				}
+			}
 		}
 	}
 	focus = {
-		id = BER_ask_for_bermuda
-		icon = GFX_SOV_japanese_overtures_ccp_2d_sov_compatibility
+		id = BER_ask_for_bahamas
+		icon = GFX_goal_generic_forceful_treaty
 		cost = 10
 		prerequisite = {
 			focus = BER_request_new_responsibilities
 		}
 		relative_position_id = BER_request_new_responsibilities
-		x = -5
+		x = 4
 		y = 1
 		available = {
 			has_army_manpower = {
@@ -129,11 +168,14 @@ focus_tree = {
 			}
 			has_war_support = 0.35
 			has_completed_focus = BER_increase_our_strategic_capacity
-			OR = {
-				has_idea = exile_conscription_3
-				has_idea = exile_conscription_4
-				has_idea = exile_conscription_5
-				has_idea = exile_conscription_6
+			custom_trigger_tooltip = {
+				tooltip = BER_exile_lvl_above_3_tt
+				OR = {
+					has_idea = exile_conscription_3
+					has_idea = exile_conscription_4
+					has_idea = exile_conscription_5
+					has_idea = exile_conscription_6
+				}
 			}
 			BAH = {
 				is_ai = yes
@@ -144,6 +186,7 @@ focus_tree = {
 			is_ai = yes
 		}
 		completion_reward = {
+			add_political_power = -100
 			annex_country = {
 				target = BAH
 			}
@@ -159,8 +202,28 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = BER_war_propaganda
+		icon = GFX_goal_generic_propaganda
+		cost = 5
+		prerequisite = {
+			focus = BER_request_new_responsibilities
+		}
+		relative_position_id = BER_request_new_responsibilities
+		x = -4
+		y = 1
+		available = {
+			has_war = yes
+		}
+		bypass = {
+		}
+		completion_reward = {
+			add_war_support = 0.15
+			add_political_power = -50
+		}
+	}
+	focus = {
 		id = BER_an_island_economy
-		icon = GFX_SOV_eastern_development_ccp_2d_sov_compatibility
+		icon = GFX_focus_AFG_a_modern_economy
 		cost = 10
 		prerequisite = {
 			focus = BER_request_new_responsibilities
@@ -174,7 +237,6 @@ focus_tree = {
 
 		}
 		completion_reward = {
-			###REMOVES DEBUFF, adds 1 civ
 			487 = {
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
@@ -191,7 +253,7 @@ focus_tree = {
 	}
 	focus = {
 		id = BER_bulldoze_the_island
-		icon = GFX_SOV_restore_the_glory_of_the_motherland_ccp_2d_sov_compatibility
+		icon = GFX_goal_generic_construct_civilian
 		cost = 10
 		prerequisite = {
 			focus = BER_an_island_economy
@@ -205,6 +267,7 @@ focus_tree = {
 
 		}
 		completion_reward = {
+			remove_ideas = BER_island_economy
 			add_stability = -0.10
 			487 = {
 				set_state_category = large_town
@@ -288,8 +351,8 @@ focus_tree = {
 			focus = BER_bulldoze_the_island
 		}
 		relative_position_id = BER_request_offshore_investment
-		x = -3
-		y = 1
+		x = -2
+		y = 2
 		available = {
 		}
 		bypass = {
@@ -332,7 +395,11 @@ focus_tree = {
 		x = 1
 		y = 1
 		available = {
-			has_war_support > 0.50
+			OR = {
+				has_war_support > 0.50
+				has_war = yes
+			}
+			
 		}
 		bypass = {
 
@@ -352,6 +419,10 @@ focus_tree = {
 			}
 			else = {
 				add_ideas = war_economy
+			}
+			add_offsite_building = {
+				type = arms_factory
+				level = 3
 			}
 		}
 	}
@@ -408,7 +479,7 @@ focus_tree = {
 	}
 	focus = {
 		id = BER_british_avionics_research
-		icon = GFX_SOV_increase_aircraft_production_ccp_2d_sov_compatibility
+		icon = GFX_focus_generic_aircraft_production
 		cost = 10
 		prerequisite = {
 			focus = BER_new_research_facilities
@@ -506,6 +577,10 @@ focus_tree = {
 					province = 1268
 				}
 			}
+			add_victory_points = {
+				province = 1268
+				value = 15  
+			}
 			build_railway = {
 				path = { 5495 1268 }
 			}
@@ -519,11 +594,12 @@ focus_tree = {
 			}
 			navy_experience = 50
 			add_command_power = 50
+			add_war_support = 0.05
 		}
 	}
 	focus = {
 		id = BER_request_a_british_task_force
-		icon = GFX_SOV_military_reorganization_ccp_2d_sov_compatibility
+		icon = GFX_focus_generic_treaty
 		cost = 10
 		prerequisite = {
 			focus = BER_increase_our_strategic_capacity
@@ -539,6 +615,49 @@ focus_tree = {
 		completion_reward = {
 			###NEED TO MAKE TEMPLATES
 			###GETS 5 destroyers and 2 light cruisers
+			custom_effect_tooltip = BER_request_5_destroyers_and_2_light_cruisers_tt
+			hidden_effect = {
+				create_equipment_variant = {
+					name = "A/B/C/D Class"
+					allow_without_tech = yes
+					type = ship_hull_light_1
+					name_group = ENG_DD_HISTORICAL
+					parent_version = 0
+					modules = {
+						fixed_ship_battery_slot = ship_light_battery_2
+						fixed_ship_anti_air_slot = ship_anti_air_1
+						fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+						fixed_ship_radar_slot = ship_sonar_1
+						fixed_ship_engine_slot = light_ship_engine_1
+						fixed_ship_torpedo_slot = ship_torpedo_1
+						mid_1_custom_slot = ship_torpedo_1
+						rear_1_custom_slot = ship_depth_charge_1
+					}
+					obsolete = yes
+				}
+				create_equipment_variant = {
+					name = "Danae Class"
+					allow_without_tech = yes
+					type = ship_hull_cruiser_1
+					name_group = ENG_CL_HISTORICAL
+					parent_version = 0
+					modules = {
+						fixed_ship_battery_slot = ship_light_medium_battery_1
+						fixed_ship_anti_air_slot = ship_anti_air_1
+						fixed_ship_fire_control_system_slot = ship_fire_control_system_0
+						fixed_ship_radar_slot = empty
+						fixed_ship_engine_slot = cruiser_ship_engine_1
+						fixed_ship_armor_slot = ship_armor_cruiser_1
+						mid_1_custom_slot = ship_torpedo_1
+						mid_2_custom_slot = ship_torpedo_1
+						rear_1_custom_slot = empty
+					}
+					obsolete = yes
+				}
+			}
+			hidden_effect = {
+				load_oob = BER_naval_boats_mtg
+			}
 		}
 	}
 	focus = {
@@ -630,6 +749,32 @@ focus_tree = {
 				}
 			}
 			add_ideas = BER_increased_naval_capacity
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				name = x
+				uses = 3
+				category = naval_doctrine
+			}
+		}
+	}
+	focus = {
+		id = BER_war_rationing
+		icon = GFX_focus_SWE_rations
+		cost = 5
+		prerequisite = {
+			focus = BER_ensure_a_naval_presence focus = BER_request_further_offshore_investment
+		}
+		relative_position_id = BER_ensure_a_naval_presence
+		x = -2
+		y = 1
+		available = {
+			has_war = yes
+		}
+		bypass = {
+
+		}
+		completion_reward = {
+			add_ideas = BER_war_rationing
 		}
 	}
 ###ARMY AND AIR TREE
@@ -641,7 +786,7 @@ focus_tree = {
 			focus = BER_request_new_responsibilities
 		}
 		relative_position_id = BER_request_new_responsibilities
-		x = -8
+		x = 6
 		y = 1
 		available = {
 		}
@@ -649,6 +794,47 @@ focus_tree = {
 
 		}
 		completion_reward = {
+			custom_effect_tooltip = BER_two_bermuda_infantry_tt
+
+			hidden_effect = {
+			
+				division_template = {
+					name = "Infantry"		
+					is_locked = no
+					template_counter = 4 
+					regiments = {
+						infantry = { x = 0 y = 0 }
+						infantry = { x = 0 y = 1 }
+						infantry = { x = 0 y = 2 }
+						infantry = { x = 0 y = 3 }
+    				    infantry = { x = 1 y = 0 }
+						infantry = { x = 1 y = 1 }
+						infantry = { x = 1 y = 2 }
+						infantry = { x = 1 y = 3 }
+						infantry = { x = 2 y = 0 }
+						infantry = { x = 2 y = 1 }
+						infantry = { x = 2 y = 2 }
+					}
+				
+					support = {
+    				    engineer = { x = 0 y = 0 }
+    				    artillery = { x = 0 y = 1 }
+					}
+					#division_cap = 0
+				}
+
+				random_owned_state = {
+					prioritize = { 487 } 
+					create_unit = {
+					    division = "name = \"1st Infantry\" division_template = \"Infantry\" start_experience_factor = 1.0 start_equipment_factor = 0.5"
+					    owner = ROOT
+					}
+					create_unit = {
+					    division = "name = \"2nd Infantry\" division_template = \"Infantry\" start_experience_factor = 1.0 start_equipment_factor = 0.5"
+					    owner = ROOT
+					}
+				}
+			}
 			add_doctrine_cost_reduction = {
 				cost_reduction = 0.5
 				name = x
@@ -661,14 +847,14 @@ focus_tree = {
 	}
 	focus = {
 		id = BER_new_guns
-		icon = GFX_focus_CONGO_copper_cartridges
+		icon = GFX_focus_focus_fra_maquis
 		cost = 10
 		prerequisite = {
 			focus = BER_british_land_doctrine
 		}
 		relative_position_id = BER_british_land_doctrine
 		x = 1
-		y = 1
+		y = 2
 		available = {
 		}
 		bypass = {
@@ -693,7 +879,7 @@ focus_tree = {
 		}
 		relative_position_id = BER_british_land_doctrine
 		x = -1
-		y = 1
+		y = 2
 		available = {
 		}
 		bypass = {
@@ -718,7 +904,7 @@ focus_tree = {
 		}
 		relative_position_id = BER_british_land_doctrine
 		x = 0
-		y = 2
+		y = 1
 		available = {
 		}
 		bypass = {
@@ -729,14 +915,15 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = BER_request_old_british_guns
-		icon = GFX_focus_ETH_freedom_at_gunpoint
+		id = BER_request_old_british_stockpiles
+		icon = GFX_focus_CONGO_copper_cartridges
 		cost = 5
 		prerequisite = {
 			focus = BER_british_land_doctrine
+			focus = BER_increase_our_strategic_capacity
 		}
 		relative_position_id = BER_british_land_doctrine
-		x = -3
+		x = -2
 		y = 1
 		available = {
 		}
@@ -748,7 +935,37 @@ focus_tree = {
 				type = infantry_equipment_0
 				amount = 3000
 			}
+			add_equipment_to_stockpile = {
+				type = support_equipment
+				amount = 150
+			}
+			add_equipment_to_stockpile = {
+				type = motorized_equipment_0
+				amount = 100
+			}
 			army_experience = 10
+			if = {
+				limit = {
+					is_ai = yes
+				}
+				army_experience = 100
+				add_equipment_to_stockpile = {
+					type = infantry_equipment_0
+					amount = 10000
+				}
+				add_equipment_to_stockpile = {
+					type = support_equipment
+					amount = 500
+				}
+				add_equipment_to_stockpile = {
+					type = artillery_equipment
+					amount = 500
+				}
+				add_equipment_to_stockpile = {
+					type = motorized_equipment_0
+					amount = 100
+				}
+			}
 		}
 	}
 	focus = {
@@ -760,13 +977,59 @@ focus_tree = {
 		}
 		relative_position_id = BER_centralized_command_structure
 		x = 0
-		y = 1
+		y = 2
 		available = {
 		}
 		bypass = {
 
 		}
 		completion_reward = {
+			custom_effect_tooltip = BER_two_marines_tt
+
+			hidden_effect = {
+			
+				division_template = {
+					name = "Royal Marines"		
+					is_locked = no
+					template_counter = 4
+					regiments = {
+						marine = { x = 0 y = 0 }
+						marine = { x = 0 y = 1 }
+						marine = { x = 0 y = 2 }
+						marine = { x = 0 y = 3 }
+    				    marine = { x = 1 y = 0 }
+						marine = { x = 1 y = 1 }
+						marine = { x = 1 y = 2 }
+						marine = { x = 1 y = 3 }
+						marine = { x = 2 y = 0 }
+						marine = { x = 2 y = 1 }
+						marine = { x = 2 y = 2 }
+						marine = { x = 2 y = 3 }
+						marine = { x = 3 y = 0 }
+						marine = { x = 3 y = 1 }
+						marine = { x = 3 y = 2 }
+						marine = { x = 3 y = 3 }
+					}
+				
+					support = {
+    				    engineer = { x = 0 y = 0 }
+    				    artillery = { x = 0 y = 1 }
+					}
+					#division_cap = 0
+				}
+
+				random_owned_state = {
+					prioritize = { 487 } 
+					create_unit = {
+					    division = "name = \"1st Marine\" division_template = \"Royal Marines\" start_experience_factor = 1.0 start_equipment_factor = 0.2"
+					    owner = ROOT
+					}
+					create_unit = {
+					    division = "name = \"2nd Marine\" division_template = \"Royal Marines\" start_experience_factor = 1.0 start_equipment_factor = 0.2"
+					    owner = ROOT
+					}
+				}
+			}
 			add_tech_bonus = {
 				name = general_mills
 				bonus = 1
@@ -784,13 +1047,13 @@ focus_tree = {
 	}
 	focus = {
 		id = BER_british_air_doctrine
-		icon = GFX_SOV_found_the_jet_institute_ccp_2d_sov_compatibility
+		icon = GFX_goal_generic_build_airforce
 		cost = 10
 		prerequisite = {
 			focus = BER_request_new_responsibilities
 		}
 		relative_position_id = BER_request_new_responsibilities
-		x = 5
+		x = -6
 		y = 1
 		available = {
 		}
@@ -817,7 +1080,7 @@ focus_tree = {
 		}
 		relative_position_id = BER_british_air_doctrine
 		x = 1
-		y = 1
+		y = 2
 		available = {
 		}
 		bypass = {
@@ -842,7 +1105,7 @@ focus_tree = {
 		}
 		relative_position_id = BER_british_air_doctrine
 		x = -1
-		y = 1
+		y = 2
 		available = {
 		}
 		bypass = {
@@ -867,7 +1130,7 @@ focus_tree = {
 		}
 		relative_position_id = BER_british_air_doctrine
 		x = 0
-		y = 2
+		y = 1
 		available = {
 		}
 		bypass = {
@@ -907,14 +1170,50 @@ focus_tree = {
 		}
 		relative_position_id = BER_air_bases
 		x = 0
-		y = 1
+		y = 2
 		available = {
 		}
 		bypass = {
 
 		}
 		completion_reward = {
+			create_equipment_variant = {
+				name = "Gloster Gladiator"
+				type = small_plane_airframe_0
+				modules = {
+					fixed_main_weapon_slot = light_mg_4x
+					engine_type_slot = engine_1_1x
+					special_type_slot_1 = empty
+				}
+				icon = "GFX_ENG_early_fighter_medium"
+				allow_without_tech = yes
+			}
+		
+			create_equipment_variant = {
+				name = "Bristol Blenheim"
+				allow_without_tech = yes
+				type = medium_plane_airframe_1
+				modules = {
+					fixed_main_weapon_slot = medium_bomb_bay
+					engine_type_slot = engine_2_2x
+					special_type_slot_1 = lmg_defense_turret
+				}
+				icon = "GFX_TUR_tactical_bomber1_medium"
+			}
+			custom_effect_tooltip = BER_200_planes_tt
 			####NEED TO MAKE PLANE TEMPLATE
+			hidden_effect = {
+				add_equipment_to_stockpile = {
+					type = small_plane_airframe_0
+					amount = 100
+					variant_name = "Gloster Gladiator"
+				}
+				add_equipment_to_stockpile = {
+					type = medium_plane_airframe_1
+					amount = 100
+					variant_name = "Bristol Blenheim"
+				}
+			}
 			air_experience = 25
 		}
 	}
@@ -931,19 +1230,96 @@ focus_tree = {
 			}
 			has_war_support = 0.35
 			has_completed_focus = BER_increase_our_strategic_capacity
-			OR = {
-				has_idea = exile_conscription_3
-				has_idea = exile_conscription_4
-				has_idea = exile_conscription_5
-				has_idea = exile_conscription_6
+			custom_trigger_tooltip = {
+				tooltip = BER_exile_lvl_above_3_tt
+				OR = {
+					has_idea = exile_conscription_3
+					has_idea = exile_conscription_4
+					has_idea = exile_conscription_5
+					has_idea = exile_conscription_6
+				}
 			}
 		}
 		bypass = {
 
 		}
+		ai_will_do = {
+			factor = 100
+		}
 		completion_reward = {
 			add_war_support = 0.05
 			add_ideas = BER_prepare_our_invasion_idea
+			add_tech_bonus = {
+				name = general_mills
+				bonus = 2
+				uses = 1
+				category = tp_tech
+			}
+			if = {
+				limit = {
+					is_ai = yes
+				}
+				hidden_effect = {
+			
+					division_template = {
+						name = "Royal Marines"		
+						is_locked = no
+						template_counter = 4
+						regiments = {
+							marine = { x = 0 y = 0 }
+							marine = { x = 0 y = 1 }
+							marine = { x = 0 y = 2 }
+							marine = { x = 0 y = 3 }
+							marine = { x = 1 y = 0 }
+							marine = { x = 1 y = 1 }
+							marine = { x = 1 y = 2 }
+							marine = { x = 1 y = 3 }
+							marine = { x = 2 y = 0 }
+							marine = { x = 2 y = 1 }
+							marine = { x = 2 y = 2 }
+							marine = { x = 2 y = 3 }
+							marine = { x = 3 y = 0 }
+							marine = { x = 3 y = 1 }
+							marine = { x = 3 y = 2 }
+							marine = { x = 3 y = 3 }
+						}
+					
+						support = {
+							engineer = { x = 0 y = 0 }
+							artillery = { x = 0 y = 1 }
+						}
+						#division_cap = 0
+					}
+					
+					random_owned_state = {
+						prioritize = { 487 } 
+						create_unit = {
+							division = "name = \"1st Marine\" division_template = \"Royal Marines\" start_experience_factor = 1.0 start_equipment_factor = 0.2"
+							owner = ROOT
+						}
+						create_unit = {
+							division = "name = \"2nd Marine\" division_template = \"Royal Marines\" start_experience_factor = 1.0 start_equipment_factor = 0.2"
+							owner = ROOT
+						}
+						create_unit = {
+							division = "name = \"3rd Marine\" division_template = \"Royal Marines\" start_experience_factor = 1.0 start_equipment_factor = 0.2"
+							owner = ROOT
+						}
+						create_unit = {
+							division = "name = \"4th Marine\" division_template = \"Royal Marines\" start_experience_factor = 1.0 start_equipment_factor = 0.2"
+							owner = ROOT
+						}
+						create_unit = {
+							division = "name = \"5th Marine\" division_template = \"Royal Marines\" start_experience_factor = 1.0 start_equipment_factor = 0.2"
+							owner = ROOT
+						}
+						create_unit = {
+							division = "name = \"6th Marine\" division_template = \"Royal Marines\" start_experience_factor = 1.0 start_equipment_factor = 0.2"
+							owner = ROOT
+						}
+					}
+				}
+			}
 		}
 	}
 	focus = {
