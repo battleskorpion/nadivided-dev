@@ -2583,9 +2583,8 @@ focus_tree = {
 		relative_position_id = PON_ReElect_constravatives
 		prerequisite = {
 			focus = PON_ReElect_constravatives
-			focus = PON_Elect_J_S_Woodsworth
 		}
-		cost = 10
+		cost = 5
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
 		}
@@ -2601,18 +2600,18 @@ focus_tree = {
 				ideology = democratic
 				popularity = 0.2
 			}
+			add_stability = 0.1
 		}
 	}
 	#
 	focus = {
 		id = PON_Forien_intervention_Act
 		icon = GFX_focus_eng_move_to_secure_the_dominions
-		x = 0
+		x = -1
 		y = 1
 		relative_position_id = PON_Arrest_radicals
 		prerequisite = {
 			focus = PON_Arrest_radicals
-			focus = PON_Elect_J_S_Woodsworth
 		}
 		cost = 10
 		search_filters = {
@@ -2630,16 +2629,30 @@ focus_tree = {
 			add_ideas = PON_Forien_intervention_Act_idea
 		}
 	}
-	#
+
 	focus = {
-		id = PON_Arenals_ACt
-		icon = GFX_goal_generic_construct_mil_factory
+		id = PON_forced_intervention
+		icon = GFX_focus_generic_total_war
+		cost = 10
 		x = 0
 		y = 1
 		relative_position_id = PON_Forien_intervention_Act
 		prerequisite = {
 			focus = PON_Forien_intervention_Act
-			focus = PON_Elect_J_S_Woodsworth
+		}
+		completion_reward = { 
+			add_ideas = PON_force_intervention_idea
+		}
+	}
+	#
+	focus = {
+		id = PON_Arenals_ACt
+		icon = GFX_goal_generic_construct_mil_factory
+		x = 1
+		y = 1
+		relative_position_id = PON_Arrest_radicals
+		prerequisite = {
+			focus = PON_Arrest_radicals
 		}
 		cost = 10
 		search_filters = {
@@ -2717,7 +2730,7 @@ focus_tree = {
 		prerequisite = {
 			focus = PON_Arenals_ACt
 		}
-		cost = 7.2
+		cost = 10
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
 		}
@@ -2733,6 +2746,7 @@ focus_tree = {
 				name = armor_bonus
 				bonus = 1
 				uses = 2
+				ahead_reduction = 1.0
 				category = armor
 			}
 		}
@@ -2775,7 +2789,7 @@ focus_tree = {
 		prerequisite = {
 			focus = PON_Elect_J_S_Woodsworth
 		}
-		cost = 10
+		cost = 5
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
 		}
@@ -2787,6 +2801,7 @@ focus_tree = {
 			factor = 50
 		}
 		completion_reward = {
+			add_political_power = 50
 			add_popularity = {
 				ideology = longism
 				popularity = 0.2
@@ -2797,11 +2812,14 @@ focus_tree = {
 	focus = {
 		id = PON_Raise_Taxes
 		icon = GFX_focus_PON_raise_taxes
-		x = 0
+		x = -1
 		y = 1
 		relative_position_id = PON_Special_Government_relief_package
 		prerequisite = {
 			focus = PON_Special_Government_relief_package
+		}
+		prerequisite = {
+			focus = PON_A_new_constitution
 		}
 		cost = 10
 		search_filters = {
@@ -2812,7 +2830,7 @@ focus_tree = {
 			factor = 50
 		}
 		completion_reward = {
-			add_ideas = PON_Raise_taxes
+			add_ideas = PON_Raise_taxes 
 		}
 	}
 	#
@@ -2873,7 +2891,7 @@ focus_tree = {
 	focus = {
 		id = PON_Arms_procurment_act
 		icon = GFX_goal_generic_construct_mil_factory
-		x = 0
+		x = -1
 		y = 1
 		relative_position_id = PON_Ontario_War_Act
 		prerequisite = {
@@ -2888,16 +2906,7 @@ focus_tree = {
 			factor = 50
 		}
 		bypass = {
-			custom_trigger_tooltip = {
-				tooltip = production_effort_tt
-				all_owned_state = {
-					free_building_slots = {
-						building = arms_factory
-						size < 2
-						include_locked = yes
-					}
-				}
-			}
+			
 		}
 		complete_tooltip = {
 			add_extra_state_shared_building_slots = 2
@@ -2988,11 +2997,11 @@ focus_tree = {
 	focus = {
 		id = PON_Claim_Quebec
 		icon = GFX_goal_generic_major_war
-		x = 0
+		x = 1
 		y = 1
-		relative_position_id = PON_Arms_procurment_act
+		relative_position_id = PON_Ontario_War_Act
 		prerequisite = {
-			focus = PON_Arms_procurment_act
+			focus = PON_Ontario_War_Act
 		}
 		cost = 2
 		search_filters = {
@@ -3022,7 +3031,7 @@ focus_tree = {
 			FOCUS_FILTER_RESEARCH
 		}
 		available = {
-			date > 1938.04.1
+
 		}
 		available_if_capitulated = yes
 		ai_will_do = {
@@ -3039,11 +3048,11 @@ focus_tree = {
 	focus = {
 		id = PON_Expand_ontarios_boarders
 		icon = GFX_focus_PON_Expand_ontarios_boarders
-		x = 0
-		y = 1
-		relative_position_id = PON_Ontario_destiny
+		x = 3
+		y = 2
+		relative_position_id = PON_Ontario_War_Act
 		prerequisite = {
-			focus = PON_Ontario_destiny
+			focus = PON_Ontario_War_Act
 		}
 		cost = 10
 		search_filters = {
@@ -3054,7 +3063,10 @@ focus_tree = {
 			factor = 50
 		}
 		completion_reward = {
-			core_quebec = yes
+			create_wargoal = {
+				target = PMB 
+				type = annex_everything
+			}
 			#manitoba
 			add_state_core = 386
 			add_state_core = 387
@@ -3069,19 +3081,18 @@ focus_tree = {
 		icon = GFX_focus_PON_english_lan_schools
 		x = 0
 		y = 1
-		relative_position_id = PON_Expand_ontarios_boarders
+		relative_position_id = PON_Ontario_destiny
 		prerequisite = {
-			focus = PON_Expand_ontarios_boarders
+			focus = PON_Ontario_destiny
 		}
 		cost = 7.2
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
 		}
 		available = {
+			controls_quebec_trigger = yes
 			PQC = {
-				NOT = {
-					owns_state = 32
-				}
+				exists  = no 
 			}
 		}
 		available_if_capitulated = yes
@@ -3089,22 +3100,30 @@ focus_tree = {
 			factor = 50
 		}
 		completion_reward = {
-			annex_country = {
-				target = PQC
-				transfer_troops = yes
-			}
 			add_ideas = PON_Language_Ideas_idea
+			core_quebec = yes
 		}
 	}
 	#
 	focus = {
 		id = PON_Michigan_will_be_canadian
 		icon = GFX_focus_PON_michigan
-		x = 0
+		x = 1
 		y = 1
 		relative_position_id = PON_English_language_Schools
 		prerequisite = {
 			focus = PON_English_language_Schools
+			focus = PON_Expand_ontarios_boarders
+		}
+		bypass = {
+			AND = {
+				SMI = {
+					exists = no
+				}
+				SUP = {
+					exists = no 
+				}
+			}
 		}
 		cost = 5
 		search_filters = {
@@ -3122,6 +3141,9 @@ focus_tree = {
 			create_wargoal = {
 				type = annex_everything
 				target = SUP
+			}
+			hidden_effect = {
+				claim_michigan = yes
 			}
 		}
 	}
@@ -3156,6 +3178,70 @@ focus_tree = {
 			create_wargoal = {
 				type = annex_everything
 				target = SIN
+			}
+			create_wargoal = {
+				target = SWI
+				type = annex_everything
+			}
+			create_wargoal = {
+				target = SNY
+				type = annex_everything
+			}
+			hidden_effect = {
+				claim_ohio = yes
+				claim_illinois = yes 
+				claim_indiana = yes 
+				claim_wisconsin = yes 
+				claim_new_york = yes 
+				claim_wisconsin = yes
+				add_state_claim = 287 
+				add_state_claim = 288
+				create_wargoal = {
+					target = SPA
+					type = take_claimed_state
+				}
+			}
+		}
+	}
+	focus = {
+		id = PON_midwestern_domination
+		icon = GFX_focus_ARG_anti_american_propaganda
+		cost = 10
+		x = 0
+		y = 1
+		relative_position_id = PON_Destroy_Stronghold
+		prerequisite = {
+			focus = PON_Destroy_Stronghold
+		}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = form_country_required_states_michigan_tt
+				controls_michigan_trigger = yes
+			}
+			custom_trigger_tooltip = {
+				tooltip = form_country_required_states_illinois_tt
+				controls_illinois_trigger = yes
+			}
+			custom_trigger_tooltip = {
+				tooltip = form_country_required_states_indiana_tt
+				controls_indiana_trigger = yes
+			}
+			custom_trigger_tooltip = {
+				tooltip = form_country_required_states_ohio_tt
+				controls_ohio_trigger = yes
+			}
+		}
+		completion_reward = { 
+			custom_effect_tooltip = PON_great_lakes_domination_tt
+			hidden_effect = {
+				core_michigan = yes
+				core_ohio = yes 
+				core_indiana = yes 
+				core_illinois = yes
+				core_wisconsin = yes 
+				core_new_york = yes
+				add_state_core = 287 
+				add_state_core = 288 
 			}
 		}
 	}
@@ -3303,7 +3389,9 @@ focus_tree = {
 		}
 		cost = 10
 		available = {
-			date > 1937.06.1
+			has_army_manpower = {
+				size > 99999
+			}
 		}
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
@@ -3313,7 +3401,10 @@ focus_tree = {
 			factor = 50
 		}
 		completion_reward = {
-			add_ideas = PON_Qubec_Uprisings
+			add_timed_idea = {
+				idea = PON_Qubec_Uprisings
+				days = 720
+			}
 			create_wargoal = {
 				type = annex_everything
 				target = PQC
@@ -3336,7 +3427,7 @@ focus_tree = {
 			has_idea = PON_Qubec_Uprisings
 		}
 		search_filters = {
-			FOCUS_FILTER_RESEARCH
+			FOCUS_FILTER_POLITICAL
 		}
 		available_if_capitulated = yes
 		ai_will_do = {
@@ -3344,6 +3435,14 @@ focus_tree = {
 		}
 		completion_reward = {
 			remove_ideas = PON_Qubec_Uprisings
+			if = {
+				limit = {
+					NOT = {
+						has_idea = PON_Qubec_Uprisings
+					}
+				}
+				add_political_power = 100
+			}
 		}
 	}
 	#
@@ -3434,11 +3533,11 @@ focus_tree = {
 	focus = {
 		id = PON_Joint_UK_Ontario_Fighter_Development
 		icon = GFX_focus_PON_brit_air
-		x = 0
+		x = 2
 		y = 1
-		relative_position_id = PON_limited_british_investment
+		relative_position_id = PON_Send_envoy_to_great_britian
 		prerequisite = {
-			focus = PON_limited_british_investment
+			focus = PON_Send_envoy_to_great_britian
 		}
 		cost = 7.2
 		search_filters = {
@@ -3449,11 +3548,27 @@ focus_tree = {
 			factor = 25
 		}
 		completion_reward = {
-			add_tech_bonus = {
-				name = infantry_artillery_bonus
-				bonus = 1
-				uses = 1
-				category = light_fighter
+			if = {
+				limit = {
+					has_dlc = "By Blood Alone"
+				}
+				add_tech_bonus = {
+					name = air_bonus
+					bonus = 1
+					uses = 1
+					technology = basic_small_airframe
+					technology = improved_small_airframe
+					technology = advanced_small_airframe
+				}
+			}
+
+			else = {
+				add_tech_bonus = {
+					name = air_bonus
+					bonus = 1
+					uses = 1
+					category = light_fighter
+				}
 			}
 		}
 	}
@@ -3506,7 +3621,12 @@ focus_tree = {
 			FOCUS_FILTER_RESEARCH
 		}
 		available = {
-			date > 1940.01.1
+			or = {
+				date > 1940.01.1
+				has_army_manpower = {
+					size > 250000
+				}
+			}
 			owns_state = 31
 			owns_state = 130
 			owns_state = 392
@@ -3637,11 +3757,11 @@ focus_tree = {
 	focus = {
 		id = PON_The_Territories
 		icon = GFX_focus_PON_territories
-		x = 0
+		x = 2
 		y = 1
-		relative_position_id = PON_British_columbia
+		relative_position_id = PON_Invasion_of_The_Praries
 		prerequisite = {
-			focus = PON_British_columbia
+			focus = PON_Invasion_of_The_Praries
 		}
 		cost = 10
 		search_filters = {
@@ -3697,7 +3817,13 @@ focus_tree = {
 	focus = {
 		id = PON_reunited_Canada
 		icon = GFX_focus_canada_united
-		relative_position_id = PON_The_Territories
+		relative_position_id = PON_British_columbia
+		prerequisite = {
+			focus = PON_British_columbia
+		}
+		prerequisite = {
+			focus = PON_East_coast_reconsodiation
+		}
 		prerequisite = {
 			focus = PON_The_Territories
 		}
@@ -3709,9 +3835,9 @@ focus_tree = {
 			has_full_control_of_state = 498
 			has_full_control_of_state = 392
 		}
-		x = 0
+		x = -1
 		y = 1
-		cost = 1
+		cost = 1 
 		ai_will_do = {
 			factor = 50
 		}
