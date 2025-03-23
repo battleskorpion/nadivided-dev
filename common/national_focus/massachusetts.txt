@@ -139,6 +139,10 @@ focus_tree = {
 		prerequisite = {
 			focus = SMA_naval_program
 		}
+		ai_will_do = {
+			factor = 2
+		}
+
 		completion_reward = {
 			create_equipment_variant = {
 				name = "South Dakota Class"
@@ -185,6 +189,26 @@ focus_tree = {
 		relative_position_id = SMA_expandbostonharbor
 		cost = 7.2
 		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				add = 5
+				has_resources_in_country = {
+					resource = chromium
+					amount < 5
+					extracted = yes
+				}
+			}
+			modifier = {
+				add = 2
+				has_resources_in_country = {
+					resource = steel
+					amount < 8
+					extracted = yes
+				}
+			}
+		}
+
 		completion_reward = {
 			random_owned_controlled_state = {
 				limit = {
@@ -380,6 +404,14 @@ focus_tree = {
 		prerequisite = {
 			focus = SMA_m1garandriflecontract
 		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				add = 2
+				date > 1936.4.16
+			}
+		}
+
 		completion_reward = {
 			if = {
 				limit = {
@@ -435,6 +467,16 @@ focus_tree = {
 		cost = 5.8
 		ai_will_do = {
 			factor = 1
+			modifier = {
+				# low on steel
+				add = 2
+				date > 1936.4.1
+				has_resources_in_country = {
+					resource = steel
+					amount < 10
+					extracted = yes
+				}
+			}
 		}
 		relative_position_id = SMA_subsidizespringfieldarmory
 		available_if_capitulated = yes
@@ -461,10 +503,16 @@ focus_tree = {
 		relative_position_id = SMA_industryofmassachusetts
 		cost = 5.8
 		available_if_capitulated = yes
-		completion_reward = {
-			set_technology = {
-				infantry_equipment_1 = 1
+		ai_will_do = {
+			factor = 2
+
+			modifier = {
+				add = 2
+				date > 1936.3.1
 			}
+		}
+		
+		completion_reward = {
 			if = {
 				limit = {
 					NOT = {
@@ -496,15 +544,15 @@ focus_tree = {
 				amount = -700
 				producer = SMA
 			}
-			#add_equipment_to_stockpile = {
-			#	type = infantry_equipment_1	#was USA_infantry_equipment_1, I just want it to add M1 Garands, hopefully this will fix
-			#	amount = 2450
-			#	producer = SMA 
-			#}
+			add_equipment_to_stockpile = {
+				type = infantry_equipment_1	#was USA_infantry_equipment_1, I just want it to add M1 Garands, hopefully this will fix
+				amount = 2450
+				producer = SMA 
+			}
 			#add_ideas = SMA_m1_garandcontract
 			add_tech_bonus = {
 				name = infantry_artillery_bonus
-				bonus = 0.75
+				bonus = 0.60
 				ahead_reduction = 0.3
 				uses = 3
 				category = infantry_weapons
@@ -518,7 +566,7 @@ focus_tree = {
 		x = 2
 		y = 1
 		relative_position_id = SMA_industryofmassachusetts
-		cost = 8
+		cost = 6.9
 		available_if_capitulated = yes
 		prerequisite = {
 			focus = SMA_industryofmassachusetts
@@ -542,7 +590,7 @@ focus_tree = {
 		x = 0
 		y = 1
 		relative_position_id = SMA_industryofmassachusetts
-		cost = 8
+		cost = 6.9
 		available_if_capitulated = yes
 		prerequisite = {
 			focus = SMA_industryofmassachusetts
@@ -730,7 +778,15 @@ focus_tree = {
 			focus = SMA_industryofmassachusetts
 		}
 		ai_will_do = {
-			factor = 1
+			factor = 0.5
+			modifier = {
+				add = 8
+				has_war = yes
+			}
+			modifier = {
+				add = 4
+				threat > 0.5
+			}
 		}
 		completion_reward = {
 			5 = {
@@ -1069,9 +1125,9 @@ focus_tree = {
 		x = 2
 		y = 1
 		relative_position_id = SMA_Unification_with_Rhode_Island
-		cost = 13
+		cost = 14.4
 		ai_will_do = {
-			factor = 300
+			factor = 50
 		}
 		available_if_capitulated = yes
 		prerequisite = {
@@ -1082,8 +1138,16 @@ focus_tree = {
 			focus = SMA_Second_Era
 		}
 		available = {
-			controls_new_england_trigger = yes
+			OR = {
+				controls_rhode_island_trigger = yes
+				controls_maine_trigger = yes
+			}
 		}
+
+		will_lead_to_war_with = SVT
+		will_lead_to_war_with = SNH
+		will_lead_to_war_with = SCT
+
 		completion_reward = {
 			set_cosmetic_tag = MASS_EMPIRE
 			core_maine = yes
@@ -1096,11 +1160,44 @@ focus_tree = {
 			# (Otherwise will be bypassed when other things done) 
 			# (will also give wargoal on Nova Scotia assuming not in faction and stuff) 
 			add_named_threat = {
-				threat = 1
+				threat = 2
 				name = SMA_claim_new_england_empire
 			}
-			add_political_power = 75
-			add_stability = 0.05
+			add_stability = 0.01
+			if = {
+				limit = {
+					SVT = {
+						exists = yes
+					}
+				}
+				create_wargoal = {
+					target = SVT
+					type = annex_everything
+				}
+			}
+			if = {
+				limit = {
+					SNH = {
+						exists = yes
+					}
+				}
+				create_wargoal = {
+					target = SNH
+					type = annex_everything
+				}
+			}
+			if = {
+				limit = {
+					SCT = {
+						exists = yes
+					}
+				}
+				create_wargoal = {
+					target = SCT
+					type = annex_everything
+				}
+			}
+
 		}
 	}
 	focus = {
@@ -1181,7 +1278,42 @@ focus_tree = {
 			focus = SMA_Massachusetts_Empire
 		}
 		available = {
-			controls_new_england_trigger = yes
+			OR = {
+				controls_rhode_island_trigger = yes
+				controls_maine_trigger = yes
+			}
+			OR = {
+				controls_rhode_island_trigger = yes
+				is_in_faction_with = SRI
+				any_country = {
+					controls_rhode_island_trigger = yes
+					is_in_faction_with = ROOT
+				}
+			}
+			OR = {
+				controls_maine_trigger = yes
+				is_in_faction_with = SME
+				any_country = {
+					controls_maine_trigger = yes
+					is_in_faction_with = ROOT
+				}
+			}
+			OR = {
+				controls_new_hampshire_trigger = yes
+				is_in_faction_with = SNH
+				any_country = {
+					controls_new_hampshire_trigger = yes
+					is_in_faction_with = ROOT
+				}
+			}
+			OR = {
+				controls_vermont_trigger = yes
+				is_in_faction_with = SVT
+				any_country = {
+					controls_vermont_trigger = yes
+					is_in_faction_with = ROOT
+				}
+			}
 		}
 		bypass = {
 			AND = {
@@ -1206,6 +1338,33 @@ focus_tree = {
 			add_state_claim = 743
 		}
 	}
+
+	focus = {
+		id = SMA_The_New_Northeast
+		icon = GFX_focus_generic_spread_fascism
+
+		x = 0
+		y = 2
+		relative_position_id = SMA_Massachusetts_Empire
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = yes
+		prerequisite = {
+			focus = SMA_Imperial_Lands
+		}
+
+		completion_reward = {
+			core_new_york = yes
+			core_new_jersey = yes
+			core_southern_quebec = yes
+			core_prince_edward_island = yes
+			core_st_pierre = yes
+			core_newfoundland_and_labrador = yes
+		}
+	}
+
 	##########################	
 	####### DEMOCRACY ########
 	##########################
@@ -1218,7 +1377,7 @@ focus_tree = {
 		cost = 1
 		available_if_capitulated = yes
 		mutually_exclusive = {
-			focus = SMA_Wickliffes_Coup
+			focus = SMA_By_The_Sword
 			focus = SMA_Stirrings_of_a_Revolution
 		}
 		ai_will_do = {
@@ -1912,6 +2071,9 @@ focus_tree = {
 			factor = 1
 		}
 		available_if_capitulated = yes
+
+		will_lead_to_war_with = SNH
+		will_lead_to_war_with = SME
 		completion_reward = {
 			claim_new_hampshire = yes
 			claim_maine = yes
@@ -2275,6 +2437,9 @@ focus_tree = {
 		}
 		#prerequisite = {focus = X }
 		available_if_capitulated = yes
+
+		will_lead_to_war_with = SCT
+		will_lead_to_war_with = SRI
 		completion_reward = {
 			create_wargoal = {
 				type = annex_everything
@@ -3066,21 +3231,47 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = SMA_Wickliffes_Coup
-		icon = GFX_focus_SMA_workufucker
+		# This focus exists because of the AI, so they actually may go fascist. 
+		id = SMA_By_The_Sword
+		icon = GFX_focus_secret_rearmament
 		x = 15
 		y = 0
-		mutually_exclusive = {
-			focus = SMA_Elections_Will_Continue
-			focus = SMA_Stirrings_of_a_Revolution
-		}
 		cost = 1
 		ai_will_do = {
 			factor = 25
 		}
 		available_if_capitulated = yes
+		
+		mutually_exclusive = {
+			focus = SMA_Elections_Will_Continue
+			focus = SMA_Stirrings_of_a_Revolution
+		}
+		
+		completion_reward = {
+			add_stability = -0.04
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.015
+			} 
+			recruit_character = SMA_Joseph_Lorings
+		} 
+    }
+
+	focus = {
+		id = SMA_Wickliffes_Coup
+		icon = GFX_focus_SMA_workufucker
+		x = 15
+		y = 1
+		cost = 3
+		ai_will_do = {
+			factor = 5
+		}
+		prerequisite = {
+			focus = SMA_By_The_Sword
+		}
+		available_if_capitulated = yes
 		available = {
-			stability < 0.80
+			has_stability < 0.80
 			fascism > 0.08
 			communism < 0.2
 			longism < 0.45
@@ -3112,7 +3303,7 @@ focus_tree = {
 		available_if_capitulated = yes
 		mutually_exclusive = {
 			focus = SMA_Elections_Will_Continue
-			focus = SMA_Wickliffes_Coup
+			focus = SMA_By_The_Sword
 		}
 		ai_will_do = {
 			factor = 20
@@ -3340,6 +3531,8 @@ focus_tree = {
 			}
 		}
 		available_if_capitulated = yes
+
+		will_lead_to_war_with = SRI
 		completion_reward = {
 			create_wargoal = {
 				type = annex_everything
@@ -3365,6 +3558,8 @@ focus_tree = {
 			}
 		}
 		available_if_capitulated = yes
+
+		will_lead_to_war_with = SME
 		completion_reward = {
 			create_wargoal = {
 				type = annex_everything
@@ -3974,9 +4169,9 @@ focus_tree = {
 		x = 0
 		y = 1
 		relative_position_id = SMA_Wickliffes_Coup
-		cost = 7.2
+		cost = 5
 		ai_will_do = {
-			factor = 1
+			factor = 4
 		}
 		available_if_capitulated = yes
 		available = {
@@ -4000,9 +4195,15 @@ focus_tree = {
 		}
 		x = -3
 		y = 1
-		cost = 7.2
+		cost = 5
 		ai_will_do = {
-			factor = 1
+			factor = 2
+			modifier = {
+				add = 10
+				has_completed_focus = SMA_Modernization_of_our_tactics
+				has_completed_focus = SMA_Reach_out_to_the_fascist_in_Europe
+				has_completed_focus = SMA_Fueling_our_war_industries
+			}
 		}
 		relative_position_id = SMA_Make_Promises_to_the_Generals
 		available_if_capitulated = yes
@@ -4089,7 +4290,7 @@ focus_tree = {
 		y = 1
 		cost = 7.2
 		ai_will_do = {
-			factor = 1
+			factor = 2
 		}
 		relative_position_id = SMA_Funding_Our_military_industries
 		available_if_capitulated = yes
@@ -4107,9 +4308,15 @@ focus_tree = {
 		}
 		x = 1
 		y = 1
-		cost = 7.2
+		cost = 5
 		ai_will_do = {
-			factor = 1
+			factor = 1.5
+			modifier = {
+				add = 15
+				has_completed_focus = SMA_Funding_Our_military_industries
+				has_completed_focus = SMA_Reach_out_to_the_fascist_in_Europe
+				has_completed_focus = SMA_Fueling_our_war_industries
+			}
 		}
 		relative_position_id = SMA_Make_Promises_to_the_Generals
 		available_if_capitulated = yes
@@ -4133,9 +4340,9 @@ focus_tree = {
 		}
 		x = 0
 		y = 1
-		cost = 7.2
+		cost = 4
 		ai_will_do = {
-			factor = 1
+			factor = 2
 		}
 		relative_position_id = SMA_Modernization_of_our_tactics
 		available_if_capitulated = yes
@@ -4160,7 +4367,11 @@ focus_tree = {
 		y = 1
 		cost = 5
 		ai_will_do = {
-			factor = 1
+			factor = 3
+			modifier = {
+				has_completed_focus = SMA_By_The_Sword
+				add = 3
+			}
 		}
 		relative_position_id = SMA_Make_Promises_to_the_Generals
 		available_if_capitulated = yes
@@ -4183,9 +4394,9 @@ focus_tree = {
 		}
 		x = 0
 		y = 1
-		cost = 14.4
+		cost = 14
 		ai_will_do = {
-			factor = 1
+			factor = 2
 		}
 		relative_position_id = SMA_Draper_Plan
 		available_if_capitulated = yes
@@ -4224,7 +4435,7 @@ focus_tree = {
 		y = 1
 		cost = 5.8
 		ai_will_do = {
-			factor = 1
+			factor = 2.5
 		}
 		relative_position_id = SMA_Make_Promises_to_the_Generals
 		available_if_capitulated = yes
@@ -4246,9 +4457,9 @@ focus_tree = {
 		}
 		x = 0
 		y = 1
-		cost = 10
+		cost = 7.2
 		ai_will_do = {
-			factor = 1
+			factor = 3
 		}
 		relative_position_id = SMA_Reach_out_to_the_fascist_in_Europe
 		available_if_capitulated = yes
@@ -4275,7 +4486,7 @@ focus_tree = {
 		y = 1
 		cost = 7.2
 		ai_will_do = {
-			factor = 1
+			factor = 5
 		}
 		relative_position_id = SMA_Adopt_European_Style_Laws
 		available_if_capitulated = yes
@@ -4294,7 +4505,7 @@ focus_tree = {
 
 	focus = {
 		id = SMA_Second_Era
-		#icon = GFX_focus_SMA_second_era
+		icon = GFX_focus_generic_fascist_propaganda
 		x = 0
 		y = 1
 		relative_position_id = SMA_Solidify_The_Partys_Rule
@@ -4308,6 +4519,10 @@ focus_tree = {
 		available_if_capitulated = no
 		available = {
 		}
+		cost = 3
+		ai_will_do = {
+			factor = 20
+		}
 
 		completion_reward = {
 			add_ideas = SMA_second_era
@@ -4315,8 +4530,65 @@ focus_tree = {
 				ideology = fascism
 				can_create_factions = yes
 			}
+			set_major = yes
 
 			country_event = massachusetts.11
+		}
+	}
+
+	focus = {
+		id = SMA_Modern_Governance 
+		icon = GFX_focus_ITA_generic_fascist_workers
+		prerequisite = {
+			focus = SMA_Second_Era
+		}
+		prerequisite = {
+			focus = SMA_Government_Workers_Program
+		}
+		x = 2
+		y = 1
+		cost = 7.2
+		ai_will_do = {
+			factor = 4
+		}
+		relative_position_id = SMA_Second_Era
+		available_if_capitulated = yes
+
+		completion_reward = {
+			custom_override_tooltip = {
+				tooltip = SMA_modern_governance_tt
+ 				hold_election = ROOT
+			}
+
+			add_political_power = 30
+			add_stability = 0.02
+			add_country_leader_trait = national_socialist_sympathizer
+
+			add_advisor_role = {
+				character = SMA_william_aworton
+				activate = yes
+				advisor = {
+					slot = army_chief
+					cost = 50
+					idea_token = SMA_character_token_army_chief
+					traits = {
+						army_chief_maneuver_2
+						army_chief_morale_2
+					}
+				}
+			}
+			add_advisor_role = {
+				character = SMA_Clarence_Lionel_Adcock
+				activate = yes
+				advisor = {
+					slot = high_command
+					cost = 50
+					idea_token = SMA_character_token_army_chief
+					traits = {
+						army_chief_army_high_command
+					}
+				}
+			}
 		}
 	}
 
@@ -4339,7 +4611,7 @@ focus_tree = {
 			factor = 1
 			modifier = {
 				date > 1938.6.1
-				factor = 15
+				factor = 5
 			}
 		}
 		relative_position_id = SMA_Solidify_The_Partys_Rule
@@ -4388,12 +4660,14 @@ focus_tree = {
 		y = 1
 		cost = 7.2
 		ai_will_do = {
-			factor = 1
+			factor = 5
 		}
 		relative_position_id = SMA_Argue_for_Expansionism
 		available_if_capitulated = yes
 		available = {
 		}
+
+		will_lead_to_war_with = SRI
 		completion_reward = {
 			create_wargoal = {
 				type = annex_everything
@@ -4458,12 +4732,14 @@ focus_tree = {
 		y = 1
 		cost = 7.2
 		ai_will_do = {
-			factor = 1
+			factor = 5
 		}
 		relative_position_id = SMA_Argue_for_Expansionism
 		available_if_capitulated = yes
 		available = {
 		}
+
+		will_lead_to_war_with = SME
 		completion_reward = {
 			create_wargoal = {
 				type = annex_everything
@@ -4486,7 +4762,7 @@ focus_tree = {
 		}
 		x = 2
 		y = 0
-		cost = 7.9
+		cost = 7.2
 		ai_will_do = {
 			factor = 1
 		}
@@ -4508,7 +4784,20 @@ focus_tree = {
 		y = 1
 		cost = 5
 		ai_will_do = {
-			factor = 1
+			factor = 1.5
+			modifier = {
+				add = 10
+				has_resources_in_country = {
+					resource = steel
+					amount < 12
+				}
+			}
+			modifier = {
+				add = 15
+				has_completed_focus = SMA_Funding_Our_military_industries
+				has_completed_focus = SMA_Reach_out_to_the_fascist_in_Europe
+				has_completed_focus = SMA_Modernization_of_our_tactics
+			}
 		}
 		relative_position_id = SMA_Make_Promises_to_the_Generals
 		available_if_capitulated = yes
@@ -4582,9 +4871,9 @@ focus_tree = {
 		}
 		x = 6
 		y = 1
-		cost = 7.2
+		cost = 5
 		ai_will_do = {
-			factor = 1
+			factor = 3
 		}
 		relative_position_id = SMA_Wickliffes_Coup
 		available_if_capitulated = yes
@@ -4611,7 +4900,7 @@ focus_tree = {
 		y = 1
 		cost = 7.2
 		ai_will_do = {
-			factor = 1
+			factor = 3
 		}
 		relative_position_id = SMA_Make_Promises_to_the_People
 		available_if_capitulated = yes
@@ -4640,9 +4929,20 @@ focus_tree = {
 		}
 		x = -1
 		y = 2
-		cost = 7.2
+		cost = 5
 		ai_will_do = {
-			factor = 1
+			factor = 1.5
+			modifier = {
+				factor = 7
+				OR = {
+					has_completed_focus = SMA_Adopt_European_Style_Laws
+					has_completed_focus = SMA_Modernization_of_our_tanks
+				}
+				OR = {
+					has_completed_focus = SMA_Adopt_European_Style_Laws
+					has_completed_focus = SMA_Introduce_Slave_Labour_for_Prisoners
+				}
+			}
 		}
 		relative_position_id = SMA_Make_Promises_to_the_People
 		available_if_capitulated = yes
@@ -4665,7 +4965,7 @@ focus_tree = {
 		}
 		x = 1
 		y = 2
-		cost = 7.2
+		cost = 5
 		ai_will_do = {
 			factor = 1
 		}
@@ -4719,7 +5019,7 @@ focus_tree = {
 		y = 1
 		cost = 7.2
 		ai_will_do = {
-			factor = 1
+			factor = 3
 		}
 		relative_position_id = SMA_Make_Promises_to_the_People
 		available_if_capitulated = yes
@@ -4737,9 +5037,9 @@ focus_tree = {
 		}
 		x = -7
 		y = 1
-		cost = 7.2
+		cost = 5 
 		ai_will_do = {
-			factor = 1
+			factor = 3
 		}
 		relative_position_id = SMA_Wickliffes_Coup
 		available_if_capitulated = yes
@@ -4766,7 +5066,7 @@ focus_tree = {
 		y = 1
 		cost = 7.2
 		ai_will_do = {
-			factor = 1
+			factor = 2
 		}
 		relative_position_id = SMA_Make_Promises_to_the_Doctors
 		available_if_capitulated = yes
@@ -4785,9 +5085,9 @@ focus_tree = {
 		}
 		x = 0
 		y = 1
-		cost = 7.2
+		cost = 5
 		ai_will_do = {
-			factor = 1
+			factor = 1.5
 		}
 		relative_position_id = SMA_Nationalize_the_Pioneer_Fund
 		available_if_capitulated = yes
@@ -4832,7 +5132,7 @@ focus_tree = {
 		}
 		x = -1
 		y = 1
-		cost = 5
+		cost = 4
 		ai_will_do = {
 			factor = 1
 		}
@@ -4859,7 +5159,7 @@ focus_tree = {
 		}
 		x = 1
 		y = 1
-		cost = 7.2
+		cost = 6
 		ai_will_do = {
 			factor = 1
 		}
@@ -4879,7 +5179,7 @@ focus_tree = {
 		}
 		x = 0
 		y = 1
-		cost = 7.2
+		cost = 3
 		ai_will_do = {
 			factor = 1
 		}
@@ -4952,7 +5252,7 @@ focus_tree = {
 		x = -2
 		y = 1
 		relative_position_id = SMA_minutemen_militas
-		cost = 7.2
+		cost = 5
 		available_if_capitulated = yes
 		prerequisite = {
 			focus = SMA_minutemen_militas
@@ -4970,7 +5270,7 @@ focus_tree = {
 		x = 0
 		y = 1
 		relative_position_id = SMA_Civilian_Work_Corps
-		cost = 7.2
+		cost = 5
 		available_if_capitulated = yes
 		prerequisite = {
 			focus = SMA_Civilian_Work_Corps
@@ -4985,7 +5285,7 @@ focus_tree = {
 		x = 0
 		y = 1
 		relative_position_id = SMA_Promote_Women_in_factories
-		cost = 7.2
+		cost = 5
 		available_if_capitulated = yes
 		prerequisite = {
 			focus = SMA_Promote_Women_in_factories
@@ -5005,7 +5305,7 @@ focus_tree = {
 		x = 5
 		y = 1
 		relative_position_id = SMA_minutemen_militas
-		cost = 10
+		cost = 6.5
 		available_if_capitulated = yes
 		prerequisite = {
 			focus = SMA_minutemen_militas
@@ -5021,7 +5321,7 @@ focus_tree = {
 		x = 0
 		y = 1
 		relative_position_id = SMA_Massachusetts_Army_Rangers
-		cost = 7.2
+		cost = 5.8
 		available_if_capitulated = yes
 		prerequisite = {
 			focus = SMA_Massachusetts_Army_Rangers
@@ -5039,7 +5339,7 @@ focus_tree = {
 		x = -1
 		y = 1
 		relative_position_id = SMA_Trench_Raiders_Doctrine
-		cost = 7.2
+		cost = 5
 		available_if_capitulated = yes
 		prerequisite = {
 			focus = SMA_Trench_Raiders_Doctrine
@@ -5059,7 +5359,7 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = SMA_Massachusetts_Tank_Corps
-		cost = 7.2
+		cost = 5
 		available_if_capitulated = yes
 		prerequisite = {
 			focus = SMA_Massachusetts_Tank_Corps
@@ -5099,7 +5399,7 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = SMA_Trench_Raiders_Doctrine
-		cost = 7.2
+		cost = 5
 		available_if_capitulated = yes
 		prerequisite = {
 			focus = SMA_Trench_Raiders_Doctrine
@@ -5173,7 +5473,7 @@ focus_tree = {
 		x = 0
 		y = 1
 		relative_position_id = SMA_Promote_Spirt_of_Revoultion
-		cost = 5
+		cost = 4
 		available_if_capitulated = yes
 		prerequisite = {
 			focus = SMA_Promote_Spirt_of_Revoultion
@@ -5193,7 +5493,7 @@ focus_tree = {
 		x = 2
 		y = 1
 		relative_position_id = SMA_Promote_Spirt_of_Revoultion
-		cost = 5
+		cost = 4
 		available_if_capitulated = yes
 		prerequisite = {
 			focus = SMA_Promote_Spirt_of_Revoultion
@@ -5208,7 +5508,7 @@ focus_tree = {
 		x = -1
 		y = 1
 		relative_position_id = SMA_Minute_Medics
-		cost = 7.2
+		cost = 5
 		available_if_capitulated = yes
 		prerequisite = {
 			focus = SMA_Minute_Medics
@@ -5247,7 +5547,7 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = SMA_Minute_Medics
-		cost = 7.2
+		cost = 5
 		available_if_capitulated = yes
 		prerequisite = {
 			focus = SMA_Minute_Medics
@@ -5298,7 +5598,7 @@ focus_tree = {
 		x = 2
 		y = 1
 		relative_position_id = SMA_Construct_National_Guard_centers
-		cost = 7.2
+		cost = 4
 		available_if_capitulated = yes
 		prerequisite = {
 			focus = SMA_Construct_National_Guard_centers
@@ -5433,7 +5733,7 @@ focus_tree = {
 		x = 0
 		y = 1
 		relative_position_id = SMA_Naval_investment
-		cost = 10
+		cost = 5
 		available_if_capitulated = yes
 		prerequisite = {
 			focus = SMA_Naval_investment
@@ -5504,7 +5804,7 @@ focus_tree = {
 		x = -3
 		y = 1
 		relative_position_id = SMA_Naval_investment
-		cost = 7.2
+		cost = 6.5
 		available_if_capitulated = yes
 		prerequisite = {
 			focus = SMA_Naval_investment
@@ -5598,7 +5898,7 @@ focus_tree = {
 		x = 0
 		y = 1
 		relative_position_id = SMA_Establishing_Our_Airforce
-		cost = 7.2
+		cost = 5
 		available_if_capitulated = yes
 		prerequisite = {
 			focus = SMA_Establishing_Our_Airforce
@@ -5625,7 +5925,7 @@ focus_tree = {
 		x = 0
 		y = 1
 		relative_position_id = SMA_Construct_National_Guard_centers
-		cost = 7.2
+		cost = 5
 		available_if_capitulated = yes
 		prerequisite = {
 			focus = SMA_Construct_National_Guard_centers
