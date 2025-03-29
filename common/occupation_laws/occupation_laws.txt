@@ -60,11 +60,26 @@
 #		}
 #	}
 #}
+missing_garrison_scaled_effect = {
+	icon = 1
+	missing_garrison_law = yes # missing garrison will now be scaling to law set as missing_garrison_law if it is set, otherwise it will use default_law as it used to
+	sound_effect = "Martial_Law_Interface_No_Garrison"
+	visible = {
+		always = no
+	}
 
+	state_modifier = {
+		resistance_target = 0.1
+		compliance_gain = -0.045
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
 
 no_garrison = {
 	icon = 1
-	default_law = yes
 	sound_effect = "Martial_Law_Interface_No_Garrison"
 	
 	state_modifier = {
@@ -101,6 +116,11 @@ no_garrison = {
 				surrender_progress > 0.4
 			}
 			add = 500
+		}
+
+		modifier = {
+			check_variable  = { uncapped_resistance_target > -0.4 }
+			add = -60
 		}
 	}
 }
@@ -146,7 +166,6 @@ foreign_civilian_oversight = {
 		local_factories 				= 0.00
 		local_resources 				= 0.00
 	}
-	starting_law = yes	
 
 	ai_will_do = {
 		base = 120
@@ -198,6 +217,12 @@ local_police_force_garrison = {
 secret_police_oversight = {
 	icon = 4
 	sound_effect = "Martial_Law_Interface_Secret_Police_Oversight"
+
+	visible = {
+		NOT = {
+			has_country_flag = PON_Ontario_secret_police_flag
+		}
+	}
 	
 	state_modifier = {
 		resistance_target 				= -0.30
@@ -237,6 +262,8 @@ liberate_workers_occupation = {
 military_governor_occupation = {
 	icon = 6
 	sound_effect = "Martial_Law_Interface_Military_Governor_Occupation"
+	default_law = yes
+	starting_law = yes
 	
 	state_modifier = {
 		resistance_target 			= -0.4
@@ -265,6 +292,20 @@ military_governor_occupation = {
 			check_variable  = { resistance_target_without_law > 0.55} 						
 			add = 400
 		}
+		
+		modifier = {
+			check_variable  = { resistance_target_without_law > 0.34}
+
+			set_temp_variable = { requirement_limit = 0.25 }
+			if = {
+				limit = { occupation_law = military_governor_occupation }
+				set_temp_variable = { requirement_limit = 0.45 }
+			}
+			check_variable = { garrison_min_support_ratio < requirement_limit }
+
+			add = 400
+		}
+		
 	}
 }
 
@@ -482,6 +523,30 @@ command_center_occupation = {
 		repair_speed_infrastructure_factor 	= 0.25
 		repair_speed_arms_factory_factor = 0.25
 		repair_speed_industrial_complex_factor = 0.25
+		
+		custom_modifier_tooltip = "resource_sabotage_decrease_tooltip"
+	}
+}
+ontario_secret_police = {
+	icon = 4
+	visible = {
+		original_tag = PON 
+		has_completed_focus = PON_Ontario_Secret_Police
+	}
+	sound_effect = "Martial_Law_Interface_Autonomous_Occupation_Unique_DEM"
+	state_modifier = {
+		resistance_target 					= -0.40
+		compliance_gain 					= -0.08
+		resistance_damage_to_garrison 		= 0.3
+		required_garrison_factor 			= 0.0
+		local_resources 					= 0.40
+		local_factories 					= 0.40
+		repair_speed_infrastructure_factor 	= 0.25
+		repair_speed_arms_factory_factor = 0.25
+		repair_speed_industrial_complex_factor = 0.25
+		enemy_operative_detection_chance_over_occupied_tag = 1 # offset detection chance by +1%
+		enemy_intel_network_gain_factor_over_occupied_tag = -0.25 # -25% scaled by the number of occupied states and the ratio of the network covering those occupied states
+		operative_slot = 1
 		
 		custom_modifier_tooltip = "resource_sabotage_decrease_tooltip"
 	}
