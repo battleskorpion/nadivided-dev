@@ -4904,7 +4904,16 @@
 		}
 
 		completion_reward = {
-
+			add_political_power = 75
+			add_stability = 0.05
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 	focus = {
@@ -5132,6 +5141,20 @@
 			mio:generic_infantry_equipment_organization = {
 				add_mio_size = 2
 				add_mio_research_bonus = 0.05
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
 			}
 		}
 	}
@@ -5838,10 +5861,10 @@
     focus = {
 		id = SMI_Expand_Jeep_Program
 		icon = GFX_focus_SMI_Expand_Jeep_Program
-		x = 0
+		x = 2
 		y = 2
 		relative_position_id = SMI_SteeL_Wars_Tank_Program_Continuation
-        prerequisite = { focus = SMI_SteeL_Wars_Tank_Program_Continuation }
+        prerequisite = { focus = SMI_Materials_Science_and_Engineering focus = SMI_Tires_and_Tubes }
 	
 		cost = 5
 	
@@ -5868,7 +5891,12 @@
 			focus = SMI_Open_Fire_On_Protesters
 		}
 		cost = 2
-
+		available = {
+			or = {
+				has_completed_focus = SMI_edsils_influence
+				has_completed_focus = SMI_Ford_Rouge_Complex_Expansion
+			}
+		}
 		search_filters = {   }
 		
 		available_if_capitulated = yes
@@ -5965,7 +5993,7 @@
     focus = {
 		id = SMI_Continue_Deprecatory_Behavior
 		icon = GFX_focus_SMI_Continue_Deprecatory_Behavior
-		x = -5
+		x = 5
 		y = 1
 		relative_position_id = SMI_A_Volitle_Disagreement
         prerequisite = { focus = SMI_A_Volitle_Disagreement }
@@ -5989,16 +6017,106 @@
 				ideology = fascism
 				popularity = 0.1
 			}
+		}
+	}
+	focus = {
+		id = SMI_Republish_The_International_Jew
+		icon = GFX_focus_SMI_Republish_The_International_Jew
+		x = 1
+		y = 1
+		relative_position_id = SMI_Continue_Deprecatory_Behavior
+        prerequisite = { focus = SMI_Continue_Deprecatory_Behavior }
 
+		cost = 7.2
+
+		search_filters = {   }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			add_war_support = 0.05
+			create_wargoal = {
+				target = NYC
+				type = annex_everything
+			}
+			#event + wargoal on nyc?, not sure what this should do exactly...
+		}
+	}
+	focus = {
+		id = SMI_the_line_men_army
+		icon = GFX_focus_SMI_Tires_and_Tubes
+		x = -5
+		y = 1
+		relative_position_id = SMI_Continue_Deprecatory_Behavior
+        prerequisite = { focus = SMI_Continue_Deprecatory_Behavior focus = SMI_The_Shareholders_Plot }
+		cost = 10
+
+		search_filters = {   }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			add_ideas = SMI_service_men_army
+		}
+	}
+	focus = {
+		id = SMI_company_propagnada
+		icon = GFX_focus_SMI_Tires_and_Tubes
+		x = -1
+		y = 1
+		relative_position_id = SMI_the_line_men_army
+        prerequisite = { focus = SMI_the_line_men_army }
+		cost = 5
+
+		search_filters = {   }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			add_war_support = 0.10
+			add_political_power = 50
+		}
+	}
+	focus = {
+		id = SMI_muster_the_men
+		icon = GFX_focus_SMI_Tires_and_Tubes
+		x = 0
+		y = 1
+		relative_position_id = SMI_company_propagnada
+        prerequisite = { focus = SMI_company_propagnada }
+		cost = 5
+
+		search_filters = {   }
+		available = {
+			has_war = yes
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			add_war_support = 0.10
+			add_stability = -0.05
+			add_manpower = 20000
 		}
 	}
 	focus = {
 		id = SMI_ford_synthetic_fuels_deparment
 		icon = GFX_focus_SMI_Tires_and_Tubes
-		x = 4
+		x = 1
 		y = 1
-		relative_position_id = SMI_Continue_Deprecatory_Behavior
-        prerequisite = { focus = SMI_Continue_Deprecatory_Behavior }
+		relative_position_id = SMI_the_line_men_army
+        prerequisite = { focus = SMI_the_line_men_army }
 		cost = 7.2
 
 		search_filters = {   }
@@ -6039,15 +6157,60 @@
 			add_ideas = SMI_ford_synthetic_fuels_deparment_idea
 		}
 	}
+	focus = {
+		id = SMI_promote_research_facilities
+		icon = GFX_focus_SMI_Tires_and_Tubes
+		x = -7
+		y = 1
+		relative_position_id = SMI_Continue_Deprecatory_Behavior
+        prerequisite = { focus = SMI_Continue_Deprecatory_Behavior focus = SMI_The_Shareholders_Plot }
+		cost = 10
+
+		search_filters = {   }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
+	focus = {
+		id = SMI_industrial_advancements
+		icon = GFX_focus_SMI_Tires_and_Tubes
+		x = -3
+		y = 1
+		relative_position_id = SMI_Continue_Deprecatory_Behavior
+        prerequisite = { focus = SMI_Continue_Deprecatory_Behavior focus = SMI_The_Shareholders_Plot }
+		cost = 10
+
+		search_filters = {   }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = "Tires and Tubes"
+				category = industry
+				bonus = 1.0
+				uses = 2 
+			}
+		}
+	}
     focus = {
 		id = SMI_Only_Black_Paint
 		icon = GFX_focus_SMI_Only_Black_Paint
-		x = 2
+		x = -1
 		y = 1
 		relative_position_id = SMI_Continue_Deprecatory_Behavior
         prerequisite = { focus = SMI_Continue_Deprecatory_Behavior }
 
-		cost = 10
+		cost = 5
 
 		search_filters = {   }
 		
@@ -6068,61 +6231,22 @@
 	}
 
     focus = {
-		id = SMI_Ford_Service_Department_Expansion
-		icon = GFX_focus_SMI_Ford_Service_Department_Expansion
-		x = 0
-		y = 1
-		relative_position_id = SMI_Continue_Deprecatory_Behavior
-        prerequisite = { focus = SMI_Continue_Deprecatory_Behavior }
-
-		cost = 10
-
-		search_filters = {   }
-		
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-
-		completion_reward = {
-			#ahead bonus for maintence companies
-		}
-	}
-
-    focus = {
-		id = SMI_Increase_union_busting_tactics
-		icon = GFX_focus_SMI_Increase_union_busting_tactics
-		x = -2
-		y = 1
-		relative_position_id = SMI_Ford_Service_Department_Expansion
-        prerequisite = { focus = SMI_Ford_Service_Department_Expansion }
-
-		cost = 10
-
-		search_filters = {   }
-		
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-
-		completion_reward = {
-			#stability+warsupport
-		}
-	}
-
-    focus = {
 		id = SMI_Militarization_Of_Ford_Security
 		icon = GFX_focus_SMI_Militarization_Of_Ford_Security
-		x = 0
+		x = -3
 		y = 1
-		relative_position_id = SMI_Ford_Service_Department_Expansion
-        prerequisite = { focus = SMI_Ford_Service_Department_Expansion }
+		relative_position_id = SMI_the_line_men_army
+        prerequisite = { focus = SMI_the_line_men_army }
+		prerequisite = {
+			focus = SMI_Republish_The_International_Jew
+		}
 
 		cost = 10
 
 		search_filters = {   }
-		
+		available = {
+			has_country_leader = SMI_Henry_Ford
+		}
 		available_if_capitulated = yes
 		ai_will_do = {
 			factor = 1
@@ -6136,12 +6260,7 @@
 				name = special_forces_bonus
 				bonus = 1.0
 				uses = 1
-				technology = paratroopers
-				technology = paratroopers2
-				technology = marines
-				technology = marines2
-				technology = tech_mountaineers
-				technology = tech_mountaineers2
+				category = cat_special_forces_generic
 			}
 		}
 	}
@@ -6150,11 +6269,13 @@
     focus = {
 		id = SMI_Ford_Board_Of_Directors_Take_Over
 		icon = GFX_focus_SMI_Ford_Board_Of_Directors_Take_Over
-		x = 0
-		y = 2
-		relative_position_id = SMI_Militarization_Of_Ford_Security
-        prerequisite = { focus = SMI_Militarization_Of_Ford_Security }
-
+		x = 1
+		y = 1
+		relative_position_id = SMI_Preserving_Americana
+        prerequisite = { focus = SMI_Preserving_Americana }
+		mutually_exclusive = {
+			focus = SMI_Henry_Ford_II_Inheritance
+		}
 		cost = 10
 
 		search_filters = {   }
@@ -6163,28 +6284,57 @@
 		ai_will_do = {
 			factor = 1
 		}
-
+		available = {
+			date > 1947.01.01
+		}
 		completion_reward = {
 			#ford senior dies in 1947 new leader Board_Of_Directors
 			#custom_effect_tooltip = "SMI_FordSR_death_B_tt"
 			hidden_effect = {
 				retire_country_leader = yes
-				promote_character = SMI_Board_Of_Directors
 				#Edsil takes over
 			}
+			promote_character = SMI_Board_Of_Directors
+
+		}
+	}
+	focus = {
+		id = SMI_Henry_Ford_II_Inheritance
+		icon = GFX_focus_SMI_Henry_Ford_II_Inheritance
+		x = -1
+		y = 1
+		relative_position_id = SMI_Preserving_Americana
+        prerequisite = { focus = SMI_Preserving_Americana }
+		mutually_exclusive = {
+			focus = SMI_Ford_Board_Of_Directors_Take_Over
+		}
+
+		cost = 10
+		available = {
+			date > 1947.01.01
+		}
+		search_filters = {   }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			promote_character = SMI_Henry_FordII
+			#dies 1943 from cancer #ford II Takes over 
+
 		}
 	}
 
     focus = {
 		id = SMI_Preserving_Americana
 		icon = GFX_focus_SMI_Preserving_Americana
-		x = -2
+		x = -1
 		y = 1
-		relative_position_id = SMI_Militarization_Of_Ford_Security
-        prerequisite = { focus = SMI_Militarization_Of_Ford_Security }
-        prerequisite = { focus = SMI_Republish_The_International_Jew }
-        prerequisite = { focus = SMI_Increase_union_busting_tactics }
-		cost = 10
+		relative_position_id = SMI_Republish_The_International_Jew
+        prerequisite = { focus = SMI_Republish_The_International_Jew focus = SMI_Only_Black_Paint }
+		cost = 7.2
 
 		search_filters = {   }
 		
@@ -6198,17 +6348,18 @@
 			#industry research
 			add_tech_bonus = {
 				name = industrial_bonus
-				bonus = 1.5
+				bonus = 0.5
 				uses = 1
 				category = industry
 			}
+			add_stability = 0.10
 		}
 	}
 
     focus = {
 		id = SMI_Edison_Institute
 		icon = GFX_focus_SMI_Edison_Institute
-		x = -2
+		x = 3
 		y = 1
 		relative_position_id = SMI_Preserving_Americana
         prerequisite = { focus = SMI_Preserving_Americana }
@@ -6238,33 +6389,11 @@
 		}
 	}
 
-    focus = {
-		id = SMI_Republish_The_International_Jew
-		icon = GFX_focus_SMI_Republish_The_International_Jew
-		x = 2
-		y = 1
-		relative_position_id = SMI_Ford_Service_Department_Expansion
-        prerequisite = { focus = SMI_Ford_Service_Department_Expansion }
-
-		cost = 10
-
-		search_filters = {   }
-		
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-
-		completion_reward = {
-			#event + wargoal on nyc?, not sure what this should do exactly...
-		}
-	}
-
 		# Edsil Ford Coup D'etat
 	focus = {
 		id = SMI_The_Shareholders_Plot
 		icon = GFX_focus_SMI_The_Shareholders_Plot
-		x = 3
+		x = -5
 		y = 1
 		relative_position_id = SMI_A_Volitle_Disagreement
         prerequisite = { focus = SMI_A_Volitle_Disagreement }
@@ -6281,25 +6410,53 @@
 			focus = SMI_Continue_Deprecatory_Behavior
 		}
 		available = {
-			OR = {
-				NOT = {
-					has_completed_focus = SMI_edsils_influence
-				}
-				NOT = {
-					has_completed_focus = SMI_Ford_Rouge_Complex_Expansion
-				}
-			}
+			
 		}
 		completion_reward = {
-			#custom_effect_tooltip = "SMI_Ford_Coup_B_tt"
-			#hidden_effect = {
-			#	retire_country_leader = yes
-			#	promote_character = SMI_Edsel_Ford
-			#	#Edsil takes over
-			#}
+			custom_effect_tooltip = "SMI_Ford_Coup_B_tt"
+			hidden_effect = {
+				retire_country_leader = yes
+				promote_character = SMI_Edsel_Ford
+				#Edsil takes over
+			}
 		}
 	}
+    focus = {
+		id = SMI_Ford_Mercury_Dominance
+		icon = GFX_focus_SMI_Ford_Mercury_Dominance
+		x = -2
+		y = 1
+		relative_position_id = SMI_The_Shareholders_Plot
+        prerequisite = { focus = SMI_The_Shareholders_Plot }
 
+		cost = 10
+
+		search_filters = {   }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = motorized_bonus
+				bonus = 4.0
+				technology = motorised_infantry
+			}
+			add_equipment_to_stockpile = {
+				type = motorized_equipment_1
+				amount = 1000
+				producer = SMI
+			}
+
+			add_tech_bonus = {
+				name = motorized_bonus
+				bonus = 2.0
+				category = motorized_equipment
+			}
+		}
+	}
     focus = {
 		id = SMI_The_Fate_Of_SR_Ford
 		icon = GFX_focus_SMI_The_Fate_Of_SR_Ford
@@ -6319,7 +6476,7 @@
 
 		completion_reward = {
 			#event Jail or House Arrest
-			###STAB AND NONALIGNED and PP OR FASCISM
+			###NONALIGNED and PP OR FASCISM + STAB
 		}
 	}
 	focus = {
@@ -6427,7 +6584,7 @@
     focus = {
 		id = SMI_Take_Assets_From_chemical_conglomerate_IG_Farben
 		icon = GFX_focus_SMI_Take_Assets_From_chemical_conglomerate_IG_Farben
-		x = 0
+		x = -1
 		y = 1
 		relative_position_id = SMI_Invest_In_Overseas_Production
         prerequisite = { focus = SMI_Invest_In_Overseas_Production }
@@ -6476,50 +6633,13 @@
 			}
 	}
 
-
-    focus = {
-		id = SMI_Ford_Mercury_Dominance
-		icon = GFX_focus_SMI_Ford_Mercury_Dominance
-		x = 8
-		y = 1
-		relative_position_id = SMI_A_Volitle_Disagreement
-        prerequisite = { focus = SMI_A_Volitle_Disagreement }
-
-		cost = 10
-
-		search_filters = {   }
-		
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = motorized_bonus
-				bonus = 4.0
-				technology = motorised_infantry
-			}
-			add_equipment_to_stockpile = {
-				type = motorized_equipment_1
-				amount = 1000
-				producer = SMI
-			}
-
-			add_tech_bonus = {
-				name = motorized_bonus
-				bonus = 2.0
-				category = motorized_equipment
-			}
-		}
-	}
 	focus = {
-		id = SMI_research_facilites
+		id = SMI_mic_research
 		icon = GFX_focus_SMI_Ford_Mercury_Dominance
 		x = 0
-		y = 2
-		relative_position_id = SMI_military_industrial_complex_expansion
-        prerequisite = { focus = SMI_military_industrial_complex_expansion }
+		y = 1
+		relative_position_id = SMI_mio_spending
+        prerequisite = { focus = SMI_mio_spending }
 
 		cost = 10
 
@@ -6531,7 +6651,6 @@
 		}
 
 		completion_reward = {
-			add_research_slot = 1
 			every_military_industrial_organization = {
 				add_mio_research_bonus = 0.30
 			}
@@ -6540,7 +6659,7 @@
 	focus = {
 		id = SMI_mio_spending
 		icon = GFX_focus_SMI_Ford_Mercury_Dominance
-		x = 1
+		x = 0
 		y = 1
 		relative_position_id = SMI_military_industrial_complex_expansion
         prerequisite = { focus = SMI_military_industrial_complex_expansion }
@@ -6560,13 +6679,38 @@
 			}
 		}
 	}
+
+	focus = {
+		id = SMI_break_up_competitors
+		icon = GFX_focus_SMI_Ford_Mercury_Dominance
+		x = 1
+		y = 1
+		relative_position_id = SMI_Invest_In_Overseas_Production
+        prerequisite = { focus = SMI_Invest_In_Overseas_Production }
+
+		cost = 10
+
+		search_filters = {   }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+		}
+		completion_reward = {
+			add_stability = 0.05
+			add_political_power = 100
+			custom_effect_tooltip = SMI_disable_mios_tt
+		}
+	}
 	focus = {
 		id = SMI_only_ford_products
 		icon = GFX_focus_SMI_Ford_Mercury_Dominance
-		x = 0
+		x = -1
 		y = 1
-		relative_position_id = SMI_The_Fate_Of_SR_Ford
-        prerequisite = { focus = SMI_The_Fate_Of_SR_Ford }
+		relative_position_id = SMI_break_up_competitors
+        prerequisite = { focus = SMI_break_up_competitors focus = SMI_Take_Assets_From_chemical_conglomerate_IG_Farben }
 
 		cost = 10
 
@@ -6585,12 +6729,12 @@
 		}
 	}
 	focus = {
-		id = SMI_buy_out_the_country
-		icon = GFX_focus_SMI_Ford_Mercury_Dominance
+		id = SMI_announce_buy_back_program
+		icon = GFX_focus_SMI_Invest_In_Overseas_Production
 		x = 0
 		y = 1
-		relative_position_id = SMI_only_ford_products
-        prerequisite = { focus = SMI_only_ford_products }
+		relative_position_id = SMI_The_Fate_Of_SR_Ford
+        prerequisite = { focus = SMI_The_Fate_Of_SR_Ford }
 
 		cost = 10
 
@@ -6600,24 +6744,50 @@
 		ai_will_do = {
 			factor = 1
 		}
-		available = {
-			fascism > 0.65
-		}
+
 		completion_reward = {
-			add_stability = -0.05
-			add_political_power = 50
-			set_popularities = {
-				fascism = 100
+        	add_timed_idea = {
+				idea = SMI_buy_back_program_idea
+				days = 200
 			}
+		}
+	}
+	focus = {
+		id = SMI_head_of_the_table
+		icon = GFX_focus_SMI_Invest_In_Overseas_Production
+		x = 0
+		y = 2
+		relative_position_id = SMI_announce_buy_back_program
+        prerequisite = { focus = SMI_announce_buy_back_program }
+
+		cost = 10
+
+		search_filters = {   }
+		available = {
+			NOT = {
+				has_idea = SMI_buy_back_program_idea
+			}
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			###COUNTRY EVENT TO KEEP EDSIL OR GET RID OF EDSEL
+			remove_country_leader_trait = undecided_leadership
 		}
 	}
 	focus = {
 		id = SMI_military_industrial_complex_eco_law
 		icon = GFX_focus_SMI_Ford_Mercury_Dominance
 		x = 0
-		y = 1
-		relative_position_id = SMI_buy_out_the_country
-        prerequisite = { focus = SMI_buy_out_the_country }
+		y = 4
+		relative_position_id = SMI_The_Fate_Of_SR_Ford
+        prerequisite = { focus = SMI_only_ford_products focus = SMI_mic_research }
+		prerequisite = {
+			focus = SMI_head_of_the_table
+		}
 
 		cost = 10
 
@@ -6633,140 +6803,6 @@
 			add_ideas = SMI_military_industrial_complex_law
 		}
 	}
-    focus = {
-		id = SMI_Arsenal_Of_Freedom
-		icon = GFX_focus_SMI_Arsenal_Of_Freedom
-		x = 2
-		y = 2
-		relative_position_id = SMI_Ford_Mercury_Dominance
-        prerequisite = { focus = SMI_Ford_Mercury_Dominance }
-
-		cost = 10
-
-		search_filters = {   }
-		
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-
-		completion_reward = {
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = arms_factory
-						size > 3
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = arms_factory
-										size > 3
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = arms_factory
-					level = 3
-					instant_build = yes
-				}
-			}
-			random_owned_controlled_state = {
-				limit = {
-					free_building_slots = {
-						building = arms_factory
-						size > 3
-						include_locked = yes
-					}
-					OR = {
-						is_in_home_area = yes
-						NOT = {
-							owner = {
-								any_owned_state = {
-									free_building_slots = {
-										building = arms_factory
-										size > 3
-										include_locked = yes
-									}
-									is_in_home_area = yes
-								}
-							}
-						}
-					}
-				}
-				add_extra_state_shared_building_slots = 3
-				add_building_construction = {
-					type = arms_factory
-					level = 3
-					instant_build = yes
-				}
-			}
-		}
-	}
-
-    focus = {
-		id = SMI_The_Death_Of_Edsel
-		icon = GFX_focus_SMI_The_Death_Of_Edsel
-		x = 0
-		y = 1
-		relative_position_id = SMI_Ford_Mercury_Dominance
-        prerequisite = { focus = SMI_Ford_Mercury_Dominance }
-		cost = 10
-
-		search_filters = {   }
-		
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-
-		completion_reward = {
-			#custom_effect_tooltip = "SMI_FordSR_death_B_tt"
-			retire_country_leader = yes
-			promote_character = SMI_Henry_FordII
-			#dies 1943 from cancer # Henry Ford II Takes over
-			#event funeral
-		}
-	}
-
-    focus = {
-		id = SMI_Henry_Ford_II_Inheritance
-		icon = GFX_focus_SMI_Henry_Ford_II_Inheritance
-		x = 0
-		y = 1
-		relative_position_id = SMI_The_Death_Of_Edsel
-        prerequisite = { focus = SMI_The_Death_Of_Edsel }
-
-		cost = 10
-
-		search_filters = {   }
-		
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-
-		completion_reward = {
-			#dies 1943 from cancer #ford II Takes over 
-
-		}
-	}
-
-
-
-
-
-
 
 	### John Keracher Path ###
 
