@@ -1816,25 +1816,41 @@ focus_tree = {
 #################
 	focus = {
 		id = PQC_the_forces_armees_quebecoises
-		icon = GFX_
+		icon = GFX_SOV_cohesion_first_ccp_2d_sov_compatibility
 		#prerequisite = { focus = PQC_seize_the_capitol }
 		#relative_position_id = PQC_seize_the_capitol
-		x = 5
+		x = 7
 		y = 0
 		cost = 5
 		ai_will_do = {
 			factor = 1
 		}
-
+		available = {
+			OR = {
+				has_war_support = 0.25
+				has_war = yes
+				threat > 0.05
+			}
+		}
 		available_if_capitulated = no
 
 		completion_reward = {
-			###THE QBC UNIONS ALWAYS HAD A PROBLEM WITH LEADERSHIP
+			army_experience = 25
+			add_timed_idea = {
+				idea = PQC_recruitment_drive
+				days = 270
+			}
+			add_tech_bonus = {
+				name = PQC_artillery_improvements
+				category = train_tech
+				uses = 1
+				bonus = 0.25
+			}
 		}
 	}
 	focus = {
 		id = PQC_old_doctrines
-		icon = GFX_
+		icon = GFX_SOV_pacify_the_rim_ccp_2d_sov_compatibility
 		prerequisite = { focus = PQC_the_forces_armees_quebecoises }
 		relative_position_id = PQC_the_forces_armees_quebecoises
 		mutually_exclusive = {
@@ -1850,6 +1866,13 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
+			army_experience = 25
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				uses = 2
+				name = old_doctrines
+				category = cat_grand_battle_plan
+			}
 			####GRANDBATTLE PLAN
 			####ADVANCES FOR INFANTRY AND CONSCRIPTION FACTOR
 			#####ARTILLERY IMPROVEMENTS
@@ -1858,7 +1881,7 @@ focus_tree = {
 	}
 	focus = {
 		id = PQC_new_doctrines
-		icon = GFX_
+		icon = GFX_goal_generic_army_doctrines
 		prerequisite = { focus = PQC_the_forces_armees_quebecoises }
 		relative_position_id = PQC_the_forces_armees_quebecoises
 		mutually_exclusive = {
@@ -1874,6 +1897,14 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
+			army_experience = 25
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				uses = 2
+				name = old_doctrines
+				category = cat_mobile_warfare
+				category = cat_mass_assault
+			}
 			####LAND DOCTRINE BONUS
 			####ARMOR
 			####SPECIAL FORCES EARLY
@@ -1883,9 +1914,52 @@ focus_tree = {
 	}
 	focus = {
 		id = PQC_address_conscription
-		icon = GFX_
+		icon = GFX_goal_tfv_can_forced_quebec_conscription
 		prerequisite = { focus = PQC_old_doctrines focus = PQC_new_doctrines }
 		relative_position_id = PQC_the_forces_armees_quebecoises
+		x = 0
+		y = 2
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			OR = {
+				has_government = fascism
+				has_government = communism
+				threat > 0.30
+				has_war = yes
+				AND = {
+					any_other_country = {
+						OR = {
+							has_wargoal_against = ROOT
+							is_justifying_wargoal_against = ROOT
+						}
+					}
+					has_war_support > 0.30
+				}
+				
+			}
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			IF = {
+				limit = {
+					threat < 0.50
+				}
+				add_stability = -0.10
+			}
+			add_war_support = 0.05
+			remove_ideas = PQC_conscription_crisis
+			add_ideas = limited_conscription
+		}
+	}
+	focus = {
+		id = PQC_quebecois_special_forces
+		icon = GFX_focus_CHL_departemento_de_las_tropas_nacistas_de_asalto
+		prerequisite = { focus = PQC_address_conscription }
+		relative_position_id = PQC_address_conscription
 		x = 0
 		y = 2
 		cost = 5
@@ -1896,12 +1970,116 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
+			add_tech_bonus = {
+				name = PQC_artillery_improvements
+				category = cat_special_forces_generic
+				uses = 2
+				bonus = 1
+			}
 			###THE QBC UNIONS ALWAYS HAD A PROBLEM WITH LEADERSHIP
 		}
 	}
 	focus = {
+		id = PQC_advanced_research_facility
+		icon = GFX_focus_generic_advanced_military_studies
+		prerequisite = { focus = PQC_quebecois_special_forces }
+		relative_position_id = PQC_quebecois_special_forces
+		x = 0
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = no
+
+		completion_reward = {
+			if = {
+				limit = {
+					NOT = { has_facility_specialization = specialization_land }
+				}
+				if = {
+					limit = { 
+						32 = {
+							is_fully_controlled_by = ROOT
+							air_facility < 1
+							land_facility < 1
+							naval_facility < 1
+							nuclear_facility < 1
+						}
+					}
+					32 = {
+						add_building_construction = {
+							type = land_facility
+							level = 1
+							instant_build = yes
+							province = 4013
+						}
+					}
+				}
+				else = {
+					random_owned_controlled_state = {
+						limit = {
+							can_construct_building = land_facility
+						}
+						construct_building_in_random_province = {
+							land_facility = 1
+						}
+					}
+				}
+			}
+			###THE QBC UNIONS ALWAYS HAD A PROBLEM WITH LEADERSHIP
+		}
+	}
+	focus = {
+		id = PQC_centralized_planning
+		icon = GFX_SOV_eastern_expansion_ccp_2d_sov_compatibility
+		prerequisite = { focus = PQC_quebecois_special_forces }
+		relative_position_id = PQC_quebecois_special_forces
+		x = -1
+		y = 2
+		mutually_exclusive = {
+			focus = PQC_decentralized_planning
+		}
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = no
+		available = {
+			has_completed_focus = PQC_old_doctrines
+		}
+		completion_reward = {
+			add_ideas = PQC_centralized_planning
+		}
+	}
+	focus = {
+		id = PQC_decentralized_planning
+		icon = GFX_focus_chi_army_reform
+		prerequisite = { focus = PQC_quebecois_special_forces }
+		relative_position_id = PQC_quebecois_special_forces
+		x = 1
+		y = 2
+		mutually_exclusive = {
+			focus = PQC_centralized_planning
+		}
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = no
+		available = {
+			has_completed_focus = PQC_new_doctrines
+		}
+		completion_reward = {
+			add_ideas = PQC_decentralized_planning
+		}
+	}
+	focus = {
 		id = PQC_artillery_improvements
-		icon = GFX_
+		icon = GFX_focus_RAJ_mountain_guns
 		prerequisite = { focus = PQC_old_doctrines focus = PQC_new_doctrines }
 		relative_position_id = PQC_the_forces_armees_quebecoises
 		x = -2
@@ -1914,13 +2092,67 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
+			add_tech_bonus = {
+				name = PQC_artillery_improvements
+				category = artillery
+				uses = 1
+				bonus = 1
+			}
+			###THE QBC UNIONS ALWAYS HAD A PROBLEM WITH LEADERSHIP
+		}
+	}
+	focus = {
+		id = PQC_anti_tank_improvements
+		icon = GFX_focus_generic_anti_tank_guns
+		prerequisite = { focus = PQC_artillery_improvements }
+		relative_position_id = PQC_artillery_improvements
+		x = 0
+		y = 2
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = PQC_artillery_improvements
+				category = cat_anti_tank
+				uses = 1
+				bonus = 2
+			}
 			###THE QBC UNIONS ALWAYS HAD A PROBLEM WITH LEADERSHIP
 		}
 	}
 	focus = {
 		id = PQC_infantry_equipment_improvements
-		icon = GFX_
+		icon = GFX_SOV_fascist_youth_union_ccp_2d_sov_compatibility
 		prerequisite = { focus = PQC_old_doctrines focus = PQC_new_doctrines }
+		relative_position_id = PQC_the_forces_armees_quebecoises
+		x = -1
+		y = 3
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = PQC_artillery_improvements
+				category = infantry_tech
+				uses = 2
+				bonus = 1
+			}
+			###THE QBC UNIONS ALWAYS HAD A PROBLEM WITH LEADERSHIP
+		}
+	}
+	focus = {
+		id = PQC_mechanization_of_the_army
+		icon =  GFX_focus_generic_mechanized_offensive
+		prerequisite = { focus = PQC_new_doctrines }
 		relative_position_id = PQC_the_forces_armees_quebecoises
 		x = 2
 		y = 2
@@ -1932,15 +2164,22 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
+			add_tech_bonus = {
+				name = PQC_artillery_improvements
+				category = cat_mechanized_equipment
+				uses = 1
+				bonus = 1
+				ahead_reduction = 1
+			}
 			###THE QBC UNIONS ALWAYS HAD A PROBLEM WITH LEADERSHIP
 		}
 	}
 	focus = {
-		id = PQC_mechanization_of_the_army
-		icon = GFX_
-		prerequisite = { focus = PQC_old_doctrines focus = PQC_new_doctrines }
-		relative_position_id = PQC_the_forces_armees_quebecoises
-		x = 3
+		id = PQC_bombardier_designs
+		icon = GFX_SOV_pc_of_mechanical_engineering_ccp_2d_sov_compatibility
+		prerequisite = { focus = PQC_mechanization_of_the_army }
+		relative_position_id = PQC_mechanization_of_the_army
+		x = 0
 		y = 2
 		cost = 5
 		ai_will_do = {
@@ -1950,13 +2189,59 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
+			unlock_mio_trait_tooltip = PQC_bombardier_factories_name_mio_trait
 			###THE QBC UNIONS ALWAYS HAD A PROBLEM WITH LEADERSHIP
 		}
 	}
 	focus = {
 		id = PQC_tank_improvements
-		icon = GFX_
+		icon = GFX_focus_FIN_salvaged_and_retooled
 		prerequisite = { focus = PQC_old_doctrines focus = PQC_new_doctrines }
+		relative_position_id = PQC_the_forces_armees_quebecoises
+		x = 1
+		y = 3
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = no
+
+		completion_reward = {
+			if = {
+				limit = {
+					has_completed_focus = PQC_new_doctrines
+				}
+				add_tech_bonus = {
+					name = PQC_artillery_improvements
+					category = mio_cat_tech_all_armor_and_modules
+					uses = 1
+					bonus = 1
+					ahead_reduction = 1
+				}
+				add_tech_bonus = {
+					name = PQC_artillery_improvements
+					category = mio_cat_tech_all_armor_and_modules
+					uses = 1
+					bonus = 1
+				}
+			}
+			else = {
+				add_tech_bonus = {
+					name = PQC_artillery_improvements
+					category = mio_cat_tech_all_armor_and_modules
+					uses = 1
+					bonus = 1.3
+				}
+			}
+			
+			###THE QBC UNIONS ALWAYS HAD A PROBLEM WITH LEADERSHIP
+		}
+	}
+	focus = {
+		id = PQC_12th_armored_regiment
+		icon = GFX_focus_generic_mechanized
+		prerequisite = { focus = PQC_new_doctrines }
 		relative_position_id = PQC_the_forces_armees_quebecoises
 		x = 4
 		y = 2
@@ -1968,15 +2253,58 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			###THE QBC UNIONS ALWAYS HAD A PROBLEM WITH LEADERSHIP
+			army_experience = 25
+			###SPAWN AN INF DIV
+			custom_effect_tooltip = PQC_create_two_mechanized_34_widths_tt
+			division_template = {
+				name = "Mechanized"
+				division_names_group = CAN_MEC_01
+				regiments = {
+					mechanized = { x = 0 y = 0 }
+					mechanized = { x = 0 y = 1 }		
+					mechanized = { x = 0 y = 2 }		
+					mechanized = { x = 0 y = 3 }
+					mechanized = { x = 0 y = 4 }
+					mechanized = { x = 1 y = 0 }
+					mechanized = { x = 1 y = 1 }
+					mechanized = { x = 1 y = 2 }		
+					mechanized = { x = 1 y = 3 }	
+					mechanized = { x = 1 y = 4 }
+					mechanized = { x = 2 y = 0 }
+					mechanized = { x = 2 y = 1 }
+					mechanized = { x = 2 y = 2 }		
+					mechanized = { x = 2 y = 3 }	
+					mechanized = { x = 2 y = 4 }		
+					mechanized = { x = 3 y = 0 }
+					mechanized = { x = 3 y = 1 }
+				}
+				support = { 
+					engineer = { x = 0 y = 0 } 
+					artillery = { x = 0 y = 1 }
+					field_hospital = { x = 0 y = 2 }
+				}
+				priority = 3
+			}
+			hidden_effect = {
+				32 = {
+					create_unit = {
+						division = "name = \"1. 12th Armored Regiment\" division_template = \"Mechanized\" start_experience_factor = 0.9 start_equipment_factor = 0.55"
+						owner = PREV
+					}
+					create_unit = {
+						division = "name = \"2. 12th Armored Regiment\" division_template = \"Mechanized\" start_experience_factor = 0.9 start_equipment_factor = 0.55"
+						owner = PREV
+					}
+				}
+			}
 		}
 	}
 	focus = {
-		id = PQC_12th_armored_regiment
-		icon = GFX_
-		prerequisite = { focus = PQC_old_doctrines focus = PQC_new_doctrines }
-		relative_position_id = PQC_the_forces_armees_quebecoises
-		x = 6
+		id = PQC_support_companies
+		icon = GFX_focus_generic_machine_gun
+		prerequisite = { focus = PQC_new_doctrines }
+		relative_position_id = PQC_new_doctrines
+		x = 1
 		y = 2
 		cost = 5
 		ai_will_do = {
@@ -1986,13 +2314,19 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			###SPAWN SOME TANK DIVISIONS
+			army_experience = 25
+			add_tech_bonus = {
+				name = PQC_artillery_improvements
+				category = support_tech
+				uses = 3
+				bonus = 0.75
+			}
 		}
 	}
 	focus = {
 		id = PQC_sherbrooke_fusilers
-		icon = GFX_
-		prerequisite = { focus = PQC_old_doctrines focus = PQC_new_doctrines }
+		icon = GFX_focus_generic_commonwealth_build_infantry
+		prerequisite = { focus = PQC_old_doctrines }
 		relative_position_id = PQC_the_forces_armees_quebecoises
 		x = -4
 		y = 2
@@ -2004,7 +2338,80 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
+			army_experience = 25
 			###SPAWN AN INF DIV
+			custom_effect_tooltip = PQC_create_two_sherbrooke_34_widths_tt
+			division_template = {
+				name = "Sherbrooke Fusilers"
+
+				division_names_group = CAN_ARM_01
+				regiments = {
+					infantry = { x = 0 y = 0 }
+					infantry = { x = 0 y = 1 }		
+					infantry = { x = 0 y = 2 }		
+					infantry = { x = 0 y = 3 }
+					infantry = { x = 0 y = 4 }
+					infantry = { x = 1 y = 0 }
+					infantry = { x = 1 y = 1 }
+					infantry = { x = 1 y = 2 }		
+					infantry = { x = 1 y = 3 }	
+					infantry = { x = 1 y = 4 }
+					infantry = { x = 2 y = 0 }
+					infantry = { x = 2 y = 1 }
+					infantry = { x = 2 y = 2 }		
+					infantry = { x = 2 y = 3 }	
+					infantry = { x = 2 y = 4 }		
+					infantry = { x = 3 y = 0 }
+					infantry = { x = 3 y = 1 }
+				}
+				support = { 
+					engineer = { x = 0 y = 0 } 
+					artillery = { x = 0 y = 1 }
+					field_hospital = { x = 0 y = 2 }
+				}
+				priority = 3
+			}
+			hidden_effect = {
+				32 = {
+					create_unit = {
+						division = "name = \"1. Sherbrooke Fusilers\" division_template = \"Sherbrooke Fusilers\" start_experience_factor = 0.9 start_equipment_factor = 0.55"
+						owner = PREV
+					}
+					create_unit = {
+						division = "name = \"2. Sherbrooke Fusilers\" division_template = \"Sherbrooke Fusilers\" start_experience_factor = 0.9 start_equipment_factor = 0.55"
+						owner = PREV
+					}
+				}
+			}
+		}
+	}
+	focus = {
+		id = PQC_tunnelling_companies
+		icon = GFX_focus_FIN_weapon_caches
+		prerequisite = { focus = PQC_old_doctrines }
+		relative_position_id = PQC_the_forces_armees_quebecoises
+		x = -3
+		y = 3
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = no
+
+		completion_reward = {
+			#add_ideas = PQC_tunnelling_companies_idea
+			army_experience = 25
+			add_tech_bonus = {
+				name = PQC_artillery_improvements
+				category = support_tech
+				uses = 3
+				bonus = 0.75
+			}
+			custom_effect_tooltip = PQC_tunnelling_tech_tt
+			set_technology = {
+				PQC_tunnelling_companies_tech = 1
+			}
 		}
 	}
 	}
