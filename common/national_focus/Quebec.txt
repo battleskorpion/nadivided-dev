@@ -19,8 +19,8 @@ focus_tree = {
 	focus = {
 		id = PQC_the_padlock_law
 		icon = GFX_focus_generic_self_management
-		prerequisite = { focus = PQC_quebec}
-		x = 33
+		#prerequisite = { focus = PQC_quebec}
+		x = 38
 		y = 0
 		cost = 5
 		ai_will_do = {
@@ -2421,7 +2421,7 @@ focus_tree = {
 #################
 	focus = {
 		id = PQC_marine_nationale_quebecoise
-		icon = GFX_SOV_cohesion_first_ccp_2d_sov_compatibility
+		icon = GFX_focus_generic_treaty
 		#prerequisite = { focus = PQC_seize_the_capitol }
 		#relative_position_id = PQC_seize_the_capitol
 		x = 17
@@ -2472,7 +2472,7 @@ focus_tree = {
 	}
 	focus = {
 		id = PQC_an_escort_fleet
-		icon = GFX_SOV_cohesion_first_ccp_2d_sov_compatibility
+		icon = GFX_SOV_pc_of_the_ussr_navy_ccp_2d_sov_compatibility
 		prerequisite = { focus = PQC_marine_nationale_quebecoise }
 		relative_position_id = PQC_marine_nationale_quebecoise
 		x = 3
@@ -2490,12 +2490,18 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			
+			navy_experience = 50
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				name = DOCTRINE_NAVAL
+				category = convoy_defense_tree
+				uses = 3
+			}
 		}
 	}
 	focus = {
 		id = PQC_an_atlantic_fleet
-		icon = GFX_SOV_cohesion_first_ccp_2d_sov_compatibility
+		icon = GFX_focus_generic_navy_battleship2
 		prerequisite = { focus = PQC_marine_nationale_quebecoise }
 		relative_position_id = PQC_marine_nationale_quebecoise
 		x = -3
@@ -2513,12 +2519,18 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			
+			navy_experience = 50
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				name = DOCTRINE_NAVAL
+				category = fleet_in_being_tree
+				uses = 3
+			}
 		}
 	}
 	focus = {
 		id = PQC_cruiser_warfare
-		icon = GFX_SOV_cohesion_first_ccp_2d_sov_compatibility
+		icon = GFX_focus_generic_cruiser2
 		prerequisite = { focus = PQC_an_atlantic_fleet }
 		relative_position_id = PQC_an_atlantic_fleet
 		x = -1
@@ -2534,12 +2546,67 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			
+			add_tech_bonus = {
+				name = PQC_NAVY
+				category = mio_cat_tech_all_cruiser_and_modules
+				uses = 2
+				bonus = 1
+			}
+		}
+	}
+	focus = {
+		id = PQC_naval_gunnery_improvments
+		icon = GFX_focus_generic_navy_research_bonus
+		prerequisite = { focus = PQC_an_atlantic_fleet }
+		relative_position_id = PQC_an_atlantic_fleet
+		x = 1
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = PQC_NAVY
+				category = naval_equipment
+				uses = 2
+				bonus = 1
+			}
+		}
+	}
+	focus = {
+		id = PQC_stock_up_fuel
+		icon = GFX_focus_generic_stockpile_fuel
+		prerequisite = { focus = PQC_an_atlantic_fleet focus = PQC_an_escort_fleet }
+		relative_position_id = PQC_an_atlantic_fleet
+		x = 5
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_timed_idea = {
+				idea = PQC_stockpiling_fuel
+				days = 365
+			}
 		}
 	}
 	focus = {
 		id = PQC_lay_down_MNQ_papineau
-		icon = GFX_SOV_cohesion_first_ccp_2d_sov_compatibility
+		icon = GFX_goal_generic_navy_battleship
 		prerequisite = { focus = PQC_an_atlantic_fleet }
 		relative_position_id = PQC_an_atlantic_fleet
 		x = 0
@@ -2555,12 +2622,54 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			###SPAWNS HEAVY SHIP
+			add_tech_bonus = {
+				name = PQC_NAVY
+				category = mio_cat_tech_all_capital_ship_and_modules
+				uses = 1
+				bonus = 1
+			}
+			add_tech_bonus = {
+				name = PQC_NAVY
+				category = naval_armor
+				uses = 1
+				bonus = 1
+			}
+			create_equipment_variant = {
+				name = "Montreal Class"
+				allow_without_tech = yes
+				type = ship_hull_heavy_2
+				name_group = CAN_BB_HISTORICAL
+				parent_version = 0
+				modules = {
+					fixed_ship_battery_slot = ship_heavy_battery_1
+					fixed_ship_anti_air_slot = ship_anti_air_1
+					fixed_ship_fire_control_system_slot = ship_fire_control_system_1
+					fixed_ship_radar_slot = empty
+					fixed_ship_engine_slot = heavy_ship_engine_2
+					fixed_ship_secondaries_slot = ship_secondaries_1
+					fixed_ship_armor_slot = ship_armor_bb_1
+					front_1_custom_slot = ship_anti_air_1
+					mid_1_custom_slot = ship_anti_air_1
+					mid_2_custom_slot = ship_secondaries_1
+					rear_1_custom_slot = ship_heavy_battery_1
+				}
+			}
+			add_equipment_production = {
+				equipment = {
+					type = ship_hull_heavy_2
+					creator = "PQC"
+					version_name = "Montreal Class"
+				}
+				name = "MNQ Papineau"
+				requested_factories = 1
+				progress = 0.95
+				amount = 1
+			}
 		}
 	}
 	focus = {
 		id = PQC_escort_effort
-		icon = GFX_SOV_cohesion_first_ccp_2d_sov_compatibility
+		icon = GFX_focus_generic_destroyer
 		prerequisite = { focus = PQC_an_escort_fleet }
 		relative_position_id = PQC_an_escort_fleet
 		x = 0
@@ -2576,12 +2685,17 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			###IDEA FOR SPOTTING AND DESTORYER IC
+			add_tech_bonus = {
+				name = ENG_asw_warfare
+				bonus = 2
+				uses = 1
+				category = mio_cat_tech_all_destroyer_and_modules
+			}
 		}
 	}
 	focus = {
 		id = PQC_convoy_protection_tactics
-		icon = GFX_SOV_cohesion_first_ccp_2d_sov_compatibility
+		icon = GFX_SOV_long_range_raiders_ccp_2d_sov_compatibility
 		prerequisite = { focus = PQC_an_escort_fleet }
 		relative_position_id = PQC_an_escort_fleet
 		x = 1
@@ -2598,11 +2712,18 @@ focus_tree = {
 
 		completion_reward = {
 			#TECH FOR ANTI sub warfare and convoy defense doctrine
+			add_tech_bonus = {
+				name = ENG_asw_warfare
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 2
+				category = asw_tech
+			}
 		}
 	}
 	focus = {
 		id = PQC_build_up_cote_de_nord
-		icon = GFX_SOV_cohesion_first_ccp_2d_sov_compatibility
+		icon = GFX_goal_generic_construct_naval_dockyard
 		prerequisite = { focus = PQC_an_escort_fleet focus = PQC_an_atlantic_fleet }
 		relative_position_id = PQC_an_escort_fleet
 		x = -3
@@ -2653,7 +2774,7 @@ focus_tree = {
 	}
 	focus = {
 		id = PQC_naval_repair_yards
-		icon = GFX_SOV_cohesion_first_ccp_2d_sov_compatibility
+		icon = GFX_focus_generic_refit_civilian_ships
 		prerequisite = { focus = PQC_build_up_cote_de_nord }
 		relative_position_id = PQC_build_up_cote_de_nord
 		x = 1
@@ -2689,7 +2810,7 @@ focus_tree = {
 	}
 	focus = {
 		id = PQC_new_naval_academy
-		icon = GFX_SOV_cohesion_first_ccp_2d_sov_compatibility
+		icon = GFX_focus_BEL_antwerp_maritime_academy
 		prerequisite = { focus = PQC_build_up_cote_de_nord }
 		relative_position_id = PQC_build_up_cote_de_nord
 		x = -1
@@ -2714,7 +2835,7 @@ focus_tree = {
 	}
 	focus = {
 		id = PQC_massive_naval_build_up
-		icon = GFX_SOV_cohesion_first_ccp_2d_sov_compatibility
+		icon = GFX_focus_POL_develop_polish_shipbuilding
 		prerequisite = { focus = PQC_naval_repair_yards }
 		prerequisite = {
 			focus = PQC_new_naval_academy
