@@ -20,7 +20,7 @@ focus_tree = {
 		id = PQC_the_padlock_law
 		icon = GFX_focus_generic_self_management
 		#prerequisite = { focus = PQC_quebec}
-		x = 38
+		x = 42
 		y = 0
 		cost = 5
 		ai_will_do = {
@@ -1951,9 +1951,10 @@ focus_tree = {
 				}
 				add_stability = -0.10
 			}
-			add_war_support = 0.05
+			add_war_support = -0.05
 			remove_ideas = PQC_conscription_crisis
-			add_ideas = limited_conscription
+			add_ideas = extensive_conscription
+			army_experience = 50
 		}
 	}
 	focus = {
@@ -2574,7 +2575,7 @@ focus_tree = {
 		completion_reward = {
 			add_tech_bonus = {
 				name = PQC_NAVY
-				category = naval_equipment
+				category = naval_artillery
 				uses = 2
 				bonus = 1
 			}
@@ -2601,6 +2602,40 @@ focus_tree = {
 			add_timed_idea = {
 				idea = PQC_stockpiling_fuel
 				days = 365
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = fuel_silo
+						size > 0
+					}
+					is_fully_controlled_by = ROOT
+				}
+				#prioritize = {
+				#	
+				#}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = fuel_silo
+					level = 2
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = fuel_silo
+						size > 0
+					}
+					is_fully_controlled_by = ROOT
+				}
+				#prioritize = {
+				#	
+				#}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = fuel_silo
+					level = 1
+				}
 			}
 		}
 	}
@@ -2834,6 +2869,27 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = PQC_womens_quebec_naval_service
+		icon = GFX_focus_generic_naval_discipline
+		prerequisite = { focus = PQC_new_naval_academy }
+		relative_position_id = PQC_new_naval_academy
+		x = -1
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			has_war = yes
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_ideas = PQC_womens_quebec_naval_service
+		}
+	}
+	focus = {
 		id = PQC_massive_naval_build_up
 		icon = GFX_focus_POL_develop_polish_shipbuilding
 		prerequisite = { focus = PQC_naval_repair_yards }
@@ -2849,14 +2905,14 @@ focus_tree = {
 		}
 
 		available = {
-
+			has_completed_focus = PQC_hydro_quebec
 		}
 		available_if_capitulated = no
 
 		completion_reward = {
 			add_timed_idea = {
 				idea = PQC_massive_naval_build_up
-				days = 270
+				years = 1
 			}
 			random_owned_controlled_state = {
 				limit = {
@@ -2889,6 +2945,276 @@ focus_tree = {
 				}
 			}
 
+		}
+	}
+#############
+#####AIR TREE
+#############
+	focus = {
+		id = PQC_create_an_airforce_branch
+		icon = GFX_goal_generic_build_airforce
+		#prerequisite = { focus = PQC_seize_the_capitol }
+		#relative_position_id = PQC_seize_the_capitol
+		x = 24
+		y = 0
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			air_experience = 50
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				name = PQC_air_doctrine_bonus
+				category = air_doctrine
+				uses = 1
+			}
+		}
+	}
+	focus = {
+		id = PQC_bombardier_aircraft_manufacturing_startup
+		icon = GFX_SOV_increase_aircraft_production_ccp_2d_sov_compatibility
+		prerequisite = { focus = PQC_create_an_airforce_branch }
+		relative_position_id = PQC_create_an_airforce_branch
+		x = 0
+		y = 1
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			has_completed_focus = PQC_hydro_quebec
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_ideas = PQC_bombardier_aircraft
+			random_core_state = {
+				prioritize = {
+					111
+				}
+				limit = {
+					is_controlled_by = ROOT
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+			###ADDS IDEA FOR -10 ic for all planes
+			####HISTORICALLY WASN't producing air until 1986 however, in this time line a national quebec air industry would be needed, so bombardier would be subsidized
+		}
+	}
+	focus = {
+		id = PQC_light_aircraft
+		icon = GFX_goal_generic_air_fighter
+		prerequisite = { focus = PQC_create_an_airforce_branch }
+		relative_position_id = PQC_create_an_airforce_branch
+		x = -2
+		y = 2
+		mutually_exclusive = {
+			focus = PQC_heavy_aircraft
+		}
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = ENG_asw_warfare
+				bonus = 1
+				uses = 1
+				category = light_air
+			}
+		}
+	}
+	focus = {
+		id = PQC_heavy_aircraft
+		icon = GFX_SOV_long_range_aircraft_ccp_2d_sov_compatibility
+		prerequisite = { focus = PQC_create_an_airforce_branch }
+		relative_position_id = PQC_create_an_airforce_branch
+		x = 2
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			
+		}
+		mutually_exclusive = {
+			focus = PQC_light_aircraft
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = ENG_asw_warfare
+				bonus = 1
+				uses = 1
+				category = heavy_air
+				category = medium_air
+			}
+		}
+	}
+	focus = {
+		id = PQC_engine_improvements
+		icon = GFX_focus_generic_air_research_boost
+		prerequisite = { focus = PQC_heavy_aircraft focus = PQC_light_aircraft }
+		relative_position_id = PQC_light_aircraft
+		x = 1
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = ENG_asw_warfare
+				bonus = 1
+				uses = 1
+				category = cat_air_engine
+			}
+		}
+	}
+	focus = {
+		id = PQC_montreal_air_bases
+		icon = GFX_focus_generic_air_bases
+		prerequisite = { focus = PQC_heavy_aircraft focus = PQC_light_aircraft }
+		relative_position_id = PQC_create_an_airforce_branch
+		x = 0
+		y = 4
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			air_experience = 50
+			random_owned_controlled_state = {
+				prioritize = {
+					34
+				}
+				add_building_construction = {
+					type = air_base
+					level = 4
+				}
+			}
+		}
+	}
+	focus = {
+		id = PQC_doctrine_training
+		icon = GFX_goal_generic_air_doctrine
+		prerequisite = { focus = PQC_light_aircraft focus = PQC_heavy_aircraft }
+		relative_position_id = PQC_light_aircraft
+		x = 3
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				name = PQC_air_doctrine_bonus
+				category = air_doctrine
+				uses = 3
+			}
+		}
+	}
+	focus = {
+		id = PQC_ace_training
+		icon = GFX_goal_generic_air_production
+		prerequisite = { focus = PQC_montreal_air_bases }
+		relative_position_id = PQC_montreal_air_bases
+		x = 0
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_ideas = PQC_ace_training
+		}
+	}
+	focus = {
+		id = PQC_dive_bombing
+		icon = GFX_focus_generic_cas_aircraft
+		prerequisite = { focus = PQC_light_aircraft }
+		relative_position_id = PQC_light_aircraft
+		x = 0
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_ideas = PQC_ground_support
+		}
+	}
+	focus = {
+		id = PQC_escort_fighters
+		icon = GFX_focus_usa_escort_fighters
+		prerequisite = { focus = PQC_heavy_aircraft }
+		relative_position_id = PQC_heavy_aircraft
+		x = 0
+		y = 2
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = ENG_asw_warfare
+				bonus = 1
+				uses = 1
+				ahead_reduction = 1
+				category = medium_air
+			}
 		}
 	}
 }
