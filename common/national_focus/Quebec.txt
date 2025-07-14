@@ -1089,9 +1089,13 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			
+			create_faction = "Canadian Defense Council"
 			set_rule = {
 				can_create_factions = yes
+			}
+			set_variable = {
+				var = quebec_expansion_var
+				value = 10
 			}
 			unlock_decision_category_tooltip = PQC_unite_canada
 			hidden_effect = {
@@ -1161,11 +1165,26 @@ focus_tree = {
 		}
 		available = {
 		}
+		will_lead_to_war_with = PON
+		will_lead_to_war_with = PNB
+		will_lead_to_war_with = PNS
+		will_lead_to_war_with = PEI
+		will_lead_to_war_with = PNL
+		will_lead_to_war_with = PMB
+		will_lead_to_war_with = PSK
+		will_lead_to_war_with = PAB
+		will_lead_to_war_with = PBC
+		will_lead_to_war_with = PYT
+		will_lead_to_war_with = PNT
 		available_if_capitulated = no
 
 		completion_reward = {
 			####DECIUSONS FOR ATTACKING OTHER CANDIANS
 			custom_effect_tooltip = PQC_attack_canadian_countries_tt
+			set_variable = {
+				var = quebec_expansion_var
+				value = 50
+			}
 		}
 	}
 	focus = {
@@ -1199,11 +1218,32 @@ focus_tree = {
 			factor = 1
 		}
 		available = {
-			
+
 		}
+
 		available_if_capitulated = no
 
 		completion_reward = {
+			every_country = {
+				limit = {
+					is_in_array = {
+						array = global.canadian_array
+						value = this.id
+					}
+					OR = {
+						is_in_faction_with = ROOT
+						is_puppet_of = ROOT
+					}
+					is_ai = yes
+				}
+				PQC = {
+					annex_country = {
+						target = PREV
+					}
+				}
+			}
+			set_cosmetic_tag = PQC_united_canada
+			core_canada = yes
 			###UNLOCKS DECSIONS FOR INTEGRATING CANADIANS
 		}
 	}
@@ -1541,11 +1581,6 @@ focus_tree = {
 			factor = 1
 		}
 		available = {
-			OR = {
-				has_war = yes
-				has_war_support > 0.50
-				threat > 0.50
-			}
 		}
 		available_if_capitulated = no
 
