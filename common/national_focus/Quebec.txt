@@ -819,6 +819,11 @@ focus_tree = {
 			###LIBERAL PARTY
 			###CALLS FOR RELECTIONS OF A LEADER
 			###REMOVES PADLOCK LAW
+			set_party_name = {
+				ideology = democratic
+				long_name = PQC_parti_liberal_long_name
+				name = PQC_parti_liberal_short_name
+			}
 		}
 	}
 
@@ -1004,6 +1009,8 @@ focus_tree = {
 			add_political_power = 100
 			#add_stability = 0.10
 			remove_ideas = PQC_unions_starting
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = PQC_gerard_picard
 		}
 	}
 	focus = {
@@ -1024,6 +1031,21 @@ focus_tree = {
 
 		completion_reward = {
 			add_ideas = PQC_hydro_quebec
+			random_core_state = {
+				limit = {
+					is_controlled_by = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
 		}
 	}
 	focus = {
@@ -1067,7 +1089,122 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
+			
+			set_rule = {
+				can_create_factions = yes
+			}
+			unlock_decision_category_tooltip = PQC_unite_canada
+			hidden_effect = {
+				every_country = {
+					limit = {
+						OR = {
+							#tag = PQC
+							tag = PON
+							tag = PNB
+							tag = PNS
+							tag = PEI
+							tag = PNL
+							tag = PMB
+							tag = PSK
+							tag = PAB
+							tag = PBC
+							tag = PYT
+							tag = PNT
+						}
+					}
+					add_to_array = {
+						array = global.canadian_array
+						value = this.id
+					}
+				}
+			}
 			####THIS PATH IS ALL ABOUT ALLYING THE OTHER CANADIANS STATES AND THEN INTEGRATING THEM
+		}
+	}
+	focus = {
+		id = PQC_strengthen_the_alliance
+		icon = GFX_focus_generic_diplomatic_treaty
+		prerequisite = { focus = PQC_unite_canada  }
+		x = -2
+		y = 1
+        relative_position_id = PQC_unite_canada
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		mutually_exclusive = {
+			focus = PQC_unite_by_force
+		}
+		available = {
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			###GIVES DIPLO MODIFERS TO QUEBEC
+			####allows to give allances to all the canadian countries
+			custom_effect_tooltip = PQC_send_alliance_to_canadian_countries_tt
+		}
+	}
+	focus = {
+		id = PQC_unite_by_force
+		icon = GFX_SOV_the_last_break_southward_ccp_2d_sov_compatibility
+		prerequisite = { focus = PQC_unite_canada  }
+		x = 0
+		y = 1
+        relative_position_id = PQC_unite_canada
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		mutually_exclusive = {
+			focus = PQC_strengthen_the_alliance
+		}
+		available = {
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			####DECIUSONS FOR ATTACKING OTHER CANDIANS
+			custom_effect_tooltip = PQC_attack_canadian_countries_tt
+		}
+	}
+	focus = {
+		id = PQC_guarenteed_rights
+		icon = GFX_focus_AUS_lawmaking_leniency
+		prerequisite = { focus = PQC_strengthen_the_alliance focus = PQC_unite_by_force }
+		x = 1
+		y = 1
+        relative_position_id = PQC_strengthen_the_alliance
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_ideas = PQC_guarenteed_rights
+		}
+	}
+	focus = {
+		id = PQC_integration
+		icon = GFX_focus_hol_the_foundations_of_defense
+		prerequisite = { focus = PQC_guarenteed_rights }
+		x = 0
+		y = 1
+        relative_position_id = PQC_guarenteed_rights
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			###UNLOCKS DECSIONS FOR INTEGRATING CANADIANS
 		}
 	}
 	focus = {
@@ -1088,7 +1225,30 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			
+			if = {	#You allied me, I allied you, buddy, but sorry, we are now different
+				limit = {
+					is_in_faction = yes
+					any_other_country = {
+						is_faction_leader = yes
+						is_in_faction_with = ROOT 
+					}
+				}
+				every_other_country = {
+					limit = {
+						is_faction_leader = yes
+						is_in_faction_with = ROOT
+					}
+					remove_from_faction = ROOT
+					add_ai_strategy = {	#your problem, not ours
+						type = ignore
+						id = ROOT
+						value = 300
+					}
+				}
+			}
+			set_rule = {
+				can_create_factions = no
+			}
 		}
 	}
 	focus = {
@@ -1138,7 +1298,7 @@ focus_tree = {
 		id = PQC_the_quiet_revolution
 		icon = GFX_focus_SWE_refuge_from_war
 		prerequisite = { focus = PQC_complete_agrarian_reform  }
-		x = 1
+		x = 2
 		y = 1
         relative_position_id = PQC_complete_agrarian_reform
 		cost = 10
@@ -1159,10 +1319,10 @@ focus_tree = {
 		id = PQC_interventionist_policy
 		icon = GFX_focus_PER_communist_afghanistan_intervention
 		prerequisite = { focus = PQC_complete_agrarian_reform }
-		x = -1
+		x = 0
 		y = 1
         relative_position_id = PQC_complete_agrarian_reform
-		cost = 10
+		cost = 5
 		ai_will_do = {
 			factor = 1
 		}
@@ -1182,9 +1342,9 @@ focus_tree = {
 		id = PQC_tackle_the_communist_threat_democratic
 		icon = GFX_goal_anti_comintern_pact
 		prerequisite = {
-			focus = PQC_interventionist_policy
+			focus = PQC_interventionist_policy focus = PQC_integration
 		}
-		x = -1
+		x = -2
 		y = 1
 		cost = 10
 		ai_will_do = {
@@ -1223,9 +1383,9 @@ focus_tree = {
 		id = PQC_tackle_the_fascist_threat_democratic
 		icon = GFX_focus_generic_anti_fascist_diplomacy
 		prerequisite = {
-			focus = PQC_interventionist_policy
+			focus = PQC_interventionist_policy focus = PQC_integration
 		}
-		x = -3
+		x = -4
 		y = 1
 		cost = 10
 		ai_will_do = {
@@ -1370,7 +1530,7 @@ focus_tree = {
 	}
 	focus = {
 		id = PQC_beacon_of_democracy
-		icon = GFX_focus_defend_democracy
+		icon = GFX_focus_ARG_defense_and_democracy
 		prerequisite = { focus = PQC_economic_mobilization }
 		prerequisite = { focus = PQC_ordinance_factories }
 		x = 0
@@ -1804,7 +1964,8 @@ focus_tree = {
 					}
 				}
 			}
-
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = PQC_jean_drapeau
 		}
 	}
 	focus = {

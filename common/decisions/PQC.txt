@@ -920,3 +920,74 @@ PQC_concession_to_labour = {
 		}
 	}
 }
+
+PQC_unite_canada = {
+    PQC_ally_canada = {
+		allowed = {
+			original_tag = PQC
+		}
+        visible = {
+            OR = {
+                has_completed_focus = PQC_unite_canada
+            }
+        }
+		target_root_trigger = {
+            OR = {
+				has_completed_focus = PQC_unite_canada
+            }
+		}
+		available = {
+			OR = {
+				has_completed_focus = PQC_strengthen_the_alliance
+				has_completed_focus = PQC_unite_by_force
+			}
+			NOT = {
+				has_wargoal_against = FROM
+			}
+		}
+		target_array = global.canadian_array
+		icon = GFX_decision_hol_draw_up_staff_plans
+		cost = quebec_expansion_var
+		days_remove = 60
+		war_with_target_on_complete = yes
+
+        remove_effect = {
+			if = {
+				limit = {
+					has_completed_focus = PQC_unite_by_force
+				}
+				create_wargoal = {
+					target = FROM
+					type = puppet_wargoal_focus
+				}
+			}
+        }
+        
+		complete_effect = {
+            #custom_effect_tooltip = SIL_integration_requires_subjugation_tt 
+            #every_state = {
+            #    limit = {
+            #        is_core_of = FROM
+            #        is_owned_and_controlled_by = FROM
+            #    } 
+            #    add_claim_by = ROOT
+            #    add_to_array = {
+            #        array = SIL_this_is_what_you_cored_before_i_invaded_array
+            #        value = FROM.FROM
+            #    }
+            #}
+            #add_to_array = {
+            #    array = global.SIL_invaded_countries_array
+            #    value = FROM.id
+            #}
+			if = {
+				limit = {
+					has_completed_focus = PQC_strengthen_the_alliance
+				}
+				FROM = {
+					country_event = generic.5
+				}
+			}
+		}
+	}
+}
