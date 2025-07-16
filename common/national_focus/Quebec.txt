@@ -821,8 +821,8 @@ focus_tree = {
 			###REMOVES PADLOCK LAW
 			set_party_name = {
 				ideology = democratic
-				long_name = PQC_parti_liberal_long_name
-				name = PQC_parti_liberal_short_name
+				long_name = PQC_democratic_party_alternate_long
+				name = PQC_democratic_party_alternate
 			}
 		}
 	}
@@ -1837,6 +1837,48 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = PQC_quebec_communist_party
+		icon = GFX_SOV_the_stalin_constitutiony_ccp_2d_sov_compatibility
+		prerequisite = { focus = PQC_a_decision_of_leadership }
+		relative_position_id = PQC_a_decision_of_leadership
+		x = 0
+		y = 1
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = no
+
+		completion_reward = {
+			####GETS EVENT FOR A DECIUSON OF LANGUAGE, FOR FLAVOR
+			set_party_name = {
+				ideology = communism
+				long_name = PQC_communism_party_soviet_long
+				name = PQC_communism_party_soviet
+			}
+			add_ideas = PQC_communist_party_idea
+		}
+	}
+	focus = {
+		id = PQC_national_radio
+		icon = GFX_focus_SWE_radiotjanst
+		prerequisite = { focus = PQC_a_decision_of_leadership }
+		relative_position_id = PQC_a_decision_of_leadership
+		y = 1
+		x = 2
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_ideas = PQC_radio_national_broadcast
+		}
+	}
+	focus = {
 		id = PQC_educate_the_masses
 		icon = GFX_focus_NOR_moscows_education_centers
 		available = {
@@ -1862,30 +1904,12 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = PQC_communist_party
-		icon = GFX_SOV_the_stalin_constitutiony_ccp_2d_sov_compatibility
-		prerequisite = { focus = PQC_a_decision_of_leadership }
-		relative_position_id = PQC_a_decision_of_leadership
-		x = 0
-		y = 1
-		cost = 10
-		ai_will_do = {
-			factor = 1
-		}
-
-		available_if_capitulated = no
-
-		completion_reward = {
-			add_ideas = PQC_communist_party_idea
-		}
-	}
-	focus = {
-		id = PQC_national_radio
-		icon = GFX_focus_SWE_radiotjanst
-		prerequisite = { focus = PQC_communist_party }
-		relative_position_id = PQC_communist_party
-		x = 0
-		y = 1
+		id = PQC_united_by_communism
+		icon = GFX_focus_SOV_builder_of_the_red_army
+		prerequisite = { focus = PQC_unite_by_force_commie focus = PQC_strengthen_the_alliance_commie }
+		relative_position_id = PQC_quebec_communist_party
+		x = 1
+		y = 2
 		cost = 5
 		ai_will_do = {
 			factor = 1
@@ -1894,7 +1918,251 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
-			add_ideas = PQC_radio_national_broadcast
+			add_ideas = PQC_united_by_communism_idea
+		}
+	}
+
+	focus = {
+		id = PQC_strengthen_the_alliance_commie
+		icon = GFX_focus_generic_diplomatic_treaty
+		prerequisite = { focus = PQC_quebec_communist_party }
+		x = -1
+		y = 1
+        relative_position_id = PQC_quebec_communist_party
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		mutually_exclusive = {
+			focus = PQC_unite_by_force_commie
+		}
+		available = {
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			mark_focus_tree_layout_dirty = yes
+			###GIVES DIPLO MODIFERS TO QUEBEC
+			####allows to give allances to all the canadian countries
+			custom_effect_tooltip = PQC_send_alliance_to_canadian_countries_tt
+		}
+	}
+	focus = {
+		id = PQC_unite_by_force_commie
+		icon = GFX_SOV_the_last_break_southward_ccp_2d_sov_compatibility
+		prerequisite = { focus = PQC_quebec_communist_party  }
+		x = 1
+		y = 1
+
+        relative_position_id = PQC_quebec_communist_party
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+		mutually_exclusive = {
+			focus = PQC_strengthen_the_alliance_commie
+		}
+		available = {
+		}
+		will_lead_to_war_with = PON
+		will_lead_to_war_with = PNB
+		will_lead_to_war_with = PNS
+		will_lead_to_war_with = PEI
+		will_lead_to_war_with = PNL
+		will_lead_to_war_with = PMB
+		will_lead_to_war_with = PSK
+		will_lead_to_war_with = PAB
+		will_lead_to_war_with = PBC
+		will_lead_to_war_with = PYT
+		will_lead_to_war_with = PNT
+		available_if_capitulated = no
+
+		completion_reward = {
+			mark_focus_tree_layout_dirty = yes
+			####DECIUSONS FOR ATTACKING OTHER CANDIANS
+			custom_effect_tooltip = PQC_attack_canadian_countries_tt
+			set_variable = {
+				var = quebec_expansion_var
+				value = 50
+			}
+		}
+	}
+	focus = {
+		id = PQC_equal_rights
+		icon = GFX_focus_generic_desegregated_military
+		prerequisite = { focus = PQC_strengthen_the_alliance_commie focus = PQC_unite_by_force_commie }
+		relative_position_id = PQC_quebec_communist_party
+		x = -1
+		y = 2
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_ideas = SMN_desegrated_army
+		}
+	}
+	focus = {
+		id = PQC_integration_commie
+		icon = GFX_focus_hol_the_foundations_of_defense
+		prerequisite = { focus = PQC_equal_rights focus = PQC_united_by_communism }
+		x = 1
+		y = 1
+		allow_branch = {
+			
+		}
+        relative_position_id = PQC_equal_rights
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			
+		}
+
+		available_if_capitulated = no
+
+		completion_reward = {
+			every_country = {
+				limit = {
+					is_in_array = {
+						array = global.canadian_array
+						value = this.id
+					}
+					OR = {
+						is_in_faction_with = ROOT
+						is_puppet_of = ROOT
+					}
+					is_ai = yes
+				}
+				PQC = {
+					annex_country = {
+						target = PREV
+					}
+				}
+			}
+			set_cosmetic_tag = PQC_united_canada
+			core_canada = yes
+			###UNLOCKS DECSIONS FOR INTEGRATING CANADIANS
+		}
+	}
+	focus = {
+		id = PQC_integration_force_commie
+		icon = GFX_focus_hol_the_foundations_of_defense
+		prerequisite = { focus = PQC_equal_rights focus = PQC_united_by_communism }
+		x = 2
+		y = 1
+		allow_branch = {
+			
+		}
+        relative_position_id = PQC_equal_rights
+		cost = 10
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			###NEEDS REQ
+		}
+
+		available_if_capitulated = no
+
+		completion_reward = {
+			set_cosmetic_tag = PQC_united_canada
+			core_canada = yes
+			###UNLOCKS DECSIONS FOR INTEGRATING CANADIANS
+		}
+	}
+	focus = {
+		id = PQC_eradicate_fascism
+		icon = GFX_focus_focus_fra_fascist_threat
+		prerequisite = { focus = PQC_integration_commie  }
+		x = 1
+		y = 1
+		relative_position_id = PQC_integration_commie
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				has_civil_war = yes
+			}	
+		}
+		
+		available = {
+			any_country = {
+				has_government = fascism
+				is_major = yes
+				is_subject = no
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = SMN_wargoal_against_government_fascist_tt
+			every_country = {
+				limit = {
+					has_government = fascism
+					is_major = yes
+					NOT = { is_in_faction_with = ROOT }
+				}
+				ROOT = {
+					create_wargoal = {
+						target = PREV
+						type = topple_government
+						expire = 0
+					}
+				}
+			}
+		}
+	}
+	focus = {
+		id = PQC_liberation_of_the_proliteriate
+		icon = GFX_focus_spr_class_war
+		prerequisite = { focus = PQC_integration_commie  }
+		x = -1
+		y = 1
+		relative_position_id = PQC_integration_commie 
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				has_civil_war = yes
+			}	
+		}
+		
+		available = {
+			any_country = {
+				OR = {
+					has_government = democratic
+					has_government = progressivism
+				}
+				is_major = yes
+				is_subject = no
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = SMN_wargoal_against_government_capitalist_tt
+			every_country = {
+				limit = {
+					OR = {
+						has_government = democratic
+						has_government = progressivism
+					}
+					is_major = yes
+					NOT = { is_in_faction_with = ROOT }
+				}
+				ROOT = {
+					create_wargoal = {
+						target = PREV
+						type = topple_government
+						expire = 0
+					}
+				}
+			}
 		}
 	}
 ##############
