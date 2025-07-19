@@ -812,7 +812,9 @@ focus_tree = {
 		}
 
 		available_if_capitulated = no
-
+		mutually_exclusive = {
+			focus = PQC_seize_the_capitol
+		}
 		completion_reward = {
 			remove_ideas = PQC_padlock_law
 			country_event = quebec.2
@@ -1224,7 +1226,9 @@ focus_tree = {
 		x = 0
 		y = 1
 		allow_branch = {
-			
+			NOT = {
+				has_completed_focus = PQC_unite_by_force
+			}
 		}
         relative_position_id = PQC_guarenteed_rights
 		cost = 10
@@ -1267,16 +1271,61 @@ focus_tree = {
 		prerequisite = { focus = PQC_guarenteed_rights }
 		x = 1
 		y = 1
-		allow_branch = {
-			
-		}
         relative_position_id = PQC_guarenteed_rights
 		cost = 10
 		ai_will_do = {
 			factor = 1
 		}
+		#allow_branch = {
+		#	has_completed_focus = PQC_unite_by_force
+		#}
+		offset = {
+			trigger = {
+				has_completed_focus = PQC_unite_by_force
+			}
+			x = -1
+			y= 0
+		}
 		available = {
-			###NEEDS REQ
+			count_triggers = {
+				amount > 4
+				custom_trigger_tooltip = {
+					tooltip = controls_manitoba_tt
+					controls_manitoba_trigger = yes
+				}
+				custom_trigger_tooltip = {
+					tooltip = controls_saskatchewan_tt
+					controls_saskatchewan_trigger = yes
+				}
+				custom_trigger_tooltip = {
+					tooltip = controls_british_columbia_tt
+					controls_british_columbia_trigger = yes
+				}
+				custom_trigger_tooltip = {
+					tooltip = controls_alberta_tt
+					controls_alberta_trigger = yes
+				}
+				custom_trigger_tooltip = {
+					tooltip = controls_new_brunswick_tt
+					controls_new_brunswick_trigger = yes
+				}
+				custom_trigger_tooltip = {
+					tooltip = controls_nova_scotia_tt
+					controls_nova_scotia_trigger = yes
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = controls_newfoundland_tt
+				controls_newfoundland_and_labrador_trigger = yes
+			}
+			custom_trigger_tooltip = {
+				tooltip = controls_quebec_tt
+				controls_quebec_trigger = yes
+			}
+			custom_trigger_tooltip = {
+				tooltip = controls_ontario_tt
+				controls_ontario_trigger = yes
+			}
 		}
 
 		available_if_capitulated = no
@@ -1305,6 +1354,7 @@ focus_tree = {
 		available_if_capitulated = no
 
 		completion_reward = {
+			add_ideas = PQC_neutrality_idea
 			if = {	#You allied me, I allied you, buddy, but sorry, we are now different
 				limit = {
 					is_in_faction = yes
@@ -1416,13 +1466,14 @@ focus_tree = {
 			set_rule = {
 				can_send_volunteers = yes
 			}
+			remove_ideas = PQC_neutrality_idea
 		}
 	}
 	focus = {
 		id = PQC_tackle_the_communist_threat_democratic
 		icon = GFX_goal_anti_comintern_pact
 		prerequisite = {
-			focus = PQC_interventionist_policy focus = PQC_integration
+			focus = PQC_interventionist_policy focus = PQC_integration focus = PQC_integration_force
 		}
 		x = -2
 		y = 1
@@ -1463,7 +1514,7 @@ focus_tree = {
 		id = PQC_tackle_the_fascist_threat_democratic
 		icon = GFX_focus_generic_anti_fascist_diplomacy
 		prerequisite = {
-			focus = PQC_interventionist_policy focus = PQC_integration
+			focus = PQC_interventionist_policy focus = PQC_integration focus = PQC_integration_force
 		}
 		x = -4
 		y = 1
@@ -1640,11 +1691,27 @@ focus_tree = {
 		ai_will_do = {
 			factor = 1
 		}
-
+		mutually_exclusive = {
+			focus = PQC_liberal_continuation
+		}
 		available_if_capitulated = no
 
 		completion_reward = {
 			remove_ideas = PQC_padlock_law
+			set_politics = {
+				ruling_party = communism
+			}
+			add_country_leader_role = {
+				character = PQC_communist_provisonary_gov
+				promote_leader = yes
+				country_leader = {
+					ideology = union_communism
+					expire = "1965.1.1.1"
+					traits = {
+						undecided_leadership
+					}
+				}
+			}
 			###COMMUNIST
 			####REMOVES THE PADLOCK LAW
 		}
@@ -1832,6 +1899,7 @@ focus_tree = {
 
 		completion_reward = {
 			add_political_power = 100
+			promote_character = PQC_fred_rose
 			###GETS EVENT FOR LEADERS OF COMMUNIST PARTY
 			###THE QBC UNIONS ALWAYS HAD A PROBLEM WITH LEADERSHIP
 		}
@@ -1858,6 +1926,39 @@ focus_tree = {
 				name = PQC_communism_party_soviet
 			}
 			add_ideas = PQC_communist_party_idea
+			create_faction = "Canadian Commune"
+			set_rule = {
+				can_create_factions = yes
+			}
+			set_variable = {
+				var = quebec_expansion_var
+				value = 10
+			}
+			unlock_decision_category_tooltip = PQC_unite_canada
+			hidden_effect = {
+				every_country = {
+					limit = {
+						OR = {
+							#tag = PQC
+							tag = PON
+							tag = PNB
+							tag = PNS
+							tag = PEI
+							tag = PNL
+							tag = PMB
+							tag = PSK
+							tag = PAB
+							tag = PBC
+							tag = PYT
+							tag = PNT
+						}
+					}
+					add_to_array = {
+						array = global.canadian_array
+						value = this.id
+					}
+				}
+			}
 		}
 	}
 	focus = {
@@ -1865,8 +1966,8 @@ focus_tree = {
 		icon = GFX_focus_SWE_radiotjanst
 		prerequisite = { focus = PQC_a_decision_of_leadership }
 		relative_position_id = PQC_a_decision_of_leadership
+		x = -3
 		y = 1
-		x = 2
 		cost = 5
 		ai_will_do = {
 			factor = 1
@@ -1876,6 +1977,70 @@ focus_tree = {
 
 		completion_reward = {
 			add_ideas = PQC_radio_national_broadcast
+		}
+	}
+	focus = {
+		id = PQC_world_revolution
+		icon = GFX_focus_ger_great_red_menace
+		prerequisite = { focus = PQC_national_radio }
+		relative_position_id = PQC_national_radio
+		x = 0
+		y = 2
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_ideas = PQC_world_revolution_idea
+		}
+	}
+	focus = {
+		id = PQC_spread_communism
+		icon = GFX_focus_ETH_callout_to_the_world
+		prerequisite = { focus = PQC_world_revolution }
+		relative_position_id = PQC_world_revolution
+		x = 0
+		y = 2
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = no
+
+		completion_reward = {
+			every_other_country = {
+				limit = {
+					NOT = {
+						has_government = communism
+					}
+				}
+				add_timed_idea = {
+					idea = internationalism
+					days = 200
+				}
+			}
+		}
+	}
+	focus = {
+		id = PQC_international_conflicts
+		icon = GFX_focus_GER_proletarian_solidarity
+		prerequisite = { focus = PQC_national_radio }
+		relative_position_id = PQC_national_radio
+		x = -1
+		y = 1
+		cost = 5
+		ai_will_do = {
+			factor = 1
+		}
+
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_ideas = PQC_interventionist_policy
 		}
 	}
 	focus = {
@@ -1889,7 +2054,7 @@ focus_tree = {
 		}
 		prerequisite = { focus = PQC_a_decision_of_leadership }
 		relative_position_id = PQC_a_decision_of_leadership
-		x = -2
+		x = 2
 		y = 1
 		cost = 10
 		ai_will_do = {
@@ -1924,7 +2089,7 @@ focus_tree = {
 
 	focus = {
 		id = PQC_strengthen_the_alliance_commie
-		icon = GFX_focus_generic_diplomatic_treaty
+		icon = GFX_goal_generic_dangerous_deal
 		prerequisite = { focus = PQC_quebec_communist_party }
 		x = -1
 		y = 1
@@ -2012,7 +2177,9 @@ focus_tree = {
 		x = 1
 		y = 1
 		allow_branch = {
-			
+			NOT = {
+				has_completed_focus = PQC_unite_by_force_commie
+			}
 		}
         relative_position_id = PQC_equal_rights
 		cost = 10
@@ -2044,7 +2211,7 @@ focus_tree = {
 					}
 				}
 			}
-			set_cosmetic_tag = PQC_united_canada
+			set_cosmetic_tag = DSCR
 			core_canada = yes
 			###UNLOCKS DECSIONS FOR INTEGRATING CANADIANS
 		}
@@ -2055,8 +2222,15 @@ focus_tree = {
 		prerequisite = { focus = PQC_equal_rights focus = PQC_united_by_communism }
 		x = 2
 		y = 1
-		allow_branch = {
-			
+		#allow_branch = {
+		#	has_completed_focus = PQC_unite_by_force_commie
+		#}
+		offset = {
+			trigger = {
+				has_completed_focus = PQC_unite_by_force_commie
+			}
+			x = -1
+			y= 0
 		}
         relative_position_id = PQC_equal_rights
 		cost = 10
@@ -2064,13 +2238,51 @@ focus_tree = {
 			factor = 1
 		}
 		available = {
-			###NEEDS REQ
+			count_triggers = {
+				amount > 4
+				custom_trigger_tooltip = {
+					tooltip = controls_manitoba_tt
+					controls_manitoba_trigger = yes
+				}
+				custom_trigger_tooltip = {
+					tooltip = controls_saskatchewan_tt
+					controls_saskatchewan_trigger = yes
+				}
+				custom_trigger_tooltip = {
+					tooltip = controls_british_columbia_tt
+					controls_british_columbia_trigger = yes
+				}
+				custom_trigger_tooltip = {
+					tooltip = controls_alberta_tt
+					controls_alberta_trigger = yes
+				}
+				custom_trigger_tooltip = {
+					tooltip = controls_new_brunswick_tt
+					controls_new_brunswick_trigger = yes
+				}
+				custom_trigger_tooltip = {
+					tooltip = controls_nova_scotia_tt
+					controls_nova_scotia_trigger = yes
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = controls_newfoundland_tt
+				controls_newfoundland_and_labrador_trigger = yes
+			}
+			custom_trigger_tooltip = {
+				tooltip = controls_quebec_tt
+				controls_quebec_trigger = yes
+			}
+			custom_trigger_tooltip = {
+				tooltip = controls_ontario_tt
+				controls_ontario_trigger = yes
+			}
 		}
 
 		available_if_capitulated = no
 
 		completion_reward = {
-			set_cosmetic_tag = PQC_united_canada
+			set_cosmetic_tag = DSCR
 			core_canada = yes
 			###UNLOCKS DECSIONS FOR INTEGRATING CANADIANS
 		}
@@ -2078,7 +2290,7 @@ focus_tree = {
 	focus = {
 		id = PQC_eradicate_fascism
 		icon = GFX_focus_focus_fra_fascist_threat
-		prerequisite = { focus = PQC_integration_commie  }
+		prerequisite = { focus = PQC_integration_commie focus = PQC_integration_force_commie }
 		x = 1
 		y = 1
 		relative_position_id = PQC_integration_commie
@@ -2120,7 +2332,7 @@ focus_tree = {
 	focus = {
 		id = PQC_liberation_of_the_proliteriate
 		icon = GFX_focus_spr_class_war
-		prerequisite = { focus = PQC_integration_commie  }
+		prerequisite = { focus = PQC_integration_commie focus = PQC_integration_force_commie }
 		x = -1
 		y = 1
 		relative_position_id = PQC_integration_commie 
