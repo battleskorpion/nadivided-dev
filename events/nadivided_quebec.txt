@@ -164,7 +164,6 @@ country_event = {
         name = quebec.2.a
 
     }
-    ###HAROLD BENSON BECOMES PRESIDENT
     option = {
 		ai_chance = {
 			factor = 0
@@ -234,7 +233,7 @@ country_event = {
     }
 }
 
-###ELECTIONS for democratic side
+###ELECTIONS for commie
 country_event = { 
     id = quebec.4
     title = quebec.4.t
@@ -261,7 +260,7 @@ country_event = {
         name = quebec.4.a
 
     }
-    ###HAROLD BENSON BECOMES PRESIDENT
+    ###LEA ROBECK
     option = {
 		ai_chance = {
 			factor = 0
@@ -283,4 +282,92 @@ country_event = {
 			}
 		}
     }
+}
+
+###PEOPLE READY TO STRIKE
+country_event = { 
+    id = quebec.5
+    title = quebec.5.t
+    desc = quebec.5.d
+    picture = GFX_worker_strike
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    immediate = {log = "[GetDateText]: [Root.GetName]: event quebec.5"}
+
+    option = {
+       name =  quebec.5.a
+       hidden_effect = {
+        remove_mission = PQC_1937_strikes
+        clr_country_flag = PQC_incoming_strikes
+       }
+       activate_mission = PQC_1936_strikes
+       set_country_flag = PQC_incoming_strikes_1936_flag
+       ###PEOPLE FLOCK TO THE STRIKES
+    }
+    ###THE PEOPLE ARE DISPLEASED
+}
+###THE RIOT BEGINS NORMAL
+country_event = { 
+    id = quebec.6
+    title = quebec.6.t
+    desc = quebec.6.d
+    picture = GFX_worker_strike
+
+    fire_only_once = yes
+    is_triggered_only = yes
+
+    immediate = {log = "[GetDateText]: [Root.GetName]: event quebec.6"}
+
+    option = {
+        name = quebec.6.a
+        34 = {
+            damage_building = {
+                type = dockyard
+                damage = 2
+            }
+        }
+		34 = {
+            damage_building = {
+                type = industrial_complex
+                damage = 3
+            }
+        }
+       	34 = {
+            damage_building = {
+                type = arms_factory
+                damage = 3
+            }
+        }
+		if = {
+			limit = {
+				OR = {
+					NOT = {
+						has_completed_focus = PQC_union_busting_tactics
+					}
+					NOT = {
+						has_completed_focus = PQC_deal_with_labor_unions
+					}
+					NOT = {
+						has_completed_focus = PQC_pass_labor_reforms
+					}
+				}
+			}
+			add_ideas = strikes_1
+		}
+		if = {
+			limit = {
+				has_completed_focus = PQC_support_the_strikers
+			}
+			add_political_power = 50
+			add_popularity = {
+				ideology = fascism
+				popularity = -0.05
+			}
+		}
+        add_stability = -0.10
+        set_country_flag = PQC_strike_has_happened
+    }
+    ###THE PEOPLE ARE DISPLEASED
 }
