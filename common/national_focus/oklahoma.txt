@@ -1556,7 +1556,7 @@ focus_tree = {
 		id = SOK_fighter_focus
 		icon = GFX_focus_SOK_fighters
 		prerequisite = { focus = SOK_Aircraft_factories }
-		mutually_exclusive = { focus = bomber_focus }
+		#mutually_exclusive = { focus = SOK_Bomber_focus }
 		x = 0
 		y = 1
 		relative_position_id = SOK_Aircraft_factories
@@ -3769,5 +3769,340 @@ focus = {
 			}
 		}
 	}
+
+
+	focus = {
+		id = SOK_Airstuff
+		icon = GFX_goal_generic_build_airforce
+		x = 42
+		y = 2
+		cost = 10
+
+		available = {
+			has_completed_focus = SOK_Bring_the_war_to_the_skies
+		}
+
+		available_if_capitulated = yes
+
+			#modifier = {
+			#	factor = 25
+			#}
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			air_experience = 100
+		}
+
+
+		complete_tooltip = {
+			air_experience = 25
+			if = { limit = { has_country_flag = aviation_effort_AB }
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}			
+			add_doctrine_cost_reduction = {
+				name =  air_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}		
+		}
+
+		completion_reward = {
+			air_experience = 25
+
+			if = {
+				limit = {
+					capital_scope = {
+						NOT = {
+							free_building_slots = {
+								building = air_base
+								size > 1
+							}
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_AB }
+				}
+			}
+			if = {
+				limit = {
+					capital_scope = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+				}
+				capital_scope = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_AB }
+				}
+			}
+			add_doctrine_cost_reduction = {
+				name = air_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+		}
+	}
+
+	focus = {
+		id = SOK_Bomber_focus
+		icon = GFX_goal_generic_air_bomber
+		prerequisite = { focus = SOK_Airstuff }
+		mutually_exclusive = { focus = fighter_focus }
+		x = 0
+		y = 1
+		relative_position_id = SOK_Airstuff
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = bomber_bonus
+				bonus = 1.0
+				uses = 2
+				technology = strategic_bomber1
+				technology = strategic_bomber2
+				technology = strategic_bomber3
+				category = tactical_bomber
+			}
+			air_experience = 50
+		}
+	}
+
+
+
+	focus = {
+		id = SOK_aviation_effort_2
+		icon = GFX_goal_generic_air_doctrine
+		prerequisite = { focus = SOK_Bomber_focus }
+		x = 0
+		y = 1
+		relative_position_id = SOK_Bomber_focus
+		cost = 10
+
+		available_if_capitulated = yes
+
+		ai_will_do = {
+			factor = 1
+		}
+
+		completion_reward = {
+			hidden_effect = {
+				if = {
+					limit = { is_ai = yes }
+					air_experience = 75
+				}
+			}
+		}
+
+		complete_tooltip = {
+			air_experience = 25
+			if = { limit = { has_country_flag = SOK_aviation_effort_2_AB }
+				add_building_construction = {
+					type = air_base
+					level = 2
+					instant_build = yes
+				}
+			}
+			add_doctrine_cost_reduction = {
+				name =  air_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+		}
+		completion_reward = {
+			air_experience = 25
+			if = {
+				limit = {
+					capital_scope = {
+						OR = {
+							NOT = { is_controlled_by = ROOT }
+							NOT = {
+								free_building_slots = {
+									building = air_base
+									size > 1
+								}
+							}
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = SOK_aviation_effort_2_AB }
+				}
+			}
+			if = {
+				limit = {
+					capital_scope = {
+						is_controlled_by = ROOT
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+				}
+				capital_scope = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}				
+					ROOT = { set_country_flag = SOK_aviation_effort_2_AB }
+				}
+			}
+			add_doctrine_cost_reduction = {
+				name = air_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+		}
+	}
+
+
+	focus = {
+		id = SOK_NAV_effort
+		icon = GFX_goal_generic_air_naval_bomber
+		prerequisite = { focus = SOK_aviation_effort_2 }
+		x = 1
+		y = 1
+		relative_position_id = SOK_aviation_effort_2
+		cost = 10
+
+		available_if_capitulated = yes
+
+		ai_will_do = {
+			factor = 4
+		}
+		#crashes?
+		#completion_reward = {
+		#hidden_effect = {
+		#	if = {
+		#		limit = { is_ai = yes }
+		#		add_equipment_to_stockpile = {
+		#			type = nav_bomber_equipment_1
+		#			amount = 210
+		#			producer = WDC
+		#			}
+		#		}
+		#	}
+		#}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = nav_bomber_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = naval_bomber
+			}
+		}
+	}
+
+
+	focus = {
+		id = SOK_CAS_effort1
+		icon = GFX_goal_generic_CAS
+		prerequisite = { focus = SOK_aviation_effort_2 }
+		#prerequisite = { focus = motorization_effort1 }
+		x = -1
+		y = 1
+		relative_position_id = SOK_aviation_effort_2
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+		}
+
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = CAS_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = cas_bomber
+			}
+		}
+	}
+
+	focus = {
+		id = SOK_rocket_effort
+		icon = GFX_focus_rocketry
+		prerequisite = { focus = SOK_aviation_effort_2 }
+		#prerequisite = { focus = infrastructure_effort }
+		x = 0
+		y = 2
+		relative_position_id = SOK_aviation_effort_2
+		cost = 7.2
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = jet_rocket_bonus
+				ahead_reduction = 2
+				uses = 2
+				category = rocketry
+				category = jet_technology
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.25
+				always = yes
+			}
+		}
+	}
+
+
 
 }
