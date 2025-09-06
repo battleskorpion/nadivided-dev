@@ -164,7 +164,7 @@
 --},
 
 --NProduction = {
-	NDefines.NProduction.BASE_FACTORY_EFFICIENCY_BALANCE_FACTOR = 0.20			-- def 0.1 -- more production
+	--NDefines.NProduction.BASE_FACTORY_EFFICIENCY_BALANCE_FACTOR = 0.20			-- def 0.1 -- more production
 --},
 
 
