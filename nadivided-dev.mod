@@ -1,5 +1,5 @@
-name="North America Divided"
-version="1.17.0"
+name="North America Divided [Dev]"
+version="1.14.3"
 user_dir="nadivided"
 picture="thumbnail.png"
 tags={
@@ -80,4 +80,4 @@ replace_path="map/strategicregions"
 replace_path="map/supplyareas"
 supported_version="1.16.*"
 path="C:/Users/judso/OneDrive/Documents/Paradox Interactive/Hearts of Iron IV/mod/nadivided-dev"
-remote_file_id="2780506619"
+remote_file_id="2095618478"
