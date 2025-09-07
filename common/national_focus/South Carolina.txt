@@ -1743,7 +1743,6 @@ focus = {
 		}
 
 		completion_reward = {
-            add_manpower = 2000
 			add_equipment_to_stockpile = {
 				type = infantry_equipment
 				amount = 2000
@@ -1799,6 +1798,33 @@ focus = {
 			army_experience = 10
 		}
 	}
+
+	focus = {
+		id = SSC_modernize_anti_tank
+		icon = GFX_focus_generic_tank_hunt
+		cost = 5
+		x = 0
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SSC_Acquiring_Weapons }
+		relative_position_id = SSC_Acquiring_Weapons
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = cat_anti_tank
+			}
+
+		}
+	}
+
 		focus = {
 		id = SSC_Construct_Spartanburg_line
 		icon = GFX_focus_SSC_spartanburg_line
@@ -1896,6 +1922,32 @@ focus = {
 
 		}
 	}
+
+	focus = {
+		id = SSC_modernize_support
+		icon = GFX_focus_generic_machine_gun
+		cost = 5
+		x = 0
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SSC_Construct_Spartanburg_line }
+		relative_position_id = SSC_Construct_Spartanburg_line
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = engineers_tech
+			}
+		}
+	}
+
 	focus = {
 		id = SSC_re_organize_army
 		icon = GFX_focus_SSC_org_army
@@ -1917,6 +1969,7 @@ focus = {
 
 		completion_reward = {
 			army_experience = 50
+            add_manpower = 20000
 		}
 	}
 
@@ -1925,7 +1978,7 @@ focus = {
 		id = SSC_Recruit_the_redshirts
 		icon = GFX_focus_SSC_south_carolina_red_shirts
 		x = -4
-		y = 1
+		y = 3
 		cost = 10
  		relative_position_id = SSC_re_organize_army
 		search_filters = {  FOCUS_FILTER_POLITICAL }
@@ -1951,7 +2004,7 @@ focus = {
 		id = SSC_army_of_defense
 		icon = GFX_focus_SSC_army_of_defence
 		x = -1
-		y = 1
+		y = 2
 		cost = 7.2
  		relative_position_id = SSC_Recruit_the_redshirts
 		search_filters = {  FOCUS_FILTER_POLITICAL }
@@ -1972,16 +2025,102 @@ focus = {
 	}
 
 	focus = {
+		id = SSC_study_blitzkrieg
+		icon = GFX_focus_generic_tank_offensive
+		cost = 10
+		x = -2
+		y = 1
+		mutually_exclusive = {
+			focus = SSC_overwhelming_firepower focus = SSC_wave_tactics focus = SSC_methodical_battle
+		}
+		prerequisite = { focus = SSC_army_of_defense focus = SSC_army_of_attack }
+		relative_position_id = SSC_army_of_defense
+		bypass = {
+		}
+		available = {
+			has_tech = elastic_defence
+		}
+		completion_reward = {
+			army_experience = 35
+			add_ideas = SSC_study_blitzkrieg_idea
+		}
+	}
+
+	focus = {
+		id = SSC_methodical_battle
+		icon = GFX_focus_generic_military_mission
+		cost = 10
+		x = 2
+		y = 1
+		mutually_exclusive = {
+			focus = SSC_wave_tactics focus = SSC_overwhelming_firepower focus = SSC_study_blitzkrieg
+		}
+		prerequisite = { focus = SSC_army_of_defense focus = SSC_army_of_attack }
+		relative_position_id = SSC_army_of_defense
+		bypass = {
+		}
+		available = {
+			has_tech = prepared_defense
+		}
+		completion_reward = {
+			army_experience = 25
+			add_ideas = SSC_methodical_battle_idea
+		}
+	}
+	focus = {
+		id = SSC_wave_tactics
+		icon = GFX_focus_generic_manpower2
+		cost = 10
+		x = 4
+		y = 1
+		mutually_exclusive = {
+			focus = SSC_overwhelming_firepower focus = SSC_study_blitzkrieg focus = SSC_methodical_battle
+		}
+		prerequisite = { focus = SSC_army_of_defense focus = SSC_army_of_attack }
+		relative_position_id = SSC_army_of_defense
+		bypass = {
+		}
+		available = {
+			has_tech = defence_in_depth
+		}
+		completion_reward = {
+			army_experience = 25
+			add_ideas = SSC_wave_tactics_idea
+		}
+	}
+	focus = {
+		id = SSC_overwhelming_firepower
+		icon = GFX_goal_generic_army_artillery2
+		cost = 10
+		x = 0
+		y = 1
+		mutually_exclusive = {
+			focus = SSC_study_blitzkrieg focus = SSC_wave_tactics focus = SSC_methodical_battle
+		}
+		prerequisite = { focus = SSC_army_of_defense focus = SSC_army_of_attack }
+		relative_position_id = SSC_army_of_defense
+		bypass = {
+		}
+		available = {
+			has_tech = mobile_defence
+		}
+		completion_reward = {
+			army_experience = 35
+			add_ideas = SSC_overwhelming_firepower_idea
+		}
+	}
+
+	focus = {
 		id = SSC_South_Carolina_National_fervor
 		icon = GFX_focus_SSC_fenaticals
 		x = 1
-		y = 1
+		y = 2
 		cost = 7.2
  		relative_position_id = SSC_army_of_defense
 		search_filters = {  FOCUS_FILTER_POLITICAL }
 		
 		available_if_capitulated = no
-		prerequisite = { focus = SSC_army_of_defense focus = SSC_army_of_attack }
+		prerequisite = { focus = SSC_study_blitzkrieg focus = SSC_overwhelming_firepower focus = SSC_methodical_battle focus = SSC_wave_tactics}
 		 
 		available = {
               
@@ -1996,10 +2135,34 @@ focus = {
 	}
 
 	focus = {
+		id = SSC_centralize_planning
+		icon = GFX_focus_generic_military_academy
+		cost = 10
+		x = 0
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SSC_South_Carolina_National_fervor }
+		relative_position_id = SSC_South_Carolina_National_fervor
+		bypass = {
+		}
+		available = {
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			army_experience = 50
+			add_ideas = SSC_centralize_planning_idea
+		}
+	}
+
+	focus = {
 		id = SSC_army_of_attack
 		icon = GFX_focus_SSC_army_of_attack
 		x = 1
-		y = 1
+		y = 2
 		cost = 7.2
  		relative_position_id = SSC_Recruit_the_redshirts
 		search_filters = {  FOCUS_FILTER_POLITICAL }
@@ -2023,8 +2186,8 @@ focus = {
 	focus = {
 		id = SSC_gun_batteries_investments
 		icon = GFX_focus_SSC_artillery
-		x = 4
-		y = 1
+		x = 5
+		y = 3
 		cost = 7.2
  		relative_position_id = SSC_re_organize_army
 		search_filters = {  FOCUS_FILTER_POLITICAL }
@@ -2181,6 +2344,42 @@ focus = {
 	}
 
 	focus = {
+		id = SSC_railgun
+		icon = GFX_focus_generic_railway_artillery
+		cost = 8
+		x = 0
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SSC_Improve_artillery_shells }
+		relative_position_id = SSC_Improve_artillery_shells
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					NOT = { has_tech = railway_gun }
+				}
+				set_technology = { railway_gun = 1 }
+			}
+			create_railway_gun = {
+				equipment = railway_gun_equipment_1
+				name = "MINNESODAAAA"
+			}
+			add_tech_bonus = {
+				name = arty_plz
+				#ahead_reduction = 1
+				bonus = 1
+				uses = 1
+				category = Artillery
+			}
+		}
+	}
+
+	focus = {
 		id = SSC_paris_island_marine_corps
 		icon = GFX_focus_SSC_paris_island
 		x = 1
@@ -2240,12 +2439,43 @@ focus = {
 			}
 		}
 	}
+
+	focus = {
+		id = SSC_modernize_matience_companies
+		icon = GFX_goal_generic_build_tank
+		cost = 5
+		x = -1
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = SSC_armored_courses }
+		relative_position_id = SSC_armored_courses
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = maintenance_company_tech
+			}
+			mio:generic_tank_organization = {
+				add_mio_funds = 500
+				add_mio_size = 1
+				add_mio_research_bonus = 0.05
+			}
+		}
+	}
+
 	######
 	focus = {
 		id = SSC_citadel
 		icon = GFX_focus_SSC_citadel
-		x = 0
-		y = 1
+		x = 1
+		y = 3
 		cost = 10
  relative_position_id = SSC_re_organize_army
 		search_filters = {  FOCUS_FILTER_POLITICAL }
@@ -2767,7 +2997,7 @@ focus = {
 
 		completion_reward = {
 			add_timed_idea = {
-				idea = SMN_fighter_quotas_idea
+				idea = SSC_fighter_quotas_idea
 				days = 730
 			}
 		}
@@ -2925,7 +3155,7 @@ focus = {
 		}
 
 		completion_reward = {
-			SMN_great_depression_down = yes
+			SSC_great_depression_down = yes
 			add_timed_idea = { idea = SSC_Agriculture_Subsidies_idea days = 200 } 	
 		}
 	}
@@ -2950,7 +3180,7 @@ focus = {
 
 
 		completion_reward = {
-			SMN_great_depression_down = yes
+			SSC_great_depression_down = yes
 	     	350 = {
 				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
@@ -2994,7 +3224,7 @@ focus = {
 		}
 
 		completion_reward = {
-			SMN_great_depression_down = yes
+			SSC_great_depression_down = yes
 			add_timed_idea = {
 			idea = SSC_public_welfare
 			days = 365
