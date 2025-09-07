@@ -747,7 +747,7 @@ focus_tree = {
 			factor = 0
 			modifier = {
 				is_historical_focus_on = yes
-				factor = 1
+				factor = 10
 			}
 		}
 		prerequisite = { focus = SMN_the_end_of_the_oconnor_agreement }
@@ -831,6 +831,10 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
+			add_popularity = {
+				ideology = progressivism
+				popularity = 0.15
+			}
 			#add_political_power = -50
 			add_ideas = SMN_olson_legacy_new_deal
 		}
@@ -845,11 +849,7 @@ focus_tree = {
 			
 		}
 		ai_will_do = {
-			factor = 0
-			modifier = {
-				is_historical_focus_on = yes
-				factor = 1
-			}
+			factor = 100
 		}
 		prerequisite = { focus = SMN_elmer_benson_focus focus = SMN_harold_stassen_focus }
 		relative_position_id = SMN_elmer_benson_focus
@@ -861,6 +861,7 @@ focus_tree = {
 					is_ai = yes
 				}
 				remove_ideas = SMN_anton_j_rockne
+				retire_character = SMN_anton_j_rockne
 			}
 			set_can_be_fired_in_advisor_role = {
 				character = SMN_anton_j_rockne
@@ -1146,35 +1147,44 @@ focus_tree = {
 			set_rule = { can_create_factions = yes }
 			if = {
 				limit = {
-					is_in_faction = yes
+					SWI = {
+						is_faction_leader = yes
+						has_government = progressivism
+					}
+				}
+				SWI = {
+					country_event = {
+						id = generic.2
+						days = 10
+					}
 				}
 			}
 			else = {
 				create_faction = FARMER_LABOR_LEAGUE
-			}
-			SUP = {
-				if = {
-					limit = {
-						NOT = {
-							is_in_faction_with = SMN
+				SUP = {
+					if = {
+						limit = {
+							NOT = {
+								is_in_faction_with = SMN
+							}
 						}
-					}
-					country_event = {
-						id = generic.5
-						days = 10
+						country_event = {
+							id = generic.5
+							days = 10
+						}
 					}
 				}
-			}
-			SWI = {
-				if = {
-					limit = {
-						NOT = {
-							is_in_faction_with = SMN
+				SWI = {
+					if = {
+						limit = {
+							NOT = {
+								is_in_faction_with = SMN
+							}
 						}
-					}
-					country_event = {
-						id = generic.5
-						days = 10
+						country_event = {
+							id = generic.5
+							days = 10
+						}
 					}
 				}
 			}
@@ -1455,7 +1465,15 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			add_ideas = SMN_defense_of_our_homeland_idea
+			if = {
+				limit = {
+					has_government = progressivism
+				}
+				add_ideas = SMN_defense_of_our_homeland_idea_2
+			}
+			else = {
+				add_ideas = SMN_defense_of_our_homeland_idea
+			}
 		}
 	}
 	focus = {
@@ -1601,11 +1619,7 @@ focus_tree = {
 		x = -11
 		y = 1
 		ai_will_do = {
-			factor = 15
-			modifier = {
-				is_historical_focus_on = yes
-				factor = 0
-			}
+			factor = 1
 		}
 		mutually_exclusive = {
 			focus = SMN_olsons_death focus = SMN_olson_declares_marshal_law
@@ -1652,6 +1666,9 @@ focus_tree = {
 		relative_position_id = SMN_fascist_path
 		available = {
 			
+		}
+		ai_will_do = {
+			base = 2
 		}
 		completion_reward = {
 			add_popularity = {
@@ -2168,6 +2185,9 @@ focus_tree = {
 		relative_position_id = SMN_fascist_path
 		available = {
 		}
+		ai_will_do = {
+			base = 2
+		}
 		completion_reward = {
 			add_popularity = {
 				ideology = fascism
@@ -2208,6 +2228,9 @@ focus_tree = {
 		cost = 5
 		x = 1
 		y = 1
+		ai_will_do = {
+			base = 5
+		}
 		mutually_exclusive = {
 			focus = SMN_elect_gulbrand_lunde
 		}
@@ -2255,6 +2278,9 @@ focus_tree = {
 		y = 1
 		mutually_exclusive = {
 			focus = SMN_elect_hjalmar
+		}
+		ai_will_do = {
+			base = 5
 		}
 		prerequisite = { focus = SMN_send_hjalmar_to_legitimize_the_stones }
 		relative_position_id = SMN_send_hjalmar_to_legitimize_the_stones
@@ -2307,6 +2333,7 @@ focus_tree = {
 					is_ai = yes
 				}
 				remove_ideas = SMN_anton_j_rockne
+				retire_character = SMN_anton_j_rockne
 			}
 			set_can_be_fired_in_advisor_role = {
 				character = SMN_anton_j_rockne
@@ -2696,6 +2723,28 @@ focus_tree = {
 		completion_reward = {
 			if = {
 				limit = {
+					is_ai = yes
+				}
+				664 = {
+					add_building_construction = {
+						type = supply_node
+						level = 1
+						province = 5026
+					}
+				}
+				344 = {
+					add_building_construction = {
+						type = supply_node
+						level = 1
+						province = 6167
+					}
+				}
+				build_railway = {
+					path = { 6158 2641 6155 6154 5026 }
+				}
+			}
+			if = {
+				limit = {
 					country_exists = SND
 				}
 				create_wargoal = {
@@ -3028,11 +3077,7 @@ focus_tree = {
 		x = 16
 		y = 1
 		ai_will_do = {
-			factor = 0
-			modifier = {
-				is_historical_focus_on = no
-				factor = 1
-			}
+			factor = 1
 		}
 		allow_branch = {
 			NOT = {
