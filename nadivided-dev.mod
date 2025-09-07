@@ -1,4 +1,4 @@
-name="North America Divided [Dev]"
+name="North America Divided"
 version="1.14.3"
 supported_version="1.16.*"
 path="mod/nadivided-dev"
