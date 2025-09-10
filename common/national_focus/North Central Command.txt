@@ -469,18 +469,12 @@ focus_tree = {
 
 		}
 		completion_reward = {
-			add_ideas = NCC_armament_production_idea
 			random_owned_controlled_state = {
-				prioritize = { 324 }
-				add_extra_state_shared_building_slots = 2
-				add_building_construction = {
-					type = industrial_complex
-					level = 1
-					instant_build = yes
-				}
+				prioritize = { 342 }
+				add_extra_state_shared_building_slots = 4
 				add_building_construction = {
 					type = arms_factory
-					level = 1
+					level = 4
 					instant_build = yes
 				}
 			}
@@ -505,6 +499,27 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_research_slot = 1
+		}
+	}
+	focus = {
+		id = NCC_war_propaganda
+		icon = GFX_goal_generic_propaganda
+		prerequisite = {
+			focus = NCC_armament_production_junta
+		}
+		x = -2
+		y = 1
+		cost = 7.2
+		relative_position_id = NCC_armament_production_junta
+		ai_will_do = {
+			factor = 1
+		}
+
+		available = {
+			has_idea = NCC_jay_near
+		}
+		completion_reward = {
+			add_war_support = 0.15
 		}
 	}
 	focus = {
@@ -922,5 +937,995 @@ focus_tree = {
 		completion_reward = {
 			add_ideas = NCC_justification_for_further_expansion_idea
 		}
+	}
+#####ECO TREE BEGINS
+	focus = {
+		id = NCC_appoint_macmillian
+		icon = GFX_focus_generic_treaty
+		cost = 5
+		x = 10
+		y = 0
+		prerequisite = {  }
+		available = {
+		}
+		completion_reward = {
+			activate_advisor = NCC_john_h_macmillian
+		}
+	}
+	focus = {
+		id = NCC_iron_range_infrastructure
+		icon = GFX_goal_generic_construction2
+		cost = 5
+		x = 2
+		y = 0
+		relative_position_id = NCC_appoint_macmillian
+		available = {
+
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					342 = {
+						is_controlled_by = ROOT
+					}
+				}
+				342 = {
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+					}
+				}
+			}
+			if = {
+				limit = {
+					669 = {
+						is_controlled_by = ROOT
+					}
+				}
+				669 = {
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+					}
+				}
+			}
+			if = {
+				limit = {
+					198 = {
+						is_controlled_by = ROOT
+					}
+				}
+				198 = {
+					add_building_construction = {
+						type = infrastructure
+						level = 1
+					}
+				}
+			}
+			build_railway = {
+				path = {  6508 8177 2800 6504  }
+			}
+		}
+	}
+	focus = {
+		id = NCC_four_year_plan
+		icon = GFX_SOV_restoration_and_development_ccp_2d_sov_compatibility
+		cost = 5
+		x = -1
+		y = 1
+		prerequisite = { focus = NCC_iron_range_infrastructure }
+		prerequisite = {
+			focus = NCC_appoint_macmillian
+		}
+		relative_position_id = NCC_iron_range_infrastructure
+		available = {
+			has_completed_focus = NCC_the_military_takesover
+		}
+		completion_reward = {
+			add_dynamic_modifier = {
+				modifier = NCC_four_year_plan
+			}
+		}
+	}
+	focus = {
+		id = NCC_reorganize_heavy_industry
+		icon = GFX_SOV_reorganize_the_pc_of_heavy_industry_ccp_2d_sov_compatibility
+		cost = 5
+		x = -2
+		y = 1
+		prerequisite = { focus = NCC_four_year_plan }
+		mutually_exclusive = {
+			focus = NCC_armaments_production
+		}
+		relative_position_id = NCC_four_year_plan
+		available = {
+		}
+		completion_reward = {
+			####MODIFY DYNAMIC MOD
+			####-20%CONSUMER GOODS
+			####PRODUCTION EFF GROWTH
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = industry
+				category = electronics
+			}
+		}
+	}
+	focus = {
+		id = NCC_armaments_production
+		icon = GFX_SOV_shift_to_armaments_production_ccp_2d_sov_compatibility
+		cost = 5
+		x = 2
+		y = 1
+		prerequisite = { focus = NCC_four_year_plan }
+		mutually_exclusive = {
+			focus = NCC_reorganize_heavy_industry
+		}
+		relative_position_id = NCC_four_year_plan
+		available = {
+		}
+		completion_reward = {
+			####MODIFY DYNAMIC MOD
+			####-CIV SPEED
+			#### 10% MILLS SPEED
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = infantry_weapons
+				category = artillery
+			}
+		}
+	}
+	focus = {
+		id = NCC_steel_casting_industry
+		icon = GFX_SOV_steel_casting_industry_ccp_2d_sov_compatibility
+		cost = 5
+		x = 1
+		y = 2
+		prerequisite = { focus = NCC_armaments_production focus = NCC_reorganize_heavy_industry }
+		relative_position_id = NCC_four_year_plan
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = NCC_sythetic_refining
+		icon = GFX_SOV_synthetic_rubber_ccp_2d_sov_compatibility
+		cost = 5
+		x = -1
+		y = 2
+		prerequisite = { focus = NCC_armaments_production focus = NCC_reorganize_heavy_industry }
+		relative_position_id = NCC_four_year_plan
+		available = {
+		}
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = NCC_modernize_production_lines
+		icon = GFX_SOV_industrial_modernization_ccp_2d_sov_compatibility
+		cost = 5
+		x = -2
+		y = 3
+		prerequisite = {  focus = NCC_reorganize_heavy_industry }
+		relative_position_id = NCC_four_year_plan
+		available = {
+		}
+		completion_reward = {
+			####MODIFY DYNAMIC MOD
+			####CAP
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				ahead_reduction = 2
+				category = industry
+			}
+		}
+	}
+	focus = {
+		id = NCC_optimize_production_lines
+		icon = GFX_SOV_optimize_production_lines_ccp_2d_sov_compatibility
+		cost = 5
+		x = 2
+		y = 3
+		prerequisite = { focus = NCC_armaments_production }
+		relative_position_id = NCC_four_year_plan
+		available = {
+		}
+		completion_reward = {
+			####MODIFY DYNAMIC MOD
+			####factory_output
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 2
+				category = industry
+			}
+		}
+	}
+	focus = {
+		id = NCC_increase_state_reserves
+		icon = GFX_focus_generic_continuous_extraction
+		cost = 5
+		x = 0
+		y = 3
+		prerequisite = { focus = NCC_sythetic_refining }
+		prerequisite = {
+			focus = NCC_steel_casting_industry
+		}
+		#prerequisite = {
+		#	focus = NCC_modernize_production_lines focus = NCC_optimize_production_lines
+		#}
+		relative_position_id = NCC_four_year_plan
+		available = {
+		}
+		completion_reward = {
+			####10% resources extraction
+		}
+	}
+	focus = {
+		id = NCC_increased_production
+		icon = GFX_focus_CONGO_copper_cartridges
+		cost = 5
+		x = 0
+		y = 4
+		prerequisite = {
+			focus = NCC_modernize_production_lines focus = NCC_optimize_production_lines
+		}
+		relative_position_id = NCC_four_year_plan
+		available = {
+		}
+		completion_reward = {
+			#####
+		}
+	}
+	focus = {
+		id = NCC_invite_foreign_experts
+		icon = GFX_SOV_foreign_experts_ccp_2d_sov_compatibility
+		cost = 5
+		x = 5
+		y = 1
+		prerequisite = {
+			focus = NCC_four_year_plan
+		}
+		relative_position_id = NCC_four_year_plan
+		available = {
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+			add_ideas = NCC_foreign_experts
+		}
+	}
+	focus = {
+		id = NCC_develop_southern_farms
+		icon = GFX_goal_generic_construction2
+		cost = 5
+		x = 1
+		y = 1
+		prerequisite = {
+			focus = NCC_invite_foreign_experts
+		}
+		relative_position_id = NCC_invite_foreign_experts
+		available = {
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				prioritize = {
+					675
+				}
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				prioritize = {
+					676
+				}
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = NCC_develop_northern_industries
+		icon = GFX_goal_generic_construction
+		cost = 5
+		x = -1
+		y = 1
+		prerequisite = {
+			focus = NCC_invite_foreign_experts
+		}
+		relative_position_id = NCC_invite_foreign_experts
+		available = {
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				prioritize = {
+					670
+				}
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				prioritize = {
+					669
+				}
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = NCC_expand_the_university_of_minnesota
+		icon = GFX_focus_generic_university_1
+		cost = 10
+		x = 0
+		y = 2
+		prerequisite = {
+			focus = NCC_develop_northern_industries
+		}
+		prerequisite = {
+			focus = NCC_develop_southern_farms
+		}
+		relative_position_id = NCC_invite_foreign_experts
+		available = {
+		}
+		completion_reward = {
+			add_research_slot = 1
+			random_owned_controlled_state = {
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+####Army tree
+	focus = {
+		id = NCC_improve_camp_ridley
+		icon = GFX_focus_BEL_better_than_maginot
+		cost = 5
+		x = 23
+		y = 0
+		available = {
+		}
+		completion_reward = {
+			army_experience = 25
+			add_breakthrough_progress = {
+				specialization = specialization_land
+				value = 0.5
+			}
+			custom_effect_tooltip = generic_skip_one_line_tt
+			if = {
+				limit = {
+					NOT = { has_facility_specialization = specialization_land }
+				}
+				if = {
+					limit = { 
+						673 = {
+							is_fully_controlled_by = ROOT
+							air_facility < 1
+							land_facility < 1
+							naval_facility < 1
+							nuclear_facility < 1
+						}
+					}
+					673 = {
+						add_building_construction = {
+							type = land_facility
+							level = 1
+							instant_build = yes
+							province = 2659
+						}
+					}
+					673 = {
+						add_building_construction = {
+							type = bunker
+							level = 4
+							instant_build = yes
+							province = 2659
+						}
+					}
+				}
+				else = {
+					random_owned_controlled_state = {
+						limit = {
+							can_construct_building = land_facility
+						}
+						construct_building_in_random_province = {
+							land_facility = 1
+						}
+					}
+				}
+			}
+		}
+	}
+	focus = {
+		id = NCC_special_forces_specialization
+		icon = GFX_focus_AUS_osterreichische_gebirgsjager
+		cost = 5
+		x = -3
+		y = 1
+		prerequisite = { focus = NCC_improve_camp_ridley }
+		mutually_exclusive = {
+			focus = NCC_mobilize_the_army
+		}
+		relative_position_id = NCC_improve_camp_ridley
+		available = {
+		}
+		completion_reward = {
+			army_experience = 25
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.25
+				name = special_forces
+				category = special_forces_doctrine
+				uses = 3
+			}
+		}
+	}
+
+	focus = {
+		id = NCC_mobilize_the_army
+		icon = GFX_focus_generic_tank_production
+		cost = 5
+		x = 3
+		y = 1
+		prerequisite = { focus = NCC_improve_camp_ridley }
+		mutually_exclusive = {
+			focus = NCC_special_forces_specialization
+		}
+		relative_position_id = NCC_improve_camp_ridley
+		available = {
+		}
+		completion_reward = {
+			army_experience = 25
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = cat_anti_tank
+			}
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 0.25
+				uses = 3
+				category = armor
+			}
+		}
+	}
+	focus = {
+		id = NCC_modernize_infantry
+		icon = GFX_goal_generic_small_arms
+		cost = 5
+		x = 0
+		y = 2
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = NCC_special_forces_specialization focus = NCC_mobilize_the_army }
+		relative_position_id = NCC_special_forces_specialization
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 0.75
+				uses = 3
+				category = infantry_weapons
+			}
+		}
+	}
+	focus = {
+		id = NCC_modernize_armor
+		icon = GFX_goal_generic_army_tanks
+		cost = 10
+		x = 1
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = NCC_mobilize_the_army }
+		relative_position_id = NCC_mobilize_the_army
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				ahead_reduction = 0.5
+				bonus = 1
+				uses = 1
+				category = armor
+			}
+		}
+	}
+	focus = {
+		id = NCC_modernize_artillery
+		icon = GFX_goal_generic_army_artillery
+		cost = 5
+		x = 1
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = NCC_special_forces_specialization focus = NCC_mobilize_the_army }
+		relative_position_id = NCC_special_forces_specialization
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = arty_plz
+				#ahead_reduction = 1
+				bonus = 1
+				uses = 1
+				category = Artillery
+			}
+		}
+	}
+	focus = {
+		id = NCC_modernize_anti_tank
+		icon = GFX_focus_generic_tank_hunt
+		cost = 5
+		x = 4
+		y = 2
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = NCC_special_forces_specialization focus = NCC_mobilize_the_army }
+		relative_position_id = NCC_special_forces_specialization
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = cat_anti_tank
+			}
+
+		}
+	}
+	focus = {
+		id = NCC_modernize_anti_air
+		icon = GFX_focus_generic_airplane_hunt
+		cost = 5
+		x = 2
+		y = 2
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = NCC_special_forces_specialization focus = NCC_mobilize_the_army }
+		relative_position_id = NCC_special_forces_specialization
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = cat_anti_air
+			}
+		}
+	}
+	focus = {
+		id = NCC_modernize_mechanize
+		icon = GFX_focus_generic_mechanized_offensive
+		cost = 5
+		x = 0
+		y = 2
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = NCC_mobilize_the_army }
+		relative_position_id = NCC_mobilize_the_army
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = cat_mechanized_equipment
+			}
+		}
+	}
+	focus = {
+		id = NCC_modernize_support
+		icon = GFX_focus_generic_machine_gun
+		cost = 5
+		x = 5
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = NCC_special_forces_specialization focus = NCC_mobilize_the_army }
+		relative_position_id = NCC_special_forces_specialization
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = engineers_tech
+			}
+		}
+	}
+	focus = {
+		id = NCC_railway_gun
+		icon = GFX_focus_generic_railway_artillery
+		cost = 8
+		x = -1
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = NCC_special_forces_specialization }
+		relative_position_id = NCC_special_forces_specialization
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					NOT = { has_tech = railway_gun }
+				}
+				set_technology = { railway_gun = 1 }
+			}
+			create_railway_gun = {
+				equipment = railway_gun_equipment_1
+				name = "MINNESODAAAA"
+			}
+			add_tech_bonus = {
+				name = arty_plz
+				#ahead_reduction = 1
+				bonus = 1
+				uses = 1
+				category = Artillery
+			}
+		}
+	}
+	focus = {
+		id = NCC_minnesota_manuevers
+		icon = GFX_goal_generic_army_doctrines
+		cost = 5
+		x = -3
+		y = 1
+		ai_will_do = {
+			factor = 1
+		}
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = NCC_special_forces_specialization focus = NCC_mobilize_the_army }
+		relative_position_id = NCC_mobilize_the_army
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			army_experience = 50
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				name = x
+				uses = 3
+				category = land_doctrine
+			}
+		}
+	}
+	focus = {
+		id = NCC_integrate_the_national_guard
+		icon = GFX_focus_generic_little_entente
+		cost = 8
+		x = 0
+		y = 2
+		ai_will_do = {
+			factor = 1
+		}
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = NCC_minnesota_manuevers }
+		relative_position_id = NCC_minnesota_manuevers
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			army_experience = 25
+			add_political_power = 15
+			add_war_support = 0.05
+			add_ideas = SMN_Minnesota_home_army
+		}
+	}
+	focus = {
+		id = NCC_centralize_planning
+		icon = GFX_SOV_pacify_the_rim_ccp_2d_sov_compatibility
+		cost = 10
+		x = 0
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = NCC_integrate_the_national_guard }
+		relative_position_id = NCC_integrate_the_national_guard 
+		bypass = {
+		}
+		available = {
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			army_experience = 50
+			add_ideas = SMN_centralize_planning_idea
+		}
+	}
+#####NAVY TREE
+	focus = {
+		id = NCC_duluth_dockyards
+		icon = GFX_goal_generic_build_navy
+		x = 40
+		y = 0
+
+		cost = 5
+
+		available = {
+			any_state = {
+				is_controlled_by = NCC
+				is_coastal = yes
+			}
+		}
+
+		available_if_capitulated = yes
+
+
+		ai_will_do = {
+			factor = 0
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				prioritize = {198}
+				limit = {
+					is_coastal = yes
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = dockyard
+					level = 3
+					instant_build = yes
+				}
+			}
+			navy_experience = 25
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+	}
+
+	focus = {
+		id = NCC_protect_convoys
+		icon = GFX_goal_generic_navy_doctrines_tactics
+		prerequisite = { focus = NCC_duluth_dockyards }
+		x = 0
+		y = 1
+		relative_position_id = NCC_duluth_dockyards
+
+		cost = 5
+
+
+		available = {
+		}
+
+		available_if_capitulated = yes
+
+
+
+		completion_reward = {
+			navy_experience = 15
+			add_doctrine_cost_reduction = {
+				name = SMN_big_a_battlefleet
+				cost_reduction = 0.5
+				uses = 3
+				category = cat_fleet_in_being
+			}
+
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	focus = {
+		id = NCC_destoryer_effort
+		icon = GFX_goal_generic_navy_anti_submarine
+		prerequisite = { focus = NCC_duluth_dockyards }
+		x = -2
+		y = 1
+		relative_position_id = NCC_duluth_dockyards
+
+		cost = 5
+
+
+		available = {
+		}
+
+		available_if_capitulated = yes
+
+
+
+		completion_reward = {
+			navy_experience = 15
+			add_tech_bonus = {
+				name = SMN_destroyer
+				bonus = 3
+				uses = 1
+				category = dd_tech
+			}
+
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	focus = {
+		id = NCC_cruisers
+		icon = GFX_goal_generic_navy_cruiser
+		prerequisite = { focus = NCC_duluth_dockyards }
+		x = 2
+		y = 1
+		relative_position_id = NCC_duluth_dockyards
+
+		cost = 5
+
+		available = {
+		}
+
+		available_if_capitulated = yes
+
+
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = SMN_cruisers
+				bonus = 1
+				uses = 2
+				category = cl_tech
+				category = ca_tech
+			}
+
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	focus = {
+		id = NCC_incrase_naval_capacity
+		icon = GFX_focus_POL_develop_polish_shipbuilding
+		prerequisite = { focus = NCC_destoryer_effort }
+		prerequisite = { focus = NCC_protect_convoys }
+		prerequisite = { focus = NCC_cruisers }
+		x = 0
+		y = 2
+		relative_position_id = NCC_duluth_dockyards
+
+		cost = 5
+
+		available = {
+			any_state = {
+				is_controlled_by = NCC
+				is_coastal = yes
+			}
+		}
+
+		available_if_capitulated = yes
+
+
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = dockyard
+						size > 0
+					}
+					is_coastal = yes
+					is_fully_controlled_by = ROOT
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = dockyard
+						size > 0
+					}
+					is_coastal = yes
+					is_fully_controlled_by = ROOT
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+				}
+			}
+		}
+		search_filters = { FOCUS_FILTER_RESEARCH }
 	}
 }
