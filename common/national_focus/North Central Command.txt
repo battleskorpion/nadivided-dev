@@ -5,7 +5,7 @@ focus_tree = {
 		modifier = { 
 			add = 10 
 			tag = NCC
-		} 	
+		}
 	}
 	# 		   continous focus position 		   #
 	continuous_focus_position = { x = 700 y = 2000 }
@@ -332,7 +332,7 @@ focus_tree = {
 		}
 		x = -6
 		y = 1
-		cost = 10
+		cost = 5
 		relative_position_id = NCC_begin_reconstruction
 		ai_will_do = {
 			factor = 1
@@ -345,6 +345,14 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
+			add_popularity = {
+				ideology = progressivism
+				popularity = 0.10
+			}
+			set_politics = {
+				ruling_party = progressivism
+			}
+			set_cosmetic_tag = SMN
 			load_focus_tree = SMN
 			hidden_effect = {
 				set_country_flag = SMN_riot_side_tree
@@ -363,8 +371,8 @@ focus_tree = {
 				complete_national_focus = SMN_war_manpower_commission
 				add_ideas = SMN_great_depression_3
 				add_ideas = SMN_organized_crime
-				change_tag_from = SMN
 				set_country_flag = SMN_teamsters_have_striked
+				
 			}
 		}
 	}
@@ -384,7 +392,13 @@ focus_tree = {
 		ai_will_do = {
 			factor = 1
 		}
-
+		#offset = {
+		#	x = -2
+		#	y = 0
+		#	trigger = {
+		#		has_completed_focus = NCC_the_military_takesover
+		#	}
+		#}
 		available = {
 
 		}
@@ -403,6 +417,7 @@ focus_tree = {
 				idea = SMN_consolidated_power_idea
 				days = 200
 			}
+			country_event = northcommandcenter.1
 		}
 	}
 	focus = {
@@ -611,14 +626,14 @@ focus_tree = {
 
 		}
 		completion_reward = {
-			custom_effect_tooltip = NCC_upgrade_based_off_previous_focuses_tt
+			custom_effect_tooltip = SMN_upgrade_based_off_previous_focuses_tt
 			effect_tooltip = {
 				swap_ideas = {
 					remove_idea = NCC_tighten_recruitment_standards_idea
 					add_idea = NCC_tighten_recruitment_standards_upgraded_idea
 				}
 			}
-			custom_effect_tooltip = NCC_upgrade_based_off_previous_focuses_2_tt
+			custom_effect_tooltip = SMN_upgrade_based_off_previous_focuses_2_tt
 			effect_tooltip = {
 				swap_ideas = {
 					remove_idea = NCC_loosen_recruitment_standards_idea
@@ -692,7 +707,7 @@ focus_tree = {
 		available = {
 		}
 		completion_reward = {
-			unlock_decision_category_tooltip = NCC_enhanced_conscription
+			unlock_decision_category_tooltip = NCC_enhancing_conscription_cat
 		}
 	}
 	focus = {
@@ -936,6 +951,16 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_ideas = NCC_justification_for_further_expansion_idea
+			every_country = {
+				if = {
+					limit = {
+						NOT = {
+							original_tag = NCC
+						}
+					}
+					news_event = northcommandcenter.2
+				}
+			}
 		}
 	}
 #####ECO TREE BEGINS
@@ -1023,7 +1048,21 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_dynamic_modifier = {
-				modifier = NCC_four_year_plan
+				modifier = NCC_four_year_plan_dyn
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
 			}
 		}
 	}
@@ -1044,6 +1083,19 @@ focus_tree = {
 			####MODIFY DYNAMIC MOD
 			####-20%CONSUMER GOODS
 			####PRODUCTION EFF GROWTH
+			add_to_variable = {
+				NCC_consumer_goods_factor = -0.20
+			}
+			add_to_variable = {
+				NCC_production_speed_industrial_complex_factor = 0.1
+			}
+			custom_effect_tooltip = NCC_reorganize_heavy_industry_tt
+			#add_to_variable = {
+			#	NCC_production_factory_efficiency_gain_factor = -0.05
+			#}
+			#add_to_variable = {
+			#	NCC_production_factory_max_efficiency_factor = 0.05
+			#}
 			add_tech_bonus = {
 				name = GER_counter_sloped_armor
 				bonus = 1
@@ -1070,6 +1122,13 @@ focus_tree = {
 			####MODIFY DYNAMIC MOD
 			####-CIV SPEED
 			#### 10% MILLS SPEED
+			add_to_variable = {
+				NCC_production_speed_industrial_complex_factor = -0.15
+			}
+			add_to_variable = {
+				NCC_production_arms_factory_factor = 0.1
+			}
+			custom_effect_tooltip = NCC_armaments_production_tt
 			add_tech_bonus = {
 				name = GER_counter_sloped_armor
 				bonus = 1
@@ -1088,8 +1147,48 @@ focus_tree = {
 		prerequisite = { focus = NCC_armaments_production focus = NCC_reorganize_heavy_industry }
 		relative_position_id = NCC_four_year_plan
 		available = {
+			has_tech = aluminum_production_1
+			has_tech = steel_production_1
 		}
 		completion_reward = {
+			add_to_variable = {
+				NCC_industrial_capacity_factory = 0.05
+			}
+			add_to_variable = {
+				NCC_production_speed_aluminum_mill_factor = 0.15
+			}
+			add_to_variable = {
+				NCC_production_speed_steel_mill_factor = 0.15
+			}
+			custom_effect_tooltip = NCC_steel_casting_industry_tt
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = aluminum_mill
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = steel_mill
+					level = 2
+					instant_build = yes
+				}
+			}
 		}
 	}
 	focus = {
@@ -1101,14 +1200,37 @@ focus_tree = {
 		prerequisite = { focus = NCC_armaments_production focus = NCC_reorganize_heavy_industry }
 		relative_position_id = NCC_four_year_plan
 		available = {
+			has_tech = synth_oil_experiments
 		}
 		completion_reward = {
+			add_to_variable = {
+				NCC_fuel_gain_factor = 0.25
+			}
+			add_to_variable = {
+				NCC_production_speed_synthetic_refinery_factor = 0.20
+			}
+			custom_effect_tooltip = NCC_sythetic_refining_tt
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 2
+					instant_build = yes
+				}
+			}
+
 		}
 	}
 	focus = {
 		id = NCC_modernize_production_lines
 		icon = GFX_SOV_industrial_modernization_ccp_2d_sov_compatibility
-		cost = 5
+		cost = 10
 		x = -2
 		y = 3
 		prerequisite = {  focus = NCC_reorganize_heavy_industry }
@@ -1118,6 +1240,13 @@ focus_tree = {
 		completion_reward = {
 			####MODIFY DYNAMIC MOD
 			####CAP
+			add_to_variable = {
+				NCC_production_factory_max_efficiency_factor = 0.10
+			}
+			add_to_variable = {
+				NCC_consumer_goods_factor = -0.10
+			}
+			custom_effect_tooltip = NCC_modernize_production_lines_tt
 			add_tech_bonus = {
 				name = GER_counter_sloped_armor
 				bonus = 1
@@ -1130,7 +1259,7 @@ focus_tree = {
 	focus = {
 		id = NCC_optimize_production_lines
 		icon = GFX_SOV_optimize_production_lines_ccp_2d_sov_compatibility
-		cost = 5
+		cost = 10
 		x = 2
 		y = 3
 		prerequisite = { focus = NCC_armaments_production }
@@ -1140,6 +1269,16 @@ focus_tree = {
 		completion_reward = {
 			####MODIFY DYNAMIC MOD
 			####factory_output
+			add_to_variable = {
+				NCC_industrial_capacity_factory = 0.10
+			}
+			add_to_variable = {
+				NCC_production_factory_efficiency_gain_factor = 0.05
+			}
+			add_to_variable = {
+				NCC_production_factory_start_efficiency_factor = 0.05
+			}
+			custom_effect_tooltip = NCC_optimize_production_lines_tt
 			add_tech_bonus = {
 				name = GER_counter_sloped_armor
 				bonus = 1
@@ -1166,12 +1305,27 @@ focus_tree = {
 		}
 		completion_reward = {
 			####10% resources extraction
+			add_to_variable = {
+				NCC_local_resources_factor = 0.1
+			}
+			custom_effect_tooltip = NCC_increase_state_reserves_tt
+			random_owned_controlled_state = {
+				prioritize = { 343 }
+				add_resource = {
+					type = steel
+					amount = 20
+				}
+				add_resource = {
+					type = tungsten
+					amount = 7
+				}
+			}
 		}
 	}
 	focus = {
 		id = NCC_increased_production
 		icon = GFX_focus_CONGO_copper_cartridges
-		cost = 5
+		cost = 10
 		x = 0
 		y = 4
 		prerequisite = {
@@ -1179,9 +1333,10 @@ focus_tree = {
 		}
 		relative_position_id = NCC_four_year_plan
 		available = {
+			has_war = yes
 		}
 		completion_reward = {
-			#####
+			add_ideas = NCC_armament_production_idea
 		}
 	}
 	focus = {
@@ -1216,7 +1371,7 @@ focus_tree = {
 	}
 	focus = {
 		id = NCC_develop_southern_farms
-		icon = GFX_goal_generic_construction2
+		icon = GFX_SOV_develop_the_urals_ccp_2d_sov_compatibility
 		cost = 5
 		x = 1
 		y = 1
@@ -1678,6 +1833,7 @@ focus_tree = {
 		bypass = {
 		}
 		available = {
+			
 		}
 		completion_reward = {
 			army_experience = 50
@@ -1706,6 +1862,7 @@ focus_tree = {
 		bypass = {
 		}
 		available = {
+			has_completed_focus = NCC_the_military_takesover
 		}
 		completion_reward = {
 			army_experience = 25
@@ -1737,11 +1894,187 @@ focus_tree = {
 			add_ideas = SMN_centralize_planning_idea
 		}
 	}
+	focus = {
+		id = NCC_an_independent_air_force
+		icon = GFX_focus_generic_air_bases
+		cost = 5
+		x = 31
+		y = 0
+		mutually_exclusive = {
+			
+		}
+		bypass = {
+		}
+		available = {
+			has_completed_focus = NCC_the_military_takesover
+		}
+		completion_reward = {
+			air_experience = 50
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				name = NCC_an_independent_air_force
+				category = air_doctrine
+				uses = 1
+			}
+			NCC_non_independent_airforce_down = yes
+			####idea malus for research air
+		}
+	}
+	focus = {
+		id = NCC_aircraft_studies
+		icon = GFX_goal_generic_air_fighter
+		cost = 5
+		x = -1
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = NCC_an_independent_air_force }
+		relative_position_id = NCC_an_independent_air_force
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = JAP_fighter_modernization
+				bonus = 1.0
+				uses = 1
+				category = light_air
+			}
+			NCC_non_independent_airforce_down = yes
+		}
+	}
+	focus = {
+		id = NCC_large_aircraft_studies
+		icon = GFX_focus_generic_long_range_aircraft
+		cost = 5
+		x = 1
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = NCC_an_independent_air_force }
+		relative_position_id = NCC_an_independent_air_force
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = JAP_fighter_modernization
+				bonus = 1.0
+				uses = 1
+				category = heavy_air
+			}
+			NCC_non_independent_airforce_down = yes
+		}
+	}
+	focus = {
+		id = NCC_engine_studies
+		icon = GFX_goal_generic_air_fighter2
+		cost = 5
+		x = -2
+		y = 2
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = NCC_aircraft_studies focus = NCC_large_aircraft_studies }
+		relative_position_id = NCC_an_independent_air_force
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = JAP_fighter_modernization
+				bonus = 1.0
+				uses = 1
+				category = cat_air_engine
+			}
+			NCC_non_independent_airforce_down = yes
+		}
+	}
+	focus = {
+		id = NCC_air_gun_studies
+		icon = GFX_focus_generic_multi_role_aircraft
+		cost = 5
+		x = 2
+		y = 2
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = NCC_aircraft_studies focus = NCC_large_aircraft_studies }
+		relative_position_id = NCC_an_independent_air_force
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = JAP_fighter_modernization
+				bonus = 1.0
+				uses = 1
+				category = cat_air_guns
+			}
+			NCC_non_independent_airforce_down = yes
+		}
+	}
+	focus = {
+		id = NCC_air_support_studies
+		icon = GFX_goal_generic_CAS
+		cost = 5
+		x = 0
+		y = 2
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = NCC_aircraft_studies focus = NCC_large_aircraft_studies }
+		relative_position_id = NCC_an_independent_air_force
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = JAP_fighter_modernization
+				bonus = 1.0
+				uses = 1
+				category = cat_air_bombs
+			}
+			NCC_non_independent_airforce_down = yes
+		}
+	}
+	focus = {
+		id = NCC_air_doctrines_studies
+		icon = GFX_goal_generic_build_airforce
+		cost = 5
+		x = 0
+		y = 3
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = NCC_engine_studies focus = NCC_air_support_studies focus = NCC_air_gun_studies }
+		relative_position_id = NCC_an_independent_air_force
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				name = NCC_air_doctrines_studies
+				category = air_doctrine
+				uses = 3
+			}
+			NCC_non_independent_airforce_down = yes
+		}
+	}
 #####NAVY TREE
 	focus = {
 		id = NCC_duluth_dockyards
 		icon = GFX_goal_generic_build_navy
-		x = 40
+		x = 37
 		y = 0
 
 		cost = 5
@@ -1751,6 +2084,7 @@ focus_tree = {
 				is_controlled_by = NCC
 				is_coastal = yes
 			}
+			has_completed_focus = NCC_the_military_takesover
 		}
 
 		available_if_capitulated = yes
@@ -1927,5 +2261,60 @@ focus_tree = {
 			}
 		}
 		search_filters = { FOCUS_FILTER_RESEARCH }
+	}
+	focus = {
+		id = NCC_naval_repair_yards
+		icon = GFX_focus_generic_refit_civilian_ships
+		prerequisite = { focus = NCC_incrase_naval_capacity }
+		relative_position_id = NCC_incrase_naval_capacity
+		x = 1
+		y = 1
+		cost = 5
+
+		available = {
+
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			add_ideas = SMA_expand_the_repair_yards
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = dockyard
+						size > 1
+					}
+					is_coastal = yes
+					is_fully_controlled_by = ROOT
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = dockyard
+					level = 2
+				}
+			}
+		}
+	}
+	focus = {
+		id = NCC_new_naval_academy
+		icon = GFX_focus_BEL_antwerp_maritime_academy
+		prerequisite = { focus = NCC_incrase_naval_capacity }
+		relative_position_id = NCC_incrase_naval_capacity
+		x = -1
+		y = 1
+		cost = 5
+
+		available = {
+
+		}
+		available_if_capitulated = no
+
+		completion_reward = {
+			every_navy_leader = { 
+				add_defense = 1
+				add_coordination = 1
+			}
+			add_ideas = PQC_naval_academy
+		}
 	}
 }
