@@ -1,45 +1,182 @@
-SNY_1936_elections = { 
-    SNY_begin_the_process = {
-        icon = GFX_decision_generic_speech
- 
-        available = {
-            original_tag = SNY
-            has_completed_focus = SNY_the_election_bids
-        }
-        visible = {
-            has_completed_focus = SNY_the_election_bids
-            original_tag = SNY
-        }
-        cancel_if_not_visible = yes
-        fire_only_once = yes
-        cost = 25
-        complete_effect = {
-
-        }
-    }
+SNY_1936_elections = {
     SNY_1936_election_mission = {
         activation = {
             has_completed_focus = SNY_the_election_bids
+            tag = SNY
         }
         available = {
-            original_tag = SNY
+            always = false
         }
         cancel_trigger = {
-            NOT = {
-                has_government = democratic
-            }
+            has_war = yes
             has_civil_war = yes
         }
+        days_mission_timeout = 236
         icon = mission_icon
         is_good = yes
-        war_with_on_timeout = SOV
-        days_mission_timeout = 100
-        selectable_mission = yes
+        complete_effect = {}
+        timeout_effect = {
+            country_event = { id = SNY.election.1 }
+        }
+    }
+    SNY_election_opposing_point_gain_D = {
+        activation = {
+            check_variable =  { SNY_election_R > 0 }
+            NOT = {
+                check_variable = { SNY_election_D > SNY_election_R }
+                has_active_mission = SNY_election_opposing_point_gain_R
+                check_variable = { SNY_election_D = SNY_election_R }
+            }
+        }
+        available = {
+            always = false
+        }
+        cancel_trigger = {
+            has_war = yes
+            has_civil_war = yes
+            NOT = {
+                has_active_mission = SNY_1936_election_mission
+            }
+        }
+        days_mission_timeout = 45
+        icon = mission_icon
+        is_good = yes
         complete_effect = {
-            add_ideas = my_idea
+            NOT = {
+                has_active_mission = SNY_1936_election_mission
+            }
         }
         timeout_effect = {
-            # country event
+            add_to_variable = {
+                var = SNY_election_D
+                value = 1
+                tooltip = SNY_election_democratic_point_gain_tt
+            }
+        }
+    }
+    SNY_election_opposing_point_gain_R = {
+        activation = {
+            check_variable = { SNY_election_D > 0 }
+            NOT = {
+                check_variable = { SNY_election_R > SNY_election_D }
+                has_active_mission = SNY_election_opposing_point_gain_D
+                has_active_mission = SNY_election_opposing_point_gain_R
+                check_variable = { SNY_election_D = SNY_election_R }
+            }
+        }
+        available = {
+            always = false
+        }
+        cancel_trigger = {
+            has_war = yes
+            has_civil_war = yes
+            NOT = {
+                has_active_mission = SNY_1936_election_mission
+            }
+        }
+        days_mission_timeout = 45
+        icon = mission_icon
+        is_good = yes
+        complete_effect = {}
+        timeout_effect = {
+           add_to_variable = {
+                var = SNY_election_R
+                value = 1
+                tooltip = SNY_election_republican_point_gain_tt
+            }
+        }
+    }
+    SNY_campaign_for_democrats = {
+        allowed = {
+            tag = SNY
+        }
+        visible = {
+            has_completed_focus = SNY_the_election_bids 
+        }
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SNY_election_already_campaign_tt
+                NOT = {
+                    has_decision = SNY_campaign_for_democrats
+                }
+            }
+        }
+        cost = 25
+        icon = 
+        fire_only_once = no
+        days_remove = 30
+        cancel_trigger = {
+            always = false
+        }
+        remove_effect = {
+            if = {
+                limit = {
+                    check_variable = { SNY_election_D = 0 }
+                }
+                set_variable = {
+                    var = SNY_election_D
+                    value = 1
+                    tooltip = SNY_election_var_d_tt
+                }
+                else = {
+                    add_to_variable = {
+                        var = SNY_election_D
+                        value = 1
+                        tooltip = SNY_election_var_d_tt
+                    }
+                }
+            }
+            activate_mission = SNY_opposing_point_gain_D
+        }
+    }
+    SNY_campaign_for_republicans = {
+        allowed = {
+            tag = SNY
+        }
+        visible = {
+            has_completed_focus = SNY_the_election_bids
+        }
+        available = {
+            custom_trigger_tooltip = {
+                tooltip = SNY_election_already_campaign_tt
+                NOT = {
+                    has_decision = SNY_campaign_for_democrats
+                }
+            }
+        }
+        cost = 25
+        icon = 
+        fire_only_once = no
+        days_remove = 30
+        modifer = {
+            set_country_flag = {
+                flag = SNY_election_decision_activated 
+                days = 30
+                value = 2000
+            }
+        }
+        cancel_trigger = {
+            always = false
+        }
+        remove_effect = {
+            if = {
+                limit = {
+                    check_variable = { SNY_election_R = 0 }
+                }
+                set_variable = {
+                    var = SNY_election_R
+                    value = 1
+                    tooltip = SNY_election_var_r_tt
+                }
+                else = {
+                    add_to_variable = {
+                        var = SNY_election_R
+                        value = 1
+                        tooltip = SNY_election_var_r_tt
+                    }
+                }
+            }
+            activate_mission = SNY_opposing_point_gain_R
         }
     }
 }
