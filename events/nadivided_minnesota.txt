@@ -85,11 +85,12 @@ country_event = {
     	clr_country_flag = SMN_has_oconnor_agreement
 		mark_focus_tree_layout_dirty = yes
 		set_country_flag = SMN_non_riot_side_tree
+		complete_national_focus = SMN_the_end_of_the_oconnor_agreement
 		ai_chance = {
-			factor = 1
+			base = 1
 			modifier = {
 				is_historical_focus_on = yes
-				factor = 0
+				factor = 100
 			}
 		}
     }
@@ -99,11 +100,12 @@ country_event = {
         country_event = minnesota.4
 		mark_focus_tree_layout_dirty = yes
 		set_country_flag = SMN_riot_side_tree
+		complete_national_focus = SMN_the_end_of_the_oconnor_agreement
 		ai_chance = {
-			factor = 100
+			base = 1
 			modifier = {
 				is_historical_focus_on = yes
-				factor = 0
+				factor = -1
 			}
 		}
         ###PEOPLE ARE DISPLEASED WITH HOW THE GOVERNEMNT HAS DEALT WITH THE CORRUPTION
@@ -173,8 +175,8 @@ country_event = {
     picture = GFX_report_event_election_vote
 
     fire_only_once = yes
-
-		trigger = {
+	is_triggered_only = yes
+	trigger = {
 		tag = SMN
 	}
     
@@ -347,6 +349,7 @@ country_event = {
 		every_other_country = {
 			news_event = usastates_news.55
 		}
+		complete_national_focus = SMN_olson_declares_marshal_law
     }
     ###THE PEOPLE ARE DISPLEASED
 }
@@ -488,7 +491,7 @@ country_event = {
 		ai_chance = {
 			factor = 0
 		}
-		SMN = { country_event = minnesota.16 }
+		FROM = { country_event = minnesota.16 }
 	}
 
 	option = { #gives in to minnesota for SSD
@@ -499,14 +502,14 @@ country_event = {
 		ai_chance = {
 			factor = 100
 		}
-        SMN = { country_event = minnesota.17 }
+        FROM = { country_event = minnesota.17 }
         every_state = {
             limit = {
                 #is_core_of = SSD
                 is_owned_by = SSD
-                is_claimed_by = SMN
+                is_claimed_by = FROM
             }
-            SMN = {
+            FROM = {
                 transfer_state = PREV
             }
         }
@@ -520,14 +523,14 @@ country_event = {
         ai_chance = {
             factor = 100
         }
-        SMN = { country_event = minnesota.17 }
+        FROM = { country_event = minnesota.17 }
         every_state = {
             limit = {
                 #is_core_of = SND
                 is_owned_by = SND
-                is_claimed_by = SMN
+                is_claimed_by = FROM
             }
-            SMN = {
+            FROM = {
                 transfer_state = PREV
             }
         }
@@ -686,7 +689,7 @@ country_event = {
 			}
 		}
 		add_stability = remove_rivals_var
-		add_ideas = SMN_banned_opposition_authoritian
+		add_ideas = NCC_banned_opposition_authoritian
 		country_event = {
 			days = 15
 			id = minnesota.21
@@ -744,81 +747,99 @@ country_event = {
 	fire_only_once = yes
 
 	immediate = {
-		random_country = {
-			limit = {
-				original_tag = SMN
-				NOT = {
-					tag = SMN
-				}
-				has_government = progressivism
-			}
-			save_event_target_as = THE_state_of_MN
+		342 = {
+			add_core_of = NCC
 		}
-		every_character = {
-			limit = {
-				OR = {
-					is_character = SMN_hjalmar_peterson
-					is_character = SMN_richard_canyon
-					is_character = SMN_hubert_humphrey_state
-					is_character = SMN_josh_williams
-					is_character = SMN_bob_wilson
-					is_character = SMN_bob_doug
-					is_character = SMN_henry_johnson
-				}
-			}
-			set_nationality = event_target:THE_state_of_MN
+		release = NCC
+		NCC = {
+			transfer_state = 669
+			transfer_state = 668
+			transfer_state = 198
+			transfer_state = 670
+			transfer_state = 667
+			transfer_state = 343
+			transfer_state = 671
 		}
-		
-		event_target:THE_state_of_MN = {
-			inherit_technology = SMN
-			#recruit_character = SMN_hjalmar_peterson
-			#recruit_character = SMN_richard_canyon
-			SMN_hjalmar_peterson = {
-				add_country_leader_role = {
-					promote_leader = yes
-					country_leader = {
-						ideology = roosevelt_progressivism
-						expire = "1965.1.1.1" 
-						traits = { 
-							resolute_social_democrat
-						}
-					}
-				}
-			}
-			
-			add_equipment_to_stockpile = { #buff to compensate for lack of industry, 5-divisions worth
-				type = infantry_equipment
-				amount = 500
-				producer = SMN
-			}
-			add_equipment_to_stockpile = { #buff to compensate for lack of industry, 5-divisions worth
-				type = support_equipment
-				amount = 25
-				producer = SMN
-			}
-			set_country_flag = SMN_anti_communist_tree_chosen
-			every_state = {
-				limit = {
-					is_controlled_by = ROOT
-					is_core_of = ROOT
-					NOT = {
-						is_controlled_by = event_target:THE_state_of_MN
-					}
-				}
-				add_core_of = PREV
-			}
+		NCC = {
+			load_oob = NCC_spawn
+			#add_ideas = NCC_in_civil_war
 		}
-		transfer_units_fraction= {
-			target = event_target:THE_state_of_MN 
-			size = 0.3
-			stockpile_ratio = 0.2
-			army_ratio = 0.3
-			navy_ratio = 1
-			air_ratio = 0.10
-			keep_unit_leaders_trigger = {
-				always = yes 
-			}
-		}
+		#add_ideas = NCC_in_civil_war
+		#random_country = {
+		#	limit = {
+		#		original_tag = SMN
+		#		NOT = {
+		#			tag = SMN
+		#		}
+		#		has_government = progressivism
+		#	}
+		#	save_event_target_as = THE_state_of_MN
+		#}
+		#every_character = {
+		#	limit = {
+		#		OR = {
+		#			is_character = SMN_hjalmar_peterson
+		#			is_character = SMN_richard_canyon
+		#			is_character = SMN_hubert_humphrey_state
+		#			is_character = SMN_josh_williams
+		#			is_character = SMN_bob_wilson
+		#			is_character = SMN_bob_doug
+		#			is_character = SMN_henry_johnson
+		#		}
+		#	}
+		#	set_nationality = event_target:THE_state_of_MN
+		#}
+		#
+		#event_target:THE_state_of_MN = {
+		#	inherit_technology = SMN
+		#	#recruit_character = SMN_hjalmar_peterson
+		#	#recruit_character = SMN_richard_canyon
+		#	SMN_hjalmar_peterson = {
+		#		add_country_leader_role = {
+		#			promote_leader = yes
+		#			country_leader = {
+		#				ideology = roosevelt_progressivism
+		#				expire = "1965.1.1.1" 
+		#				traits = { 
+		#					resolute_social_democrat
+		#				}
+		#			}
+		#		}
+		#	}
+		#	
+		#	add_equipment_to_stockpile = { #buff to compensate for lack of industry, 5-divisions worth
+		#		type = infantry_equipment
+		#		amount = 500
+		#		producer = SMN
+		#	}
+		#	add_equipment_to_stockpile = { #buff to compensate for lack of industry, 5-divisions worth
+		#		type = support_equipment
+		#		amount = 25
+		#		producer = SMN
+		#	}
+		#	set_country_flag = SMN_anti_communist_tree_chosen
+		#	every_state = {
+		#		limit = {
+		#			is_controlled_by = ROOT
+		#			is_core_of = ROOT
+		#			NOT = {
+		#				is_controlled_by = event_target:THE_state_of_MN
+		#			}
+		#		}
+		#		add_core_of = PREV
+		#	}
+		#}
+		#transfer_units_fraction= {
+		#	target = event_target:THE_state_of_MN 
+		#	size = 0.3
+		#	stockpile_ratio = 0.2
+		#	army_ratio = 0.3
+		#	navy_ratio = 1
+		#	air_ratio = 0.10
+		#	keep_unit_leaders_trigger = {
+		#		always = yes 
+		#	}
+		#}
 	}
 	
 	option = {
@@ -827,28 +848,68 @@ country_event = {
 		hidden_effect = {
 			remove_ideas = strikes_1
 		}
-		event_target:THE_state_of_MN = {
-			SMN_spawn_national_guard_units_CW = yes
+		#event_target:THE_state_of_MN = {
+		#	SMN_spawn_national_guard_units_CW = yes
+		#}
+		hidden_effect = {
+			342 = {
+				add_core_of = SMN
+			}
+		}
+		NCC = {
+			declare_war_on = {
+				target = SMN
+				type = annex_everything
+			}
 		}
 		SMN_spawn_communist_units_CW = yes
+		hidden_effect = {
+			every_state = {
+				limit = {
+					is_core_of = SMN
+				}
+				add_core_of = NCC
+				set_state_flag = NCC_marked_for_conscription_flag
+			}
+		}
 	}
 	option = {
 		name = "For the Republic!"
 		custom_effect_tooltip = SMN_play_as_the_state_tt
-		event_target:THE_state_of_MN = {
-			SMN_spawn_national_guard_units_CW = yes
-			set_country_flag = SMN_teamsters_have_striked
-		}
-		SMN_spawn_communist_units_CW = yes
-		event_target:THE_state_of_MN = {
+		NCC = {
 			change_tag_from = ROOT
 		}
+		#event_target:THE_state_of_MN = {
+		#	SMN_spawn_national_guard_units_CW = yes
+		#	set_country_flag = SMN_teamsters_have_striked
+		#}
+		SMN_spawn_communist_units_CW = yes
+		NCC = {
+			declare_war_on = {
+				target = SMN
+				type = annex_everything
+			}
+		}
+		#hidden_effect = {
+		#	every_character = {
+		#		limit = {
+		#			has_nationality = SMN
+		#		}
+		#		set_nationality = event_target:THE_state_of_MN
+		#	}
+		#}
 		hidden_effect = {
-			every_character = {
+			342 = {
+				add_core_of = SMN
+			}
+		}
+		hidden_effect = {
+			every_state = {
 				limit = {
-					has_nationality = SMN
+					is_core_of = SMN
 				}
-				set_nationality = event_target:THE_state_of_MN
+				add_core_of = NCC
+				set_state_flag = NCC_marked_for_conscription_flag
 			}
 		}
 	}

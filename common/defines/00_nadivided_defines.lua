@@ -112,7 +112,8 @@
 	NDefines.NCountry.BASE_COMMAND_POWER_GAIN = 0.4					-- def 0.4 -- base value for daily command power gain
 	NDefines.NCountry.AIR_VOLUNTEER_BASES_CAPACITY_LIMIT = 0.15	-- def 0.1 -- Ratio for volunteer planes available for sending in relation to receiver air base capacity
 	NDefines.NCountry.DAYS_OF_WAR_BEFORE_SURRENDER = 5			-- def 7 -- Number of days a war has to have existed before anyone can surrender in it
-		-- NAD is smaller
+	--NDefines.NCountry.BASE_MOBILIZATION_SPEED = 0.02,				-- Base speed of manpower mobilization  #in 1/1000 of 1 % (base game 0.01)
+	-- NAD is smaller
 	
 	NDefines.NCountry.FUEL_LEASE_CONVOY_RATIO = 0.0010				-- num convoys needed per fuel land lease
 	-- fuel is priceless, def 0.0005
@@ -164,17 +165,46 @@
 --},
 
 --NProduction = {
-	NDefines.NProduction.BASE_FACTORY_EFFICIENCY_BALANCE_FACTOR = 0.20			-- def 0.1 -- more production
+	--NDefines.NProduction.BASE_FACTORY_EFFICIENCY_BALANCE_FACTOR = 0.20			-- def 0.1 -- more production
 --},
 
 
 --NMilitary = {
-	FIELD_EXPERIENCE_ON_DIVISION_MULT = 0.005					-- default 0.005-- Victory points with values higher than or equal to this are considered to be of medium importance.
+	--NDefines.NMilitary.FIELD_EXPERIENCE_ON_DIVISION_MULT = 0.005					-- default 0.005-- Victory points with values higher than or equal to this are considered to be of medium importance.
 	NDefines.NMilitary.REINFORCEMENT_MANPOWER_CHUNK = 0.4				-- default 0.2-- MOREMANPOWER
 	--},
 
 --NRailwayGun = {
-	RAILWAY_GUN_RANGE = 50					-- default 50 -- Victory points with values higher than or equal to this are considered to be of medium importance.
+	--NDefines.NRailwayGun = {
+	--	RAILWAY_GUN_POSSIBLE_RANGES = { 30, 15, 45 },	-- Possible values for railway gun range in pixel.
+	--													-- For optimization reasons, they are listed here and equipment DB must use one of those.
+	--													-- when writing railway gun in equipment, use the index in this array
+	--													-- the first value in array is the default value
+	--	ATTACK_TO_FORTS_MODIFIER_FACTOR = 1.333,		-- Forts modifier is calculated by multiplying railway gun attack value with this and dividing by 100
+	--	ATTACK_TO_ENTRENCHMENT_MODIFIER_FACTOR = 0.8,		-- Entrenchment modifier is calculated by multiplying railway gun attack value with this and dividing by 100
+	--	ATTACK_TO_BOMBARDMENT_MODIFIER_FACTOR = 0.4,	-- Bombardment modifier is calculated by multiplying railway gun attack value with this and dividing by 100
+	--	DAILY_MANPOWER_GAIN_RATIO = 0.05,				-- Railway Guns will be able to gain this ratio of their max manpower daily
+	--	DISBAND_MANPOWER_LOSS = 0.0,					-- The ration of manpower lost on disbanding railway guns
+	--	ENCIRCLED_DISBAND_MANPOWER_FACTOR = 0.2,		-- The percentage of manpower returned when an encircled unit is disbanded
+	--	OUT_OF_SUPPLY_SPEED = -0.8,						-- Max speed reduction from supply for railway guns
+	--	BASE_CAPTURE_CHANCE = 0.2,						-- The base chance of railway guns being captured during an overrrun. Will be further modified by the equipment capture chance of the capturing unit.
+	--	DISTRIBUTION_RAILWAY_GUN_PRESENCE_SCORE = -100,					-- Score for Railway Guns in nearby provs. x3 if on that province. x2 if adjacent. x1 if 2 away.
+	--	DISTRIBUTION_OUR_UNITS_PRESENCE_SCORE = 1,	 					-- Score for our units in province when distributing Railway Guns
+	--	DISTRIBUTION_FRIENDLY_UNITS_PRESENCE_SCORE = 0,					-- Score for friendly units in province when distributing Railway Guns
+	--	DISTRIBUTION_HOSTILE_UNITS_PRESENCE_SCORE = -45,				-- Score for hostile units in province when distributing Railway Guns
+	--	DISTRIBUTION_COMBATS_PRESENCE_SCORE = -30,						-- Score for combats in province when distributing Railway Guns
+	--	DISTRIBUTION_COMBATS_INRANGE_SCORE = 15,						-- Score for combats in range when distributing Railway Guns
+	--	DISTRIBUTION_OUR_UNITS_INRANGE_SCORE = 2.5,						-- Score for our units in range when distributing Railway Guns
+	--	DISTRIBUTION_FRIENDLY_UNITS_INRANGE_SCORE = 1.5,				-- Score for friendly units in range when distributing Railway Guns
+	--	DISTRIBUTION_HOSTILE_UNITS_INRANGE_SCORE = 6,					-- Score for hostile units in range when distributing Railway Guns
+	--	DISTRIBUTION_DISTANCE_SCORE = -0.08,							-- Score for distance to province when distributing Railway Guns
+	--	DISTRIBUTION_PROVINCE_CONTROLLED_BY_ENEMY_SCORE = -3,			-- Score for staying in province controlled by enemy
+	--	DISTRIBUTION_PROVINCES_CONTROLLED_BY_ENEMY_INRANGE_SCORE = 15,	-- Score for provinces controlled by enemy in range when distributing Railway Guns
+	--	DISTRIBUTION_HOLD_POSITION_SCORE = 30,							-- Score for staying in the same province when distributing Railway Guns
+	--	DISTRIBUTION_NO_RAILWAY_SCORE = -500,							-- Score for provinces with no railways (need to be low, but we allow RG to enter port provinces without railways)
+	--	DISTRIBUTION_SUPPLY_DEFICIT_SCORE = -100,						-- Score for provinces without sufficient supply cap
+	--}
+	
 --},
 
 --NProject = {
