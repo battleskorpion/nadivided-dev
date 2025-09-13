@@ -175,11 +175,7 @@
 	--},
 
 --NRailwayGun = {
-<<<<<<< HEAD
-	RAILWAY_GUN_RANGE = 150					-- default 50 -- Victory points with values higher than or equal to this are considered to be of medium importance.
-=======
 	RAILWAY_GUN_RANGE = 150				-- default 50 -- Victory points with values higher than or equal to this are considered to be of medium importance.
->>>>>>> b842b11107e98a66d989229ceee0e88a1a4a7e02
 --},
 
 --NProject = {
