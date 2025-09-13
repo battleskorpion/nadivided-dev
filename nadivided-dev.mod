@@ -1,5 +1,5 @@
 name="North America Divided [Dev]"
-version="1.14.3"
+version="1.17.2"
 user_dir="nadivided"
 picture="thumbnail.png"
 tags={

@@ -169,12 +169,12 @@
 
 
 --NMilitary = {
-	FIELD_EXPERIENCE_ON_DIVISION_MULT = 0.005					-- default 0.005-- Victory points with values higher than or equal to this are considered to be of medium importance.
+	NDefines.NMilitary.FIELD_EXPERIENCE_ON_DIVISION_MULT = 0.005					-- default 0.005-- Victory points with values higher than or equal to this are considered to be of medium importance.
 	NDefines.NMilitary.REINFORCEMENT_MANPOWER_CHUNK = 0.4				-- default 0.2-- MOREMANPOWER
 	--},
 
 --NRailwayGun = {
-	RAILWAY_GUN_RANGE = 50					-- default 50 -- Victory points with values higher than or equal to this are considered to be of medium importance.
+	RAILWAY_GUN_RANGE = 150				-- default 50 -- Victory points with values higher than or equal to this are considered to be of medium importance.
 --},
 
 --NProject = {
