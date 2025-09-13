@@ -112,7 +112,8 @@
 	NDefines.NCountry.BASE_COMMAND_POWER_GAIN = 0.4					-- def 0.4 -- base value for daily command power gain
 	NDefines.NCountry.AIR_VOLUNTEER_BASES_CAPACITY_LIMIT = 0.15	-- def 0.1 -- Ratio for volunteer planes available for sending in relation to receiver air base capacity
 	NDefines.NCountry.DAYS_OF_WAR_BEFORE_SURRENDER = 5			-- def 7 -- Number of days a war has to have existed before anyone can surrender in it
-		-- NAD is smaller
+	NDefines.NCountry.BASE_MOBILIZATION_SPEED = 0.02,				-- Base speed of manpower mobilization  #in 1/1000 of 1 % (base game 0.01)
+	-- NAD is smaller
 	
 	NDefines.NCountry.FUEL_LEASE_CONVOY_RATIO = 0.0010				-- num convoys needed per fuel land lease
 	-- fuel is priceless, def 0.0005
@@ -169,12 +170,16 @@
 
 
 --NMilitary = {
-	FIELD_EXPERIENCE_ON_DIVISION_MULT = 0.005					-- default 0.005-- Victory points with values higher than or equal to this are considered to be of medium importance.
+	NDefines.NMilitary.FIELD_EXPERIENCE_ON_DIVISION_MULT = 0.005					-- default 0.005-- Victory points with values higher than or equal to this are considered to be of medium importance.
 	NDefines.NMilitary.REINFORCEMENT_MANPOWER_CHUNK = 0.4				-- default 0.2-- MOREMANPOWER
 	--},
 
 --NRailwayGun = {
-	RAILWAY_GUN_RANGE = 50					-- default 50 -- Victory points with values higher than or equal to this are considered to be of medium importance.
+<<<<<<< HEAD
+	RAILWAY_GUN_RANGE = 150					-- default 50 -- Victory points with values higher than or equal to this are considered to be of medium importance.
+=======
+	RAILWAY_GUN_RANGE = 150				-- default 50 -- Victory points with values higher than or equal to this are considered to be of medium importance.
+>>>>>>> b842b11107e98a66d989229ceee0e88a1a4a7e02
 --},
 
 --NProject = {
