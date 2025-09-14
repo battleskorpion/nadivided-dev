@@ -3849,7 +3849,7 @@ focus_tree = {
 	#		add_political_power = 75
 	#	}
 	#	#
-	# 
+	# }
 	focus = {
 		id = PON_British_columbia
 		icon = GFX_focus_PON_bc
@@ -3981,9 +3981,15 @@ focus_tree = {
 	focus = {
 		id = PON_Break_out_our_old_ross_rifles
 		icon = GFX_focus_pon_ross_rifles
-		x = 37
-		y = 0
-		cost = 4
+
+		prerequisite = {
+			focus = PON_Ontario_army
+		}
+		x = 0
+		y = 1
+		relative_position_id = PON_Ontario_army
+
+		cost = 5
 		ai_will_do = {
 			factor = 50
 		}
@@ -3999,15 +4005,41 @@ focus_tree = {
 	}
 	#
 	focus = {
+		id = SSC_Anti_tank
+		icon = GFX_focus_generic_tank_hunt
+		cost = 5
+		x = -3
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = PON_Break_out_our_old_ross_rifles }
+		relative_position_id = PON_Break_out_our_old_ross_rifles
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = cat_anti_tank
+			}
+
+		}
+	}
+
+	focus = {
 		id = PON_Ontario_army
 		icon = GFX_focus_pon_ontario_army
-		prerequisite = {
-			focus = PON_Break_out_our_old_ross_rifles
-		}
-		x = 0
-		y = 1
-		relative_position_id = PON_Break_out_our_old_ross_rifles
-		cost = 4
+		#prerequisite = {
+		#	focus = PON_Break_out_our_old_ross_rifles
+		#}
+		x = 40
+		y = 0
+		#relative_position_id = PON_Break_out_our_old_ross_rifles
+		cost = 5
 		ai_will_do = {
 			factor = 50
 		}
@@ -4019,14 +4051,179 @@ focus_tree = {
 	}
 	#
 	focus = {
-		id = PON_Weapons1
-		icon = GFX_focus_PON_small_arms1
+		id = PON_Razor_Wire
+		icon = GFX_focus_generic_machine_gun
+		cost = 7.2
+		x = 4
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = PON_Break_out_our_old_ross_rifles }
+		relative_position_id = PON_Break_out_our_old_ross_rifles
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = engineers_tech
+			}
+		}
+	}
+	#
+	focus = {
+		id = PON_Winter_Warfare_Specialization
+		icon = GFX_goal_generic_army_motorized
 		prerequisite = {
-			focus = PON_Ontario_army
+			focus = PON_Razor_Wire
+		}
+		x = 0
+		y = 1
+		relative_position_id = PON_Razor_Wire
+		#available = {
+		#	date > 1940.01.1
+		#}
+		cost = 7.2
+		ai_will_do = {
+			factor = 25
+		}
+		available = {
+		}
+		bypass = {
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+		}
+		completion_reward = {
+			add_ideas = PON_cold_acclimatization_idea
+		}
+	}
+	focus = {
+		id = PON_Commando_Focus
+		icon = GFX_goal_generic_special_forces
+		prerequisite = {
+			focus = PON_Winter_Warfare_Specialization
 		}
 		x = -1
 		y = 1
-		relative_position_id = PON_Ontario_army
+		relative_position_id = PON_Winter_Warfare_Specialization
+
+		mutually_exclusive = {
+			focus = PON_Paratroops_Focus
+		}
+
+		#available = {
+		#	date > 1940.01.1
+		#}
+		cost = 7.2
+		ai_will_do = {
+			factor = 25
+		}
+		available = {
+		}
+		bypass = {
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+		}
+		completion_reward = {
+			add_ideas = special_forces
+			add_tech_bonus = {
+				name = CAN_the_black_devils
+				bonus = 1.00
+				uses = 1
+				category = marine_tech
+				category = mountaineers_tech
+			}
+		}
+	}
+
+	focus = {
+		id = PON_Paratroops_Focus
+		icon = GFX_goal_generic_special_forces
+		prerequisite = {
+			focus = PON_Winter_Warfare_Specialization
+		}
+		x = 1
+		y = 1
+		relative_position_id = PON_Winter_Warfare_Specialization
+
+		mutually_exclusive = {
+			focus = PON_Commando_Focus
+		}
+
+		#available = {
+		#	date > 1940.01.1
+		#}
+		cost = 10
+		ai_will_do = {
+			factor = 25
+		}
+		available = {
+		}
+		bypass = {
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+		}
+		completion_reward = {
+			add_ideas = special_forces
+			add_tech_bonus = {
+				name = CAN_1st_canadian_parachute_battalion
+				bonus = 1.0
+				uses = 1
+				category = para_tech
+			}
+			if = {
+				limit = { has_dlc = "Arms Against Tyranny" }
+				add_doctrine_cost_reduction = {
+					cost_reduction = 0.5
+					uses = 2
+					category = special_forces_doctrine
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = PON_Trench_Raiders
+		icon = GFX_focus_generic_machine_gun
+		cost = 3
+		x = 3
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = PON_Razor_Wire }
+		relative_position_id = PON_Razor_Wire
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_ideas = PON_Trench_Raiders_idea
+		}
+	}
+
+	focus = {
+		id = PON_Weapons1
+		icon = GFX_focus_PON_small_arms1
+		prerequisite = {
+			focus = PON_Break_out_our_old_ross_rifles
+		}
+		x = -1
+		y = 1
+		relative_position_id = PON_Break_out_our_old_ross_rifles
 		cost = 5
 		ai_will_do = {
 			factor = 1
@@ -4111,16 +4308,84 @@ focus_tree = {
 			}
 		}
 	}
+
+	focus = {
+		id = PON_ration_grenade_switcheroo
+		icon = GFX_goal_generic_army_artillery2
+		prerequisite = {
+			focus = PON_Support_Weapons
+		}
+		prerequisite = {
+			focus = PON_Dcotrine3
+		}
+		x = 1
+		y = 1
+		relative_position_id = PON_Support_Weapons
+
+
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+		}
+		bypass = {
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+		}
+		completion_reward = {
+			add_ideas = PON_ration_grenade_switcheroo_idea
+		}
+	}
+
+
+	focus = {
+		id = PON_Mass_Moderization_Campaign
+		icon = GFX_goal_generic_army_artillery2
+		prerequisite = {
+			focus = PON_ration_grenade_switcheroo
+		}
+		prerequisite = {
+			focus = PON_Dcotrine3
+		}
+		x = 0
+		y = 1
+		relative_position_id = PON_ration_grenade_switcheroo
+
+
+		cost = 7.2
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+		}
+		bypass = {
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+		}
+		completion_reward = {
+			remove_ideas = PON_Ontario_Army_Idea
+			add_ideas = PON_Ontario_Army_Idea2
+		}
+	}
+
 	focus = {
 		id = PON_Ontario_Tank_corps
 		icon = GFX_focus_generic_light_tank
 		prerequisite = {
-			focus = PON_Support_Weapons
+			focus = SSC_Anti_tank
+			focus = PON_pioneers_off_the_creeping_barrage
 		}
 		x = -1
 		y = 1
-		relative_position_id = PON_Support_Weapons
-		cost = 10
+		relative_position_id = SSC_Anti_tank
+		cost = 7.2
 		ai_will_do = {
 			factor = 25
 		}
@@ -4143,13 +4408,19 @@ focus_tree = {
 		prerequisite = {
 			focus = PON_Ontario_Tank_corps
 		}
-		x = 0
+		x = -1
 		y = 1
 		relative_position_id = PON_Ontario_Tank_corps
+
+		mutually_exclusive = {
+			focus = PON_Focus_On_Ambulances
+		}
+
+
 		available = {
 			date > 1940.01.1
 		}
-		cost = 10
+		cost = 7.2
 		ai_will_do = {
 			factor = 25
 		}
@@ -4166,19 +4437,88 @@ focus_tree = {
 			add_ideas = PON_Mechanized_Idea
 		}
 	}
+
+	focus = {
+		id = PON_Focus_On_Ambulances
+		icon = GFX_focus_SSC_medical
+		prerequisite = {
+			focus = PON_Ontario_Tank_corps
+		}
+		x = 1
+		y = 1
+		relative_position_id = PON_Ontario_Tank_corps
+		available = {
+			date > 1940.01.1
+		}
+		cost = 7.2
+		ai_will_do = {
+			factor = 25
+		}
+
+		mutually_exclusive = {
+			focus = PON_McLaughlin_Mechanized
+		}
+
+
+		available = {
+		}
+		bypass = {
+		}
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = no
+		complete_tooltip = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = motorized_bonus
+				bonus = 3.0
+				category = hospital_tech
+			}
+		}
+	}
+
+	focus = {
+		id = PON_General_Motors_of_Canada
+		icon = GFX_focus_SMI_work_with_general_motors
+		cost = 7.2
+		x = 1
+		y = 1
+		mutually_exclusive = {
+			
+		}
+		prerequisite = { focus = PON_McLaughlin_Mechanized }
+		relative_position_id = PON_McLaughlin_Mechanized
+		bypass = {
+		}
+		available = {
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = maintenance_company_tech
+			}
+			mio:generic_tank_organization = {
+				add_mio_funds = 500
+				add_mio_size = 1
+				add_mio_research_bonus = 0.05
+			}
+		}
+	}
+
 	focus = {
 		id = PON_Trench_Raiders
 		icon = GFX_focus_PON_ontario_doctrine3
 		prerequisite = {
-			focus = PON_Dcotrine3
-		}
-		prerequisite = {
-			focus = PON_Support_Weapons
+			focus = PON_Commando_Focus
+			focus = PON_Commando_Focus
 		}
 		x = 1
 		y = 1
-		relative_position_id = PON_Support_Weapons
-		cost = 10
+		relative_position_id = PON_Commando_Focus
+		cost = 7.2
 		ai_will_do = {
 			factor = 50
 		}
@@ -4201,10 +4541,10 @@ focus_tree = {
 		prerequisite = {
 			focus = PON_Trench_Raiders
 		}
-		x = 0
-		y = 1
-		relative_position_id = PON_Trench_Raiders
-		cost = 10
+		x = 1
+		y = 2
+		relative_position_id = PON_Commando_Focus
+		cost = 7.2
 		ai_will_do = {
 			factor = 50
 		}
@@ -4235,12 +4575,12 @@ focus_tree = {
 		id = PON_Dcotrine1
 		icon = GFX_focus_PON_ontario_doctrine1
 		prerequisite = {
-			focus = PON_Ontario_army
+			focus = PON_Break_out_our_old_ross_rifles
 		}
 		x = 1
 		y = 1
-		relative_position_id = PON_Ontario_army
-		cost = 10
+		relative_position_id = PON_Break_out_our_old_ross_rifles
+		cost = 7.2
 		ai_will_do = {
 			factor = 79
 		}
@@ -4272,7 +4612,7 @@ focus_tree = {
 		x = 0
 		y = 1
 		relative_position_id = PON_Dcotrine1
-		cost = 10
+		cost = 7.2
 		ai_will_do = {
 			factor = 79
 		}
@@ -4304,7 +4644,7 @@ focus_tree = {
 		x = 0
 		y = 1
 		relative_position_id = PON_Dcotrine2
-		cost = 10
+		cost = 7.2
 		ai_will_do = {
 			factor = 79
 		}
@@ -4331,12 +4671,12 @@ focus_tree = {
 		id = PON_pioneers_off_the_creeping_barrage
 		icon = GFX_goal_generic_army_artillery2
 		prerequisite = {
-			focus = PON_Dcotrine3
+			focus = PON_Break_out_our_old_ross_rifles
 		}
-		x = 1
+		x = -5
 		y = 1
-		relative_position_id = PON_Dcotrine3
-		cost = 10
+		relative_position_id = PON_Break_out_our_old_ross_rifles
+		cost = 7.2
 		ai_will_do = {
 			factor = 25
 		}
@@ -4357,7 +4697,7 @@ focus_tree = {
 	focus = {
 		id = PON_aviation_effort
 		icon = GFX_goal_generic_build_airforce
-		x = 41
+		x = 48
 		y = 0
 		cost = 10
 		available_if_capitulated = yes
@@ -4686,7 +5026,7 @@ focus_tree = {
 	focus = {
 		id = PON_naval_effort
 		icon = GFX_goal_generic_construct_naval_dockyard
-		x = 45
+		x = 52
 		y = 0
 		cost = 10
 		available_if_capitulated = yes
