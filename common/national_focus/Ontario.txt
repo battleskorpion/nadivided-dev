@@ -5494,11 +5494,24 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			activate_advisor = PON_c_d_howe
+			if = {
+				limit = {
+					NOT = {
+						has_idea = PON_c_d_howe
+					}
+				}
+				activate_advisor = PON_c_d_howe
+			}
+			if = {
+				limit = {
+					has_idea = PON_c_d_howe
+				}
+				add_political_power = 50
+			}
 		}
 	}
 	focus = {
-		id = PON_defence_of_canada_regulations
+		id = PON_defence_of_ontario_regulations
 		icon = GFX_focus_BRA_north_and_south_america
 		x = 35
 		y = 10
@@ -5516,7 +5529,9 @@ focus_tree = {
 		bypass = {
 
 		}
-
+		allow_branch = {
+			always = no
+		}
 		cancel_if_invalid = yes
 		continue_if_invalid = no
 		available_if_capitulated = yes
@@ -5524,23 +5539,23 @@ focus_tree = {
 		completion_reward = {
 			if = {
 				limit = { has_government = progressivism }
-				add_ideas = PON_defence_of_canada_regulations_progressive
+				add_ideas = PON_defence_of_ontario_regulations_progressive
 			}
 			if = {
 				limit = { has_government = communism }
-				add_ideas = PON_defence_of_canada_regulations_communism
+				add_ideas = PON_defence_of_ontario_regulations_communism
 			}
 			if = {
 				limit = { has_government = fascism }
-				add_ideas = PON_defence_of_canada_regulations_fascism
+				add_ideas = PON_defence_of_ontario_regulations_fascism
 			}
 			if = {
 				limit = { has_government = democratic }
-				add_ideas = PON_defence_of_canada_regulations_democratic
+				add_ideas = PON_defence_of_ontario_regulations_democratic
 			}
 			if = {
 				limit = { has_government = neutrality }
-				add_ideas = PON_defence_of_canada_regulations_neutral
+				add_ideas = PON_defence_of_ontario_regulations_neutral
 			}
 		}
 	}
@@ -5553,7 +5568,7 @@ focus_tree = {
 		prerequisite = {
 			focus = PON_appoint_howe
 		}
-		cost = 5
+		cost = 10
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
 		}
@@ -5620,6 +5635,9 @@ focus_tree = {
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
 		}
+		bypass = {
+			has_government = communism
+		}
 		available_if_capitulated = yes
 		ai_will_do = {
 			factor = 1
@@ -5652,7 +5670,7 @@ focus_tree = {
 			add_tech_bonus = {
 				name = GER_counter_sloped_armor
 				bonus = 1
-				uses = 2
+				uses = 1
 				category = industry
 			}
 		}
@@ -5666,7 +5684,7 @@ focus_tree = {
 		prerequisite = {
 			focus = PON_modernize_industry
 		}
-		cost = 5
+		cost = 10
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
 		}
@@ -5701,15 +5719,15 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = PON_the_bank_of_ontario
-		icon = GFX_goal_generic_construct_civ_factory
+		id = PON_hydroelectric_dams
+		icon = GFX_focus_generic_hydroelectric_energy
 		x = -1
 		y = 1
 		relative_position_id = PON_modernize_industry
 		prerequisite = {
 			focus = PON_modernize_industry
 		}
-		cost = 5
+		cost = 10
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
 		}
@@ -5718,8 +5736,50 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			add_political_power = 50
-			add_ideas = PON_bank_of_canada
+			if = {
+				limit = { has_full_control_of_state = 102 }
+				102 = {
+					add_extra_state_shared_building_slots = 1
+					#add_building_construction = {
+					#	type = industrial_complex
+					#	level = 1
+					#}
+					add_building_construction = {
+						type = dam
+						level = 1
+						instant_build = yes
+						province = {
+							id = 2672
+						}
+					}
+					custom_effect_tooltip = {
+						localization_key = building_state_modifier|dam
+						INDENT = "    "
+					}
+				}
+			}
+			if = {
+				limit = { has_full_control_of_state = 94 }
+				94 = {
+					add_extra_state_shared_building_slots = 1
+					#add_building_construction = {
+					#	type = industrial_complex
+					#	level = 1
+					#}
+					add_building_construction = {
+						type = dam
+						level = 1
+						instant_build = yes
+						province = {
+							id = 3539
+						}
+					}
+					custom_effect_tooltip = {
+						localization_key = building_state_modifier|dam
+						INDENT = "    "
+					}
+				}
+			}
 		}
 	}
 	focus = {
@@ -5727,9 +5787,9 @@ focus_tree = {
 		icon = GFX_focus_generic_aluminum
 		x = 1
 		y = 1
-		relative_position_id = PON_the_bank_of_ontario
+		relative_position_id = PON_hydroelectric_dams
 		prerequisite = {
-			focus = PON_the_bank_of_ontario
+			focus = PON_hydroelectric_dams
 		}
 		cost = 5
 		search_filters = {
@@ -5833,9 +5893,9 @@ focus_tree = {
 		icon = GFX_goal_generic_oil_refinery
 		x = -1
 		y = 1
-		relative_position_id = PON_the_bank_of_ontario
+		relative_position_id = PON_hydroelectric_dams
 		prerequisite = {
-			focus = PON_the_bank_of_ontario
+			focus = PON_hydroelectric_dams
 		}
 		cost = 5
 		search_filters = {
@@ -5946,9 +6006,9 @@ focus_tree = {
 		prerequisite = {
 			focus = PON_war_bonds
 		}
-		prerequisite = {
-			focus = PON_defence_of_canada_regulations
-		}
+		#prerequisite = {
+		#	focus = PON_defence_of_ontario_regulations
+		#}
 		cost = 5
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
@@ -5962,7 +6022,7 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = PON_the_ontario_wheat_board
+		id = PON_unemployment_and_farm_relief_act
 		icon = GFX_focus_generic_farmland
 		x = 1
 		y = 1
@@ -5987,9 +6047,9 @@ focus_tree = {
 		icon = GFX_focus_generic_land_reclamation
 		x = 1
 		y = 1
-		relative_position_id = PON_the_ontario_wheat_board
+		relative_position_id = PON_unemployment_and_farm_relief_act
 		prerequisite = {
-			focus = PON_the_ontario_wheat_board
+			focus = PON_unemployment_and_farm_relief_act
 		}
 		mutually_exclusive = {
 			focus = PON_secure_southern_imports
@@ -6030,9 +6090,9 @@ focus_tree = {
 		icon = GFX_goal_generic_trade
 		x = -1
 		y = 1
-		relative_position_id = PON_the_ontario_wheat_board
+		relative_position_id = PON_unemployment_and_farm_relief_act
 		prerequisite = {
-			focus = PON_the_ontario_wheat_board
+			focus = PON_unemployment_and_farm_relief_act
 		}
 		mutually_exclusive = {
 			focus = PON_develop_rural_ontario
@@ -6079,7 +6139,7 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = PON_department_of_munitions_and_supply
+		id = PON_arms_procurement_act
 		icon = GFX_goal_generic_build_tank
 		x = -2
 		y = 0
@@ -6090,7 +6150,7 @@ focus_tree = {
 		prerequisite = {
 			focus = PON_appoint_howe
 		}
-		cost = 5
+		cost = 10
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
 		}
@@ -6140,9 +6200,9 @@ focus_tree = {
 		icon = GFX_focus_generic_reorient_production
 		x = 1
 		y = 1
-		relative_position_id = PON_department_of_munitions_and_supply
+		relative_position_id = PON_arms_procurement_act
 		prerequisite = {
-			focus = PON_department_of_munitions_and_supply
+			focus = PON_arms_procurement_act
 		}
 		cost = 5
 		search_filters = {
@@ -6157,15 +6217,15 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = PON_john_inglis_and_complany
+		id = PON_john_inglis_and_company
 		icon = GFX_goal_generic_construct_mil_factory
 		x = -1
 		y = 1
-		relative_position_id = PON_department_of_munitions_and_supply
+		relative_position_id = PON_arms_procurement_act
 		prerequisite = {
-			focus = PON_department_of_munitions_and_supply
+			focus = PON_arms_procurement_act
 		}
-		cost = 5
+		cost = 7.2
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
 		}
@@ -6218,9 +6278,9 @@ focus_tree = {
 		relative_position_id = PON_bits_and_pieces_program
 		prerequisite = {
 			focus = PON_bits_and_pieces_program
-			focus = PON_john_inglis_and_complany
+			focus = PON_john_inglis_and_company
 		}
-		cost = 5
+		cost = 10
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
 		}
@@ -6267,6 +6327,10 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
+			add_timed_idea = {
+				idea = PON_Ontario_juggernaut
+				days = 200
+			}
 		}
 	}
 	focus = {
@@ -6278,7 +6342,7 @@ focus_tree = {
 		prerequisite = {
 			focus = PON_national_resources_mobilization_act
 		}
-		cost = 5
+		cost = 7.2
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
 		}
@@ -6292,7 +6356,7 @@ focus_tree = {
 	}
 	focus = {
 		id = PON_national_steel_car
-		icon = GFX_focus_GER_wirtschaftswunder
+		icon = GFX_focus_generic_railroad
 		x = 0
 		y = 2
 		relative_position_id = PON_national_resources_mobilization_act
@@ -6300,9 +6364,9 @@ focus_tree = {
 			focus = PON_national_resources_mobilization_act
 		}
 		prerequisite = {
-			focus = PON_the_ontario_wheat_board
+			focus = PON_unemployment_and_farm_relief_act
 		}
-		cost = 5
+		cost = 10
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
 		}
@@ -6350,7 +6414,7 @@ focus_tree = {
 		prerequisite = {
 			focus = PON_national_steel_car
 		}
-		cost = 5
+		cost = 10
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
 		}
