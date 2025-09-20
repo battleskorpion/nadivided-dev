@@ -5481,7 +5481,7 @@ focus_tree = {
 #####NEW INDUSTRY
 	focus = {
 		id = PON_appoint_howe
-		icon = GFX_focus_steel_ladle
+		icon = GFX_focus_RAJ_appoint_a_c_suite
 		x = 29
 		y = 10
 
@@ -5498,11 +5498,61 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = PON_national_housing_act
-		icon = GFX_focus_steel_ladle
-		x = 29
+		id = PON_defence_of_canada_regulations
+		icon = GFX_focus_BRA_north_and_south_america
+		x = 35
 		y = 10
 
+		cost = 3
+
+		ai_will_do = {
+			factor = 30
+		}
+
+		available = {
+			threat > 0.2
+		}
+		
+		bypass = {
+
+		}
+
+		cancel_if_invalid = yes
+		continue_if_invalid = no
+		available_if_capitulated = yes
+
+		completion_reward = {
+			if = {
+				limit = { has_government = progressivism }
+				add_ideas = PON_defence_of_canada_regulations_progressive
+			}
+			if = {
+				limit = { has_government = communism }
+				add_ideas = PON_defence_of_canada_regulations_communism
+			}
+			if = {
+				limit = { has_government = fascism }
+				add_ideas = PON_defence_of_canada_regulations_fascism
+			}
+			if = {
+				limit = { has_government = democratic }
+				add_ideas = PON_defence_of_canada_regulations_democratic
+			}
+			if = {
+				limit = { has_government = neutrality }
+				add_ideas = PON_defence_of_canada_regulations_neutral
+			}
+		}
+	}
+	focus = {
+		id = PON_national_housing_act
+		icon = GFX_focus_SWE_hygienic_housing
+		x = 0
+		y = 1
+		relative_position_id = PON_appoint_howe
+		prerequisite = {
+			focus = PON_appoint_howe
+		}
 		cost = 5
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
@@ -5512,15 +5562,60 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			###ADD 2 infra 2 building slots
+			###REDUCE GP
+			random_owned_controlled_state = {
+				#prioritize = {
+				#	676
+				#}
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size < 4
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+				}
+				#add_building_construction = {
+				#	type = industrial_complex
+				#	level = 1
+				#	instant_build = yes
+				#}
+			}
+			random_owned_controlled_state = {
+				#prioritize = {
+				#	676
+				#}
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size < 4
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+				}
+				#add_building_construction = {
+				#	type = industrial_complex
+				#	level = 1
+				#	instant_build = yes
+				#}
+			}
 		}
 	}
 	focus = {
 		id = PON_dollar_a_year_men
-		icon = GFX_focus_steel_ladle
-		x = 29
-		y = 10
-
+		icon = GFX_focus_RAJ_special_economic_zones
+		x = -2
+		y = 1
+		relative_position_id = PON_appoint_howe
+		prerequisite = {
+			focus = PON_appoint_howe
+		}
 		cost = 5
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
@@ -5530,17 +5625,21 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
+			add_ideas = PON_a_dollar_a_year_men
 			###GIVES NATIONAl spirit -consuemr and politcal advisor cost
 			####UNLOCKS HENRY ANGUS
 			####NOT AVAILABLE FOR COMMUNIST
 		}
 	}
 	focus = {
-		id = PON_hamilton_steel_plants
-		icon = GFX_focus_steel_ladle
-		x = 29
-		y = 10
-
+		id = PON_modernize_industry
+		icon = GFX_goal_generic_production2
+		x = -2
+		y = 2
+		relative_position_id = PON_appoint_howe
+		prerequisite = {
+			focus = PON_dollar_a_year_men
+		}
 		cost = 5
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
@@ -5550,15 +5649,327 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			###STEEEL TO HAMILTON
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 2
+				category = industry
+			}
+		}
+	}
+	focus = {
+		id = PON_develop_ottowa
+		icon = GFX_focus_generic_rebuild_city
+		x = 1
+		y = 1
+		relative_position_id = PON_modernize_industry
+		prerequisite = {
+			focus = PON_modernize_industry
+		}
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_stability = 0.05
+			random_owned_controlled_state = {
+				prioritize = {
+					33
+				}
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+					}
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				set_state_category = metropolis
+			}
+		}
+	}
+	focus = {
+		id = PON_the_bank_of_ontario
+		icon = GFX_goal_generic_construct_civ_factory
+		x = -1
+		y = 1
+		relative_position_id = PON_modernize_industry
+		prerequisite = {
+			focus = PON_modernize_industry
+		}
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_political_power = 50
+			add_ideas = PON_bank_of_canada
+		}
+	}
+	focus = {
+		id = PON_aluminum_company_of_ontario
+		icon = GFX_focus_generic_aluminum
+		x = 1
+		y = 1
+		relative_position_id = PON_the_bank_of_ontario
+		prerequisite = {
+			focus = PON_the_bank_of_ontario
+		}
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			OR = {
+				has_full_control_of_state = 30
+				has_full_control_of_state = 102
+			}
+		}
+		completion_reward = {
+			unlock_decision_category_tooltip = prospect_for_resources
+			if = {
+				limit = {
+					102 = {
+						is_fully_controlled_by = ROOT
+					}
+				}
+				102 = {
+					add_resource = {
+						type = aluminium
+						amount = 3
+						state = THIS
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = aluminum_mill
+						level = 2
+					}
+				}
+			}
+			if = {
+				limit = {
+					30 = {
+						is_fully_controlled_by = ROOT
+					}
+				}
+				30 = {
+					add_resource = {
+						type = aluminium
+						amount = 3
+						state = THIS
+					}
+				}
+			}
+			####UNLOCKS QUEBECS DECISONS TO DEVELOP ALUMINUM
+			####ALU WAS NOT PRODUCED REALLY IN ONTARIO 
+			###EXCEPT FOR A PRODUCTION PLANT IN KINGSTON WHICH PRODUCED ALU FOR THE WAR VIA IMPORTING FROM Quebec
+			###3 alu should set aside for utensil production in toronto
+		}
+	}
+	focus = {
+		id = PON_hamilton_steel_plants
+		icon = GFX_focus_generic_steel
+		x = 0
+		y = 1
+		relative_position_id = PON_aluminum_company_of_ontario
+		prerequisite = {
+			focus = PON_aluminum_company_of_ontario
+		}
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			has_full_control_of_state = 93
+		}
+		completion_reward = {
+			if = {
+				limit = {
+					93 = {
+						is_fully_controlled_by = ROOT
+					}
+				}
+				93 = {
+					add_resource = {
+						type = steel
+						amount = 3
+						state = THIS
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = steel_mill
+						level = 3
+					}
+				}
+			}
+		}
+	}
+	focus = {
+		id = PON_the_polymer_corporation
+		icon = GFX_goal_generic_oil_refinery
+		x = -1
+		y = 1
+		relative_position_id = PON_the_bank_of_ontario
+		prerequisite = {
+			focus = PON_the_bank_of_ontario
+		}
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_tech_bonus = {
+				name = synt
+				bonus = 1.5
+				uses = 1
+				category = synth_resources
+			}
+		}
+	}
+	focus = {
+		id = PON_imperial_oil_refineries
+		icon = GFX_focus_PER_invite_oil_nations
+		x = 0
+		y = 1
+		relative_position_id = PON_the_polymer_corporation
+		prerequisite = {
+			focus = PON_the_polymer_corporation
+		}
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			custom_effect_tooltip = SLA_research_syth_tt
+			93 = {
+				if = {
+					limit = {
+						free_building_slots = {
+							building = synthetic_refinery
+							size > 2
+							include_locked = yes
+						}
+						OR = {
+							is_in_home_area = yes
+							NOT = {
+								owner = {
+									any_owned_state = {
+										free_building_slots = {
+											building = synthetic_refinery
+											size > 2
+											include_locked = yes
+										}
+										is_in_home_area = yes
+									}
+								}
+							}
+						}
+					}
+					add_extra_state_shared_building_slots = 2
+					add_building_construction = {
+						type = synthetic_refinery
+						level = 2
+						instant_build = yes
+					}
+				}
+			}
+		}
+	}
+	focus = {
+		id = PON_war_bonds
+		icon = GFX_focus_RAJ_issue_bonds_on_the_stock_market
+		x = 33
+		y = 10
+
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available = {
+			OR = {
+				threat > 0.15
+				has_government = fascism
+				has_government = communism
+				has_war = yes
+			}
+			
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_ideas = PON_war_bonds_1
+		}
+	}
+	focus = {
+		id = PON_wartime_prices_and_trade_board
+		icon = GFX_focus_generic_price_controls
+		x = 2
+		y = 1
+		relative_position_id = PON_war_bonds
+		#prerequisite = {
+		#	focus = PON_appoint_howe
+		#}
+		prerequisite = {
+			focus = PON_war_bonds
+		}
+		prerequisite = {
+			focus = PON_defence_of_canada_regulations
+		}
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_ideas = PON_wartime_prices_and_trade_board
 		}
 	}
 	focus = {
 		id = PON_the_ontario_wheat_board
-		icon = GFX_focus_steel_ladle
-		x = 29
-		y = 10
-
+		icon = GFX_focus_generic_farmland
+		x = 1
+		y = 1
+		relative_position_id = PON_wartime_prices_and_trade_board
+		prerequisite = {
+			focus = PON_wartime_prices_and_trade_board
+		}
 		cost = 5
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
@@ -5573,10 +5984,16 @@ focus_tree = {
 	}
 	focus = {
 		id = PON_develop_rural_ontario
-		icon = GFX_focus_steel_ladle
-		x = 29
-		y = 10
-
+		icon = GFX_focus_generic_land_reclamation
+		x = 1
+		y = 1
+		relative_position_id = PON_the_ontario_wheat_board
+		prerequisite = {
+			focus = PON_the_ontario_wheat_board
+		}
+		mutually_exclusive = {
+			focus = PON_secure_southern_imports
+		}
 		cost = 5
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
@@ -5586,38 +6003,40 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			###REMOVES DEUBFFS FOR AGRICULTURE
-		}
-	}
-	focus = {
-		id = PON_secure_southern_imports
-		icon = GFX_focus_steel_ladle
-		x = 29
-		y = 10
-
-		cost = 5
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			95 = {
-				add_resource = {
-					type = steel
-					amount = 39
+			add_stability = 0.05
+			remove_ideas = PON_Agricultural_Crisis
+			remove_ideas = PON_importing_food_across_windsor
+			random_owned_controlled_state = {
+				prioritize = {
+					101
+				}
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
 				}
 			}
 		}
 	}
 	focus = {
-		id = PON_develop_ottowa
-		icon = GFX_focus_steel_ladle
-		x = 29
-		y = 10
-
+		id = PON_secure_southern_imports
+		icon = GFX_goal_generic_trade
+		x = -1
+		y = 1
+		relative_position_id = PON_the_ontario_wheat_board
+		prerequisite = {
+			focus = PON_the_ontario_wheat_board
+		}
+		mutually_exclusive = {
+			focus = PON_develop_rural_ontario
+		}
 		cost = 5
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
@@ -5627,70 +6046,26 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			####REBUILDS OTTOWA 
-			###CIVS
-		}
-	}
-	focus = {
-		id = PON_war_bonds
-		icon = GFX_focus_steel_ladle
-		x = 29
-		y = 10
-
-		cost = 5
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			####CONSUMER GOODS
-		}
-	}
-	focus = {
-		id = PON_department_of_munitions_and_supply
-		icon = GFX_focus_steel_ladle
-		x = 29
-		y = 10
-
-		cost = 5
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			####CONSUMER GOODS
-		}
-	}
-	focus = {
-		id = PON_bits_and_pieces_program
-		icon = GFX_focus_steel_ladle
-		x = 29
-		y = 10
-
-		cost = 5
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			####CONSUMER GOODS
+			swap_ideas = {
+				remove_idea = PON_importing_food_across_windsor
+				add_idea = PON_importing_food_across_windsor_2
+			}
+			remove_ideas = PON_Agricultural_Crisis
+			add_offsite_building = {
+				type = industrial_complex
+				level = 2
+			}
 		}
 	}
 	focus = {
 		id = PON_national_resources_mobilization_act
-		icon = GFX_focus_steel_ladle
-		x = 29
-		y = 10
-
+		icon = GFX_focus_CHL_expand_the_forestry
+		x = 0
+		y = 1
+		relative_position_id = PON_war_bonds
+		prerequisite = {
+			focus = PON_war_bonds
+		}
 		cost = 5
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
@@ -5700,15 +6075,21 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			####CONSUMER GOODS
+			add_ideas = PON_national_resources_mobilization_act
 		}
 	}
 	focus = {
-		id = PON_victory_aircraft_limiited
-		icon = GFX_focus_steel_ladle
-		x = 29
-		y = 10
-
+		id = PON_department_of_munitions_and_supply
+		icon = GFX_goal_generic_build_tank
+		x = -2
+		y = 0
+		relative_position_id = PON_national_resources_mobilization_act
+		prerequisite = {
+			focus = PON_war_bonds
+		}
+		prerequisite = {
+			focus = PON_appoint_howe
+		}
 		cost = 5
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
@@ -5718,15 +6099,51 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			###TORONTO
+			random_owned_controlled_state = {
+				#prioritize = {
+				#	675
+				#}
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				#prioritize = {
+				#	675
+				#}
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 	focus = {
-		id = PON_john_inglis_and_company
-		icon = GFX_focus_steel_ladle
-		x = 29
-		y = 10
-
+		id = PON_bits_and_pieces_program
+		icon = GFX_focus_generic_reorient_production
+		x = 1
+		y = 1
+		relative_position_id = PON_department_of_munitions_and_supply
+		prerequisite = {
+			focus = PON_department_of_munitions_and_supply
+		}
 		cost = 5
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
@@ -5736,15 +6153,18 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			###TORONTO MANUFU
+			add_ideas = PON_bits_and_pieces_program
 		}
 	}
 	focus = {
-		id = PON_national_research_council
-		icon = GFX_focus_steel_ladle
-		x = 29
-		y = 10
-
+		id = PON_john_inglis_and_complany
+		icon = GFX_goal_generic_construct_mil_factory
+		x = -1
+		y = 1
+		relative_position_id = PON_department_of_munitions_and_supply
+		prerequisite = {
+			focus = PON_department_of_munitions_and_supply
+		}
 		cost = 5
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
@@ -5754,15 +6174,110 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			###TORONTO MANUFU
+			random_owned_controlled_state = {
+				#prioritize = {
+				#	675
+				#}
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				#prioritize = {
+				#	675
+				#}
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = PON_war_fueled_economy
+		icon = GFX_focus_generic_tank_production
+		x = -1
+		y = 1
+		relative_position_id = PON_bits_and_pieces_program
+		prerequisite = {
+			focus = PON_bits_and_pieces_program
+			focus = PON_john_inglis_and_complany
+		}
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			has_war = yes
+		}
+		completion_reward = {
+			####REDUCE GP
+			random_owned_controlled_state = {
+				#prioritize = {
+				#	675
+				#}
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				#prioritize = {
+				#	675
+				#}
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 	focus = {
 		id = PON_defense_research_grants
-		icon = GFX_focus_steel_ladle
-		x = 29
-		y = 10
-
+		icon = GFX_focus_research
+		x = 1
+		y = 1
+		relative_position_id = PON_national_resources_mobilization_act
+		prerequisite = {
+			focus = PON_national_resources_mobilization_act
+		}
 		cost = 5
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
@@ -5772,15 +6287,21 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			###TORONTO MANUFU
+			add_research_slot = 1
 		}
 	}
 	focus = {
-		id = PON_imperial_oil_refineries
-		icon = GFX_focus_steel_ladle
-		x = 29
-		y = 10
-
+		id = PON_national_steel_car
+		icon = GFX_focus_GER_wirtschaftswunder
+		x = 0
+		y = 2
+		relative_position_id = PON_national_resources_mobilization_act
+		prerequisite = {
+			focus = PON_national_resources_mobilization_act
+		}
+		prerequisite = {
+			focus = PON_the_ontario_wheat_board
+		}
 		cost = 5
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
@@ -5790,15 +6311,45 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			###TORONTO MANUFU
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+			}
 		}
 	}
 	focus = {
-		id = PON_the_polymer_corporation
-		icon = GFX_focus_steel_ladle
-		x = 29
-		y = 10
-
+		id = PON_national_research_council
+		icon = GFX_focus_research2
+		x = 0
+		y = 1
+		relative_position_id = PON_national_steel_car
+		prerequisite = {
+			focus = PON_national_steel_car
+		}
 		cost = 5
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
@@ -5808,64 +6359,7 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			###TORONTO MANUFU
-		}
-	}
-	focus = {
-		id = PON_the_bank_of_ontario
-		icon = GFX_focus_steel_ladle
-		x = 29
-		y = 10
-
-		cost = 5
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			###TORONTO MANUFU
-		}
-	}
-	focus = {
-		id = PON_aluminum_company_of_ontario
-		icon = GFX_focus_steel_ladle
-		x = 29
-		y = 10
-
-		cost = 5
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			####UNLOCKS QUEBECS DECISONS TO DEVELOP ALUMINUM
-			####ALU WAS NOT PRODUCED REALLY IN ONTARIO 
-			###EXCEPT FOR A PRODUCTION PLANT IN KINGSTON WHICH PRODUCED ALU FOR THE WAR VIA IMPORTING FROM Quebec
-			###3 alu should set aside for utensil production in toronto
-		}
-	}
-	focus = {
-		id = PON_modernize_industry
-		icon = GFX_focus_steel_ladle
-		x = 29
-		y = 10
-
-		cost = 5
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			###industry bonus?
+			add_research_slot = 1
 		}
 	}
 }
