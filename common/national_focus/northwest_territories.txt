@@ -9,7 +9,7 @@ focus_tree = {
 	}
 
 	continuous_focus_position = {
-		x = -30
+		x = 400
 		y = 30
 	}
 
@@ -30,6 +30,9 @@ focus_tree = {
 		}
 		x = 20
 		y = 0
+		mutually_exclusive = {
+			focus = PNT_RCMP_Takes_Order
+		}
 		completion_reward = { 
 			country_event = {
 				id = Northwest.1
@@ -37,6 +40,21 @@ focus_tree = {
 			}
 		}
 
+	}
+
+	focus = {
+		id = PNT_RCMP_Takes_Order
+		icon = GFX_
+		cost = 10
+		available = {
+			always = no 
+		}
+		x = 40
+		y = 0
+		mutually_exclusive = {
+			focus = PNT_Reformation_Effort
+		}
+		completion_reward = { }
 	}
 
 	focus = {
@@ -82,6 +100,340 @@ focus_tree = {
 			focus = PNT_Direct_Council_Rule
 		}
 		completion_reward = { }
+	}
+
+	focus = {
+		id = PNT_status_quo
+		icon = GFX_
+		cost = 7.2
+		x = 0
+		y = 1
+		available = {
+			NOT = {
+				has_idea = PNT_legacy_of_the_2nd_council_1
+			}
+			hidden_trigger = {
+				NOT = {
+					has_idea = PNT_legacy_of_the_2nd_council
+				}
+			}
+		}
+		relative_position_id = PNT_Charles_Camsell_government
+		prerequisite = {
+			focus = PNT_Charles_Camsell_government
+		}
+		completion_reward = { 
+			add_ideas = PNT_status_quo_idea
+		}
+	}
+
+	focus = { # Shared  
+		id = PNT_stabilize_the_politcial_situation
+		icon = GFX_
+		cost = 10
+		relative_position_id = PNT_Direct_Council_Rule
+		x = 6
+		y = 2
+		prerequisite = {
+			focus = PNT_Charles_Camsell_government
+			focus = PNT_Direct_Council_Rule
+		}
+		completion_reward = { 
+			if = { # keeps surrender limit so its not annoying to annex 
+				limit = {
+					is_ai = yes 
+				}
+				swap_ideas = {
+					remove_idea = PNT_legacy_of_the_2nd_council_1
+					add_idea = PNT_the_3rd_council_AI
+				}
+			}
+
+			else = { 
+				swap_ideas = {
+					remove_idea = PNT_legacy_of_the_2nd_council_1
+					add_idea = PNT_the_3rd_council
+				}
+			}
+		}
+	}
+
+
+
+
+
+	### Eco tree ###
+
+	focus = {
+		id = PNT_expand_yellowknife
+		icon = GFX_
+		cost = 10
+		x = 50
+		y = 0
+		completion_reward = { 
+			504 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 2
+			}
+			add_stability = 0.05
+		}
+	}
+
+	focus = {
+		id = PNT_buy_foreign_weapons
+		icon = GFX_theatre_army_group_shield
+		cost = 7.2
+		x = -2
+		y = 1
+		relative_position_id = PNT_expand_yellowknife
+		prerequisite = {
+			focus = PNT_expand_yellowknife
+		}
+		mutually_exclusive = {
+			focus = PNT_build_our_own_guns
+		}
+		completion_reward = { # lets go gambling
+			random_list = {
+				33 = { # aw dang it
+					add_equipment_to_stockpile = {
+						type = infantry_equipment_0
+						amount = 1000 
+						producer = PON 
+					}
+					add_timed_idea = {
+						idea = PNT_small_weapon_payments
+						days = 200
+					}
+				}
+				34 = {
+					add_equipment_to_stockpile = {
+						type = infantry_equipment_0
+						amount = 2500
+						producer = PON 
+					}
+					add_timed_idea = {
+						idea = PNT_medium_weapon_payments
+						days = 200
+					}
+				}
+				33 = {
+					add_equipment_to_stockpile = {
+						type = infantry_equipment_0
+						amount = 5000
+						producer = PON 
+					}
+					add_timed_idea = {
+						idea = PNT_large_weapon_payments
+						days = 200
+					}
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = PNT_build_our_own_guns
+		icon = GFX_theatre_army_group_shield
+		cost = 10
+		x = -4
+		y = 1
+		relative_position_id = PNT_expand_yellowknife
+		prerequisite = {
+			focus = PNT_expand_yellowknife
+		}
+		mutually_exclusive = {
+			focus = PNT_buy_foreign_weapons
+		}
+		completion_reward = { 
+			add_tech_bonus = {
+				name = "Our Own Guns"
+				uses = 2
+				bonus = 1.5 
+				category = infantry_weapons
+			}
+		}
+	}
+
+
+	focus = {
+		id = PNT_develop_the_mining_industry 
+		icon = GFX
+		cost = 10
+		x = 3
+		y = 1
+		relative_position_id = PNT_expand_yellowknife
+		prerequisite = {
+			focus = PNT_expand_yellowknife
+		}
+		completion_reward = { 
+			swap_ideas = {
+				remove_idea = PNT_underdeveloped_mining_industry
+				add_idea = PNT_underdeveloped_mining_industry_1
+			}
+		}
+	}
+
+
+	focus = {
+		id = PNT_futher_develop_our_industries 
+		icon = GFX_
+		cost = 10
+		relative_position_id = PNT_develop_the_mining_industry
+		prerequisite = {
+			focus = PNT_develop_the_mining_industry
+		}
+		available = {
+			num_of_factories > 3
+		}
+		x = 0
+		y = 1
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = PNT_underdeveloped_mining_industry_1
+				add_idea = PNT_underdeveloped_mining_industry_2
+			}
+		}
+	}
+
+	focus = {
+		id = PNT_encourage_more_yellowknife_immegration
+		icon = GFX_
+		cost = 10
+		relative_position_id = PNT_expand_yellowknife
+		prerequisite = {
+			focus = PNT_expand_yellowknife
+		}
+		available = {
+			504 = {
+				infrastructure > 1
+			}
+		}
+		x = 0
+		y = 2
+		completion_reward = { 
+			add_ideas = PNT_encouraged_immigration
+			504 = {
+				increase_state_category = yes 
+			}
+		}
+	}
+
+	focus = {
+		id = PNT_the_city_of_yellowknife
+		icon = GFX_
+		cost = 10
+		x = 0
+		y = 1
+		available = {
+			504 = {
+				infrastructure > 2
+			}
+		}
+		relative_position_id = PNT_encourage_more_yellowknife_immegration
+		prerequisite = {
+			focus = PNT_encourage_more_yellowknife_immegration
+		}
+		completion_reward = { 
+			504 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}	
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 2 
+			}
+			504 = {
+				increase_state_category = yes 
+			}
+		}
+	}
+
+
+	focus = {
+		id = PNT_economic_independence
+		icon = GFX_ 
+		cost = 10
+		relative_position_id = PNT_the_city_of_yellowknife
+		x = 1
+		y = 1
+		prerequisite = {
+			focus = PNT_the_city_of_yellowknife
+		}
+		prerequisite = {
+			focus = PNT_futher_develop_our_industries
+		}
+		completion_reward = { 
+			add_stability = 0.1
+			remove_ideas = PNT_underdeveloped_mining_industry_2
+			add_political_power = 50
+		}
+	}
+
+
+	focus = {
+		id = PNT_advanced_material_imports
+		icon = GFX_
+		cost = 12
+		relative_position_id = PNT_economic_independence
+		prerequisite = {
+			focus = PNT_economic_independence
+		}
+		available = {
+			if = {
+				limit = {
+					has_dlc = "By Blood Alone"
+				}
+				has_tech = bba_improved_transport_plane
+			}
+			else = {
+				has_tech = improved_transport_plane
+			}
+
+			date > 1945.1.1
+		}
+		x = 2
+		y = 1
+		completion_reward = { 
+			add_ideas = PNT_economic_boom 
+		}
+	}
+
+
+	focus = {
+		id = PNT_Oil_Discoveries
+		icon = GFX_
+		cost = 10
+		relative_position_id = PNT_economic_independence
+		prerequisite = {
+			focus = PNT_economic_independence
+		}
+		available = {
+			has_tech = excavation3
+		}
+		x = 0
+		y = 2
+		completion_reward = { 
+			add_resource = {
+				type = oil 
+				amount = 20
+				state = 500
+			}
+			add_resource = {
+				type = oil 
+				amount = 20
+				state = 461
+			}
+		}
 	}
 
 }
