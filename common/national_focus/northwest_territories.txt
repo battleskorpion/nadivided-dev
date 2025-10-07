@@ -127,6 +127,66 @@ focus_tree = {
 		}
 	}
 
+	focus = {
+		id = PNT_Scouting_New_Fronteers
+		icon = GFX_
+		cost = 7.2
+		x = 3
+		y = 1
+		relative_position_id = PNT_status_quo
+		prerequisite = {
+			focus = PNT_status_quo
+		}
+		completion_reward = { 
+			random_owned_state = {
+				limit = {
+					is_core_of = PNT 
+					NOT = {
+						state = 504
+					}
+				} 
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+				set_state_flag = PNT_new_fronteer
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+
+	focus = {
+		id = PNT_Mining_Industry_Domination
+		icon = GFX_
+		cost = 10
+		x = -1
+		y = 3
+		available = {
+			has_completed_focus = PNT_futher_develop_our_industries
+		}
+		relative_position_id = PNT_status_quo
+		prerequisite = {
+			focus = PNT_status_quo
+		}
+		prerequisite = {
+			focus = PNT_stabilize_the_politcial_situation
+		}
+		completion_reward = { 
+			if = {
+				limit = {
+					has_idea = PNT_underdeveloped_mining_industry_2
+				}
+				swap_ideas = {
+					remove_idea = PNT_underdeveloped_mining_industry_2
+					add_idea = PNT_mining_industry_dom
+				}
+			}
+			else = {
+				add_ideas = PNT_mining_industry_dom
+			}
+		}
+	}
+
 	focus = { # Shared  
 		id = PNT_stabilize_the_politcial_situation
 		icon = GFX_
@@ -782,7 +842,10 @@ focus_tree = {
 		mutually_exclusive = {
 			focus = PNT_a_large_standing_army
 		}
-		completion_reward = { 
+		completion_reward = {
+			set_technology = {
+				militia_tech = 1
+			} 
 			swap_ideas = {
 				remove_idea = PNT_weak_military
 				add_idea = PNT_large_defense_force
