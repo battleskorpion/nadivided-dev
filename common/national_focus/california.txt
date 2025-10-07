@@ -14,7 +14,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SCA_nationalize_the_armed_forces
-		icon = GFX_goal_cali_army
+		icon = GFX_focus_chi_army_reform
 		x = 80
 		y = 0
 		offset = {
@@ -93,16 +93,75 @@ focus_tree = {
 			factor = 110
 		}
 		completion_reward = {
-			SCA = {
-				add_political_power = -50
+			add_political_power = -25
+			army_experience = 10
+		}
+	}
+	focus = {
+		id = SCA_merriam
+		icon = GFX_focus_SCA_merriam
+		x = 0
+		y = 2
+		allow_branch = {
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = obsolete_focus_branches_visibility
+						option = HIDE
+					}
+				}
+				# NOT = {
+				# 	has_completed_focus = SCA_Louis_B_Mayer_hijack_GOP
+				# }
+				NOT = {
+					has_completed_focus = SCA_anti_establishment
+				}
+				NOT = {
+					has_completed_focus = SCA_halt_the_elections
+				}
+			}
+		}
+		offset = {
+			x = -8
+			y = 0
+			trigger = {
+				has_game_rule = {
+					rule = obsolete_focus_branches_visibility
+					option = HIDE
+				}
+				has_completed_focus = SCA_merriam
+			}
+		}
+		cost = 4
+		available_if_capitulated = yes
+		available = {
+			has_government = democratic
+		}
+		prerequisite = {
+			focus = SCA_the_establishment
+		}
+		relative_position_id = SCA_the_establishment
+		ai_will_do = {
+			factor = 40
+		}
+		completion_reward = {
+			add_political_power = 150
+			add_ideas = SCA_epic_opposition
+			if = {
+				limit = {
+					has_game_rule = {
+						rule = obsolete_focus_branches_visibility
+						option = HIDE
+					}
+				}
+				mark_focus_tree_layout_dirty = yes
 			}
 		}
 	}
-	# deal with baja communists
 	focus = {
 		id = SCA_warplan_tan
 		icon = GFX_focus_attack_mexico
-		x = 4
+		x = 6
 		y = 1
 		cost = 7.2
 		available_if_capitulated = no
@@ -208,7 +267,7 @@ focus_tree = {
 	focus = {
 		id = SCA_warplan_blue
 		icon = GFX_focus_SCA_warplan_blue
-		x = -9
+		x = -7
 		y = 1
 		cost = 10
 		available_if_capitulated = yes
@@ -231,37 +290,23 @@ focus_tree = {
 			hidden_effect = {
 				country_event = usastates_news.48
 			}
-		}
-	}
-	focus = {
-		id = SCA_militarize_the_Pacific_treaty_org
-		icon = GFX_focus_SCA_militarize_the_Pacific_treaty_org
-		x = 0
-		y = 2
-		cost = 5
-		available_if_capitulated = yes
-		available = {
-			OR = {
-				has_war = yes
-				threat > 0.2
+			hidden_effect = {
+				every_country = {
+					limit = {
+						OR = {
+							#tag = PQC
+							tag = SNV
+							tag = SAZ
+							tag = SCO
+							tag = SWA
+						}
+					}
+					add_to_array = {
+						array = global.planblue_array
+						value = this.id
+					}
+				}
 			}
-		}
-		prerequisite = {
-			focus = SCA_aid_SNV
-		}
-		prerequisite = {
-			focus = SCA_aid_colorado
-		}
-		prerequisite = {
-			focus = SCA_SAZ_support
-		}
-		relative_position_id = SCA_warplan_blue
-		ai_will_do = {
-			factor = 10
-		}
-		completion_reward = {
-			unlock_decision_category_tooltip = SCA_integration_decisions
-			custom_effect_tooltip = militarize_the_Pacific_treaty_org_tt
 		}
 	}
 	focus = {
@@ -415,8 +460,8 @@ focus_tree = {
 	focus = {
 		id = SCA_washingtonian_cooperation
 		icon = GFX_focus_SCA_washingtonian_cooperation
-		x = -4
-		y = 1
+		x = -3
+		y = 2
 		cost = 4
 		available_if_capitulated = yes
 		bypass = {
@@ -464,71 +509,51 @@ focus_tree = {
 			}
 		}
 	}
-	# focus = {
-	# 	id = SCA_Louis_B_Mayer_hijack_GOP
-	# 	icon = GFX_focus_SCA_meyer
-	# 	x = -8
-	# 	y = 1
-	# 	allow_branch = {
-	# 		if = {
-	# 			limit = {
-	# 				has_game_rule = {
-	# 					rule = obsolete_focus_branches_visibility
-	# 					option = HIDE
-	# 				}
-	# 			}
-	# 			NOT = {
-	# 				has_completed_focus = SCA_merriam
-	# 			}
-	# 			NOT = {
-	# 				has_completed_focus = SCA_anti_establishment
-	# 			}
-	# 			NOT = {
-	# 				has_completed_focus = SCA_halt_the_elections
-	# 			}
-	# 		}
-	# 	}
-	# 	offset = {
-	# 		x = 8
-	# 		y = 0
-	# 		trigger = {
-	# 			has_game_rule = {
-	# 				rule = obsolete_focus_branches_visibility
-	# 				option = HIDE
-	# 			}
-	# 			has_completed_focus = SCA_Louis_B_Mayer_hijack_GOP
-	# 		}
-	# 	}
-	# 	cost = 4
-	# 	available_if_capitulated = yes
-	# 	available = {
-	# 		always = no
-	# 	}
-	# 	prerequisite = {
-	# 		focus = SCA_the_establishment
-	# 	}
-	# 	mutually_exclusive = {
-	# 		focus = SCA_merriam
-	# 	}
-	# 	relative_position_id = SCA_the_establishment
-	# 	ai_will_do = {
-	# 		factor = 40
-	# 	}
-	# 	completion_reward = {
-	# 		hidden_effect = {
-	# 			country_event = usastates_news.27
-	# 		}
-	# 		if = {
-	# 			limit = {
-	# 				has_game_rule = {
-	# 					rule = obsolete_focus_branches_visibility
-	# 					option = HIDE
-	# 				}
-	# 			}
-	# 			mark_focus_tree_layout_dirty = yes
-	# 		}
-	# 	}
-	# }
+	focus = {
+		id = SCA_militarize_the_Pacific_treaty_org
+		icon = GFX_focus_SCA_militarize_the_Pacific_treaty_org
+		x = 0
+		y = 2
+		cost = 10
+		available_if_capitulated = yes
+		available = {
+			OR = {
+				has_war = yes
+				threat > 0.2
+			}
+		}
+		prerequisite = {
+			focus = SCA_aid_SNV focus = SCA_SAZ_support focus = SCA_aid_colorado
+		}
+		relative_position_id = SCA_warplan_blue
+		ai_will_do = {
+			factor = 10
+		}
+		available = {
+			
+		}
+		completion_reward = {
+			every_country = {
+				limit = {
+					is_in_array = {
+						array = global.planblue_array
+						value = this.id
+					}
+					OR = {
+						is_in_faction_with = ROOT
+						is_puppet_of = ROOT
+					}
+					is_ai = yes
+				}
+				SCA = {
+					annex_country = {
+						target = PREV
+					}
+				}
+			}
+			custom_effect_tooltip = militarize_the_Pacific_treaty_org_tt
+		}
+	}
 	focus = {
 		id = SCA_the_establishment
 		icon = GFX_focus_SCA_frank_merrian
@@ -592,70 +617,9 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = SCA_merriam
-		icon = GFX_focus_SCA_merriam
-		x = 0
-		y = 2
-		allow_branch = {
-			if = {
-				limit = {
-					has_game_rule = {
-						rule = obsolete_focus_branches_visibility
-						option = HIDE
-					}
-				}
-				# NOT = {
-				# 	has_completed_focus = SCA_Louis_B_Mayer_hijack_GOP
-				# }
-				NOT = {
-					has_completed_focus = SCA_anti_establishment
-				}
-				NOT = {
-					has_completed_focus = SCA_halt_the_elections
-				}
-			}
-		}
-		offset = {
-			x = -8
-			y = 0
-			trigger = {
-				has_game_rule = {
-					rule = obsolete_focus_branches_visibility
-					option = HIDE
-				}
-				has_completed_focus = SCA_merriam
-			}
-		}
-		cost = 4
-		available_if_capitulated = yes
-		available = {
-			has_government = democratic
-		}
-		prerequisite = {
-			focus = SCA_the_establishment
-		}
-		relative_position_id = SCA_the_establishment
-		ai_will_do = {
-			factor = 40
-		}
-		completion_reward = {
-			add_political_power = 150
-			add_ideas = SCA_epic_opposition
-			if = {
-				limit = {
-					has_game_rule = {
-						rule = obsolete_focus_branches_visibility
-						option = HIDE
-					}
-				}
-				mark_focus_tree_layout_dirty = yes
-			}
-		}
-	}
-	focus = {
 		id = SCA_begin_depression_fix
 		icon = GFX_focus_SCA_begin_depression_fix
-		x = 0
+		x = 2
 		y = 1
 		cost = 10
 		available_if_capitulated = yes
@@ -716,10 +680,9 @@ focus_tree = {
 	focus = {
 		id = SCA_end_socialism_in_california
 		icon = GFX_focus_SCA_end_socialism_in_california2
-		x = -4
+		x = -2
 		y = 1
 		cost = 7.2
-		available_if_capitulated = yes
 		available = {
 		}
 		prerequisite = {
@@ -735,6 +698,31 @@ focus_tree = {
 				bonus = 1
 				uses = 2
 				category = military_police_tech
+			}
+		}
+	}
+	focus = {
+		id = SCA_crackdown_on_unions
+		icon = GFX_focus_SCA_crackdown_on_unions
+		x = -1
+		y = 1
+		cost = 7.2
+		available_if_capitulated = yes
+		available = {
+		}
+		prerequisite = {
+			focus = SCA_end_socialism_in_california
+		}
+		relative_position_id = SCA_end_socialism_in_california
+		ai_will_do = {
+			factor = 40
+		}
+		completion_reward = {
+			add_political_power = 100
+			add_stability = -0.05
+			swap_ideas = {
+				remove_idea = SCA_epic_opposition
+				add_idea = SCA_epic_opposition2
 			}
 		}
 	}
@@ -801,31 +789,6 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_ideas = SCA_california_state_police
-		}
-	}
-	focus = {
-		id = SCA_crackdown_on_unions
-		icon = GFX_focus_SCA_crackdown_on_unions
-		x = -1
-		y = 1
-		cost = 7.2
-		available_if_capitulated = yes
-		available = {
-		}
-		prerequisite = {
-			focus = SCA_end_socialism_in_california
-		}
-		relative_position_id = SCA_end_socialism_in_california
-		ai_will_do = {
-			factor = 40
-		}
-		completion_reward = {
-			add_political_power = 100
-			add_stability = -0.05
-			swap_ideas = {
-				remove_idea = SCA_epic_opposition
-				add_idea = SCA_epic_opposition2
-			}
 		}
 	}
 	focus = {
@@ -982,32 +945,6 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = SCA_the_new_national_guard
-		icon = GFX_focus_SCA_the_new_national_guard
-		x = 0
-		y = 6
-		cost = 10
-		available_if_capitulated = yes
-		available = {
-		}
-		prerequisite = {
-			focus = SCA_professional_strike_breakers
-		}
-		prerequisite = {
-			focus = SCA_mobile_police_force
-		}
-		prerequisite = {
-			focus = SCA_prioritize_artillery
-		}
-		relative_position_id = SCA_begin_depression_fix
-		ai_will_do = {
-			factor = 40
-		}
-		completion_reward = {
-			add_ideas = SCA_the_new_national_guard_idea
-		}
-	}
-	focus = {
 		id = SCA_prioritize_artillery
 		icon = GFX_focus_SCA_prioritize_artillery
 		x = 2
@@ -1066,6 +1003,32 @@ focus_tree = {
 		}
 	}
 	focus = {
+		id = SCA_the_new_national_guard
+		icon = GFX_focus_SCA_the_new_national_guard
+		x = 0
+		y = 6
+		cost = 10
+		available_if_capitulated = yes
+		available = {
+		}
+		prerequisite = {
+			focus = SCA_professional_strike_breakers
+		}
+		prerequisite = {
+			focus = SCA_mobile_police_force
+		}
+		prerequisite = {
+			focus = SCA_prioritize_artillery
+		}
+		relative_position_id = SCA_begin_depression_fix
+		ai_will_do = {
+			factor = 40
+		}
+		completion_reward = {
+			add_ideas = SCA_the_new_national_guard_idea
+		}
+	}
+	focus = {
 		id = SCA_work_with_standard_oil
 		icon = GFX_focus_SCA_work_with_standard_oil
 		x = -5
@@ -1093,6 +1056,7 @@ focus_tree = {
 			custom_effect_tooltip = SCA_bail_out_standard_oil_tt
 		}
 	}
+
 	focus = {
 		id = SCA_ban_unions
 		icon = GFX_focus_SCA_ban_unions
@@ -1312,6 +1276,7 @@ focus_tree = {
 			factor = 200
 		}
 		completion_reward = {
+
 			random_owned_controlled_state = {
 				limit = {
 					free_building_slots = {
@@ -1366,6 +1331,7 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
+			custom_effect_tooltip = "Will unlock Warplan Blue"
 		}
 	}
 	focus = {
@@ -5267,10 +5233,6 @@ focus_tree = {
 				cost_reduction = 0.5
 				uses = 1
 				category = cat_grand_battle_plan
-			}
-			add_tech_bonus = {
-				bonus = 1
-				uses = 1
 				category = cat_mass_assault
 			}
 		}
@@ -5649,7 +5611,7 @@ focus_tree = {
 				bonus = 1
 				ahead_reduction = 2
 				uses = 1
-				category = cas_bomber
+				category = cat_air_bombs
 			}
 			add_doctrine_cost_reduction = {
 				name = air_doc_bonus
@@ -5723,13 +5685,8 @@ focus_tree = {
 		relative_position_id = SCA_aviation_effort
 		available_if_capitulated = yes
 		completion_reward = {
-			add_tech_bonus = {
-				name = nav_bomber_bonus
-				bonus = 1
-				ahead_reduction = 2
-				uses = 1
-				category = naval_bomber
-			}
+			navy_experience = 50
+			air_experience = 50
 		}
 	}
 	focus = {
@@ -6619,12 +6576,16 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			core_arizona = yes
-			core_nevada = yes
-			core_utah = yes
-			core_baja_california = yes
-			core_navajo = yes
-			core_all_of_oregon = yes
+			custom_effect_tooltip = "Cores all of arizona, nevada, utah, baja california, navajo, and oregon."
+			hidden_effect = {
+				core_arizona = yes
+				core_nevada = yes
+				core_utah = yes
+				core_baja_california = yes
+				core_navajo = yes
+				core_all_of_oregon = yes
+			}
+			
 			country_event = {
 				id = California.3
 			}
@@ -7157,7 +7118,7 @@ focus_tree = {
 	}
 	focus = {
 		id = SCA_crush_the_red_press
-		icon = GFX_goal_generic_war_with_comintern
+		icon = GFX_focus_GER_end_european_communism
 		x = 0
 		y = 1
 		cost = 10
@@ -7971,8 +7932,8 @@ focus_tree = {
 			focus = SCA_nevada_friend
 		}
 		available = {
-			has_stability > 0.49
-			has_war = no
+			controls_arizona_trigger = yes
+			controls_nevada_trigger = yes
 		}
 		mutually_exclusive = {
 		}
@@ -7982,50 +7943,13 @@ focus_tree = {
 		}
 		completion_reward = {
 			custom_effect_tooltip = SCA_end_the_chaos_tt 
-			if = {
-				limit = {
-					77 = {
-						NOT = {
-							is_core_of = ROOT
-						}
-					}
-				}
-				core_arizona = yes
+			core_arizona = yes
+			core_nevada = yes
+			###WHY DID THIS ADD THIS BONUS? anywayas
+			add_timed_idea = {
+				idea = SCA_end_the_chaos
+				days = 140
 			}
-			if = {
-				limit = { 
-					143 = {
-						NOT = {
-							is_core_of = ROOT
-						}
-					}
-				}
-				core_nevada = yes
-			}
-			if = {
-				limit = {
-					ROOT = {
-						controls_oregon_proper_trigger = yes
-					}
-				}
-				core_oregon_proper = yes
-			}
-			if = {
-				limit = {
-					ROOT = {
-						controls_washington_trigger = yes
-					}
-				}
-				core_washington = yes
-			}
-
-			if = {
-				limit = {
-					controls_idaho_trigger = yes 
-				}
-				core_idaho = yes
-			}
-			add_ideas = SCA_end_the_chaos
 		}
 	}
 	focus = {
