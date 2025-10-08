@@ -1517,12 +1517,11 @@ focus_tree = {
             } 
         }
     }
-#######################################
-#############generic trees#############
-#######################################
+
+######MEXICAN ECO TREE
     focus = {
-        id = MSH_expand_our_industry
-        icon = GFX_focus_industry
+        id = MSH_modernize_industries
+        icon = GFX_focus_generic_modernize_industry
         x = 33
         y = 0
         cost = 10
@@ -1537,183 +1536,285 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_INDUSTRY }
 
         completion_reward = {
-            random_owned_controlled_state = {
-                add_extra_state_shared_building_slots = 1
-                add_building_construction = {
-                    type = industrial_complex
-                    level = 1
-                    instant_build = yes
-                }
+            add_tech_bonus = {
+                name = MSH_tech_bonus
+                category = industry
+                bonus = 1
+                uses = 1
             }
         }
     }
     focus = {
-        id = MSH_expand_civilian_industry
-        icon = GFX_goal_generic_construct_civilian
-        prerequisite = { focus = MSH_expand_our_industry}
-        x = -1
-        y = 1
-        relative_position_id = MSH_expand_our_industry
-        cost = 7.2
-        ai_will_do = {
-            factor = 1
-            modifier = {
-                factor = 2
-                num_of_civilian_factories < 10
-            }
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_INDUSTRY }
-
-        completion_reward = {
-            add_offsite_building = { type = industrial_complex level = 1 }
-        }
-    }
+		id = MSH_infrastructure
+		icon = GFX_focus_generic_road
+		cost = 5
+		x = -1
+		y = 1
+		ai_will_do = {
+			factor = 1
+		}
+		prerequisite = { focus = MSH_modernize_industries }
+		relative_position_id = MSH_modernize_industries
+		available = {
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size < 4
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
     focus = {
-        id = MSH_expand_civilian_industry2
-        icon = GFX_goal_generic_construct_civ_factory
-        prerequisite = { focus = MSH_expand_civilian_industry}
-        x = -1
-        y = 2
-        relative_position_id = MSH_expand_our_industry
-        cost = 7.2
-        ai_will_do = {
-            factor = 1
-            modifier = {
-                factor = 2
-                num_of_civilian_factories < 10
-            }
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_INDUSTRY }
-
-        completion_reward = {
-            add_offsite_building = { type = industrial_complex level = 2 }
-        }
-    }
+		id = MSH_civilian_industries
+		icon = GFX_goal_generic_construct_civ_factory
+		cost = 7
+		x = 0
+		y = 1
+		ai_will_do = {
+			factor = 1
+		}
+		prerequisite = { focus = MSH_infrastructure }
+		relative_position_id = MSH_infrastructure
+		available = {
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
     focus = {
-        id = MSH_research_initiative
-        icon = GFX_focus_research
-        prerequisite = { focus = MSH_expand_civilian_industry2}
-        x = 0
-        y = 3
-        relative_position_id = MSH_expand_our_industry
-        cost = 10
-        ai_will_do = {
-            factor = 2
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
-
-        completion_reward = {
-            add_research_slot = 1
-        }
-    }
+		id = MSH_textile_mills
+		icon = GFX_focus_CHL_enlarge_the_textile_industries
+		cost = 7
+		x = 0
+		y = 1
+		ai_will_do = {
+			factor = 1
+		}
+        available = {
+			has_tech = construction2
+			num_of_controlled_states > 0
+		}
+		prerequisite = { focus = MSH_civilian_industries }
+		relative_position_id = MSH_civilian_industries
+		available = {
+		}
+		completion_reward = {
+			add_offsite_building = {
+                type = industrial_complex
+                level = 2
+            }
+		}
+	}
     focus = {
-        id = MSH_fund_universities
-        icon = GFX_focus_research2
-        prerequisite = { focus = MSH_research_initiative}
-        x = 0
-        y = 4
-        relative_position_id = MSH_expand_our_industry
-        cost = 10
-        ai_will_do = {
-            factor = 1
-        }
-        available_if_capitulated = yes
-        search_filters = { FOCUS_FILTER_RESEARCH }
-
-        completion_reward = {
-            add_research_slot = 1
-        }
-    }
+		id = MSH_begin_armament_production
+		icon = GFX_goal_generic_construct_mil_factory
+		cost = 7
+		x = 1
+		y = 1
+		ai_will_do = {
+			factor = 1
+		}
+		prerequisite = { focus = MSH_modernize_industries }
+		relative_position_id = MSH_modernize_industries
+		available = {
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
     focus = {
-        id = MSH_expand_military_industry
-        icon = GFX_focus_ask_for_company_support
-        prerequisite = { focus = MSH_expand_our_industry}
-        x = 1
-        y = 1
-        relative_position_id = MSH_expand_our_industry
-        cost = 10
-        ai_will_do = {
-            factor = 100
-            modifier = {
-                factor = 2
-                num_of_military_factories < 8
+		id = MSH_military_complex
+		icon = GFX_goal_generic_build_tank
+		cost = 7
+		x = 0
+		y = 1
+		ai_will_do = {
+			factor = 1
+		}
+		prerequisite = { focus = MSH_begin_armament_production }
+		relative_position_id = MSH_begin_armament_production
+		available = {
+		}
+		completion_reward = {
+			add_offsite_building = {
+                type = arms_factory
+                level = 1
             }
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_INDUSTRY }
-
-        completion_reward = {
-            add_offsite_building = { type = arms_factory level = 1 }
-        }
-    }
+		}
+	}
     focus = {
-        id = MSH_expand_military_industry2
-        icon = GFX_goal_generic_construct_mil_factory
-        prerequisite = { focus = MSH_expand_military_industry}
-        x = 1
-        y = 2
-        relative_position_id = MSH_expand_our_industry
-        cost = 10
-        ai_will_do = {
-            factor = 100
-            modifier = {
-                factor = 2
-                num_of_military_factories < 8
+		id = MSH_automobile_industry
+		icon = GFX_focus_GER_wirtschaftswunder
+		cost = 7
+		x = 1
+		y = 1
+		ai_will_do = {
+			factor = 1
+		}
+		prerequisite = { focus = MSH_heavy_industry }
+		relative_position_id = MSH_heavy_industry
+	    available = {
+			num_of_controlled_states > 0
+			has_tech = motorised_infantry
+		}
+		completion_reward = {
+			add_offsite_building = {
+                type = arms_factory
+                level = 1
             }
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_INDUSTRY }
-
-        completion_reward = {
-            add_offsite_building = { type = arms_factory level = 3 }
-        }
-    }
+			add_equipment_to_stockpile = { type = motorized_equipment_1 amount = 125 producer = ROOT }
+		}
+	}
     focus = {
-        id = MSH_expand_dockyards
-        icon = GFX_goal_generic_construct_naval_dockyard
-        prerequisite = { focus = MSH_expand_military_industry}
-        x = 2
-        y = 3
-        relative_position_id = MSH_expand_our_industry
-        cost = 15
-        ai_will_do = {
-            factor = 1
-            modifier = {
-                factor = 2
-                num_of_naval_factories < 5
-            }
-        }
-        available_if_capitulated = no
-        search_filters = { FOCUS_FILTER_INDUSTRY }
+		id = MSH_heavy_industry
+		icon = GFX_focus_generic_reorient_production
+		cost = 7
+		x = 0
+		y = 1
+		ai_will_do = {
+			factor = 1
+		}
+		prerequisite = { focus = MSH_military_complex }
+		relative_position_id = MSH_military_complex
+	    available = {
+			num_of_controlled_states > 0
+			OR = {
+				has_tech = improved_machine_tools
+				has_tech = concentrated_industry2
+				has_tech = dispersed_industry2
+			}
+			
+		}
 
-        completion_reward = {
-            random_owned_controlled_state = {
-                limit = {
-                    is_coastal = yes
-                }
-                add_extra_state_shared_building_slots = 2
-                add_building_construction = {
-                    type = dockyard
-                    level = 2
-                    instant_build = yes
-                }
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+            add_offsite_building = {
+                type = arms_factory
+                level = 1
             }
-            random_owned_controlled_state = {
-                limit = {
-                    is_coastal = yes
-                }
-                add_extra_state_shared_building_slots = 1
-                add_building_construction = {
-                    type = dockyard
-                    level = 1
-                    instant_build = yes
-                }
-            }
+		}
+	}
+    focus = {
+		id = MSH_industrial_expansion
+		icon = GFX_focus_generic_industry_3
+		cost = 10
+		x = 1
+		y = 1
+		ai_will_do = {
+			factor = 1
+		}
+        available = {
+			num_of_controlled_states > 1
+		}
+		prerequisite = { focus = MSH_heavy_industry }
+        prerequisite = {
+            focus = MSH_textile_mills
         }
-    }
+		relative_position_id = MSH_textile_mills
+		available = {
+		}
+		completion_reward = {
+            add_offsite_building = {
+                type = arms_factory
+                level = 1
+            }
+            add_offsite_building = {
+                type = industrial_complex
+                level = 2
+            }
+		}
+	}
+    focus = {
+		id = MSH_rural_schooling
+		icon = GFX_focus_research2
+		cost = 10
+		x = -1
+		y = 1
+		ai_will_do = {
+			factor = 1
+		}
+		prerequisite = { focus = MSH_textile_mills }
+		relative_position_id = MSH_textile_mills 
+		available = {
+		}
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
+    focus = {
+		id = MSH_establish_university
+		icon = GFX_focus_research
+		cost = 10
+		x = 0
+		y = 1
+		ai_will_do = {
+			factor = 1
+		}
+		prerequisite = { focus = MSH_industrial_expansion }
+		relative_position_id = MSH_industrial_expansion 
+		available = {
+            num_of_factories > 30
+		}
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
+#####GENERIC ARMY TREE
     focus = {
 		id = MSH_army_effort
 		icon = GFX_goal_generic_allies_build_infantry
@@ -2046,13 +2147,7 @@ focus_tree = {
 				name = fighter_bonus
 				bonus = 1.0
 				uses = 2
-				technology = early_fighter
-				technology = fighter1
-				technology = fighter2
-				technology = fighter3
-				technology = heavy_fighter1
-				technology = heavy_fighter2
-				technology = heavy_fighter3
+                category = light_fighter
 			}
 		}
 	}
@@ -2074,10 +2169,8 @@ focus_tree = {
 				name = bomber_bonus
 				bonus = 1.0
 				uses = 2
-				technology = strategic_bomber1
-				technology = strategic_bomber2
-				technology = strategic_bomber3
-				category = tactical_bomber
+                category = medium_air
+                category = heavy_air
 			}
 		}
 	}
@@ -2187,7 +2280,8 @@ focus_tree = {
 				bonus = 1.0
 				ahead_reduction = 2
 				uses = 1
-				category = cas_bomber
+				category = cat_air_bombs
+                category = cat_air_guns
 			}
 		}
 	}
@@ -2241,7 +2335,7 @@ focus_tree = {
 				bonus = 1.0
 				ahead_reduction = 2
 				uses = 1
-				category = naval_bomber
+				category = cat_air_bombs
 			}
 		}
 	}
