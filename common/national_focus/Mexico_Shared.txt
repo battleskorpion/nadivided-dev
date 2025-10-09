@@ -1524,7 +1524,7 @@ focus_tree = {
         icon = GFX_focus_generic_modernize_industry
         x = 33
         y = 0
-        cost = 10
+        cost = 5
         ai_will_do = {
             factor = 2
             modifier = {
@@ -1547,7 +1547,7 @@ focus_tree = {
     focus = {
 		id = MSH_infrastructure
 		icon = GFX_focus_generic_road
-		cost = 5
+		cost = 3
 		x = -1
 		y = 1
 		ai_will_do = {
@@ -1572,12 +1572,13 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
+            add_equipment_to_stockpile = { type = train_equipment amount = 10 producer = ROOT }
 		}
 	}
     focus = {
 		id = MSH_civilian_industries
 		icon = GFX_goal_generic_construct_civ_factory
-		cost = 7
+		cost = 10
 		x = 0
 		y = 1
 		ai_will_do = {
@@ -1609,7 +1610,7 @@ focus_tree = {
     focus = {
 		id = MSH_textile_mills
 		icon = GFX_focus_CHL_enlarge_the_textile_industries
-		cost = 7
+		cost = 10
 		x = 0
 		y = 1
 		ai_will_do = {
@@ -1633,7 +1634,7 @@ focus_tree = {
     focus = {
 		id = MSH_begin_armament_production
 		icon = GFX_goal_generic_construct_mil_factory
-		cost = 7
+		cost = 10
 		x = 1
 		y = 1
 		ai_will_do = {
@@ -1665,7 +1666,7 @@ focus_tree = {
     focus = {
 		id = MSH_military_complex
 		icon = GFX_goal_generic_build_tank
-		cost = 7
+		cost = 10
 		x = 0
 		y = 1
 		ai_will_do = {
@@ -1685,7 +1686,7 @@ focus_tree = {
     focus = {
 		id = MSH_automobile_industry
 		icon = GFX_focus_GER_wirtschaftswunder
-		cost = 7
+		cost = 5
 		x = 1
 		y = 1
 		ai_will_do = {
@@ -1708,7 +1709,7 @@ focus_tree = {
     focus = {
 		id = MSH_heavy_industry
 		icon = GFX_focus_generic_reorient_production
-		cost = 7
+		cost = 10
 		x = 0
 		y = 1
 		ai_will_do = {
@@ -1727,25 +1728,9 @@ focus_tree = {
 		}
 
 		completion_reward = {
-			random_owned_controlled_state = {
-				limit = {
-					is_core_of = ROOT
-					free_building_slots = {
-						building = arms_factory
-						size > 1
-						include_locked = yes
-					}
-				}
-				add_extra_state_shared_building_slots = 1
-				add_building_construction = {
-					type = arms_factory
-					level = 1
-					instant_build = yes
-				}
-			}
             add_offsite_building = {
                 type = arms_factory
-                level = 1
+                level = 2
             }
 		}
 	}
@@ -1781,7 +1766,7 @@ focus_tree = {
 	}
     focus = {
 		id = MSH_rural_schooling
-		icon = GFX_focus_research2
+		icon = GFX_focus_generic_education
 		cost = 10
 		x = -1
 		y = 1
@@ -1800,7 +1785,7 @@ focus_tree = {
 		id = MSH_establish_university
 		icon = GFX_focus_research
 		cost = 10
-		x = 0
+		x = 1
 		y = 1
 		ai_will_do = {
 			factor = 1
@@ -1812,7 +1797,199 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_research_slot = 1
+            add_tech_bonus = {
+                name = x
+                category = electronics
+                bonus = 1
+                uses = 1
+            }
 		}
+	}
+    focus = {
+		id = MSH_economic_boom_focus
+		icon = GFX_focus_generic_currency_reforms
+		cost = 10
+		x = -1
+		y = 1
+		ai_will_do = {
+			factor = 1
+		}
+        available = {
+			num_of_factories > 49
+		}
+        prerequisite = {
+            focus = MSH_industrial_expansion
+        }
+		relative_position_id = MSH_industrial_expansion
+		available = {
+		}
+		completion_reward = {
+            add_timed_idea = {
+                idea = MSH_economic_expansion_idea
+                days = 365
+            }
+		}
+	}
+
+	focus = {
+		id = MSH_synthetic_refineries
+		icon = GFX_goal_generic_oil_refinery
+		prerequisite = { focus = MSH_establish_university focus = MSH_economic_boom_focus }
+		x = -1
+		y = 1
+		relative_position_id = MSH_establish_university
+		mutually_exclusive = {
+			focus = MSH_steel_mills focus = MSH_aluminum_mills
+		}
+		cost = 10
+
+		available_if_capitulated = yes
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		bypass = {
+		}
+
+		available = {
+			num_of_controlled_states > 0
+			ROOT = { has_tech = synth_oil_experiments }
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = synthetic_refinery
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = GEN_Refinery_1
+			}
+
+			add_tech_bonus = {
+				name = JAP_coal_liquification
+				bonus = 1
+				uses = 1
+				category = synth_resources
+			}
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH FOCUS_FILTER_OIL}
+	}
+	focus = {
+		id = MSH_aluminum_mills
+		icon = GFX_focus_generic_aluminum
+		prerequisite = { focus = MSH_establish_university focus = MSH_economic_boom_focus }
+		x = -3
+		y = 1
+		relative_position_id = MSH_establish_university
+		mutually_exclusive = {
+			focus = MSH_synthetic_refineries focus = MSH_steel_mills
+		}
+		cost = 10
+
+		available_if_capitulated = yes
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		bypass = {
+		}
+
+		available = {
+			num_of_controlled_states > 0
+			ROOT = { has_tech = aluminum_production_1 }
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = aluminum_mill
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = GEN_Refinery_1
+			}
+            add_tech_bonus = {
+                name = x
+                bonus = 1
+                uses = 1
+                technology = aluminum_production_2
+            }
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH FOCUS_FILTER_OIL}
+	}
+	focus = {
+		id = MSH_steel_mills
+		icon = GFX_focus_generic_steel
+		prerequisite = { focus = MSH_establish_university  focus = MSH_economic_boom_focus }
+		x = 1
+		y = 1
+		relative_position_id = MSH_establish_university
+		mutually_exclusive = {
+			focus = MSH_synthetic_refineries focus = MSH_aluminum_mills
+		}
+		cost = 10
+
+		available_if_capitulated = yes
+
+		ai_will_do = {
+			factor = 10
+		}
+
+		bypass = {
+		}
+
+		available = {
+			num_of_controlled_states > 0
+			ROOT = { has_tech = steel_production_1 }
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = steel_mill
+					level = 1
+					instant_build = yes
+				}
+				set_state_flag = GEN_Refinery_1
+			}
+            add_tech_bonus = {
+                name = x
+                bonus = 1
+                uses = 1
+                technology = steel_production_2
+            }
+		}
+		search_filters = { FOCUS_FILTER_INDUSTRY FOCUS_FILTER_RESEARCH FOCUS_FILTER_OIL}
 	}
 #####GENERIC ARMY TREE
     focus = {
@@ -1827,13 +2004,7 @@ focus_tree = {
             factor = 500
         }
 		completion_reward = {
-			army_experience = 75
-            add_manpower = 42000
-            add_equipment_to_stockpile = {
-                type = infantry_equipment
-                amount = 8000
-                producer = MEX
-            }    
+			army_experience = 75  
             add_doctrine_cost_reduction = {
 				name = land_doc_bonus
 				cost_reduction = 0.5
