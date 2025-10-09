@@ -1545,7 +1545,7 @@ focus_tree = {
     }
     focus = {
 		id = MSH_purchase_weapons
-		icon = GFX_focus_SWI_issue_war_bonds
+		icon = GFX_focus_focus_fra_maquis
 		cost = 5
 		x = -1
 		y = 1
@@ -1566,7 +1566,7 @@ focus_tree = {
 	}
     focus = {
 		id = MSH_conscript_milita
-		icon = GFX_focus_generic_military_mission
+		icon = GFX_focus_BRA_deal_with_the_cangaco
 		cost = 5
 		x = 1
 		y = 1
@@ -1631,7 +1631,7 @@ focus_tree = {
 			
 		}
 		completion_reward = {
-            add_war_support = 0.05
+            add_political_power = 50
 		}
 	}
     focus = {
@@ -1645,7 +1645,16 @@ focus_tree = {
 		prerequisite = { focus = MSH_expand_our_political_influence }
 		relative_position_id = MSH_expand_our_political_influence
 		available = {
-			
+			NOT = {
+                has_completed_focus = MSH_nationalize_oil_fields
+            }
+			any_state = {
+                is_controlled_by = ROOT
+                has_resources_amount = {
+                    resource = oil
+                    amount > 0
+                }
+            }
 		}
 		completion_reward = {
             every_neighbor_country = {
@@ -1659,6 +1668,49 @@ focus_tree = {
                     modifier = MSH_neutrality_opinion_trade
                 }
             }
+            add_ideas = MSH_expanded_oil_trade
+		}
+	}
+    focus = {
+		id = MSH_nationalize_oil_fields
+		icon = GFX_focus_BRA_repeale_national_security_law
+		cost = 3
+		x = 1
+		y = 1
+        available = {
+        }
+        mutually_exclusive = {
+            
+        }
+		prerequisite = { focus = MSH_expand_our_political_influence }
+		relative_position_id = MSH_expand_our_political_influence
+		available = {
+            NOT = {
+                has_completed_focus = MSH_expand_trade_with_the_states
+            }
+			any_state = {
+                is_controlled_by = ROOT
+                has_resources_amount = {
+                    resource = oil
+                    amount > 0
+                }
+            }
+		}
+		completion_reward = {
+            every_country = {
+                limit = {
+                    NOT = {
+                        is_a_state_of_mexico = yes
+                    }
+                }
+                add_opinion_modifier = {
+                    target = ROOT
+                    modifier = MSH_nationalized_oil_fields
+                }
+            }
+            add_war_support = 0.02
+            add_stability = 0.02
+            add_political_power = 15
 		}
 	}
     focus = {
@@ -1741,13 +1793,16 @@ focus_tree = {
 		id = MSH_economic_liberalization
 		icon =  GFX_goal_generic_consumer_goods
 		cost = 5
-		x = 4
+		x = 3
 		y = 1
 		prerequisite = { focus = MSH_strengthen_strong_man_regime }
 		relative_position_id = MSH_strengthen_strong_man_regime
 		available = {
 			
 		}
+        mutually_exclusive = {
+            focus = MSH_setup_agriculture_bank
+        }
 		completion_reward = {
             add_stability = -0.05
             add_ideas = MSH_economic_liberalization
@@ -1755,9 +1810,9 @@ focus_tree = {
 	}
     focus = {
 		id = MSH_strike_breaking
-		icon = GFX_focus_CZE_german_puppet
+		icon = GFX_focus_BRA_end_the_state_of_emergency
 		cost = 7
-		x = -2
+		x = -1
 		y = 1
 		prerequisite = { focus = MSH_economic_liberalization }
 		relative_position_id = MSH_economic_liberalization
@@ -1772,7 +1827,7 @@ focus_tree = {
 		id = MSH_privatization
 		icon = GFX_focus_mex_privatisation
 		cost = 5
-		x = 0
+		x = 1
 		y = 1
 		prerequisite = { focus = MSH_economic_liberalization }
 		relative_position_id = MSH_economic_liberalization
@@ -1832,7 +1887,7 @@ focus_tree = {
 	}
     focus = {
 		id = MSH_clientelism
-		icon = GFX_goal_generic_intelligence_exchange
+		icon = GFX_focus_BRA_reach_out_to_military_dem
 		cost = 5
 		x = 2
 		y = 1
@@ -1864,6 +1919,121 @@ focus_tree = {
 		}
 		completion_reward = {
             add_ideas = MSH_hacienda_bonds
+		}
+	}
+    focus = {
+		id = MSH_setup_agriculture_bank
+		icon = GFX_focus_generic_wheat_2
+		cost = 5
+		x = 7
+		y = 1
+		prerequisite = { focus = MSH_strengthen_strong_man_regime }
+		relative_position_id = MSH_strengthen_strong_man_regime
+		available = {
+			
+		}
+        mutually_exclusive = {
+            focus = MSH_economic_liberalization
+        }
+		completion_reward = {
+            add_political_power = 35
+            add_stability = 0.05
+		}
+	}
+    focus = {
+		id = MSH_rural_infrastructure
+		icon = GFX_goal_generic_production2
+		cost = 5
+		x = -1
+		y = 1
+		prerequisite = { focus = MSH_setup_agriculture_bank }
+		relative_position_id = MSH_setup_agriculture_bank
+		available = {
+			
+		}
+		completion_reward = {
+            random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+                    is_capital = no
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+                add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+            random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+                    is_capital = no
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+						include_locked = yes
+					}
+				}
+                add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+    focus = {
+		id = MSH_rent_freeze
+		icon = GFX_focus_generic_self_management
+		cost = 7
+		x = 1
+		y = 1
+		prerequisite = { focus = MSH_setup_agriculture_bank }
+		relative_position_id = MSH_setup_agriculture_bank
+		available = {
+			
+		}
+		completion_reward = {
+            add_political_power = 70
+            add_stability = 0.05
+		}
+	}
+    focus = {
+		id = MSH_confederation_of_workers
+		icon = GFX_focus_generic_rally_workers
+		cost = 7
+		x = 1
+		y = 1
+		prerequisite = { focus = MSH_rural_infrastructure }
+        prerequisite = {
+            focus = MSH_rent_freeze
+        }
+		relative_position_id = MSH_rural_infrastructure
+		available = {
+			
+		}
+		completion_reward = {
+            add_ideas = MSH_confederation_of_workers
+		}
+	}
+    focus = {
+		id = MSH_worker_militas
+		icon = GFX_focus_generic_spur_communist_revolutions
+		cost = 10
+		x = 0
+		y = 1
+		prerequisite = { focus = MSH_confederation_of_workers }
+		relative_position_id = MSH_confederation_of_workers
+		available = {
+			
+		}
+		completion_reward = {
+            add_ideas = MSH_worker_militas
 		}
 	}
     focus = {
