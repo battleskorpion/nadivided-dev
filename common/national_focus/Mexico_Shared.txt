@@ -1521,16 +1521,12 @@ focus_tree = {
 #####POLITICAL TREE
     focus = {
         id = MSH_strengthen_strong_man_regime
-        icon = GFX_focus_generic_modernize_industry
+        icon = GFX_goal_generic_demand_territory
         x = 33
         y = 10
         cost = 10
         ai_will_do = {
             factor = 2
-            modifier = {
-                factor = 2
-                num_of_civilian_factories < 10
-            }
         }
         available = {
             has_government = neutrality
@@ -1548,17 +1544,336 @@ focus_tree = {
         }
     }
     focus = {
+		id = MSH_purchase_weapons
+		icon = GFX_focus_SWI_issue_war_bonds
+		cost = 5
+		x = -1
+		y = 1
+		prerequisite = { focus = MSH_strengthen_strong_man_regime }
+		relative_position_id = MSH_strengthen_strong_man_regime
+		available = {
+			
+		}
+		completion_reward = {
+            add_equipment_to_stockpile = {
+                type = infantry_equipment_0
+                amount = 2500
+            }
+            add_timed_idea = {
+                idea = MCH_gun_purchases
+            }
+		}
+	}
+    focus = {
+		id = MSH_conscript_milita
+		icon = GFX_focus_generic_military_mission
+		cost = 5
+		x = 1
+		y = 1
+		prerequisite = { focus = MSH_strengthen_strong_man_regime }
+		relative_position_id = MSH_strengthen_strong_man_regime
+		available = {
+			
+		}
+		completion_reward = {
+            add_manpower = 10000
+		}
+	}
+    focus = {
+		id = MSH_caudillismo
+		icon = GFX_focus_generic_full_social_mobilization
+		cost = 5
+		x = 0
+		y = 2
+		prerequisite = { focus = MSH_purchase_weapons }
+        prerequisite = {
+            focus = MSH_conscript_milita
+        }
+		relative_position_id = MSH_strengthen_strong_man_regime
+		available = {
+			
+		}
+		completion_reward = {
+            add_country_leader_trait = caudillo_2
+            army_experience = 50
+            add_popularity = {
+                ideology = neutrality
+                popularity = 0.05
+            }
+            add_stability = 0.05
+            add_war_support = 0.05
+		}
+	}
+    focus = {
+		id = MSH_caudillo_private_armies
+		icon = GFX_focus_mex_caudillo_private_armies
+		cost = 10
+		x = 0
+		y = 1
+		prerequisite = { focus = MSH_caudillismo }
+		relative_position_id = MSH_caudillismo
+		available = {
+			
+		}
+		completion_reward = {
+            add_ideas = MSH_caudillo_private_armies_idea
+		}
+	}
+    focus = {
+		id = MSH_expand_our_political_influence
+		icon = GFX_goal_generic_military_sphere
+		cost = 5
+		x = -3
+		y = 1
+		prerequisite = { focus = MSH_strengthen_strong_man_regime }
+		relative_position_id = MSH_strengthen_strong_man_regime
+		available = {
+			
+		}
+		completion_reward = {
+            add_war_support = 0.05
+		}
+	}
+    focus = {
+		id = MSH_expand_trade_with_the_states
+		icon = GFX_goal_generic_intelligence_exchange
+		cost = 5
+		x = -1
+		y = 1
+        available = {
+        }
+		prerequisite = { focus = MSH_expand_our_political_influence }
+		relative_position_id = MSH_expand_our_political_influence
+		available = {
+			
+		}
+		completion_reward = {
+            every_neighbor_country = {
+                limit = {
+                    NOT = {
+                        is_a_state_of_mexico = yes
+                    }
+                }
+                add_opinion_modifier = {
+                    target = ROOT
+                    modifier = MSH_neutrality_opinion_trade
+                }
+            }
+		}
+	}
+    focus = {
+		id = MSH_rightful_expansion
+		icon = GFX_goal_generic_territory_or_war
+		cost = 10
+		x = 0
+		y = 2
+        available = {
+            has_global_flag = hacienda_has_risen_up_tt
+        }
+		prerequisite = { focus = MSH_expand_our_political_influence }
+		relative_position_id = MSH_expand_our_political_influence
+		available = {
+			
+		}
+		completion_reward = {
+            random_neighbor_country = {
+                limit = {
+                    # is_a_state_of_mexico = yes
+                    NOT = {
+                        tag = MEX
+                        tag = MCL
+                        tag = MAC
+                        tag = MDC
+                    }
+                }
+                ROOT = {
+                    create_wargoal = {
+                        target = PREV
+                        type = annex_everything
+                    }
+                }
+                every_owned_state = {
+                    ROOT = {
+                        add_state_claim = PREV
+                    }
+                }
+            }
+		}
+	}
+    focus = {
+		id = MSH_claim_mexico
+		icon = GFX_focus_mex_jefe_maximo
+		cost = 10
+		x = 0
+		y = 1
+        available = {
+        }
+		prerequisite = { focus = MSH_caudillo_private_armies }
+        prerequisite = {
+            focus = MSH_rightful_expansion
+        }
+		relative_position_id = MSH_caudillo_private_armies
+		available = {
+			
+		}
+		completion_reward = {
+            ###UNLOCKS DECISONS TO ATTACK ALL OF MEXICO
+		}
+	}
+    focus = {
+		id = MSH_integrate_mexico
+		icon = GFX_focus_generic_new_treaty
+		cost = 10
+		x = 0
+		y = 2
+        available = {
+        }
+		prerequisite = { focus = MSH_claim_mexico }
+		relative_position_id = MSH_caudillo_private_armies
+		available = {
+			
+		}
+		completion_reward = {
+            ###UNLOCKS DECISONS TO CORE ALL MEXICAN STATES
+		}
+	}
+    focus = {
+		id = MSH_economic_liberalization
+		icon =  GFX_goal_generic_consumer_goods
+		cost = 5
+		x = 4
+		y = 1
+		prerequisite = { focus = MSH_strengthen_strong_man_regime }
+		relative_position_id = MSH_strengthen_strong_man_regime
+		available = {
+			
+		}
+		completion_reward = {
+            add_stability = -0.05
+            add_ideas = MSH_economic_liberalization
+		}
+	}
+    focus = {
+		id = MSH_strike_breaking
+		icon = GFX_focus_CZE_german_puppet
+		cost = 7
+		x = -2
+		y = 1
+		prerequisite = { focus = MSH_economic_liberalization }
+		relative_position_id = MSH_economic_liberalization
+		available = {
+			
+		}
+		completion_reward = {
+            add_ideas = MSH_strike_breaking
+		}
+	}
+    focus = {
+		id = MSH_privatization
+		icon = GFX_focus_mex_privatisation
+		cost = 5
+		x = 0
+		y = 1
+		prerequisite = { focus = MSH_economic_liberalization }
+		relative_position_id = MSH_economic_liberalization
+		available = {
+			
+		}
+		completion_reward = {
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+            }
+            random_owned_controlled_state = {
+                add_extra_state_shared_building_slots = 1
+            }
+		}
+	}
+    focus = {
+		id = MSH_urban_development
+		icon = GFX_focus_generic_low_cost_housing
+		cost = 10
+		x = 0
+		y = 1
+		prerequisite = { focus = MSH_privatization }
+        prerequisite = {
+            focus = MSH_strike_breaking
+        }
+		relative_position_id = MSH_strike_breaking
+		available = {
+			
+		}
+		completion_reward = {
+            random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+                    is_capital = yes
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
+                add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+    focus = {
+		id = MSH_clientelism
+		icon = GFX_goal_generic_intelligence_exchange
+		cost = 5
+		x = 2
+		y = 1
+		prerequisite = { focus = MSH_privatization }
+        prerequisite = {
+            focus = MSH_strike_breaking
+        }
+		relative_position_id = MSH_strike_breaking
+		available = {
+			
+		}
+		completion_reward = {
+            add_political_power = 50
+		}
+	}
+    focus = {
+		id = MSH_hacienda_bonds
+		icon = GFX_focus_SWI_issue_war_bonds
+		cost = 5
+		x = 1
+		y = 1
+		prerequisite = { focus = MSH_urban_development }
+        prerequisite = {
+            focus = MSH_clientelism
+        }
+		relative_position_id = MSH_urban_development
+		available = {
+			
+		}
+		completion_reward = {
+            add_ideas = MSH_hacienda_bonds
+		}
+	}
+    focus = {
         id = MSH_open_political_discourse
-        icon = GFX_focus_generic_modernize_industry
+        icon = GFX_goal_generic_neutrality_focus
         x = 37
         y = 10
         cost = 10
         ai_will_do = {
             factor = 2
-            modifier = {
-                factor = 2
-                num_of_civilian_factories < 10
-            }
         }
         available_if_capitulated = no
         search_filters = { FOCUS_FILTER_INDUSTRY }
