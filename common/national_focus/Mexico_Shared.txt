@@ -77,7 +77,7 @@ focus_tree = {
 		}
 	}
     focus = {
-		id = MSH_conscript_milita
+		id = MSH_call_of_the_campesinos
 		icon = GFX_focus_BRA_deal_with_the_cangaco
 		cost = 5
 		x = 1
@@ -99,7 +99,7 @@ focus_tree = {
 		y = 2
 		prerequisite = { focus = MSH_purchase_weapons }
         prerequisite = {
-            focus = MSH_conscript_milita
+            focus = MSH_call_of_the_campesinos
         }
 		relative_position_id = MSH_strengthen_strong_man_regime
 		available = {
@@ -1245,233 +1245,234 @@ focus_tree = {
 	}
 #####GENERIC ARMY TREE
     focus = {
-		id = MSH_army_effort
+		id = MSH_begin_military_efforts
 		icon = GFX_goal_generic_allies_build_infantry
-		x = 34
+		x = 35
 		y = 0
 		cost = 10
 		search_filters = {  FOCUS_FILTER_RESEARCH }
 		available_if_capitulated = yes
         ai_will_do = {
-            factor = 500
+            factor = 1
         }
 		completion_reward = {
-			army_experience = 75  
+			army_experience = 10 
             add_doctrine_cost_reduction = {
 				name = land_doc_bonus
 				cost_reduction = 0.5
-				uses = 2
+				uses = 1
 				category = land_doctrine
 			}
 		}
 	}
-
 	focus = {
-		id = MSH_equipment_effort
-		icon = GFX_goal_generic_small_arms
-		prerequisite = { focus = MSH_army_effort }
-		x = -1
+		id = MSH_call_in_milita
+		icon = GFX_focus_generic_little_entente
+		prerequisite = { focus = MSH_begin_military_efforts }
+		x = 0
 		y = 1
-		relative_position_id = MSH_army_effort
-		cost = 10
+		relative_position_id = MSH_begin_military_efforts
+		cost = 5
 
-		search_filters = {  FOCUS_FILTER_RESEARCH }
 		available_if_capitulated = yes
 
 		completion_reward = {
-			add_tech_bonus = {
-				name = infantry_artillery_bonus
-				bonus = 1.0
-				uses = 1
-				category = infantry_weapons
-				category = artillery
+			add_timed_idea = {
+				idea = MSH_increase_conscription
+				days = 365
+			}
+			add_manpower = 2500
+		}
+	}
+	focus = {
+		id = MSH_focus_on_jungle_combat
+		icon = GFX_focus_prc_infiltration
+		prerequisite = { focus = MSH_begin_military_efforts }
+		mutually_exclusive = { focus = MSH_focus_on_desert_combat }
+		x = -1
+		y = 2
+		relative_position_id = MSH_begin_military_efforts
+		cost = 7
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			custom_effect_tooltip = MSH_will_give_jungle_rat_to_a_random_general_tt
+			random_army_leader = {
+				add_trait = {
+					trait = jungle_rat
+				}
 			}
 		}
 	}
-
 	focus = {
-		id = MSH_motorization_effort
-		icon = GFX_goal_generic_army_motorized
-		prerequisite = { focus = MSH_army_effort }
-		bypass = { has_tech = motorised_infantry }
+		id = MSH_focus_on_desert_combat
+		icon = GFX_focus_PER_desert_training
+		prerequisite = { focus = MSH_begin_military_efforts }
+		mutually_exclusive = { focus = MSH_focus_on_jungle_combat }
+		x = 1
+		y = 2
+		relative_position_id = MSH_begin_military_efforts
+		cost = 7
+		available = {
+		}
+		available_if_capitulated = yes
+
+		completion_reward = {
+			custom_effect_tooltip = MSH_will_give_desert_fox_to_a_random_general_tt
+			random_army_leader = {
+				add_trait = {
+					trait = desert_fox
+				}
+			}
+		}
+	}
+	focus = {
+		id = MSH_infantry_improvements
+		icon = GFX_goal_generic_small_arms
+		prerequisite = { focus = MSH_focus_on_desert_combat focus = MSH_focus_on_jungle_combat }
 		x = 1
 		y = 1
-		relative_position_id = MSH_army_effort
-		cost = 10
+		relative_position_id = MSH_focus_on_desert_combat
+		cost = 7
 
 		available_if_capitulated = yes
 
 		completion_reward = {
 			add_tech_bonus = {
-				name = motorized_bonus
-				bonus = 3.0
-				technology = motorised_infantry
+				name = x
+				bonus = 0.75
+				uses = 2
+				category = infantry_tech
 			}
 		}
 	}
-
 	focus = {
-		id = MSH_doctrine_effort
-		icon = GFX_goal_generic_army_doctrines
-		prerequisite = { focus = MSH_army_effort }
+		id = MSH_mechanized_infantry
+		icon = GFX_focus_generic_mechanized
+		prerequisite = { focus = MSH_infantry_improvements }
 		x = 0
-		y = 2
-		relative_position_id = MSH_army_effort
-		cost = 10
+		y = 1
+		relative_position_id = MSH_infantry_improvements
+		cost = 7
 
 		available_if_capitulated = yes
 
 		completion_reward = {
-			army_experience = 5
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
+			add_tech_bonus = {
+				name = x
+				bonus = 1
 				uses = 1
-				category = land_doctrine
+				category = cat_mechanized_equipment
 			}
 		}
 	}
-
 	focus = {
-		id = MSH_equipment_effort_2
+		id = MSH_artillery_improvements
 		icon = GFX_goal_generic_army_artillery
-		prerequisite = { focus = MSH_equipment_effort }
-		x = 0
-		y = 2
-		relative_position_id = MSH_equipment_effort
-		cost = 10
+		prerequisite = { focus = MSH_focus_on_desert_combat focus = MSH_focus_on_jungle_combat }
+		x = -3
+		y = 1
+		relative_position_id = MSH_focus_on_desert_combat
+		cost = 7
 
 		available_if_capitulated = yes
 
 		completion_reward = {
 			add_tech_bonus = {
-				name = infantry_artillery_bonus
-				bonus = 1.0
-				uses = 1
-				category = infantry_weapons
+				name = x
+				bonus = 0.75
+				uses = 2
 				category = artillery
 			}
 		}
 	}
-
 	focus = {
-		id = MSH_mechanization_effort
-		icon = GFX_goal_generic_build_tank
-		prerequisite = { focus = MSH_motorization_effort }
+		id = MSH_armor_improvements
+		icon = GFX_focus_generic_tank_assault
+		prerequisite = { focus = MSH_artillery_improvements }
 		x = 0
-		y = 2
-		relative_position_id = MSH_motorization_effort
-		cost = 10
+		y = 1
+		relative_position_id = MSH_artillery_improvements
+		cost = 7
 
 		available_if_capitulated = yes
 
 		completion_reward = {
 			add_tech_bonus = {
-				name = motorized_bonus
-				ahead_reduction = 2
-				uses = 1
-				category = motorized_equipment
-			}
-		}
-	}
-
-	focus = {
-		id = MSH_doctrine_effort_2
-		icon = GFX_goal_generic_army_doctrines
-		prerequisite = { focus = MSH_doctrine_effort }
-		x = 0
-		y = 2
-		relative_position_id = MSH_doctrine_effort
-		cost = 10
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			army_experience = 5
-			add_doctrine_cost_reduction = {
-				name = land_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = land_doctrine
-			}
-		}
-	}
-
-	focus = {
-		id = MSH_equipment_effort_3
-		icon = GFX_goal_generic_army_artillery2
-		prerequisite = { focus = MSH_equipment_effort_2 }
-		x = 0
-		y = 2
-		relative_position_id = MSH_equipment_effort_2
-		cost = 10
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = infantry_artillery_bonus
-				ahead_reduction = 2
-				uses = 1
-				category = infantry_weapons
-				category = artillery
-			}
-		}
-	}
-
-	focus = {
-		id = MSH_armor_effort
-		icon = GFX_goal_generic_army_tanks
-		prerequisite = { focus = MSH_mechanization_effort }
-		x = 0
-		y = 2
-		relative_position_id = MSH_mechanization_effort
-		cost = 10
-
-		available_if_capitulated = yes
-
-		completion_reward = {
-			add_tech_bonus = {
-				name = armor_bonus
-				bonus = 1.0
+				name = x
+				bonus = 0.75
 				uses = 2
 				category = armor
 			}
 		}
 	}
-
 	focus = {
-		id = MSH_special_forces
-		icon = GFX_goal_generic_special_forces
-		prerequisite = { focus = MSH_equipment_effort_3 }
-		prerequisite = { focus = MSH_doctrine_effort_2 }
-		prerequisite = { focus = MSH_armor_effort }
-		x = 1
+		id = MSH_learn_from_the_revolution
+		icon = GFX_goal_generic_army_doctrines
+		prerequisite = { focus = MSH_focus_on_desert_combat focus = MSH_focus_on_jungle_combat }
+		x = -1
 		y = 1
-		relative_position_id = MSH_equipment_effort_3
+		relative_position_id = MSH_focus_on_desert_combat
 		cost = 10
 
 		available_if_capitulated = yes
 
 		completion_reward = {
+			army_experience = 25
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				name = x
+				category = land_doctrine
+			}
+		}
+	}
+	focus = {
+		id = MSH_new_doctrines
+		icon = GFX_focus_generic_army_doctrines_2
+		prerequisite = { focus = MSH_learn_from_the_revolution }
+		x = 0
+		y = 1
+		relative_position_id = MSH_learn_from_the_revolution
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			army_experience = 25
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				name = x
+				category = land_doctrine
+			}
+		}
+	}
+	focus = {
+		id = MSH_special_forces
+		icon = GFX_focus_SMB_special_forces_option_3
+		prerequisite = { focus = MSH_new_doctrines }
+		x = 0
+		y = 1
+		relative_position_id = MSH_new_doctrines
+		cost = 10
+
+		available_if_capitulated = yes
+
+		completion_reward = {
+			army_experience = 25
 			add_ideas = special_forces
 			add_tech_bonus = {
-				name = special_forces_bonus
-				bonus = 1.0
+				name = x
+				bonus = 1
 				uses = 1
-				technology = paratroopers
-				technology = paratroopers2
-				technology = marines
-				technology = marines2
-				technology = tech_mountaineers
-				technology = tech_mountaineers2
+				category = cat_special_forces_generic
 			}
 		}
 	}
     focus = {
 		id = MSH_aviation_effort
 		icon = GFX_goal_generic_build_airforce
-		x = 38
+		x = 40
 		y = 0
 		cost = 10
 
@@ -1765,7 +1766,7 @@ focus_tree = {
     focus = {
 		id = MSH_naval_effort
 		icon = GFX_goal_generic_construct_naval_dockyard
-		x = 42
+		x = 44
 		y = 0
 		cost = 10
 
