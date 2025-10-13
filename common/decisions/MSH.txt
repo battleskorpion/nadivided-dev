@@ -304,3 +304,190 @@ MSH_category_church_power = {
 		}
 	}
 }
+
+MSH_integration_cat = {
+	MSH_integration = {
+		icon = GFX_decision_CHL_mapuche_reorganize_the_bolivian_government
+		allowed = {
+			OR = {
+				original_tag = BAJ
+				original_tag = MSO
+				original_tag = MCH
+				original_tag = MCO
+				original_tag = MNL
+				original_tag = MTA
+				original_tag = MSI
+				original_tag = MDU
+				original_tag = MZA
+				original_tag = MSL
+				original_tag = MNA
+				original_tag = MJA
+				original_tag = MAG
+				original_tag = MGU
+				original_tag = MQU
+				original_tag = MHI
+				original_tag = MVE
+				original_tag = MCM
+				original_tag = MMI
+				original_tag = MEM
+				original_tag = MCT
+				original_tag = MMO
+				original_tag = MTL
+				original_tag = MPU
+				original_tag = MGR
+				original_tag = MOX
+				original_tag = MTB
+				original_tag = MCI
+				original_tag = MCA
+				original_tag = MYU
+				original_tag = MQR
+				original_tag = MDC
+				original_tag = MEX
+				original_tag = MCL
+				original_tag = MAC
+			}
+		}
+	
+		available = {
+			#has_tech = construction1
+			#num_of_civilian_factories_available_for_projects > 0
+			#has_full_control_of_state = root.owned_states
+		}
+	
+		state_target = yes
+		
+		target_array = ROOT.owned_states
+		
+		target_trigger = {
+			FROM = {
+				is_controlled_by = ROOT
+				is_claimed_by = ROOT
+			}
+		}
+
+		ai_will_do = {
+			base = 500
+		}
+
+		target_root_trigger = {
+			has_completed_focus = MSH_integrate_mexico
+		}
+
+		visible = {
+			FROM = {
+				is_controlled_by = ROOT
+				is_claimed_by = ROOT
+				has_state_flag = MSH_can_be_cored_in_mexico_flag
+				NOT = {
+					is_core_of = ROOT
+				}
+			}
+		}
+
+		cost = 50
+	
+		days_remove = 70
+	
+		modifier = {
+			#civilian_factory_use = 1
+		}
+
+		complete_effect = {
+		}
+
+		remove_effect = {
+			FROM = {
+				#set_state_flag = MSH_has_been_integrated_flag
+				add_core_of = ROOT
+			}
+		}
+	}
+}
+
+MSH_expansion_cat = {
+    MSH_expand = {
+		allowed = {
+			OR = {
+				original_tag = BAJ
+				original_tag = MSO
+				original_tag = MCH
+				original_tag = MCO
+				original_tag = MNL
+				original_tag = MTA
+				original_tag = MSI
+				original_tag = MDU
+				original_tag = MZA
+				original_tag = MSL
+				original_tag = MNA
+				original_tag = MJA
+				original_tag = MAG
+				original_tag = MGU
+				original_tag = MQU
+				original_tag = MHI
+				original_tag = MVE
+				original_tag = MCM
+				original_tag = MMI
+				original_tag = MEM
+				original_tag = MCT
+				original_tag = MMO
+				original_tag = MTL
+				original_tag = MPU
+				original_tag = MGR
+				original_tag = MOX
+				original_tag = MTB
+				original_tag = MCI
+				original_tag = MCA
+				original_tag = MYU
+				original_tag = MQR
+				original_tag = MDC
+				original_tag = MEX
+				original_tag = MCL
+				original_tag = MAC
+			}
+		}
+        visible = {
+            OR = {
+                has_completed_focus = MSH_claim_mexico
+            }
+			FROM = {
+				is_a_state_of_mexico = yes
+			}
+        }
+		target_root_trigger = {
+            OR = {
+                has_completed_focus = MSH_claim_mexico
+            }
+		}
+		available = {
+			NOT = {
+				has_wargoal_against = FROM
+			}
+			FROM = {
+				is_a_state_of_mexico = yes
+			}
+		}
+		target_array = neighbors
+		icon = GFX_decision_hol_draw_up_staff_plans
+		cost = 50
+		days_remove = 60
+		war_with_target_on_complete = yes
+
+        remove_effect = {
+            create_wargoal = {
+				target = FROM
+				type = annex_everything
+			}
+        }
+        
+		complete_effect = {
+            every_state = {
+                limit = {
+                    is_core_of = FROM
+                    is_owned_and_controlled_by = FROM
+                } 
+                add_claim_by = ROOT
+            }
+		}
+        
+	}
+}
