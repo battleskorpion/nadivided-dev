@@ -626,7 +626,7 @@ focus_tree = {
 	}
     focus = {
 		id = MSH_worker_militas
-		icon = GFX_focus_generic_spur_communist_revolutions
+		icon = GFX_focus_GER_liberate_exploited_colonial_workers
 		cost = 10
 		x = 0
 		y = 1
@@ -754,6 +754,7 @@ focus_tree = {
 		available = {
 			
 		}
+		will_lead_to_war_with = var:neighbors
 		completion_reward = {
             random_neighbor_country = {
                 limit = {
@@ -824,6 +825,10 @@ focus_tree = {
 			unlock_decision_category_tooltip = MSH_integration_cat
             ###UNLOCKS DECISONS TO CORE ALL MEXICAN STATES
             remove_ideas = MSH_illegitimate_government
+			add_timed_idea = {
+				idea = MSH_integration_efforts
+				days = 180
+			}
 		}
 	}
     focus = {
@@ -835,6 +840,16 @@ focus_tree = {
         ai_will_do = {
             factor = 10
         }
+		offset = {
+			trigger = {
+				OR = {
+					tag = MQR
+					tag = MYU
+					tag = MCA
+				}
+			}
+			x= -1
+		}
         available_if_capitulated = no
         search_filters = { FOCUS_FILTER_INDUSTRY }
         bypass = {
@@ -2345,4 +2360,430 @@ focus_tree = {
 			}
 		}
 	}
+	####MAYAN UPRISING TREE
+	focus = {
+        id = MSH_hacienda_controlled_yucatan
+        icon = GFX_focus_generic_military_dictatorship
+        x = -5
+        y = 3
+        cost = 1
+		#allow_branch = {
+		#	OR = {
+		#		tag = MQR
+		#		tag = MYU
+		#		tag = MCA
+		#	}
+		#}
+        ai_will_do = {
+            factor = 10
+        }
+		offset = {
+			trigger = {
+				OR = {
+					tag = MQR
+					tag = MYU
+					tag = MCA
+				}
+			}
+			x= -1
+		}
+		mutually_exclusive = {
+			focus = MSH_mayan_controlled_yucatan
+		}
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+		available = {
+			OR = {
+				original_tag = MYU
+				original_tag = MCA
+			}
+		}
+        completion_reward = {
+			add_political_power = 35
+        }
+    }
+	focus = {
+        id = MSH_mayan_controlled_yucatan
+        icon = GFX_focus_GER_support_the_proletarian_uprising
+        x = -1
+        y = 3
+        cost = 1
+		offset = {
+			trigger = {
+				OR = {
+					tag = MQR
+					tag = MYU
+					tag = MCA
+				}
+			}
+			x= -1
+		}
+		#allow_branch = {
+		#	OR = {
+		#		tag = MQR
+		#		tag = MYU
+		#		tag = MCA
+		#	}
+		#}
+        ai_will_do = {
+            factor = 10
+        }
+		available = {
+			original_tag = MQR
+		}
+		mutually_exclusive = {
+			focus = MSH_hacienda_controlled_yucatan
+		}
+        available_if_capitulated = no
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        completion_reward = {
+			add_political_power = 35
+        }
+    }
+	focus = {
+        id = MSH_prepare_for_the_uprising
+        icon = GFX_focus_ETH_freedom_at_gunpoint
+        x = -3
+        y = 1
+        cost = 3
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = {
+            focus = MSH_mayan_controlled_yucatan focus = MSH_hacienda_controlled_yucatan
+        }
+        relative_position_id = MSH_mayan_controlled_yucatan
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        available = {
+            #OR = {
+            #    has_idea = MSH_church_power_5
+            #    has_idea = MSH_church_power_4
+            #}
+        }
+        completion_reward = {
+            add_manpower = 5000
+			add_equipment_to_stockpile = {
+				type = infantry_equipment_0
+				amount = 3000
+			}
+			army_experience = 25
+        }
+    }
+	focus = {
+        id = MSH_underground_factories
+        icon = GFX_goal_generic_construct_mil_factory
+        x = -1
+        y = 1
+        cost = 3
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = {
+            focus = MSH_mayan_controlled_yucatan focus = MSH_hacienda_controlled_yucatan
+        }
+        relative_position_id = MSH_mayan_controlled_yucatan
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        available = {
+            #OR = {
+            #    has_idea = MSH_church_power_5
+            #    has_idea = MSH_church_power_4
+            #}
+        }
+        completion_reward = {
+            add_offsite_building = {
+				type = arms_factory
+				level = 1
+			}
+        }
+    }
+	focus = {
+        id = MSH_enact_conscription
+        icon = GFX_focus_generic_military_restructure
+        x = -1
+        y = 1
+        cost = 2
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = {
+            focus = MSH_underground_factories
+        }
+		prerequisite = {
+			focus = MSH_prepare_for_the_uprising
+		}
+        relative_position_id = MSH_underground_factories
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        available = {
+            #OR = {
+            #    has_idea = MSH_church_power_5
+            #    has_idea = MSH_church_power_4
+            #}
+        }
+        completion_reward = {
+            add_ideas = extensive_conscription
+        }
+    }
+	focus = {
+        id = MSH_industrial_investments
+        icon = GFX_goal_generic_construct_civilian
+        x = -1
+        y = 1
+        cost = 3
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = {
+            focus = MSH_hacienda_controlled_yucatan
+        }
+        relative_position_id = MSH_hacienda_controlled_yucatan
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        available = {
+            #OR = {
+            #    has_idea = MSH_church_power_5
+            #    has_idea = MSH_church_power_4
+            #}
+        }
+        completion_reward = {
+            add_offsite_building = {
+				type = industrial_complex
+				level = 1
+			}
+        }
+    }
+	focus = {
+        id = MSH_a_small_private_army
+        icon = GFX_focus_GER_schutztruppe
+        x = 0
+        y = 1
+        cost = 3
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = {
+            focus = MSH_industrial_investments
+        }
+        relative_position_id = MSH_industrial_investments
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        available = {
+            #OR = {
+            #    has_idea = MSH_church_power_5
+            #    has_idea = MSH_church_power_4
+            #}
+        }
+        completion_reward = {
+            add_ideas = MSH_small_private_army
+        }
+    }
+	focus = {
+        id = MSH_warrior_priests
+        icon = GFX_focus_ITA_generic_fascist_workers
+        x = 1
+        y = 1
+        cost = 3
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = {
+            focus = MSH_mayan_controlled_yucatan
+        }
+        relative_position_id = MSH_mayan_controlled_yucatan
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        available = {
+            #OR = {
+            #    has_idea = MSH_church_power_5
+            #    has_idea = MSH_church_power_4
+            #}
+        }
+        completion_reward = {
+            add_ideas = MSH_warrior_priests
+        }
+    }
+	focus = {
+        id = MSH_talking_cross_radio
+        icon = GFX_focus_SWE_radiotjanst
+        x = 0
+        y = 1
+        cost = 3
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = {
+            focus = MSH_warrior_priests
+        }
+        relative_position_id = MSH_warrior_priests
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        available = {
+            #OR = {
+            #    has_idea = MSH_church_power_5
+            #    has_idea = MSH_church_power_4
+            #}
+        }
+        completion_reward = {
+            add_ideas = MSH_talking_cross_radio
+        }
+    }
+	focus = {
+        id = MSH_syncretic_church
+        icon = GFX_focus_por_concordat
+        x = 0
+        y = 1
+        cost = 3
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = {
+            focus = MSH_talking_cross_radio
+        }
+        relative_position_id = MSH_talking_cross_radio
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        available = {
+            #OR = {
+            #    has_idea = MSH_church_power_5
+            #    has_idea = MSH_church_power_4
+            #}
+        }
+        completion_reward = {
+            add_ideas = MSH_syncretic_church
+        }
+    }
+	focus = {
+        id = MSH_double_down_on_hacienda_economy
+        icon = GFX_focus_RAJ_special_economic_zones
+        x = 1
+        y = 1
+        cost = 3
+        ai_will_do = {
+            factor = 10
+        }
+		prerequisite = {
+			focus = MSH_a_small_private_army
+		}
+		mutually_exclusive = {
+			focus = MSH_reel_in_the_haciendas
+		}
+        relative_position_id = MSH_a_small_private_army
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        available = {
+            has_idea = MYU_idea_hacienda_controlled_economy
+        }
+        completion_reward = {
+            swap_ideas = {
+				remove_idea = MYU_idea_hacienda_controlled_economy
+				add_idea = MYU_idea_hacienda_controlled_economy_double_down
+			}
+        }
+    }
+	focus = {
+        id = MSH_reel_in_the_haciendas
+        icon = GFX_focus_BEL_government_resigns
+        x = -1
+        y = 1
+        cost = 3
+        ai_will_do = {
+            factor = 10
+        }
+        prerequisite = {
+            focus = MSH_a_small_private_army
+        }
+		mutually_exclusive = {
+			focus = MSH_double_down_on_hacienda_economy
+		}
+        relative_position_id = MSH_a_small_private_army
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        available = {
+            has_idea = MYU_idea_hacienda_controlled_economy
+        }
+        completion_reward = {
+            swap_ideas = {
+				remove_idea = MYU_idea_hacienda_controlled_economy
+				add_idea = MYU_idea_hacienda_controlled_economy_reigned_in
+			}
+        }
+    }
+	focus = {
+        id = MSH_declare_triumph
+        icon = GFX_focus_generic_support_the_left_right
+        x = -3
+        y = 1
+        cost = 3
+        ai_will_do = {
+            factor = 10
+        }
+		available = {
+			has_war = no
+			count_triggers = {
+				amount = 2
+				MYU = {
+					exists = no
+				}
+				MQR = {
+					exists = no
+				}
+				MCA = {
+					exists = no
+				}
+			}
+		}
+        prerequisite = {
+            focus = MSH_talking_cross_radio focus = MSH_a_small_private_army
+        }
+        relative_position_id = MSH_talking_cross_radio
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        available = {
+            #OR = {
+            #    has_idea = MSH_church_power_5
+            #    has_idea = MSH_church_power_4
+            #}
+        }
+        completion_reward = {
+            add_political_power = 100
+			add_stability = 0.1
+			add_manpower = 20000
+        }
+    }
+	focus = {
+        id = MSH_embrace_the_revolution
+        icon = GFX_focus_focus_fra_revolution_utmost
+        x = 2
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+		prerequisite = {
+			focus = MSH_declare_triumph
+		}
+		prerequisite = {
+			focus = MSH_syncretic_church
+		}
+        relative_position_id = MSH_declare_triumph
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        available = {
+            has_idea = MYU_idea_hacienda_controlled_economy
+        }
+        completion_reward = {
+            add_ideas = revolution_complete
+        }
+    }
+	focus = {
+        id = MSH_enforce_the_hierarchy
+        icon = GFX_focus_CZE_german_puppet
+        x = -2
+        y = 1
+        cost = 5
+        ai_will_do = {
+            factor = 10
+        }
+		prerequisite = {
+			focus = MSH_declare_triumph
+		}
+		prerequisite = {
+			focus = MSH_reel_in_the_haciendas focus = MSH_double_down_on_hacienda_economy
+		}
+        relative_position_id = MSH_declare_triumph
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        completion_reward = {
+            add_ideas = enforced_caste_order
+        }
+    }
 }
