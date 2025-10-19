@@ -18,9 +18,162 @@ focus_tree = {
     continuous_focus_position = { x = 50 y = 50 }
 
 	shared_focus = SXS_Southern_Consolidation
-#######################################
+
+    focus = {
+        id = SMD_Unconventional_Strategems
+        icon = GFX_goal_generic_construct_naval_dockyard
+        available = {
+
+        }
+        x = -15
+        y = 0
+        cost = 7.2
+        mutually_exclusive = { focus = SMD_Prepare_For_War_With_DC}
+	    available = {
+
+		}
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        ai_will_do = {
+            factor = 1
+        }
+		
+		completion_reward = {
+			navy_experience = 25
+			if = {
+				limit = {
+					NOT = {
+						any_owned_state = {
+							dockyard > 0
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+					any_owned_state = {
+						is_coastal = yes
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						is_coastal = yes
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					any_owned_state = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						dockyard > 0
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+				set_country_flag = naval_effort_built
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = naval_effort_built }
+					NOT = {
+						any_owned_state = {
+							free_building_slots = {
+								building = dockyard
+								size > 2
+								include_locked = yes
+							}
+						}
+					}
+				}
+				random_state = {
+					limit = {
+						controller = { tag = ROOT }
+						free_building_slots = {
+							building = dockyard
+							size > 2
+							include_locked = yes
+						}
+					}
+					add_extra_state_shared_building_slots = 3
+					add_building_construction = {
+						type = dockyard
+						level = 3
+						instant_build = yes
+					}
+				}
+			}			
+		}            
+        
+    }
+
+    focus = {
+        id = SMD_Prepare_For_War_With_DC
+        icon = GFX_goal_generic_allies_build_infantry
+        available = {
+
+        }
+        x = -13
+        y = 0
+        cost = 7.2
+
+        mutually_exclusive = { focus = SMD_Unconventional_Strategems}
+	        ai_will_do = {
+            factor = 50
+        }
+
+
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_INDUSTRY }
+        completion_reward = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 500
+				producer = SMD
+			}
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = engineers_tech
+			}           
+        }
+    }
+ #######################################
 ###########Ritchie dies ###########
 #######################################
+
     focus = {
         id = SMD_Ritchie_dies
         icon = GFX_goal_generic_neutrality_focus
@@ -59,7 +212,7 @@ focus_tree = {
         y = 1
         cost = 7.2
         ai_will_do = {
-            factor = 10
+            factor = 1
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
@@ -324,6 +477,12 @@ focus_tree = {
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
+			add_manpower = 1600
+			add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 3000
+				producer = SMD
+			}        
             add_timed_idea = { idea = SMD_Rally_bonus_Army  days = 360 }
         }
     }
@@ -1209,6 +1368,7 @@ focus_tree = {
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
+            add_political_power = 25
             add_stability = 0.10
             add_popularity = {
 				ideology = longism
@@ -1305,6 +1465,7 @@ focus_tree = {
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
+            add_political_power = 25
             add_popularity = {
 				ideology = longism
 				popularity = 0.1
@@ -1508,11 +1669,12 @@ focus_tree = {
         y = 1
         cost = 7.2
         ai_will_do = {
-            factor = 10
+            factor = 1
         }
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_POLITICAL }
         completion_reward = {
+            add_state_core = 352
             set_politics = {
 				ruling_party = fascism
 			}
@@ -1609,6 +1771,7 @@ focus_tree = {
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_ANNEXATION }
         completion_reward = {
+            add_ideas = SMD_Valle_propaganda_campaign_idea
             add_war_support = 0.05 
             add_political_power = 50       
         }
@@ -3509,8 +3672,9 @@ focus_tree = {
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_MANPOWER }
         completion_reward = {
+            add_political_power = 150   
             44 = {
-				add_manpower = -100000
+				add_manpower = -80000
 			}
             add_state_core = 44
         }
@@ -3533,6 +3697,9 @@ focus_tree = {
         available_if_capitulated = yes
         search_filters = { FOCUS_FILTER_MANPOWER }
         completion_reward = {
+            44 = {
+				add_manpower = -40000
+			}
             add_timed_idea = { idea = SMD_Forced_Labour_Campaign_idea  days = 360 }
         }
     }
@@ -3554,6 +3721,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_MANPOWER }
         completion_reward = {
             add_war_support = 0.1             
+            add_state_core = 137
         }
     }
     focus = {
@@ -4106,6 +4274,7 @@ focus_tree = {
         search_filters = { FOCUS_FILTER_MANPOWER }
         completion_reward = {
             add_stability = 0.15
+            add_ideas = WDC_rehabilitated_economy 
         }
     } 
     focus = {
