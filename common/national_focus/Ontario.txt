@@ -5463,10 +5463,10 @@ focus_tree = {
 						size > 1
 					}
 				}
-				add_extra_state_shared_building_slots = 2
+				add_extra_state_shared_building_slots = 1
 				add_building_construction = {
 					type = arms_factory
-					level = 2
+					level = 1
 					instant_build = yes
 				}
 			}
@@ -6455,7 +6455,7 @@ focus_tree = {
 			focus = PON_direction_of_the_army
 		}
 		mutually_exclusive = {
-
+			focus = PON_mcnaughton_plan focus = PON_crear_plan
 		}
 		cost = 10
 		search_filters = {
@@ -6467,6 +6467,7 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
+			add_ideas = PON_simmonds_plan
 			####TANKS
 			###Add idea for tanks, prelimiary buff for later
 		}
@@ -6481,7 +6482,7 @@ focus_tree = {
 			focus = PON_direction_of_the_army
 		}
 		mutually_exclusive = {
-
+			focus = PON_guy_simmonds_plan focus = PON_mcnaughton_plan
 		}
 		cost = 10
 		search_filters = {
@@ -6493,6 +6494,10 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
+			add_ideas = PON_crear_plan
+			set_technology = {
+				PON_motorized_arty_tech = 1
+			}
 			####mechanized army, with rockets
 			###Add idea for mechanized, prelimiary buff for later
 		}
@@ -6507,7 +6512,7 @@ focus_tree = {
 			focus = PON_direction_of_the_army
 		}
 		mutually_exclusive = {
-
+			focus = PON_guy_simmonds_plan focus = PON_crear_plan
 		}
 		cost = 10
 		search_filters = {
@@ -6519,6 +6524,46 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
+			add_ideas = PON_mcnaughton_plan
+			####infantry and arty army
+			###Add idea for arty/inf, prelimiary buff for later
+			#add_mastery_bonus = {
+			#	bonus = 0.1
+			#	days = 240
+			#	track = armor
+			#	name = JAP_reform_the_army
+			#}
+			#add_mastery_bonus = {
+			#	bonus = 0.1
+			#	days = 240
+			#	track = infantry
+			#	name = JAP_reform_the_army
+			#}
+		}
+	}
+	focus = {
+		id = PON_stock_up_on_fuel
+		icon = GFX_focus_generic_full_social_mobilization
+		x = 3
+		y = 2
+		relative_position_id = PON_direction_of_the_army
+		prerequisite = {
+			focus = PON_direction_of_the_army
+		}
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available = {
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_timed_idea = {
+				days = 180
+				idea = PQC_stockpiling_fuel
+			}
 			####infantry and arty army
 			###Add idea for arty/inf, prelimiary buff for later
 		}
@@ -6545,16 +6590,92 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			###ARMY RESERACH CENTER
-			###BREAKTHRO)UGH PROGRESS
+			add_breakthrough_points = {
+				specialization = specialization_land
+				value = 1
+			}
+			if = {
+				limit = {
+					NOT = { has_facility_specialization = specialization_land }
+				}
+				if = {
+					limit = { 
+						33 = {
+							is_fully_controlled_by = ROOT
+							air_facility < 1
+							land_facility < 1
+							naval_facility < 1
+							nuclear_facility < 1
+						}
+					}
+					33 = {
+						add_building_construction = {
+							type = land_facility
+							level = 1
+							instant_build = yes
+							province = 8037
+						}
+					}
+				}
+				else = {
+					random_owned_controlled_state = {
+						limit = {
+							can_construct_building = land_facility
+						}
+						construct_building_in_random_province = {
+							land_facility = 1
+						}
+					}
+				}
+			}
 		}
 	}
 	focus = {
 		id = PON_camp_x
 		icon = GFX_focus_generic_full_social_mobilization
-		x = 0
+		x = -1
 		y = 1
 		relative_position_id = PON_national_research_council
+		prerequisite = {
+			focus = PON_national_research_council
+		}
+		mutually_exclusive = {
+
+		}
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available = {
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_ideas = PON_camp_x
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 1
+				category = cat_special_forces_generic
+			}
+			add_doctrine_cost_reduction = {
+				cost_reduction = 0.5
+				name = special_forces
+				category = special_forces_doctrine
+				uses = 2
+			}
+			###+1 operative
+			####RECURITALBE SPECIAL FORCES
+			###RESRAERCH BONSUES FOR SPECIAL FORCES AND DOCTRINES
+		}
+	}
+	focus = {
+		id = PON_radar_improvements
+		icon = GFX_focus_generic_full_social_mobilization
+		x = 1
+		y = 1
+		relative_position_id = PON_camp_x
 		prerequisite = {
 			focus = PON_national_research_council
 		}
@@ -6571,35 +6692,19 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			###+1 operative
-			####RECURITALBE SPECIAL FORCES
-			###RESRAERCH BONSUES FOR SPECIAL FORCES AND DOCTRINES
-		}
-	}
-	focus = {
-		id = PON_radar_improvements
-		icon = GFX_focus_generic_full_social_mobilization
-		x = 0
-		y = 1
-		relative_position_id = PON_camp_x
-		prerequisite = {
-			focus = PON_camp_x
-		}
-		mutually_exclusive = {
-
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available = {
-		}
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			###RESERACH BONUSES FOR RADAR
-			####X2 100%'s
+			add_tech_bonus = {
+				name = GER_counter_sloped_armor
+				bonus = 1
+				uses = 2
+				category = radar_tech
+				technology = improved_radio
+				technology = advanced_radio
+			}
+			air_experience = 25
+			add_breakthrough_points = {
+				specialization = specialization_air
+				value = 1
+			}
 		}
 	}
 }
