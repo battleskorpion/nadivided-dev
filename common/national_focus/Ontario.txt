@@ -1504,7 +1504,7 @@ focus_tree = {
 	#####
 	focus = {
 		id = PON_arthur_meighen
-		icon = GFX_focus_eng_concessions_to_the_trade_unions
+		icon = GFX_focus_PON_arthur_meighen
 		x = 6
 		y = 1
 		mutually_exclusive = {
@@ -1513,6 +1513,9 @@ focus_tree = {
 		relative_position_id = PON_1936_Ontario_Elections
 		prerequisite = {
 			focus = PON_1936_Ontario_Elections
+		}
+		available = {
+			always = no
 		}
 		cost = 5
 		search_filters = {
@@ -1523,7 +1526,7 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			
+			custom_effect_tooltip = focus_will_bypass_tt
 		}
 	}
 	focus = {
@@ -1576,7 +1579,43 @@ focus_tree = {
 			factor = 50
 		}
 		completion_reward = {
-			
+			###EVENT FOR SHOOTING FACISTS
+			hidden_effect = {
+				country_event = {
+					id = Ontario.13
+					days = 15
+				}
+			}
+			hidden_effect = {
+				country_event = {
+					id = Ontario.27
+					days = 73
+				}
+			}
+			hidden_effect = {
+				country_event = {
+					id = Ontario.28
+					days = 143
+				}
+			}
+			hidden_effect = {
+				country_event = {
+					id = Ontario.29
+					days = 219
+				}
+			}
+			hidden_effect = {
+				country_event = {
+					id = Ontario.30
+					days = 292
+				}
+			}
+			hidden_effect = {
+				country_event = {
+					id = Ontario.31
+					days = 365
+				}
+			}
 			remove_ideas = PON_Commonwealth_dissolution_shock
 			add_timed_idea = {
 				days = 365
@@ -1613,18 +1652,19 @@ focus_tree = {
 		}
 		completion_reward = {
 			add_political_power = 70
+			add_war_support = 0.05
 		}
 	}
 	focus = {
 		id = PON_limited_british_investment
 		icon = GFX_goal_generic_intelligence_exchange
 		x = -1
-		y = 1
+		y = 2
 		relative_position_id = PON_tour_george_VI
 		prerequisite = {
 			focus = PON_tour_george_VI
 		}
-		cost = 5
+		cost = 7
 		available_if_capitulated = yes
 		ai_will_do = {
 			factor = 50
@@ -1647,13 +1687,30 @@ focus_tree = {
 					instant_build = yes
 				}
 			}
+			random_owned_controlled_state = {
+				#prioritize = {
+				#	675
+				#}
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
 		}
 	}
 	focus = {
 		id = PON_british_technological_exchange
 		icon = GFX_goal_generic_scientific_exchange
 		x = 0
-		y = 2
+		y = 1
 		relative_position_id = PON_tour_george_VI
 		prerequisite = {
 			focus = PON_tour_george_VI
@@ -1694,11 +1751,19 @@ focus_tree = {
 		}
 		available = {
 			NOT = {
+				is_in_faction_with = PQC
+			}
+			NOT = {
 				has_idea = PON_reforming_constitution
 			}
 		}
 		completion_reward = {
-			###OPINION MALUS TO QUEBEC
+			#add_stability = 0.05
+			add_opinion_modifier = {
+				target = PQC
+				modifier = hostile_status
+			}
+			add_threat = 5
 		}
 	}
 	focus = {
@@ -1729,7 +1794,7 @@ focus_tree = {
 		id = PON_Recreate_RCMP
 		icon = GFX_focus_PON_ReenstateRCMP
 		x = 0
-		y = 2
+		y = 1
 		relative_position_id = PON_national_service_and_emergency_preparedness_act
 		prerequisite = {
 			focus = PON_national_service_and_emergency_preparedness_act
@@ -1751,7 +1816,7 @@ focus_tree = {
 		id = PON_Orange_Order_Cadets
 		icon = GFX_focus_PON_Orange_cadets
 		x = 1
-		y = 1
+		y = 2
 		relative_position_id = PON_national_service_and_emergency_preparedness_act
 		prerequisite = {
 			focus = PON_national_service_and_emergency_preparedness_act
@@ -1807,7 +1872,7 @@ focus_tree = {
 	focus = {
 		id = PON_Marshal_Law_In_Qubec
 		icon = GFX_focus_PON_Marshal_Law_qubec
-		x = 0
+		x = -1
 		y = 1
 		relative_position_id = PON_Reconquest_of_Qubec
 		prerequisite = {
@@ -1816,7 +1881,63 @@ focus_tree = {
 		cost = 10
 		available = {
 			controls_quebec_trigger = yes
-			has_idea = PON_Qubec_Uprisings
+			#has_idea = PON_Qubec_Uprisings
+		}
+		search_filters = {
+			FOCUS_FILTER_POLITICAL
+		}
+		mutually_exclusive = {
+			focus = PON_comprimise_with_the_quebecois
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 50
+		}
+		select_effect = {
+			add_ideas = PON_Qubec_Uprisings
+		}
+		completion_reward = {
+			custom_effect_tooltip = when_selected_will_give_idea_tt
+			effect_tooltip = {
+				add_timed_idea = {
+					idea = PON_Qubec_Uprisings
+					days = 70
+				}
+			}
+			add_political_power = 50
+			add_stability = 0.05
+			if = {
+				limit = {
+					has_idea = PON_Qubec_Uprisings
+				}
+				remove_ideas = PON_Qubec_Uprisings
+			}
+			remove_relation_modifier = {
+ 				target = PQC
+ 				modifier = PON_quebec_independence
+ 			}
+			add_relation_modifier = {
+				target = PQC
+				modifier = PON_quebec_martial_law
+			}
+		}
+	}
+	focus = {
+		id = PON_comprimise_with_the_quebecois
+		icon = GFX_focus_PON_quebec_canada_treaty
+		x = 1
+		y = 1
+		relative_position_id = PON_Reconquest_of_Qubec
+		prerequisite = {
+			focus = PON_Reconquest_of_Qubec
+		}
+		mutually_exclusive = {
+			focus = PON_Marshal_Law_In_Qubec
+		}
+		cost = 10
+		available = {
+			controls_quebec_trigger = yes
+			#has_idea = PON_Qubec_Uprisings
 		}
 		search_filters = {
 			FOCUS_FILTER_POLITICAL
@@ -1826,27 +1947,39 @@ focus_tree = {
 			factor = 50
 		}
 		completion_reward = {
-			remove_ideas = PON_Qubec_Uprisings
-			if = {
+			add_stability = -0.05
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.05
+			}
+			add_popularity = {
+				ideology = neutrality
+				popularity = -0.10
+			}
+			remove_relation_modifier = {
+ 				target = PQC
+ 				modifier = PON_quebec_independence
+ 			}
+			every_controlled_state = {
 				limit = {
-					NOT = {
-						has_idea = PON_Qubec_Uprisings
-					}
+					is_core_of = PQC
 				}
-				add_political_power = 100
+				add_compliance = 20
+				add_resistance = -5
 			}
 		}
 	}
 	focus = {
 		id = PON_enact_war_powers
 		icon = GFX_focus_generic_emergency_powers
-		x = 0
+		x = 1
 		y = 1
 		relative_position_id = PON_Marshal_Law_In_Qubec
 		prerequisite = {
 			focus = PON_Marshal_Law_In_Qubec
+			focus = PON_comprimise_with_the_quebecois
 		}
-		cost = 5
+		cost = 7
 		available_if_capitulated = yes
 		ai_will_do = {
 			factor = 50
@@ -1855,6 +1988,7 @@ focus_tree = {
 			has_idea = PON_national_service_system_phase_3
 		}
 		completion_reward = {
+			add_stability = -0.05
 			country_event = Ontario.16
 			custom_effect_tooltip = War_Economy_if_war_support_tt
 			if = {
@@ -1876,19 +2010,24 @@ focus_tree = {
 				add_ideas = war_economy
 			}
 			add_ideas = PON_war_powers_enacted
+			set_rule = {
+				#can_create_factions = yes
+				can_declare_war_on_same_ideology = yes
+			}
 		}
 	}
 	#
 	focus = {
 		id = PON_Reconquest_Maitimes
 		icon = GFX_focus_PON_Reconquest_maritimes
-		x = 2
+		x = 3
 		y = 1
 		relative_position_id = PON_Marshal_Law_In_Qubec
 		prerequisite = {
 			focus = PON_Marshal_Law_In_Qubec
+			focus = PON_comprimise_with_the_quebecois
 		}
-		cost = 10
+		cost = 5
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
 		}
@@ -1912,6 +2051,7 @@ focus_tree = {
 				type = annex_everything
 				target = PNB
 			}
+			add_threat = 4
 		}
 	}
 	focus = {
@@ -1928,13 +2068,10 @@ focus_tree = {
 			FOCUS_FILTER_RESEARCH
 		}
 		available = {
-			or = {
-				date > 1940.01.1
-				has_army_manpower = {
-					size > 250000
-				}
-			}
 			owns_state = 31
+			owns_state = 134
+			owns_state = 132
+			owns_state = 131
 			owns_state = 130
 			owns_state = 392
 		}
@@ -1943,42 +2080,91 @@ focus_tree = {
 			factor = 50
 		}
 		completion_reward = {
-			core_quebec = yes
-			core_nova_scotia = yes
-			core_new_brunswick = yes
-			core_prince_edward_island = yes
 			add_timed_idea = {
 				idea = PON_Maritimes_industry
 				days = 300
 			}
 			navy_experience = 100
-			132 = {
-				add_extra_state_shared_building_slots = 2
+			random_owned_controlled_state = {
+				prioritize = {
+					31
+				}
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 0
+					}
+				}
+				add_extra_state_shared_building_slots = 5
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
 				add_building_construction = {
 					type = dockyard
 					level = 2
 					instant_build = yes
 				}
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+					instant_build = yes
+				}
 			}
-			add_war_support = 5
+			random_owned_controlled_state = {
+				prioritize = { 134 }
+				add_resource = {
+					type = coal
+					amount = 2
+				}
+			}
+			random_owned_controlled_state = {
+				prioritize = { 132 }
+				add_resource = {
+					type = coal
+					amount = 2
+				}
+			}
+			random_owned_controlled_state = {
+				prioritize = { 31 }
+				add_resource = {
+					type = coal
+					amount = 2
+				}
+			}
+			random_owned_controlled_state = {
+				prioritize = { 131 }
+				add_resource = {
+					type = coal
+					amount = 2
+				}
+			}
+			add_war_support = 0.10
 		}
 	}
 	focus = {
 		id = PON_Manitoba_is_still_crownland
 		icon = GFX_focus_PON_Manitoba
-		x = -2
+		x = -1
 		y = 1
 		relative_position_id = PON_Marshal_Law_In_Qubec
 		prerequisite = {
 			focus = PON_Marshal_Law_In_Qubec
+			focus = PON_comprimise_with_the_quebecois
 		}
-		cost = 10
+		cost = 5
 		available = {
 			OR = {
 				date > 1939.06.1
 				NOT = {
 					country_exists = PQC
 				}
+			}
+		}
+		bypass = {
+			PMB = {
+				exists = no
 			}
 		}
 		will_lead_to_war_with = PMB
@@ -1994,7 +2180,7 @@ focus_tree = {
 				type = annex_everything
 				target = PMB
 			}
-			core_manitoba = yes
+			#core_manitoba = yes
 		}
 	}
 	#
@@ -2008,7 +2194,7 @@ focus_tree = {
 		prerequisite = {
 			focus = PON_Manitoba_is_still_crownland
 		}
-		cost = 10
+		cost = 5
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
 		}
@@ -2016,11 +2202,17 @@ focus_tree = {
 		ai_will_do = {
 			factor = 50
 		}
+		bypass = {
+			PAB = {
+				exists = no
+			}
+			PSK = {
+				exists = no
+			}
+		}
 		will_lead_to_war_with = PAB
 		will_lead_to_war_with = PSK
 		completion_reward = {
-			core_alberta = yes
-			core_saskatchewan = yes
 			create_wargoal = {
 				type = annex_everything
 				target = PAB
@@ -2029,6 +2221,7 @@ focus_tree = {
 				type = annex_everything
 				target = PSK
 			}
+			add_threat = 4
 		}
 	}
 	#
@@ -2081,7 +2274,7 @@ focus_tree = {
 		prerequisite = {
 			focus = PON_Invasion_of_The_Praries
 		}
-		cost = 10
+		cost = 5
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
 		}
@@ -2089,9 +2282,13 @@ focus_tree = {
 		ai_will_do = {
 			factor = 50
 		}
+		bypass = {
+			PBC = {
+				exists = no
+			}
+		}
 		will_lead_to_war_with = PBC
 		completion_reward = {
-			core_british_columbia = yes
 			create_wargoal = {
 				type = annex_everything
 				target = PBC
@@ -2108,7 +2305,7 @@ focus_tree = {
 		prerequisite = {
 			focus = PON_Invasion_of_The_Praries
 		}
-		cost = 10
+		cost = 5
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
 		}
@@ -2116,11 +2313,17 @@ focus_tree = {
 		ai_will_do = {
 			factor = 50
 		}
+		bypass = {
+			PNT = {
+				exists = no
+			}
+			PYT = {
+				exists = no
+			}
+		}
 		will_lead_to_war_with = PNT
 		will_lead_to_war_with = PYT
 		completion_reward = {
-			core_nwt = yes
-			core_yukon = yes
 			create_wargoal = {
 				type = annex_everything
 				target = PNT
@@ -2147,30 +2350,64 @@ focus_tree = {
 		prerequisite = {
 			focus = PON_The_Territories
 		}
-		available = {
-			has_full_control_of_state = 32
-			has_full_control_of_state = 34
-			has_full_control_of_state = 31
-			has_full_control_of_state = 61
-			has_full_control_of_state = 498
-			has_full_control_of_state = 392
-		}
+		cost = 10
 		x = 2
 		y = 1
-		cost = 1 
-		ai_will_do = {
-			factor = 50
+		available = {
+			count_triggers = {
+				amount > 4
+				custom_trigger_tooltip = {
+					tooltip = controls_manitoba_tt
+					controls_manitoba_trigger = yes
+				}
+				custom_trigger_tooltip = {
+					tooltip = controls_saskatchewan_tt
+					controls_saskatchewan_trigger = yes
+				}
+				custom_trigger_tooltip = {
+					tooltip = controls_british_columbia_tt
+					controls_british_columbia_trigger = yes
+				}
+				custom_trigger_tooltip = {
+					tooltip = controls_alberta_tt
+					controls_alberta_trigger = yes
+				}
+				custom_trigger_tooltip = {
+					tooltip = controls_new_brunswick_tt
+					controls_new_brunswick_trigger = yes
+				}
+				custom_trigger_tooltip = {
+					tooltip = controls_nova_scotia_tt
+					controls_nova_scotia_trigger = yes
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = controls_newfoundland_tt
+				controls_newfoundland_and_labrador_trigger = yes
+			}
+			custom_trigger_tooltip = {
+				tooltip = controls_quebec_tt
+				controls_quebec_trigger = yes
+			}
+			custom_trigger_tooltip = {
+				tooltip = controls_ontario_tt
+				controls_ontario_trigger = yes
+			}
 		}
-		available_if_capitulated = no
 		completion_reward = {
-			load_focus_tree = canada_focus
+			core_canada = yes
 			set_cosmetic_tag = CAN_UNIFIED_ENG
 			PON = {
 				country_event = {
 					id = Ontario.21
 				}
 			}
+			load_focus_tree = canada_focus
 		}
+		ai_will_do = {
+			factor = 50
+		}
+		available_if_capitulated = no
 	}
 	#
 	focus = {
@@ -4040,7 +4277,7 @@ focus_tree = {
 			always = no
 		}
 		completion_reward = {
-			###KING WIN
+			custom_effect_tooltip = focus_will_bypass_tt
 		}
 	}
 	focus = {
@@ -4061,6 +4298,12 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
+			hidden_effect = {
+				country_event = {
+					id = Ontario.13
+					days = 15
+				}
+			}
 			###ADD OPERATIVE idea thing
 			####UNLOCKS DECISON TO ARREST RADICALS
 			add_ideas = PON_defence_of_ontario_regulations_democratic
@@ -4208,6 +4451,9 @@ focus_tree = {
 				set_state_flag = canadian_province_capital_flag
 			}
 			###ADD BUFF AND SETS NEW DIRECTION OF ONTARIO, to conquest of the great lakes, or conquest of canada.
+			set_rule = {
+				can_create_factions = yes
+			}
 		}
 	}
 	focus = {
@@ -4288,6 +4534,7 @@ focus_tree = {
 			always = no
 		}
 		completion_reward = {
+			add_threat = 10
 			###ADD BUFF AND SETS NEW DIRECTION OF ONTARIO, to conquest of the great lakes, or conquest of canada.
 			add_timed_idea = {
 				idea = NCC_massive_construction_spending
@@ -4694,6 +4941,7 @@ focus_tree = {
 			factor = 100
 		}
 		completion_reward = {
+			add_threat = 10
 			add_tech_bonus = {
 				name = x
 				bonus = 1
