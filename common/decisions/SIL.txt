@@ -1,0 +1,442 @@
+SIL_public_works = {
+    SIL_renovate_chicago = {
+		icon = decision_category_SOV_merge_designers
+		available = {
+            has_completed_focus = SIL_public_works
+		}
+		allowed = {
+            tag = SIL    
+		}
+		cost = 50
+		ai_will_do = {
+			factor = 50
+		}
+		days_remove = 35
+		modifier = {
+			civilian_factory_use = 2
+		}
+		fire_only_once = yes
+		visible = {
+            original_tag = SIL
+		}
+		remove_effect = {
+			
+		}
+		complete_effect = {
+		41 = {
+            remove_dynamic_modifier = { modifier = SIL_mob_wars }
+        }
+        692 = {
+            remove_dynamic_modifier = { modifier = SIL_mob_wars }
+			}
+		}		
+	}
+	SIL_englewood_suburbs = {
+		icon = decision_category_SOV_merge_designers
+		available = {
+            has_completed_focus = SIL_public_works
+		}
+		allowed = {
+            tag = SIL   
+		}
+		cost = 50
+		ai_will_do = {
+			factor = 50
+		}
+		days_remove = 50
+		modifier = {
+			civilian_factory_use = 2
+		}
+		fire_only_once = yes
+		visible = {
+            original_tag = SIL
+		}
+		remove_effect = {
+			
+		}
+		complete_effect = {
+            41 = {
+                add_building_construction = {
+                    type = infrastructure
+                    level = 1
+                    instant_build = yes
+                }
+                add_extra_state_shared_building_slots = 3
+                add_building_construction = {
+                    type = industrial_complex
+                    level = 3
+                    instant_build = yes
+                }
+			}
+		}		
+	}
+}
+SIL_spread_the_machine_category = {
+    SIL_spread_the_machine = {
+		allowed = {
+			original_tag = SIL
+		}
+        visible = {
+            OR = {
+                has_completed_focus = SIL_mafia_diplomacy
+                has_completed_focus = SIL_mobilize_superpatriots
+                has_completed_focus = SIL_interventionism
+            }
+        }
+		target_root_trigger = {
+            OR = {
+                has_completed_focus = SIL_mafia_diplomacy
+                has_completed_focus = SIL_mobilize_superpatriots
+                has_completed_focus = SIL_interventionism
+            }
+		}
+		available = {
+			NOT = {
+				has_wargoal_against = FROM
+			}
+		}
+		target_array = neighbors
+		icon = GFX_decision_hol_draw_up_staff_plans
+		cost = 50
+		days_remove = 60
+		war_with_target_on_complete = yes
+
+        remove_effect = {
+            create_wargoal = {
+				target = FROM
+				type = puppet_wargoal_focus
+			}
+        }
+        
+		complete_effect = {
+            custom_effect_tooltip = SIL_integration_requires_subjugation_tt 
+            every_state = {
+                limit = {
+                    is_core_of = FROM
+                    is_owned_and_controlled_by = FROM
+                } 
+                add_claim_by = ROOT
+                add_to_array = {
+                    array = SIL_this_is_what_you_cored_before_i_invaded_array
+                    value = FROM.FROM
+                }
+            }
+            add_to_array = {
+                array = global.SIL_invaded_countries_array
+                value = FROM.id
+            }
+		}
+        
+	}
+}
+SIL_spread_the_machine_integration_category = {
+    SIL_spread_the_machine_integration = {
+		allowed = {
+			original_tag = SIL
+		}
+        visible = {
+            OR = {
+                has_completed_focus = SIL_mafia_diplomacy
+                has_completed_focus = SIL_mobilize_superpatriots
+                has_completed_focus = SIL_interventionism
+            }
+        }
+		target_root_trigger = {
+            OR = {
+                has_completed_focus = SIL_mafia_diplomacy
+                has_completed_focus = SIL_mobilize_superpatriots
+                has_completed_focus = SIL_interventionism
+            }
+		}
+		available = {
+            is_in_array = {
+                array = global.SIL_invaded_countries_array
+                value = FROM.id
+            }
+            FROM = {
+                is_subject_of = ROOT
+            }
+            ####DYANMIC REFERENCE TO THE STATES
+		}
+		target_array = global.SIL_invaded_countries_array
+		icon = GFX_decision_hol_draw_up_staff_plans
+		cost = 100
+		days_remove = 100
+		#war_with_target_on_complete = yes
+        remove_effect = {
+            every_state = {
+                limit = {
+                    is_in_array = {
+                        array = SIL_this_is_what_you_cored_before_i_invaded_array
+                        value = FROM.FROM
+                    }
+                }
+                add_core_of = ROOT
+            }
+            annex_country = {
+                target = FROM
+            }
+        }
+		complete_effect = {
+            remove_from_array = {
+                array = global.SIL_invaded_countries_array
+                value = FROM.id
+            }
+		}
+	}
+}
+#SIL_invade_shit1_category = {
+#    SIL_invade_shit1 = {
+#		allowed = {
+#			original_tag = SIL
+#		}
+#        visible = {
+#            has_completed_focus = SIL_mobilize_superpatriots
+#        }
+#		target_root_trigger = {
+#			has_completed_focus = SIL_mobilize_superpatriots
+#		}
+#		available = {
+#			NOT = {
+#				has_wargoal_against = FROM
+#			}
+#		}
+#		target_array = neighbors
+#		icon = GFX_decision_hol_draw_up_staff_plans
+#		cost = 25
+#		days_remove = 7
+#		war_with_target_on_complete = yes
+#		complete_effect = {
+#			create_wargoal = {
+#				target = FROM
+#				type = annex_everything
+#			}
+#		}
+#	}
+#}
+#SIL_invade_shit2_category = {
+#    SIL_invade_shit2 = {
+#		allowed = {
+#			original_tag = SIL
+#		}
+#        visible = {
+#            has_completed_focus = SIL_interventionism
+#        }
+#		target_root_trigger = {
+#			has_completed_focus = SIL_interventionism
+#		}
+#		available = {
+#			NOT = {
+#				has_wargoal_against = FROM
+#			}
+#		}
+#		target_array = neighbors
+#		icon = GFX_decision_hol_draw_up_staff_plans
+#		cost = 25
+#		days_remove = 7
+#		war_with_target_on_complete = yes
+#		complete_effect = {
+#			create_wargoal = {
+#				target = FROM
+#				type = annex_everything
+#			}
+#		}
+#	}
+#}
+#SIL_core_shit_category = {
+#    SIL_integrate_SIN = {
+#        available = {
+#            original_tag = SIL
+#            or = {
+#                SIL = {
+#                    controls_indiana_trigger = yes
+#                }
+#                SIN = {
+#                    is_subject_of = SIL
+#                }
+#            }
+#        }
+#        visible = {
+#			OR = {
+#            has_completed_focus = SIL_interventionism
+#			has_completed_focus = SIL_mobilize_superpatriots
+#			}
+#        }
+#        fire_only_once = yes 
+#        cost = 100
+#        complete_effect = {
+#            core_indiana = yes
+#            if = {
+#                limit = {
+#                    SIN = {
+#                        is_subject_of = SIL 
+#                    }
+#                }
+#                annex_country = {
+#                    target = SIN
+#                    transfer_troops = yes
+#                }
+#            }
+#        }
+#    }
+#	SIL_integrate_SOH = {
+#        available = {
+#            original_tag =SIL
+#            or = {
+#                SIL = {
+#                    controls_ohio_trigger = yes
+#                }
+#                SOH = {
+#                    is_subject_of = SIL
+#                }
+#            }
+#        }
+#        visible = {
+#			OR = {
+#            has_completed_focus = SIL_interventionism
+#			has_completed_focus = SIL_mobilize_superpatriots
+#			}
+#        }
+#        fire_only_once = yes 
+#        cost = 125
+#        complete_effect = {
+#            core_ohio = yes
+#            if = {
+#                limit = {
+#                    SOH = {
+#                        is_subject_of = SIL 
+#                    }
+#                }
+#                annex_country = {
+#                    target = SOH
+#                    transfer_troops = yes
+#                }
+#            }
+#        }
+#    }
+#	SIL_integrate_SMI = {
+#        available = {
+#            original_tag = SIL
+#            or = {
+#                SIL = {
+#                    controls_michigan_trigger = yes
+#                }
+#                SMI = {
+#                    is_subject_of = SIL
+#                }
+#            }
+#        }
+#        visible = {
+#			OR = {
+#            has_completed_focus = SIL_interventionism
+#			has_completed_focus = SIL_mobilize_superpatriots
+#			}
+#        }
+#        fire_only_once = yes 
+#        cost = 100
+#        complete_effect = {
+#            core_michigan = yes
+#            if = {
+#                limit = {
+#                    SMI = {
+#                        is_subject_of = SIL
+#                    }
+#                }
+#                annex_country = {
+#                    target = SMI
+#                    transfer_troops = yes
+#                }
+#            }
+#        }
+#    }
+#	SIL_integrate_SWI = {
+#        available = {
+#            original_tag =SIL
+#            or = {
+#                SWI = {
+#                    exists = no 
+#                    AND = {
+#                        531 = {
+#                            is_controlled_by = SIL 
+#                        }
+#                    }
+#                }
+#                SWI = {
+#                    is_subject_of = SIL
+#                }
+#            }
+#        }
+#        visible = {
+#			OR = {
+#            has_completed_focus = SIL_interventionism
+#			has_completed_focus = SIL_mobilize_superpatriots
+#			}
+#        }
+#        fire_only_once = yes 
+#        cost = 100
+#        complete_effect = {
+#            every_state = {
+#                limit = {
+#                    is_core_of = SWI
+#                }
+#                add_core_of = SIL 
+#            }
+#            if = {
+#                limit = {
+#                    SWI = {
+#                        is_subject_of = SIL 
+#                    }
+#                }
+#                annex_country = {
+#                    target = SWI
+#                    transfer_troops = yes
+#                }
+#            }
+#        }
+#    }
+#	SIL_integrate_SMN = {
+#        available = {
+#            original_tag =SIL
+#            or = {
+#                AND = {
+#                    531 = {
+#                        is_controlled_by = SIL 
+#                    }
+#                    SMN = {
+#                        exists = no 
+#                    }
+#                }
+#                SMN = {
+#                    is_subject_of = SIL
+#                }
+#            }
+#        }
+#        visible = {
+#			OR = {
+#            has_completed_focus = SIL_interventionism
+#			has_completed_focus = SIL_mobilize_superpatriots
+#			}
+#        }
+#        fire_only_once = yes 
+#        cost = 100
+#        complete_effect = {
+#            every_state = {
+#                limit = {
+#                    is_core_of = SMN
+#                }
+#                add_core_of = SIL 
+#            }
+#            if = {
+#                limit = {
+#                    SMN = {
+#                        is_subject_of = SIL 
+#                    }
+#                }
+#                annex_country = {
+#                    target = SMN
+#                    transfer_troops = yes
+#                }
+#            }
+#        }
+#    }
+#}

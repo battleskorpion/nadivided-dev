@@ -1,0 +1,3328 @@
+focus_tree = {
+	id = Tidewater
+	
+	country = {
+		factor = 0
+		
+		modifier = {
+			add = 10
+			tag = TDW
+
+		}
+	}
+		
+	default = no
+
+	continuous_focus_position = { x = 50 y = 2800 }
+
+focus = {
+		id = TDW_Organize_our_forces
+		icon = GFX_focus_TDW_organize_our_forces
+		x = 0
+		y = 2
+		cost = 1
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		
+		available_if_capitulated = no
+		available = {
+
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+			add_offsite_building = { type = arms_factory level = 3 }
+            add_equipment_to_stockpile = {
+				type = infantry_equipment
+				amount = 6000
+				producer = SNY
+			}			
+			army_experience = 35
+			add_manpower = 14500
+		}
+	}
+
+		focus = {
+		id = TDW_arms_for_our_insurrections
+		icon = GFX_focus_TDW_arms_for_insurection
+		x = 0
+		y = 1
+		relative_position_id = TDW_Organize_our_forces
+        prerequisite = { focus = TDW_Organize_our_forces }
+		cost = 5
+
+		search_filters = {  FOCUS_FILTER_POLITICAL }
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 2
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 2
+						include_locked = yes
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = arms_factory
+										size > 2
+										include_locked = yes
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+	}
+
+    focus = {
+        id = TDW_Equality_in_the_army
+        icon = GFX_focus_TDW_equality_in_army
+        prerequisite = { focus = TDW_arms_for_our_insurrections}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_arms_for_our_insurrections
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+			add_war_support = 0.10
+			add_ideas = army_equality
+        }
+    }
+
+    focus = {
+        id = TDW_Laws_plan
+        icon = GFX_focus_TDW_laws_plan
+        prerequisite = { focus = TDW_Equality_in_the_army}
+        available = {
+
+        }
+
+        mutually_exclusive = { focus = TDW_Haywood_plan}
+
+        x = 3
+        y = 1
+        relative_position_id = TDW_Equality_in_the_army
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+			army_experience = 35
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 2
+				category = cat_superior_firepower
+			}
+        }
+    }
+
+    focus = {
+        id = TDW_industry_for_big_guns
+        icon = GFX_focus_TDW_industry_for_big_guns
+        prerequisite = { focus = TDW_Laws_plan}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Laws_plan
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_offsite_building = { type = arms_factory level = 3 }
+
+        }
+    }
+
+    focus = {
+        id = TDW_Recon_is_key
+        icon = GFX_focus_TDW_recon
+        prerequisite = { focus = TDW_industry_for_big_guns}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_industry_for_big_guns
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		add_tech_bonus = {
+				name = recon_tech
+				bonus = 1.0
+				uses = 2
+				category = recon_tech
+			}
+        }
+    }
+
+    focus = {
+        id = TDW_Equipment_specialization
+        icon = GFX_focus_TDW_Equipment_specialization
+        prerequisite = { focus = TDW_Recon_is_key}
+        available = {
+
+        }
+        x = -2
+        y = 1
+        relative_position_id = TDW_Recon_is_key
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		add_tech_bonus = {
+				name = support_tech
+				bonus = 1.0
+				uses = 2
+				category = support_tech
+			}
+        }
+    }
+
+    focus = {
+        id = TDW_Develop_rocket_weapons
+        icon = GFX_focus_TDW_rocket
+        prerequisite = { focus = TDW_Anti_air_coordination }
+        available = {
+
+        }
+        x = -1
+        y = 1
+        relative_position_id = TDW_Anti_air_coordination
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        mutually_exclusive = { focus = TDW_Mass_production}
+
+        completion_reward = {
+            add_tech_bonus = {
+                    name = rocket_bonus
+                    bonus = 1.0
+                    uses = 2
+                    category = mot_rockets
+                }
+                add_equipment_to_stockpile = {
+                    type = motorized_rocket_equipment
+                    amount = 150
+                    producer = TDW
+            }
+        }
+    }
+
+    focus = {
+        id = TDW_Mass_production
+        icon = GFX_focus_TDW_mass_production
+        prerequisite = { focus = TDW_Anti_air_coordination focus = TDW_Establish_Tidewater_marine_corps}
+        available = {
+
+        }
+        x = 1
+        y = 1
+        relative_position_id = TDW_Anti_air_coordination
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        mutually_exclusive = { focus = TDW_Develop_rocket_weapons}
+
+        completion_reward = {
+		add_ideas = mass_gun_production
+        }
+    }
+
+
+    focus = {
+        id = TDW_Anti_air_coordination
+        icon = GFX_focus_TDW_antiair
+        prerequisite = { focus = TDW_Recon_is_key}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Recon_is_key
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		359 = {
+				add_building_construction = {
+					type = anti_air_building
+					level = 5
+					instant_build = yes
+				}
+			}
+		
+			
+        }
+    }
+
+    focus = {
+        id = TDW_Establish_Tidewater_marine_corps
+        icon = GFX_focus_TDW_marines
+        prerequisite = { focus = TDW_Recon_is_key}
+        available = {
+
+        }
+        x = 2
+        y = 1
+        relative_position_id = TDW_Recon_is_key
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		
+			army_experience = 45
+			add_ideas = special_forces
+			add_tech_bonus = {
+				name = special_forces_bonus
+				bonus = 1.0
+				uses = 1
+				technology = marines
+				technology = marines2
+			}
+		}
+        
+    }
+
+
+    focus = {
+        id = TDW_Haywood_plan
+        icon = GFX_focus_TDW_haywood
+        prerequisite = { focus = TDW_Equality_in_the_army}
+        available = {
+
+        }
+
+        mutually_exclusive = { focus = TDW_Laws_plan}
+
+        x = -3
+        y = 1
+        relative_position_id = TDW_Equality_in_the_army
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+			army_experience = 35
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = cat_mass_assault
+			}
+        }
+    }
+
+    focus = {
+        id = TDW_Empower_the_infantryman
+        icon = GFX_focus_TDW_empower_infantry_man
+        prerequisite = { focus = TDW_Haywood_plan}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Haywood_plan
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.5
+				uses = 3
+				category = infantry_weapons
+				category = artillery
+			}
+		}
+    }
+
+    focus = {
+        id = TDW_Military_police_investment
+        icon = GFX_focus_TDW_military_police
+        prerequisite = { focus = TDW_Empower_the_infantryman}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Empower_the_infantryman
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+			add_tech_bonus = {
+				name = police
+				bonus = 2.0
+				uses = 3
+				category = military_police_tech
+			}
+        }
+    }
+
+    focus = {
+        id = TDW_Seize_the_initiative
+        icon = GFX_focus_TDW_seize_the_initive
+        prerequisite = { focus = TDW_Military_police_investment}
+        available = {
+
+        }
+        x = -2
+        y = 1
+        relative_position_id = TDW_Military_police_investment
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+			army_experience = 10
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 1.0
+				uses = 1
+				category = cat_mass_assault
+			}
+        }
+    }
+
+    focus = {
+        id = TDW_Tank_focus
+        icon = GFX_focus_TDW_tanks
+        prerequisite = { focus = TDW_Motorized_swarms focus = TDW_Concentrated_swarms }
+        available = {
+
+        }
+        x = 3
+        y = 1
+        relative_position_id = TDW_Seize_the_initiative
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        mutually_exclusive = { focus = TDW_Infantry_weapons_are_priority}
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = armor_bonus
+				bonus = 1.0
+				uses = 2
+				category = armor
+			}
+			add_ideas = tank_priority
+		}
+    }
+
+    focus = {
+        id = TDW_Infantry_weapons_are_priority
+        icon = GFX_focus_TDW_focus_on_infantry_weapons
+        prerequisite = { focus = TDW_Seize_the_initiative focus = TDW_Concentrated_swarms }
+        available = {
+
+        }
+        x = 1
+        y = 1
+        relative_position_id = TDW_Seize_the_initiative
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        mutually_exclusive = { focus = TDW_Tank_focus}
+
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 3.0
+				uses = 1
+				category = infantry_weapons
+			}
+			
+		}
+        
+    }
+
+
+    focus = {
+        id = TDW_Concentrated_swarms
+        icon = GFX_focus_TDW_concentrated_swarms
+        prerequisite = { focus = TDW_Military_police_investment}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Military_police_investment
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		
+			army_experience = 10
+			add_doctrine_cost_reduction = {
+				name = land_doc_bonus
+				cost_reduction = 0.5
+				uses = 2
+				category = cat_mass_assault
+			}
+        }
+    }
+
+    focus = {
+        id = TDW_Motorized_swarms
+        icon = GFX_focus_TDW_motorized_swarms
+        prerequisite = { focus = TDW_Military_police_investment}
+        available = {
+
+        }
+        x = 2
+        y = 1
+        relative_position_id = TDW_Military_police_investment
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = motorized_bonus
+				bonus = 3.0
+				technology = motorised_infantry
+			}
+			add_equipment_to_stockpile = {
+				type = motorized_equipment_1
+				amount = 400
+				producer = WDC
+			}
+
+		}
+    }
+
+
+focus = {
+		id = TDW_Organizing_our_leadership
+		icon = GFX_focus_TDW_organize_our_leadership
+		x = 14
+		y = 2
+		cost = 1
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		
+		available_if_capitulated = no
+		available = {
+		has_war = no
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		add_political_power = 150
+		}
+	}
+    
+    focus = {
+        id = TDW_Rally
+        icon = GFX_focus_TDW_rally
+        prerequisite = { focus = TDW_Organizing_our_leadership}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Organizing_our_leadership
+        cost = 2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		add_war_support = 0.10
+        }
+    }
+
+    focus = {
+        id = TDW_Tide_water_constitutional_congress
+        icon = GFX_focus_TDW_constution
+        prerequisite = { focus = TDW_Rally}
+		available = {
+		NOT = {
+		country_exists = SVA
+		}
+
+		
+        }
+        x = -0
+        y = 1
+        relative_position_id = TDW_Rally
+        cost = 1
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		country_event = {
+				id  = tidewater.1
+			}
+        }
+    }
+
+
+    focus = {
+        id = TDW_Haywood
+        icon = GFX_focus_TDW_haywood
+        prerequisite = { focus = TDW_Tide_water_constitutional_congress}
+        available = {
+		always = no
+        }
+
+        mutually_exclusive = { focus = TDW_Randolphs_Progress}
+
+        x = -4
+        y = 1
+        relative_position_id = TDW_Tide_water_constitutional_congress
+        cost = 1
+        ai_will_do = {
+            factor = 4000
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		add_popularity = {
+		ideology = communism
+		popularity = 0.05
+			}		
+        }
+    }
+
+    focus = {
+        id = TDW_Formation_of_vanguard_party
+        icon = GFX_focus_TDW_formation_of_guard_party
+        prerequisite = { focus = TDW_Haywood}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Haywood
+        cost = 2
+        ai_will_do = {
+            factor = 1000
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		add_popularity = {
+		ideology = communism
+		popularity = 0.05
+		}
+		add_stability = 0.05
+		add_state_core = 358
+		add_state_core = 763
+		add_state_core = 137
+		add_state_core = 209
+		add_state_core = 334
+		add_state_core = 765
+		add_state_core = 762
+		add_state_core = 761
+		add_state_core = 764
+		add_state_core = 357
+		add_political_power = 250
+
+        }
+    }
+
+    focus = {
+        id = TDW_Purge_pacifists
+        icon = GFX_focus_TDW_purge_pacificsts
+        prerequisite = { focus = TDW_Formation_of_vanguard_party}
+        available = {
+
+        }
+        x = -1
+        y = 1
+        relative_position_id = TDW_Formation_of_vanguard_party
+        cost = 6
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		add_popularity = {
+		ideology = progressivism
+		popularity = -0.1
+		}
+		add_war_support = 0.10	
+
+        }
+    }
+
+    focus = {
+        id = TDW_Uproot_bourgeoisie
+        icon = GFX_focus_TDW_Uproot_bourgeoisie
+        prerequisite = { focus = TDW_Purge_pacifists}
+        available = {
+
+        }
+        x = 1
+        y = 1
+        relative_position_id = TDW_Purge_pacifists
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		add_ideas = TDW_collective_farms
+        }
+    }
+
+    focus = {
+        id = TDW_cultural_revolution
+        icon = GFX_focus_TDW_cultural_revolution
+        prerequisite = { focus = TDW_Uproot_bourgeoisie}
+        available = {
+		NOT = {
+		country_exists = SVA
+		}
+
+		
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Uproot_bourgeoisie
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		add_stability = -0.15
+		add_ideas = TDW_cultural_revolution
+        }
+    }
+
+    focus = {
+        id = TDW_introduce_forced_labour_as_punisment
+        icon = GFX_focus_TDW_forced_labour
+        prerequisite = { focus = TDW_cultural_revolution}
+        available = {
+
+        }
+        x = 2
+        y = 1
+        relative_position_id = TDW_cultural_revolution
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		358 = {
+				add_extra_state_shared_building_slots = 3
+				add_building_construction = {
+					type = industrial_complex
+					level = 3
+					instant_build = yes
+				}
+			}
+		add_ideas = TDW_forced_labor
+        }
+    }
+
+    focus = {
+        id = TDW_Political_education_for_masses
+        icon = GFX_focus_TDW_political_education
+        prerequisite = { focus = TDW_cultural_revolution}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_cultural_revolution
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		add_research_slot = 1
+
+        }
+    }
+    focus = {
+        id = TDW_mason_dixon
+        icon = GFX_goal_generic_major_war
+        prerequisite = {
+            focus = TDW_Haywood
+            focus = TDW_Randolphs_Progress
+        }
+        available = {
+
+        }
+        x = -1
+        y = 2
+        relative_position_id = TDW_Tide_water_constitutional_congress
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            core_maryland = yes
+            core_delaware = yes
+            core_west_virginia = yes
+            create_wargoal = {
+                type = annex_everything
+                target = SMD
+            }
+            create_wargoal = {
+                type = annex_everything
+                target = SWV
+            }
+            create_wargoal = {
+                type = annex_everything
+                target = WDC
+            }
+        }
+    }
+    focus = {
+        id = TDW_black_white_united_front
+        icon = GFX_focus_TDW_black_white_united_front
+        prerequisite = { focus = TDW_cultural_revolution
+						focus = TDW_Political_education_for_masses}
+        available = {
+
+        }
+
+        mutually_exclusive = { focus = TDW_blacks_at_the_helm}
+
+        x = -2
+        y = 1
+        relative_position_id = TDW_Political_education_for_masses
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		set_rule = {
+		can_create_factions = yes
+		}
+		swap_ideas = {
+		add_idea = TDW_cultural_revolution2
+		remove_idea = TDW_cultural_revolution
+			}
+		country_event = {
+                id = tidewater.9
+            }	
+        }
+    }
+
+    focus = {
+        id = TDW_Support_dawson_Carolina_communists
+        icon = GFX_focus_TDW_carolina_communists
+        prerequisite = { focus = TDW_black_white_united_front}
+        available = {
+
+        }
+		bypass = {
+		SNC = { has_government = communism }
+		}
+        x = 1
+        y = 1
+        relative_position_id = TDW_black_white_united_front
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		SNC = { add_timed_idea = { idea = SNC_dawson_communists  days = 100 }
+
+		}
+		SSC = {  add_timed_idea = { idea = SNC_dawson_communists  days = 80 }
+		}
+		country_event = {
+                id = tidewater.2
+            }
+		add_threat = 5	
+        }
+    }
+
+    focus = {
+        id = TDW_Suggest_allaince_with_dawson
+        icon = GFX_focus_TDW_blacks_at_helm
+        prerequisite = { focus = TDW_black_white_united_front}
+
+        mutually_exclusive = { focus = TDW_deal_with_north_carolina}
+
+        available = {
+		SNC = { has_government = communism }
+		SNC = { is_ai = no }
+		
+        }
+        x = -1
+        y = 1
+        relative_position_id = TDW_black_white_united_front
+        cost = 1
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		set_rule = {
+		can_create_factions = yes
+			}
+		create_faction = Southern_Comintern	
+		TDW = { add_to_faction = SNC }
+		}
+    }
+
+    focus = {
+        id = TDW_deal_with_north_carolina
+        icon = GFX_goal_generic_major_war
+        prerequisite = { focus = TDW_black_white_united_front}
+
+        mutually_exclusive = { focus = TDW_Suggest_allaince_with_dawson}
+
+        available = {
+		SNC = { is_ai = yes }
+        SNC = { has_government = communism }
+        }
+        x = -3
+        y = 1
+        relative_position_id = TDW_black_white_united_front
+        cost = 1
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+    
+        completion_reward = {
+		annex_country = {
+        target = SNC
+        transfer_troops = yes
+        }
+		core_south_carolina = yes
+		core_north_carolina = yes
+        }
+    }
+
+    focus = {
+        id = TDW_Take_advantage_of_the_situation
+        icon = GFX_focus_TDW_take_advantage_of_situation
+        prerequisite = { focus = TDW_Support_dawson_Carolina_communists}
+        available = {
+        }
+		bypass = {
+		OR = { 
+		has_war_with = SNC
+		NOT = {
+		country_exists = SNC
+			}
+				}
+					}
+        x = 0
+        y = 1
+        relative_position_id = TDW_Support_dawson_Carolina_communists
+        cost = 1
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		create_wargoal = {
+		type = annex_everything
+		target = SNC
+			}
+        }
+    }
+
+    focus = {
+        id = TDW_strike_South_carolina
+        icon = GFX_focus_TDW_strike_sc
+        prerequisite = { focus = TDW_Take_advantage_of_the_situation}
+        available = {
+        }
+		bypass = {
+		OR = { 
+		has_war_with = SSC
+		NOT = {
+		country_exists = SSC
+			}
+				}
+					}
+        x = -1
+        y = 1
+        relative_position_id = TDW_Take_advantage_of_the_situation
+        cost = 1
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		create_wargoal = {
+		type = annex_everything
+		target = SSC
+			}
+        }
+    }
+
+    focus = {
+        id = TDW_march_to_The_sea
+        icon = GFX_focus_TDW_march_to_The_sea
+        prerequisite = { focus = TDW_strike_South_carolina}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_strike_South_carolina
+        cost = 3
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		create_wargoal = {
+		type = annex_everything
+		target = SGA
+			}
+        }
+    }
+
+    focus = {
+        id = TDW_Atlanta_conference
+        icon = GFX_focus_TDW_Atlanta_conference
+        prerequisite = { focus = TDW_march_to_The_sea}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_march_to_The_sea
+        cost = 2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		create_wargoal = {
+		type = annex_everything
+		target = SAL
+			}
+			create_wargoal = {
+		type = annex_everything
+		target = SMS
+			}
+		annex_country = {
+		target = FNS
+		transfer_troops = yes
+		}
+		annex_country = {
+		target = DOU
+		transfer_troops = yes
+		}
+		annex_country = {
+		target = SHE
+		transfer_troops = yes
+		}
+
+		country_event = {
+                id = tidewater.3
+            }
+        }
+    }
+
+    focus = {
+        id = TDW_Southern_comitee_strikes_long
+        icon = GFX_focus_SAL_end_jeffersonians
+        prerequisite = { focus = TDW_Atlanta_conference}
+		bypass = {
+		NOT = {
+		country_exists = SLA
+		}
+		}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Atlanta_conference
+        cost = 1
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		SLA = { add_timed_idea = { idea = TDW_communist_rebels  days = 80 }
+		create_wargoal = {
+		type = annex_everything
+		target = SLA
+				}
+			}
+		}
+		
+	}
+    focus = {
+        id = TDW_Sunbelt_people_republic
+        icon = GFX_focus_TDW_sunbelt_peoples
+        prerequisite = { focus = TDW_Southern_comitee_strikes_long}
+        available = {
+		controls_state = 752	
+		OR = {
+		owns_state = 752
+		controls_state = 752
+		}
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Southern_comitee_strikes_long
+        cost = 7.2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            set_cosmetic_tag = SUNBELT
+			set_capital = {state = 752}
+			core_louisiana = yes
+			core_arkansas = yes
+        }
+    }
+
+    focus = {
+        id = TDW_Tackle_texan_behemoth
+        icon = GFX_focus_TDW_Tackle_texan_behemoth
+        prerequisite = { focus = TDW_Sunbelt_people_republic}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Sunbelt_people_republic
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		create_wargoal = {
+		type = annex_everything
+		target = STX
+			}
+			create_wargoal = {
+		type = annex_everything
+		target = MTX
+			}
+        }
+    }
+
+    focus = {
+        id = TDW_Across_the_rio
+        icon = GFX_focus_TDW_invades
+        prerequisite = { focus = TDW_Tackle_texan_behemoth}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Tackle_texan_behemoth
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		create_wargoal = {
+		type = annex_everything
+		target = MTA
+			}
+			create_wargoal = {
+		type = annex_everything
+		target = MNL
+			}
+			create_wargoal = {
+		type = annex_everything
+		target = MCO
+			}
+		core_tamaulipas = yes
+		core_nuevo_leon = yes
+		core_coahuila = yes
+		core_chihuahua = yes
+			
+        }
+    }
+
+    focus = {
+        id = TDW_invade_central_mexico
+        icon = GFX_focus_TDW_invades
+        prerequisite = { focus = TDW_Across_the_rio}
+        available = {
+
+        }
+        x = -2
+        y = 1
+        relative_position_id = TDW_Across_the_rio
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		create_wargoal = {
+		type = annex_everything
+		target = MDC
+			}
+			create_wargoal = {
+		type = annex_everything
+		target = MEX
+			}
+			create_wargoal = {
+		type = annex_everything
+		target = MTB
+			}
+        }
+    }
+
+    focus = {
+        id = TDW_invade_yucatan_peninsula
+        icon = GFX_focus_TDW_invades
+        prerequisite = { focus = TDW_Across_the_rio}
+        available = {
+
+        }
+        x = 2
+        y = 1
+        relative_position_id = TDW_Across_the_rio
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		create_wargoal = {
+		type = annex_everything
+		target = MYU
+			}
+			create_wargoal = {
+		type = annex_everything
+		target = MQR
+			}
+			create_wargoal = {
+		type = annex_everything
+		target = MCA
+			}
+        }
+    }
+
+    focus = {
+        id = TDW_invade_cuba
+        icon = GFX_focus_TDW_invade_cuba
+        prerequisite = { focus = TDW_Across_the_rio}
+        available = {
+
+        }
+        x = 4
+        y = 1
+        relative_position_id = TDW_Across_the_rio
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		create_wargoal = {
+		type = annex_everything
+		target = CUB
+			}
+		core_cuba = yes	
+        }
+    }
+
+    focus = {
+        id = TDW_invade_florida
+        icon = GFX_focus_TDW_invades
+        prerequisite = { focus = TDW_Across_the_rio}
+        available = {
+
+        }
+        x = -4
+        y = 1
+        relative_position_id = TDW_Across_the_rio
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		create_wargoal = {
+		type = annex_everything
+		target = SFL
+			}
+				country_event = {
+                id = tidewater.8
+            }	
+        }
+    }
+
+
+    focus = {
+        id = TDW_Black_White_and_Mexican_one_people
+        icon = GFX_focus_TDW_Black_White_and_Mexican_one_people
+        prerequisite = { focus = TDW_Across_the_rio}
+        available = {
+		controls_state = 589
+		controls_state = 691
+		controls_state = 468
+		controls_state = 164
+		controls_state = 752
+		controls_state = 11
+		controls_state = 465
+		controls_state = 563
+        }
+        x = 0
+        y = 2
+        relative_position_id = TDW_Across_the_rio
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		create_wargoal = {
+		type = annex_everything
+		target = MTA
+		}
+		create_wargoal = {
+		type = annex_everything
+		target = MNL
+		}
+		country_event = {
+                id = tidewater.7
+            }
+		
+		}
+    }
+
+
+    focus = {
+        id = TDW_blacks_at_the_helm
+        icon = GFX_focus_TDW_blacks_at_helm
+        prerequisite = { focus = TDW_Political_education_for_masses
+						focus = TDW_cultural_revolution}
+        available = {
+
+        }
+
+        mutually_exclusive = { focus = TDW_black_white_united_front}
+
+        x = 3
+        y = 1
+        relative_position_id = TDW_Political_education_for_masses
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		set_rule = {
+    can_create_factions = yes
+		}
+		swap_ideas = {
+		add_idea = TDW_cultural_revolution2
+		remove_idea = TDW_cultural_revolution
+			}
+
+        }
+    }
+
+    focus = {
+        id = TDW_strike_the_carolinas
+        icon = GFX_focus_TDW_carolina_communists
+        prerequisite = { focus = TDW_blacks_at_the_helm}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_blacks_at_the_helm
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		create_wargoal = {
+		type = annex_everything
+		target = SNC
+			}
+			create_wargoal = {
+			type = annex_everything
+			target = SSC
+			}
+			SSC = { add_timed_idea = { idea = SSC_black_rebels  days = 40 }
+			SNC = { add_timed_idea = { idea = SSC_black_rebels  days = 40 }
+			country_event = {
+                id = tidewater.2
+            }
+			add_threat = 5
+
+		}
+
+		}
+        }
+    }
+
+    focus = {
+        id = TDW_shermanland_strategy
+        icon = GFX_focus_YUG_pan_slavic_congress
+        prerequisite = { focus = TDW_strike_the_carolinas}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_strike_the_carolinas
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+
+		country_event = {
+                id = free_negro_state.4
+            }
+			country_event = {
+                id = free_negro_state.6
+            }
+			country_event = {
+                id = tidewater.3
+            }
+        }
+    }
+
+    focus = {
+        id = TDW_Plan_herndon
+        icon = GFX_focus_TDW_strike_sc
+        prerequisite = { focus = TDW_shermanland_strategy}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_shermanland_strategy
+
+
+
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		create_wargoal = {
+		type = annex_everything
+		target = SAL
+			}
+        }
+    }
+
+    focus = {
+        id = TDW_Operation_douglas
+        icon = GFX_focus_TDW_strike_sc
+        prerequisite = { focus = TDW_Plan_herndon}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Plan_herndon
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		create_wargoal = {
+		type = annex_everything
+		target = SMS
+			}
+        }
+    }
+
+
+    focus = {
+        id = TDW_join_southern_commitee
+        icon = GFX_focus_TDW_join_southern_commitee
+        prerequisite = { focus = TDW_shermanland_strategy}
+        available = {
+
+        }
+		bypass = {	
+		NOT = {
+		country_exists = FNS
+		country_exists = DOU
+			}
+		}
+
+
+        
+
+        x = -2
+        y = 1
+        relative_position_id = TDW_shermanland_strategy
+        cost = 1
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		DOU = { add_to_faction = TDW }
+		SLA = { add_timed_idea = { idea = TDW_communist_rebels  days = 80 }
+
+        }
+		}
+	}
+    focus = {
+        id = TDW_Negros_peoples_republic
+        icon = GFX_focus_generic_anti_fascist_diplomacy
+        prerequisite = { focus = TDW_join_southern_commitee}
+        available = {
+
+        }
+        x = 0
+        y = 2
+        relative_position_id = TDW_join_southern_commitee
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		set_cosmetic_tag = NEGRO
+		set_capital = {state = 23}
+		annex_country = {
+		target = FNS
+		transfer_troops = yes
+			}
+			annex_country = {
+		target = DOU
+		transfer_troops = yes
+			}
+			annex_country = {
+		target = SHE
+		transfer_troops = yes
+			}
+		core_louisiana = yes
+		core_arkansas = yes
+        }
+    }
+
+    focus = {
+        id = TDW_consolidate_american_holdings
+        icon = GFX_focus_TDW_strike_sc
+        prerequisite = { focus = TDW_Negros_peoples_republic}
+        available = {
+
+        }
+        x = -1
+        y = 1
+        relative_position_id = TDW_Negros_peoples_republic
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		create_wargoal = {
+		type = take_state_focus
+		target = SFL
+			}
+			create_wargoal = {
+		type = take_state_focus
+		target = STX
+			}
+        }
+    }
+
+    focus = {
+        id = TDW_expand_into_carribean
+        icon = GFX_focus_TDW_expand_into_carribean
+        prerequisite = { focus = TDW_Negros_peoples_republic}
+        available = {
+
+        }
+        x = 1
+        y = 1
+        relative_position_id = TDW_Negros_peoples_republic
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		add_state_core = 477
+		add_state_core = 478
+		add_state_core = 603
+		add_state_core = 606
+		add_state_core = 603
+		add_state_core = 454
+		add_state_core = 607
+		add_state_core = 479
+		add_state_core = 480
+		add_state_core = 634
+		add_state_core = 633
+		add_state_core = 632
+		add_state_core = 480
+		add_state_core = 486
+		add_state_core = 526
+		add_state_core = 525
+		add_state_core = 483
+		add_state_core = 631
+		create_wargoal = {
+		type = annex_everything
+		target = CUB
+			}
+		create_wargoal = {
+		type = annex_everything
+		target = HAI
+			}
+		create_wargoal = {
+		type = annex_everything
+		target = JAM
+			}
+        }
+    }
+
+
+    focus = {
+        id = TDW_Direct_intervention
+        icon = GFX_focus_TDW_strike_sc
+        prerequisite = { focus = TDW_shermanland_strategy}
+        available = {
+
+        }
+        x = 2
+        y = 1
+        relative_position_id = TDW_shermanland_strategy
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		declare_war_on = {
+		target = SGA
+		type = annex_everything
+			}
+		add_ideas = communist_internationalism	
+        }
+    }
+
+    focus = {
+        id = TDW_Randolphs_Progress
+        icon = GFX_focus_TDW_randof
+        prerequisite = { focus = TDW_Tide_water_constitutional_congress}
+        available = {
+		always = no
+        }
+
+        mutually_exclusive = { focus = TDW_Haywood}
+
+        x = 4
+        y = 1
+        relative_position_id = TDW_Tide_water_constitutional_congress
+        cost = 8
+        ai_will_do = {
+            factor = 10
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		set_politics = {
+		ruling_party = progressivism
+        elections_allowed = yes
+        last_election = "1935.12.17"
+        election_frequency = 48
+		}
+            add_popularity = {
+                ideology = progressivism
+                popularity = 0.15
+            }
+        }
+    }
+
+    focus = {
+        id = TDW_Work_with_virginia_progressives
+        icon = GFX_focus_TDW_work_atvirgina_socialists
+        prerequisite = { focus = TDW_Randolphs_Progress}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Randolphs_Progress
+        cost = 1
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		add_ideas = SVA_progressive_influence
+		}	
+		
+        
+    }
+
+    focus = {
+        id = TDW_Begin_forgien_campagining
+        icon = GFX_focus_TDW_beg_forigen_camp
+        prerequisite = { focus = TDW_Work_with_virginia_progressives}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Work_with_virginia_progressives
+        cost = 1
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		add_popularity = {
+		ideology = progressivism
+		popularity = 0.10
+			}
+        }
+    }
+
+    focus = {
+        id = TDW_Integrate_virginia
+        icon = GFX_focus_TDW_integrate_virginia
+        prerequisite = { focus = TDW_Begin_forgien_campagining}
+        available = {
+		progressivism > 0.45
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Begin_forgien_campagining
+        cost = 2
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		annex_country = {
+		target = SVA
+		transfer_troops = yes
+			}
+		add_state_core = 358
+		add_state_core = 763
+		add_state_core = 137
+		add_state_core = 209
+		add_state_core = 334
+		add_state_core = 765
+		add_state_core = 762
+		add_state_core = 761
+		add_state_core = 764
+		add_state_core = 357
+        }
+    }
+
+    focus = {
+        id = TDW_throw_out_communists
+        icon = GFX_focus_TDW_throw_out_communists
+        prerequisite = { focus = TDW_Integrate_virginia}
+        available = {
+
+        }
+        x = -1
+        y = 1
+        relative_position_id = TDW_Integrate_virginia
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		add_popularity = {
+		ideology = communism
+		popularity = -0.10
+			}
+		kill_ideology_leader = communism	
+        }
+    }
+    focus = {
+        id = TDW_support_black_buisnesses
+        icon = GFX_focus_TDW_support_black_buisnesses
+        prerequisite = { focus = TDW_Integrate_virginia}
+        available = {
+
+        }
+        x = 1
+        y = 1
+        relative_position_id = TDW_Integrate_virginia
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+           add_offsite_building = { type = industrial_complex level = 2 } 
+        }
+    }
+
+    focus = {
+        id = TDW_the_tide_water_tobacco_industry
+        icon = GFX_focus_TDW_tobacco
+        prerequisite = { focus = TDW_support_black_buisnesses}
+        available = {
+
+        }
+        x = 3
+        y = 1
+        relative_position_id = TDW_support_black_buisnesses
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_ideas = TDW_tobacco_industry
+        }
+    }
+
+    focus = {
+        id = TDW_Increase_pay_for_feild_workers
+        icon = GFX_focus_TDW_Increase_pay
+        prerequisite = { focus = TDW_the_tide_water_tobacco_industry}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_the_tide_water_tobacco_industry
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_stability = .05
+
+        }
+    }
+
+    focus = {
+        id = TDW_reduce_taxes_on_our_industries
+        icon = GFX_focus_TDW_reduce_taxes_on_our_industries
+        prerequisite = { focus = TDW_the_tide_water_tobacco_industry}
+        available = {
+
+        }
+        x = 2
+        y = 1
+        relative_position_id = TDW_the_tide_water_tobacco_industry
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_ideas = TDW_less_taxes
+
+        }
+    }
+
+    focus = {
+        id = TDW_support_integration_of_black_culture
+        icon = GFX_focus_TDW_black_culture
+        prerequisite = { focus = TDW_support_black_buisnesses focus = TDW_throw_out_communists}
+        available = {
+
+        }
+        x = -1
+        y = 1
+        relative_position_id = TDW_support_black_buisnesses
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_ideas = TDW_black_culture
+        }
+    }
+
+    focus = {
+        id = TDW_Ally_with_washington
+        icon = GFX_focus_TDW_ally_with_washington
+        prerequisite = { focus = TDW_support_integration_of_black_culture }
+
+        mutually_exclusive = { focus = TDW_Challange_challenge_federal_government}
+
+        available = {
+
+        }
+        x = -2
+        y = 1
+        relative_position_id = TDW_support_integration_of_black_culture
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		WDC = { annex_country = {
+		target = TDW
+		transfer_troops = yes
+		} }
+		add_state_core = 764
+		add_state_core = 137
+		add_state_core = 761
+		add_state_core = 763
+		add_state_core = 353
+		add_state_core = 769
+		add_state_core = 356
+		add_state_core = 768
+		add_state_core = 357
+		add_state_core = 762
+		add_state_core = 358
+		add_state_core = 764
+		add_state_core = 765
+		add_state_core = 334
+		add_state_core = 359
+		add_state_core = 209
+        }
+    }
+
+    focus = {
+        id = TDW_Challange_challenge_federal_government
+        icon = GFX_focus_TDW_challenge_federal_government
+        prerequisite = { focus = TDW_support_integration_of_black_culture }
+ 
+        mutually_exclusive = { focus = TDW_Ally_with_washington} 
+ 
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_support_integration_of_black_culture
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		create_wargoal = {
+		type = annex_everything
+		target = WDC
+			}
+			create_wargoal = {
+		type = annex_everything
+		target = SMD
+			}
+        }
+    }
+
+    focus = {
+        id = TDW_Developing_our_nation
+        icon = GFX_focus_TDW_develop_our_nation
+        prerequisite = { focus = TDW_Challange_challenge_federal_government focus = TDW_Ally_with_washington }
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Challange_challenge_federal_government
+        cost = 5
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_popularity = {
+                ideology = progressivism
+                popularity = 0.35
+            }		
+        }
+    }
+
+    focus = {
+        id = TDW_Formalization_of_our_new_army
+        icon = GFX_focus_TDW_army
+        prerequisite = { focus = TDW_Developing_our_nation }
+        available = {
+
+        }
+        x = 0
+        y = 3
+        relative_position_id = TDW_Developing_our_nation
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_ideas = TDW_Our_new_army
+        }
+    }
+
+    focus = {
+        id = TDW_A_new_constitution_for_a_new_america
+        icon = GFX_focus_TDW_new_constitution
+        prerequisite = { focus = TDW_Formalization_of_our_new_army }
+        prerequisite = { focus = TDW_A_bureaucratic_future }
+        available = {
+
+        }
+        x = 0
+        y = 3
+        relative_position_id = TDW_Formalization_of_our_new_army
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            set_cosmetic_tag = COMOFAMERICA
+		    add_stability = 0.05
+        }
+    }
+
+
+
+
+    focus = {
+        id = TDW_March_on_DC
+        icon = GFX_focus_TDW_march_on_dc
+        prerequisite = { focus = TDW_A_new_constitution_for_a_new_america }
+
+		available = {	
+			controls_state = 44			
+		}
+        x = 0
+        y = 1
+        relative_position_id = TDW_A_new_constitution_for_a_new_america
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_state_core = 44      
+            add_war_support = 0.15			
+		}
+    }
+
+    focus = {
+        id = TDW_improved_small_arms
+        icon = GFX_focus_TDW_weapon_modernization
+        prerequisite = { focus = TDW_Formalization_of_our_new_army }
+        available = {
+
+        }
+        x = 1
+        y = 1
+        relative_position_id = TDW_Formalization_of_our_new_army
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = infantry_artillery_bonus
+				bonus = 1.0
+				uses = 1
+				category = infantry_weapons
+			}
+		}
+        
+    }
+
+    focus = {
+        id = TDW_Tidewater_elite_army
+        icon = GFX_focus_TDW_elite_army
+        prerequisite = { focus = TDW_improved_small_arms }
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_improved_small_arms
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+            add_ideas = TDW_Elite_units
+        }
+    }
+
+    focus = {
+        id = TDW_Develop_our_own_tanks
+        icon = GFX_focus_TDW_tank
+        prerequisite = { focus = TDW_Formalization_of_our_new_army }
+        available = {
+
+        }
+        x = -1
+        y = 1
+        relative_position_id = TDW_Formalization_of_our_new_army
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = armor_bonus
+				bonus = 1.0
+				uses = 2
+				category = armor
+			}
+		}
+    }
+
+    focus = {
+        id = TDW_Mechanized_army
+        icon = GFX_focus_TDW_mechanization
+        prerequisite = { focus = TDW_Develop_our_own_tanks }
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Develop_our_own_tanks
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = motorized_bonus
+				ahead_reduction = 2
+				uses = 1
+				category = motorized_equipment
+			}
+		}
+    }
+
+    focus = {
+        id = TDW_Cheapskate_investment
+        icon = GFX_focus_TDW_costal_development
+        prerequisite = { focus = TDW_Developing_our_nation }
+        available = {
+
+        }
+        x = -1
+        y = 1
+        relative_position_id = TDW_Developing_our_nation
+        cost = 10
+		
+		ai_will_do = {
+			factor = 5
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = construction_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = industrial_complex
+						size < 2
+						include_locked = yes
+					}					
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}			
+		}
+
+		completion_reward = {
+			764 = {
+                if = {
+				    limit = {
+				    	free_building_slots = {
+				    		building = industrial_complex
+				    		size > 1
+				    		include_locked = yes
+				    	}
+				    	OR = {
+				    		is_in_home_area = yes
+				    		NOT = {
+				    			owner = {
+				    				any_owned_state = {
+				    					free_building_slots = {
+				    						building = industrial_complex
+				    						size > 1
+				    						include_locked = yes
+				    					}
+				    					is_in_home_area = yes
+				    				}
+				    			}
+				    		}
+				    	}
+				    }
+				    add_extra_state_shared_building_slots = 2
+				    add_building_construction = {
+				    	type = industrial_complex
+				    	level = 2
+				    	instant_build = yes
+				    }
+                }
+			}
+		}
+    }
+
+    focus = {
+        id = TDW_Norfolk_development
+        icon = GFX_focus_TDW_costal_development
+        prerequisite = { focus = TDW_Cheapskate_investment }
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Cheapskate_investment
+        cost = 10
+		
+		ai_will_do = {
+			factor = 5
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = construction_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = industrial_complex
+						size < 2
+						include_locked = yes
+					}					
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}			
+		}
+
+		completion_reward = {
+			209 = {
+                if = {
+				    limit = {
+				    	free_building_slots = {
+				    		building = industrial_complex
+				    		size > 1
+				    		include_locked = yes
+				    	}
+				    	OR = {
+				    		is_in_home_area = yes
+				    		NOT = {
+				    			owner = {
+				    				any_owned_state = {
+				    					free_building_slots = {
+				    						building = industrial_complex
+				    						size > 1
+				    						include_locked = yes
+				    					}
+				    					is_in_home_area = yes
+				    				}
+				    			}
+				    		}
+				    	}
+				    }
+				    add_extra_state_shared_building_slots = 2
+				    add_building_construction = {
+				    	type = industrial_complex
+				    	level = 2
+				    	instant_build = yes
+				    }
+                }
+			}
+		}
+    }
+
+
+    focus = {
+        id = TDW_Develop_our_infrastructure
+        icon = GFX_focus_TDW_infrastructure
+        prerequisite = { focus = TDW_Developing_our_nation }
+        available = {
+
+        }
+        x = 1
+        y = 1
+        relative_position_id = TDW_Developing_our_nation
+        cost = 10
+		ai_will_do = {
+			factor = 10
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = infrastructure_effort_tt
+				all_owned_state = {			
+					free_building_slots = {
+						building = infrastructure
+						size < 2
+					}
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_building_construction = {
+				type = infrastructure
+				level = 2
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = infrastructure
+				level = 2
+				instant_build = yes
+			}
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = infrastructure
+										size > 1
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = infrastructure
+										size > 1
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+    }
+
+    focus = {
+        id = TDW_Develop_infacstructure_in_carolina
+        icon = GFX_focus_TDW_infrastructure
+        prerequisite = { focus = TDW_Develop_our_infrastructure }
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Develop_our_infrastructure
+        cost = 10
+		ai_will_do = {
+			factor = 10
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = infrastructure_effort_tt
+				all_owned_state = {			
+					free_building_slots = {
+						building = infrastructure
+						size < 2
+					}
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_building_construction = {
+				type = infrastructure
+				level = 2
+				instant_build = yes
+			}
+			add_building_construction = {
+				type = infrastructure
+				level = 2
+				instant_build = yes
+			}
+		}
+
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = infrastructure
+										size > 1
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = infrastructure
+						size > 1
+					}
+					OR = {
+						is_in_home_area = yes
+						NOT = {
+							owner = {
+								any_owned_state = {
+									free_building_slots = {
+										building = infrastructure
+										size > 1
+									}
+									is_in_home_area = yes
+								}
+							}
+						}
+					}
+				}
+				add_building_construction = {
+					type = infrastructure
+					level = 2
+					instant_build = yes
+				}
+			}
+		}
+    }
+
+
+    focus = {
+        id = TDW_develop_our_airports
+        icon = GFX_focus_TDW_develop_airports
+        prerequisite = { focus = TDW_Developing_our_nation }
+        available = {
+
+        }
+        x = 3
+        y = 1
+        relative_position_id = TDW_Developing_our_nation
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			air_experience = 25
+
+			if = {
+				limit = {
+					capital_scope = {
+						NOT = {
+							free_building_slots = {
+								building = air_base
+								size > 1
+							}
+						}
+					}
+				}
+				random_owned_controlled_state = {
+					limit = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_AB }
+				}
+			}
+			if = {
+				limit = {
+					capital_scope = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+				}
+				capital_scope = {
+					add_building_construction = {
+						type = air_base
+						level = 3
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_AB }
+				}
+			}
+			add_doctrine_cost_reduction = {
+				name = air_doc_bonus
+				cost_reduction = 0.5
+				uses = 1
+				category = air_doctrine
+			}
+		}
+    }
+
+    focus = {
+        id = TDW_fighter_plane_modernization
+        icon = GFX_focus_TDW_plane
+        prerequisite = { focus = TDW_develop_our_airports }
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_develop_our_airports
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = fighter_bonus
+				bonus = 1.0
+				uses = 2
+				technology = early_fighter
+				technology = fighter1
+				technology = fighter2
+				technology = fighter3
+				technology = heavy_fighter1
+				technology = heavy_fighter2
+				technology = heavy_fighter3
+			}
+			air_experience = 50
+		}
+    }
+
+    focus = {
+        id = TDW_A_bureaucratic_future
+        icon = GFX_focus_TDW_beurocratic
+        prerequisite = { focus = TDW_fighter_plane_modernization }
+        prerequisite = { focus = TDW_appellation_mining }
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_fighter_plane_modernization
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		add_political_power = 150
+        }
+    }
+
+    focus = {
+        id = TDW_Build_a_moonshine_factory
+        icon = GFX_focus_TDW_moonshine_factory
+        prerequisite = { focus = TDW_Developing_our_nation }
+        available = {
+
+        }
+        x = 5
+        y = 1
+        relative_position_id = TDW_Developing_our_nation
+        cost = 10
+		
+		ai_will_do = {
+			factor = 5
+		}
+
+		bypass = {
+			custom_trigger_tooltip = {
+				tooltip = construction_effort_tt
+				all_owned_state = {
+					free_building_slots = {
+						building = industrial_complex
+						size < 2
+						include_locked = yes
+					}					
+				}
+			}
+		}
+
+		complete_tooltip = {
+			add_extra_state_shared_building_slots = 2
+			add_building_construction = {
+				type = industrial_complex
+				level = 2
+				instant_build = yes
+			}			
+		}
+
+		completion_reward = {
+			334 = {
+                if = {
+				    limit = {
+				    	free_building_slots = {
+				    		building = industrial_complex
+				    		size > 1
+				    		include_locked = yes
+				    	}
+				    	OR = {
+				    		is_in_home_area = yes
+				    		NOT = {
+				    			owner = {
+				    				any_owned_state = {
+				    					free_building_slots = {
+				    						building = industrial_complex
+				    						size > 1
+				    						include_locked = yes
+				    					}
+				    					is_in_home_area = yes
+				    				}
+				    			}
+				    		}
+				    	}
+				    }
+				    add_extra_state_shared_building_slots = 2
+				    add_building_construction = {
+				    	type = industrial_complex
+				    	level = 2
+				    	instant_build = yes
+				    }
+                }
+			}
+		}
+    }
+
+    focus = {
+        id = TDW_appellation_mining
+        icon = GFX_focus_TDW_app_mining
+        prerequisite = { focus = TDW_Build_a_moonshine_factory }
+        available = {
+			controls_state = 334
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Build_a_moonshine_factory
+        cost = 10
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+          add_resource = {
+	        state = 334
+	        type = tungsten
+	       amount = 15
+			}
+          add_resource = {
+	        state = 334
+	        type = steel
+	       amount = 5
+			}
+        }
+    }
+
+    focus = {
+        id = TDW_Challange_regressives_in_Wvirgina
+        icon = GFX_focus_TDW_challange_regresives
+        prerequisite = { focus = TDW_support_integration_of_black_culture }
+        available = {
+
+        }
+        x = 2
+        y = 1
+        relative_position_id = TDW_support_integration_of_black_culture
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		SWV = { add_ideas = SVA_progressive_influence 
+		}
+        }
+    }
+
+
+    focus = {
+        id = TDW_root_out_corrupt_union_leaders
+        icon = GFX_focus_TDW_root_out_corruptul
+        prerequisite = { focus = TDW_Randolphs_Progress}
+        available = {
+
+        }
+        x = -3
+        y = 1
+        relative_position_id = TDW_Randolphs_Progress
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		add_ideas = state_unions
+        }
+    }
+
+    focus = {
+        id = TDW_night_schools
+        icon = GFX_focus_TDW_night_schools
+        prerequisite = { focus = TDW_Randolphs_Progress}
+        available = {
+
+        }
+        x = 3
+        y = 1
+        relative_position_id = TDW_Randolphs_Progress
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		add_research_slot = 1
+        }
+    }
+
+    focus = {
+        id = TDW_Desegrigated_higher_education
+        icon = GFX_focus_TDW_desegrigatedhighedu
+        prerequisite = { focus = TDW_night_schools}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_night_schools
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		add_ideas = desegregated_higher_education
+        }
+    }
+
+focus = {
+		id = TDW_Enlist_Tuskegee_Airmen
+		icon = GFX_focus_TDW_Tuskegee_Airmen
+		x = 6
+		y = 2
+		cost = 4
+
+		search_filters = {  FOCUS_FILTER_RESEARCH }
+		
+		available_if_capitulated = no
+		available = {
+		NOT = {
+		country_exists = SVA
+		}
+		}
+		ai_will_do = {
+			factor = 10
+		}
+
+		completion_reward = {
+		air_experience = 35
+		navy_experience = 50
+		add_ideas = tuskegee
+		}
+
+	}
+
+    focus = {
+        id = TDW_Allow_Female_pilots
+        icon = GFX_focus_TDW_female_pilots
+        prerequisite = { focus = TDW_Enlist_Tuskegee_Airmen}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Enlist_Tuskegee_Airmen
+        cost = 1
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		set_rule = {
+		can_generate_female_aces = yes
+		
+		
+			}
+		air_experience = 10	
+        }
+    }
+
+    focus = {
+        id = TDW_bomber_production
+        icon = GFX_focus_TDW_bomber
+        prerequisite = { focus = TDW_Allow_Female_pilots}
+
+
+        mutually_exclusive = { focus = TDW_Invest_in_cas}
+
+        available = {
+
+        }
+        x = 1
+        y = 1
+        relative_position_id = TDW_Allow_Female_pilots
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = bomber_bonus
+				bonus = 1.0
+				uses = 2
+				technology = strategic_bomber1
+				technology = strategic_bomber2
+				technology = strategic_bomber3
+				category = tactical_bomber
+			}
+		}
+    }
+
+    focus = {
+        id = TDW_fighter_escorts
+        icon = GFX_focus_TDW_fighters
+        prerequisite = { focus = TDW_bomber_production}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_bomber_production
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = fighter_bonus
+				bonus = 1.0
+				uses = 2
+				technology = early_fighter
+				technology = fighter1
+				technology = fighter2
+				technology = fighter3
+				technology = heavy_fighter1
+				technology = heavy_fighter2
+				technology = heavy_fighter3
+			}
+			air_experience = 50
+		}
+    }
+
+    focus = {
+        id = TDW_Develop_airbases
+        icon = GFX_focus_TDW_airfeilds
+        prerequisite = { focus = TDW_fighter_escorts}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_fighter_escorts
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+			random_owned_controlled_state = {
+				limit = {
+					free_building_slots = {
+						building = air_base
+						size > 1
+					}
+				}
+				add_building_construction = {
+					type = air_base
+					level = 4
+					instant_build = yes
+				}
+				ROOT = { set_country_flag = aviation_effort_AB }
+			}
+			if = {
+				limit = {
+					capital_scope = {
+						free_building_slots = {
+							building = air_base
+							size > 1
+						}
+					}
+				}
+				capital_scope = {
+					add_building_construction = {
+						type = air_base
+						level = 2
+						instant_build = yes
+					}
+					ROOT = { set_country_flag = aviation_effort_AB }
+				}
+			}
+        }
+    }
+
+    focus = {
+        id = TDW_Big_bomber_development
+        icon = GFX_focus_TDW_heavy_bombers
+        prerequisite = { focus = TDW_Develop_airbases}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Develop_airbases
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = bomber_bonus
+				bonus = 1.0
+				uses = 2
+				technology = strategic_bomber1
+				technology = strategic_bomber2
+				technology = strategic_bomber3
+				category = tactical_bomber
+			}
+
+		}
+        
+    }
+
+    focus = {
+        id = TDW_incendiary_bombs
+        icon = GFX_focus_TDW_fire_bombs
+        prerequisite = { focus = TDW_Big_bomber_development}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Big_bomber_development
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+		add_ideas = incen_bombs
+        }
+    }
+
+    focus = {
+        id = TDW_Invest_in_cas
+        icon = GFX_focus_TDW_cas
+        prerequisite = { focus = TDW_Allow_Female_pilots}
+        available = {
+
+        }
+
+        mutually_exclusive = { focus = TDW_bomber_production}
+
+        x = -1
+        y = 1
+        relative_position_id = TDW_Allow_Female_pilots
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+		completion_reward = {
+			add_tech_bonus = {
+				name = CAS_bonus
+				bonus = 1.0
+				ahead_reduction = 2
+				uses = 1
+				category = cas_bomber
+			}
+		}
+    }
+
+    focus = {
+        id = TDW_land_support_doctrines
+        icon = GFX_focus_TDW_land_support
+        prerequisite = { focus = TDW_Invest_in_cas}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Invest_in_cas
+        cost = 8
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+			add_doctrine_cost_reduction = {
+				name = air_doc_bonus
+				cost_reduction = 0.6
+				uses = 1
+				category = air_doctrine
+			}
+        }
+    }
+
+    focus = {
+        id = TDW_Paratroopers
+        icon = GFX_focus_TDW_paratroopers
+        prerequisite = { focus = TDW_land_support_doctrines}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_land_support_doctrines
+        cost = 6
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+
+        completion_reward = {
+			add_tech_bonus = {
+				name = special_forces_bonus
+				bonus = 1.0
+				uses = 2
+				technology = paratroopers
+				technology = paratroopers2
+			}
+        }
+    }
+
+    focus = {
+        id = TDW_supply_from_air
+        icon = GFX_focus_TDW_supply_from_air
+        prerequisite = { focus = TDW_Paratroopers}
+        available = {
+
+        }
+        x = 0
+        y = 1
+        relative_position_id = TDW_Paratroopers
+        cost = 6
+        ai_will_do = {
+            factor = 1
+        }
+        available_if_capitulated = yes
+        search_filters = { FOCUS_FILTER_RESEARCH }
+        #this may be removed
+        completion_reward = {
+		    add_ideas = air_supply
+        }
+    }
+
+}

@@ -1,0 +1,568 @@
+add_namespace = gold_shirts
+#
+###   ##  #  # ###  ### ###      ##  ##  ###   ##  ###  ##   ##  ### 
+#  # #  # ## # #  #  #   #      #   #  # #  # #  #  #  #  # #    #   
+###  #### # ## #  #  #   #       #  #### ###  #  #  #  #### # ## ##  
+#  # #  # #  # #  #  #   #        # #  # #  # #  #  #  #  # #  # #   
+###  #  # #  # ###  ###  #      ##  #  # ###   ##   #  #  #  ##  ### 
+
+#Bandit sabotage - factory sabotaged
+country_event = {
+	id = gold_shirts.21
+	title = gold_shirts.21.t
+	desc = gold_shirts.21.desc
+	picture = GFX_report_event_generic_ruins
+
+	is_triggered_only = yes
+	
+	option = {
+		name = gold_shirts.21.a #okay
+		random_owned_state = {
+			limit = {
+				is_fully_controlled_by = ROOT
+				arms_factory > 0
+			}
+			damage_building = {
+				type = arms_factory
+				damage = 0.6
+			}
+		}
+	}
+}
+
+#Bandit sabotage - civilian factory sabotaged
+country_event = {
+	id = gold_shirts.22
+	title = gold_shirts.22.t
+	desc = gold_shirts.21.desc
+	picture = GFX_report_event_generic_ruins
+
+	is_triggered_only = yes
+	
+	option = {
+		name = gold_shirts.21.a #okay
+		random_owned_state = {
+			limit = {
+				is_fully_controlled_by = ROOT
+				industrial_complex > 0
+			}
+			damage_building = {
+				type = industrial_complex
+				damage = 0.6
+			}
+		}
+	}
+}
+
+#Bandit sabotage - bridge blown
+country_event = {
+	id = gold_shirts.23
+	title = gold_shirts.23.t
+	desc = gold_shirts.23.desc
+	picture = GFX_report_event_generic_train
+
+	is_triggered_only = yes
+	
+	option = {
+		name = gold_shirts.21.a #okay
+		random_owned_state = {
+			limit = {
+				is_fully_controlled_by = ROOT
+				infrastructure > 0
+			}
+			damage_building = {
+				type = infrastructure
+				damage = 1
+			}
+		}
+	}
+}
+
+####EVENT SENT TO SAID NATION
+###DEMANDS ANNEXATION
+country_event = {
+	id = gold_shirts.8
+	title = gold_shirts.8.t
+	desc = gold_shirts.8.d
+	picture = GFX_report_event_ENG_middle_eastern_conflict_2
+	is_triggered_only = yes
+	
+	option = {
+		name = gold_shirts.8.a #gold_shirts annex root
+		FROM = {
+			annex_country = {
+				target = ROOT
+			}
+		}
+		custom_effect_tooltip = GAME_OVER_TT
+		FROM = {
+			country_event = gold_shirts.9
+		}
+		ai_chance = {
+			base = 1
+		}
+	}
+	option = {
+		name = gold_shirts.8.b #gold_shirts annex root
+		effect_tooltip = {
+			FROM = {
+				create_wargoal = {
+					target = ROOT
+					type = annex_everything
+				}
+			}
+		}
+		FROM = {
+			country_event = gold_shirts.10
+		}
+		ai_chance = {
+			base = 5
+		}
+	}
+}
+###THEY ACCEPTED
+country_event = {
+	id = gold_shirts.9
+	title = gold_shirts.9.t
+	desc = gold_shirts.9.d
+	picture = GFX_report_event_ENG_middle_eastern_conflict_2
+	is_triggered_only = yes
+	
+	option = {
+		name = gold_shirts.9.a #we shall support the Turks
+		#add_stability = 0.01
+		#add_war_support = 0.01
+	}
+}
+###THEY REJECT US< GAIN WARGOAL
+country_event = {
+	id = gold_shirts.10
+	title = gold_shirts.10.t
+	desc = gold_shirts.10.d
+	picture = GFX_report_event_ENG_middle_eastern_conflict_2
+	is_triggered_only = yes
+	
+	option = {
+		name = gold_shirts.10.a #
+		ROOT = {
+			create_wargoal = {
+				target = FROM
+				type = annex_everything
+			}
+		}
+	}
+}
+
+
+
+#####PARTITION OF SONORA
+####EVENT SENT TO SAID NATION
+###DEMANDS ANNEXATION
+###EVENT GOES TO BAJA CALIFORNIA FOR PARTITION
+country_event = {
+	id = gold_shirts.1
+	title = gold_shirts.1.t
+	desc = gold_shirts.1.d
+	picture = GFX_report_event_generic_conference
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = gold_shirts.1.a #we agree, lets parition
+		FROM = {
+      	####WE ACCEPTS, let the gold shirts know we will work with them
+			country_event = gold_shirts.2
+		}
+		custom_effect_tooltip = this_will_lead_to_war_tt
+		MSO = {
+      	###DEMAND ANNEXATION OR BE INVADED BY BOTH
+		country_event = {
+        	id = gold_shirts.3
+        	days = 10
+      	}
+		}
+		ai_chance = {
+			base = 5
+		}
+	}
+	option = {
+		name = gold_shirts.1.b ###WE WILL NEVER WORK WITH THEM
+		FROM = {
+      		country_event = gold_shirts.4
+    	}
+		ai_chance = {
+			base = 1
+		}
+	}
+
+}
+###THEY ACCEPTED
+country_event = {
+	id = gold_shirts.2
+	title = gold_shirts.2.t
+	desc = gold_shirts.2.d
+	picture = GFX_report_event_ENG_middle_eastern_conflict_2
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = gold_shirts.2.a
+		effect_tooltip = {
+      MSO = {
+        ###SENDS EVENT TO SENORA DEMANDING ANNEXATION OF BOTH
+			  country_event = gold_shirts.3
+		  }
+    }
+	}
+}
+###WERE GONNA BE PARITIONED? EVENT FOR SONORA
+country_event = {
+	id = gold_shirts.3
+	title = gold_shirts.3.t
+	desc = gold_shirts.3.d
+	picture = GFX_report_event_ENG_middle_eastern_conflict_2
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {###WE SURRENDER
+		name = gold_shirts.3.a #
+		custom_effect_tooltip = GAME_OVER_TT
+    ai_chance = {
+      base = 1
+    }
+    BAJ = {
+      transfer_state = 80
+      transfer_state = 805
+      transfer_state = 123
+      80 = {
+        add_claim_by = BAJ
+		add_compliance = 0.45
+		add_resistance = 0.1
+      }
+      805 = {
+        add_claim_by = BAJ
+		add_compliance = 0.45
+		add_resistance = 0.1
+      }
+      123 = {
+        add_claim_by = BAJ
+		add_compliance = 0.45
+		add_resistance = 0.1
+      }
+    }
+    MCH = {
+      transfer_state = 593
+      transfer_state = 594
+      593 = {
+		add_claim_by = MCH
+		add_compliance = 0.45
+		add_resistance = 0.1
+      }
+      594 = {
+        add_claim_by = MCH
+		add_compliance = 0.45
+		add_resistance = 0.1
+      }
+    }
+    add_threat = 2
+	}
+  option = {####NO
+	name = gold_shirts.3.a #
+    add_war_support = 0.20
+    add_political_power = 100
+    ai_chance = {
+      base = 3
+    }
+    BAJ = {
+      80 = {
+        add_claim_by = BAJ
+      }
+      805 = {
+        add_claim_by = BAJ
+      }
+      123 = {
+        add_claim_by = BAJ
+      }
+      create_wargoal = {
+        target = MSO
+        type = annex_everything
+      }
+    }
+    MCH = {
+      593 = {
+		add_claim_by = MCH
+      }
+      594 = {
+        add_claim_by = MCH
+      }
+      create_wargoal = {
+        target = MSO
+        type = annex_everything
+      }
+    }
+	}
+}
+####EVENT FROM MAGONISTAS
+country_event = {###THEY declined us
+	id = gold_shirts.4
+	title = gold_shirts.4.t
+	desc = gold_shirts.4.d
+	picture = GFX_report_event_gre_megali_conference_signing
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = gold_shirts.4.a
+		claim_sonora = yes
+    	create_wargoal = {
+    	  target = MSO
+    	  type = annex_everything
+    	}
+	}
+}
+
+
+#####PARTITION OF SINALOA & Coahulia
+####EVENT SENT TO SAID NATION
+###EVENT GOES TO CRISTEROS FOR PARTITION
+country_event = {
+	id = gold_shirts.11
+	title = gold_shirts.11.t
+	desc = gold_shirts.11.d
+	picture = GFX_report_event_generic_conference
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = gold_shirts.11.a #we agree, lets parition
+		FROM = {
+      	####WE ACCEPTS, let the gold shirts know we will work with them
+			country_event = gold_shirts.12
+		}
+		custom_effect_tooltip = this_will_lead_to_war_tt
+		MSI = {
+      	###DEMAND ANNEXATION OR BE INVADED BY BOTH
+			country_event = {
+        		id = gold_shirts.13
+        		days = 10
+      		}
+		}
+    	MCO = {
+      	###DEMAND ANNEXATION OR BE INVADED BY BOTH
+			country_event = {
+        		id = gold_shirts.15
+        		days = 10
+      		}
+		}
+		ai_chance = {
+			base = 5
+      		modifier = {
+        		add = 20
+        		is_historical_focus_on = yes
+      		}
+		}
+	}
+	option = {
+		name = gold_shirts.11.b ###WE WILL NEVER WORK WITH THEM
+		FROM = {
+      		country_event = gold_shirts.14
+    	}
+		ai_chance = {
+			base = 1
+		}
+	}
+}
+###THEY ACCEPTED
+country_event = {
+	id = gold_shirts.12
+	title = gold_shirts.12.t
+	desc = gold_shirts.12.d
+	picture = GFX_report_event_ENG_middle_eastern_conflict_2
+	is_triggered_only = yes
+	
+	option = {
+		name = gold_shirts.12.a
+		effect_tooltip = {
+      	MSO = {
+      	  ###SENDS EVENT TO SENORA DEMANDING ANNEXATION OF BOTH
+				  country_event = gold_shirts.15
+			  }
+      	MSI = {
+      	  country_event = gold_shirts.13
+      	}
+    }
+	}
+}
+###WERE GONNA BE PARITIONED? EVENT FOR SINOLHA
+country_event = {
+	id = gold_shirts.13
+	title = gold_shirts.13.t
+	desc = gold_shirts.13.d
+	picture = GFX_report_event_ENG_middle_eastern_conflict_2
+	is_triggered_only = yes
+	
+	option = {###WE SURRENDER
+		name = gold_shirts.13.a #
+		custom_effect_tooltip = GAME_OVER_TT
+    	ai_chance = {
+    	  base = 2
+    	  modifier = {
+    	    add = 1
+    	    is_historical_focus_on = yes
+    	  }
+    	}
+    	MDC = {
+    	  transfer_state = 596
+    	  transfer_state = 558
+    	  596 = {
+    	    add_claim_by = MDC
+			add_compliance = 0.45
+			add_resistance = 0.1
+    	  }
+    	  558 = {
+    	    add_claim_by = MDC
+			add_compliance = 0.45
+			add_resistance = 0.1
+    	  }
+    	}
+    	MCH = {
+    	  transfer_state = 595
+    	  595 = {
+    	    add_claim_by = MCH
+			add_compliance = 0.45
+			add_resistance = 0.1
+    	  }
+    	}
+    	add_threat = 2
+	}
+  option = {####NO
+	name = gold_shirts.13.b #
+    add_war_support = 0.20
+    add_political_power = 100
+    ai_chance = {
+      base = 1
+    }
+    MDC = {
+      #transfer_state = 596
+      #transfer_state = 558
+      596 = {
+        add_claim_by = MDC
+      }
+      558 = {
+        add_claim_by = MDC
+      }
+      create_wargoal = {
+        target = MSI
+        type = annex_everything
+      }
+    }
+    MCH = {
+      #transfer_state = 595
+      595 = {
+        add_claim_by = MCH
+      }
+      create_wargoal = {
+        target = MSI
+        type = annex_everything
+      }
+    }
+	}
+}
+####EVENT FROM CRISTEROS
+country_event = {###THEY declined us
+	id = gold_shirts.14
+	title = gold_shirts.14.t
+	desc = gold_shirts.14.d
+	picture = GFX_report_event_gre_megali_conference_signing
+	is_triggered_only = yes
+	
+	option = {
+		name = gold_shirts.14.a
+		claim_sinaloa = yes
+    	create_wargoal = {
+    	  target = MSI
+    	  type = annex_everything
+    	}
+    	claim_coahuila = yes
+    	create_wargoal = {
+    	  target = MCO
+    	  type = annex_everything
+    	}
+	}
+}
+###WERE GONNA BE PARITIONED? EVENT FOR coahulia
+country_event = {
+	id = gold_shirts.15
+	title = gold_shirts.15.t
+	desc = gold_shirts.15.d
+	picture = GFX_report_event_ENG_middle_eastern_conflict_2
+	is_triggered_only = yes
+	
+	option = {###WE SURRENDER
+		name = gold_shirts.15.a #
+		custom_effect_tooltip = GAME_OVER_TT
+    ai_chance = {
+      base = 4
+      modifier = {
+        add = 1
+        is_historical_focus_on = yes
+      }
+    }
+    MDC = {
+      transfer_state = 601
+      601 = {
+        add_claim_by = MDC
+		add_compliance = 0.45
+		add_resistance = 0.1
+      }
+    }
+    MCH = {
+      transfer_state = 218
+      transfer_state = 602
+      218 = {
+        add_claim_by = MCH
+		add_compliance = 0.45
+		add_resistance = 0.1
+      }
+      602 = {
+        add_claim_by = MCH
+		add_compliance = 0.45
+		add_resistance = 0.1
+      }
+    }
+    add_threat = 2
+	}
+  option = {####NO
+	name = gold_shirts.15.b #
+    add_war_support = 0.20
+    add_political_power = 100
+    ai_chance = {
+      base = 1
+    }
+    MDC = {
+      #transfer_state = 601
+      601 = {
+        add_claim_by = MDC
+		#add_compliance = 0.45
+		#add_resistance = 0.1
+      }
+      create_wargoal = {
+        target = MCO
+        type = annex_everything
+      }
+    }
+    MCH = {
+      #transfer_state = 218
+      #transfer_state = 602
+      218 = {
+        add_claim_by = MCH
+		#add_compliance = 0.45
+		#add_resistance = 0.1
+      }
+      602 = {
+        add_claim_by = MCH
+		#add_compliance = 0.45
+		#add_resistance = 0.1
+      }
+      create_wargoal = {
+        target = MCO
+        type = annex_everything
+      }
+    }
+	}
+}
