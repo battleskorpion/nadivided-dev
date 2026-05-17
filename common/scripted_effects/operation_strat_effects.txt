@@ -1,5 +1,3 @@
-
-
 update_operation_ai = {
 	# old target is no longer relevant
 	if = {
@@ -16,7 +14,6 @@ update_operation_ai = {
 		set_variable = { generic_operation_target = 0 }
 	}
 
-
 	# pick an operation target
 	get_highest_scored_country = {
 		scorer = ai_generic_operation_target_scorer
@@ -28,18 +25,27 @@ update_operation_ai = {
 	# check if we have any operatives that are captured
 	# find the captor so they can be rescued
 	set_temp_variable = { captor = 0 }
-	
+
 	every_operative = {
-		limit = { is_operative_captured = yes }
-		add_to_temp_variable = { min_needed_operative_for_operations = 1 }
-		if = {
-			limit = { check_variable = { captor = 0 } }
-			set_temp_variable = { captor = operative_captor }
+		ROOT = {
+			limit = {
+				is_operative_captured = yes
+			}
+
+			add_to_temp_variable = { min_needed_operative_for_operations = 1 }
+
+			if = {
+				limit = { check_variable = { captor = 0 } }
+				set_temp_variable = { captor = operative_captor }
+			}
 		}
 	}
+
 	set_variable = { rescue_operative_from = 0 }
+
 	if = {
 		limit = { NOT = { check_variable = { captor = 0 } } }
+
 		set_variable = { rescue_operative_from = captor } # used in ai strat generic_operation_ai_rescue
 		add_to_temp_variable = { min_needed_operative_for_operations = 2 }
 	}
@@ -48,6 +54,7 @@ update_operation_ai = {
 	# if we have too few of operatives clear operative target
 	set_temp_variable = { t = min_needed_operative_for_operations }
 	subtract_from_temp_variable = { t = 2 }
+
 	if = {
 		limit = { num_of_operatives < t }
 		set_variable = { generic_operation_target = 0 }
@@ -57,9 +64,11 @@ update_operation_ai = {
 		# if found a target pick an operation
 		limit = { 
 			NOT = { check_variable = { generic_operation_target = 0 } }
+
 			# if we are already preparing for current one no need to recalc
 			OR = {
 				check_variable = { generic_operation_type_to_run = 0 }
+
 				NOT = { 
 					is_preparing_operation = {
 						target = var:generic_operation_target
@@ -87,6 +96,7 @@ update_operation_ai = {
 			set_temp_variable = { score = 50 }
 			add_to_temp_variable = { score = num_armies }
 			clamp_temp_variable = { var = score max = 180 }
+
 			add_to_temp_array = { operation_types = token:operation_infiltrate_armed_forces_army }
 			add_to_temp_array = { operation_types_scores = score }
 			
@@ -96,6 +106,7 @@ update_operation_ai = {
 			divide_temp_variable = { t = 10 }
 			add_to_temp_variable = { score = t }
 			clamp_temp_variable = { var = score max = 180 }
+
 			add_to_temp_array = { operation_types = token:operation_infiltrate_armed_forces_airforce }
 			add_to_temp_array = { operation_types_scores = score }
 			
@@ -104,10 +115,12 @@ update_operation_ai = {
 				if = {
 					limit = { 
 						has_navy_size = { size > 0 } 
+
 						PREV = {
 							has_navy_size = { size > 0 } 
 						}
 					}
+
 					set_temp_variable = { score = num_ships }
 					
 					set_temp_variable = { t = num_ships_with_type@carrier }
@@ -131,8 +144,9 @@ update_operation_ai = {
 				if = {
 					limit = { 
 						PREV = {
-							NOT = { tag = ENG } # ENG already does it against GER
+							NOT = { tag = ENG }
 							NOT = { has_government = fascism } 
+
 							NOT = {
 								has_operation_token = {
 									tag = var:generic_operation_target
@@ -140,6 +154,7 @@ update_operation_ai = {
 								}
 							}
 						}
+
 						has_government = fascism
 						check_variable = { occupied_countries^num > 0 }
 						has_added_tension_amount > 20
@@ -160,6 +175,7 @@ update_operation_ai = {
 					add_to_temp_array = { operation_types_scores = score }
 				}
 			}
+
 			# boost resistance
 			if = {
 				limit = { 
@@ -201,9 +217,9 @@ update_operation_ai = {
 									operation = var:v
 									value > 1
 								}
-								
-								set_temp_variable = { operation_types_scores^i = -1 }
 							}
+							
+							set_temp_variable = { operation_types_scores^i = -1 }
 						}
 					}
 				}
@@ -213,13 +229,14 @@ update_operation_ai = {
 			find_highest_in_array = {
 				array = operation_types_scores
 			}
+
 			if = {
 				limit = { check_variable = { v > 0 } }
-				set_variable = { generic_operation_type_to_run = operation_types^i } # used in ai strat generic_operation_ai
+
+				set_variable = { generic_operation_type_to_run = operation_types^i }
 			}
 		}
-		else =
-		{
+		else = {
 			set_variable = { generic_operation_type_to_run = 0 }
 		}
 	}
