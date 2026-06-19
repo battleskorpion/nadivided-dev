@@ -15,10 +15,10 @@ focus_tree = {
 ###ALT HIST####NEW TREE
 	focus = {
 		id = PON_Toronto_Marches
-		icon = GFX_focus_expand_the_minutemen
+		icon = GFX_focus_generic_on_strike
 		x = -20
 		y = 0
-		cost = 10
+		cost = 5
 		search_filters = {
 			FOCUS_FILTER_RESEARCH
 		}
@@ -44,14 +44,14 @@ focus_tree = {
 	}
 	focus = {
 		id = PON_break_tim_out_of_jail
-		icon = GFX_goal_generic_construct_mil_factory
+		icon = GFX_focus_generic_workers_and_farmers_rise
 		x = -2
 		y = 1
 		relative_position_id = PON_Toronto_Marches
 		prerequisite = {
 			focus = PON_Toronto_Marches
 		}
-		cost = 10
+		cost = 3
 		search_filters = {
 			
 		}
@@ -60,7 +60,11 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			###GIVES COMMIE SUPPORT
+			PON = {
+				country_event = {
+					id = Ontario.12
+				}
+			}
 			add_stability = -0.05
 			add_popularity = {
 				ideology = communism
@@ -70,7 +74,7 @@ focus_tree = {
 	}
 	focus = {
 		id = PON_radio_broadcast
-		icon = GFX_goal_generic_construct_mil_factory
+		icon = GFX_focus_SWE_radiotjanst
 		x = 0
 		y = 1
 		relative_position_id = PON_Toronto_Marches
@@ -85,21 +89,30 @@ focus_tree = {
 		ai_will_do = {
 			factor = 1
 		}
+		available = {
+			NOT = {
+				has_government = democratic
+			}
+		}
 		completion_reward = {
-			###UNLOCKS IDEA
+			add_ideas = PON_Radio_broadcasts_default
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.1
+			}
 			###UNLOCKS DECISONS TO CHANGE IDEAS ALONG IWTH IDEOLOYGY AKA IRAN
 		}
 	}
 	focus = {
 		id = PON_second_christie_riots
-		icon = GFX_goal_generic_construct_mil_factory
+		icon = GFX_focus_ITA_generic_fascist_workers
 		x = 2
 		y = 1
 		relative_position_id = PON_Toronto_Marches
 		prerequisite = {
 			focus = PON_Toronto_Marches
 		}
-		cost = 10
+		cost = 3
 		search_filters = {
 			
 		}
@@ -109,11 +122,16 @@ focus_tree = {
 		}
 		completion_reward = {
 			####EVENT FOR CHRISTIE RIOTS
+			PON = {
+				country_event = { 
+					id = Ontario.2
+				}
+			}
 		}
 	}
 	focus = {
 		id = PON_storm_parliament
-		icon = GFX_goal_generic_construct_mil_factory
+		icon = GFX_focus_generic_world_in_flames
 		x = 0
 		y = 2
 		relative_position_id = PON_Toronto_Marches
@@ -122,6 +140,59 @@ focus_tree = {
 		}
 		prerequisite = {
 			focus = PON_second_christie_riots
+		}
+		
+		cost = 10
+		search_filters = {
+			
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			PON = {
+				country_event = {
+					id = Ontario.11
+				}
+			}
+		}
+	}
+	focus = {
+		id = PON_choose_fascist
+		icon = GFX_focus_generic_fascist_propaganda
+		x = -1
+		y = 1
+		relative_position_id = PON_storm_parliament
+		prerequisite = {
+			focus = PON_storm_parliament
+		}
+		mutually_exclusive = {
+			focus = PON_choose_communist
+		}
+		cost = 10
+		search_filters = {
+			
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			###EVENT FOR CHANGING OF DEMOCRACY
+		}
+	}
+	focus = {
+		id = PON_choose_communist
+		icon = GFX_focus_SWE_socialist_reforms
+		x = 1
+		y = 1
+		relative_position_id = PON_storm_parliament
+		prerequisite = {
+			focus = PON_storm_parliament
+		}
+		mutually_exclusive = {
+			focus = PON_choose_fascist
 		}
 		cost = 10
 		search_filters = {
@@ -137,12 +208,12 @@ focus_tree = {
 	}
 	focus = {
 		id = PON_bomb_ottawa_and_blame_it_on_quebec
-		icon = GFX_goal_generic_construct_mil_factory
+		icon = GFX_goal_generic_political_pressure
 		x = 0
-		y = 1
+		y = 2
 		relative_position_id = PON_storm_parliament
 		prerequisite = {
-			focus = PON_storm_parliament
+			focus = PON_choose_communist focus = PON_choose_fascist
 		}
 		cost = 10
 		search_filters = {
@@ -152,13 +223,20 @@ focus_tree = {
 		ai_will_do = {
 			factor = 1
 		}
+		will_lead_to_war_with = PQC
 		completion_reward = {
 			###EVENT FOR CHANGING OF DEMOCRACY
+			declare_war_on = {
+				target = PQC
+				type = take_state_focus
+				generator = { 34 32 119 }
+			}
+			add_war_support = 0.10
 		}
 	}
 	focus = {
 		id = PON_martial_law
-		icon = GFX_goal_generic_construct_mil_factory
+		icon = GFX_focus_generic_emergency
 		x = 0
 		y = 1
 		relative_position_id = PON_bomb_ottawa_and_blame_it_on_quebec
