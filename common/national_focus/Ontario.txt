@@ -155,18 +155,18 @@ focus_tree = {
 			has_country_flag = mackenzie_king_dead
 		}
 		completion_reward = {
-			#PON = {
-			#	country_event = {
-			#		id = Ontario.11
-			#	}
-			#}
+			PON = {
+				country_event = {
+					id = Ontario.34
+				}
+			}
 			###WILL SPAWN 6 units based off the party chosen to help with future conquests
 		}
 	}
 	focus = {
 		id = PON_choose_fascist
 		icon = GFX_focus_generic_fascist_propaganda
-		x = -1
+		x = -3
 		y = 1
 		relative_position_id = PON_storm_parliament
 		prerequisite = {
@@ -184,13 +184,14 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
+			mark_focus_tree_layout_dirty = yes
 			###EVENT FOR CHANGING OF DEMOCRACY
 		}
 	}
 	focus = {
 		id = PON_choose_communist
-		icon = GFX_focus_SWE_socialist_reforms
-		x = 1
+		icon = GFX_focus_AUS_union_of_danubian_socialist_republics
+		x = 3
 		y = 1
 		relative_position_id = PON_storm_parliament
 		prerequisite = {
@@ -208,7 +209,182 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
+			mark_focus_tree_layout_dirty = yes
 			###EVENT FOR CHANGING OF DEMOCRACY
+		}
+	}
+	focus = {
+		id = PON_nationalize_factories_for_our_survival
+		icon = GFX_goal_generic_construct_mil_factory
+		x = -1
+		y = 1
+		relative_position_id = PON_choose_communist
+		prerequisite = {
+			focus = PON_choose_communist
+			focus = PON_choose_fascist
+		}
+		cost = 5
+		search_filters = {
+			
+		}
+		available = {
+			has_war = yes
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				#prioritize = {
+				#	675
+				#}
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = {
+					type = arms_factory
+					level = 2
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				#prioritize = {
+				#	675
+				#}
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = PON_call_up_the_swastika_club_brigades
+		icon = GFX_focus_generic_fascist_troops
+		x = -5
+		y = 1
+		relative_position_id = PON_choose_communist
+		prerequisite = {
+			focus = PON_choose_communist
+			focus = PON_choose_fascist
+		}
+		allow_branch = {
+			has_completed_focus = PON_choose_fascist
+		}
+		cost = 5
+		search_filters = {
+			
+		}
+		available = {
+			has_war = yes
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			PON_spawn_swastika_clubs_divisions = yes
+			army_experience = 25
+			add_ideas = PON_Swastika_clubs_1
+		}
+	}
+	focus = {
+		id = PON_call_up_the_worker_brigades
+		icon = GFX_focus_SOV_builder_of_the_red_army
+		x = -5
+		y = 1
+		relative_position_id = PON_choose_communist
+		prerequisite = {
+			focus = PON_choose_communist
+			focus = PON_choose_fascist
+		}
+		allow_branch = {
+			NOT = {
+				has_completed_focus = PON_choose_fascist
+			}
+		}
+		cost = 5
+		search_filters = {
+			
+		}
+		available = {
+			has_war = yes
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			PON_spawn_union_guard_for_war = yes
+			army_experience = 25
+			add_manpower = 5000
+		}
+	}
+	focus = {
+		id = PON_tims_constitution
+		icon = GFX_focus_generic_treaty
+		x = 1
+		y = 1
+		relative_position_id = PON_choose_communist
+		prerequisite = {
+			focus = PON_choose_communist
+		}
+		cost = 5
+		available = {
+			has_completed_focus = PON_martial_law
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_popularity = {
+				ideology = communism
+				popularity = 0.2
+			}
+			add_stability = 0.1
+		}
+	}
+	focus = {
+		id = PON_eradicate_unions
+		icon = GFX_focus_RAJ_union_busting
+		x = -1
+		y = 1
+		relative_position_id = PON_choose_fascist
+		prerequisite = {
+			focus = PON_choose_fascist
+		}
+		cost = 5
+		available = {
+			has_completed_focus = PON_martial_law
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.05
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = -0.15
+			}
+			add_stability = 0.1
 		}
 	}
 	focus = {
@@ -237,6 +413,21 @@ focus_tree = {
 				generator = { 34 32 119 }
 			}
 			add_war_support = 0.10
+			284 = {
+				add_building_construction = {
+					type = supply_node
+					level = 1
+					province = 2869
+				}
+				add_building_construction = {
+					type = air_base
+					level = 1
+				}
+			}
+			PON_spawn_militia_for_war = yes
+
+			####BASED ON WHICH SIDE WAS CHOSEN, that selected leader will take hold of the government and then get an illigitimate governemnt debuff
+			country_event = { id = ontario.33 days = 14 }
 		}
 	}
 	focus = {
@@ -257,6 +448,9 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
+			unlock_decision_category_tooltip = PON_martial_law_cat
+			add_ideas = PON_martial_law
+			custom_effect_tooltip = this_idea_will_dissapear_after_war_with_quebec_tt
 			###DECISOONS FOR CONSOLIDATING POWER AND CONSCRIPTION
 			###UNLOCKS IDEA
 			####HAVING WAR JUSTIFIES CONSOLDIATION OF POWER AND INDUSTRY/COSNCRIPTIION whilist at 0 stab
@@ -856,7 +1050,7 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			add_ideas = PON_Swastika_clubs_institution
+			
 		}
 	}
 	# 
