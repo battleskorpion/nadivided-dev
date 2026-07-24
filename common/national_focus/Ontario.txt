@@ -361,6 +361,7 @@ focus_tree = {
 			add_manpower = 5000
 		}
 	}
+###COMMUNIST SIDE BEGINS
 	focus = {
 		id = PON_tims_constitution
 		icon = GFX_focus_generic_treaty
@@ -384,6 +385,481 @@ focus_tree = {
 				popularity = 0.2
 			}
 			add_stability = 0.1
+		}
+	}
+	focus = {
+		id = PON_empower_the_unions
+		icon = GFX_focus_eng_concessions_to_the_trade_unions
+		x = -1
+		y = 1
+		relative_position_id = PON_tims_constitution
+		prerequisite = {
+			focus = PON_tims_constitution
+		}
+		cost = 10
+		available = {
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_ideas = PON_empowered_unions
+		}
+	}
+	focus = {
+		id = PON_establish_the_proletarian_dictorship
+		icon = GFX_focus_GER_proletarian_dictatorship
+		x = 0
+		y = 2
+		relative_position_id = PON_tims_constitution
+		prerequisite = {
+			focus = PON_choose_communist
+		}
+		cost = 5
+		available = {
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_country_leader_trait = PON_proletarian_dictorship
+		}
+	}
+	focus = {
+		id = PON_establish_the_union_of_quebec
+		icon = GFX_focus_PON_citizens_of_the_union
+		x = 0
+		y = 1
+		relative_position_id = PON_establish_the_proletarian_dictorship
+		prerequisite = {
+			focus = PON_establish_the_proletarian_dictorship
+		}
+		
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			has_government = communism
+			controls_quebec_trigger = yes
+		}
+		completion_reward = {
+			release = PQC
+			PON = { set_autonomy = { target = PQC autonomy_state = autonomy_integrated_puppet } }
+			PQC = {
+				add_ideas = PON_proletarian_union
+				set_politics = {
+					ruling_party = communism
+					elections_allowed = no 
+				}
+			}
+		}
+	}
+	focus = {
+		id = PON_Citizens_Of_The_New_Union
+		icon = GFX_focus_PON_citizens_of_the_union
+		x = 0
+		y = 2
+		relative_position_id = PON_establish_the_union_of_quebec
+		prerequisite = {
+			focus = PON_establish_the_union_of_quebec
+		}
+		continue_if_invalid = yes
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			has_government = communism
+			has_completed_focus = PON_empower_the_unions
+			has_political_power > 100
+		}
+		completion_reward = {
+			add_ideas = PON_Canadian_Union
+			core_quebec = yes
+			add_political_power = -100
+			annex_country = { target = PQC transfer_troops = yes }
+		}
+	}
+	
+	focus = {
+		id = PON_Spread_the_revoultion_to_Manitoba
+		icon = GFX_focus_PON_rev_manitoba
+		x = -2
+		y = 1
+		relative_position_id = PON_Citizens_Of_The_New_Union
+		prerequisite = {
+			focus = PON_Citizens_Of_The_New_Union
+		}
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			has_government = communism
+		}
+		will_lead_to_war_with = PMB
+		completion_reward = {
+			create_wargoal = {
+				type = annex_everything
+				target = PMB
+			}
+		}
+	}
+	focus = {
+		id = PON_Democratic_Socialist_Canadian_Republic
+		icon = GFX_focus_PON_dscr
+		x = 2
+		y = 1
+		relative_position_id = PON_Spread_the_revoultion_to_Manitoba
+		prerequisite = {
+			focus = PON_Spread_the_revoultion_to_Manitoba
+		}
+		prerequisite = {
+			focus = PON_Spread_revoultion_to_Newfoundland
+		}
+		prerequisite = {
+			focus = PON_Spread_revoultion_to_the_great_north
+		}
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			has_government = communism
+		}
+		will_lead_to_war_with = PBC
+		will_lead_to_war_with = PSK
+		will_lead_to_war_with = PAB
+		will_lead_to_war_with = PYT
+		completion_reward = {
+			set_cosmetic_tag = DSCR
+			add_stability = 0.05
+			custom_effect_tooltip = PON_CORE_Canada_tt
+			hidden_effect = {
+				core_canada = yes 
+			}
+			if = {
+				limit = {
+					PBC = {
+						exists = yes
+					}
+				}
+				create_wargoal = {
+					target = PBC 
+					type = take_core_state
+				}
+			}
+			if = {
+				limit = {
+					PSK = {
+						exists = yes
+					}
+				}
+				create_wargoal = {
+					target = PSK
+					type = take_core_state
+				}
+			}
+			if = {
+				limit = {
+					PAB = {
+						exists = yes
+					}
+				}
+				create_wargoal = {
+					target = PAB
+					type = take_core_state
+				}
+			}
+			if = {
+				limit = {
+					PYT = {
+						exists = yes
+					}
+				}
+				create_wargoal = {
+					target = PYT
+					type = take_core_state
+				}
+			}
+		}
+	}
+	#
+	focus = {
+		id = PON_Spread_revoultion_to_Newfoundland
+		icon = GFX_focus_PON_rev_newfoundland
+		x = 0
+		y = 1
+		relative_position_id = PON_Citizens_Of_The_New_Union
+		prerequisite = {
+			focus = PON_Citizens_Of_The_New_Union
+		}
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			has_government = communism
+		}
+		will_lead_to_war_with = PNL
+		completion_reward = {
+			create_wargoal = {
+				type = annex_everything
+				target = PNL
+			}
+		}
+	}
+	focus = {
+		id = PON_Spread_revoultion_to_the_great_north
+		icon = GFX_focus_PON_rev_north
+		x = 2
+		y = 1
+		relative_position_id = PON_Citizens_Of_The_New_Union
+		prerequisite = {
+			focus = PON_Citizens_Of_The_New_Union
+		}
+		cost = 10
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			has_government = communism
+		}
+		will_lead_to_war_with = PNT
+		completion_reward = {
+			create_wargoal = {
+				type = annex_everything
+				target = PNT
+			}
+		}
+	}
+	focus = {
+		id = PON_Mandate_of_inverventionalism
+		icon = GFX_focus_PON_mandate
+		x = 2
+		y = 1
+		relative_position_id = PON_establish_the_proletarian_dictorship
+		prerequisite = {
+			focus = PON_establish_the_proletarian_dictorship
+		}
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_ideas = PON_Interventionalism
+		}
+	}
+	focus = {
+		id = PON_the_bureau_of_truth
+		icon = GFX_focus_PON_communist_police
+		x = 0
+		y = 2
+		relative_position_id = PON_Mandate_of_inverventionalism
+		prerequisite = {
+			focus = PON_Mandate_of_inverventionalism
+		}
+		cost = 7
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_ideas = PON_bureau_of_truth
+		}
+	}
+	focus = {
+		id = PON_egalitarism
+		icon = GFX_focus_ARG_women_in_industry
+		x = 1
+		y = 1
+		relative_position_id = PON_Mandate_of_inverventionalism
+		prerequisite = {
+			focus = PON_Mandate_of_inverventionalism
+		}
+		cost = 7
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_ideas = PON_egalitarism
+		}
+	}
+	focus = {
+		id = PON_establish_new_economic_plan
+		icon = GFX_focus_generic_communist_industry
+		x = -2
+		y = 1
+		relative_position_id = PON_establish_the_proletarian_dictorship
+		prerequisite = {
+			focus = PON_establish_the_proletarian_dictorship
+		}
+		cost = 3
+		available = {
+			has_completed_focus = PON_empower_the_unions
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_ideas = PON_new_economic_plan
+			random_owned_controlled_state = {
+				#prioritize = {
+				#	675
+				#}
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+		
+	#
+	focus = {
+		id = PON_Resource_planning_initiative
+		icon = GFX_focus_PON_Resource_planning_initiative
+		x = 1
+		y = 1
+		relative_position_id = PON_establish_new_economic_plan
+		prerequisite = {
+			focus = PON_establish_new_economic_plan
+		}
+		cost = 5
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+		}
+		completion_reward = {
+			add_ideas = PON_Resource_initiative
+		}
+	}
+	#
+	focus = {
+		id = PON_Collective_industries
+		icon = GFX_focus_PON_collective_industries
+		x = 0
+		y = 2
+		relative_position_id = PON_establish_new_economic_plan
+		prerequisite = {
+			focus = PON_establish_new_economic_plan
+		}
+		cost = 7
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				#prioritize = {
+				#	675
+				#}
+				limit = {
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+			}
+			random_owned_controlled_state = {
+				#prioritize = {
+				#	675
+				#}
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size > 1
+					}
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+	}
+	focus = {
+		id = PON_target_Freemasons
+		icon = GFX_focus_PON_targert_freemasons
+		x = -1
+		y = 1
+		relative_position_id = PON_establish_new_economic_plan
+		prerequisite = {
+			focus = PON_establish_new_economic_plan
+		}
+		cost = 7
+		search_filters = {
+			FOCUS_FILTER_RESEARCH
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_ideas = PON_Fully_Planned_Economy
 		}
 	}
 	focus = {
@@ -440,6 +916,7 @@ focus_tree = {
 				type = take_state_focus
 				generator = { 34 32 119 }
 			}
+			claim_quebec = yes
 			add_war_support = 0.10
 			284 = {
 				add_building_construction = {
@@ -1312,647 +1789,6 @@ focus_tree = {
 				ideology = fascism
 				popularity = 0.1
 			}
-		}
-	}
-	focus = {
-		id = PON_Back_Ontario_Unionists
-		icon = GFX_focus_PON_ontario_unionists
-		x = 6
-		y = 20
-		relative_position_id = PON_Toronto_Marches
-		prerequisite = {
-			focus = PON_Toronto_Marches
-		}
-		cost = 1
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		mutually_exclusive = {
-			focus = PON_Back_Swastica_clubs
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			
-		}
-	}
-	#
-	focus = {
-		id = PON_Mackenzies_king_demise
-		icon = GFX_focus_PON_Macks_king_demise
-		x = 0
-		y = 1
-		relative_position_id = PON_Back_Ontario_Unionists
-		prerequisite = {
-			focus = PON_Back_Ontario_Unionists
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available = {
-			communism > 0.35
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			remove_ideas = PON_Commonwealth_dissolution_shock
-			#addevent
-			add_ideas = PON_Crown_Loyalists_insurections
-			PON = {
-				country_event = {
-					id = Ontario.11
-				}
-			}
-			add_popularity = {
-				ideology = communism
-				popularity = 0.1
-			}
-			add_popularity = {
-				ideology = fascism
-				popularity = 0.05
-			}
-			add_popularity = {
-				ideology = neutrality
-				popularity = 0.05
-			}
-			create_country_leader = {
-				name = "Closed Government"
-				picture = GFX_portrait_Fallen_Government
-				expire = "1965.1.1"
-				ideology = liberalism
-				traits = {
-					#
-				}
-			}
-		}
-	}
-	#
-	focus = {
-		id = PON_break_Tim_outa_jail
-		icon = GFX_focus_PON_break_tim_out
-		x = 0
-		y = 1
-		relative_position_id = PON_Mackenzies_king_demise
-		prerequisite = {
-			focus = PON_Mackenzies_king_demise
-		}
-		cost = 5
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available = {
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_ideas = PON_Fascist_insurections
-			PON = {
-				country_event = {
-					id = Ontario.12
-				}
-			}
-		}
-	}
-	#
-	focus = {
-		id = PON_Storm_Parliament_Hill
-		icon = GFX_focus_PON_storm_the_parliment
-		x = 0
-		y = 1
-		relative_position_id = PON_break_Tim_outa_jail
-		prerequisite = {
-			focus = PON_break_Tim_outa_jail
-		}
-		cost = 5
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_ideas = PON_French_insurections
-			set_politics = {
-				ruling_party = communism
-				elections_allowed = no
-			}
-		}
-	}
-	#
-	focus = {
-		id = PON_Tim_constitution
-		icon = GFX_focus_PON_tim_constitution
-		x = 0
-		y = 1
-		relative_position_id = PON_Storm_Parliament_Hill
-		prerequisite = {
-			focus = PON_Storm_Parliament_Hill
-		}
-		cost = 5
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_popularity = {
-				ideology = communism
-				popularity = 0.2
-			}
-		}
-	}
-	#
-	focus = {
-		id = PON_French_Canadians_Equality
-		icon = GFX_focus_PON_french_equality
-		x = 1
-		y = 1
-		relative_position_id = PON_Tim_constitution
-		prerequisite = {
-			focus = PON_Tim_constitution
-		}
-		cost = 8
-		prerequisite = {
-			focus = PON_The_QUBEC_ISSUE
-		}
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available = {
-			has_government = communism
-			owns_state = 32
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			remove_ideas = PON_French_insurections
-			add_manpower = 30000
-			core_quebec = yes
-		}
-	}
-	#
-	focus = {
-		id = PON_Mandate_of_inverventionalism
-		icon = GFX_focus_PON_mandate
-		x = 3
-		y = 1
-		relative_position_id = PON_Arrest_ontario_facists
-		prerequisite = {
-			focus = PON_Arrest_ontario_facists
-		}
-		cost = 8
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_ideas = PON_Interventionalism
-		}
-	}
-	#
-	focus = {
-		id = PON_criminalize_bourgeoisie_Music
-		icon = GFX_focus_PON_criminalize_bjazz
-		x = 3
-		y = 2
-		relative_position_id = PON_Northern_ontario_Gulags
-		prerequisite = {
-			focus = PON_Northern_ontario_Gulags
-		}
-		cost = 9
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		available = {
-			has_government = communism
-		}
-		completion_reward = {
-			add_stability = 0.2
-		}
-	}
-	#
-	focus = {
-		id = PON_Establish_bureau_of_police
-		icon = GFX_focus_PON_communist_police
-		x = -1
-		y = 1
-		relative_position_id = PON_Mandate_of_inverventionalism
-		prerequisite = {
-			focus = PON_Northern_ontario_Gulags
-		}
-		cost = 8
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_ideas = PON_bureau_of_truth
-		}
-	}
-	#
-	focus = {
-		id = PON_Arrest_ontario_facists
-		icon = GFX_focus_PON_Handcuffs
-		x = -1
-		y = 1
-		relative_position_id = PON_Tim_constitution
-		prerequisite = {
-			focus = PON_Tim_constitution
-		}
-		cost = 8
-		prerequisite = {
-			focus = PON_The_QUBEC_ISSUE
-		}
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available = {
-			has_government = communism
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			remove_ideas = PON_Fascist_insurections
-			PON = {
-				country_event = {
-					id = Ontario.13
-				}
-			}
-			add_stability = 0.05
-		}
-	}
-	#
-	focus = {
-		id = PON_target_Freemasons
-		icon = GFX_focus_PON_targert_freemasons
-		x = -1
-		y = 1
-		relative_position_id = PON_Arrest_ontario_facists
-		prerequisite = {
-			focus = PON_Arrest_ontario_facists
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_ideas = PON_Fully_Planned_Economy
-		}
-	}
-	#
-	focus = {
-		id = PON_Declare_basketball_the_sport_of_the_Union
-		icon = GFX_focus_PON_basketball
-		x = -1
-		y = 3
-		relative_position_id = PON_target_Freemasons
-		prerequisite = {
-			focus = PON_target_Freemasons
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available = {
-			has_government = communism
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_ideas = PON_Socialist_Ballers
-		}
-	}
-	#
-	focus = {
-		id = PON_Collective_industries
-		icon = GFX_focus_PON_collective_industries
-		x = 1
-		y = 1
-		relative_position_id = PON_target_Freemasons
-		prerequisite = {
-			focus = PON_target_Freemasons
-		}
-		prerequisite = {
-			focus = PON_Northern_ontario_Gulags
-		}
-		cost = 8
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			95 = {
-				if = {
-					limit = {
-						free_building_slots = {
-							building = arms_factory
-							size > 1
-							include_locked = yes
-						}
-						OR = {
-							is_in_home_area = yes
-							NOT = {
-								owner = {
-									any_owned_state = {
-										free_building_slots = {
-											building = arms_factory
-											size > 1
-											include_locked = yes
-										}
-										is_in_home_area = yes
-									}
-								}
-							}
-						}
-					}
-					add_extra_state_shared_building_slots = 2
-					add_building_construction = {
-						type = arms_factory
-						level = 2
-						instant_build = yes
-					}
-				}
-			}
-		}
-	}
-	#
-	focus = {
-		id = PON_Citizens_Of_The_New_Union
-		icon = GFX_focus_PON_citizens_of_the_union
-		x = 1
-		y = 2
-		relative_position_id = PON_Collective_industries
-		prerequisite = {
-			focus = PON_Collective_industries
-		}
-		prerequisite = {
-			focus = PON_Establish_bureau_of_police
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		available = {
-			has_government = communism
-		}
-		completion_reward = {
-			add_ideas = PON_Canadian_Union
-		}
-	}
-	#
-	focus = {
-		id = PON_Resource_planning_initiative
-		icon = GFX_focus_PON_Resource_planning_initiative
-		x = -2
-		y = 1
-		relative_position_id = PON_Citizens_Of_The_New_Union
-		prerequisite = {
-			focus = PON_Citizens_Of_The_New_Union
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		available = {
-			has_government = communism
-		}
-		completion_reward = {
-			add_ideas = PON_Resource_initiative
-		}
-	}
-	#
-	focus = {
-		id = PON_Spread_the_revoultion_to_Manitoba
-		icon = GFX_focus_PON_rev_manitoba
-		x = 0
-		y = 1
-		relative_position_id = PON_Citizens_Of_The_New_Union
-		prerequisite = {
-			focus = PON_Citizens_Of_The_New_Union
-		}
-		cost = 5
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		available = {
-			has_government = communism
-		}
-		will_lead_to_war_with = PMB
-		completion_reward = {
-			create_wargoal = {
-				type = annex_everything
-				target = PMB
-			}
-		}
-	}
-	focus = {
-		id = PON_Democratic_Socialist_Canadian_Republic
-		icon = GFX_focus_PON_dscr
-		x = 0
-		y = 1
-		relative_position_id = PON_Spread_the_revoultion_to_Manitoba
-		prerequisite = {
-			focus = PON_Spread_the_revoultion_to_Manitoba
-		}
-		prerequisite = {
-			focus = PON_Resource_planning_initiative
-		}
-		prerequisite = {
-			focus = PON_Spread_revoultion_to_Newfoundland
-		}
-		prerequisite = {
-			focus = PON_Spread_revoultion_to_the_great_north
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		available = {
-			has_government = communism
-		}
-		will_lead_to_war_with = PBC
-		will_lead_to_war_with = PSK
-		will_lead_to_war_with = PAB
-		will_lead_to_war_with = PYT
-		completion_reward = {
-			set_cosmetic_tag = DSCR
-			add_stability = 0.05
-			custom_effect_tooltip = PON_CORE_Canada_tt
-			hidden_effect = {
-				core_canada = yes 
-			}
-			if = {
-				limit = {
-					PBC = {
-						exists = yes
-					}
-				}
-				create_wargoal = {
-					target = PBC 
-					type = take_core_state
-				}
-			}
-			if = {
-				limit = {
-					PSK = {
-						exists = yes
-					}
-				}
-				create_wargoal = {
-					target = PSK
-					type = take_core_state
-				}
-			}
-			if = {
-				limit = {
-					PAB = {
-						exists = yes
-					}
-				}
-				create_wargoal = {
-					target = PAB
-					type = take_core_state
-				}
-			}
-			if = {
-				limit = {
-					PYT = {
-						exists = yes
-					}
-				}
-				create_wargoal = {
-					target = PYT
-					type = take_core_state
-				}
-			}
-		}
-	}
-	#
-	focus = {
-		id = PON_Spread_revoultion_to_Newfoundland
-		icon = GFX_focus_PON_rev_newfoundland
-		x = 2
-		y = 1
-		relative_position_id = PON_Citizens_Of_The_New_Union
-		prerequisite = {
-			focus = PON_Citizens_Of_The_New_Union
-		}
-		cost = 5
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		available = {
-			has_government = communism
-		}
-		will_lead_to_war_with = PNL
-		completion_reward = {
-			create_wargoal = {
-				type = annex_everything
-				target = PNL
-			}
-		}
-	}
-	focus = {
-		id = PON_Spread_revoultion_to_the_great_north
-		icon = GFX_focus_PON_rev_north
-		x = 4
-		y = 1
-		relative_position_id = PON_Citizens_Of_The_New_Union
-		prerequisite = {
-			focus = PON_Citizens_Of_The_New_Union
-		}
-		cost = 5
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		available = {
-			has_government = communism
-		}
-		will_lead_to_war_with = PNT
-		completion_reward = {
-			create_wargoal = {
-				type = annex_everything
-				target = PNT
-			}
-		}
-	}
-	#
-	focus = {
-		id = PON_Northern_ontario_Gulags
-		icon = GFX_focus_PON_gulags
-		x = 1
-		y = 1
-		relative_position_id = PON_Arrest_ontario_facists
-		prerequisite = {
-			focus = PON_Arrest_ontario_facists
-		}
-		cost = 8
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			remove_ideas = PON_Crown_Loyalists_insurections
 		}
 	}
 ####FOR DEMOCRACY
