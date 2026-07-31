@@ -734,11 +734,11 @@ country_event = {
 		complete_national_focus = PON_choose_fascist
 	}
 }
-# MINNESOTA SENDS ROOT to demand alignment
+# ONTARIO SENDS ROOT DEMANDS
 country_event = {
 	id = Ontario.35
-	title = "Minnesota Demands Our Alignment"
-	desc = "The State of Minnesota has been influencing our politics, we knew this day would come, shall we become their puppet, align with them, or anger them?"
+	title = Ontario.35.t
+	desc = Ontario.35.d
 	picture = GFX_report_event_journalists_speech
 	
 	is_triggered_only = yes
@@ -746,36 +746,40 @@ country_event = {
 	option = { #become their puppet
 		name = "We Surrender"
 		ai_chance = {
-			factor = 25
+			factor = 30
+			modifier = {
+				factor = 15
+				has_opinion = {
+					target = FROM
+					value > 69
+				}
+			}
 		}
-		FROM = { country_event = minnesota.12 }
+		FROM = { country_event = Ontario.36 }
 	}
 
-	option = { #change government to Romanian type, enter alliance
-		name = "We shall align, but maintain our soverignty"
-		ai_chance = {
-			factor = 25
-		}
-		FROM = { country_event = minnesota.13 }
-	}
 
 	option = { #no deals
 		name = "No Deal"
 		ai_chance = {
-			factor = 50
+			factor = 15
 			modifier = {
 				factor = 10
 				is_in_faction = yes
 			}
 		}
-		FROM = { country_event = minnesota.14 }	
+		add_opinion_modifier = {
+			target = ROOT
+			modifier = large_decrease
+		}
+		FROM = { country_event = Ontario.37 }	
 	}
 }
-#Minnesota has FROM become their puppet
+##THEY ACCEPTED, puppet now!
 country_event = {
-	id = minnesota.12
-	title = "They Accepted!"
-	desc = "They are now under our union. Welcome to the Commune"
+	id = Ontario.36
+	title = Ontario.36.t
+	desc = Ontario.36.d
 	picture = GFX_report_event_generic_sign_treaty2
 	
 	is_triggered_only = yes
@@ -784,52 +788,12 @@ country_event = {
 		name = "Cool"
 		puppet = FROM
 	}
-
 }
 
-#FROM OFFERS ALIGNMENT
-country_event = {
-	id = minnesota.13
-	title = "They have aligned themselves to our politics"
-	desc = "We have grown our union to further unite the midwest"
-	picture = GFX_report_event_hungary_parliament
-	
-	is_triggered_only = yes
-    fire_only_once = no
-	option = { #cool
-		name = "Awesome"
-		ai_chance = {
-			factor = 80
-		}
-		if = {
-			limit = { is_faction_leader = yes }
-			add_to_faction = FROM
-		}
-		if = {
-			limit = {
-				is_in_faction = no
-			}
-			set_rule = { can_create_factions = yes }
-			create_faction = TROSKYIST_FACTION
-			add_to_faction = FROM
-		}
-	}
 
-	option = { #war
-		name = "It seems we have no other choice but to liberate the workers"
-		ai_chance = {
-			factor = 20
-		}
-		create_wargoal = {
-			type = puppet_wargoal_focus
-			target = FROM
-		}
-	}
-}
-
-#HUN refuses
+###THEY REFUSED WTF!
 country_event = {
-	id = minnesota.14
+	id = Ontario.37
 	title = "They have Refused alignment"
 	desc = "How dare they refuse to unite!"
 	picture = GFX_report_event_hungarian_soldiers
@@ -844,13 +808,17 @@ country_event = {
 	}
 
 	option = { #war
-		name = "Liberate the workers"
+		name = "Liberate the Proletariat"
 		ai_chance = {
 			factor = 90
 			modifier = {
 				has_war = yes
-				factor = 0
+				factor = -10
 			}
+		}
+		add_opinion_modifier = {
+			target = ROOT
+			modifier = large_decrease
 		}
 		create_wargoal = {
 			type = puppet_wargoal_focus
