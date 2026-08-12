@@ -1513,3 +1513,60 @@ PON_program_of_socialist_integration = {
 		}
 	}
 }
+
+PON_pronvincial_conscription_cat = {
+	PON_pronvincial_conscription = {
+		icon = GFX_decision_generic_military
+		allowed = {
+			original_tag = PON
+		}
+	
+		available = {
+			is_core_of = ROOT
+			num_of_civilian_factories_available_for_projects > 0
+		}
+	
+		state_target = yes
+	
+		target_array = ROOT.owned_states
+		
+		target_trigger = {
+			FROM = {
+				is_fully_controlled_by = ROOT
+				has_state_flag = PON_marked_for_increased_conscription_flag
+			}
+		}
+		ai_will_do = {
+			base = 500
+		}
+		target_root_trigger = {
+			original_tag = PON
+			has_completed_focus = PON_pronvincial_conscription
+		}
+		visible = {
+			FROM = {
+				NOT = {
+					has_state_flag = PON_increased_conscription_flag
+				}
+			}
+		}
+		cost = 50
+	
+		days_remove = 50
+	
+		modifier = {
+			civilian_factory_use = 1
+		}
+		complete_effect = {
+		}
+
+		remove_effect = {
+			FROM = {
+				set_state_flag = PON_increased_conscription_flag
+				add_dynamic_modifier = {
+					modifier = PON_pronvincial_conscription_mod
+				}
+			}
+		}
+	}
+}
