@@ -9,159 +9,19 @@ focus_tree = {
 		}
 	}
 
-	continuous_focus_position = { x = 100 y = 1200 }
+	continuous_focus_position = { x = 100 y = 1000 }
 
 	focus = {
-		id = SMO_first_politics
+		id = SMO_fix_economy
 		icon = GFX_focus_generic_improve_the_administration
 		x = 4
 		y = 1
 		cost = 5
-		mutually_exclusive = { focus = SMO_get_to_revolting }
+		prerequisite = { focus = SMO_democratic_path }
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus SMO_first_politics"
 			add_political_power = 60
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-
-	focus = {
-		id = SMO_get_to_revolting
-		icon = GFX_generic_political_pressure
-		x = 9
-		y = 1
-		cost = 10
-		mutually_exclusive = { focus = SMO_first_politics }
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		completion_reward = {
-			add_popularity = {
-				ideology = fascism
-				popularity = 0.15
-			}
-			add_popularity = {
-				ideology = longism
-				popularity = 0.05
-			}
-			add_popularity = {
-				ideology = neutrality
-				popularity = -0.1
-			}
-		}
-
-		ai_will_do = {
-			base = 0
-		}
-	}
-
-	focus = {
-		id = SMO_little_dixie
-		icon = generic_political_pressure
-		x = 8
-		y = 2
-		cost = 10
-		prerequisite = { focus = SMO_get_to_revolting }
-		mutually_exclusive = { focus = SMO_ozark_nationalism }
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus SMO_little_dixie"
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-
-	focus = {
-		id = SMO_klan_call
-		icon = generic_political_pressure
-		x = 7
-		y = 3
-		cost = 10
-		prerequisite = { focus = SMO_little_dixie }
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus SMO_klan_call"
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-
-	focus = {
-		id = SMO_ozark_vols
-		icon = generic_political_pressure
-		x = 9
-		y = 3
-		cost = 10
-		prerequisite = { focus = SMO_little_dixie focus = SMO_ozark_nationalism }
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus SMO_ozark_vols"
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-
-	focus = {
-		id = SMO_divide_mo
-		icon = generic_political_pressure
-		x = 11
-		y = 3
-		cost = 10
-		prerequisite = { focus = SMO_ozark_nationalism }
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus SMO_divide_mo"
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-
-	focus = {
-		id = SMO_revolt
-		icon = generic_political_pressure
-		x = 9
-		y = 4
-		cost = 10
-		prerequisite = { focus = SMO_divide_mo focus = SMO_klan_call }
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus SMO_revolt"
-		}
-
-		ai_will_do = {
-			base = 1
-		}
-	}
-
-	focus = {
-		id = SMO_ozark_nationalism
-		icon = generic_political_pressure
-		x = 10
-		y = 2
-		cost = 10
-		prerequisite = { focus = SMO_get_to_revolting }
-		mutually_exclusive = { focus = SMO_little_dixie }
-		search_filters = { FOCUS_FILTER_POLITICAL }
-
-		completion_reward = {
-			log = "[GetDateText]: [Root.GetName]: Focus SMO_ozark_nationalism"
 		}
 
 		ai_will_do = {
@@ -172,10 +32,12 @@ focus_tree = {
 	focus = {
 		id = SMO_worker_programs
 		icon = GFX_focus_generic_new_treaty
-		x = 3
-		y = 2
+		
+		relative_position_id = SMO_fix_economy
+		x = 0
+		y = 1
 		cost = 10
-		prerequisite = { focus = SMO_first_politics }
+		prerequisite = { focus = SMO_fix_economy }
 		search_filters = { FOCUS_FILTER_POLITICAL }
 
 		completion_reward = {
@@ -192,13 +54,15 @@ focus_tree = {
 	focus = {
 		id = SMO_rebuild_sls_armory
 		icon = GFX_focus_SIL_fund_military_industries
-		x = 3
-		y = 3
+		
+		relative_position_id = SMO_worker_programs
+		x = -1
+		y = 1
 		cost = 10
 		prerequisite = { focus = SMO_worker_programs }
 		search_filters = { FOCUS_FILTER_INDUSTRY }
-		bypass = {
-			NOT = { owns_state = 60 }
+		available = {
+			has_full_control_of_state = 60
 		}
 
 		completion_reward = {
@@ -219,8 +83,9 @@ focus_tree = {
 	focus = {
 		id = SMO_farmer_assocs
 		icon = GFX_focus_support_farmers
-		x = 1
-		y = 3
+		relative_position_id = SMO_worker_programs
+		x = 3
+		y = 1
 		cost = 5
 		prerequisite = { focus = SMO_worker_programs }
 		search_filters = { FOCUS_FILTER_INDUSTRY }
@@ -238,13 +103,14 @@ focus_tree = {
 	focus = {
 		id = SMO_fund_sls_car_company
 		icon = GFX_focus_focus_goal_business_deals
-		x = 5
-		y = 3
+		relative_position_id = SMO_worker_programs
+		x = -3
+		y = 1
 		cost = 10
 		prerequisite = { focus = SMO_worker_programs }
 		search_filters = { FOCUS_FILTER_INDUSTRY }
-		bypass = {
-			NOT = { owns_state = 60 }
+		available = {
+			has_full_control_of_state = 60
 		}
 
 		completion_reward = {
@@ -264,13 +130,14 @@ focus_tree = {
 	focus = {
 		id = SMO_fund_sls_aircraft
 		icon = GFX_focus_generic_air_partners
-		x = 5
-		y = 4
+		relative_position_id = SMO_fund_sls_car_company
+		x = 0
+		y = 1
 		cost = 10
 		prerequisite = { focus = SMO_fund_sls_car_company }
 		search_filters = { FOCUS_FILTER_INDUSTRY }
-		bypass = {
-			NOT = { owns_state = 60 }
+		available = {
+			has_full_control_of_state = 60
 		}
 
 		completion_reward = {
@@ -281,6 +148,164 @@ focus_tree = {
 				uses = 2
 				category = light_air
 			}
+		}
+
+		ai_will_do = {
+			base = 1
+		}
+	}
+
+	focus = {
+		id = SMO_start_fixing_depression
+		icon = GFX_goal_generic_political_pressure
+		
+		relative_position_id = SMO_worker_programs
+		x = 3
+		y = 3
+		cost = 10
+		prerequisite = { focus = SMO_farmer_assocs }
+		prerequisite = {
+			focus = SMO_support_hallmark
+			focus = SMO_rebuild_sls_armory
+			focus = SMO_fund_sls_aircraft
+		}
+		
+		search_filters = { FOCUS_FILTER_POLITICAL }
+
+		completion_reward = {
+			log = "[GetDateText]: [Root.GetName]: Focus SMO_start_fixing_depression"
+			# TODO: add effects
+		}
+
+		ai_will_do = {
+			base = 1
+		}
+	}
+
+	focus = {
+		id = SMO_support_hallmark
+		icon = GFX_goal_generic_political_pressure
+		relative_position_id = SMO_worker_programs
+		x = 1
+		y = 1
+		cost = 10
+		prerequisite = { focus = SMO_worker_programs }
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		available = {
+			has_full_control_of_state = 683
+		}
+
+		completion_reward = {
+			683 = {
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+		}
+
+		ai_will_do = {
+			base = 1
+		}
+	}
+	
+	focus = {
+		id = SMO_democratic_path
+		icon = GFX_goal_generic_political_pressure
+		x = 10
+		y = 0
+		cost = 10
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		available = {
+			
+		}
+
+		completion_reward = {
+			add_popularity = {
+				ideology = fascism
+				popularity = -0.05
+			}
+			add_popularity = {
+				ideology = communism
+				popularity = -0.05
+			}
+			add_political_power = 50
+		}
+
+		ai_will_do = {
+			base = 1
+		}
+	}
+	
+	focus = {
+		id = SMO_dem_party
+		icon = GFX_goal_generic_political_pressure
+		x = 15
+		y = 1
+		cost = 10
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		prerequisite = { focus = SMO_democratic_path }
+		
+		available = {
+			
+		}
+
+		completion_reward = {
+			add_popularity = {
+				ideology = neutrality
+				popularity = 0.1
+			}
+			add_political_power = 50
+		}
+
+		ai_will_do = {
+			base = 1
+		}
+	}
+	
+	focus = {
+		id = SMO_rep_party
+		icon = GFX_goal_generic_political_pressure
+		x = 10
+		y = 1
+		cost = 10
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		prerequisite = { focus = SMO_democratic_path }
+		
+		available = {
+			
+		}
+		
+		mutually_exclusive = { focus = SMO_dem_party }
+
+		completion_reward = {
+			add_popularity = {
+				ideology = democratic
+				popularity = 0.1
+			}
+			add_political_power = 50
+		}
+
+		ai_will_do = {
+			base = 1
+		}
+	}
+	
+	focus = {
+		id = SMO_rebellion_focus
+		icon = GFX_goal_generic_political_pressure
+		x = 24
+		y = 0
+		cost = 10
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		
+		available = {
+			has_country_flag = SMO_has_lmo_rebelled
+		}
+
+		completion_reward = {
+			add_political_power = 50
 		}
 
 		ai_will_do = {
