@@ -9,18 +9,27 @@ focus_tree = {
 	}
 	default = no
 	continuous_focus_position = {
-		x = 50
-		y = 1900
+		x = 1000
+		y = 2000
 	}
 ###ALT HIST####NEW TREE
 	focus = {
 		id = PON_Toronto_Marches
 		icon = GFX_focus_generic_on_strike
-		x = -20
+		x = -7
 		y = 0
 		cost = 3
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
+		allow_branch = {
+			NOT = {
+				has_completed_focus = PON_1936_Ontario_Elections
+			}
+		}
+		offset = {
+			x = 28
+			y = 0
+			trigger = {
+				has_completed_focus = PON_Toronto_Marches
+			}
 		}
 		available_if_capitulated = yes
 		ai_will_do = {
@@ -34,6 +43,7 @@ focus_tree = {
 			focus = PON_1936_Ontario_Elections
 		}
 		completion_reward = {
+			mark_focus_tree_layout_dirty = yes
 			#add_stability = -0.15
 			PON = {
 				country_event = {
@@ -317,6 +327,9 @@ focus_tree = {
 			focus = PON_kkk
 		}
 		allow_branch = {
+			NOT = {
+				has_completed_focus = PON_1936_Ontario_Elections
+			}
 			OR = {
 				has_completed_focus = PON_choose_fascist
 			}
@@ -351,6 +364,9 @@ focus_tree = {
 			focus = PON_kkk
 		}
 		allow_branch = {
+			NOT = {
+				has_completed_focus = PON_1936_Ontario_Elections
+			}
 			OR = {
 				NOT = {
 					has_completed_focus = PON_kkk
@@ -387,6 +403,9 @@ focus_tree = {
 			focus = PON_kkk
 		}
 		allow_branch = {
+			NOT = {
+				has_completed_focus = PON_1936_Ontario_Elections
+			}	
 			OR = {
 				has_completed_focus = PON_kkk
 			}
@@ -717,10 +736,100 @@ focus_tree = {
 			}
 		}
 	}
+	focus = {
+		id = PON_eradicate_fascism
+		icon = GFX_focus_generic_communism_anti_fascism
+		prerequisite = { focus = PON_Democratic_Socialist_Canadian_Republic   }
+		x = -1
+		y = 1
+		relative_position_id = PON_Democratic_Socialist_Canadian_Republic
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				has_civil_war = yes
+			}	
+		}
+		
+		available = {
+			any_country = {
+				has_government = fascism
+				is_major = yes
+				is_subject = no
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = SMN_wargoal_against_government_fascist_tt
+			every_country = {
+				limit = {
+					has_government = fascism
+					is_major = yes
+					NOT = { is_in_faction_with = ROOT }
+				}
+				ROOT = {
+					create_wargoal = {
+						target = PREV
+						type = topple_government
+						expire = 0
+					}
+				}
+			}
+		}
+	}
+	focus = {
+		id = PON_liberation_of_the_proliteriate
+		icon = GFX_focus_spr_class_war
+		prerequisite = { focus = PON_Democratic_Socialist_Canadian_Republic   }
+		x = 1
+		y = 1
+		relative_position_id = PON_Democratic_Socialist_Canadian_Republic
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				has_civil_war = yes
+			}	
+		}
+		
+		available = {
+			any_country = {
+				OR = {
+					has_government = democratic
+					has_government = progressivism
+				}
+				is_major = yes
+				is_subject = no
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = SMN_wargoal_against_government_capitalist_tt
+			every_country = {
+				limit = {
+					OR = {
+						has_government = democratic
+						has_government = progressivism
+					}
+					is_major = yes
+					NOT = { is_in_faction_with = ROOT }
+				}
+				ROOT = {
+					create_wargoal = {
+						target = PREV
+						type = topple_government
+						expire = 0
+					}
+				}
+			}
+		}
+	}
 	#
 	focus = {
 		id = PON_Mandate_of_inverventionalism
-		icon = GFX_focus_spr_torchbearers_of_tomorrow
+		icon = GFX_focus_focus_fra_revolution_utmost
 		x = 2
 		y = 1
 		relative_position_id = PON_establish_the_proletarian_dictatorship
@@ -917,19 +1026,21 @@ focus_tree = {
 	focus = {
 		id = PON_begin_isolation_from_the_conflict
 		icon = GFX_focus_generic_league_of_nations
-		x = -6
+		x = -10
 		y = 1
 		relative_position_id = PON_Democratic_Socialist_Canadian_Republic
-		#prerequisite = {
-		#	focus = PON_Democratic_Socialist_Canadian_Republic
-		#}
+		prerequisite = {
+			focus = PON_Democratic_Socialist_Canadian_Republic
+			focus = PON_secure_the_borders
+			focus = PON_become_canada
+		}
 		available = {
 			has_war = no
-			OR = {
-				has_completed_focus = PON_Democratic_Socialist_Canadian_Republic
-				has_completed_focus = PON_secure_the_borders
-				has_completed_focus = PON_reunited_Canada
-			}
+			#OR = {
+			#	has_completed_focus = PON_Democratic_Socialist_Canadian_Republic
+			#	has_completed_focus = PON_secure_the_borders
+			#	has_completed_focus = PON_reunited_Canada
+			#}
 		}
 		mutually_exclusive = {
 			focus = PON_intervene_in_the_conflict_abroad
@@ -1143,18 +1254,13 @@ focus_tree = {
 	focus = {
 		id = PON_intervene_in_the_conflict_abroad
 		icon = GFX_focus_ARG_the_american_push
-		x = -2
+		x = -6
 		y = 1
 		relative_position_id = PON_Democratic_Socialist_Canadian_Republic
-		#prerequisite = {
-		#	focus = PON_Democratic_Socialist_Canadian_Republic
-		#}
-		available = {
-			OR = {
-				has_completed_focus = PON_Democratic_Socialist_Canadian_Republic
-				has_completed_focus = PON_secure_the_borders
-				has_completed_focus = PON_reunited_Canada
-			}
+		prerequisite = {
+			focus = PON_Democratic_Socialist_Canadian_Republic
+			focus = PON_secure_the_borders
+			focus = PON_become_canada
 		}
 		cost = 10
 		available_if_capitulated = yes
@@ -1245,11 +1351,12 @@ focus_tree = {
 			add_stability = 0.1
 		}
 	}
+	
 ###KKK
 	focus = {
 		id = PON_national_loyalty_laws
 		icon = GFX_focus_AUS_lawmaking_leniency
-		x = -4
+		x = -9
 		y = 1
 		relative_position_id = PON_eradicate_unions
 		prerequisite = {
@@ -1343,16 +1450,14 @@ focus_tree = {
 	focus = {
 		id = PON_take_non_gentile_assets
 		icon = GFX_focus_generic_ban_jews
-		x = -2
-		y = 0
+		x = -3
+		y = 2
 		relative_position_id = PON_national_loyalty_laws
 		prerequisite = {
-			focus = PON_eradicate_unions
+			focus = PON_expel_the_french_from_barrie
 		}
 		cost = 10
-		available = {
-			has_completed_focus = PON_kkk
-		}
+		
 		available_if_capitulated = yes
 		ai_will_do = {
 			factor = 1
@@ -1438,16 +1543,14 @@ focus_tree = {
 	focus = {
 		id = PON_volunteers_from_the_south
 		icon = GFX_focus_generic_army_attack
-		x = 2
-		y = 0
+		x = 3
+		y = 2
 		relative_position_id = PON_national_loyalty_laws
 		prerequisite = {
-			focus = PON_eradicate_unions
+			focus = PON_enforce_the_occupation_of_the_quebecois
 		}
 		cost = 5
-		available = {
-			has_completed_focus = PON_kkk
-		}
+		
 		available_if_capitulated = yes
 		ai_will_do = {
 			factor = 1
@@ -1529,8 +1632,8 @@ focus_tree = {
 	focus = {
 		id = PON_invite_our_southern_bretheren
 		icon = GFX_goal_generic_alliance
-		x = 2
-		y = 2
+		x = 0
+		y = 1
 		relative_position_id = PON_the_second_great_upheaval
 		prerequisite = {
 			focus = PON_the_second_great_upheaval
@@ -1573,7 +1676,7 @@ focus_tree = {
 	focus = {
 		id = PON_Attack_manitoba
 		icon = GFX_goal_generic_major_war
-		x = -1
+		x = -2
 		y = 1
 		relative_position_id = PON_the_second_great_upheaval
 		prerequisite = {
@@ -1596,7 +1699,7 @@ focus_tree = {
 	focus = {
 		id = PON_Attack_the_maritimes
 		icon = GFX_focus_generic_swooping_falcon
-		x = 1
+		x = 2
 		y = 1
 		relative_position_id = PON_the_second_great_upheaval
 		prerequisite = {
@@ -1626,9 +1729,9 @@ focus_tree = {
 		}
 	}
 	focus = {
-		id = PON_attack_saskatchewan
+		id = PON_attack_saskatchewan_kkk
 		icon = GFX_goal_generic_dangerous_deal
-		x = -1
+		x = -2
 		y = 1
 		relative_position_id = PON_Attack_the_maritimes
 		prerequisite = {
@@ -1652,9 +1755,9 @@ focus_tree = {
 		icon = GFX_goal_generic_demand_territory
 		x = 0
 		y = 1
-		relative_position_id = PON_attack_saskatchewan
+		relative_position_id = PON_attack_saskatchewan_kkk
 		prerequisite = {
-			focus = PON_attack_saskatchewan
+			focus = PON_attack_saskatchewan_kkk
 		}
 		available = {
 			count_triggers = {
@@ -1777,6 +1880,669 @@ focus_tree = {
 			}
 		}
 	}
+	focus = {
+		id = PON_eradicate_communism
+		icon = GFX_focus_GER_end_european_communism
+		prerequisite = { focus = PON_secure_the_borders  focus =PON_become_canada }
+		x = 4
+		y = 1
+		relative_position_id = PON_secure_the_borders
+		cost = 10
+
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				has_civil_war = yes
+			}	
+		}
+		
+		available = {
+			any_country = {
+				has_government = communism
+				is_major = yes
+				is_subject = no
+			}
+		}
+		completion_reward = {
+			custom_effect_tooltip = SMN_wargoal_against_government_communist_tt
+			every_country = {
+				limit = {
+					has_government = communism
+					is_major = yes
+					NOT = { is_in_faction_with = ROOT }
+				}
+				ROOT = {
+					create_wargoal = {
+						target = PREV
+						type = topple_government
+						expire = 0
+					}
+				}
+			}
+		}
+	}
+###FASCIST TREE
+	focus = {
+		id = PON_merge_the_fascist_parties
+		icon = GFX_focus_generic_diplomatic_treaty
+		x = 0
+		y = 1
+		relative_position_id = PON_eradicate_unions
+		prerequisite = {
+			focus = PON_eradicate_unions
+		}
+		cost = 10
+		available = {
+			has_completed_focus = PON_choose_fascist
+			custom_trigger_tooltip = {
+				tooltip = controls_quebec_tt
+				controls_quebec_trigger = yes
+			}
+			custom_trigger_tooltip = {
+				tooltip = controls_ontario_tt
+				controls_ontario_trigger = yes
+			}
+		}
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			set_party_name = {
+				ideology = fascism
+				long_name = PON_fascism_party_alt_long
+				name = PON_fascism_party_alt
+			}
+			custom_effect_tooltip = available_political_advisor
+			show_ideas_tooltip = PON_adrian_arcand
+			add_ideas = PON_national_unity_party
+			###GIVES ADViSOR ARCAND
+			###ARCAND TRAIT = gives stab and pp as idea 5. 15
+			###IDEA = party stab, fascism, recuritable pop . 10. 0.1, 0.05
+
+		}
+	}
+	focus = {
+		id = PON_integrate_quebec_fascist
+		icon = GFX_focus_generic_court
+		x = 0
+		y = 1
+		relative_position_id = PON_merge_the_fascist_parties
+		prerequisite = {
+			focus = PON_merge_the_fascist_parties
+		}
+		cost = 10
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_political_power = -150
+			core_quebec = yes
+			remove_relation_modifier = {
+ 				target = PQC
+ 				modifier = PON_quebec_independence
+ 			}
+			add_manpower = 5000
+			add_stability = 0.1
+		}
+	}
+
+	focus = {
+		id = PON_expel_jews_to_hudson_bay
+		icon = GFX_goal_generic_forceful_treaty
+		x = -2
+		y = 1
+		relative_position_id = PON_merge_the_fascist_parties
+		prerequisite = {
+			focus = PON_merge_the_fascist_parties
+		}
+		cost = 5
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = controls_quebec_tt
+				controls_quebec_trigger = yes
+			}
+		}
+		completion_reward = {
+			add_popularity = {
+				ideology = fascism
+				popularity = 0.08
+			}
+			add_stability = 0.05
+			add_political_power = 50
+			34 = {
+				add_manpower = -65000
+			}
+			265 = {
+				add_manpower = 15000
+			}
+			267 = {
+				add_manpower = 15000
+			}
+			109 = {
+				add_manpower = 15000
+			}
+			108 = {
+				add_manpower = 15000
+			}
+
+		}
+	}
+	focus = {
+		id = PON_replace_jewish_schools
+		icon = GFX_focus_research
+		x = 0
+		y = 2
+		relative_position_id = PON_expel_jews_to_hudson_bay
+		prerequisite = {
+			focus = PON_expel_jews_to_hudson_bay
+		}
+		cost = 5
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_ideas = PON_one_public_school_system
+
+		}
+	}
+	focus = {
+		id = PON_promote_interventionism
+		icon = GFX_focus_generic_loyal_business
+		x = 2
+		y = 1
+		relative_position_id = PON_merge_the_fascist_parties
+		prerequisite = {
+			focus = PON_merge_the_fascist_parties
+		}
+		cost = 5
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_ideas = PON_business_inteventionism
+		}
+	}
+	focus = {
+		id = PON_war_production
+		icon = GFX_focus_generic_mass_production
+		x = -1
+		y = 1
+		relative_position_id = PON_promote_interventionism
+		prerequisite = {
+			focus = PON_integrate_quebec_fascist
+		}
+		prerequisite = {
+			focus = PON_promote_interventionism
+		}
+		cost = 7
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_timed_idea = {
+				idea = SMN_increased_military_production
+				days = 180
+			}
+
+		}
+	}
+	focus = {
+		id = PON_expand_the_swastika_clubs
+		icon = GFX_focus_PRC_controlled_growth
+		x = -1
+		y = 1
+		relative_position_id = PON_integrate_quebec_fascist
+		prerequisite = {
+			focus = PON_integrate_quebec_fascist
+		}
+		prerequisite = {
+			focus = PON_promote_interventionism
+		}
+		cost = 5
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			swap_ideas = {
+				remove_idea = PON_Swastika_clubs_1
+				add_idea = PON_Swastika_clubs_2
+			}
+
+		}
+	}
+	focus = {
+		id = PON_war_propaganda
+		icon = GFX_focus_SIA_united_against_aggresion
+		x = -2
+		y = 2
+		relative_position_id = PON_promote_interventionism
+		prerequisite = {
+			focus = PON_war_production
+		}
+		prerequisite = {
+			focus = PON_expand_the_swastika_clubs
+		}
+		cost = 5
+		
+		available_if_capitulated = yes
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_war_support = 0.15
+
+		}
+	}
+	focus = {
+		id = PON_strength_through_conquest
+		icon = GFX_focus_generic_fascist_troops
+		prerequisite = {
+			focus = PON_war_propaganda
+		}
+		x = 0
+		y = 1
+		cost = 10
+		available = {
+			count_triggers = {
+				amount > 5
+				has_full_control_of_state = 32
+				has_full_control_of_state = 33
+				has_full_control_of_state = 392
+				has_full_control_of_state = 31
+				has_full_control_of_state = 65
+				has_full_control_of_state = 68
+				has_full_control_of_state = 388
+				has_full_control_of_state = 789
+				has_full_control_of_state = 62
+			}
+		}
+		relative_position_id = PON_war_propaganda
+		ai_will_do = {
+			factor = 1
+		}
+		available_if_capitulated = no
+		completion_reward = {
+			random_core_state = {
+				limit = {
+					is_controlled_by = ROOT
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+			random_core_state = {
+				limit = {
+					is_controlled_by = ROOT
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+			random_core_state = {
+				limit = {
+					is_controlled_by = ROOT
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+			random_core_state = {
+				limit = {
+					is_controlled_by = ROOT
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+			random_core_state = {
+				limit = {
+					is_controlled_by = ROOT
+					free_building_slots = {
+						building = arms_factory
+						size > 1
+						include_locked = yes
+					}
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+	focus = {
+		id = PON_attack_new_brunswick
+		icon = GFX_goal_generic_major_war
+		prerequisite = {
+			focus = PON_war_propaganda
+		}
+		x = 2
+		y = 1
+		cost = 7
+		relative_position_id = PON_war_propaganda
+		ai_will_do = {
+			factor = 1
+		}
+		will_lead_to_war_with = PNB
+		available_if_capitulated = no
+		bypass = {
+			PNB = {
+				exists = no
+			}
+		}
+		completion_reward = {
+			create_wargoal = {
+				target = PNB
+				type = take_state
+			}
+		}
+	}
+	focus = {
+		id = PON_attack_new_foundland_and_labrador
+		icon = GFX_goal_generic_major_war
+		prerequisite = {
+			focus = PON_war_propaganda
+		}
+		x = 4
+		y = 1
+		cost = 7
+		relative_position_id = PON_war_propaganda
+		ai_will_do = {
+			factor = 1
+		}
+		will_lead_to_war_with = PNL
+		available_if_capitulated = no
+		bypass = {
+			PNL = {
+				exists = no
+			}
+		}
+		completion_reward = {
+			create_wargoal = {
+				target = PNL
+				type = take_state
+			}
+		}
+	}
+	focus = {
+		id = PON_attack_manitoba
+		icon = GFX_focus_eng_move_to_secure_the_dominions
+		prerequisite = {
+			focus = PON_war_propaganda
+		}
+		x = -2
+		y = 1
+		cost = 7
+		relative_position_id = PON_war_propaganda
+		ai_will_do = {
+			factor = 1
+		}
+		will_lead_to_war_with = PMB
+		available_if_capitulated = no
+		bypass = {
+			PMB = {
+				exists = no
+			}
+		}
+		completion_reward = {
+			create_wargoal = {
+				target = PMB
+				type = take_state
+			}
+		}
+	}
+	focus = {
+		id = PON_attack_saskatchewan
+		icon = GFX_goal_generic_major_war
+		prerequisite = {
+			focus = PON_war_propaganda
+		}
+		x = -4
+		y = 1
+		cost = 7
+		relative_position_id = PON_war_propaganda
+		ai_will_do = {
+			factor = 1
+		}
+		will_lead_to_war_with = PSK
+		available_if_capitulated = no
+		bypass = {
+			PSK = {
+				exists = no
+			}
+		}
+		completion_reward = {
+			create_wargoal = {
+				target = PSK
+				type = take_state
+			}
+		}
+	}
+	focus = {
+		id = PON_attack_alberta
+		icon = GFX_goal_generic_territory_or_war
+		prerequisite = {
+			focus = PON_war_propaganda
+		}
+		x = -3
+		y = 2
+		cost = 7
+		relative_position_id = PON_war_propaganda
+		ai_will_do = {
+			factor = 1
+		}
+		will_lead_to_war_with = PAB
+		available_if_capitulated = no
+		bypass = {
+			PAB = {
+				exists = no
+			}
+		}
+		completion_reward = {
+			create_wargoal = {
+				target = PAB
+				type = take_state
+			}
+		}
+	}
+	focus = {
+		id = PON_attack_british_columbia
+		icon = GFX_focus_generic_subjugation
+		prerequisite = {
+			focus = PON_war_propaganda
+		}
+		x = -1
+		y = 2
+		cost = 7
+		relative_position_id = PON_war_propaganda
+		ai_will_do = {
+			factor = 1
+		}
+		will_lead_to_war_with = PBC
+		available_if_capitulated = no
+		bypass = {
+			PBC = {
+				exists = no
+			}
+		}
+		completion_reward = {
+			create_wargoal = {
+				target = PBC
+				type = take_state
+			}
+		}
+	}
+	focus = {
+		id = PON_attack_nova_scotia
+		icon = GFX_goal_generic_attack_allies
+		prerequisite = {
+			focus = PON_attack_new_brunswick
+		}
+		x = 1
+		y = 1
+		cost = 7
+		relative_position_id = PON_attack_new_brunswick
+		ai_will_do = {
+			factor = 1
+		}
+		will_lead_to_war_with = PNS
+		available_if_capitulated = no
+		bypass = {
+			PNS = {
+				exists = no
+			}
+		}
+		completion_reward = {
+			create_wargoal = {
+				target = PNS
+				type = take_state
+			}
+		}
+	}
+	focus = {
+		id = PON_attack_edward_island
+		icon = GFX_goal_generic_major_war
+		prerequisite = {
+			focus = PON_attack_new_brunswick
+		}
+		x = -1
+		y = 1
+		cost = 7
+		relative_position_id = PON_attack_new_brunswick
+		ai_will_do = {
+			factor = 1
+		}
+		will_lead_to_war_with = PEI
+		available_if_capitulated = no
+		bypass = {
+			PEI = {
+				exists = no
+			}
+		}
+		completion_reward = {
+			create_wargoal = {
+				target = PEI
+				type = take_state
+			}
+		}
+	}
+	focus = {
+		id = PON_become_canada
+		icon = GFX_focus_hol_the_foundations_of_defense
+		prerequisite = {
+			focus = PON_strength_through_conquest
+		}
+		x = 0
+		y = 2
+		cost = 10
+		relative_position_id = PON_strength_through_conquest
+		ai_will_do = {
+			factor = 1
+		}
+		available = {
+			count_triggers = {
+				amount > 4
+				custom_trigger_tooltip = {
+					tooltip = controls_manitoba_tt
+					controls_manitoba_trigger = yes
+				}
+				custom_trigger_tooltip = {
+					tooltip = controls_saskatchewan_tt
+					controls_saskatchewan_trigger = yes
+				}
+				custom_trigger_tooltip = {
+					tooltip = controls_british_columbia_tt
+					controls_british_columbia_trigger = yes
+				}
+				custom_trigger_tooltip = {
+					tooltip = controls_alberta_tt
+					controls_alberta_trigger = yes
+				}
+				custom_trigger_tooltip = {
+					tooltip = controls_new_brunswick_tt
+					controls_new_brunswick_trigger = yes
+				}
+				custom_trigger_tooltip = {
+					tooltip = controls_nova_scotia_tt
+					controls_nova_scotia_trigger = yes
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = controls_newfoundland_tt
+				controls_newfoundland_and_labrador_trigger = yes
+			}
+			custom_trigger_tooltip = {
+				tooltip = controls_quebec_tt
+				controls_quebec_trigger = yes
+			}
+			custom_trigger_tooltip = {
+				tooltip = controls_ontario_tt
+				controls_ontario_trigger = yes
+			}
+		}
+		will_lead_to_war_with = PYT
+		will_lead_to_war_with = PNT
+		available_if_capitulated = no
+		completion_reward = {
+			create_wargoal = {
+				target = PYT
+				type = take_state
+			}
+			create_wargoal = {
+				target = PNT
+				type = take_state
+			}
+			set_cosmetic_tag = PQC_united_canada_fascist
+			core_canada = yes
+			add_political_power = -300
+		}
+	}
 ###MARTIAL LAW
 	focus = {
 		id = PON_bomb_ottawa_and_blame_it_on_quebec
@@ -1883,710 +2649,7 @@ focus_tree = {
 		}
 	}
 	#
-	focus = {
-		id = PON_Back_Swastica_clubs
-		icon = GFX_focus_PON_swastika_clubs
-		x = -7
-		y = 20
-		relative_position_id = PON_Toronto_Marches
-		
-		cost = 1
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		mutually_exclusive = {
-			focus = PON_Back_Ontario_Unionists
-		}
-		completion_reward = {
-			
-		}
-	}
-	#
-	focus = {
-		id = PON_2nd_christie_pitts_riot
-		icon = GFX_focus_PON_cristie_pitriot
-		x = 0
-		y = 1
-		relative_position_id = PON_Back_Swastica_clubs
-		prerequisite = {
-			focus = PON_Back_Swastica_clubs
-		}
-		cost = 5
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			PON = {
-				country_event = { 
-					id = Ontario.2
-				}
-			}
-		}
-	}
-	#
-	focus = {
-		id = PON_John_Ross_Taylor_chancellor
-		icon = GFX_focus_eng_move_to_secure_the_dominions
-		x = 0
-		y = 1
-		relative_position_id = PON_2nd_christie_pitts_riot
-		prerequisite = {
-			focus = PON_2nd_christie_pitts_riot
-		}
-		available = {
-			fascism > 0.45
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			set_politics = {
-				ruling_party = fascism
-				elections_allowed = no 
-			}
-			remove_ideas = PON_Commonwealth_dissolution_shock
-			add_political_power = 150
-		}
-	}
-	#
-	focus = {
-		id = PON_Eradicate_Unions
-		icon = GFX_focus_PON_eradicate_unions
-		x = 0
-		y = 1
-		relative_position_id = PON_John_Ross_Taylor_chancellor
-		prerequisite = {
-			focus = PON_John_Ross_Taylor_chancellor
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_popularity = {
-				ideology = fascism
-				popularity = 0.1
-			}
-			add_popularity = {
-				ideology = communism
-				popularity = -0.2
-			}
-		}
-	}
-	#
-	focus = {
-		id = PON_J_h_Hawkins
-		icon = GFX_focus_PON_j_h_hawkins
-		x = -2
-		y = 2
-		relative_position_id = PON_Eradicate_Unions
-		prerequisite = {
-			focus = PON_Eradicate_Unions
-		}
-		prerequisite = {
-			focus = PON_The_QUBEC_ISSUE
-		}
-		cost = 10
-		mutually_exclusive = {
-			focus = PON_Ontarioite_union_of_the_fascists
-		}
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			set_country_flag = KKK_led_USA_state
-			set_cosmetic_tag = KKK_ONTARIO
-			PON = {
-				country_event = {
-					id = Ontario.6
-				}
-			}
-			create_country_leader = {
-				name = "J. H. Hawkins"
-				desc = "KKK leader"
-				picture = "gfx_leaders_PON_jw_hawkins.dds"
-				expire = "1965.1.1"
-				ideology = fascism_ideology
-				traits = {
-				}
-			}
-			set_party_name = {
-				ideology = fascism
-				long_name = PON_fascist_KKK_party_nadivided
-				name = PON_fascist_KKK_party_nadivided
-			}
-		}
-	}
-	#
-	focus = {
-		id = PON_Expel_the_french_from_barrie
-		icon = GFX_focus_PON_expell_french_from_Barrie
-		x = 0
-		y = 1
-		relative_position_id = PON_J_h_Hawkins
-		prerequisite = {
-			focus = PON_J_h_Hawkins
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_ideas = PON_quebecois_riots
-		}
-	}
-	#
-	focus = {
-		id = PON_blowuup_the_church_of_barrie
-		icon = GFX_focus_PON_bomb_church_barrie
-		x = -1
-		y = 1
-		relative_position_id = PON_Expel_the_french_from_barrie
-		prerequisite = {
-			focus = PON_Expel_the_french_from_barrie
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			remove_ideas = PON_Outraged_minorites
-			add_ideas = PON_Support_from_Anglican_chruch
-			PON = {
-				country_event = {
-					id = Ontario.7
-				}
-			}
-		}
-	}
-	#
-	focus = {
-		id = PON_burn_Saint_Boniface_university
-		icon = GFX_focus_PON_burn_stbon_barrie
-		x = 1
-		y = 1
-		relative_position_id = PON_Expel_the_french_from_barrie
-		prerequisite = {
-			focus = PON_Expel_the_french_from_barrie
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			PON = {
-				country_event = {
-					id = Ontario.8
-				}
-			}
-			add_political_power = 300
-		}
-	}
-	#
-	focus = {
-		id = PON_Pacify_qubec
-		icon = GFX_focus_PON_pacifiy_Qubec
-		x = -1
-		y = 1
-		relative_position_id = PON_burn_Saint_Boniface_university
-		prerequisite = {
-			focus = PON_burn_Saint_Boniface_university
-		}
-		prerequisite = {
-			focus = PON_blowuup_the_church_of_barrie
-		}
-		available = {
-			NOT = {
-				has_war_with = PQC
-			}
-		}
-		cost = 15
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			#owns_state = 32
-			core_quebec = yes
-			remove_ideas = PON_Outraged_French_Canadians
-			remove_ideas = PON_quebecois_riots
-		}
-	}
-	#
-	focus = {
-		id = PON_Second_Great_deportation
-		icon = GFX_focus_PON_great_deportation2
-		x = -1
-		y = 1
-		relative_position_id = PON_Pacify_qubec
-		prerequisite = {
-			focus = PON_Pacify_qubec
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			32 = {
-				add_manpower = -90000
-			}
-			34 = {
-				add_manpower = -900000
-			}
-			111 = {
-				add_manpower = -90000
-			}
-			118 = {
-				add_manpower = -90000
-			}
-			add_timed_idea = {
-				idea = PON_quebec_free_real_estate
-				days = 500
-			}
-			add_stability = 0.05
-		}
-	}
-	#
-	# 
-	focus = {
-		id = PON_Volenteers_from_the_south
-		icon = GFX_focus_PON_volenteers_from_the_south
-		x = 1
-		y = 1
-		relative_position_id = PON_Pacify_qubec
-		prerequisite = {
-			focus = PON_Pacify_qubec
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_timed_idea = {
-				idea = PON_Yankee_Volenteers
-				days = 625
-			}
-		}
-	}
-	#
-	focus = {
-		id = PON_Ontarioite_union_of_the_fascists
-		icon = GFX_focus_PON_union_of_the_fascists
-		x = 2
-		y = 2
-		relative_position_id = PON_Eradicate_Unions
-		prerequisite = {
-			focus = PON_Eradicate_Unions
-		}
-		prerequisite = {
-			focus = PON_The_QUBEC_ISSUE
-		}
-		cost = 10
-		mutually_exclusive = {
-			focus = PON_J_h_Hawkins
-		}
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_timed_idea = {
-				idea = PON_Nationalist_Union_of_Ontario
-				days = 100
-			}
-			PON = {
-				country_event = {
-					id = Ontario.10
-				}
-			}
-		}
-	}
-	#
-	focus = {
-		id = PON_Demolish_The_Slums
-		icon = GFX_focus_PON_bulldoze_slums
-		x = 1
-		y = 1
-		relative_position_id = PON_Ontarioite_union_of_the_fascists
-		prerequisite = {
-			focus = PON_Ontarioite_union_of_the_fascists
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			remove_ideas = PON_Outraged_minorites
-		}
-	}
-	#
-	focus = {
-		id = PON_invite_Adrien_Arcand_for_rally
-		icon = GFX_focus_PON_invite_adrianforspeech
-		x = -1
-		y = 1
-		relative_position_id = PON_Ontarioite_union_of_the_fascists
-		prerequisite = {
-			focus = PON_Ontarioite_union_of_the_fascists
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			remove_ideas = PON_Outraged_French_Canadians
-			core_quebec = yes
-		}
-	}
-	#
-	focus = {
-		id = PON_Ensure_political_Domination
-		icon = GFX_focus_PON_ensure_p_domination
-		x = 1
-		y = 1
-		relative_position_id = PON_invite_Adrien_Arcand_for_rally
-		prerequisite = {
-			focus = PON_invite_Adrien_Arcand_for_rally
-		}
-		prerequisite = {
-			focus = PON_Demolish_The_Slums
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_manpower = -56
-			add_political_power = 100
-		}
-	}
-	# 
-	focus = {
-		id = PON_Steralization_campagins
-		icon = GFX_focus_PON_steralizaitons
-		x = -1
-		y = 2
-		relative_position_id = PON_Ensure_political_Domination
-		prerequisite = {
-			focus = PON_Ensure_political_Domination
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_ideas = PON_Fascist_Medical_community
-		}
-	}
-	# 
-	focus = {
-		id = PON_Unethical_Research
-		icon = GFX_focus_PON_unethical_research
-		x = 0
-		y = 1
-		relative_position_id = PON_Steralization_campagins
-		prerequisite = {
-			focus = PON_Steralization_campagins
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_research_slot = 1
-		}
-	}
-	# 
-	focus = {
-		id = PON_Expand_Swastica_clubs
-		icon = GFX_focus_PON_expand_swastika_clubs
-		x = 1
-		y = 1
-		relative_position_id = PON_Ensure_political_Domination
-		prerequisite = {
-			focus = PON_Ensure_political_Domination
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			
-		}
-	}
-	# 
-	focus = {
-		id = PON_National_Unity_Police
-		icon = GFX_focus_PON_national_unity_police
-		x = 2
-		y = 1
-		relative_position_id = PON_Expand_Swastica_clubs
-		prerequisite = {
-			focus = PON_Expand_Swastica_clubs
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_ideas = PON_Fascist_Cops
-		}
-	}
-	# 
-	focus = {
-		id = PON_Expand_Kingston_Penitentiary
-		icon = GFX_focus_PON_expand_kingston_penn
-		x = 0
-		y = 1
-		relative_position_id = PON_National_Unity_Police
-		prerequisite = {
-			focus = PON_National_Unity_Police
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_stability = 0.15
-		}
-	}
-	# 
-	focus = {
-		id = PON_New_Uniforms
-		icon = GFX_focus_PON_new_uniforms
-		x = 0
-		y = 1
-		relative_position_id = PON_Expand_Swastica_clubs
-		prerequisite = {
-			focus = PON_Expand_Swastica_clubs
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available = {
-			has_idea = PON_Ontario_Army_Idea
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			swap_ideas = {
-				remove_idea = PON_Ontario_Army_Idea
-				add_idea = PON_Ontario_Fascist_Army
-			}
-		}
-	}
 
-
-	
-	focus = {
-		id = PON_Total_War_against_Communism
-		icon = GFX_focus_PON_totalwar_communism
-		x = 0
-		y = 1
-		relative_position_id = PON_New_Uniforms
-		prerequisite = {
-			focus = PON_New_Uniforms
-		}
-		cost = 10
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			custom_effect_tooltip = PON_total_war_against_communism_tt
-			hidden_effect = {
-				every_country = { ## i dont understand how this works but it does ( looks funny in game so its hidden )
-					limit = {
-						original_tag = PON
-					}
-					every_country = {
-						limit = {
-							has_government = communism
-						}
-						PREV = {
-							create_wargoal = {
-								target = PREV
-								type = topple_government
-							}
-						}
-					}
-				}
-			}
-			add_stability = 0.05
-			add_political_power = 150
-		}
-	}
-
-	
-	focus = {
-		id = PON_Ontario_Secret_Police
-		icon = GFX_focus_generic_secret_service_agency
-		cost = 10
-		x = 0
-		y = 1
-		relative_position_id = PON_Total_War_against_Communism
-		prerequisite = {
-			focus = PON_Total_War_against_Communism
-		}
-		prerequisite = {
-			focus = PON_Unethical_Research
-		}
-		prerequisite = {
-			focus = PON_Expand_Kingston_Penitentiary
-		}
-
-		completion_reward = { 
-			PON = {
-				set_country_flag = PON_Ontario_secret_police_flag
-			}
-
-			custom_effect_tooltip = PON_Ontario_secret_police_tt
-		}
-	}
-
-	focus = {
-		id = PON_The_QUBEC_ISSUE
-		icon = GFX_focus_Qubec_problem
-		x = 4
-		y = 1
-		relative_position_id = PON_Eradicate_Unions
-		prerequisite = {
-			focus = PON_Eradicate_Unions
-			focus = PON_Storm_Parliament_Hill
-		}
-		cost = 5
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available = {
-			#date > 1939.03.1
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		will_lead_to_war_with = PQC
-		completion_reward = {
-			create_wargoal = {
-				type = annex_everything
-				target = PQC
-			}
-		}
-	}
-	#
-	focus = {
-		id = PON_Radio_Broadcasts
-		icon = GFX_focus_PON_radiobroadcast
-		x = -2
-		y = 1
-		relative_position_id = PON_Back_Swastica_clubs
-		prerequisite = {
-			focus = PON_Back_Swastica_clubs
-		}
-		cost = 5
-		available = {
-			has_tech = radio
-		}
-		search_filters = {
-			FOCUS_FILTER_RESEARCH
-		}
-		available_if_capitulated = yes
-		ai_will_do = {
-			factor = 1
-		}
-		completion_reward = {
-			add_ideas = PON_Radio_broadcasts
-			add_popularity = {
-				ideology = fascism
-				popularity = 0.1
-			}
-		}
-	}
 ####FOR DEMOCRACY
 	focus = {
 		id = PON_1936_Ontario_Elections
@@ -2601,10 +2664,23 @@ focus_tree = {
 				factor = 100
 			}
 		}
+		allow_branch = {
+			NOT = {
+				has_completed_focus = PON_Toronto_Marches
+			}
+		}
+		#offset = {
+		#	x = 10
+		#	y = 0
+		#	trigger = {
+		#		has_completed_focus = PON_Toronto_Marches
+		#	}
+		#}
 		mutually_exclusive = {
 			focus = PON_Toronto_Marches
 		}
 		completion_reward = {
+			mark_focus_tree_layout_dirty = yes
 			PON = {
 				country_event = {
 					id = Ontario.5
@@ -3101,6 +3177,11 @@ focus_tree = {
 		x = 1
 		y = 1
 		relative_position_id = PON_Marshal_Law_In_Qubec
+		allow_branch = {
+			NOT = {
+				has_completed_focus = PON_Toronto_Marches
+			}
+		}
 		#prerequisite = {
 		#	focus = PON_Reconquest_of_Qubec
 		#}
@@ -3501,7 +3582,7 @@ focus_tree = {
 					id = Ontario.21
 				}
 			}
-			#load_focus_tree = canada_focus
+			load_focus_tree = canada_focus
 		}
 		ai_will_do = {
 			factor = 50
@@ -3653,22 +3734,17 @@ focus_tree = {
 			focus = PON_bomber_focus
 		}
 		x = 0
-		y = 5
+		y = 4
 		relative_position_id = PON_bomber_focus
 		cost = 10
-		available = {
-			date > 1947.01.1
-		}
+		
 		available_if_capitulated = yes
 		completion_reward = {
 			add_tech_bonus = {
 				name = bomber_bonus
 				bonus = 1
 				uses = 2
-				technology = strategic_bomber1
-				technology = strategic_bomber2
-				technology = strategic_bomber3
-				category = tactical_bomber
+				category = heavy_air
 			}
 			air_experience = 50
 		}
@@ -3685,25 +3761,7 @@ focus_tree = {
 		relative_position_id = PON_bomber_focus
 		cost = 10
 		available_if_capitulated = yes
-		complete_tooltip = {
-			air_experience = 25
-			if = {
-				limit = {
-					has_country_flag = aviation_effort_2_AB
-				}
-				add_building_construction = {
-					type = air_base
-					level = 2
-					instant_build = yes
-				}
-			}
-			add_doctrine_cost_reduction = {
-				name = air_doc_bonus
-				cost_reduction = 0.5
-				uses = 1
-				category = air_doctrine
-			}
-		}
+		
 		completion_reward = {
 			air_experience = 25
 			if = {
@@ -3765,6 +3823,12 @@ focus_tree = {
 				cost_reduction = 0.5
 				uses = 1
 				category = air_doctrine
+			}
+			add_tech_bonus = {
+				name = fighter_bonus
+				bonus = 0.33
+				uses = 3
+				category = plane_modules_tech
 			}
 		}
 	}
