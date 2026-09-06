@@ -1,0 +1,337 @@
+#	Example:
+# 
+#	example_effect = {
+#		add_political_power = 66
+#		add_popularity = {
+#			ideology = fascism
+#			popularity = 0.33
+#		}
+#	}
+#
+#
+#	In a script file:
+#
+#	effect = {
+#		example_effect = yes
+#	}
+#
+
+###################################
+### NA DIVIDED SCRIPTED EFFECTS ###
+###################################
+
+# TARGET CATHOLIC NATIONS #
+# Adds +15 Opinion of all Christian Nations towards FROM / ROOT country
+target_catholic_nations = {
+	FROM = {
+		COR = {
+			if = {
+				limit = {
+					NOT = {
+						ROOT = {
+							original_tag = COR
+						}
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = christian_positivity_nation_modifier
+				}
+			}
+		}
+		#SNJ = {
+		#	if = {
+		#		limit = {
+		#			AND = {
+		#				SNJ = {
+		#					has_completed_focus = NJ_catholiczealotry
+		#				}
+		#				NOT = {
+		#					ROOT = {
+		#						original_tag = COR
+		#					}
+		#				}
+		#			}
+		#		}
+		#		add_opinion_modifier = {
+		#			target = ROOT
+		#			modifier = christian_positivity_nation_modifier
+		#		}
+		#	}
+		#}
+		MCL = {
+			if = {
+				limit = {
+					NOT = {
+						ROOT = {
+							original_tag = MCL
+						}
+					}
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = christian_positivity_nation_modifier
+				}
+			}
+		}
+		SMA = {
+			if = {
+				limit = {
+					#OR = {
+						has_completed_focus = SMA_Curley_Coup
+					#} 
+				}
+				add_opinion_modifier = {
+					target = ROOT
+					modifier = christian_positivity_nation_modifier
+				}
+			}
+		}
+	}
+# end target catholic nations effect	
+}
+
+SFL_fascist_leader_target_country_effect = {
+	SFL = {
+		clear_variable = SFL_invite_fascist_leader_speech_leader_loc
+		clr_country_flag = invite_fascist_leader_speech_leader_country_selected_flag
+	}
+	every_other_country = {
+		if = {
+			limit = {
+				AND = {
+					has_government = fascism
+					NOT = {
+						SFL = {
+							has_country_flag = invite_fascist_leader_speech_leader_country_selected_flag
+						}
+					}
+				}
+			}
+			SFL = {
+				set_variable = { SFL_invite_fascist_leader_speech_leader_loc = PREV.id }
+				set_country_flag = invite_fascist_leader_speech_leader_country_selected_flag
+			}
+			var:SFL.SFL_invite_fascist_leader_speech_leader_loc = {
+				set_country_flag = invite_fascist_leader_speech_leader_target_flag
+			}
+		}
+	}
+# end florida fascist leader from foreign country targeting effect
+}
+
+florida_wargoal_west_florida_countries = {
+	custom_effect_tooltip = florida_wargoal_west_florida_countries_tt
+	hidden_effect = {
+		every_other_country = {
+			limit = {
+				any_owned_state = {
+					is_west_florida_state = yes
+				}
+			}
+			ROOT = {
+				create_wargoal = {
+					type = take_state_focus
+					target = PREV
+					generator = { 13 18 22 23 155 156 159 }
+				}
+			}
+			add_opinion_modifier = {
+				target = ROOT
+				modifier = SFL_claims_west_florida_modifier
+			}
+		}
+	}
+}
+
+increase_dwavern_level = {
+	if = {
+		limit = {
+			NOT = {
+				OR = {
+					has_idea = GRE_dwavern_spirit1
+					has_idea = GRE_dwavern_spirit2
+					has_idea = GRE_dwavern_spirit3
+					has_idea = GRE_dwavern_spirit4
+				}
+			}
+		}
+		add_ideas = GRE_dwavern_spirit1
+	}
+	else_if = {
+		limit = {
+			has_idea = GRE_dwavern_spirit1
+		}
+		swap_ideas = {
+			remove_idea = GRE_dwavern_spirit1
+			add_idea = GRE_dwavern_spirit2
+		}
+	}
+	else_if = {
+		limit = {
+			has_idea = GRE_dwavern_spirit2
+		}
+		swap_ideas = {
+			remove_idea = GRE_dwavern_spirit2
+			add_idea = GRE_dwavern_spirit3
+		}
+	}
+	else_if = {
+		limit = {
+			has_idea = GRE_dwavern_spirit3
+		}
+		swap_ideas = {
+			remove_idea = GRE_dwavern_spirit3
+			add_idea = GRE_dwavern_spirit4
+		}
+	}
+}
+
+#####KEEP LOWEST LEVEL ON THE BOTTOM AKA AGRARIAN ECO LVL 1
+PBC_foreign_citizenship_up = {
+
+	if = {
+		limit = { has_idea = PBC_european_knowhow_3 }
+		swap_ideas = {
+			remove_idea = PBC_european_knowhow_3
+			add_idea = PBC_european_knowhow_4
+		}
+	}
+
+	if = {
+		limit = { has_idea = PBC_european_knowhow_2 }
+		swap_ideas = {
+			remove_idea = PBC_european_knowhow_2
+			add_idea = PBC_european_knowhow_3
+		}
+	}
+	if = {
+		limit = { has_idea = PBC_european_knowhow }
+		swap_ideas = {
+			remove_idea = PBC_european_knowhow
+			add_idea = PBC_european_knowhow_2
+		}
+	}
+}
+
+#SNY_update_military_tension_frame = {
+#	if = {
+#		limit = {
+#			check_variable = { military_coup_tension = 0 }
+#		}
+#		military_coup_militancy_frame = 1
+#	}
+#	else_if = {
+#		limit = {
+#			check_variable = { military_coup_tension = 100 }
+#		}
+#		military_coup_militancy_frame = 9
+#	}
+#	else_if = {
+#		limit = {
+#			check_variable = { military_coup_tension > 14 }
+#		}
+#		military_coup_militancy_frame = 2
+#	}
+#	else_if = {
+#		limit = {
+#			check_variable = { military_coup_tension > 28 }
+#		}
+#		military_coup_militancy_frame = 3
+#	}
+#	else_if = {
+#		limit = {
+#			check_variable = { military_coup_tension > 42 }
+#		}
+#		military_coup_militancy_frame = 4
+#	}
+#	else_if = {
+#		limit = {
+#			check_variable = { military_coup_tension > 56 }
+#		}
+#		military_coup_militancy_frame = 5
+#	}
+#	else_if = {
+#		limit = {
+#			check_variable = { military_coup_tension > 70 }
+#		}
+#		military_coup_militancy_frame = 6
+#	}
+#	else_if = {
+#		limit = {
+#			check_variable = { military_coup_tension > 84 }
+#		}
+#		military_coup_militancy_frame = 7
+#	}
+#	else_if = {
+#		limit = {
+#			check_variable = { military_coup_tension > 100 } #Should be 98, but close enough
+#		}
+#		military_coup_militancy_frame = 8
+#	}
+#	else = {
+#		military_coup_militancy_frame = 1
+#	}
+#}
+######################################
+#####KEEP LOWEST LEVEL ON THE BOTTOM AKA AGRARIAN ECO LVL 1
+
+#desegregation_lvl_up = {
+#	if = {
+#		limit = {
+#			has_idea = partial_desegregation
+#		}
+#		swap_ideas = {
+#			remove_idea = partial_desegregation
+#			add_idea = legal_desegregation
+#		}
+#	}
+#	if = {
+#		limit = {
+#			has_idea = segregation
+#		}
+#		swap_ideas = {
+#			remove_idea = segregation
+#			add_idea = partial_desegregation
+#		}
+#	}
+#	if = {
+#		limit = {
+#			has_idea = enforced_segregation
+#		}
+#		swap_ideas = {
+#			remove_idea = enforced_segregation
+#			add_idea = segregation
+#		}
+#	}
+#}
+#
+#desegregation_lvl_down = {
+#	if = {
+#		limit = {
+#			has_idea = segregation
+#		}
+#		swap_ideas = {
+#			remove_idea = segregation
+#			add_idea = enforced_segregation
+#		}
+#	}
+#	if = {
+#		limit = {
+#			has_idea = partial_desegregation
+#		}
+#		swap_ideas = {
+#			remove_idea = partial_desegregation
+#			add_idea = segregation
+#		}
+#	}
+#	if = {
+#		limit = {
+#			has_idea = legal_desegregation
+#		}
+#		swap_ideas = {
+#			remove_idea = legal_desegregation
+#			add_idea = partial_desegregation
+#		}
+#	}
+#}

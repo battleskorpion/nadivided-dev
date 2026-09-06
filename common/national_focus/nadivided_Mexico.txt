@@ -1,0 +1,1152 @@
+focus_tree = {
+	id = mexico_nadivided_focus
+	
+	country = {
+		factor = 0
+		####TAKEN OUT FOR NOW FOR UPDATE
+		#modifier = {
+		#	add = 11
+        #    OR = {
+        #        tag = MEX
+        #        tag = MAC
+        #        tag = MCL
+        #    }
+		#}
+    }
+    continuous_focus_position = { x = 50 y = 2000 }
+    
+focus = {
+	id = MEX_continue_land_reforms
+	icon = GFX_focus_generic_land_redistribution
+
+	x = 25
+	y = 0
+	cost = 10
+
+	cancelable = no
+
+	bypass = {
+		has_country_flag = MEX_haciendes_rose_up
+	}
+
+	enable_automatic_bypass = yes
+
+	completion_reward = {
+		effect_tooltip = {
+			swap_ideas = {
+				remove_idea = MEX_callistas_NAD_fake
+				add_idea = MEX_callistas_NAD_fake_1
+			}
+		}
+		add_to_variable = {
+			var = MEX_callistas_NAD_const
+			value = 0.05
+		}
+
+		add_to_variable = {
+			var = MEX_callistas_NAD_pp
+			value = 0.05
+		}
+
+		update_dynamic_modifier = {
+			modifier = MEX_callistas_NAD
+		}
+		hidden_effect = {
+			country_event = {
+				id = na_mex.1
+				days = 1
+			}
+			country_event = {
+				id = na_mex.2
+				days = 50
+			}
+		}
+	}
+}
+
+focus = {
+	id = MEX_publicitize_land
+	icon = GFX_focus_generic_land_reclamation
+
+	prerequisite = {
+		focus = MEX_continue_land_reforms
+	}
+
+	relative_position_id = MEX_continue_land_reforms
+
+	x = 1
+	y = 1
+	cost = 10
+
+	cancelable = no
+
+	bypass = {
+		has_country_flag = MEX_haciendes_rose_up
+	}
+
+	enable_automatic_bypass = yes
+
+	completion_reward = {
+		effect_tooltip = {
+			swap_ideas = {
+				remove_idea = MEX_callistas_NAD_fake_1
+				add_idea = MEX_callistas_NAD_fake_3
+			}
+		}
+		add_to_variable = {
+			var = MEX_callistas_NAD_const
+			value = 0.05
+		}
+
+		add_to_variable = {
+			var = MEX_callistas_NAD_pp
+			value = 0.05
+		}
+
+		update_dynamic_modifier = {
+			modifier = MEX_callistas_NAD
+		}
+	}
+}
+
+focus = {
+	id = MEX_disperse_land
+	icon = GFX_goal_generic_construction2
+
+	prerequisite = {
+		focus = MEX_continue_land_reforms
+	}
+
+	relative_position_id = MEX_continue_land_reforms
+
+	x = -1
+	y = 1
+	cost = 10
+
+	cancelable = no
+
+	bypass = {
+		has_country_flag = MEX_haciendes_rose_up
+	}
+
+	enable_automatic_bypass = yes
+
+	completion_reward = {
+		effect_tooltip = {
+			swap_ideas = {
+				remove_idea = MEX_callistas_NAD_fake_1
+				add_idea = MEX_callistas_NAD_fake_2
+			}
+		}
+		add_to_variable = {
+			var = MEX_callistas_NAD_pp
+			value = 0.10
+		}
+		add_to_variable = {
+			var = MEX_callistas_NAD_const
+			value = 0.05
+		}
+
+		update_dynamic_modifier = {
+			modifier = MEX_callistas_NAD
+		}
+	}
+}
+
+focus = {
+	id = MEX_complete_land_reform
+	icon = GFX_focus_generic_farmland
+
+	prerequisite = {focus = MEX_publicitize_land}
+	prerequisite = {focus = MEX_disperse_land}
+
+	relative_position_id = MEX_continue_land_reforms
+
+	x = 0
+	y = 2
+	cost = 10
+
+	cancelable = no
+
+	bypass = {
+		has_country_flag = MEX_haciendes_rose_up
+	}
+
+	enable_automatic_bypass = yes
+
+	bypass_effect = {
+		mark_focus_tree_layout_dirty = yes
+	}
+	completion_reward = {
+		mark_focus_tree_layout_dirty = yes
+
+		custom_effect_tooltip = MEX_land_reform_civil_war_help_tt
+
+		custom_effect_tooltip = generic_skip_one_line_tt
+
+		effect_tooltip = {
+			remove_ideas = MEX_callistas_NAD_fake_3
+		}
+		set_variable = {
+			var = MEX_callistas_NAD_const
+			value = 0
+		}
+		set_variable = {
+			var = MEX_callistas_NAD_pp
+			value = 0
+		}
+		hidden_effect = { remove_dynamic_modifier = { modifier = MEX_callistas_NAD } }
+	}
+}
+	focus = {
+		id = MEX_a_reformed_mexico
+		icon = GFX_focus_AFG_parliamentary_democracy
+		prerequisite = { focus = MEX_complete_land_reform }
+		relative_position_id = MEX_complete_land_reform
+
+		x = 0
+		y = 1
+		cost = 0
+		
+		available = {
+			always = false
+		}
+
+		#search_filters = {  } will be added later
+
+		allow_branch = {
+			has_completed_focus = MEX_complete_land_reform
+		}
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_snap_election
+		icon = GFX_focus_generic_election
+		prerequisite = {focus = MEX_a_reformed_mexico}
+		relative_position_id = MEX_a_reformed_mexico
+
+		x = 0
+		y = 3
+		cost = 5
+		
+		available = {
+			NOT = { has_war_with = MAC }
+			MAC = {
+				exists = no
+			}
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+			country_event = na_mex_ref.1
+		}
+	}
+	focus = {
+		id = MEX_realize_social_democracy
+		icon = GFX_focus_generic_social_democracy
+		prerequisite = {focus = MEX_snap_election}
+		mutually_exclusive = {focus = MEX_preserve_the_1910_revolution}
+		relative_position_id = MEX_snap_election
+
+		x = -4
+		y = 1
+		cost = 5
+		
+		available = {
+			
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_universal_rights
+		icon = GFX_focus_generic_social_democracy
+		prerequisite = {focus = MEX_realize_social_democracy}
+		relative_position_id = MEX_realize_social_democracy
+
+		x = -1
+		y = 1
+		cost = 5
+		
+		available = {
+			
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_womens_rights
+		icon = GFX_focus_generic_social_democracy
+		prerequisite = {focus = MEX_universal_rights}
+		relative_position_id = MEX_realize_social_democracy
+
+		x = -1
+		y = 2
+		cost = 5
+		
+		available = {
+			
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_full_secularization
+		icon = GFX_focus_generic_social_democracy
+		prerequisite = {focus = MEX_realize_social_democracy}
+		relative_position_id = MEX_realize_social_democracy
+
+		x = -3
+		y = 1
+		cost = 5
+		
+		available = {
+			
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_never_another
+		icon = GFX_focus_generic_social_democracy
+		prerequisite = {focus = MEX_realize_social_democracy}
+		relative_position_id = MEX_realize_social_democracy
+
+		x = -3
+		y = 1
+		cost = 5
+		
+		available = {
+			
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_start_the_mexican_miracle
+		icon = GFX_SOV_the_trade_union_as_labor_organizer_ccp_2d_sov_compatibility
+		prerequisite = { focus = MEX_realize_social_democracy focus = MEX_preserve_the_1910_revolution }
+		relative_position_id = MEX_realize_social_democracy
+
+		x = 4
+		y = 1
+		cost = 5
+		
+		available = {
+			
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_peaceful_union_representation
+		icon = GFX_SOV_the_trade_union_as_labor_organizer_ccp_2d_sov_compatibility
+		prerequisite = {focus = MEX_start_the_mexican_miracle}
+		relative_position_id = MEX_realize_social_democracy
+
+		x = 1
+		y = 2
+		cost = 5
+		
+		available = {
+			
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_agricultural_reformation
+		icon = GFX_focus_generic_farmland
+		prerequisite = {focus = MEX_start_the_mexican_miracle}
+		relative_position_id = MEX_realize_social_democracy
+
+		x = 4
+		y = 2
+		cost = 5
+		
+		available = {
+			
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_cooperative_development
+		icon = GFX_focus_generic_agricultural_subsidies
+		prerequisite = {focus = MEX_start_the_mexican_miracle}
+		relative_position_id = MEX_realize_social_democracy
+
+		x = 7
+		y = 2
+		cost = 5
+		
+		available = {
+			
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_oil_nationalization
+		icon = GFX_focus_PER_increase_oil_sales
+		prerequisite = {focus =MEX_start_the_mexican_miracle}
+		relative_position_id = MEX_realize_social_democracy
+
+		x = 6
+		y = 3
+		cost = 5
+		
+		available = {
+			
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_reverse_the_brain_drain
+		icon = GFX_goal_tfv_generic_tech_sharing
+		prerequisite = {focus = MEX_start_the_mexican_miracle}
+		relative_position_id = MEX_realize_social_democracy
+
+		x = 2
+		y = 3
+		cost = 5
+		
+		available = {
+			
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_mexican_golden_age
+		icon = GFX_focus_mex_privatisation
+		prerequisite = {focus = MEX_cooperative_development}
+		prerequisite = {focus = MEX_agricultural_reformation}
+		prerequisite = {focus = MEX_peaceful_union_representation}
+		prerequisite = {focus = MEX_reverse_the_brain_drain}
+		prerequisite = {focus = MEX_oil_nationalization}
+		relative_position_id = MEX_realize_social_democracy
+
+		x = 4
+		y = 4
+		cost = 5
+		
+		available = {
+			
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_preserve_the_1910_revolution
+		icon = GFX_goal_support_democracy
+		prerequisite = {focus = MEX_snap_election}
+		mutually_exclusive = {focus = MEX_realize_social_democracy}
+		relative_position_id = MEX_snap_election
+
+		x = 4
+		y = 1
+		cost = 5
+		
+		available = {
+			
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_establish_competitive_democracy
+		icon = GFX_goal_support_democracy
+		prerequisite = {focus = MEX_preserve_the_1910_revolution}
+		relative_position_id = MEX_preserve_the_1910_revolution
+
+		x = 1
+		y = 1
+		cost = 5
+		
+		available = {
+			
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_dismantle_the_maximato
+		icon = GFX_goal_support_democracy
+		prerequisite = {focus = MEX_establish_competitive_democracy}
+		relative_position_id = MEX_establish_competitive_democracy
+
+		x = 0
+		y = 1
+		cost = 5
+		
+		available = {
+			
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_moderate_the_land_reform
+		icon = GFX_goal_support_democracy
+		prerequisite = {focus = MEX_preserve_the_1910_revolution}
+		relative_position_id = MEX_preserve_the_1910_revolution
+
+		x = 3
+		y = 1
+		cost = 5
+		
+		available = {
+			
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_regional_investment_opportunities
+		icon = GFX_goal_support_democracy
+		prerequisite = {focus = MEX_preserve_the_1910_revolution}
+		relative_position_id = MEX_preserve_the_1910_revolution
+
+		x = 5
+		y = 1
+		cost = 5
+		
+		available = {
+			
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_a_cry_for_help
+		icon = GFX_focus_PRC_arms_recovery_efforts
+		prerequisite = {focus = MEX_a_reformed_mexico focus = MEX_a_corpratist_mexico}
+		relative_position_id = MEX_a_reformed_mexico
+
+		x = 5
+		y = 1
+		cost = 2
+		
+		available = {
+			
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+			add_timed_idea = {
+				idea = MEX_a_cry_for_help
+				days = 90
+			}
+		}
+	}
+	focus = {
+		id = MEX_rebuild_the_nation
+		icon = GFX_SOV_rebuild_the_nation_ccp_2d_sov_compatibility
+		prerequisite = {focus = MEX_a_cry_for_help}
+		relative_position_id = MEX_a_reformed_mexico
+
+		x = 5
+		y = 2
+		cost = 5
+		
+		available = {
+			has_idea = MEX_recovering_economy
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+			custom_effect_tooltip = MEX_reduce_rebuild_time_tt
+				hidden_effect = {
+				remove_ideas = MEX_recovering_economy
+				add_timed_idea = {
+					idea = MEX_recovering_economy
+					days = 90
+				}
+			}
+		}
+	}
+	focus = {
+		id = MEX_a_catholic_mexico
+		icon = GFX_focus_generic_catholic_dominion
+
+		x = 15
+		y = 3
+		cost = 0
+		
+		available = {
+			always = false
+		}
+
+		#search_filters = {  } will be added later
+
+		allow_branch = {
+			has_completed_focus = MEX_a_catholic_mexico
+		}
+
+		completion_reward = {
+			mark_focus_tree_layout_dirty = yes
+		}
+	}
+	focus = {
+		id = MEX_a_corpratist_mexico
+		icon = GFX_focus_ICE_state_corporatism
+
+		x = 35
+		y = 3
+		cost = 0
+		
+		available = {
+			always = false
+		}
+
+
+		#search_filters = {  } will be added later
+
+		allow_branch = {
+			tag = MAC
+		}
+
+		completion_reward = {
+			mark_focus_tree_layout_dirty = yes
+		}
+	}
+	focus = {
+		id = MEX_a_compromise_with_calles
+		icon = GFX_focus_ICE_state_corporatism
+		prerequisite={focus=MEX_a_corpratist_mexico}
+		mutually_exclusive={focus=MEX_no_compromise_no_surrender}
+		relative_position_id=MEX_a_corpratist_mexico
+
+		x = -1
+		y = 3
+		cost = 0
+		
+		available = {
+			has_war_with = MEX
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_no_compromise_no_surrender
+		icon = GFX_focus_ICE_state_corporatism
+		prerequisite={focus=MEX_a_corpratist_mexico}
+		mutually_exclusive={focus=MEX_a_compromise_with_calles}
+		relative_position_id=MEX_a_corpratist_mexico
+
+		x = 1
+		y = 3
+		cost = 0
+		
+		available = {
+			has_war_with = MEX
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_found_the_pan_party
+		icon = GFX_focus_ICE_state_corporatism
+		prerequisite={focus=MEX_no_compromise_no_surrender}
+		relative_position_id=MEX_no_compromise_no_surrender
+
+		x = 1
+		y = 1
+		cost = 0
+		
+		available = {
+			#always = false
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_land_ownership_act
+		icon = GFX_focus_ICE_state_corporatism
+		prerequisite={focus=MEX_found_the_pan_party}
+		relative_position_id=MEX_no_compromise_no_surrender
+
+		x = 1
+		y = 2
+		cost = 0
+		
+		available = {
+			#always = false
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_break_the_pnr_supremacy
+		icon = GFX_focus_ICE_state_corporatism
+		prerequisite={focus=MEX_no_compromise_no_surrender}
+		relative_position_id=MEX_no_compromise_no_surrender
+
+		x = 3
+		y = 1
+		cost = 0
+		
+		available = {
+			#always = false
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_restore_real_democracy
+		icon = GFX_focus_ICE_state_corporatism
+		prerequisite={focus=MEX_break_the_pnr_supremacy}
+		mutually_exclusive={focus=MEX_totalitarian_corporate_state}
+		relative_position_id=MEX_no_compromise_no_surrender
+
+		x = 3
+		y = 2
+		cost = 0
+		
+		available = {
+			#always = false
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_totalitarian_corporate_state
+		icon = GFX_focus_ICE_state_corporatism
+		prerequisite={focus=MEX_break_the_pnr_supremacy}
+		mutually_exclusive={focus=MEX_restore_real_democracy}
+		relative_position_id=MEX_no_compromise_no_surrender
+
+		x = 5
+		y = 2
+		cost = 0
+		
+		available = {
+			#always = false
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_church_settlement_within_state
+		icon = GFX_focus_ICE_state_corporatism
+		prerequisite={focus=MEX_no_compromise_no_surrender}
+		relative_position_id=MEX_no_compromise_no_surrender
+
+		x = 5
+		y = 1
+		cost = 0
+		
+		available = {
+			#always = false
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_reverse_the_land_reform
+		icon = GFX_focus_ICE_state_corporatism
+		prerequisite={focus=MEX_a_compromise_with_calles focus=MEX_no_compromise_no_surrender}
+		relative_position_id=MEX_a_corpratist_mexico
+
+		x = 0
+		y = 5
+		cost = 0
+		
+		available = {
+			#always = false
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_private_ownership_restoration
+		icon = GFX_focus_ICE_state_corporatism
+		prerequisite={focus=MEX_reverse_the_land_reform}
+		relative_position_id=MEX_a_corpratist_mexico
+
+		x = 2
+		y = 6
+		cost = 0
+		
+		available = {
+			#always = false
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_private_ownership_restoration
+		icon = GFX_focus_ICE_state_corporatism
+		prerequisite={focus=MEX_reverse_the_land_reform}
+		relative_position_id=MEX_a_corpratist_mexico
+
+		x = 2
+		y = 6
+		cost = 0
+		
+		available = {
+			#always = false
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_capitalization_economics
+		icon = GFX_focus_ICE_state_corporatism
+		prerequisite={focus=MEX_reverse_the_land_reform}
+		relative_position_id=MEX_a_corpratist_mexico
+
+		x = -2
+		y = 6
+		cost = 0
+		
+		available = {
+			#always = false
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_oil_exploitation
+		icon = GFX_focus_ICE_state_corporatism
+		prerequisite={focus=MEX_reverse_the_land_reform}
+		relative_position_id=MEX_a_corpratist_mexico
+
+		x = -1
+		y = 7
+		cost = 0
+		
+		available = {
+			#always = false
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_union_busting
+		icon = GFX_focus_ICE_state_corporatism
+		prerequisite={focus=MEX_reverse_the_land_reform}
+		relative_position_id=MEX_a_corpratist_mexico
+
+		x = 1
+		y = 7
+		cost = 0
+		
+		available = {
+			#always = false
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_agarian_industrial_switch
+		icon = GFX_focus_ICE_state_corporatism
+		prerequisite={focus=MEX_reverse_the_land_reform}
+		relative_position_id=MEX_a_corpratist_mexico
+
+		x = 0
+		y = 9
+		cost = 0
+		
+		available = {
+			#always = false
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_a_industralized_mexico
+		icon = GFX_focus_ICE_state_corporatism
+		prerequisite={focus=MEX_agarian_industrial_switch}
+		relative_position_id=MEX_a_corpratist_mexico
+
+		x = 0
+		y = 10
+		cost = 0
+		
+		available = {
+			#always = false
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_our_foreign_policy
+		icon = GFX_focus_mex_jefe_maximo
+
+		x = 45
+		y = 1
+		cost = 0
+		
+		available = {
+			#always = false
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_northern_offensive
+		icon = GFX_focus_mex_jefe_maximo
+		prerequisite = {focus=MEX_our_foreign_policy}
+		relative_position_id=MEX_our_foreign_policy
+
+		x = 2
+		y = 1
+		cost = 0
+		
+		available = {
+			#always = false
+		}
+
+		bypass = {
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_coup_in_san_luis
+		icon = GFX_focus_mex_jefe_maximo
+		prerequisite = {focus=MEX_northern_offensive}
+		relative_position_id=MEX_northern_offensive
+
+		x = 0
+		y = 1
+		cost = 0
+		
+		available = {
+			#always = false
+		}
+
+		bypass = {
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_la_cristida_question
+		icon = GFX_focus_mex_jefe_maximo
+		prerequisite = {focus=MEX_northern_offensive}
+		relative_position_id=MEX_northern_offensive
+
+		x = 2
+		y = 1
+		cost = 0
+		
+		available = {
+			NOT = { has_completed_focus = MEX_a_catholic_mexico }
+		}
+
+		bypass = {
+			has_completed_focus = MEX_a_catholic_mexico
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_the_tabasco_problem
+		icon = GFX_focus_mex_jefe_maximo
+		prerequisite = {focus=MEX_northern_offensive}
+		relative_position_id=MEX_northern_offensive
+
+		x = 4
+		y = 1
+		cost = 0
+		
+		available = {
+			NOT = { has_completed_focus = MEX_a_catholic_mexico }
+		}
+
+		bypass = {
+			has_completed_focus = MEX_a_catholic_mexico
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_subversive_actions_within
+		icon = GFX_focus_mex_jefe_maximo
+		prerequisite = {focus=MEX_northern_offensive focus=MEX_southern_route}
+		relative_position_id=MEX_our_foreign_policy
+
+		x = 0
+		y = 2
+		cost = 0
+		
+		available = {
+			NOT = { has_completed_focus = MEX_a_catholic_mexico }
+		}
+
+		bypass = {
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_southern_route
+		icon = GFX_focus_mex_jefe_maximo
+		prerequisite = {focus=MEX_our_foreign_policy}
+		relative_position_id=MEX_our_foreign_policy
+
+		x = -2
+		y = 1
+		cost = 0
+		
+		available = {
+			#always = false
+		}
+
+		bypass = {
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+	focus = {
+		id = MEX_dealing_with_baja
+		icon = GFX_focus_mex_jefe_maximo
+		prerequisite = {focus=MEX_southern_route}
+		relative_position_id=MEX_southern_route
+
+		x = -1
+		y = 1
+		cost = 0
+		
+		available = {
+			#always = false
+		}
+
+		bypass = {
+		}
+
+		#search_filters = {  } will be added later
+
+		completion_reward = {
+		}
+	}
+}

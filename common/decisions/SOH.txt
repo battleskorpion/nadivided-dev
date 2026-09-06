@@ -1,0 +1,657 @@
+#Category only allowed for SOH
+SOH_mefo_bills_category = {
+	SOH_mefo_bills_mission = {
+		allowed = { always = no }
+		icon = ger_mefo_bills
+		priority = 100
+		available = {
+			#NOT = { has_government = democratic }
+			#GER_can_delay_mefo_payment = yes
+			#has_political_power > 0
+			hidden_trigger = { always = no }
+		}
+		#cost = GER_mefo_bill_counter?10
+		days_mission_timeout = 153
+		is_good = yes
+		fire_only_once = yes
+		cancel_trigger = {
+			hidden_trigger = {
+				OR = {
+					NOT = { SOH_has_mefo_bills = yes }
+					#has_idea = GER_mefo_bills_ended
+				}
+			}
+		}
+		#days_remove = GER_extend_mefo_bills_days?0
+		remove_effect = {
+		}
+		complete_effect = {
+		}
+		timeout_effect = {
+			if = {
+				limit = {
+					has_country_flag = SOH_has_cancelled_mefo
+				}
+				SOH_remove_mefo_bills = yes
+			}
+			else = {
+				SOH_mefo_bills_level_up = yes
+				hidden_effect = {
+					activate_mission = SOH_mefo_bills_mission
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 200
+		}
+	}
+	SOH_cancel_mefos = {
+		icon = ger_mefo_bills
+		available = {
+			
+		}
+		cost = 50
+		fire_only_once = yes
+		visible = {
+			SOH_has_mefo_bills = yes
+		}
+		cancel_if_not_visible = yes
+		remove_effect = {
+			SOH_remove_mefo_bills = yes
+			set_country_flag = SOH_has_cancelled_mefo
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+}
+SOH_100_days_offensive_decision_category = {
+	decision_100_days_offensive = {
+		icon = GFX_decision_hol_draw_up_staff_plans
+		available = {
+			AND = {
+				OR = {
+					has_completed_focus = SOH_the_100_day_offensive_democratic
+					has_completed_focus = SOH_100_days_offensive
+				}
+				OR = {
+					has_war_with = SMI
+					has_war_with = SIN
+					has_war_with = SIL
+					has_war_with = SKY
+				}
+			}
+		}
+		cost = 0
+		days_remove = 100
+		fire_only_once = yes
+		ai_will_do = {
+			base = 100
+		}
+		modifier = {
+			army_speed_factor = 0.05
+			org_loss_when_moving = -0.05
+			army_attack_factor = 0.05
+		}
+		remove_effect = {
+
+		}	
+	}
+}
+SOH_plunder_the_river_decisions_category = {
+	SOH_plunder_indiana = {
+		visible = {
+			has_completed_focus = SOH_plunder_the_river
+		}
+		available = {
+			has_full_control_of_state = 708
+			has_full_control_of_state = 366
+		}
+		priority = 150
+		allowed = {
+			original_tag = SOH
+		}
+		cost = 50
+		days_remove = SOH_plunder_time
+		fire_only_once = no
+		icon = GFX_decision_gre_faction_management
+		cancel_trigger = {
+			NOT = {
+				has_full_control_of_state = 708
+				has_full_control_of_state = 366
+			}
+		}
+		cancel_effect = {
+			clr_country_flag = SOH_plundered_indiana
+		}
+		complete_effect = {
+			set_country_flag = SOH_plundered_indiana
+		}
+		remove_effect = {
+			if = {
+				limit = {
+					has_country_flag = SOH_bad_readiness_flag
+				}
+				remove_ideas = SOH_ill_prepared_planning
+				remove_ideas = SOH_ill_prepared_supply_lines
+			}
+			else_if = {
+				limit = {
+					has_country_flag = SOH_mid_readiness_flag
+				}
+				remove_ideas = SOH_ill_prepared_planning_lesser
+				remove_ideas = SOH_ill_prepared_supply_lines_lesser
+			}
+			708 = {
+				add_resistance = 15
+				remove_building = {
+					type = industrial_complex
+					level = 2
+				}
+			}
+			366 = {
+				add_resistance = 15
+				remove_building = {
+					type = industrial_complex
+					level = 1
+				}
+				remove_building = {
+					type = arms_factory
+					level = 2
+				}
+			}
+			random_core_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size = 3
+					}
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+				hidden_effect = {
+					damage_building = {
+						type = industrial_complex
+						damage = 2
+					}
+					damage_building = {
+						type = arms_factory
+						damage = 1
+					}
+				}
+			}
+		}
+	}
+	SOH_plunder_kentucky = {
+		visible = {
+			has_completed_focus = SOH_plunder_the_river
+		}
+		
+		available = {
+			has_full_control_of_state = 772
+			has_full_control_of_state = 363
+			has_full_control_of_state = 774
+			has_full_control_of_state = 154
+		}
+		priority = 150
+		allowed = {
+			original_tag = SOH
+		}
+		cost = 50
+		days_remove = SOH_plunder_time
+		fire_only_once = no
+		icon = GFX_decision_gre_faction_management
+		cancel_trigger = {
+			NOT = {
+				has_full_control_of_state = 772
+				has_full_control_of_state = 363
+				has_full_control_of_state = 774
+				has_full_control_of_state = 154
+			}
+		}
+		cancel_effect = {
+			clr_country_flag = SOH_plundered_kentucky
+		}
+		complete_effect = {
+			set_country_flag = SOH_plundered_kentucky
+		}
+		remove_effect = {
+			if = {
+				limit = {
+					has_country_flag = SOH_bad_readiness_flag
+				}
+				remove_ideas =SOH_ill_prepared_industries
+				remove_ideas = SOH_ill_prepared_industrial_capacity
+			}
+			else_if = {
+				limit = {
+					has_country_flag = SOH_mid_readiness_flag
+				}
+				remove_ideas = SOH_ill_prepared_industries_lesser
+				remove_ideas = SOH_ill_prepared_industrial_capacity_lesser
+			}
+			772 = {
+				add_resistance = 15
+				remove_building = {
+					type = industrial_complex
+					level = 1
+				}
+				remove_building = {
+					type = arms_factory
+					level = 2
+				}
+			}
+			363 = {
+				add_resistance = 15
+				remove_building = {
+					type = industrial_complex
+					level = 1
+				}
+				remove_building = {
+					type = arms_factory
+					level = 1
+				}
+			}
+			774 = {
+				add_resistance = 15
+				remove_building = {
+					type = arms_factory
+					level = 1
+				}
+			}
+			154 = {
+				add_resistance = 15
+				remove_building = {
+					type = industrial_complex
+					level = 1
+				}
+				remove_building = {
+					type = arms_factory
+					level = 1
+				}
+			}
+			random_core_state = {
+				limit = {
+					free_building_slots = {
+						building = industrial_complex
+						size = 3
+					}
+				}
+				add_building_construction = {
+					type = industrial_complex
+					level = 2
+					instant_build = yes
+				}
+				add_building_construction = {
+					type = arms_factory
+					level = 1
+					instant_build = yes
+				}
+				hidden_effect = {
+					damage_building = {
+						type = industrial_complex
+						damage = 2
+					}
+					damage_building = {
+						type = arms_factory
+						damage = 1
+					}
+				}
+			}
+		}
+	}
+}
+economy_decisions = {
+	deny_the_steel_wars = {
+		visible = {
+			always = yes
+		}
+		allowed = {
+			original_tag = SOH
+		}
+		fire_only_once = yes
+		available = {
+			39 = {
+				is_demilitarized_zone = no
+			}
+		}
+		icon = GFX_decision_gre_faction_management
+		complete_effect = {
+			add_political_power = 10
+			SMI = {
+				country_event = ohio.11
+				remove_resource_rights = 540
+			}
+			SIN = {
+				country_event = ohio.11
+				remove_resource_rights = 99
+			}
+		}
+	}
+
+	end_our_internal_perfection = {
+		visible = {
+			has_completed_focus = SOH_end_the_internal_perfection
+			or = {
+				has_idea = SOH_focus_internally_idea
+				has_idea = SOH_focus_internally_idea_2
+			}
+		}
+
+		allowed = {
+			original_tag = SOH
+		} 
+		icon = GFX_decision_hol_war_on_pacifism
+		cost = 50
+		fire_only_once = yes
+		days_remove = 50
+
+		remove_effect = {
+			if = {
+				limit = {
+					has_idea = SOH_focus_internally_idea
+				}
+				remove_ideas = SOH_focus_internally_idea
+			}
+
+			if = {
+				limit = {
+					has_idea = SOH_focus_internally_idea_2
+				}
+				remove_ideas = SOH_focus_internally_idea_2
+			}
+		}
+	}
+}
+SOH_ohio_gang_parties_category = {
+	SOH_ohio_gang_parties_mission = {
+		allowed = { always = no }
+		icon = GFX_decision_gre_investment_decisions
+		priority = 1
+		available = {
+			hidden_trigger = { always = no }
+		}
+		days_mission_timeout = 200
+		is_good = yes
+		fire_only_once = yes
+		#cancel_trigger = {
+		#	hidden_trigger = {
+		#		has_country_leader = SOH_the_ohio_gang
+		#	}
+		#}
+		cancel_effect = {
+			remove_ideas = SOH_the_gang
+			hidden_effect = {
+				remove_mission = SOH_ohio_gang_parties_mission
+			}
+		}
+		remove_effect = {
+		}
+		complete_effect = {
+		}
+		timeout_effect = {
+			random_list = {
+				25 = { country_event = { id = ohio.12 days = 2  } }
+				25 = { country_event = { id = ohio.13 days = 2  } }
+				25 = { country_event = { id = ohio.14 days = 2  } }
+				25 = { country_event = { id = ohio.15 days = 2  } }
+			}
+			hidden_effect = {
+				activate_mission = SOH_ohio_gang_parties_mission
+			}
+		}
+		ai_will_do = {
+			factor = 200
+		}
+	}
+}
+
+SOH_ohio_industry_fund_category = {
+	SOH_invest_in_columbus_decision = {
+		visible = {
+			has_completed_focus = SOH_ohio_industry_fund
+		}
+		icon = GFX_decision_generic_factory
+		allowed = {
+			original_tag = SOH
+		}
+		fire_only_once = yes 
+		cost = 125
+		days_remove = 100
+		available = {
+			controls_state = 697
+			custom_trigger_tooltip = {
+				tooltip = SOH_internal_perfection_tt 
+				or = {
+					has_idea = SOH_focus_internally_idea
+					has_idea = SOH_focus_internally_idea_2
+				}
+			}
+		}
+		remove_effect = {
+			697 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+
+
+	SOH_invest_in_toledo_decision = {
+		visible = {
+			has_completed_focus = SOH_ohio_industry_fund
+		}
+		allowed = {
+			original_tag = SOH
+		}
+		icon = GFX_decision_generic_merge_plant_tank
+		fire_only_once = yes 
+		cost = 120
+		days_remove = 70
+		available = {
+			controls_state = 39
+			custom_trigger_tooltip = {
+				tooltip = SOH_internal_perfection_tt 
+				or = {
+					has_idea = SOH_focus_internally_idea
+					has_idea = SOH_focus_internally_idea_2
+				}
+			}
+		}
+		remove_effect = {
+			39 = {
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+
+	SOH_invest_in_dayton_decision = {
+		visible = {
+			has_completed_focus = SOH_ohio_industry_fund
+		}
+		allowed = {
+			original_tag = SOH
+		}
+		fire_only_once = yes 
+		icon = GFX_decision_generic_factory
+		cost = 75
+		days_remove = 50
+		available = {
+			controls_state = 703
+			custom_trigger_tooltip = {
+				tooltip = SOH_internal_perfection_tt 
+				or = {
+					has_idea = SOH_focus_internally_idea
+					has_idea = SOH_focus_internally_idea_2
+				}
+			}
+		}
+		remove_effect = {
+			703 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = steel_mill
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+
+
+	SOH_invest_in_cincinnati_decision = {
+		visible = {
+			has_completed_focus = SOH_ohio_industry_fund
+		}
+		allowed = {
+			original_tag = SOH
+		}
+		fire_only_once = yes 
+		icon = GFX_decision_generic_factory
+		cost = 100
+		days_remove = 80
+		available = {
+			controls_state = 536
+			custom_trigger_tooltip = {
+				tooltip = SOH_internal_perfection_tt 
+				or = {
+					has_idea = SOH_focus_internally_idea
+					has_idea = SOH_focus_internally_idea_2
+				}
+			}
+		}
+		remove_effect = {
+			536 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = steel_mill
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+
+	SOH_invest_in_cleveland_decision = {
+		visible = {
+			has_completed_focus = SOH_ohio_industry_fund
+		}
+		allowed = {
+			original_tag = SOH
+		}
+		icon = GFX_decision_generic_merge_plant_ship
+		fire_only_once = yes 
+		cost = 100 
+		days_remove = 100
+		available = {
+			controls_state = 48
+			custom_trigger_tooltip = {
+				tooltip = SOH_internal_perfection_tt 
+				or = {
+					has_idea = SOH_focus_internally_idea
+					has_idea = SOH_focus_internally_idea_2
+				}
+			}
+		}
+		remove_effect = {
+			48 = {
+				add_building_construction = {
+					type = infrastructure
+					level = 1
+				}
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = dockyard
+					level = 2
+				}
+				add_extra_state_shared_building_slots = 1
+			}
+		}
+	}
+}
+SOH_public_works_category = {
+	SOH_public_works = {
+		icon = GFX_decision_generic_construction
+		allowed = {
+			original_tag = SOH
+		}
+
+		available = {
+			has_tech = construction2
+			num_of_civilian_factories_available_for_projects > 0
+			NOT = {
+				has_country_flag = SOH_is_investing
+			}
+		}
+
+		state_target = yes
+	
+		target_array = ROOT.owned_states
+	
+		target_trigger = {
+			FROM = {
+				is_fully_controlled_by = ROOT
+				is_core_of = ROOT
+			}
+		}
+	
+		target_root_trigger = {
+			original_tag = SOH
+			has_completed_focus = SOH_public_works
+		}
+	
+		cost = 100
+	
+		days_remove = 120
+	
+		modifier = {
+			civilian_factory_use = 3
+		}
+		complete_effect = {
+			set_country_flag = SOH_is_investing
+		}
+		
+		remove_effect = {
+			clr_country_flag = SOH_is_investing
+			FROM = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+				add_dynamic_modifier = {
+					modifier = SOH_public_works_expansion
+				}
+			}
+		}
+	}
+}
